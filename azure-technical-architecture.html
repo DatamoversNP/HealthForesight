@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azure Technical Architecture</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 40px;
+            color: #1a1a1a;
+        }
+
+        .slide {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 50px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .title {
+            font-size: 36px;
+            font-weight: 600;
+            color: #1e3a5f;
+            margin-bottom: 10px;
+            text-align: center;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #718096;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .architecture {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .tier {
+            background: #ffffff;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 25px;
+        }
+
+        .tier-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e3a5f;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tier.presentation {
+            border-color: #4a90a4;
+            background: linear-gradient(to bottom, #f0f9fb 0%, #ffffff 100%);
+        }
+
+        .tier.application {
+            border-color: #5b4fa8;
+            background: linear-gradient(to bottom, #f5f4fa 0%, #ffffff 100%);
+        }
+
+        .tier.data {
+            border-color: #2d7d32;
+            background: linear-gradient(to bottom, #f1f8f4 0%, #ffffff 100%);
+        }
+
+        .service {
+            background: #ffffff;
+            border: 1px solid #d0d0d0;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .service-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .service-icon {
+            width: 20px;
+            height: 20px;
+            background: #5b4fa8;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .service-icon.blue { background: #0078d4; }
+        .service-icon.purple { background: #5b4fa8; }
+        .service-icon.green { background: #2d7d32; }
+        .service-icon.teal { background: #4a90a4; }
+        .service-icon.orange { background: #ff6b35; }
+
+        .service-details {
+            font-size: 12px;
+            color: #718096;
+            line-height: 1.6;
+        }
+
+        .service-details ul {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 8px;
+        }
+
+        .service-details li {
+            padding-left: 20px;
+            position: relative;
+            margin-bottom: 4px;
+        }
+
+        .service-details li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #5b4fa8;
+            font-weight: bold;
+        }
+
+        .data-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .flow-arrow {
+            font-size: 24px;
+            color: #5b4fa8;
+        }
+
+        .security-layer {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .security-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #856404;
+            margin-bottom: 15px;
+        }
+
+        .security-items {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .security-item {
+            font-size: 13px;
+            color: #856404;
+            padding: 10px;
+            background: #ffffff;
+            border-radius: 4px;
+            border: 1px solid #ffc107;
+        }
+
+        .monitoring {
+            background: #e7f3ff;
+            border: 2px solid #0078d4;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .monitoring-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #004578;
+            margin-bottom: 15px;
+        }
+
+        .monitoring-items {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .monitoring-item {
+            font-size: 13px;
+            color: #004578;
+            padding: 10px;
+            background: #ffffff;
+            border-radius: 4px;
+            border: 1px solid #0078d4;
+        }
+
+        .cicd {
+            background: #f0f0f0;
+            border: 2px solid #666;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .cicd-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .cicd-flow {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .cicd-step {
+            flex: 1;
+            padding: 12px;
+            background: #ffffff;
+            border-radius: 4px;
+            border: 1px solid #666;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-left: 8px;
+        }
+
+        .badge.standard { background: #0078d4; color: #fff; }
+        .badge.premium { background: #5b4fa8; color: #fff; }
+        .badge.free { background: #2d7d32; color: #fff; }
+
+        .connection-line {
+            stroke: #5b4fa8;
+            stroke-width: 2;
+            fill: none;
+            stroke-dasharray: 5,5;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <h1 class="title">Azure Technical Architecture</h1>
+        <p class="subtitle">HealthForesight Platform - Complete Infrastructure</p>
+
+        <!-- Main Architecture Tiers -->
+        <div class="architecture">
+            <!-- Presentation Tier -->
+            <div class="tier presentation">
+                <div class="tier-title">Presentation Tier</div>
+                
+                <div class="service">
+                    <div class="service-title">
+                        <span class="service-icon blue"></span>
+                        Azure Static Web Apps
+                        <span class="badge free">Free</span>
+                    </div>
+                    <div class="service-details">
+                        React SPA Frontend<br>
+                        <ul>
+                            <li>Global CDN</li>
+                            <li>Auto SSL</li>
+                            <li>Custom Domain</li>
+                            <li>GitHub Integration</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="service">
+                    <div class="service-title">
+                        <span class="service-icon blue"></span>
+                        Azure Front Door
+                        <span class="badge standard">Standard</span>
+                    </div>
+                    <div class="service-details">
+                        Global Load Balancer<br>
+                        <ul>
+                            <li>DDoS Protection</li>
+                            <li>WAF Rules</li>
+                            <li>SSL Termination</li>
+                            <li>Geo-routing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Application Tier -->
+            <div class="tier application">
+                <div class="tier-title">Application Tier</div>
+                
+                <div class="service">
+                    <div class="service-title">
+                        <span class="service-icon purple"></span>
+                        App Service (API)
+                        <span class="badge standard">B1</span>
+                    </div>
+                    <div class="service-details">
+                        FastAPI Python Backend<br>
+                        <ul>
+                            <li>Python 3.11</li>
+                            <li>Auto-scaling</li>
+                            <li>Deployment Slots</li>
+                            <li>Health Checks</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="service">
+                    <div class="service-title">
+                        <span class="service-icon purple"></span>
+                        Azure Functions
+                        <span class="badge free">Consumption</span>
+                    </div>
+                    <div class="service-details">
+                        Background Jobs<br>
+                        <ul>
+                            <li>Data Processing</li>
+                            <li>Scheduled Tasks</li>
+                            <li>Event-driven</li>
+                            <li>Serverless</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="service">
+                    <div class="service-title">
+                        <span class="service-icon teal"></span>
+                        Azure Active Directory
+                        <span class="badge standard">B2C</span>
+                    </div>
+                    <div class="service-details">
+                        Authentication & Authorization<br>
+                        <ul>
+                            <li>OAuth 2.0 / OIDC</li>
+                            <li>Multi-tenant</li>
+                            <li>SSO</li>
+                            <li>MFA Support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Tier -->
+            <div class="tier data">
+                <div class="tier-title">Data & Storage Tier</div>
+                
+                <div class="service">
+                    <div class="service-title">
+                        <span class="service-icon green"></span>
+                        Azure File Storage
+                        <span class="badge standard">LRS</span>
+                    </div>
+                    <div class="service-details">
+                        File-based Data Storage<br>
+                        <ul>
+                            <li>Policies & Configs</li>
+                            <li>Analyses & Results</li>
+                            <li>Pipeline Metadata</li>
+                            <li>SMB Protocol</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="service">
+                    <div class="service-title">
+                        <span class="service-icon green"></span>
+                        Azure Blob Storage
+                        <span class="badge standard">Hot</span>
+                    </div>
+                    <div class="service-details">
+                        Large Data Files<br>
+                        <ul>
+                            <li>CSV/Parquet Files</li>
+                            <li>Data Exports</li>
+                            <li>Backups</li>
+                            <li>Lifecycle Management</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="service">
+                    <div class="service-title">
+                        <span class="service-icon orange"></span>
+                        Azure Cache for Redis
+                        <span class="badge standard">Basic</span>
+                    </div>
+                    <div class="service-details">
+                        Caching & Sessions<br>
+                        <ul>
+                            <li>API Response Cache</li>
+                            <li>Session Storage</li>
+                            <li>Queue Management</li>
+                            <li>Pub/Sub</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Flow -->
+        <div class="data-flow">
+            <div style="flex: 1; text-align: center; padding: 15px; background: #f0f9fb; border-radius: 6px;">
+                <strong>Data Sources</strong><br>
+                <small>Claims, Members, Providers</small>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div style="flex: 1; text-align: center; padding: 15px; background: #f5f4fa; border-radius: 6px;">
+                <strong>Ingestion Pipeline</strong><br>
+                <small>Validation & Transformation</small>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div style="flex: 1; text-align: center; padding: 15px; background: #f1f8f4; border-radius: 6px;">
+                <strong>Azure File Storage</strong><br>
+                <small>Canonical Data Model</small>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div style="flex: 1; text-align: center; padding: 15px; background: #f5f4fa; border-radius: 6px;">
+                <strong>AI/ML Processing</strong><br>
+                <small>Elasticity & Impact Models</small>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div style="flex: 1; text-align: center; padding: 15px; background: #f0f9fb; border-radius: 6px;">
+                <strong>API & Dashboards</strong><br>
+                <small>Executive Outputs</small>
+            </div>
+        </div>
+
+        <!-- Security Layer -->
+        <div class="security-layer">
+            <div class="security-title">🔒 Security & Compliance</div>
+            <div class="security-items">
+                <div class="security-item">
+                    <strong>Network Security</strong><br>
+                    VNet Integration, Private Endpoints, NSG Rules
+                </div>
+                <div class="security-item">
+                    <strong>Identity & Access</strong><br>
+                    Azure AD B2C, RBAC, Managed Identities
+                </div>
+                <div class="security-item">
+                    <strong>Data Protection</strong><br>
+                    Encryption at Rest & Transit, Key Vault
+                </div>
+            </div>
+        </div>
+
+        <!-- Monitoring & Operations -->
+        <div class="monitoring">
+            <div class="monitoring-title">📊 Monitoring & Operations</div>
+            <div class="monitoring-items">
+                <div class="monitoring-item">
+                    <strong>Application Insights</strong><br>
+                    Performance, Errors, Dependencies
+                </div>
+                <div class="monitoring-item">
+                    <strong>Log Analytics</strong><br>
+                    Centralized Logging, Queries
+                </div>
+                <div class="monitoring-item">
+                    <strong>Azure Monitor</strong><br>
+                    Metrics, Alerts, Dashboards
+                </div>
+                <div class="monitoring-item">
+                    <strong>Cost Management</strong><br>
+                    Budgets, Cost Analysis, Recommendations
+                </div>
+            </div>
+        </div>
+
+        <!-- CI/CD Pipeline -->
+        <div class="cicd">
+            <div class="cicd-title">🔄 CI/CD Pipeline</div>
+            <div class="cicd-flow">
+                <div class="cicd-step">
+                    <strong>Source Control</strong><br>
+                    GitHub / Azure DevOps
+                </div>
+                <div style="font-size: 20px; color: #666;">→</div>
+                <div class="cicd-step">
+                    <strong>Build</strong><br>
+                    GitHub Actions / Azure Pipelines
+                </div>
+                <div style="font-size: 20px; color: #666;">→</div>
+                <div class="cicd-step">
+                    <strong>Test</strong><br>
+                    Unit, Integration, E2E
+                </div>
+                <div style="font-size: 20px; color: #666;">→</div>
+                <div class="cicd-step">
+                    <strong>Deploy</strong><br>
+                    Staging → Production
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Specifications -->
+        <div style="margin-top: 40px; padding: 20px; background: #f8f9fa; border-radius: 6px;">
+            <div style="font-size: 14px; font-weight: 600; color: #1e3a5f; margin-bottom: 15px;">Key Specifications</div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; font-size: 12px; color: #4a5568;">
+                <div>
+                    <strong>Availability:</strong> 99.95% SLA<br>
+                    <strong>Scalability:</strong> Auto-scale 1-10 instances
+                </div>
+                <div>
+                    <strong>Region:</strong> East US (Primary)<br>
+                    <strong>Disaster Recovery:</strong> Geo-redundant backup
+                </div>
+                <div>
+                    <strong>Compliance:</strong> HIPAA Ready<br>
+                    <strong>Data Retention:</strong> Configurable policies
+                </div>
+                <div>
+                    <strong>Cost Model:</strong> Pay-as-you-go<br>
+                    <strong>Estimated:</strong> $200-500/month
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+

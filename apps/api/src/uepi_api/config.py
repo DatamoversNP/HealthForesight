@@ -1,0 +1,122 @@
+"""API configuration"""
+from functools import lru_cache
+from typing import Optional
+import json
+
+from pydantic import field_validator
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from uepi_common.config import (
+    DatabaseSettings,
+    OIDCSettings,
+    ObjectStorageSettings,
+    RedisSettings,
+)
+
+
+class APISettings(BaseSettings):
+    """API-specific settings"""
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
+    
+    environment: str = "development"
+    debug: bool = False
+    log_level: str = "INFO"
+    cors_origins: list[str] = [
+        "http://localhost:3050",
+        "http://localhost:3000",
+        "http://localhost:8080",
+        "http://127.0.0.1:3050",
+        "http://127.0.0.1:3000",
+    ]
+    
+    @field_validator('cors_origins', mode='before')
+    @classmethod
+    def parse_cors_origins(cls, v):
+        """Parse CORS origins from environment variable, handling empty/invalid values"""
+        # Return None to use default if value is None or empty
+        if v is None:
+            return None
+        if isinstance(v, list):
+            return v if v else None  # Return None for empty list to use default
+        if isinstance(v, str):
+            # If empty string or whitespace only, return None to use default
+            v = v.strip()
+            if not v:
+                return None
+            # Try to parse as JSON
+            try:
+                parsed = json.loads(v)
+                if isinstance(parsed, list):
+                    return parsed if parsed else None  # Return None for empty list
+                # If single string, wrap in list
+                if isinstance(parsed, str):
+                    return [parsed] if parsed.strip() else None
+                return None
+            except (json.JSONDecodeError, ValueError, TypeError):
+                # If not valid JSON, treat as comma-separated string
+                origins = [origin.strip() for origin in v.split(',') if origin.strip()]
+                return origins if origins else None  # Return None for empty list
+        # For any other type, return None to use default
+        return None
+    
+    database: DatabaseSettings = DatabaseSettings()
+    object_storage: ObjectStorageSettings = ObjectStorageSettings()
+    redis: RedisSettings = RedisSettings()
+    oidc: OIDCSettings = OIDCSettings()
+    
+    jwt_secret: str = "dev-secret-change-in-prod"
+    jwt_algorithm: str = "HS256"
+    jwt_expiration_minutes: int = 30
+    
+    # File-based storage (no database)
+    use_file_storage: bool = True  # Use file storage instead of database
+    storage_path: str = "./data"  # Base path for file storage
+    
+    # Azure File Storage (alternative to local file storage)
+    use_azure_file_storage: bool = False  # Use Azure File Storage instead of local
+    azure_storage_account_name: Optional[str] = None
+    azure_storage_account_key: Optional[str] = None
+    azure_storage_connection_string: Optional[str] = None  # Alternative to account_key
+    azure_storage_file_share_name: str = "healthforesight-data"  # File share name
+    
+    # Conversational AI / LLM Settings
+    llm_provider: str = "openai"  # "openai", "anthropic", or "local"
+    openai_api_key: Optional[str] = None
+    openai_model: str = "gpt-4-turbo-preview"  # or "gpt-4", "gpt-3.5-turbo"
+    anthropic_api_key: Optional[str] = None
+    anthropic_model: str = "claude-3-opus-20240229"  # or "claude-3-sonnet-20240229"
+    llm_temperature: float = 0.3  # Lower temperature for more deterministic outputs
+    llm_max_tokens: int = 2000
+    enable_rag: bool = True  # Enable Retrieval-Augmented Generation
+    rag_top_k: int = 5  # Number of context chunks to retrieve
+    enable_safety_guardrails: bool = True  # Enable content filtering and safety checks
+    
+    # Vector Search / Embeddings
+    use_vector_search: bool = False  # Use embeddings instead of keyword matching
+    embedding_provider: str = "openai"  # "openai" or "local"
+    embedding_model: str = "text-embedding-3-small"  # OpenAI embedding model
+    vector_store_path: str = "./data/vector_store"  # Path for vector store
+    
+    # Fine-tuning
+    enable_fine_tuning: bool = False  # Enable fine-tuned models
+    fine_tuned_model_id: Optional[str] = None  # Fine-tuned model ID
+    
+    # Caching
+    enable_query_cache: bool = True  # Enable query result caching
+    cache_ttl_seconds: int = 3600  # Cache TTL (1 hour)
+    cache_backend: str = "memory"  # "memory", "redis", or "file"
+    
+    # Rate Limiting
+    enable_rate_limiting: bool = True  # Enable rate limiting
+    rate_limit_per_minute: int = 10  # Requests per minute per user
+    rate_limit_per_hour: int = 100  # Requests per hour per user
+    
+    # Cost Tracking
+    enable_cost_tracking: bool = True  # Track LLM API costs
+    cost_tracking_path: str = "./data/cost_tracking"  # Path for cost logs
+
+
+@lru_cache()
+def get_settings() -> APISettings:
+    """Get cached settings instance"""
+    return APISettings()
+

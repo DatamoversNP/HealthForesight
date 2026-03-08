@@ -1,0 +1,61 @@
+{
+  "timestamp": "2026-01-28T18:32:10.289017",
+  "api_url": "https://healthforesight-api-9016.azurewebsites.net/api/v1",
+  "frontend_url": "https://gentle-flower-01dffcd0f.2.azurestaticapps.net",
+  "test_data": {
+    "policies": [],
+    "analyses": [],
+    "cohorts": [],
+    "observations": [],
+    "baseline_analysis_id": null,
+    "impact_analysis_id": null
+  },
+  "results": {
+    "passed": 3,
+    "failed": 3,
+    "warnings": 1,
+    "details": {
+      "passed": [
+        {
+          "test": "API Health Check",
+          "details": "Service: uepi-api",
+          "time": 1769646703.724375
+        },
+        {
+          "test": "Generate Daily Data (OPS_CLINICAL)",
+          "details": "Job ID: 640efb34-ce02-44ee-863b-51d363050f1f, Target Date: 2026-01-27",
+          "time": 1769646716.9378612
+        },
+        {
+          "test": "View Dashboard (EXECUTIVE)",
+          "details": "Dashboard data retrieved successfully",
+          "time": 1769646730.287812
+        }
+      ],
+      "failed": [
+        {
+          "test": "User Authentication",
+          "error": "No user ID returned",
+          "time": 1769646703.84943
+        },
+        {
+          "test": "Create Policy",
+          "error": "HTTPSConnectionPool(host='healthforesight-api-9016.azurewebsites.net', port=443): Max retries exceeded with url: /api/v1/policies (Caused by ResponseError('too many 500 error responses'))",
+          "time": 1769646710.327122
+        },
+        {
+          "test": "Run Baseline Analysis",
+          "error": "HTTPSConnectionPool(host='healthforesight-api-9016.azurewebsites.net', port=443): Max retries exceeded with url: /api/v1/analyses/baseline (Caused by ResponseError('too many 503 error responses'))",
+          "time": 1769646716.87771
+        }
+      ],
+      "warnings": [
+        {
+          "test": "Create Cohort",
+          "message": "422 Client Error: Unprocessable Entity for url: https://healthforesight-api-9016.azurewebsites.net/api/v1/cohorts",
+          "time": 1769646717.040106
+        }
+      ]
+    }
+  }
+}

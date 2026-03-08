@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "uepi-common"
+version = "0.1.0"
+description = "Shared UEPI package"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pydantic = "^2.5.0"
+pydantic-settings = "^2.1.0"
+pydantic[email] = "^2.5.0"
+# Storage dependencies
+boto3 = "^1.29.0"  # For S3-compatible storage (MinIO, AWS S3)
+azure-storage-blob = "^12.19.0"  # For Azure Blob Storage
+azure-identity = "^1.15.0"  # For Azure Managed Identity support
+# Queue dependencies
+redis = "^5.0.1"  # For Redis queue (MVP)
+# Data processing dependencies
+pandas = "^2.1.0"  # For flexible ingestion format detection
+numpy = "^1.24.0"  # For data quality and profiling
+openpyxl = "^3.1.0"  # For Excel file support
+# Observability dependencies
+opentelemetry-api = "^1.21.0"
+opentelemetry-sdk = "^1.21.0"
+opentelemetry-exporter-otlp-proto-grpc = "^1.21.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.3"
+ruff = "^0.1.6"
+mypy = "^1.7.0"

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "CORS_ORIGINS",
+    "value": "[\"https://gentle-flower-01dffcd0f.2.azurestaticapps.net\",\"https://healthforesight-web-9016.azurestaticapps.net\",\"https://healthforesight-api-9016.azurewebsites.net\",\"http://localhost:3050\",\"http://localhost:3000\"]"
+  }
+]
+

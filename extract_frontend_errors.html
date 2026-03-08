@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Extract Frontend Errors</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .error { background: #fee; padding: 10px; margin: 10px 0; border-left: 4px solid #f00; }
+        .warning { background: #ffe; padding: 10px; margin: 10px 0; border-left: 4px solid #fa0; }
+        .info { background: #eef; padding: 10px; margin: 10px 0; border-left: 4px solid #00f; }
+        pre { background: #f5f5f5; padding: 10px; overflow-x: auto; }
+        button { padding: 10px 20px; margin: 10px 5px; cursor: pointer; }
+        .stats { background: #f0f0f0; padding: 15px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <h1>Frontend Error Extractor</h1>
+    <p>This page extracts errors from browser localStorage and displays them.</p>
+    
+    <div class="stats" id="stats"></div>
+    
+    <button onclick="extractErrors()">Extract Errors from localStorage</button>
+    <button onclick="downloadErrors()">Download Error Report</button>
+    <button onclick="clearLogs()">Clear Logs</button>
+    
+    <div id="errors"></div>
+    
+    <script>
+        function extractErrors() {
+            const logs = JSON.parse(localStorage.getItem('uepi_logs') || '[]');
+            const errors = logs.filter(log => log.level === 'error');
+            const warnings = logs.filter(log => log.level === 'warn');
+            const apiErrors = logs.filter(log => log.category === 'API' && (log.level === 'error' || log.data?.status >= 400));
+            
+            // Update stats
+            document.getElementById('stats').innerHTML = `
+                <h3>Statistics</h3>
+                <p><strong>Total Logs:</strong> ${logs.length}</p>
+                <p><strong>Errors:</strong> ${errors.length}</p>
+                <p><strong>Warnings:</strong> ${warnings.length}</p>
+                <p><strong>API Errors:</strong> ${apiErrors.length}</p>
+            `;
+            
+            // Display errors
+            const container = document.getElementById('errors');
+            container.innerHTML = '<h2>Errors Found</h2>';
+            
+            if (errors.length === 0 && apiErrors.length === 0) {
+                container.innerHTML += '<p>No errors found in logs.</p>';
+                return;
+            }
+            
+            // Display API errors
+            if (apiErrors.length > 0) {
+                container.innerHTML += '<h3>API Errors</h3>';
+                apiErrors.forEach((log, idx) => {
+                    const div = document.createElement('div');
+                    div.className = 'error';
+                    div.innerHTML = `
+                        <strong>Error #${idx + 1}</strong><br>
+                        <strong>Time:</strong> ${log.timestamp}<br>
+                        <strong>Message:</strong> ${log.message}<br>
+                        <strong>URL:</strong> ${log.url || 'N/A'}<br>
+                        <strong>Data:</strong>
+                        <pre>${JSON.stringify(log.data, null, 2)}</pre>
+                        ${log.error ? `<strong>Error Details:</strong><pre>${JSON.stringify(log.error, null, 2)}</pre>` : ''}
+                    `;
+                    container.appendChild(div);
+                });
+            }
+            
+            // Display other errors
+            if (errors.length > 0) {
+                container.innerHTML += '<h3>Other Errors</h3>';
+                errors.filter(log => log.category !== 'API').forEach((log, idx) => {
+                    const div = document.createElement('div');
+                    div.className = 'error';
+                    div.innerHTML = `
+                        <strong>Error #${idx + 1}</strong><br>
+                        <strong>Time:</strong> ${log.timestamp}<br>
+                        <strong>Category:</strong> ${log.category}<br>
+                        <strong>Message:</strong> ${log.message}<br>
+                        <strong>URL:</strong> ${log.url || 'N/A'}<br>
+                        ${log.data ? `<strong>Data:</strong><pre>${JSON.stringify(log.data, null, 2)}</pre>` : ''}
+                        ${log.error ? `<strong>Error Details:</strong><pre>${JSON.stringify(log.error, null, 2)}</pre>` : ''}
+                    `;
+                    container.appendChild(div);
+                });
+            }
+        }
+        
+        function downloadErrors() {
+            const logs = JSON.parse(localStorage.getItem('uepi_logs') || '[]');
+            const errors = logs.filter(log => log.level === 'error' || (log.category === 'API' && log.data?.status >= 400));
+            
+            const report = {
+                generated: new Date().toISOString(),
+                totalLogs: logs.length,
+                errorCount: errors.length,
+                errors: errors
+            };
+            
+            const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `frontend_errors_${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        function clearLogs() {
+            if (confirm('Are you sure you want to clear all logs?')) {
+                localStorage.removeItem('uepi_logs');
+                alert('Logs cleared!');
+                extractErrors();
+            }
+        }
+        
+        // Auto-extract on load
+        window.onload = extractErrors;
+    </script>
+</body>
+</html>
+

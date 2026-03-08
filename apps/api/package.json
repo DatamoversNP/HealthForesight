@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@types/react-joyride": "^2.0.2",
+    "react-joyride": "^2.9.3"
+  }
+}

@@ -1,0 +1,262 @@
+{
+  "timestamp": "2026-01-29T08:55:50.085009",
+  "api_url": "https://healthforesight-api-9016.azurewebsites.net/api/v1",
+  "frontend_url": "https://gentle-flower-01dffcd0f.2.azurestaticapps.net",
+  "workflow_data": {
+    "policy_admin": {
+      "policy_id": "16e31299-d2c6-4589-9638-7dd47537e937"
+    },
+    "analyst": {
+      "cohort_id": "9057484c-a8ae-41f1-aa17-10dcc5715f13"
+    },
+    "policy_owner": {},
+    "ops_clinical": {
+      "daily_job_id": "a3525b5c-f733-4c14-aaa4-931b741d7f39"
+    },
+    "executive": {
+      "dashboard_summary": {
+        "summary": {
+          "active_policies": 7,
+          "total_policies": 32,
+          "recent_analyses": 96,
+          "completed_analyses": 56,
+          "total_observations": 9
+        },
+        "metrics": {
+          "avg_utilization_change_pct": -74.58,
+          "avg_cost_impact": -172099.09,
+          "total_cost_impact": -1548891.79
+        },
+        "top_policies": [
+          {
+            "policy_id": "COMPOUND_IMG_005",
+            "policy_name": "Advanced Imaging Control Bundle",
+            "utilization_change_pct": -14.399999999999999,
+            "cost_impact": -648000.0,
+            "observation_date": "2026-01-24T02:34:03.604178",
+            "is_predicted": true
+          },
+          {
+            "policy_id": "CS_UCC_004",
+            "policy_name": "Urgent Care Copay Increase",
+            "utilization_change_pct": -12.0,
+            "cost_impact": -540000.0000000001,
+            "observation_date": "2026-01-24T02:34:03.570615",
+            "is_predicted": true
+          },
+          {
+            "policy_id": "SOC_INFUSION_002",
+            "policy_name": "Infusion Site-of-Care Optimization",
+            "utilization_change_pct": -8.000000000000002,
+            "cost_impact": -360000.0000000001,
+            "observation_date": "2026-01-24T02:34:03.598029",
+            "is_predicted": true
+          }
+        ],
+        "recent_activity": [
+          {
+            "id": "f48dd64c-d71a-4c68-9b8b-f739aa0e5660",
+            "type": "SIMULATE",
+            "status": "COMPLETED",
+            "created_at": "2026-01-17T10:54:41.593836"
+          },
+          {
+            "id": "da4c15a1-5c01-4996-81aa-02870ebb634c",
+            "type": "SIMULATE",
+            "status": "COMPLETED",
+            "created_at": "2026-01-17T10:54:28.389262"
+          },
+          {
+            "id": "4d241246-35d0-4f12-ad6a-b2d13bd3e4ae",
+            "type": "SIMULATE",
+            "status": "COMPLETED",
+            "created_at": "2026-01-17T10:48:14.130469"
+          },
+          {
+            "id": "447d0d55-4812-4f8f-a61e-8ebb6c9d13e1",
+            "type": "SIMULATE",
+            "status": "COMPLETED",
+            "created_at": "2026-01-17T10:45:27.411978"
+          },
+          {
+            "id": "9ea86b71-5e4d-4092-afb0-192612214c85",
+            "type": "SIMULATE",
+            "status": "COMPLETED",
+            "created_at": "2026-01-17T10:45:27.375247"
+          }
+        ],
+        "risk_indicators": [
+          {
+            "type": "HIGH_UTILIZATION_DROP",
+            "severity": "HIGH",
+            "message": "Average utilization decreased by 74.6%"
+          },
+          {
+            "type": "HIGH_COST_IMPACT",
+            "severity": "MEDIUM",
+            "message": "Significant cost impact detected: $172,099"
+          }
+        ],
+        "last_updated": "2026-01-29T14:55:39.958285"
+      }
+    }
+  },
+  "results": {
+    "passed": 16,
+    "failed": 1,
+    "warnings": 12,
+    "details": {
+      "passed": [
+        {
+          "test": "System Health",
+          "details": "API is healthy",
+          "time": 1769698493.733481
+        },
+        {
+          "test": "POLICY_ADMIN: Create Policy",
+          "details": "Policy ID: 16e31299...",
+          "time": 1769698493.8438778
+        },
+        {
+          "test": "ANALYST: Create Cohort",
+          "details": "Cohort ID: 9057484c...",
+          "time": 1769698503.547628
+        },
+        {
+          "test": "ANALYST: Get Cohort Members",
+          "details": "Found 0 members",
+          "time": 1769698518.602769
+        },
+        {
+          "test": "ANALYST: List Datasets",
+          "details": "Found 0 datasets",
+          "time": 1769698519.283069
+        },
+        {
+          "test": "ANALYST: List Data Periods",
+          "details": "Found 0 periods",
+          "time": 1769698519.3559291
+        },
+        {
+          "test": "OPS_CLINICAL: Generate Daily Data",
+          "details": "Job ID: a3525b5c..., Date: 2026-01-28",
+          "time": 1769698532.524053
+        },
+        {
+          "test": "OPS_CLINICAL: List Observations",
+          "details": "Found 9 observations",
+          "time": 1769698532.728832
+        },
+        {
+          "test": "OPS_CLINICAL: Get Observation Details",
+          "details": "Observation: da619cb3...",
+          "time": 1769698532.820514
+        },
+        {
+          "test": "OPS_CLINICAL: Get Observation Comparison",
+          "details": "Comparison data retrieved",
+          "time": 1769698532.8905442
+        },
+        {
+          "test": "OPS_CLINICAL: List Data Periods",
+          "details": "Found 0 periods",
+          "time": 1769698532.941364
+        },
+        {
+          "test": "OPS_CLINICAL: List Pipelines",
+          "details": "Found 22 pipelines",
+          "time": 1769698533.450031
+        },
+        {
+          "test": "OPS_CLINICAL: Get Pipeline Status",
+          "details": "Pipeline: N/A",
+          "time": 1769698533.5342479
+        },
+        {
+          "test": "EXECUTIVE: View Dashboard Summary",
+          "details": "Dashboard loaded",
+          "time": 1769698539.875199
+        },
+        {
+          "test": "EXECUTIVE: View Policy Performance",
+          "details": "Performance dashboard loaded",
+          "time": 1769698548.4974442
+        },
+        {
+          "test": "EXECUTIVE: List All Scorecards",
+          "details": "Found 16 scorecards",
+          "time": 1769698549.990242
+        }
+      ],
+      "failed": [
+        {
+          "test": "ANALYST: Baseline Analysis",
+          "error": "HTTPSConnectionPool(host='healthforesight-api-9016.azurewebsites.net', port=443): Max retries exceeded with url: /api/v1/analyses/baseline (Caused by ResponseError('too many 503 error responses'))",
+          "time": 1769698503.320791
+        }
+      ],
+      "warnings": [
+        {
+          "test": "POLICY_ADMIN: Verify Policy",
+          "message": "Policy may not be immediately available: 404 Client Error: Not Found for url: https://healthforesight-api-9016.azurewebsites.net/api/v1/policies/16e31299-d2c6-4589-9638-7dd47537e937",
+          "time": 1769698495.4648042
+        },
+        {
+          "test": "POLICY_ADMIN: Create Version",
+          "message": "Version created but no ID returned",
+          "time": 1769698495.613625
+        },
+        {
+          "test": "POLICY_ADMIN: Activate Policy",
+          "message": "Status update not available: 404 Client Error: Not Found for url: https://healthforesight-api-9016.azurewebsites.net/api/v1/policies/16e31299-d2c6-4589-9638-7dd47537e937/status",
+          "time": 1769698496.2484128
+        },
+        {
+          "test": "POLICY_ADMIN: Review Policy",
+          "message": "Policy may not be retrievable: 404 Client Error: Not Found for url: https://healthforesight-api-9016.azurewebsites.net/api/v1/policies/16e31299-d2c6-4589-9638-7dd47537e937",
+          "time": 1769698496.9794471
+        },
+        {
+          "test": "ANALYST: Elasticity Analysis",
+          "message": "Endpoint not available (404)",
+          "time": 1769698519.1490061
+        },
+        {
+          "test": "POLICY_OWNER: Impact Analysis",
+          "message": "Endpoint not available (404) - may need policy version",
+          "time": 1769698519.894516
+        },
+        {
+          "test": "POLICY_OWNER: What-If: Stricter Policy",
+          "message": "HTTPSConnectionPool(host='healthforesight-api-9016.azurewebsites.net', port=443): Max retries exceeded with url: /api/v1/analyses/simulate (Caused by ResponseError('too many 500 error responses'))",
+          "time": 1769698526.165338
+        },
+        {
+          "test": "POLICY_OWNER: What-If: Broader Scope",
+          "message": "HTTPSConnectionPool(host='healthforesight-api-9016.azurewebsites.net', port=443): Max retries exceeded with url: /api/v1/analyses/simulate (Caused by ResponseError('too many 500 error responses'))",
+          "time": 1769698532.423827
+        },
+        {
+          "test": "POLICY_OWNER: Review Performance",
+          "message": "404 Client Error: Not Found for url: https://healthforesight-api-9016.azurewebsites.net/api/v1/policies/16e31299-d2c6-4589-9638-7dd47537e937/performance",
+          "time": 1769698532.47861
+        },
+        {
+          "test": "OPS_CLINICAL: Get Latest Baseline Period",
+          "message": "404 Client Error: Not Found for url: https://healthforesight-api-9016.azurewebsites.net/api/v1/periods/baseline-eligible/latest",
+          "time": 1769698533.001465
+        },
+        {
+          "test": "EXECUTIVE: Policy Scorecard",
+          "message": "404 Client Error: Not Found for url: https://healthforesight-api-9016.azurewebsites.net/api/v1/scorecards/policies/16e31299-d2c6-4589-9638-7dd47537e937",
+          "time": 1769698548.652145
+        },
+        {
+          "test": "EXECUTIVE: Create Export",
+          "message": "Missing required fields - may need analysis_id",
+          "time": 1769698550.0837781
+        }
+      ]
+    }
+  }
+}

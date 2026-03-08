@@ -1,0 +1,195 @@
+{
+  "timestamp": "2026-01-29T08:14:15.305251",
+  "api_url": "https://healthforesight-api-9016.azurewebsites.net/api/v1",
+  "frontend_url": "https://gentle-flower-01dffcd0f.2.azurestaticapps.net",
+  "test_data": {
+    "policies": [
+      "98e30950-24fd-42ac-9502-cb017639e302",
+      "ed928361-1141-45bf-a5bc-a7ab7edb87c6",
+      "15a87b07-683c-4307-b6a8-3cae0d8e3b05"
+    ],
+    "policy_versions": [],
+    "analyses": {
+      "baseline": [],
+      "impact": [],
+      "elasticity": [],
+      "simulate": []
+    },
+    "cohorts": [
+      "6bacc7b0-4968-438d-bf5d-66029068475a",
+      "bf7cd5d1-b81f-4465-885f-a798fe7b31e4",
+      "8544de5d-2b79-49bd-8a33-7d0ed47c3cab",
+      "8f19e7fd-a291-481f-a7ac-9cc99302c9f8"
+    ],
+    "observations": [],
+    "pipelines": [],
+    "schedules": [],
+    "exports": [],
+    "decisions": []
+  },
+  "results": {
+    "passed": 23,
+    "failed": 5,
+    "warnings": 2,
+    "skipped": 0,
+    "details": {
+      "passed": [
+        {
+          "test": "API Health Check",
+          "details": "Service: uepi-api",
+          "time": 1769696002.760784
+        },
+        {
+          "test": "User Authentication",
+          "details": "User: 00000000-0000-0000-0000-000000000001, Email: demo@example.com, Roles: ['admin']",
+          "time": 1769696002.925511
+        },
+        {
+          "test": "Create SITE_OF_CARE Policy",
+          "details": "Policy ID: 98e30950...",
+          "time": 1769696009.738396
+        },
+        {
+          "test": "Create COST_SHARING Policy",
+          "details": "Policy ID: ed928361...",
+          "time": 1769696009.878946
+        },
+        {
+          "test": "Create DURATION_FREQUENCY_LIMIT Policy",
+          "details": "Policy ID: 15a87b07...",
+          "time": 1769696010.018081
+        },
+        {
+          "test": "Create Multiple Policies",
+          "details": "Created 3/5 policies",
+          "time": 1769696016.671305
+        },
+        {
+          "test": "List All Policies",
+          "details": "Found 32 policies",
+          "time": 1769696017.9287791
+        },
+        {
+          "test": "List Active Policies",
+          "details": "Found 32 active policies",
+          "time": 1769696018.535923
+        },
+        {
+          "test": "Create Cohort: High Utilizers - Commercial",
+          "details": "Cohort ID: 6bacc7b0...",
+          "time": 1769696039.6399932
+        },
+        {
+          "test": "Create Cohort: Chronic Condition Patients",
+          "details": "Cohort ID: bf7cd5d1...",
+          "time": 1769696039.799446
+        },
+        {
+          "test": "Create Cohort: High-Cost Members",
+          "details": "Cohort ID: 8544de5d...",
+          "time": 1769696039.99191
+        },
+        {
+          "test": "Create Cohort: Provider Network Analysis",
+          "details": "Cohort ID: 8f19e7fd...",
+          "time": 1769696040.168503
+        },
+        {
+          "test": "Create Multiple Cohorts",
+          "details": "Created 4/4 cohorts",
+          "time": 1769696040.168541
+        },
+        {
+          "test": "List Datasets",
+          "details": "Found 0 datasets",
+          "time": 1769696040.328545
+        },
+        {
+          "test": "Generate Daily Data for 2026-01-28",
+          "details": "Job ID: c8f71cf2...",
+          "time": 1769696040.444772
+        },
+        {
+          "test": "Generate Daily Data for 2026-01-27",
+          "details": "Job ID: cb968bb5...",
+          "time": 1769696040.516649
+        },
+        {
+          "test": "Generate Daily Data for 2026-01-26",
+          "details": "Job ID: f4b40c3b...",
+          "time": 1769696040.6079092
+        },
+        {
+          "test": "View Summary Dashboard",
+          "details": "Dashboard loaded",
+          "time": 1769696049.3606331
+        },
+        {
+          "test": "View Policy Performance",
+          "details": "Dashboard loaded",
+          "time": 1769696054.46839
+        },
+        {
+          "test": "List Exports",
+          "details": "Found 0 exports",
+          "time": 1769696054.596991
+        },
+        {
+          "test": "List Pipelines",
+          "details": "Found 22 pipelines",
+          "time": 1769696055.190005
+        },
+        {
+          "test": "List Schedules",
+          "details": "Found 0 schedules",
+          "time": 1769696055.2514281
+        },
+        {
+          "test": "List Notifications",
+          "details": "Found 0 notifications",
+          "time": 1769696055.302506
+        }
+      ],
+      "failed": [
+        {
+          "test": "Create UTILIZATION_MANAGEMENT Policy",
+          "error": "HTTPSConnectionPool(host='healthforesight-api-9016.azurewebsites.net', port=443): Max retries exceeded with url: /api/v1/policies (Caused by ResponseError('too many 500 error responses'))",
+          "time": 1769696009.3806798
+        },
+        {
+          "test": "Create NETWORK_STEERING Policy",
+          "error": "HTTPSConnectionPool(host='healthforesight-api-9016.azurewebsites.net', port=443): Max retries exceeded with url: /api/v1/policies (Caused by ResponseError('too many 500 error responses'))",
+          "time": 1769696016.671207
+        },
+        {
+          "test": "Run Baseline Analysis Config 1",
+          "error": "HTTPSConnectionPool(host='healthforesight-api-9016.azurewebsites.net', port=443): Max retries exceeded with url: /api/v1/analyses/baseline (Caused by ResponseError('too many 503 error responses'))",
+          "time": 1769696026.676414
+        },
+        {
+          "test": "Run Baseline Analysis Config 2",
+          "error": "HTTPSConnectionPool(host='healthforesight-api-9016.azurewebsites.net', port=443): Max retries exceeded with url: /api/v1/analyses/baseline (Caused by ResponseError('too many 503 error responses'))",
+          "time": 1769696032.938015
+        },
+        {
+          "test": "Run Baseline Analysis Config 3",
+          "error": "HTTPSConnectionPool(host='healthforesight-api-9016.azurewebsites.net', port=443): Max retries exceeded with url: /api/v1/analyses/baseline (Caused by ResponseError('too many 503 error responses'))",
+          "time": 1769696039.401639
+        }
+      ],
+      "warnings": [
+        {
+          "test": "Data Exploration",
+          "message": "HTTP 404: Not Found",
+          "time": 1769696040.3831239
+        },
+        {
+          "test": "View Trends Dashboard",
+          "message": "HTTP 404: Not Found",
+          "time": 1769696054.5374122
+        }
+      ],
+      "skipped": []
+    }
+  }
+}

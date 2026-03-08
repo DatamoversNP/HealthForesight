@@ -1,0 +1,176 @@
+{
+  "summary": {
+    "passed": 15,
+    "failed": 3,
+    "total": 18,
+    "success_rate": 83.33333333333334
+  },
+  "results": [
+    {
+      "test": "System Health Check",
+      "status": "PASS",
+      "message": "API is healthy: uepi-api",
+      "details": {},
+      "timestamp": "2026-01-30T10:57:22.025201"
+    },
+    {
+      "test": "User Authentication",
+      "status": "PASS",
+      "message": "User: 00000000-0000-0000-0000-000000000001, Email: demo@example.com",
+      "details": {
+        "user_id": "00000000-0000-0000-0000-000000000001",
+        "email": "demo@example.com"
+      },
+      "timestamp": "2026-01-30T10:57:22.109857"
+    },
+    {
+      "test": "Create Policy",
+      "status": "FAIL",
+      "message": "Policy creation failed: API request failed: HTTP 500: Failed to create policy: 1 validation error for CanonicalPolicy\npolicy_levers.0.lever_type\n  Input should be 'PRIOR_AUTH', 'SITE_OF_CARE', 'COVERAGE', 'STEP_THERAPY', 'BENEFIT', 'CLINICAL_CRITERIA', 'DURATION_FREQUENCY_LIMIT', 'QUANTITY_LIMIT', 'NETWORK_RESTRICTION', 'PROVIDER_ELIGIBILITY', 'REFERRAL_REQUIREMENT', 'COST_SHARING', 'PAYMENT_POLICY', 'ADMINISTRATIVE_REQUIREMENT', 'ACCESS_AVAILABILITY_RULE', 'COMPOSITE' or 'PRIOR_AUTH' [type=enum, input_value='PRIOR_AUTH_REQUIRED', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.12/v/enum (will use existing policies for other tests)",
+      "details": {
+        "error": "API request failed: HTTP 500: Failed to create policy: 1 validation error for CanonicalPolicy\npolicy_levers.0.lever_type\n  Input should be 'PRIOR_AUTH', 'SITE_OF_CARE', 'COVERAGE', 'STEP_THERAPY', 'BENEFIT', 'CLINICAL_CRITERIA', 'DURATION_FREQUENCY_LIMIT', 'QUANTITY_LIMIT', 'NETWORK_RESTRICTION', 'PROVIDER_ELIGIBILITY', 'REFERRAL_REQUIREMENT', 'COST_SHARING', 'PAYMENT_POLICY', 'ADMINISTRATIVE_REQUIREMENT', 'ACCESS_AVAILABILITY_RULE', 'COMPOSITE' or 'PRIOR_AUTH' [type=enum, input_value='PRIOR_AUTH_REQUIRED', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.12/v/enum",
+        "fallback": "Will use existing policies"
+      },
+      "timestamp": "2026-01-30T10:57:22.146198"
+    },
+    {
+      "test": "List Policies",
+      "status": "PASS",
+      "message": "Found 25 policies",
+      "details": {
+        "count": 25
+      },
+      "timestamp": "2026-01-30T10:57:22.163419"
+    },
+    {
+      "test": "Get Policy Details",
+      "status": "PASS",
+      "message": "Policy details retrieved: Advanced Imaging Control Bundle",
+      "details": {
+        "policy_id": "COMPOUND_IMG_005"
+      },
+      "timestamp": "2026-01-30T10:57:22.171716"
+    },
+    {
+      "test": "Generate Predicted Impact",
+      "status": "PASS",
+      "message": "Predicted impact generated for policy COMPOUND_IMG_005",
+      "details": {
+        "policy_id": "COMPOUND_IMG_005",
+        "has_metrics": true,
+        "has_timestamp": true
+      },
+      "timestamp": "2026-01-30T10:57:25.930389"
+    },
+    {
+      "test": "Get Predicted Impact",
+      "status": "FAIL",
+      "message": "Predicted impact not found after 5 retries (may need more time to save)",
+      "details": {
+        "policy_id": "COMPOUND_IMG_005",
+        "retries": 5
+      },
+      "timestamp": "2026-01-30T10:57:31.368677"
+    },
+    {
+      "test": "Create Baseline Analysis",
+      "status": "PASS",
+      "message": "Baseline analysis created: 40a1ecac-d2dc-4151-9eee-891f8917201d (status: COMPLETED)",
+      "details": {
+        "analysis_id": "40a1ecac-d2dc-4151-9eee-891f8917201d",
+        "status": "COMPLETED"
+      },
+      "timestamp": "2026-01-30T10:58:07.841489"
+    },
+    {
+      "test": "Get Baseline Analysis",
+      "status": "PASS",
+      "message": "Baseline analysis completed and results retrieved",
+      "details": {
+        "analysis_id": "40a1ecac-d2dc-4151-9eee-891f8917201d",
+        "status": "COMPLETED"
+      },
+      "timestamp": "2026-01-30T10:58:07.863437"
+    },
+    {
+      "test": "Create Cohort",
+      "status": "PASS",
+      "message": "Cohort created: 7072a531-3e04-4b3f-8281-747ebbbc89de",
+      "details": {
+        "cohort_id": "7072a531-3e04-4b3f-8281-747ebbbc89de"
+      },
+      "timestamp": "2026-01-30T10:58:07.870582"
+    },
+    {
+      "test": "List Cohorts",
+      "status": "PASS",
+      "message": "Found 6 cohorts",
+      "details": {
+        "count": 6
+      },
+      "timestamp": "2026-01-30T10:58:07.875788"
+    },
+    {
+      "test": "List Pipelines",
+      "status": "PASS",
+      "message": "Found 22 pipelines",
+      "details": {
+        "count": 22
+      },
+      "timestamp": "2026-01-30T10:58:07.888141"
+    },
+    {
+      "test": "Get Pipeline Details",
+      "status": "PASS",
+      "message": "Pipeline details retrieved: 21d8bac4-cd44-4a97-b1f5-31b160a7d3ea",
+      "details": {
+        "pipeline_id": "21d8bac4-cd44-4a97-b1f5-31b160a7d3ea"
+      },
+      "timestamp": "2026-01-30T10:58:07.898211"
+    },
+    {
+      "test": "Dashboard Summary",
+      "status": "PASS",
+      "message": "Dashboard summary loaded",
+      "details": {
+        "has_data": true
+      },
+      "timestamp": "2026-01-30T10:58:07.946674"
+    },
+    {
+      "test": "Policy Performance",
+      "status": "PASS",
+      "message": "Retrieved 0 policy performance records",
+      "details": {
+        "count": 0
+      },
+      "timestamp": "2026-01-30T10:58:07.979512"
+    },
+    {
+      "test": "Data Quality Report",
+      "status": "PASS",
+      "message": "Data quality report loaded (score: 0.0)",
+      "details": {
+        "has_report": true,
+        "has_score": true
+      },
+      "timestamp": "2026-01-30T10:58:07.984073"
+    },
+    {
+      "test": "List Scorecards",
+      "status": "PASS",
+      "message": "Found 16 scorecards",
+      "details": {
+        "count": 16
+      },
+      "timestamp": "2026-01-30T10:58:07.993406"
+    },
+    {
+      "test": "Create What-If Analysis",
+      "status": "FAIL",
+      "message": "Request timeout (30s)",
+      "details": {},
+      "timestamp": "2026-01-30T10:58:38.019465"
+    }
+  ]
+}

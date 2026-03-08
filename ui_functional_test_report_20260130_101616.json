@@ -1,0 +1,162 @@
+{
+  "summary": {
+    "passed": 12,
+    "failed": 6,
+    "total": 18,
+    "success_rate": 66.66666666666666
+  },
+  "results": [
+    {
+      "test": "System Health Check",
+      "status": "PASS",
+      "message": "API is healthy: uepi-api",
+      "details": {},
+      "timestamp": "2026-01-30T10:15:58.716458"
+    },
+    {
+      "test": "User Authentication",
+      "status": "PASS",
+      "message": "User: 00000000-0000-0000-0000-000000000001, Email: demo@example.com",
+      "details": {
+        "user_id": "00000000-0000-0000-0000-000000000001",
+        "email": "demo@example.com"
+      },
+      "timestamp": "2026-01-30T10:15:58.721408"
+    },
+    {
+      "test": "Create Policy",
+      "status": "FAIL",
+      "message": "API request failed: HTTP 500: Internal Server Error",
+      "details": {},
+      "timestamp": "2026-01-30T10:15:58.751770"
+    },
+    {
+      "test": "List Policies",
+      "status": "PASS",
+      "message": "Found 25 policies",
+      "details": {
+        "count": 25
+      },
+      "timestamp": "2026-01-30T10:15:58.776524"
+    },
+    {
+      "test": "Get Policy Details",
+      "status": "FAIL",
+      "message": "No policies available to test",
+      "details": {},
+      "timestamp": "2026-01-30T10:15:58.776581"
+    },
+    {
+      "test": "Generate Predicted Impact",
+      "status": "FAIL",
+      "message": "No policies available to test",
+      "details": {},
+      "timestamp": "2026-01-30T10:15:58.776598"
+    },
+    {
+      "test": "Get Predicted Impact",
+      "status": "FAIL",
+      "message": "No policies available to test",
+      "details": {},
+      "timestamp": "2026-01-30T10:15:58.776603"
+    },
+    {
+      "test": "Create Baseline Analysis",
+      "status": "PASS",
+      "message": "Baseline analysis created: 6a73dd3c-5791-428e-828e-81ef7c30cedf (status: COMPLETED)",
+      "details": {
+        "analysis_id": "6a73dd3c-5791-428e-828e-81ef7c30cedf",
+        "status": "COMPLETED"
+      },
+      "timestamp": "2026-01-30T10:16:15.916040"
+    },
+    {
+      "test": "Get Baseline Analysis",
+      "status": "PASS",
+      "message": "Baseline analysis completed and results retrieved",
+      "details": {
+        "analysis_id": "6a73dd3c-5791-428e-828e-81ef7c30cedf",
+        "status": "COMPLETED"
+      },
+      "timestamp": "2026-01-30T10:16:15.933068"
+    },
+    {
+      "test": "Create Cohort",
+      "status": "PASS",
+      "message": "Cohort created: 23edf858-3322-4555-9bf1-a850962a81ac",
+      "details": {
+        "cohort_id": "23edf858-3322-4555-9bf1-a850962a81ac"
+      },
+      "timestamp": "2026-01-30T10:16:15.938172"
+    },
+    {
+      "test": "List Cohorts",
+      "status": "PASS",
+      "message": "Found 3 cohorts",
+      "details": {
+        "count": 3
+      },
+      "timestamp": "2026-01-30T10:16:15.941983"
+    },
+    {
+      "test": "List Pipelines",
+      "status": "PASS",
+      "message": "Found 22 pipelines",
+      "details": {
+        "count": 22
+      },
+      "timestamp": "2026-01-30T10:16:15.955427"
+    },
+    {
+      "test": "Get Pipeline Details",
+      "status": "PASS",
+      "message": "Pipeline details retrieved: 21d8bac4-cd44-4a97-b1f5-31b160a7d3ea",
+      "details": {
+        "pipeline_id": "21d8bac4-cd44-4a97-b1f5-31b160a7d3ea"
+      },
+      "timestamp": "2026-01-30T10:16:15.966978"
+    },
+    {
+      "test": "Dashboard Summary",
+      "status": "PASS",
+      "message": "Dashboard summary loaded",
+      "details": {
+        "has_data": true
+      },
+      "timestamp": "2026-01-30T10:16:16.019226"
+    },
+    {
+      "test": "Policy Performance",
+      "status": "PASS",
+      "message": "Retrieved 0 policy performance records",
+      "details": {
+        "count": 0
+      },
+      "timestamp": "2026-01-30T10:16:16.057957"
+    },
+    {
+      "test": "Data Quality Report",
+      "status": "PASS",
+      "message": "Data quality report loaded (score: 0.0)",
+      "details": {
+        "has_report": true,
+        "has_score": true
+      },
+      "timestamp": "2026-01-30T10:16:16.063291"
+    },
+    {
+      "test": "List Scorecards",
+      "status": "FAIL",
+      "message": "API request failed: HTTP 404: Not Found",
+      "details": {},
+      "timestamp": "2026-01-30T10:16:16.067719"
+    },
+    {
+      "test": "Create What-If Analysis",
+      "status": "FAIL",
+      "message": "No policies available to test",
+      "details": {},
+      "timestamp": "2026-01-30T10:16:16.067803"
+    }
+  ]
+}

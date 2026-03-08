@@ -1,0 +1,72 @@
+# === Secrets & env ===
+.env
+.env.local
+.env.*.local
+*.bak
+
+# === Data (too large for GitHub push – use DB/local; share via other means) ===
+/data/
+apps/data/
+apps/api/data/
+apps/api/target_data_model/
+apps/api/src/data/
+apps/api/deploy.zip
+**/target_data_model/
+**/analysis_results/
+**/source_data/
+**/curated/
+*.parquet
+*.zip
+
+# === Python ===
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# === Node / frontend ===
+node_modules/
+.vite/
+dist/
+dist-ssr/
+*.local
+
+# === Logs & temp ===
+*.log
+logs/
+api-logs/
+api-logs-latest/
+api.log
+
+# === Backups ===
+backups/
+.backup-core-product/
+backup_*/
+*.backup
+
+# === Infra (terraform providers are huge; state has secrets) ===
+infra/.terraform/
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+
+# === IDE / OS ===
+.vscode/
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.sln
+*.sw?
+
+# === Build / deploy artifacts ===
+*.app-backup
+.cursor/

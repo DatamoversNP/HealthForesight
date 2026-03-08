@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current State Architecture</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 40px;
+            color: #1a1a1a;
+        }
+
+        .slide {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 50px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .title {
+            font-size: 36px;
+            font-weight: 600;
+            color: #1e3a5f;
+            margin-bottom: 10px;
+            text-align: center;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #718096;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .architecture {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .tier {
+            background: #ffffff;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 25px;
+        }
+
+        .tier-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e3a5f;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tier.frontend {
+            border-color: #61dafb;
+            background: linear-gradient(to bottom, #f0fcff 0%, #ffffff 100%);
+        }
+
+        .tier.backend {
+            border-color: #3776ab;
+            background: linear-gradient(to bottom, #f0f7ff 0%, #ffffff 100%);
+        }
+
+        .tier.storage {
+            border-color: #2d7d32;
+            background: linear-gradient(to bottom, #f1f8f4 0%, #ffffff 100%);
+        }
+
+        .component {
+            background: #ffffff;
+            border: 1px solid #d0d0d0;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .component-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .component-icon {
+            width: 20px;
+            height: 20px;
+            background: #5b4fa8;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .component-icon.blue { background: #61dafb; }
+        .component-icon.python { background: #3776ab; }
+        .component-icon.green { background: #2d7d32; }
+        .component-icon.orange { background: #ff6b35; }
+
+        .component-details {
+            font-size: 12px;
+            color: #718096;
+            line-height: 1.6;
+        }
+
+        .component-details ul {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 8px;
+        }
+
+        .component-details li {
+            padding-left: 20px;
+            position: relative;
+            margin-bottom: 4px;
+            font-size: 11px;
+        }
+
+        .component-details li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #5b4fa8;
+            font-weight: bold;
+        }
+
+        .local-badge {
+            display: inline-block;
+            background: #ff6b35;
+            color: #ffffff;
+            font-size: 10px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-left: 8px;
+        }
+
+        .file-structure {
+            background: #f8f9fa;
+            border: 2px solid #2d7d32;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .file-structure-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2d7d32;
+            margin-bottom: 15px;
+        }
+
+        .file-tree {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 12px;
+            color: #4a5568;
+            line-height: 1.8;
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .data-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .flow-step {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            background: #ffffff;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+            font-size: 13px;
+        }
+
+        .flow-arrow {
+            font-size: 24px;
+            color: #5b4fa8;
+            margin: 0 15px;
+        }
+
+        .tech-stack {
+            background: #e7f3ff;
+            border: 2px solid #0078d4;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .tech-stack-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #004578;
+            margin-bottom: 15px;
+        }
+
+        .tech-items {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .tech-item {
+            font-size: 13px;
+            color: #004578;
+            padding: 12px;
+            background: #ffffff;
+            border-radius: 4px;
+            border: 1px solid #0078d4;
+        }
+
+        .limitations {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .limitations-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #856404;
+            margin-bottom: 15px;
+        }
+
+        .limitations-items {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .limitation-item {
+            font-size: 13px;
+            color: #856404;
+            padding: 12px;
+            background: #ffffff;
+            border-radius: 4px;
+            border: 1px solid #ffc107;
+        }
+
+        .specs {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .specs-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e3a5f;
+            margin-bottom: 15px;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            font-size: 12px;
+            color: #4a5568;
+        }
+
+        .spec-item {
+            padding: 12px;
+            background: #ffffff;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <h1 class="title">Current State Architecture</h1>
+        <p class="subtitle">HealthForesight Platform - File-Based Local Solution</p>
+
+        <!-- Main Architecture Tiers -->
+        <div class="architecture">
+            <!-- Frontend Tier -->
+            <div class="tier frontend">
+                <div class="tier-title">Frontend Layer</div>
+                
+                <div class="component">
+                    <div class="component-title">
+                        <span class="component-icon blue"></span>
+                        React Application
+                        <span class="local-badge">Local</span>
+                    </div>
+                    <div class="component-details">
+                        Vite Dev Server<br>
+                        <ul>
+                            <li>Port: 3050</li>
+                            <li>Material-UI</li>
+                            <li>React Router</li>
+                            <li>Axios API Client</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="component">
+                    <div class="component-title">
+                        <span class="component-icon blue"></span>
+                        Marketing Site
+                        <span class="local-badge">Local</span>
+                    </div>
+                    <div class="component-details">
+                        Separate React App<br>
+                        <ul>
+                            <li>Public-facing</li>
+                            <li>Landing pages</li>
+                            <li>Documentation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Backend Tier -->
+            <div class="tier backend">
+                <div class="tier-title">Backend Layer</div>
+                
+                <div class="component">
+                    <div class="component-title">
+                        <span class="component-icon python"></span>
+                        FastAPI Server
+                        <span class="local-badge">Local</span>
+                    </div>
+                    <div class="component-details">
+                        Python 3.11 Backend<br>
+                        <ul>
+                            <li>Port: 8000</li>
+                            <li>Uvicorn Server</li>
+                            <li>RESTful APIs</li>
+                            <li>CORS Enabled</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="component">
+                    <div class="component-title">
+                        <span class="component-icon python"></span>
+                        Pipeline Engine
+                        <span class="local-badge">Local</span>
+                    </div>
+                    <div class="component-details">
+                        Data Processing<br>
+                        <ul>
+                            <li>22 Preconfigured Pipelines</li>
+                            <li>Field Mapping</li>
+                            <li>Data Quality Validation</li>
+                            <li>Deduplication</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="component">
+                    <div class="component-title">
+                        <span class="component-icon orange"></span>
+                        Data Generation
+                        <span class="local-badge">Local</span>
+                    </div>
+                    <div class="component-details">
+                        Synthetic Data Scripts<br>
+                        <ul>
+                            <li>Python Scripts</li>
+                            <li>Pandas/NumPy</li>
+                            <li>CSV/Parquet Output</li>
+                            <li>100+ members, 3 years</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Storage Tier -->
+            <div class="tier storage">
+                <div class="tier-title">Storage Layer</div>
+                
+                <div class="component">
+                    <div class="component-title">
+                        <span class="component-icon green"></span>
+                        File-Based Storage
+                        <span class="local-badge">Local</span>
+                    </div>
+                    <div class="component-details">
+                        Local Filesystem<br>
+                        <ul>
+                            <li>apps/api/data/</li>
+                            <li>JSON Files</li>
+                            <li>CSV Files</li>
+                            <li>No Database</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="component">
+                    <div class="component-title">
+                        <span class="component-icon green"></span>
+                        Data Directories
+                        <span class="local-badge">Local</span>
+                    </div>
+                    <div class="component-details">
+                        Organized by Type<br>
+                        <ul>
+                            <li>Policies</li>
+                            <li>Analyses</li>
+                            <li>Baselines</li>
+                            <li>Observations</li>
+                            <li>Pipeline Runs</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- File Structure -->
+        <div class="file-structure">
+            <div class="file-structure-title">📁 File Storage Structure</div>
+            <div class="file-tree">
+apps/api/data/
+├── policies/              # Policy definitions (JSON)
+├── analyses/              # Analysis results (JSON)
+├── baselines/             # Baseline metrics (JSON)
+├── observations/          # Observation data (JSON)
+├── pipelines/             # Pipeline definitions (JSON)
+├── pipeline_runs/        # Pipeline execution results (JSON)
+├── ingestions/            # Ingestion metadata (JSON)
+├── target_data_model/     # Processed data (CSV)
+│   ├── CLAIMS_LINES/
+│   ├── MEMBER_MASTER/
+│   └── ...
+├── curated/               # Curated data (CSV)
+└── source_data/           # Source files (CSV/Parquet)
+    └── synthetic/         # Generated test data
+            </div>
+        </div>
+
+        <!-- Data Flow -->
+        <div class="data-flow">
+            <div class="flow-step">
+                <strong>Data Sources</strong><br>
+                <small>CSV/Parquet Files<br>Manual Upload</small>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <strong>Ingestion API</strong><br>
+                <small>File Upload<br>Validation</small>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <strong>Pipeline Processing</strong><br>
+                <small>Mapping<br>Transformation</small>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <strong>File Storage</strong><br>
+                <small>JSON/CSV Files<br>Local Filesystem</small>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+                <strong>API & Frontend</strong><br>
+                <small>Read Files<br>Display Dashboards</small>
+            </div>
+        </div>
+
+        <!-- Tech Stack -->
+        <div class="tech-stack">
+            <div class="tech-stack-title">🛠️ Technology Stack</div>
+            <div class="tech-items">
+                <div class="tech-item">
+                    <strong>Frontend</strong><br>
+                    React 18, TypeScript, Vite<br>
+                    Material-UI, React Router
+                </div>
+                <div class="tech-item">
+                    <strong>Backend</strong><br>
+                    Python 3.11, FastAPI<br>
+                    Uvicorn, Pydantic
+                </div>
+                <div class="tech-item">
+                    <strong>Data Processing</strong><br>
+                    Pandas, Polars<br>
+                    NumPy, SciPy
+                </div>
+                <div class="tech-item">
+                    <strong>Storage</strong><br>
+                    Local Filesystem<br>
+                    JSON, CSV, Parquet
+                </div>
+            </div>
+        </div>
+
+        <!-- Current Limitations -->
+        <div class="limitations">
+            <div class="limitations-title">⚠️ Current Limitations</div>
+            <div class="limitations-items">
+                <div class="limitation-item">
+                    <strong>Single Machine</strong><br>
+                    All services run on localhost. No horizontal scaling.
+                </div>
+                <div class="limitation-item">
+                    <strong>No High Availability</strong><br>
+                    Single point of failure. No redundancy or failover.
+                </div>
+                <div class="limitation-item">
+                    <strong>Manual Deployment</strong><br>
+                    No CI/CD. Manual code updates and deployments.
+                </div>
+                <div class="limitation-item">
+                    <strong>Limited Monitoring</strong><br>
+                    Basic logging. No centralized monitoring or alerting.
+                </div>
+                <div class="limitation-item">
+                    <strong>Local Access Only</strong><br>
+                    Services accessible only on localhost. No remote access.
+                </div>
+                <div class="limitation-item">
+                    <strong>No Backup Strategy</strong><br>
+                    Data stored locally. No automated backups or disaster recovery.
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Specifications -->
+        <div class="specs">
+            <div class="specs-title">Current System Specifications</div>
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <strong>Deployment:</strong> Local Development<br>
+                    <strong>Environment:</strong> macOS / Linux<br>
+                    <strong>Access:</strong> localhost only
+                </div>
+                <div class="spec-item">
+                    <strong>Data Storage:</strong> File-based<br>
+                    <strong>Format:</strong> JSON, CSV, Parquet<br>
+                    <strong>Location:</strong> apps/api/data/
+                </div>
+                <div class="spec-item">
+                    <strong>Scalability:</strong> Single instance<br>
+                    <strong>Availability:</strong> No SLA<br>
+                    <strong>Backup:</strong> Manual only
+                </div>
+                <div class="spec-item">
+                    <strong>Data Volume:</strong> ~200 files<br>
+                    <strong>Members:</strong> 100+<br>
+                    <strong>Time Range:</strong> 3 years
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+

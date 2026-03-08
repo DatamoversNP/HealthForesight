@@ -1,0 +1,265 @@
+{
+  "timestamp": "2026-01-29T07:40:15.594506",
+  "api_url": "https://healthforesight-api-9016.azurewebsites.net/api/v1",
+  "frontend_url": "https://gentle-flower-01dffcd0f.2.azurestaticapps.net",
+  "test_data": {
+    "policies": [
+      "79d5bf8a-6836-4aa0-a3fd-13a838ca6a65",
+      "05cf9118-cc45-4278-b49a-55bd738b344d",
+      "01bf48c9-0969-44b6-a354-f6074568c613"
+    ],
+    "policy_versions": [],
+    "analyses": {
+      "baseline": [],
+      "impact": [],
+      "elasticity": [],
+      "simulate": []
+    },
+    "cohorts": [
+      "82ef6c75-8c65-465a-97f0-110150a47de5",
+      "d55a25f0-8fc2-42a8-87e4-d3dab4069bbe",
+      "5ebfa1c8-4de2-4793-b09a-c39dbabf20d7",
+      "0d153937-40d3-4146-a527-bd197be5a31c"
+    ],
+    "observations": [],
+    "pipelines": [],
+    "schedules": [],
+    "exports": [],
+    "decisions": []
+  },
+  "results": {
+    "passed": 26,
+    "failed": 8,
+    "warnings": 10,
+    "skipped": 0,
+    "details": {
+      "passed": [
+        {
+          "test": "API Health Check",
+          "details": "Service: uepi-api",
+          "time": 1769693949.21057
+        },
+        {
+          "test": "User Authentication",
+          "details": "User: 00000000-0000-0000-0000-000000000001, Email: demo@example.com, Roles: ['admin']",
+          "time": 1769693949.418172
+        },
+        {
+          "test": "Create SITE_OF_CARE Policy",
+          "details": "Policy ID: 79d5bf8a...",
+          "time": 1769693956.518025
+        },
+        {
+          "test": "Create COST_SHARING Policy",
+          "details": "Policy ID: 05cf9118...",
+          "time": 1769693956.642138
+        },
+        {
+          "test": "Create DURATION_FREQUENCY_LIMIT Policy",
+          "details": "Policy ID: 01bf48c9...",
+          "time": 1769693956.755309
+        },
+        {
+          "test": "Create Multiple Policies",
+          "details": "Created 3/5 policies",
+          "time": 1769693963.123455
+        },
+        {
+          "test": "List All Policies",
+          "details": "Found 32 policies",
+          "time": 1769693965.262126
+        },
+        {
+          "test": "List Active Policies",
+          "details": "Found 32 active policies",
+          "time": 1769693965.82194
+        },
+        {
+          "test": "Create Cohort: High Utilizers - Commercial",
+          "details": "Cohort ID: 82ef6c75...",
+          "time": 1769693987.937845
+        },
+        {
+          "test": "Create Cohort: Chronic Condition Patients",
+          "details": "Cohort ID: d55a25f0...",
+          "time": 1769693988.1222222
+        },
+        {
+          "test": "Create Cohort: High-Cost Members",
+          "details": "Cohort ID: 5ebfa1c8...",
+          "time": 1769693988.298985
+        },
+        {
+          "test": "Create Cohort: Provider Network Analysis",
+          "details": "Cohort ID: 0d153937...",
+          "time": 1769693988.464279
+        },
+        {
+          "test": "Create Multiple Cohorts",
+          "details": "Created 4/4 cohorts",
+          "time": 1769693988.464316
+        },
+        {
+          "test": "Generate Daily Data for 2026-01-28",
+          "details": "Job ID: 758dfb7f...",
+          "time": 1769693992.141975
+        },
+        {
+          "test": "Generate Daily Data for 2026-01-27",
+          "details": "Job ID: b224bd7d...",
+          "time": 1769693992.2212129
+        },
+        {
+          "test": "Generate Daily Data for 2026-01-26",
+          "details": "Job ID: ca04fb72...",
+          "time": 1769693992.3002849
+        },
+        {
+          "test": "List Observations ({'policy_id': '79d5bf8a-6836-4aa0-a3fd-13a838ca6a65'})",
+          "details": "Found 0 observations",
+          "time": 1769693993.012809
+        },
+        {
+          "test": "List Observations ({'observation_type': 'PERIODIC'})",
+          "details": "Found 9 observations",
+          "time": 1769693993.196495
+        },
+        {
+          "test": "List Observations ({'data_period_id': 'latest'})",
+          "details": "Found 0 observations",
+          "time": 1769693993.357426
+        },
+        {
+          "test": "View Summary Dashboard",
+          "details": "Dashboard loaded",
+          "time": 1769694008.62353
+        },
+        {
+          "test": "View Policy Performance",
+          "details": "Dashboard loaded",
+          "time": 1769694014.458588
+        },
+        {
+          "test": "List Exports",
+          "details": "Found 0 exports",
+          "time": 1769694014.746849
+        },
+        {
+          "test": "List Pipelines",
+          "details": "Found 22 pipelines",
+          "time": 1769694015.2946339
+        },
+        {
+          "test": "List Schedules",
+          "details": "Found 0 schedules",
+          "time": 1769694015.346516
+        },
+        {
+          "test": "List Decisions",
+          "details": "Found 0 decisions",
+          "time": 1769694015.4942489
+        },
+        {
+          "test": "List Notifications",
+          "details": "Found 0 notifications",
+          "time": 1769694015.592874
+        }
+      ],
+      "failed": [
+        {
+          "test": "Create UTILIZATION_MANAGEMENT Policy",
+          "error": "HTTPSConnectionPool(host='healthforesight-api-9016.azurewebsites.net', port=443): Max retries exceeded with url: /api/v1/policies (Caused by ResponseError('too many 500 error responses'))",
+          "time": 1769693956.1432152
+        },
+        {
+          "test": "Create NETWORK_STEERING Policy",
+          "error": "HTTPSConnectionPool(host='healthforesight-api-9016.azurewebsites.net', port=443): Max retries exceeded with url: /api/v1/policies (Caused by ResponseError('too many 500 error responses'))",
+          "time": 1769693963.123123
+        },
+        {
+          "test": "Run Baseline Analysis Config 1",
+          "error": "HTTPSConnectionPool(host='healthforesight-api-9016.azurewebsites.net', port=443): Max retries exceeded with url: /api/v1/analyses/baseline (Caused by ResponseError('too many 503 error responses'))",
+          "time": 1769693974.842038
+        },
+        {
+          "test": "Run Baseline Analysis Config 2",
+          "error": "HTTPSConnectionPool(host='healthforesight-api-9016.azurewebsites.net', port=443): Max retries exceeded with url: /api/v1/analyses/baseline (Caused by ResponseError('too many 503 error responses'))",
+          "time": 1769693981.249846
+        },
+        {
+          "test": "Run Baseline Analysis Config 3",
+          "error": "HTTPSConnectionPool(host='healthforesight-api-9016.azurewebsites.net', port=443): Max retries exceeded with url: /api/v1/analyses/baseline (Caused by ResponseError('too many 503 error responses'))",
+          "time": 1769693987.530854
+        },
+        {
+          "test": "Create Impact Analysis: Standard Impact",
+          "error": "HTTP 404: Policy not found",
+          "time": 1769693990.70095
+        },
+        {
+          "test": "Create Impact Analysis: Impact with Substitution",
+          "error": "HTTP 404: Policy not found",
+          "time": 1769693991.235266
+        },
+        {
+          "test": "Create Impact Analysis: Impact with Control Group",
+          "error": "HTTP 404: Policy not found",
+          "time": 1769693991.831632
+        }
+      ],
+      "warnings": [
+        {
+          "test": "Update Policy Status to DRAFT",
+          "message": "404 Client Error: Not Found for url: https://healthforesight-api-9016.azurewebsites.net/api/v1/policies/79d5bf8a-6836-4aa0-a3fd-13a838ca6a65",
+          "time": 1769693966.744975
+        },
+        {
+          "test": "Update Policy Status to ACTIVE",
+          "message": "404 Client Error: Not Found for url: https://healthforesight-api-9016.azurewebsites.net/api/v1/policies/79d5bf8a-6836-4aa0-a3fd-13a838ca6a65",
+          "time": 1769693967.457003
+        },
+        {
+          "test": "Update Policy Status to INACTIVE",
+          "message": "404 Client Error: Not Found for url: https://healthforesight-api-9016.azurewebsites.net/api/v1/policies/79d5bf8a-6836-4aa0-a3fd-13a838ca6a65",
+          "time": 1769693968.442145
+        },
+        {
+          "test": "Data Exploration",
+          "message": "HTTP 404: Path not found: /data",
+          "time": 1769693988.574919
+        },
+        {
+          "test": "Run Elasticity Analysis",
+          "message": "HTTP 404: Policy not found",
+          "time": 1769693989.245774
+        },
+        {
+          "test": "What-If Scenario: Stricter Policy",
+          "message": "HTTP 422: [{'type': 'missing', 'loc': ['body', 'scenario_params'], 'msg': 'Field required', 'input': {'policy_id': '79d5bf8a-6836-4aa0-a3fd-13a838ca6a65', 'scenario_name': 'Stricter Policy', 'modifications': {'code_sets': [{'code_type': 'CPT', 'codes': ['99213'], 'action': 'DENY'}]}, 'treatment_filters': {'lob': ['COMMERCIAL']}}}, {'type': 'missing', 'loc': ['body', 'filters'], 'msg': 'Field required', 'input': {'policy_id': '79d5bf8a-6836-4aa0-a3fd-13a838ca6a65', 'scenario_name': 'Stricter Policy', 'modifications': {'code_sets': [{'code_type': 'CPT', 'codes': ['99213'], 'action': 'DENY'}]}, 'treatment_filters': {'lob': ['COMMERCIAL']}}}]",
+          "time": 1769693991.9046972
+        },
+        {
+          "test": "What-If Scenario: Broader Scope",
+          "message": "HTTP 422: [{'type': 'missing', 'loc': ['body', 'scenario_params'], 'msg': 'Field required', 'input': {'policy_id': '79d5bf8a-6836-4aa0-a3fd-13a838ca6a65', 'scenario_name': 'Broader Scope', 'modifications': {'scope': {'lob': ['COMMERCIAL', 'MEDICAID']}}, 'treatment_filters': {'lob': ['COMMERCIAL']}}}, {'type': 'missing', 'loc': ['body', 'filters'], 'msg': 'Field required', 'input': {'policy_id': '79d5bf8a-6836-4aa0-a3fd-13a838ca6a65', 'scenario_name': 'Broader Scope', 'modifications': {'scope': {'lob': ['COMMERCIAL', 'MEDICAID']}}, 'treatment_filters': {'lob': ['COMMERCIAL']}}}]",
+          "time": 1769693991.977908
+        },
+        {
+          "test": "What-If Scenario: Cost Sharing Change",
+          "message": "HTTP 422: [{'type': 'missing', 'loc': ['body', 'scenario_params'], 'msg': 'Field required', 'input': {'policy_id': '79d5bf8a-6836-4aa0-a3fd-13a838ca6a65', 'scenario_name': 'Cost Sharing Change', 'modifications': {'cost_sharing': {'copay': 50, 'coinsurance': 0.2}}, 'treatment_filters': {'lob': ['COMMERCIAL']}}}, {'type': 'missing', 'loc': ['body', 'filters'], 'msg': 'Field required', 'input': {'policy_id': '79d5bf8a-6836-4aa0-a3fd-13a838ca6a65', 'scenario_name': 'Cost Sharing Change', 'modifications': {'cost_sharing': {'copay': 50, 'coinsurance': 0.2}}, 'treatment_filters': {'lob': ['COMMERCIAL']}}}]",
+          "time": 1769693992.026481
+        },
+        {
+          "test": "View Trends Dashboard",
+          "message": "HTTP 404: Not Found",
+          "time": 1769694014.524348
+        },
+        {
+          "test": "View Scorecards",
+          "message": "HTTP 404: Scorecard not found. Generate scorecards first.",
+          "time": 1769694014.694442
+        }
+      ],
+      "skipped": []
+    }
+  }
+}

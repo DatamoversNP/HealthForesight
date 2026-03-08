@@ -1,0 +1,62 @@
+{
+  "timestamp": "2026-01-29T08:41:08.411110",
+  "api_url": "https://healthforesight-api-9016.azurewebsites.net/api/v1",
+  "frontend_url": "https://gentle-flower-01dffcd0f.2.azurestaticapps.net",
+  "test_data": {
+    "policies": [],
+    "analyses": [],
+    "cohorts": [
+      "4324a1f1-60bf-4158-a085-a981590ac0f9"
+    ],
+    "observations": [],
+    "baseline_analysis_id": null,
+    "impact_analysis_id": null
+  },
+  "results": {
+    "passed": 5,
+    "failed": 2,
+    "warnings": 0,
+    "details": {
+      "passed": [
+        {
+          "test": "API Health Check",
+          "details": "Service: uepi-api",
+          "time": 1769697649.23084
+        },
+        {
+          "test": "User Authentication",
+          "details": "User: 00000000-0000-0000-0000-000000000001, Email: demo@example.com, Roles: ['admin']",
+          "time": 1769697649.3308191
+        },
+        {
+          "test": "Generate Daily Data (OPS_CLINICAL)",
+          "details": "Job ID: ffdc2a83-4f53-4889-995c-c1a4e5fae10c, Target Date: 2026-01-28",
+          "time": 1769697662.181847
+        },
+        {
+          "test": "Create Cohort (ANALYST)",
+          "details": "Cohort ID: 4324a1f1-60bf-4158-a085-a981590ac0f9",
+          "time": 1769697662.3621361
+        },
+        {
+          "test": "View Dashboard (EXECUTIVE)",
+          "details": "Dashboard data retrieved successfully",
+          "time": 1769697668.4109728
+        }
+      ],
+      "failed": [
+        {
+          "test": "Create Policy",
+          "error": "HTTPSConnectionPool(host='healthforesight-api-9016.azurewebsites.net', port=443): Max retries exceeded with url: /api/v1/policies (Caused by ResponseError('too many 500 error responses'))",
+          "time": 1769697655.812704
+        },
+        {
+          "test": "Run Baseline Analysis",
+          "error": "HTTPSConnectionPool(host='healthforesight-api-9016.azurewebsites.net', port=443): Max retries exceeded with url: /api/v1/analyses/baseline (Caused by ResponseError('too many 503 error responses'))",
+          "time": 1769697662.110645
+        }
+      ],
+      "warnings": []
+    }
+  }
+}

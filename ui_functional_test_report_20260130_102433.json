@@ -1,0 +1,175 @@
+{
+  "summary": {
+    "passed": 15,
+    "failed": 3,
+    "total": 18,
+    "success_rate": 83.33333333333334
+  },
+  "results": [
+    {
+      "test": "System Health Check",
+      "status": "PASS",
+      "message": "API is healthy: uepi-api",
+      "details": {},
+      "timestamp": "2026-01-30T10:24:14.092946"
+    },
+    {
+      "test": "User Authentication",
+      "status": "PASS",
+      "message": "User: 00000000-0000-0000-0000-000000000001, Email: demo@example.com",
+      "details": {
+        "user_id": "00000000-0000-0000-0000-000000000001",
+        "email": "demo@example.com"
+      },
+      "timestamp": "2026-01-30T10:24:14.155834"
+    },
+    {
+      "test": "Create Policy",
+      "status": "FAIL",
+      "message": "Policy creation failed: API request failed: HTTP 500: Internal Server Error (will use existing policies for other tests)",
+      "details": {
+        "error": "API request failed: HTTP 500: Internal Server Error",
+        "fallback": "Will use existing policies"
+      },
+      "timestamp": "2026-01-30T10:24:14.257591"
+    },
+    {
+      "test": "List Policies",
+      "status": "PASS",
+      "message": "Found 25 policies",
+      "details": {
+        "count": 25
+      },
+      "timestamp": "2026-01-30T10:24:14.303086"
+    },
+    {
+      "test": "Get Policy Details",
+      "status": "PASS",
+      "message": "Policy details retrieved: Advanced Imaging Control Bundle",
+      "details": {
+        "policy_id": "COMPOUND_IMG_005"
+      },
+      "timestamp": "2026-01-30T10:24:14.322663"
+    },
+    {
+      "test": "Generate Predicted Impact",
+      "status": "PASS",
+      "message": "Predicted impact generated for policy COMPOUND_IMG_005",
+      "details": {
+        "policy_id": "COMPOUND_IMG_005",
+        "has_metrics": true,
+        "has_timestamp": true
+      },
+      "timestamp": "2026-01-30T10:24:14.417910"
+    },
+    {
+      "test": "Get Predicted Impact",
+      "status": "FAIL",
+      "message": "Predicted impact not found (204 No Content)",
+      "details": {
+        "policy_id": "COMPOUND_IMG_005"
+      },
+      "timestamp": "2026-01-30T10:24:15.479716"
+    },
+    {
+      "test": "Create Baseline Analysis",
+      "status": "PASS",
+      "message": "Baseline analysis created: 9777cb9f-4592-47a3-9e82-08cab755e0bc (status: COMPLETED)",
+      "details": {
+        "analysis_id": "9777cb9f-4592-47a3-9e82-08cab755e0bc",
+        "status": "COMPLETED"
+      },
+      "timestamp": "2026-01-30T10:24:33.099476"
+    },
+    {
+      "test": "Get Baseline Analysis",
+      "status": "PASS",
+      "message": "Baseline analysis completed and results retrieved",
+      "details": {
+        "analysis_id": "9777cb9f-4592-47a3-9e82-08cab755e0bc",
+        "status": "COMPLETED"
+      },
+      "timestamp": "2026-01-30T10:24:33.133190"
+    },
+    {
+      "test": "Create Cohort",
+      "status": "PASS",
+      "message": "Cohort created: 73cf51bd-5282-4641-95a6-538f4a2620e0",
+      "details": {
+        "cohort_id": "73cf51bd-5282-4641-95a6-538f4a2620e0"
+      },
+      "timestamp": "2026-01-30T10:24:33.140317"
+    },
+    {
+      "test": "List Cohorts",
+      "status": "PASS",
+      "message": "Found 4 cohorts",
+      "details": {
+        "count": 4
+      },
+      "timestamp": "2026-01-30T10:24:33.146384"
+    },
+    {
+      "test": "List Pipelines",
+      "status": "PASS",
+      "message": "Found 22 pipelines",
+      "details": {
+        "count": 22
+      },
+      "timestamp": "2026-01-30T10:24:33.162279"
+    },
+    {
+      "test": "Get Pipeline Details",
+      "status": "PASS",
+      "message": "Pipeline details retrieved: 21d8bac4-cd44-4a97-b1f5-31b160a7d3ea",
+      "details": {
+        "pipeline_id": "21d8bac4-cd44-4a97-b1f5-31b160a7d3ea"
+      },
+      "timestamp": "2026-01-30T10:24:33.171507"
+    },
+    {
+      "test": "Dashboard Summary",
+      "status": "PASS",
+      "message": "Dashboard summary loaded",
+      "details": {
+        "has_data": true
+      },
+      "timestamp": "2026-01-30T10:24:33.216577"
+    },
+    {
+      "test": "Policy Performance",
+      "status": "PASS",
+      "message": "Retrieved 0 policy performance records",
+      "details": {
+        "count": 0
+      },
+      "timestamp": "2026-01-30T10:24:33.247412"
+    },
+    {
+      "test": "Data Quality Report",
+      "status": "PASS",
+      "message": "Data quality report loaded (score: 0.0)",
+      "details": {
+        "has_report": true,
+        "has_score": true
+      },
+      "timestamp": "2026-01-30T10:24:33.252674"
+    },
+    {
+      "test": "List Scorecards",
+      "status": "PASS",
+      "message": "Found 16 scorecards",
+      "details": {
+        "count": 16
+      },
+      "timestamp": "2026-01-30T10:24:33.274579"
+    },
+    {
+      "test": "Create What-If Analysis",
+      "status": "FAIL",
+      "message": "API request failed: HTTP 500: Failed to create policy object: 1 validation error for CanonicalPolicy\nenforcement\n  Input should be a valid dictionary or instance of Enforcement [type=model_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.12/v/model_type",
+      "details": {},
+      "timestamp": "2026-01-30T10:24:33.464405"
+    }
+  ]
+}

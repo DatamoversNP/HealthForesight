@@ -1,0 +1,61 @@
+{
+  "timestamp": "2026-01-29T04:50:34.621560",
+  "api_url": "https://healthforesight-api-9016.azurewebsites.net/api/v1",
+  "frontend_url": "https://gentle-flower-01dffcd0f.2.azurestaticapps.net",
+  "test_data": {
+    "policies": [],
+    "analyses": [],
+    "cohorts": [],
+    "observations": [],
+    "baseline_analysis_id": null,
+    "impact_analysis_id": null
+  },
+  "results": {
+    "passed": 4,
+    "failed": 2,
+    "warnings": 1,
+    "details": {
+      "passed": [
+        {
+          "test": "API Health Check",
+          "details": "Service: uepi-api",
+          "time": 1769683812.352016
+        },
+        {
+          "test": "User Authentication",
+          "details": "User: 00000000-0000-0000-0000-000000000001, Email: demo@example.com, Roles: ['admin']",
+          "time": 1769683812.436299
+        },
+        {
+          "test": "Generate Daily Data (OPS_CLINICAL)",
+          "details": "Job ID: 5677a2f7-1b38-43a8-b700-4f5daf288495, Target Date: 2026-01-28",
+          "time": 1769683826.653548
+        },
+        {
+          "test": "View Dashboard (EXECUTIVE)",
+          "details": "Dashboard data retrieved successfully",
+          "time": 1769683834.6209888
+        }
+      ],
+      "failed": [
+        {
+          "test": "Create Policy",
+          "error": "HTTPSConnectionPool(host='healthforesight-api-9016.azurewebsites.net', port=443): Max retries exceeded with url: /api/v1/policies (Caused by ResponseError('too many 500 error responses'))",
+          "time": 1769683819.029335
+        },
+        {
+          "test": "Run Baseline Analysis",
+          "error": "HTTPSConnectionPool(host='healthforesight-api-9016.azurewebsites.net', port=443): Max retries exceeded with url: /api/v1/analyses/baseline (Caused by ResponseError('too many 503 error responses'))",
+          "time": 1769683826.552466
+        }
+      ],
+      "warnings": [
+        {
+          "test": "Create Cohort",
+          "message": "HTTP 422: [{'type': 'missing', 'loc': ['body', 'criteria'], 'msg': 'Field required', 'input': {'name': 'Test Cohort - ANALYST - 20260129-045026', 'description': 'Test cohort created by ANALYST persona', 'filters': {'lob': ['COMMERCIAL'], 'service_category': ['EVALUATION_MANAGEMENT'], 'age_range': {'min': 18, 'max': 65}}}}]",
+          "time": 1769683826.776289
+        }
+      ]
+    }
+  }
+}

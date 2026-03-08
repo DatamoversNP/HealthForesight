@@ -1,0 +1,173 @@
+{
+  "summary": {
+    "passed": 14,
+    "failed": 4,
+    "total": 18,
+    "success_rate": 77.77777777777779
+  },
+  "results": [
+    {
+      "test": "System Health Check",
+      "status": "PASS",
+      "message": "API is healthy: uepi-api",
+      "details": {},
+      "timestamp": "2026-01-30T13:24:58.696185"
+    },
+    {
+      "test": "User Authentication",
+      "status": "PASS",
+      "message": "User: 00000000-0000-0000-0000-000000000001, Email: demo@example.com",
+      "details": {
+        "user_id": "00000000-0000-0000-0000-000000000001",
+        "email": "demo@example.com"
+      },
+      "timestamp": "2026-01-30T13:24:58.768959"
+    },
+    {
+      "test": "Create Policy",
+      "status": "PASS",
+      "message": "Policy created: a3132a7a-161b-426a-add6-87182983a679",
+      "details": {
+        "policy_id": "a3132a7a-161b-426a-add6-87182983a679"
+      },
+      "timestamp": "2026-01-30T13:24:58.798384"
+    },
+    {
+      "test": "List Policies",
+      "status": "PASS",
+      "message": "Found 25 policies",
+      "details": {
+        "count": 25
+      },
+      "timestamp": "2026-01-30T13:24:58.837533"
+    },
+    {
+      "test": "Get Policy Details",
+      "status": "PASS",
+      "message": "Policy details retrieved: Test Policy - UI Test 20260130-132458",
+      "details": {
+        "policy_id": "a3132a7a-161b-426a-add6-87182983a679"
+      },
+      "timestamp": "2026-01-30T13:24:59.161841"
+    },
+    {
+      "test": "Generate Predicted Impact",
+      "status": "FAIL",
+      "message": "API request failed: HTTP 500: Internal Server Error (Could not parse JSON: Expecting value: line 1 column 1 (char 0))",
+      "details": {},
+      "timestamp": "2026-01-30T13:25:01.892655"
+    },
+    {
+      "test": "Get Predicted Impact",
+      "status": "FAIL",
+      "message": "Predicted impact not found after 5 retries (may need more time to save)",
+      "details": {
+        "policy_id": "a3132a7a-161b-426a-add6-87182983a679",
+        "retries": 5
+      },
+      "timestamp": "2026-01-30T13:25:08.874586"
+    },
+    {
+      "test": "Create Baseline Analysis",
+      "status": "PASS",
+      "message": "Baseline analysis created: b7e6807b-c313-4ec8-a284-2e02bc14d92d (status: PENDING)",
+      "details": {
+        "analysis_id": "b7e6807b-c313-4ec8-a284-2e02bc14d92d",
+        "status": "PENDING"
+      },
+      "timestamp": "2026-01-30T13:25:09.129216"
+    },
+    {
+      "test": "Get Baseline Analysis",
+      "status": "FAIL",
+      "message": "Baseline analysis failed: Unknown error",
+      "details": {
+        "analysis_id": "b7e6807b-c313-4ec8-a284-2e02bc14d92d",
+        "status": "FAILED",
+        "error": "Unknown error",
+        "error_trace": null
+      },
+      "timestamp": "2026-01-30T13:25:41.000991"
+    },
+    {
+      "test": "Create Cohort",
+      "status": "PASS",
+      "message": "Cohort created: 609201db-920e-47ca-9b45-ff4aac36fded",
+      "details": {
+        "cohort_id": "609201db-920e-47ca-9b45-ff4aac36fded"
+      },
+      "timestamp": "2026-01-30T13:25:41.012517"
+    },
+    {
+      "test": "List Cohorts",
+      "status": "PASS",
+      "message": "Found 14 cohorts",
+      "details": {
+        "count": 14
+      },
+      "timestamp": "2026-01-30T13:25:41.025872"
+    },
+    {
+      "test": "List Pipelines",
+      "status": "PASS",
+      "message": "Found 22 pipelines",
+      "details": {
+        "count": 22
+      },
+      "timestamp": "2026-01-30T13:25:41.052276"
+    },
+    {
+      "test": "Get Pipeline Details",
+      "status": "PASS",
+      "message": "Pipeline details retrieved: 21d8bac4-cd44-4a97-b1f5-31b160a7d3ea",
+      "details": {
+        "pipeline_id": "21d8bac4-cd44-4a97-b1f5-31b160a7d3ea"
+      },
+      "timestamp": "2026-01-30T13:25:41.066001"
+    },
+    {
+      "test": "Dashboard Summary",
+      "status": "PASS",
+      "message": "Dashboard summary loaded",
+      "details": {
+        "has_data": true
+      },
+      "timestamp": "2026-01-30T13:25:41.143016"
+    },
+    {
+      "test": "Policy Performance",
+      "status": "PASS",
+      "message": "Retrieved 0 policy performance records",
+      "details": {
+        "count": 0
+      },
+      "timestamp": "2026-01-30T13:25:41.182132"
+    },
+    {
+      "test": "Data Quality Report",
+      "status": "PASS",
+      "message": "Data quality report loaded (score: 0.0)",
+      "details": {
+        "has_report": true,
+        "has_score": true
+      },
+      "timestamp": "2026-01-30T13:25:41.190937"
+    },
+    {
+      "test": "List Scorecards",
+      "status": "PASS",
+      "message": "Found 16 scorecards",
+      "details": {
+        "count": 16
+      },
+      "timestamp": "2026-01-30T13:25:41.204054"
+    },
+    {
+      "test": "Create What-If Analysis",
+      "status": "FAIL",
+      "message": "API request failed: HTTP 500: Internal Server Error (Could not parse JSON: Expecting value: line 1 column 1 (char 0))",
+      "details": {},
+      "timestamp": "2026-01-30T13:25:41.231443"
+    }
+  ]
+}

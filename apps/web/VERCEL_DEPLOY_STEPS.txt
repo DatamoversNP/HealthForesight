@@ -1,0 +1,60 @@
+VERCEL DEPLOYMENT - STEP BY STEP
+================================
+
+OPTION 1: Fix Login and Deploy via CLI
+---------------------------------------
+
+1. Open Terminal (outside Cursor)
+
+2. Navigate to web directory:
+   cd "/Users/nilesh.patil/Downloads/Utilization Elastisity and Policy Impact Solution/apps/web"
+
+3. Clear old Vercel tokens (if any):
+   rm -rf ~/.vercel
+
+4. Login to Vercel:
+   npx vercel login
+   
+   (This opens browser - complete login there)
+
+5. Deploy:
+   npx vercel --prod
+
+
+OPTION 2: Deploy via GitHub (EASIEST - RECOMMENDED)
+----------------------------------------------------
+
+1. Push code to GitHub:
+   git add .
+   git commit -m "Ready for deployment"
+   git push origin main
+
+2. Go to: https://vercel.com
+   - Sign up/login (use GitHub)
+   - Click "Add New Project"
+   - Import your repository
+
+3. Configure:
+   Root Directory: apps/web
+   Build Command: npm run build:marketing
+   Output Directory: dist-marketing
+
+4. Click "Deploy"
+
+5. Done! Site is live in ~2 minutes
+
+
+QUICK REFERENCE
+---------------
+
+CLI Deploy:
+  cd apps/web
+  npx vercel login
+  npx vercel --prod
+
+GitHub Deploy:
+  1. Push to GitHub
+  2. Go to vercel.com
+  3. Import repo
+  4. Configure (see above)
+  5. Deploy

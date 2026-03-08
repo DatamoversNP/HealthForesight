@@ -1,0 +1,364 @@
+{
+  "timestamp": "2026-01-29T09:26:14.429061",
+  "api_url": "https://healthforesight-api-9016.azurewebsites.net/api/v1",
+  "frontend_url": "https://gentle-flower-01dffcd0f.2.azurestaticapps.net",
+  "workflow_data": {
+    "policy_admin": {
+      "policy_id": "c0a36052-b6e4-4547-9063-8e92fb861278",
+      "policy_data": {
+        "policy_id": "c0a36052-b6e4-4547-9063-8e92fb861278",
+        "policy_name": "E2E Test Policy - 20260129-092507",
+        "policy_type": "PRIOR_AUTH",
+        "description": "Policy created for end-to-end testing",
+        "status": "ACTIVE",
+        "effective_period": {
+          "start_date": "2026-01-29T15:25:08.017231",
+          "end_date": null
+        },
+        "scope": {
+          "lob": null,
+          "markets": null,
+          "plans": null,
+          "product_types": null,
+          "states": null,
+          "regions": null,
+          "network": null,
+          "network_tiers": null,
+          "member_age_min": null,
+          "member_age_max": null,
+          "exclude_pregnant": null,
+          "gender_filters": null,
+          "exclude_centers_of_excellence": null,
+          "include_provider_types": null,
+          "exclude_provider_types": null,
+          "provider_specialties": null,
+          "exclude_er": null,
+          "exclude_hospital_op": null,
+          "allowed_sites": null,
+          "applies_to_all": false
+        },
+        "enforcement": {
+          "mechanism": "HARD",
+          "touchpoint": [
+            "PA_WORKFLOW"
+          ],
+          "override_allowed": false
+        },
+        "policy_levers": [],
+        "policy_logic": null,
+        "expected_behavioral_response": null,
+        "analytics_expectations": null,
+        "ui_hints": null,
+        "created_at": null,
+        "updated_at": null,
+        "id": "c0a36052-b6e4-4547-9063-8e92fb861278"
+      },
+      "retrieved_policy": {
+        "policy_id": "c0a36052-b6e4-4547-9063-8e92fb861278",
+        "policy_name": "E2E Test Policy - 20260129-092507",
+        "policy_type": "PRIOR_AUTH",
+        "description": "Policy created for end-to-end testing",
+        "status": "ACTIVE",
+        "effective_period": {
+          "start_date": "2026-01-29T15:25:08.017231",
+          "end_date": null
+        },
+        "scope": {
+          "lob": null,
+          "markets": null,
+          "plans": null,
+          "product_types": null,
+          "states": null,
+          "regions": null,
+          "network": null,
+          "network_tiers": null,
+          "member_age_min": null,
+          "member_age_max": null,
+          "exclude_pregnant": null,
+          "gender_filters": null,
+          "exclude_centers_of_excellence": null,
+          "include_provider_types": null,
+          "exclude_provider_types": null,
+          "provider_specialties": null,
+          "exclude_er": null,
+          "exclude_hospital_op": null,
+          "allowed_sites": null,
+          "applies_to_all": false
+        },
+        "enforcement": {
+          "mechanism": "HARD",
+          "touchpoint": [
+            "PA_WORKFLOW"
+          ],
+          "override_allowed": false
+        },
+        "policy_levers": [],
+        "policy_logic": null,
+        "expected_behavioral_response": null,
+        "analytics_expectations": null,
+        "ui_hints": null,
+        "created_at": null,
+        "updated_at": null,
+        "id": "c0a36052-b6e4-4547-9063-8e92fb861278"
+      },
+      "version_id": "2"
+    },
+    "analyst": {
+      "cohort_id": "c3dd93d2-9532-4d24-9ee3-c67798bdb275"
+    },
+    "policy_owner": {},
+    "ops_clinical": {
+      "daily_job_id": "7e8ca9be-e447-489c-8d28-166a6a8c41c5"
+    },
+    "executive": {
+      "dashboard_summary": {
+        "summary": {
+          "active_policies": 7,
+          "total_policies": 32,
+          "recent_analyses": 96,
+          "completed_analyses": 56,
+          "total_observations": 9
+        },
+        "metrics": {
+          "avg_utilization_change_pct": -74.58,
+          "avg_cost_impact": -172099.09,
+          "total_cost_impact": -1548891.79
+        },
+        "top_policies": [
+          {
+            "policy_id": "COMPOUND_IMG_005",
+            "policy_name": "Advanced Imaging Control Bundle",
+            "utilization_change_pct": -14.399999999999999,
+            "cost_impact": -648000.0,
+            "observation_date": "2026-01-24T02:34:03.604178",
+            "is_predicted": true
+          },
+          {
+            "policy_id": "CS_UCC_004",
+            "policy_name": "Urgent Care Copay Increase",
+            "utilization_change_pct": -12.0,
+            "cost_impact": -540000.0000000001,
+            "observation_date": "2026-01-24T02:34:03.570615",
+            "is_predicted": true
+          },
+          {
+            "policy_id": "SOC_INFUSION_002",
+            "policy_name": "Infusion Site-of-Care Optimization",
+            "utilization_change_pct": -8.000000000000002,
+            "cost_impact": -360000.0000000001,
+            "observation_date": "2026-01-24T02:34:03.598029",
+            "is_predicted": true
+          }
+        ],
+        "recent_activity": [
+          {
+            "id": "f48dd64c-d71a-4c68-9b8b-f739aa0e5660",
+            "type": "SIMULATE",
+            "status": "COMPLETED",
+            "created_at": "2026-01-17T10:54:41.593836"
+          },
+          {
+            "id": "da4c15a1-5c01-4996-81aa-02870ebb634c",
+            "type": "SIMULATE",
+            "status": "COMPLETED",
+            "created_at": "2026-01-17T10:54:28.389262"
+          },
+          {
+            "id": "4d241246-35d0-4f12-ad6a-b2d13bd3e4ae",
+            "type": "SIMULATE",
+            "status": "COMPLETED",
+            "created_at": "2026-01-17T10:48:14.130469"
+          },
+          {
+            "id": "447d0d55-4812-4f8f-a61e-8ebb6c9d13e1",
+            "type": "SIMULATE",
+            "status": "COMPLETED",
+            "created_at": "2026-01-17T10:45:27.411978"
+          },
+          {
+            "id": "9ea86b71-5e4d-4092-afb0-192612214c85",
+            "type": "SIMULATE",
+            "status": "COMPLETED",
+            "created_at": "2026-01-17T10:45:27.375247"
+          }
+        ],
+        "risk_indicators": [
+          {
+            "type": "HIGH_UTILIZATION_DROP",
+            "severity": "HIGH",
+            "message": "Average utilization decreased by 74.6%"
+          },
+          {
+            "type": "HIGH_COST_IMPACT",
+            "severity": "MEDIUM",
+            "message": "Significant cost impact detected: $172,099"
+          }
+        ],
+        "last_updated": "2026-01-29T15:26:08.525154"
+      }
+    }
+  },
+  "results": {
+    "passed": 19,
+    "failed": 1,
+    "warnings": 10,
+    "details": {
+      "passed": [
+        {
+          "test": "System Health",
+          "details": "API is healthy",
+          "time": 1769700307.8257642
+        },
+        {
+          "test": "POLICY_ADMIN: Create Policy",
+          "details": "Policy ID: c0a36052...",
+          "time": 1769700307.976724
+        },
+        {
+          "test": "POLICY_ADMIN: Verify Policy",
+          "details": "Using creation response (policy not retrievable but creation succeeded). ID: c0a36052...",
+          "time": 1769700321.5669491
+        },
+        {
+          "test": "POLICY_ADMIN: Create Version",
+          "details": "Version ID: 2...",
+          "time": 1769700321.679573
+        },
+        {
+          "test": "POLICY_ADMIN: Review Policy",
+          "details": "Policy: E2E Test Policy - 20260129-092507 (from creation/retrieval)",
+          "time": 1769700322.249422
+        },
+        {
+          "test": "ANALYST: Create Cohort",
+          "details": "Cohort ID: c3dd93d2...",
+          "time": 1769700329.023746
+        },
+        {
+          "test": "ANALYST: Get Cohort Members",
+          "details": "Found 0 members",
+          "time": 1769700345.153158
+        },
+        {
+          "test": "ANALYST: List Datasets",
+          "details": "Found 0 datasets",
+          "time": 1769700345.839781
+        },
+        {
+          "test": "ANALYST: List Data Periods",
+          "details": "Found 0 periods",
+          "time": 1769700345.939059
+        },
+        {
+          "test": "OPS_CLINICAL: Generate Daily Data",
+          "details": "Job ID: 7e8ca9be..., Date: 2026-01-28",
+          "time": 1769700359.360943
+        },
+        {
+          "test": "OPS_CLINICAL: List Observations",
+          "details": "Found 9 observations",
+          "time": 1769700359.5949912
+        },
+        {
+          "test": "OPS_CLINICAL: Get Observation Details",
+          "details": "Observation: da619cb3...",
+          "time": 1769700359.699979
+        },
+        {
+          "test": "OPS_CLINICAL: Get Observation Comparison",
+          "details": "Comparison data retrieved",
+          "time": 1769700359.7651782
+        },
+        {
+          "test": "OPS_CLINICAL: List Data Periods",
+          "details": "Found 0 periods",
+          "time": 1769700359.830018
+        },
+        {
+          "test": "OPS_CLINICAL: List Pipelines",
+          "details": "Found 22 pipelines",
+          "time": 1769700360.299623
+        },
+        {
+          "test": "OPS_CLINICAL: Get Pipeline Status",
+          "details": "Pipeline: N/A",
+          "time": 1769700360.3833852
+        },
+        {
+          "test": "EXECUTIVE: View Dashboard Summary",
+          "details": "Dashboard loaded",
+          "time": 1769700368.4380531
+        },
+        {
+          "test": "EXECUTIVE: View Policy Performance",
+          "details": "Performance dashboard loaded",
+          "time": 1769700373.75756
+        },
+        {
+          "test": "EXECUTIVE: List All Scorecards",
+          "details": "Found 16 scorecards",
+          "time": 1769700374.381021
+        }
+      ],
+      "failed": [
+        {
+          "test": "ANALYST: Baseline Analysis",
+          "error": "HTTPSConnectionPool(host='healthforesight-api-9016.azurewebsites.net', port=443): Max retries exceeded with url: /api/v1/analyses/baseline (Caused by ResponseError('too many 503 error responses'))",
+          "time": 1769700328.778317
+        }
+      ],
+      "warnings": [
+        {
+          "test": "POLICY_ADMIN: Policy Scope",
+          "message": "Scope not saved properly (all nulls) - may be API issue",
+          "time": 1769700307.976755
+        },
+        {
+          "test": "POLICY_ADMIN: Activate Policy",
+          "message": "Status update not available: 404 Client Error: Not Found for url: https://healthforesight-api-9016.azurewebsites.net/api/v1/policies/c0a36052-b6e4-4547-9063-8e92fb861278/status",
+          "time": 1769700322.2489102
+        },
+        {
+          "test": "ANALYST: Elasticity Analysis",
+          "message": "Endpoint not available (404)",
+          "time": 1769700345.728698
+        },
+        {
+          "test": "POLICY_OWNER: Impact Analysis",
+          "message": "Endpoint not available (404) - may need policy version",
+          "time": 1769700346.42765
+        },
+        {
+          "test": "POLICY_OWNER: What-If: Stricter Policy",
+          "message": "HTTPSConnectionPool(host='healthforesight-api-9016.azurewebsites.net', port=443): Max retries exceeded with url: /api/v1/analyses/simulate (Caused by ResponseError('too many 500 error responses'))",
+          "time": 1769700352.903178
+        },
+        {
+          "test": "POLICY_OWNER: What-If: Broader Scope",
+          "message": "HTTPSConnectionPool(host='healthforesight-api-9016.azurewebsites.net', port=443): Max retries exceeded with url: /api/v1/analyses/simulate (Caused by ResponseError('too many 500 error responses'))",
+          "time": 1769700359.245875
+        },
+        {
+          "test": "POLICY_OWNER: Review Performance",
+          "message": "404 Client Error: Not Found for url: https://healthforesight-api-9016.azurewebsites.net/api/v1/policies/c0a36052-b6e4-4547-9063-8e92fb861278/performance",
+          "time": 1769700359.301472
+        },
+        {
+          "test": "OPS_CLINICAL: Get Latest Baseline Period",
+          "message": "404 Client Error: Not Found for url: https://healthforesight-api-9016.azurewebsites.net/api/v1/periods/baseline-eligible/latest",
+          "time": 1769700359.8787808
+        },
+        {
+          "test": "EXECUTIVE: Policy Scorecard",
+          "message": "404 Client Error: Not Found for url: https://healthforesight-api-9016.azurewebsites.net/api/v1/scorecards/policies/c0a36052-b6e4-4547-9063-8e92fb861278",
+          "time": 1769700373.908591
+        },
+        {
+          "test": "EXECUTIVE: Create Export",
+          "message": "Missing required fields - may need analysis_id",
+          "time": 1769700374.428203
+        }
+      ]
+    }
+  }
+}

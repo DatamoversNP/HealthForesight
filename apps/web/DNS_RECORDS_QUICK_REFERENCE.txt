@@ -1,0 +1,34 @@
+DNS RECORDS TO ADD AT YOUR DOMAIN PROVIDER
+==========================================
+
+Record 1: Root Domain (healthforesight.ai)
+-------------------------------------------
+Type:    A
+Name:    @ (or blank, or healthforesight.ai)
+Value:   216.198.79.1
+TTL:     3600 (or default)
+
+Record 2: WWW Subdomain (www.healthforesight.ai)
+-------------------------------------------------
+Type:    CNAME
+Name:    www
+Value:   aab8b42551af9ef7.vercel-dns-017.com.
+TTL:     3600 (or default)
+
+IMPORTANT NOTES:
+- CNAME value MUST end with a dot (.)
+- Remove any conflicting/old DNS records
+- Wait 5-60 minutes for DNS to propagate
+- Click "Refresh" in Vercel after adding records
+
+WHERE TO ADD:
+- Log in to your domain registrar (GoDaddy, Namecheap, etc.)
+- Go to DNS Management / DNS Settings
+- Add the two records above
+- Save changes
+
+VERIFY:
+- Wait 5-60 minutes
+- Go back to Vercel domain settings
+- Click "Refresh" button
+- Status should change to "Valid Configuration"

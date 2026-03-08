@@ -1,0 +1,173 @@
+{
+  "summary": {
+    "passed": 14,
+    "failed": 4,
+    "total": 18,
+    "success_rate": 77.77777777777779
+  },
+  "results": [
+    {
+      "test": "System Health Check",
+      "status": "PASS",
+      "message": "API is healthy: uepi-api",
+      "details": {},
+      "timestamp": "2026-01-30T18:09:24.081992"
+    },
+    {
+      "test": "User Authentication",
+      "status": "PASS",
+      "message": "User: 00000000-0000-0000-0000-000000000001, Email: demo@example.com",
+      "details": {
+        "user_id": "00000000-0000-0000-0000-000000000001",
+        "email": "demo@example.com"
+      },
+      "timestamp": "2026-01-30T18:09:24.162542"
+    },
+    {
+      "test": "Create Policy",
+      "status": "PASS",
+      "message": "Policy created: 974cad8c-d948-47e4-848f-c3d67f2c35f6",
+      "details": {
+        "policy_id": "974cad8c-d948-47e4-848f-c3d67f2c35f6"
+      },
+      "timestamp": "2026-01-30T18:09:24.191494"
+    },
+    {
+      "test": "List Policies",
+      "status": "PASS",
+      "message": "Found 25 policies",
+      "details": {
+        "count": 25
+      },
+      "timestamp": "2026-01-30T18:09:24.229925"
+    },
+    {
+      "test": "Get Policy Details",
+      "status": "PASS",
+      "message": "Policy details retrieved: Test Policy - UI Test 20260130-180924",
+      "details": {
+        "policy_id": "974cad8c-d948-47e4-848f-c3d67f2c35f6"
+      },
+      "timestamp": "2026-01-30T18:09:24.544545"
+    },
+    {
+      "test": "Generate Predicted Impact",
+      "status": "FAIL",
+      "message": "API request failed: HTTP 500: Internal server error: UnboundLocalError: cannot access local variable 'get_policy' where it is not associated with a value\nFull response: {'detail': \"Internal server error: UnboundLocalError: cannot access local variable 'get_policy' where it is not associated with a value\", 'error_type': 'UnboundLocalError', 'error_message': \"cannot access local variable 'get_policy' where it is not associated with a value\", 'path': '/api/v1/policies/974cad8c-d948-47e4-848f-c3d67f2c35f6/predicted-impact'}",
+      "details": {},
+      "timestamp": "2026-01-30T18:09:29.410779"
+    },
+    {
+      "test": "Get Predicted Impact",
+      "status": "FAIL",
+      "message": "Predicted impact not found after 5 retries (may need more time to save)",
+      "details": {
+        "policy_id": "974cad8c-d948-47e4-848f-c3d67f2c35f6",
+        "retries": 5
+      },
+      "timestamp": "2026-01-30T18:09:36.279886"
+    },
+    {
+      "test": "Create Baseline Analysis",
+      "status": "PASS",
+      "message": "Baseline analysis created: 6496d182-522c-48e7-b57f-23f08730cbea (status: PENDING)",
+      "details": {
+        "analysis_id": "6496d182-522c-48e7-b57f-23f08730cbea",
+        "status": "PENDING"
+      },
+      "timestamp": "2026-01-30T18:09:36.476113"
+    },
+    {
+      "test": "Get Baseline Analysis",
+      "status": "FAIL",
+      "message": "Baseline analysis failed: Unknown error",
+      "details": {
+        "analysis_id": "6496d182-522c-48e7-b57f-23f08730cbea",
+        "status": "FAILED",
+        "error": "Unknown error",
+        "error_trace": null
+      },
+      "timestamp": "2026-01-30T18:10:17.045758"
+    },
+    {
+      "test": "Create Cohort",
+      "status": "PASS",
+      "message": "Cohort created: 5fa9f609-c9b7-4bfd-983b-287fdb7004ab",
+      "details": {
+        "cohort_id": "5fa9f609-c9b7-4bfd-983b-287fdb7004ab"
+      },
+      "timestamp": "2026-01-30T18:10:17.071315"
+    },
+    {
+      "test": "List Cohorts",
+      "status": "PASS",
+      "message": "Found 16 cohorts",
+      "details": {
+        "count": 16
+      },
+      "timestamp": "2026-01-30T18:10:17.098291"
+    },
+    {
+      "test": "List Pipelines",
+      "status": "PASS",
+      "message": "Found 22 pipelines",
+      "details": {
+        "count": 22
+      },
+      "timestamp": "2026-01-30T18:10:17.133683"
+    },
+    {
+      "test": "Get Pipeline Details",
+      "status": "PASS",
+      "message": "Pipeline details retrieved: 21d8bac4-cd44-4a97-b1f5-31b160a7d3ea",
+      "details": {
+        "pipeline_id": "21d8bac4-cd44-4a97-b1f5-31b160a7d3ea"
+      },
+      "timestamp": "2026-01-30T18:10:17.157286"
+    },
+    {
+      "test": "Dashboard Summary",
+      "status": "PASS",
+      "message": "Dashboard summary loaded",
+      "details": {
+        "has_data": true
+      },
+      "timestamp": "2026-01-30T18:10:17.272945"
+    },
+    {
+      "test": "Policy Performance",
+      "status": "PASS",
+      "message": "Retrieved 0 policy performance records",
+      "details": {
+        "count": 0
+      },
+      "timestamp": "2026-01-30T18:10:17.315823"
+    },
+    {
+      "test": "Data Quality Report",
+      "status": "PASS",
+      "message": "Data quality report loaded (score: 0.0)",
+      "details": {
+        "has_report": true,
+        "has_score": true
+      },
+      "timestamp": "2026-01-30T18:10:17.322017"
+    },
+    {
+      "test": "List Scorecards",
+      "status": "PASS",
+      "message": "Found 16 scorecards",
+      "details": {
+        "count": 16
+      },
+      "timestamp": "2026-01-30T18:10:17.339285"
+    },
+    {
+      "test": "Create What-If Analysis",
+      "status": "FAIL",
+      "message": "API request failed: HTTP 500: Internal server error: NameError: name 'BackgroundTasks' is not defined\nFull response: {'detail': \"Internal server error: NameError: name 'BackgroundTasks' is not defined\", 'error_type': 'NameError', 'error_message': \"name 'BackgroundTasks' is not defined\", 'path': '/api/v1/analyses/simulate'}",
+      "details": {},
+      "timestamp": "2026-01-30T18:10:17.418224"
+    }
+  ]
+}

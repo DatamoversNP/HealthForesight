@@ -1,0 +1,42 @@
+/**
+ * HealthForesight Documentation Portal Styles
+ * Standalone styles for documentation portal
+ */
+
+:root {
+  --hf-primary: #1976d2;
+  --hf-secondary: #1E2A44;
+  --hf-neutral-dark: #0F172A;
+  --hf-neutral-mid: #64748B;
+  --hf-neutral-light: #E5E7EB;
+  --hf-background: #F8FAFC;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--hf-neutral-dark);
+  background-color: var(--hf-background);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: var(--hf-neutral-dark);
+  margin: 0;
+  line-height: 1.3;
+}
+
+#root {
+  min-height: 100vh;
+}

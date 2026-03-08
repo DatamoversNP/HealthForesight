@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Architecture: Intelligence Where It Matters</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: #ffffff;
+            padding: 60px 80px;
+            color: #1a1a1a;
+            line-height: 1.5;
+        }
+
+        .slide {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #ffffff;
+        }
+
+        .title {
+            font-size: 42px;
+            font-weight: 600;
+            color: #1e3a5f;
+            margin-bottom: 60px;
+            text-align: center;
+            letter-spacing: -0.5px;
+        }
+
+        .architecture-container {
+            display: flex;
+            align-items: stretch;
+            gap: 20px;
+            margin-bottom: 50px;
+            min-height: 400px;
+        }
+
+        .layer {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 30px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .layer-inputs {
+            flex: 1;
+            border-color: #4a90a4;
+            background: linear-gradient(to bottom, #f8fbfc 0%, #ffffff 100%);
+        }
+
+        .layer-core {
+            flex: 2.5;
+            border-color: #5b4fa8;
+            background: linear-gradient(to bottom, #f5f4fa 0%, #ffffff 100%);
+            border-width: 3px;
+        }
+
+        .layer-governance {
+            flex: 1.2;
+            border-color: #4a90a4;
+            background: linear-gradient(to bottom, #f8fbfc 0%, #ffffff 100%);
+        }
+
+        .layer-outputs {
+            flex: 1;
+            border-color: #4a90a4;
+            background: linear-gradient(to bottom, #f8fbfc 0%, #ffffff 100%);
+        }
+
+        .layer-label {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e3a5f;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .layer-core .layer-label {
+            color: #5b4fa8;
+            font-size: 20px;
+        }
+
+        .input-items {
+            list-style: none;
+            font-size: 15px;
+            color: #4a5568;
+        }
+
+        .input-items li {
+            margin-bottom: 12px;
+            padding-left: 8px;
+            border-left: 3px solid #4a90a4;
+            padding-left: 15px;
+        }
+
+        .core-components {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            flex: 1;
+        }
+
+        .component {
+            background: #ffffff;
+            border: 2px solid #5b4fa8;
+            border-radius: 6px;
+            padding: 20px;
+            flex: 1;
+        }
+
+        .component-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #5b4fa8;
+            margin-bottom: 8px;
+        }
+
+        .component-subtitle {
+            font-size: 13px;
+            color: #718096;
+            font-style: italic;
+        }
+
+        .ai-badge {
+            display: inline-block;
+            background: #5b4fa8;
+            color: #ffffff;
+            font-size: 10px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-left: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .ai-assist-badge {
+            background: #4a90a4;
+        }
+
+        .human-badge {
+            background: #718096;
+        }
+
+        .governance-content {
+            font-size: 15px;
+            color: #4a5568;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .governance-content p {
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 3px solid #4a90a4;
+        }
+
+        .output-items {
+            list-style: none;
+            font-size: 15px;
+            color: #4a5568;
+        }
+
+        .output-items li {
+            margin-bottom: 12px;
+            padding-left: 8px;
+            border-left: 3px solid #4a90a4;
+            padding-left: 15px;
+        }
+
+        .banner {
+            background: linear-gradient(to right, #1e3a5f 0%, #5b4fa8 100%);
+            color: #ffffff;
+            padding: 25px 40px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            border-radius: 6px;
+            margin-top: 40px;
+        }
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            right: -12px;
+            width: 0;
+            height: 0;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            border-left: 12px solid #5b4fa8;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+
+        .layer-inputs .arrow {
+            border-left-color: #4a90a4;
+        }
+
+        .layer-governance .arrow {
+            border-left-color: #4a90a4;
+        }
+
+        .layer-outputs .arrow {
+            display: none;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            font-size: 13px;
+            color: #4a5568;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-badge {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+
+        .legend-badge.ai-heavy {
+            background: #5b4fa8;
+        }
+
+        .legend-badge.ai-assist {
+            background: #4a90a4;
+        }
+
+        .legend-badge.human {
+            background: #718096;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <h1 class="title">AI Architecture: Intelligence Where It Matters</h1>
+        
+        <div class="architecture-container">
+            <!-- Layer 1: Data & Policy Inputs -->
+            <div class="layer layer-inputs">
+                <div class="layer-label">Data & Policy Inputs</div>
+                <ul class="input-items">
+                    <li>Claims Data</li>
+                    <li>Member Demographics</li>
+                    <li>Provider Networks</li>
+                    <li>Policy Definitions</li>
+                    <li>Historical Baselines</li>
+                    <li>Market Events</li>
+                </ul>
+                <span class="ai-badge ai-assist-badge">AI-Assisted</span>
+            </div>
+            <div class="arrow"></div>
+
+            <!-- Layer 2: Core Intelligence Layer -->
+            <div class="layer layer-core">
+                <div class="layer-label">Core Intelligence Layer</div>
+                <div class="core-components">
+                    <div class="component">
+                        <div class="component-title">
+                            Elasticity Modeling
+                            <span class="ai-badge">AI-Heavy</span>
+                        </div>
+                        <div class="component-subtitle">Bayesian / ML</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-title">
+                            Causal Impact Measurement
+                            <span class="ai-badge">AI-Heavy</span>
+                        </div>
+                        <div class="component-subtitle">Statistical Inference</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-title">
+                            Behavioral Attribution
+                            <span class="ai-badge">AI-Heavy</span>
+                        </div>
+                        <div class="component-subtitle">Pattern Recognition</div>
+                    </div>
+                </div>
+            </div>
+            <div class="arrow"></div>
+
+            <!-- Layer 3: Decision & Governance Layer -->
+            <div class="layer layer-governance">
+                <div class="layer-label">Decision & Governance</div>
+                <div class="governance-content">
+                    <p>Human-in-the-Loop</p>
+                    <p>Policy Validation</p>
+                    <p>Risk Assessment</p>
+                    <p>Approval Workflows</p>
+                </div>
+                <span class="ai-badge human-badge">Human-Governed</span>
+            </div>
+            <div class="arrow"></div>
+
+            <!-- Layer 4: Executive Outputs -->
+            <div class="layer layer-outputs">
+                <div class="layer-label">Executive Outputs</div>
+                <ul class="output-items">
+                    <li>Impact Predictions</li>
+                    <li>Performance Dashboards</li>
+                    <li>Risk Scores</li>
+                    <li>Recommendations</li>
+                    <li>Scenario Analysis</li>
+                </ul>
+                <span class="ai-badge ai-assist-badge">AI-Assisted</span>
+            </div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-badge ai-heavy"></div>
+                <span>AI-Heavy</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-badge ai-assist"></div>
+                <span>AI-Assisted</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-badge human"></div>
+                <span>Human-Governed</span>
+            </div>
+        </div>
+
+        <div class="banner">
+            AI as an Intelligence Layer — Not a Black Box
+        </div>
+    </div>
+</body>
+</html>
+
+

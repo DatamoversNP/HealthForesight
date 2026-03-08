@@ -1,0 +1,25 @@
+:80 {
+    root * /usr/share/caddy
+    file_server
+    
+    # API proxy - must come before SPA routing
+    handle /api/* {
+        reverse_proxy uepi-api.uepi-prod.svc.cluster.local:8000 {
+            header_up Host {host}
+            header_up X-Real-IP {remote}
+            header_up X-Forwarded-For {remote_host}
+            header_up X-Forwarded-Proto {scheme}
+            transport http {
+                dial_timeout 10s
+                response_header_timeout 30s
+            }
+        }
+    }
+    
+    # SPA routing - try file first, then fallback to index.html
+    handle {
+        try_files {path} /index.html
+        file_server
+    }
+}
+

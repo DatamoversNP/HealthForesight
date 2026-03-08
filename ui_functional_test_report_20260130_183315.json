@@ -1,0 +1,176 @@
+{
+  "summary": {
+    "passed": 15,
+    "failed": 3,
+    "total": 18,
+    "success_rate": 83.33333333333334
+  },
+  "results": [
+    {
+      "test": "System Health Check",
+      "status": "PASS",
+      "message": "API is healthy: uepi-api",
+      "details": {},
+      "timestamp": "2026-01-30T18:32:24.405779"
+    },
+    {
+      "test": "User Authentication",
+      "status": "PASS",
+      "message": "User: 00000000-0000-0000-0000-000000000001, Email: demo@example.com",
+      "details": {
+        "user_id": "00000000-0000-0000-0000-000000000001",
+        "email": "demo@example.com"
+      },
+      "timestamp": "2026-01-30T18:32:24.576370"
+    },
+    {
+      "test": "Create Policy",
+      "status": "PASS",
+      "message": "Policy created: a2580983-4a3b-4dce-900d-ef77346fbd25",
+      "details": {
+        "policy_id": "a2580983-4a3b-4dce-900d-ef77346fbd25"
+      },
+      "timestamp": "2026-01-30T18:32:24.626872"
+    },
+    {
+      "test": "List Policies",
+      "status": "PASS",
+      "message": "Found 25 policies",
+      "details": {
+        "count": 25
+      },
+      "timestamp": "2026-01-30T18:32:24.745546"
+    },
+    {
+      "test": "Get Policy Details",
+      "status": "PASS",
+      "message": "Policy details retrieved: Test Policy - UI Test 20260130-183224",
+      "details": {
+        "policy_id": "a2580983-4a3b-4dce-900d-ef77346fbd25"
+      },
+      "timestamp": "2026-01-30T18:32:25.142239"
+    },
+    {
+      "test": "Generate Predicted Impact",
+      "status": "FAIL",
+      "message": "API request failed: HTTP 500: Internal server error: UnboundLocalError: cannot access local variable 'get_policy' where it is not associated with a value\nFull response: {'detail': \"Internal server error: UnboundLocalError: cannot access local variable 'get_policy' where it is not associated with a value\", 'error_type': 'UnboundLocalError', 'error_message': \"cannot access local variable 'get_policy' where it is not associated with a value\", 'path': '/api/v1/policies/a2580983-4a3b-4dce-900d-ef77346fbd25/predicted-impact'}",
+      "details": {},
+      "timestamp": "2026-01-30T18:32:27.706793"
+    },
+    {
+      "test": "Get Predicted Impact",
+      "status": "FAIL",
+      "message": "Predicted impact not found after 5 retries (may need more time to save)",
+      "details": {
+        "policy_id": "a2580983-4a3b-4dce-900d-ef77346fbd25",
+        "retries": 5
+      },
+      "timestamp": "2026-01-30T18:32:34.949753"
+    },
+    {
+      "test": "Create Baseline Analysis",
+      "status": "PASS",
+      "message": "Baseline analysis created: e82dc73d-d14e-4d4e-9978-20bf2ca058f1 (status: PENDING)",
+      "details": {
+        "analysis_id": "e82dc73d-d14e-4d4e-9978-20bf2ca058f1",
+        "status": "PENDING"
+      },
+      "timestamp": "2026-01-30T18:32:35.733047"
+    },
+    {
+      "test": "Get Baseline Analysis",
+      "status": "FAIL",
+      "message": "Baseline analysis failed: Unknown error",
+      "details": {
+        "analysis_id": "e82dc73d-d14e-4d4e-9978-20bf2ca058f1",
+        "status": "FAILED",
+        "error": "Unknown error",
+        "error_trace": null
+      },
+      "timestamp": "2026-01-30T18:33:15.234437"
+    },
+    {
+      "test": "Create Cohort",
+      "status": "PASS",
+      "message": "Cohort created: fef0eb81-3a02-45e6-8f0e-4293b8b1713c",
+      "details": {
+        "cohort_id": "fef0eb81-3a02-45e6-8f0e-4293b8b1713c"
+      },
+      "timestamp": "2026-01-30T18:33:15.258301"
+    },
+    {
+      "test": "List Cohorts",
+      "status": "PASS",
+      "message": "Found 17 cohorts",
+      "details": {
+        "count": 17
+      },
+      "timestamp": "2026-01-30T18:33:15.286877"
+    },
+    {
+      "test": "List Pipelines",
+      "status": "PASS",
+      "message": "Found 22 pipelines",
+      "details": {
+        "count": 22
+      },
+      "timestamp": "2026-01-30T18:33:15.311525"
+    },
+    {
+      "test": "Get Pipeline Details",
+      "status": "PASS",
+      "message": "Pipeline details retrieved: 21d8bac4-cd44-4a97-b1f5-31b160a7d3ea",
+      "details": {
+        "pipeline_id": "21d8bac4-cd44-4a97-b1f5-31b160a7d3ea"
+      },
+      "timestamp": "2026-01-30T18:33:15.328527"
+    },
+    {
+      "test": "Dashboard Summary",
+      "status": "PASS",
+      "message": "Dashboard summary loaded",
+      "details": {
+        "has_data": true
+      },
+      "timestamp": "2026-01-30T18:33:15.403494"
+    },
+    {
+      "test": "Policy Performance",
+      "status": "PASS",
+      "message": "Retrieved 0 policy performance records",
+      "details": {
+        "count": 0
+      },
+      "timestamp": "2026-01-30T18:33:15.442472"
+    },
+    {
+      "test": "Data Quality Report",
+      "status": "PASS",
+      "message": "Data quality report loaded (score: 0.0)",
+      "details": {
+        "has_report": true,
+        "has_score": true
+      },
+      "timestamp": "2026-01-30T18:33:15.449535"
+    },
+    {
+      "test": "List Scorecards",
+      "status": "PASS",
+      "message": "Found 16 scorecards",
+      "details": {
+        "count": 16
+      },
+      "timestamp": "2026-01-30T18:33:15.462835"
+    },
+    {
+      "test": "Create What-If Analysis",
+      "status": "PASS",
+      "message": "What-if analysis created: 3e847dcb-1b3c-4da4-82b3-833c1c62e166 (status: PENDING)",
+      "details": {
+        "analysis_id": "3e847dcb-1b3c-4da4-82b3-833c1c62e166",
+        "status": "PENDING"
+      },
+      "timestamp": "2026-01-30T18:33:15.895246"
+    }
+  ]
+}

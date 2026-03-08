@@ -1,0 +1,165 @@
+{
+  "summary": {
+    "passed": 13,
+    "failed": 5,
+    "total": 18,
+    "success_rate": 72.22222222222221
+  },
+  "results": [
+    {
+      "test": "System Health Check",
+      "status": "PASS",
+      "message": "API is healthy: uepi-api",
+      "details": {},
+      "timestamp": "2026-01-30T11:29:08.469733"
+    },
+    {
+      "test": "User Authentication",
+      "status": "PASS",
+      "message": "User: 00000000-0000-0000-0000-000000000001, Email: demo@example.com",
+      "details": {
+        "user_id": "00000000-0000-0000-0000-000000000001",
+        "email": "demo@example.com"
+      },
+      "timestamp": "2026-01-30T11:29:08.503905"
+    },
+    {
+      "test": "Create Policy",
+      "status": "PASS",
+      "message": "Policy created: f59bcfda-e22e-4691-bc64-4bbc81ccbb40",
+      "details": {
+        "policy_id": "f59bcfda-e22e-4691-bc64-4bbc81ccbb40"
+      },
+      "timestamp": "2026-01-30T11:29:08.524954"
+    },
+    {
+      "test": "List Policies",
+      "status": "PASS",
+      "message": "Found 25 policies",
+      "details": {
+        "count": 25
+      },
+      "timestamp": "2026-01-30T11:29:08.561755"
+    },
+    {
+      "test": "Get Policy Details",
+      "status": "PASS",
+      "message": "Policy details retrieved: Test Policy - UI Test 20260130-112908",
+      "details": {
+        "policy_id": "f59bcfda-e22e-4691-bc64-4bbc81ccbb40"
+      },
+      "timestamp": "2026-01-30T11:29:08.884112"
+    },
+    {
+      "test": "Generate Predicted Impact",
+      "status": "FAIL",
+      "message": "API request failed: HTTP 500: Internal Server Error",
+      "details": {},
+      "timestamp": "2026-01-30T11:29:11.389479"
+    },
+    {
+      "test": "Get Predicted Impact",
+      "status": "FAIL",
+      "message": "Predicted impact not found after 5 retries (may need more time to save)",
+      "details": {
+        "policy_id": "f59bcfda-e22e-4691-bc64-4bbc81ccbb40",
+        "retries": 5
+      },
+      "timestamp": "2026-01-30T11:29:18.347315"
+    },
+    {
+      "test": "Create Baseline Analysis",
+      "status": "FAIL",
+      "message": "Request timeout (30s)",
+      "details": {},
+      "timestamp": "2026-01-30T11:30:18.480542"
+    },
+    {
+      "test": "Get Baseline Analysis",
+      "status": "FAIL",
+      "message": "No analyses available to test",
+      "details": {},
+      "timestamp": "2026-01-30T11:30:18.490323"
+    },
+    {
+      "test": "Create Cohort",
+      "status": "PASS",
+      "message": "Cohort created: ba412445-12b4-4b55-a0e7-7a169d1d1d9f",
+      "details": {
+        "cohort_id": "ba412445-12b4-4b55-a0e7-7a169d1d1d9f"
+      },
+      "timestamp": "2026-01-30T11:30:19.097399"
+    },
+    {
+      "test": "List Cohorts",
+      "status": "PASS",
+      "message": "Found 9 cohorts",
+      "details": {
+        "count": 9
+      },
+      "timestamp": "2026-01-30T11:30:19.186175"
+    },
+    {
+      "test": "List Pipelines",
+      "status": "PASS",
+      "message": "Found 22 pipelines",
+      "details": {
+        "count": 22
+      },
+      "timestamp": "2026-01-30T11:30:19.317841"
+    },
+    {
+      "test": "Get Pipeline Details",
+      "status": "PASS",
+      "message": "Pipeline details retrieved: 21d8bac4-cd44-4a97-b1f5-31b160a7d3ea",
+      "details": {
+        "pipeline_id": "21d8bac4-cd44-4a97-b1f5-31b160a7d3ea"
+      },
+      "timestamp": "2026-01-30T11:30:19.362484"
+    },
+    {
+      "test": "Dashboard Summary",
+      "status": "PASS",
+      "message": "Dashboard summary loaded",
+      "details": {
+        "has_data": true
+      },
+      "timestamp": "2026-01-30T11:30:19.921978"
+    },
+    {
+      "test": "Policy Performance",
+      "status": "PASS",
+      "message": "Retrieved 0 policy performance records",
+      "details": {
+        "count": 0
+      },
+      "timestamp": "2026-01-30T11:30:20.038999"
+    },
+    {
+      "test": "Data Quality Report",
+      "status": "PASS",
+      "message": "Data quality report loaded (score: 0.0)",
+      "details": {
+        "has_report": true,
+        "has_score": true
+      },
+      "timestamp": "2026-01-30T11:30:20.059437"
+    },
+    {
+      "test": "List Scorecards",
+      "status": "PASS",
+      "message": "Found 16 scorecards",
+      "details": {
+        "count": 16
+      },
+      "timestamp": "2026-01-30T11:30:20.096424"
+    },
+    {
+      "test": "Create What-If Analysis",
+      "status": "FAIL",
+      "message": "Request timeout (30s)",
+      "details": {},
+      "timestamp": "2026-01-30T11:31:20.117833"
+    }
+  ]
+}
