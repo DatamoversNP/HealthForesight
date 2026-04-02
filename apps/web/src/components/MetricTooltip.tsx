@@ -22,8 +22,10 @@ const METRIC_FORMULAS: Record<string, { formula: string; description: string }> 
     description: 'Average total cost per provider in this archetype. Each provider\'s total_cost = sum of allowed_amount (or paid_amount) for their claim lines. Then averaged across all providers in the cluster.',
   },
   avg_cost_per_claim: {
-    formula: 'Mean(avg_cost_per_claim for each provider in cluster) where avg_cost_per_claim = total_cost / total_claims',
-    description: 'Average cost per claim line. For each provider: total_cost / total_claims, then averaged across all providers in the cluster.',
+    formula:
+      'Archetype: mean(provider total_cost / total_claims) across cluster. Segment: mean(member avg_cost_per_claim) across members.',
+    description:
+      'Average cost per claim line—in provider archetypes (per-provider cost/claims, then averaged) or in patient segments (mean across members).',
   },
   claims_per_member: {
     formula: 'Mean(claims_per_member for each provider in cluster) where claims_per_member = total_claims / unique_members',
@@ -66,10 +68,6 @@ const METRIC_FORMULAS: Record<string, { formula: string; description: string }> 
   avg_cost_per_member: {
     formula: 'Mean(total_cost) across members in segment',
     description: 'Average total cost per member in this patient segment.',
-  },
-  avg_cost_per_claim: {
-    formula: 'Mean(avg_cost_per_claim) across members in segment',
-    description: 'Average cost per claim line for members in this segment.',
   },
 }
 

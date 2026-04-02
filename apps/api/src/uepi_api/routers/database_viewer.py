@@ -6,7 +6,7 @@ from sqlalchemy import inspect, text
 from sqlalchemy.orm import Session
 
 from uepi_api.auth import CurrentUser, get_demo_current_user
-from uepi_api.database import get_db, Base, engine
+from uepi_api.database import get_db, Base, get_engine
 
 router = APIRouter()
 
@@ -18,7 +18,7 @@ async def list_tables(
 ) -> List[Dict[str, Any]]:
     """List all database tables"""
     try:
-        inspector = inspect(engine)
+        inspector = inspect(get_engine())
         tables = inspector.get_table_names()
         
         result = []
@@ -48,7 +48,7 @@ async def get_table_schema(
 ) -> Dict[str, Any]:
     """Get schema information for a table"""
     try:
-        inspector = inspect(engine)
+        inspector = inspect(get_engine())
         
         # Check if table exists
         if table_name not in inspector.get_table_names():
@@ -114,7 +114,7 @@ async def get_table_data(
 ) -> Dict[str, Any]:
     """Get data from a table with pagination"""
     try:
-        inspector = inspect(engine)
+        inspector = inspect(get_engine())
         
         # Check if table exists
         if table_name not in inspector.get_table_names():
@@ -194,7 +194,7 @@ async def get_table_count(
 ) -> Dict[str, Any]:
     """Get row count for a table"""
     try:
-        inspector = inspect(engine)
+        inspector = inspect(get_engine())
         
         # Check if table exists
         if table_name not in inspector.get_table_names():

@@ -1,13 +1,33 @@
-"""Authentication endpoints - Database mode with non-blocking fallback"""
+"""Authentication endpoints - Database mode with non-blocking fallback. Supports AD (OIDC) and local (email/password) login."""
 from typing import Annotated
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel
 
-from uepi_api.auth import CurrentUser, verify_token, get_demo_current_user
+from uepi_api.auth import CurrentUser, verify_token, get_demo_current_user, create_local_jwt
+from uepi_api.database import get_db
+from uepi_api.models.tenant import User
+from uepi_api.password_utils import verify_password
+from sqlalchemy.orm import Session
+from sqlalchemy.exc import SQLAlchemyError
 
 router = APIRouter()
+
+
+class LoginRequest(BaseModel):
+    """Email/password login for local users."""
+    email: str
+    password: str
+
+
+class LoginResponse(BaseModel):
+    """JWT and user info after successful login."""
+    access_token: str
+    token_type: str = "bearer"
+    user_id: str
+    email: str
+    roles: list[str]
 
 
 class UserResponse(BaseModel):
@@ -21,6 +41,59 @@ class UserResponse(BaseModel):
     
     class Config:
         from_attributes = True
+
+
+@router.post("/login", response_model=LoginResponse)
+async def login(
+    body: LoginRequest,
+    db: Session = Depends(get_db),
+):
+    """Log in with email and password (local users only). Returns JWT for Authorization header."""
+    from sqlalchemy import func
+    from uepi_api.storage_auth import DEFAULT_TENANT_ID
+
+    email_clean = body.email.strip().lower()
+    try:
+        user = (
+            db.query(User)
+            .filter(func.lower(User.email) == email_clean, User.tenant_id == DEFAULT_TENANT_ID)
+            .first()
+        )
+        if not user:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email or password")
+        auth_source = getattr(user, "auth_source", None) or "local"
+        if auth_source != "local":
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="This account uses single sign-on (SSO). Please sign in with your organization login.",
+            )
+        password_hash = getattr(user, "password_hash", None)
+        if not password_hash or not verify_password(body.password, password_hash):
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email or password")
+        if (getattr(user, "is_active", "true") or "true") != "true":
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Account is disabled")
+        roles = user.get_roles(db)
+        if not roles:
+            roles = ["POLICY_ADMIN"]
+        token = create_local_jwt(user.id, user.tenant_id, user.email, roles)
+        return LoginResponse(
+            access_token=token,
+            user_id=str(user.id),
+            email=user.email,
+            roles=roles,
+        )
+    except HTTPException:
+        raise
+    except SQLAlchemyError as e:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail=(
+                "Database unavailable (login requires PostgreSQL). "
+                "On Azure: set DATABASE_URL on healthforesight-api, allow App Service outbound IPs "
+                "on PostgreSQL firewall, and run DB migrations/seed. "
+                f"Error: {str(e)[:200]}"
+            ),
+        ) from e
 
 
 @router.get("/me", response_model=UserResponse)

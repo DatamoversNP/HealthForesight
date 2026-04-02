@@ -1,0 +1,35 @@
+# Git and IDE
+.git
+.gitignore
+.cursor
+.vscode
+*.md
+# Dependencies and build artifacts
+**/node_modules
+**/venv
+**/.venv
+**/__pycache__
+**/*.pyc
+**/.pytest_cache
+**/dist
+**/build
+*.egg-info
+# Local data and env
+**/data
+**/.env
+**/.env.*
+*.log
+# Not needed in API image
+apps/web
+scripts
+infra
+backups
+*.zip
+
+# Large / unrelated trees (keeps ACR build context small)
+.backup-core-product
+**/.backup-core-product/**
+healthforesight-Website
+**/healthforesight-Website/**
+*.tar.gz
+*.tgz

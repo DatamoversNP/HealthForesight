@@ -1,6 +1,6 @@
 """API configuration"""
 from functools import lru_cache
-from typing import Optional
+from typing import Optional, Union
 import json
 
 from pydantic import field_validator
@@ -20,42 +20,37 @@ class APISettings(BaseSettings):
     environment: str = "development"
     debug: bool = False
     log_level: str = "INFO"
-    cors_origins: list[str] = [
+    # Union so env CORS_ORIGINS can be a plain string (e.g. "http://localhost:3000") without JSON
+    cors_origins: Union[str, list[str]] = [
         "http://localhost:3050",
         "http://localhost:3000",
         "http://localhost:8080",
         "http://127.0.0.1:3050",
         "http://127.0.0.1:3000",
     ]
-    
-    @field_validator('cors_origins', mode='before')
+
+    @field_validator("cors_origins", mode="before")
     @classmethod
     def parse_cors_origins(cls, v):
-        """Parse CORS origins from environment variable, handling empty/invalid values"""
-        # Return None to use default if value is None or empty
+        """Parse CORS origins from env (string or JSON list) into list[str]."""
         if v is None:
             return None
         if isinstance(v, list):
-            return v if v else None  # Return None for empty list to use default
+            return v if v else None
         if isinstance(v, str):
-            # If empty string or whitespace only, return None to use default
             v = v.strip()
             if not v:
                 return None
-            # Try to parse as JSON
             try:
                 parsed = json.loads(v)
                 if isinstance(parsed, list):
-                    return parsed if parsed else None  # Return None for empty list
-                # If single string, wrap in list
+                    return parsed if parsed else None
                 if isinstance(parsed, str):
                     return [parsed] if parsed.strip() else None
                 return None
             except (json.JSONDecodeError, ValueError, TypeError):
-                # If not valid JSON, treat as comma-separated string
-                origins = [origin.strip() for origin in v.split(',') if origin.strip()]
-                return origins if origins else None  # Return None for empty list
-        # For any other type, return None to use default
+                origins = [origin.strip() for origin in v.split(",") if origin.strip()]
+                return origins if origins else None
         return None
     
     database: DatabaseSettings = DatabaseSettings()

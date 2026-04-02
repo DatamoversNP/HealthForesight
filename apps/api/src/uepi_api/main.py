@@ -1,11 +1,15 @@
 """UEPI API Service"""
+import concurrent.futures
 import os
+import re
+import threading
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 
 from fastapi import FastAPI, Request, status
-from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.responses import Response
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 # OpenTelemetry imports (optional - skip if not available or incompatible)
@@ -30,71 +34,64 @@ except (ImportError, TypeError, Exception):
 
 # Database-only mode - no file storage initialization needed
 # from uepi_api.storage_file import init_storage  # Removed - database-only
-from uepi_api.storage_auth import ensure_demo_tenant_and_user
-from uepi_api.metrics import generate_latest, CONTENT_TYPE_LATEST
+# metrics imported inside /metrics only — prometheus registration is not free on cold start
 from uepi_api.logging_config import setup_logging, get_logger, log_error_with_context
 from uepi_api.middleware_logging import RequestLoggingMiddleware
-from uepi_api.routers import (
-    analyses,
-    auth,
-    decisions,
-    exports,
-    lineage,
-    notifications,
-    policy_import,
-    scorecards,
-)
-# Note: cohorts_file uses storage_cohorts which is database-only
-# Note: RBAC uses access router which uses database models directly
-from uepi_api.routers import policy_workspace
-from uepi_api.routers import decisions_workspace
-from uepi_api.routers import uncertainty_visualization
-from uepi_api.routers import behavior_detection
-from uepi_api.routers import collaboration
-from uepi_api.routers import narratives
-
-# Note: ingestions and datasets routers use database models directly
+from uepi_api.app_extended_routes import register_extended_routes, path_skips_extended_loading
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
-    """Application lifespan events"""
-    settings = app.state.settings
-    
-    # Setup comprehensive logging
-    # Check environment variable first, then settings
-    log_level = os.getenv('LOG_LEVEL', getattr(settings, 'log_level', 'INFO'))
-    setup_logging(log_level=log_level, enable_file_logging=True)
-    logger = get_logger(__name__)
-    logger.info("Application starting", extra={"extra_data": {"environment": settings.environment, "log_level": log_level}})
-    
-    # Database-only mode - ensure demo tenant and user exist
-    # Make this non-blocking - if database is unavailable, continue anyway
-    try:
-        ensure_demo_tenant_and_user()
-    except Exception as e:
-        logger.warning(f"Could not ensure demo tenant/user (database may be unavailable): {e}")
-        # Continue startup - database operations will fail later if needed, but API can still serve some endpoints
-    
-    # Start schedule executor (Phase 10)
-    try:
-        from uepi_api.routers.schedule_executor_service import start_schedule_executor
-        start_schedule_executor(interval_seconds=60)  # Check every minute
-        print("✅ Schedule executor started")
-    except Exception as e:
-        print(f"⚠️  Failed to start schedule executor: {e}")
-        import traceback
-        traceback.print_exc()
-    
+    """Keep startup before ``yield`` empty so Gunicorn/Uvicorn binds immediately (Azure HTML 503 if blocked)."""
     yield
-    
-    # Shutdown
-    try:
-        from uepi_api.routers.schedule_executor_service import stop_schedule_executor
-        stop_schedule_executor()
-        print("✅ Schedule executor stopped")
-    except Exception as e:
-        print(f"⚠️  Error stopping schedule executor: {e}")
+    if os.getenv("UEPI_ENABLE_SCHEDULE_EXECUTOR", "").strip().lower() in ("1", "true", "yes"):
+        try:
+            from uepi_api.routers.schedule_executor_service import stop_schedule_executor
+
+            stop_schedule_executor()
+        except Exception as e:
+            print(f"uepi_api: stop_schedule_executor: {e}", flush=True)
+
+
+def _start_background_startup(settings: object) -> None:
+    """Logging, DB seed, optional scheduler — after HTTP listener is up."""
+
+    def _run() -> None:
+        log_level = os.getenv("LOG_LEVEL", getattr(settings, "log_level", "INFO"))
+        try:
+            setup_logging(log_level=log_level, enable_file_logging=True)
+        except Exception as e:
+            print(f"uepi_api: setup_logging failed (bg): {e}", flush=True)
+            import traceback
+
+            traceback.print_exc()
+        try:
+            logger = get_logger(__name__)
+            logger.info(
+                "Application started (background)",
+                extra={"extra_data": {"environment": getattr(settings, "environment", ""), "log_level": log_level}},
+            )
+        except Exception:
+            pass
+        try:
+            from uepi_api.storage_auth import ensure_demo_tenant_and_user
+
+            ensure_demo_tenant_and_user()
+        except Exception as e:
+            print(f"uepi_api: ensure_demo_tenant_and_user (bg): {e}", flush=True)
+        if os.getenv("UEPI_ENABLE_SCHEDULE_EXECUTOR", "").strip().lower() in ("1", "true", "yes"):
+            try:
+                from uepi_api.routers.schedule_executor_service import start_schedule_executor
+
+                start_schedule_executor(interval_seconds=60)
+                print("Schedule executor started", flush=True)
+            except Exception as e:
+                print(f"uepi_api: schedule executor (bg): {e}", flush=True)
+                import traceback
+
+                traceback.print_exc()
+
+    threading.Thread(target=_run, daemon=True, name="uepi-bg-startup").start()
 
 
 def create_app() -> FastAPI:
@@ -120,6 +117,9 @@ def create_app() -> FastAPI:
         "http://localhost:3000",
         "http://127.0.0.1:3000",
         "https://gentle-flower-01dffcd0f.2.azurestaticapps.net",
+        "https://proud-glacier-0c52b8e0f.6.azurestaticapps.net",
+        "https://healthforesight-web.azurestaticapps.net",
+        "https://healthforesight-web.azurewebsites.net",
     ]
     # Add any additional origins from settings
     if hasattr(settings, 'cors_origins') and settings.cors_origins:
@@ -127,178 +127,79 @@ def create_app() -> FastAPI:
     
     # Store CORS origins in app state for exception handlers
     app.state.cors_origins = cors_origins_list
-    
-    # Configure CORS with proper order - must be before other middleware
-    # Use allow_origin_regex to allow all Azure Static Web Apps domains
-    app.add_middleware(
-        CORSMiddleware,
-        allow_origins=cors_origins_list,
-        allow_origin_regex=r"https://.*\.azurestaticapps\.net",  # Allow all Azure Static Web Apps
-        allow_credentials=True,
-        allow_methods=["*"],
-        allow_headers=["*"],
-        expose_headers=["*"],
-        max_age=3600,
+
+    # Frontend on Azure App Service: healthforesight-web[--slot].azurewebsites.net
+    _CORS_HEALTHFORESIGHT_APP = re.compile(
+        r"^https://healthforesight-[a-z0-9-]+\.azurewebsites\.net$",
+        re.IGNORECASE,
     )
-    
-    # Add request logging middleware (after CORS, before routers)
+
+    def _cors_allow_origin(origin: str | None) -> str | None:
+        o = (origin or "").strip()
+        if not o:
+            return None
+        if o in cors_origins_list:
+            return o
+        if o.startswith("https://") and ".azurestaticapps.net" in o:
+            return o
+        if _CORS_HEALTHFORESIGHT_APP.match(o):
+            return o
+        if o.startswith("http://localhost") or o.startswith("http://127.0.0.1"):
+            return o
+        return None
+
+    class ExplicitCORSMiddleware(BaseHTTPMiddleware):
+        """Handles preflight + response CORS (avoids missing headers behind Azure / Starlette quirks)."""
+
+        async def dispatch(self, request: Request, call_next):
+            origin = request.headers.get("origin")
+            allowed = _cors_allow_origin(origin)
+            if request.method == "OPTIONS" and allowed:
+                req_h = request.headers.get("access-control-request-headers", "authorization,content-type")
+                return Response(
+                    status_code=200,
+                    content="",
+                    headers={
+                        "Access-Control-Allow-Origin": allowed,
+                        "Access-Control-Allow-Credentials": "true",
+                        "Access-Control-Allow-Methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+                        "Access-Control-Allow-Headers": req_h,
+                        "Access-Control-Max-Age": "86400",
+                    },
+                )
+            response = await call_next(request)
+            if allowed:
+                response.headers["Access-Control-Allow-Origin"] = allowed
+                response.headers["Access-Control-Allow-Credentials"] = "true"
+            return response
+
+    class LazyExtendedRoutesMiddleware(BaseHTTPMiddleware):
+        """Load polars/pandas-heavy routers on first request that needs them (not at import)."""
+
+        async def dispatch(self, request: Request, call_next):
+            if not path_skips_extended_loading(request.url.path):
+                register_extended_routes(request.app)
+            return await call_next(request)
+
+    # Starlette: last-added middleware is outermost on the request. Order here is
+    # Lazy (innermost, just before routing) → logging → CORS (outer, OPTIONS first).
+    app.add_middleware(LazyExtendedRoutesMiddleware)
     app.add_middleware(RequestLoggingMiddleware)
+    app.add_middleware(ExplicitCORSMiddleware)
     
     # OpenTelemetry instrumentation (if available)
     if OPENTELEMETRY_AVAILABLE and settings.environment != "development":
         FastAPIInstrumentor.instrument_app(app)
     
-    # Routers - Database-only (all use PostgreSQL)
+    # Light routers only at startup; heavy stack loads on first non-skip request (see LazyExtendedRoutesMiddleware).
+    from uepi_api.routers import auth
+
     app.include_router(auth.router, prefix="/api/v1/auth", tags=["Auth"])
-    
-    # Access control router (uses database models: Role, User)
+
     from uepi_api.routers import access
+
     app.include_router(access.router, prefix="/api/v1/access", tags=["Access"])
-    
-    # Database-based routers (use database storage)
-    from uepi_api.routers import policies
-    app.include_router(policies.router, prefix="/api/v1", tags=["Policies"])
-    
-    # Optional routers (may be None if imports fail)
-    from uepi_api.routers import ingestions, datasets
-    if ingestions is not None:
-        app.include_router(ingestions.router, prefix="/api/v1", tags=["Ingestions"])
-    if datasets is not None:
-        app.include_router(datasets.router, prefix="/api/v1", tags=["Datasets"])
-    
-    # Other routers (database-only)
-    app.include_router(policy_import.router, prefix="/api/v1", tags=["Policy Import"])
-    # Add synchronous impact analysis endpoint FIRST (so it takes precedence)
-    # This processes immediately without needing a worker
-    try:
-        from uepi_api.routers import analyses_file
-        app.include_router(analyses_file.router, prefix="/api/v1", tags=["Analyses (Sync)"])
-    except ImportError:
-        pass  # analyses_file router not available
-    # Database-based analyses router (creates PENDING, needs worker)
-    app.include_router(analyses.router, prefix="/api/v1", tags=["Analyses"])
-    app.include_router(scorecards.router, prefix="/api/v1", tags=["Scorecards"])
-    app.include_router(exports.router, prefix="/api/v1", tags=["Exports"])
-    # Database-based cohorts router (uses storage_cohorts which is database-only)
-    from uepi_api.routers import cohorts_file
-    app.include_router(cohorts_file.router, prefix="/api/v1", tags=["Cohorts"])
-    # Note: cohorts_file uses storage_cohorts which is database-only
-    # Note: Old decisions router removed - using decisions_workspace (Epic 3) instead
-    # app.include_router(decisions.router, prefix="/api/v1", tags=["Decisions"])
-    app.include_router(lineage.router, prefix="/api/v1", tags=["Lineage"])
-    # notifications router is imported at top level and included above
-    
-    # Phase 1: Continuous System - Data Periods and Policy Versions
-    try:
-        from uepi_api.routers import data_periods
-        app.include_router(data_periods.router, prefix="/api/v1", tags=["Data Periods"])
-    except ImportError:
-        pass  # data_periods router not available
-    
-    try:
-        from uepi_api.routers import policy_versions
-        app.include_router(policy_versions.router, prefix="/api/v1", tags=["Policy Versions"])
-    except ImportError as e:
-        print(f"Warning: Could not import policy_versions router: {e}")
-        pass  # Continue without policy_versions router
-    
-    # Pipelines (uses database models: Pipeline, PipelineRun)
-    from uepi_api.routers import pipelines
-    app.include_router(pipelines.router, prefix="/api/v1", tags=["Pipelines"])
-    
-    # Optional pipeline monitoring (may be None if polars import fails)
-    from uepi_api.routers import pipeline_monitoring
-    if pipeline_monitoring is not None:
-        app.include_router(pipeline_monitoring.router, prefix="/api/v1", tags=["Pipeline Monitoring"])
-    
-    # Data Explorer (reads data files, but metadata in database)
-    from uepi_api.routers import data_explorer
-    app.include_router(data_explorer.router, prefix="/api/v1", tags=["Data Explorer"])
-    
-    # Stage 2 Policy API (always available)
-    from uepi_api.routers import policy_stage2
-    app.include_router(policy_stage2.router, prefix="/api/v1", tags=["Policy Stage 2"])
-    
-    # Phase 2: Baselines
-    from uepi_api.routers import baselines
-    app.include_router(baselines.router, prefix="/api/v1", tags=["Baselines"])
 
-    # Phase 3: Observations
-    from uepi_api.routers import observations
-    app.include_router(observations.router, prefix="/api/v1", tags=["Observations"])
-
-    # Phase 1: Analytics runs (lineage)
-    from uepi_api.routers import analytics_runs
-    app.include_router(analytics_runs.router, prefix="/api/v1", tags=["Analytics Runs"])
-
-    # Phase 4: Learning Loop
-    from uepi_api.routers import learning
-    app.include_router(learning.router, prefix="/api/v1", tags=["Learning"])
-
-    # Phase 5: Traceability (for UI)
-    from uepi_api.routers import traceability
-    app.include_router(traceability.router, prefix="/api/v1", tags=["Traceability"])
-    
-    # Data Quality
-    from uepi_api.routers import data_quality
-    app.include_router(data_quality.router, prefix="/api/v1", tags=["Data Quality"])
-    
-    from uepi_api.routers import daily_jobs
-    app.include_router(daily_jobs.router, prefix="/api/v1", tags=["Daily Jobs"])
-    
-    # Phase 7: Scenario Accuracy Tracking
-    from uepi_api.routers import scenario_accuracy
-    app.include_router(scenario_accuracy.router, prefix="/api/v1", tags=["Scenario Accuracy"])
-    
-    # Phase 8: Advanced Reporting & Exports (already included at line 113 above)
-    
-    # Phase 9: Executive Dashboards & Automation
-    from uepi_api.routers import dashboard
-    app.include_router(dashboard.router, prefix="/api/v1", tags=["Dashboard"])
-    
-    from uepi_api.routers import schedules
-    app.include_router(schedules.router, prefix="/api/v1", tags=["Schedules"])
-    
-    # Notifications router (Phase 9)
-    app.include_router(notifications.router, prefix="/api/v1", tags=["Notifications"])
-    
-    # Enterprise Uplift: RBAC (Epic 1) - already included above as "Access"
-    # Note: access router uses database models (Role, User) directly
-    
-    # Enterprise Uplift: Persona Dashboards (Epic 1)
-    from uepi_api.routers import dashboards_persona
-    app.include_router(dashboards_persona.router, prefix="/api/v1", tags=["Persona Dashboards"])
-    
-    # Enterprise Uplift: Policy Workspace (Epic 2)
-    app.include_router(policy_workspace.router, prefix="/api/v1", tags=["Policy Workspace"])
-    
-    # Epic 3: Decision Audit & Defensibility
-    app.include_router(decisions_workspace.router, prefix="/api/v1", tags=["Decision Workspace"])
-    
-    # Epic 4: Uncertainty & Risk Visualization
-    app.include_router(uncertainty_visualization.router, prefix="/api/v1", tags=["Uncertainty Visualization"])
-    
-    # Epic 5: Behavioral Signal Detection
-    app.include_router(behavior_detection.router, prefix="/api/v1", tags=["Behavior Detection"])
-    
-    # Epic 6: Collaboration Workflows
-    app.include_router(collaboration.router, prefix="/api/v1", tags=["Collaboration"])
-    
-    # Epic 7: Executive Narrative Layer
-    app.include_router(narratives.router, prefix="/api/v1", tags=["Narratives"])
-    
-    # Conversational Policy Intelligence Layer
-    from uepi_api.routers import conversational_ai
-    app.include_router(conversational_ai.router, prefix="/api/v1", tags=["Conversational AI"])
-    
-    # Database Viewer (for admin/developer tools)
-    from uepi_api.routers import database_viewer
-    app.include_router(database_viewer.router, prefix="/api/v1", tags=["Database Viewer"])
-    
-    # Data Generation
-    from uepi_api.routers import data_generation
-    app.include_router(data_generation.router, prefix="/api/v1", tags=["Data Generation"])
-    
     # Error handlers for comprehensive logging
     logger = get_logger(__name__)
     
@@ -413,41 +314,88 @@ def create_app() -> FastAPI:
             "database": "unknown"  # Don't check database in health endpoint to avoid timeouts
         }
     
+    @app.get("/api/v1/ping")
+    async def ping():
+        """Instant OK — no DB. Use to verify API is reachable (through web proxy or direct)."""
+        return {"ok": True, "service": "uepi-api"}
+
     @app.get("/api/v1/health/detailed")
     async def health_detailed():
-        """Detailed health check with database connectivity test"""
+        """DB connectivity; always returns HTTP 200 within ~6s (avoids gateway 503 on hung PostgreSQL)."""
         from uepi_api.database import SessionLocal
         from sqlalchemy import text
-        
+
+        def _db_ping() -> str:
+            try:
+                db = SessionLocal()
+                try:
+                    db.execute(text("SELECT 1")).scalar()
+                    return "connected"
+                finally:
+                    db.close()
+            except Exception as e:
+                return f"error: {str(e)[:200]}"
+
         db_status = "unknown"
         try:
-            db = SessionLocal()
-            try:
-                # Quick connection test with timeout
-                result = db.execute(text("SELECT 1"))
-                result.scalar()
-                db_status = "connected"
-            except Exception as e:
-                db_status = f"error: {str(e)[:100]}"
-            finally:
-                db.close()
+            with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
+                fut = pool.submit(_db_ping)
+                db_status = fut.result(timeout=6)
+        except concurrent.futures.TimeoutError:
+            db_status = (
+                "timeout (>6s): PostgreSQL not responding — check DATABASE_URL on this API app, "
+                "PostgreSQL firewall (allow Azure services or App Service outbound IPs), and VNet rules."
+            )
         except Exception as e:
-            db_status = f"connection_failed: {str(e)[:100]}"
-        
+            db_status = f"check_failed: {str(e)[:200]}"
+
         return {
             "status": "healthy" if db_status == "connected" else "degraded",
             "service": "uepi-api",
-            "database": db_status
+            "database": db_status,
+            "hint": "If database is not connected, login will fail. Fix Postgres access from healthforesight-api.",
         }
     
     @app.get("/metrics")
     async def metrics():
         """Prometheus metrics endpoint"""
         from fastapi import Response
+        from uepi_api.metrics import generate_latest, CONTENT_TYPE_LATEST
+
         return Response(content=generate_latest(), media_type=CONTENT_TYPE_LATEST)
-    
+
+    _start_background_startup(settings)
+
     return app
 
 
-app = create_app()
+def _degraded_app(exc: BaseException) -> FastAPI:
+    """Last resort: still answer /api/v1/ping so Azure sees a healthy listener while you fix logs."""
+    from fastapi import FastAPI as FF
+
+    d = FF(title="UEPI API (degraded)", version="0.0.0")
+
+    @d.get("/api/v1/ping")
+    async def ping_degraded():
+        return {
+            "ok": False,
+            "service": "uepi-api",
+            "degraded": True,
+            "error": str(exc)[:300],
+        }
+
+    @d.get("/health")
+    async def health_degraded():
+        return {"status": "degraded", "detail": str(exc)[:300]}
+
+    return d
+
+
+try:
+    app = create_app()
+except Exception as e:
+    import traceback
+
+    traceback.print_exc()
+    app = _degraded_app(e)
 

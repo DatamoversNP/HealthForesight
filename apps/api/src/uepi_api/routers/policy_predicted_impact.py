@@ -1,10 +1,12 @@
 """
 Helper functions for generating and storing predicted impact (Stage 3.5)
 """
-from typing import Dict, Any, Optional
+import json
+from typing import Any, Dict, Optional
 from uuid import UUID
 from datetime import datetime
 
+from uepi_api.policy_predicted_impact_metadata import get_predicted_impact_from_metadata
 from uepi_common.analytics.predicted_impact import PredictedImpactGenerator, PredictedImpactResult
 
 
@@ -140,19 +142,3 @@ def store_predicted_impact_in_metadata(
     return policy_metadata
 
 
-def get_predicted_impact_from_metadata(
-    policy_metadata: Optional[Dict[str, Any]],
-) -> Optional[Dict[str, Any]]:
-    """
-    Extract predicted impact from policy metadata
-    
-    Args:
-        policy_metadata: Policy metadata dict
-        
-    Returns:
-        Predicted impact dict if available, None otherwise
-    """
-    if not policy_metadata:
-        return None
-    
-    return policy_metadata.get("predicted_impact")

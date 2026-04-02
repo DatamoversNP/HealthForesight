@@ -344,7 +344,7 @@ def policy_impact_job(
         # Load predicted impact from policy metadata (Stage 3.5)
         predicted_impact = None
         try:
-            from uepi_api.routers.policy_predicted_impact import get_predicted_impact_from_metadata
+            from uepi_api.policy_predicted_impact_metadata import get_predicted_impact_from_metadata
             policy_metadata = policy.policy_metadata_json if hasattr(policy, 'policy_metadata_json') else None
             predicted_impact = get_predicted_impact_from_metadata(policy_metadata)
         except Exception as e:
@@ -659,135 +659,40 @@ def elasticity_job(
     """Model elasticity curves for a policy"""
     db = SessionLocal()
     try:
-        from uepi_api.models.analysis import Analysis, AnalysisStatus, AnalysisResultIndex, ElasticityAnalysisResult
-        from uepi_common.analytics.elasticity import ElasticityModeler
-        from uepi_common.storage.factory import create_storage_client
-        from uepi_common.data.parquet_service import ParquetDataService
-        from datetime import datetime
-        import json
-        import tempfile
-        import os
-        
-        # Get analysis
-        analysis = db.query(Analysis).filter(Analysis.id == UUID(analysis_id)).first()
-        if not analysis:
-            return {"status": "error", "message": "Analysis not found"}
-        
-        analysis.status = AnalysisStatus.RUNNING.value
-        db.commit()
+        from uepi_api.database import set_local_statement_timeout
 
-        settings = get_settings()
-        # Modeler needs storage_client for init; use no-op when object storage (S3) not configured (DB-only / local)
-        try:
-            storage_client = create_storage_client(settings=settings.object_storage)
-        except Exception:
-            from uepi_common.storage.noop import NoOpBlobStorageClient
-            storage_client = NoOpBlobStorageClient()
-        bucket = getattr(settings.object_storage, "bucket", None) or getattr(settings.object_storage, "bucket_name", None) or "uepi-data"
-        modeler = ElasticityModeler(storage_client, bucket)
+        set_local_statement_timeout(db, 600_000)
+        from uepi_api.services.elasticity_analysis_runner import run_elasticity_analysis_sync
 
-        result = modeler.estimate_elasticity(
+        return run_elasticity_analysis_sync(
+            db,
             UUID(tenant_id),
+            UUID(analysis_id),
             UUID(policy_id),
             service_categories,
         )
-        
-        result_dict = {
-            "policy_id": str(result.policy_id),
-            "service_categories": {
-                k: {
-                    "service_category": v.service_category,
-                    "elasticity_coefficient": v.elasticity_coefficient,
-                    "elasticity_function": v.elasticity_function,
-                    "threshold_friction": v.threshold_friction,
-                    "confidence_score": v.confidence_score,
-                    "data_points": v.data_points,
-                    "model_version": getattr(v, "model_version", "1.0"),
-                    "created_at": v.created_at.isoformat(),
-                }
-                for k, v in result.service_categories.items()
-            },
-            "overall_elasticity": result.overall_elasticity,
-            "model_quality": result.model_quality,
-            "warnings": getattr(result, "warnings", []),
-            "created_at": result.created_at.isoformat(),
-        }
-        
-        # Persist to database first (so GET results works without object storage)
-        existing = db.query(ElasticityAnalysisResult).filter(
-            ElasticityAnalysisResult.analysis_id == UUID(analysis_id),
-            ElasticityAnalysisResult.tenant_id == UUID(tenant_id),
-        ).first()
-        if existing:
-            existing.result_data_json = result_dict
-            existing.updated_at = datetime.utcnow()
-        else:
-            db.add(ElasticityAnalysisResult(
-                tenant_id=UUID(tenant_id),
-                analysis_id=UUID(analysis_id),
-                policy_id=UUID(policy_id),
-                result_data_json=result_dict,
-                schema_version="1.0",
-            ))
-        # Ensure result index exists (DB storage; data_uri=None)
-        idx = db.query(AnalysisResultIndex).filter(
-            AnalysisResultIndex.analysis_id == UUID(analysis_id),
-            AnalysisResultIndex.result_type == "ELASTICITY",
-        ).first()
-        if not idx:
-            db.add(AnalysisResultIndex(
-                tenant_id=UUID(tenant_id),
-                analysis_id=UUID(analysis_id),
-                result_type="ELASTICITY",
-                data_uri=None,
-                schema_version="1.0",
-            ))
-        analysis.status = AnalysisStatus.COMPLETED.value
-        db.commit()
-        # Optional S3 upload after marking COMPLETED so frontend does not wait on storage
-        result_key = f"{tenant_id}/results/analyses/{analysis_id}/elasticity.json"
-        try:
-            with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as tmp:
-                json.dump(result_dict, tmp, indent=2, default=str)
-                tmp_path = tmp.name
-            try:
-                with open(tmp_path, 'rb') as f:
-                    storage_client.upload_blob(
-                        container=settings.object_storage.bucket,
-                        blob_name=result_key,
-                        data=f.read(),
-                        content_type="application/json",
-                    )
-                uri = f"{settings.object_storage.bucket}/{result_key}"
-                idx2 = db.query(AnalysisResultIndex).filter(
-                    AnalysisResultIndex.analysis_id == UUID(analysis_id),
-                    AnalysisResultIndex.result_type == "ELASTICITY",
-                ).first()
-                if idx2:
-                    idx2.data_uri = uri
-                    db.commit()
-            finally:
-                if os.path.exists(tmp_path):
-                    os.unlink(tmp_path)
-        except Exception as upload_err:
-            print(f"Elasticity: optional upload failed (results saved to DB): {upload_err}")
-        
-        return {
-            "status": "completed",
-            "analysis_id": analysis_id,
-            "model_quality": result.model_quality,
-            "overall_elasticity": result.overall_elasticity,
-        }
-    except Exception as e:
-        if 'analysis' in locals():
-            analysis.status = AnalysisStatus.FAILED.value
-            err_msg = str(e)
-            if hasattr(Analysis, 'error_message'):
-                analysis.error_message = (err_msg[:2000] if len(err_msg) > 2000 else err_msg) or None
-            db.commit()
-        raise
     finally:
         db.close()
+
+
+@app.task(base=BaseTask, bind=True, max_retries=1)
+def daily_data_and_observations_job(
+    self,
+    tenant_id: str,
+    target_date_iso: str,
+    run_observations: bool,
+    job_id: str,
+) -> None:
+    """Load/generate daily data and optionally create observations (same logic as API BackgroundTasks)."""
+    from datetime import datetime
+
+    from uepi_api.routers.daily_jobs import run_daily_job_task
+
+    ts = target_date_iso.replace("Z", "+00:00")
+    target_dt = datetime.fromisoformat(ts)
+    if target_dt.tzinfo is not None:
+        target_dt = target_dt.replace(tzinfo=None)
+    run_daily_job_task(UUID(tenant_id), target_dt, run_observations, job_id)
 
 
 @app.task(base=BaseTask, bind=True, max_retries=3)

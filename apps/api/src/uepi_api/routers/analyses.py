@@ -5,7 +5,7 @@ import os
 import json
 from pathlib import Path
 
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from sqlalchemy import text
@@ -700,14 +700,13 @@ async def get_timeseries(
 @router.post("/analyses/elasticity", status_code=201)
 async def create_elasticity_analysis(
     analysis_data: ElasticityAnalysisCreate,
+    background_tasks: BackgroundTasks,
     current_user: Annotated[CurrentUser, Depends(verify_token)],
     db: Session = Depends(get_db),
 ):
     """Create elasticity modeling analysis - Database-only"""
-        
-        # Database version (original code)
     from uepi_api.models.policy import Policy, PolicyVersion
-    
+
     policy = db.query(Policy).filter(
         Policy.id == analysis_data.policy_id,
         Policy.tenant_id == current_user.tenant_id,
@@ -726,22 +725,40 @@ async def create_elasticity_analysis(
     db.add(analysis)
     db.commit()
     db.refresh(analysis)
-    
-    # Trigger elasticity job (send by name so API does not need uepi_worker on PYTHONPATH)
+
+    job_queued = False
     try:
         from uepi_api.celery_client import send_task
+
         send_task(
             "uepi_worker.tasks.elasticity_job",
             args=[
                 str(current_user.tenant_id),
                 str(analysis.id),
-                str(analysis_data.policy_id),
-                analysis_data.service_categories if hasattr(analysis_data, 'service_categories') else None,
+                str(policy.id),
+                analysis_data.service_categories,
             ],
         )
+        job_queued = True
     except Exception as e:
-        print(f"Failed to trigger elasticity job: {e}")
-    
+        import logging
+
+        logging.getLogger(__name__).warning(
+            "Elasticity: Celery enqueue failed (broker/worker down?); scheduling background task: %s",
+            e,
+        )
+
+    if not job_queued:
+        from uepi_api.services.elasticity_analysis_runner import run_elasticity_analysis_background_task
+
+        background_tasks.add_task(
+            run_elasticity_analysis_background_task,
+            str(current_user.tenant_id),
+            str(analysis.id),
+            str(policy.id),
+            analysis_data.service_categories,
+        )
+
     return {
         "id": analysis.id,
         "policy_id": analysis.policy_id,

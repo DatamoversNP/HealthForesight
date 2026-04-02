@@ -5,7 +5,7 @@ set -e
 
 # Configuration
 RESOURCE_GROUP="${RESOURCE_GROUP:-healthforesight-rg}"
-API_APP_NAME="${API_APP_NAME:-healthforesight-api-9016}"
+API_APP_NAME="${API_APP_NAME:-healthforesight-api}"
 
 echo "Deploying API to Azure App Service..."
 
@@ -13,6 +13,30 @@ echo "Deploying API to Azure App Service..."
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 cd "$PROJECT_ROOT" || exit 1
+
+# Set app settings BEFORE zip deploy so Oryx runs when we push (installs requirements.txt)
+echo "Setting app settings so Oryx build runs during deploy..."
+az webapp config appsettings set \
+  --resource-group $RESOURCE_GROUP \
+  --name $API_APP_NAME \
+  --settings \
+    SCM_DO_BUILD_DURING_DEPLOYMENT="true" \
+    PYTHONPATH="/home/site/wwwroot/src:/home/site/wwwroot/packages/common/src" \
+  --output none 2>/dev/null || true
+# Remove Run From Package so Oryx can run (they are incompatible)
+az webapp config appsettings delete \
+  --resource-group $RESOURCE_GROUP \
+  --name $API_APP_NAME \
+  --setting-names WEBSITE_RUN_FROM_PACKAGE \
+  --output none 2>/dev/null || true
+
+# Set startup command (script name relative to wwwroot)
+echo "Setting startup command to startup.sh..."
+az webapp config set \
+  --resource-group $RESOURCE_GROUP \
+  --name $API_APP_NAME \
+  --startup-file "startup.sh" \
+  --output none 2>/dev/null || true
 
 # Create deployment package from project root to include packages/common
 echo "Creating deployment package (including packages/common)..."
@@ -115,29 +139,13 @@ zip -r "$PROJECT_ROOT/api-deployment.zip" . \
 cd "$PROJECT_ROOT" || exit 1
 rm -rf "$TEMP_DIR"
 
-# Deploy to Azure
-echo "Deploying to Azure..."
-az webapp deployment source config-zip \
+# Deploy to Azure (use az webapp deploy; config-zip is deprecated)
+echo "Deploying to Azure (Oryx will run build now that SCM_DO_BUILD_DURING_DEPLOYMENT is set)..."
+az webapp deploy \
   --resource-group $RESOURCE_GROUP \
   --name $API_APP_NAME \
-  --src "$PROJECT_ROOT/api-deployment.zip"
-
-# Set startup command to use startup.sh script
-echo "Setting startup command to use startup.sh..."
-az webapp config set \
-  --resource-group $RESOURCE_GROUP \
-  --name $API_APP_NAME \
-  --startup-file "startup.sh" \
-  --output none
-
-# Set PYTHONPATH environment variable
-echo "Setting PYTHONPATH environment variable..."
-az webapp config appsettings set \
-  --resource-group $RESOURCE_GROUP \
-  --name $API_APP_NAME \
-  --settings \
-    PYTHONPATH="/home/site/wwwroot/src:/home/site/wwwroot/packages/common/src" \
-  --output none
+  --src-path "$PROJECT_ROOT/api-deployment.zip" \
+  --type zip
 
 # Restart app
 echo "Restarting app..."

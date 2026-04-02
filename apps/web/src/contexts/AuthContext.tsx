@@ -36,97 +36,78 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [apiUnavailable, setApiUnavailable] = useState(false)
   const navigate = useNavigate() // Now safe - BrowserRouter wraps AuthProvider
 
-  const loadUser = async () => {
-    // Set mock user immediately for fast startup (API will override if available)
-    const mockUser = {
-      id: '00000000-0000-0000-0000-000000000001',
-      email: 'demo@example.com',
-      name: 'Demo User',
-      roles: ['POLICY_ADMIN'],
-      tenant_id: '00000000-0000-0000-0000-000000000001',
-    }
-    
-    // Set mock user immediately so UI can render
-    setUser(mockUser)
-    setLoading(false)
-    setError(null)
-    
-    // Ensure token is set
+  const loadUser = async (opts?: { sessionOnly?: boolean }): Promise<User | null> => {
     if (!apiClient.getToken()) {
-      apiClient.setToken('dev-token-123')
+      setUser(null)
+      setLoading(false)
+      return null
     }
-    
-    // Try to get real user data in background (non-blocking)
+    const sessionOnly = opts?.sessionOnly ?? false
     try {
-      const userData = await apiClient.getMe() as any
+      const userData = (sessionOnly
+        ? await apiClient.getMeSessionVerify(12000)
+        : await apiClient.getMe()) as any
       if (userData) {
-        setUser(userData)
+        const u: User = {
+          id: userData.id,
+          email: userData.email,
+          name: userData.full_name ?? userData.name,
+          roles: userData.roles ?? [],
+          tenant_id: userData.tenant_id,
+        }
+        setUser(u)
         setApiUnavailable(false)
+        return u
       }
+      setUser(null)
+      return null
     } catch (error: any) {
-      if (error?.code === 'ERR_NETWORK' || error?.status === 0) {
+      if (error?.status === 401) {
+        apiClient.setToken(null)
+        setUser(null)
+      } else if (
+        error?.code === 'ERR_NETWORK' ||
+        error?.code === 'ECONNABORTED' ||
+        error?.status === 0
+      ) {
         setApiUnavailable(true)
+        setUser(null)
+        if (sessionOnly) {
+          apiClient.setToken(null)
+        }
+      } else {
+        setUser(null)
       }
+      return null
+    } finally {
+      setLoading(false)
     }
   }
 
   useEffect(() => {
-    // Check for existing token
-    let token = apiClient.getToken()
-    if (!token) {
-      // No token - set a mock token for development/production fallback
-      // This allows the app to work even without authentication setup
-      token = 'dev-token-123'  // Use a consistent mock token that API accepts
-      apiClient.setToken(token)
-    }
-    
-    // Try to load user with the token
-    loadUser().catch((err) => {
-      console.error('Error in loadUser during initialization:', err)
-      if (err?.code === 'ERR_NETWORK' || err?.status === 0) {
-        setApiUnavailable(true)
-      }
-      setUser({
-        id: 'mock-user-id',
-        email: 'user@example.com',
-        name: 'Demo User',
-        roles: ['POLICY_ADMIN'],
-        tenant_id: 'mock-tenant-id',
-      })
+    // Clear any legacy dev/mock token so getToken() returns null and we show login
+    const t = apiClient.getToken()
+    if (!t) {
+      setUser(null)
       setLoading(false)
-      if (!apiClient.getToken()) {
-        apiClient.setToken('dev-token-123')
-      }
-    })
+      return
+    }
+    loadUser({ sessionOnly: true }).catch(() => setLoading(false))
   }, [])
 
   const clearApiUnavailable = () => setApiUnavailable(false)
 
   const login = async (token: string) => {
-    try {
-      apiClient.setToken(token)
-      await loadUser()
-      // Connect WebSocket after login (only if user loaded successfully, and if wsClient exists)
+    apiClient.setToken(token)
+    const u = await loadUser({ sessionOnly: false })
+    if (u && apiClient.getToken()) {
       if (typeof wsClient !== 'undefined' && wsClient) {
         try {
           wsClient.connect(token)
         } catch (wsError) {
           console.warn('WebSocket connection failed:', wsError)
-          // Don't fail login if WebSocket fails
         }
       }
-      navigate('/')
-    } catch (error: any) {
-      console.error('Login failed:', error)
-      // Always allow access with mock user if login fails (until API is fully functional)
-      setUser({
-        id: 'mock-user-id',
-        email: 'user@example.com',
-        name: 'Demo User',
-        roles: ['POLICY_ADMIN'],
-        tenant_id: 'mock-tenant-id',
-      })
-      setLoading(false)
       navigate('/')
     }
   }
@@ -166,16 +147,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext)
   if (context === undefined) {
-    // Return safe defaults instead of throwing - allows components to render during hot reload
     return {
-      user: {
-        id: '00000000-0000-0000-0000-000000000001',
-        email: 'demo@example.com',
-        name: 'Demo User',
-        roles: ['POLICY_ADMIN'],
-        tenant_id: '00000000-0000-0000-0000-000000000001',
-      },
-      isAuthenticated: true,
+      user: null,
+      isAuthenticated: false,
       loading: false,
       error: null,
       apiUnavailable: false,

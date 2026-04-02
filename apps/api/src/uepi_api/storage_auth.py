@@ -4,11 +4,31 @@ from uuid import UUID, uuid4
 from datetime import datetime
 
 from sqlalchemy.orm import Session
-from uepi_api.models.tenant import Tenant, User
+from sqlalchemy import insert, select
+from uepi_api.models.tenant import Tenant, User, Role, user_roles
 
 # Default demo tenant ID
 DEFAULT_TENANT_ID = UUID("00000000-0000-0000-0000-000000000001")
 DEFAULT_USER_ID = UUID("00000000-0000-0000-0000-000000000001")
+
+# Roles to seed and assign to demo user
+DEFAULT_ROLES = [
+    ("POLICY_ADMIN", "Policy administrator; full access to policies, users, analyses."),
+    ("UM_LEADER", "Utilization management leader; create/read policies and analyses."),
+    ("ACTUARIAL", "Actuarial; read policies, analyses, scorecards."),
+    ("STRATEGY", "Strategy; read policies and analyses."),
+    ("COMPLIANCE", "Compliance; read-only access."),
+    ("EXEC_VIEWER", "Executive viewer; read-only dashboards."),
+]
+
+
+def ensure_roles_seeded(db: Session) -> None:
+    """Ensure Role table has standard roles. Idempotent."""
+    for name, description in DEFAULT_ROLES:
+        if db.query(Role).filter(Role.name == name).first():
+            continue
+        db.add(Role(name=name, description=description))
+    db.flush()
 
 
 def ensure_demo_tenant_and_user():
@@ -20,6 +40,7 @@ def ensure_demo_tenant_and_user():
     def _ensure():
         db: Session = SessionLocal()
         try:
+            ensure_roles_seeded(db)
             tenant = db.query(Tenant).filter(Tenant.id == DEFAULT_TENANT_ID).first()
             if not tenant:
                 tenant = Tenant(
@@ -28,8 +49,7 @@ def ensure_demo_tenant_and_user():
                     domain="demo",
                 )
                 db.add(tenant)
-                db.flush()  # Flush to get tenant ID available for user
-            
+                db.flush()
             user = db.query(User).filter(User.id == DEFAULT_USER_ID).first()
             if not user:
                 user = User(
@@ -37,9 +57,18 @@ def ensure_demo_tenant_and_user():
                     tenant_id=DEFAULT_TENANT_ID,
                     email="demo@example.com",
                     full_name="Demo User",
+                    auth_source="local",
                 )
                 db.add(user)
-            
+                db.flush()
+            # Assign POLICY_ADMIN and UM_LEADER to demo user if not already
+            existing_roles = db.execute(
+                select(user_roles.c.role).where(user_roles.c.user_id == DEFAULT_USER_ID)
+            ).all()
+            existing_role_names = {r[0] for r in existing_roles}
+            for role_name in ("POLICY_ADMIN", "UM_LEADER"):
+                if role_name not in existing_role_names:
+                    db.execute(insert(user_roles).values(user_id=DEFAULT_USER_ID, role=role_name))
             db.commit()
             return True
         except Exception as e:

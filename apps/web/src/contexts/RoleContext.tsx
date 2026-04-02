@@ -72,9 +72,10 @@ export function RoleProvider({ children }: { children: ReactNode }) {
             apiClient.getUserRoles(user.id),
             apiClient.getUserPermissions(user.id)
           ])
-          
-          // Update if we got valid results
-          if (rolesResult && Array.isArray(rolesResult) && rolesResult.length > 0) {
+          // API returns { user_id, role_names: string[] }; normalize to [{ role_name, role_id }]
+          if (rolesResult?.role_names && Array.isArray(rolesResult.role_names) && rolesResult.role_names.length > 0) {
+            setUserRoles(rolesResult.role_names.map((roleName: string) => ({ role_name: roleName, role_id: roleName })))
+          } else if (rolesResult && Array.isArray(rolesResult) && rolesResult.length > 0) {
             setUserRoles(rolesResult)
           }
           if (permsResult && Array.isArray(permsResult) && permsResult.length > 0) {

@@ -4,27 +4,50 @@
 import axios, { AxiosInstance, AxiosError } from 'axios'
 import logger from './logger'
 
+const TOKEN_KEY = 'uepi_token'
+
+/** localStorage (default) keeps you signed in across visits; VITE_AUTH_STORAGE=session uses sessionStorage. */
+function authStorage(): Storage | null {
+  if (typeof window === 'undefined') return null
+  return import.meta.env.VITE_AUTH_STORAGE === 'session' ? window.sessionStorage : window.localStorage
+}
+
+function clearTokenEverywhere() {
+  if (typeof window === 'undefined') return
+  try {
+    window.localStorage.removeItem(TOKEN_KEY)
+    window.sessionStorage.removeItem(TOKEN_KEY)
+  } catch {
+    /* ignore */
+  }
+}
+
 // Determine API URL based on environment
 // In production (Azure Static Web Apps), use full API URL
 // In development, use localhost or relative path
 const getApiBaseUrl = () => {
-  // If explicitly set via environment variable, use it
+  const host = window.location.hostname.toLowerCase()
+
+  // Local development
+  if (host === 'localhost' || host === '127.0.0.1') {
+    return import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1'
+  }
+
+  // Production build: prefer baked API URL so login works when the Web App only serves static
+  // files or the Node proxy is not running. API CORS allows healthforesight-web*.azurewebsites.net.
   if (import.meta.env.VITE_API_URL) {
     return import.meta.env.VITE_API_URL
   }
-  
-  // Local development
-  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-    return 'http://localhost:8000/api/v1'
+
+  // App Service UI with Node proxy (no VITE_API_URL): same-origin /api/v1 → server.mjs → API
+  if (host.endsWith('.azurewebsites.net') && !host.startsWith('healthforesight-api')) {
+    return `${window.location.origin}/api/v1`
   }
-  
-  // Production: Azure Static Web Apps - use full API URL
-  // Azure Static Web Apps hostname pattern: *.azurestaticapps.net
-  if (window.location.hostname.includes('azurestaticapps.net')) {
-    return 'https://healthforesight-api-9016.azurewebsites.net/api/v1'
+
+  if (host.includes('azurestaticapps.net')) {
+    return 'https://healthforesight-api.azurewebsites.net/api/v1'
   }
-  
-  // Fallback: try relative path (for other deployment scenarios)
+
   return '/api/v1'
 }
 
@@ -73,16 +96,10 @@ export class ApiClient {
         // Log request start time
         ;(config as any).startTime = Date.now()
         
-        // Always try to get token (from memory or localStorage)
+        // Add Bearer token only when present (no auto mock – login page must sign in)
         const token = this.getToken()
         if (token) {
           config.headers.Authorization = `Bearer ${token}`
-        } else {
-          // If no token, use mock token for development
-          // This ensures API calls always have an Authorization header
-          config.headers.Authorization = `Bearer dev-token-123`
-          this.token = 'dev-token-123'
-          localStorage.setItem('uepi_token', 'dev-token-123')
         }
         
         // Log request
@@ -179,15 +196,32 @@ export class ApiClient {
 
   setToken(token: string | null) {
     this.token = token
+    if (typeof window === 'undefined') return
     if (token) {
-      localStorage.setItem('uepi_token', token)
+      const s = authStorage()
+      if (s) s.setItem(TOKEN_KEY, token)
+      const other =
+        import.meta.env.VITE_AUTH_STORAGE === 'session' ? window.localStorage : window.sessionStorage
+      try {
+        other.removeItem(TOKEN_KEY)
+      } catch {
+        /* ignore */
+      }
     } else {
-      localStorage.removeItem('uepi_token')
+      clearTokenEverywhere()
     }
   }
 
+  /** Returns stored token, or null. Treats legacy dev/mock tokens as invalid and clears them so login is required. */
   getToken(): string | null {
-    return this.token || localStorage.getItem('uepi_token')
+    const s = authStorage()
+    let t = this.token || (s?.getItem(TOKEN_KEY) ?? null)
+    if (!t) return null
+    if (t.startsWith('dev-token-') || t.startsWith('mock-') || t === 'dev-token-123') {
+      this.setToken(null)
+      return null
+    }
+    return t
   }
 
   private formatError(error: AxiosError): ApiError {
@@ -204,9 +238,21 @@ export class ApiClient {
     return apiError
   }
 
-  // Auth endpoints
+  // Auth endpoints (supports AD/SSO and local email+password)
   async getMe() {
     const response = await this.client.get('/auth/me')
+    return response.data
+  }
+
+  /** Session check at startup — short timeout so users reach login quickly if API/CORS is down */
+  async getMeSessionVerify(timeoutMs = 12000) {
+    const response = await this.client.get('/auth/me', { timeout: timeoutMs })
+    return response.data
+  }
+
+  /** Local login (email + password). Returns { access_token, token_type, user_id, email, roles }. Use access_token as Bearer. */
+  async login(email: string, password: string) {
+    const response = await this.client.post('/auth/login', { email, password })
     return response.data
   }
 
@@ -268,9 +314,10 @@ export class ApiClient {
       // Accept 404 so axios doesn't throw (avoids console errors for policies without predicted impact)
       const response = await this.client.get(`/policies/${policyId}/predicted-impact`, {
         timeout: 15000,
-        validateStatus: (status) => status === 200 || status === 204 || status === 404,
+        validateStatus: (status) =>
+          status === 200 || status === 204 || status === 404 || status === 500,
       })
-      if (response.status === 404 || response.status === 204) return null
+      if (response.status === 404 || response.status === 204 || response.status === 500) return null
       return response.data
     } catch (error: any) {
       if (error.code === 'ECONNABORTED' || error.message?.includes('timeout') || !error.response) return null
@@ -543,26 +590,6 @@ export class ApiClient {
     return response.data
   }
 
-  async getPolicyVersions(policyId: string) {
-    const response = await this.client.get(`/policies/${policyId}/versions`)
-    return response.data
-  }
-
-  async createPolicyVersion(policyId: string, policy: any, versionNumber: string, changeDescription?: string) {
-    const formData = new FormData()
-    formData.append('policy_logic', JSON.stringify(policy))
-    formData.append('version_number', versionNumber)
-    if (changeDescription) {
-      formData.append('change_description', changeDescription)
-    }
-    const response = await this.client.post(`/policies/${policyId}/versions`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-    return response.data
-  }
-
   async getPolicyReadiness(policyId: string) {
     const response = await this.client.get(`/policies/${policyId}/readiness`)
     return response.data
@@ -705,7 +732,7 @@ export class ApiClient {
       timeout: 600000, // 10 minutes per analysis
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': this.getToken() ? `Bearer ${this.getToken()}` : 'Bearer dev-token-123',
+        'Authorization': this.getToken() ? `Bearer ${this.getToken()}` : undefined,
       },
     })
     const response = await longTimeoutClient.post('/analyses/baseline', data)
@@ -1245,9 +1272,15 @@ export class ApiClient {
     return response.data
   }
 
-  // RBAC endpoints (Epic 1)
+  // RBAC / Access endpoints (Epic 1)
   async getRoles() {
     const response = await this.client.get('/roles')
+    return response.data
+  }
+
+  /** List roles from access router (for user management). Requires POLICY_ADMIN. */
+  async getAccessRoles() {
+    const response = await this.client.get('/access/roles')
     return response.data
   }
 
@@ -1297,8 +1330,37 @@ export class ApiClient {
   }
 
   async checkPermission(resource: string, action: string, resourceId?: string) {
-    const response = await this.client.get('/permissions/check', {
+    const response = await this.client.get('/access/check-permission', {
       params: { resource, action, resource_id: resourceId },
+    })
+    return response.data
+  }
+
+  // User management (access router)
+  async listUsers(params?: { skip?: number; limit?: number }) {
+    const response = await this.client.get('/access/users', { params: params ?? {} })
+    return response.data
+  }
+
+  async getAccessUser(userId: string) {
+    const response = await this.client.get(`/access/users/${userId}`)
+    return response.data
+  }
+
+  async createUser(data: { email: string; full_name?: string; role_names?: string[]; password?: string }) {
+    const response = await this.client.post('/access/users', data)
+    return response.data
+  }
+
+  async updateAccessUser(userId: string, data: { full_name?: string; is_active?: string; role_names?: string[]; password?: string }) {
+    const response = await this.client.patch(`/access/users/${userId}`, data)
+    return response.data
+  }
+
+  async assignUserRoles(userId: string, roleNames: string[]) {
+    const response = await this.client.post(`/access/users/${userId}/roles`, {
+      user_id: userId,
+      role_names: roleNames,
     })
     return response.data
   }
@@ -1339,16 +1401,6 @@ export class ApiClient {
   // Epic 2: Policy Workspace API
   async getPolicyWorkspace(policyId: string) {
     const response = await this.client.get(`/policies/${policyId}/workspace`)
-    return response.data
-  }
-
-  async getPolicyVersions(policyId: string) {
-    const response = await this.client.get(`/policies/${policyId}/versions`)
-    return response.data
-  }
-
-  async createPolicyVersion(policyId: string, versionData: any) {
-    const response = await this.client.post(`/policies/${policyId}/versions`, versionData)
     return response.data
   }
 

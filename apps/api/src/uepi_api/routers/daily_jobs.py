@@ -14,9 +14,8 @@ from sqlalchemy.orm import Session
 from uepi_api.auth import CurrentUser, get_demo_current_user
 from uepi_api.database import get_db, SessionLocal
 from uepi_api.models.job import Job, JobStatus
-from uepi_api.services.daily_pipeline_service import load_daily_data_from_source
-from uepi_api.services.data_generation_service import generate_claims_data_for_date
 
+# Defer heavy imports (polars/pandas) until a daily job runs — smaller memory / faster cold start on Azure.
 router = APIRouter()
 
 
@@ -125,23 +124,45 @@ async def trigger_daily_job(
                 detail=f"Failed to create job record: {str(db_error)}"
             )
         
-        # Run job in background
+        # Prefer Celery so work is not tied to the API Gunicorn worker; fallback to BackgroundTasks.
+        job_queued = False
         try:
-            background_tasks.add_task(
-                run_daily_job_task,
-                tenant_id=current_user.tenant_id,
-                target_date=target_date_obj,
-                run_observations=run_observations,
-                job_id=job_id,
+            from uepi_api.celery_client import send_task
+
+            send_task(
+                "uepi_worker.tasks.daily_data_and_observations_job",
+                args=[
+                    str(current_user.tenant_id),
+                    target_date_obj.isoformat(),
+                    run_observations,
+                    job_id,
+                ],
             )
+            job_queued = True
+        except Exception as celery_err:
+            import logging
+
+            logging.getLogger(__name__).warning(
+                "Daily job: Celery enqueue failed; using FastAPI BackgroundTasks: %s",
+                celery_err,
+            )
+
+        try:
+            if not job_queued:
+                background_tasks.add_task(
+                    run_daily_job_task,
+                    tenant_id=current_user.tenant_id,
+                    target_date=target_date_obj,
+                    run_observations=run_observations,
+                    job_id=job_id,
+                )
         except Exception as task_error:
-            # Update job status to failed
             try:
                 job.status = JobStatus.FAILED.value
                 job.error_message = str(task_error)[:1000]
                 job.message = f"Failed to start background task: {str(task_error)}"
                 db.commit()
-            except:
+            except Exception:
                 db.rollback()
             raise HTTPException(
                 status_code=500,
@@ -183,6 +204,12 @@ def run_daily_job_task(tenant_id: UUID, target_date: datetime, run_observations:
     """
     db = SessionLocal()
     try:
+        from uepi_api.database import set_local_statement_timeout
+
+        def _long_timeout(sess):
+            set_local_statement_timeout(sess, 600_000)
+
+        _long_timeout(db)
         # Update job status to RUNNING
         job = db.query(Job).filter(Job.job_id == job_id).first()
         if not job:
@@ -193,10 +220,14 @@ def run_daily_job_task(tenant_id: UUID, target_date: datetime, run_observations:
         job.started_at = datetime.now()
         job.message = f"Daily job running. Generating/loading data for {target_date.date()}..."
         db.commit()
-        
+        _long_timeout(db)
+
         target_date_obj = target_date.date()
         claims_loaded = 0
         created_period_id = None
+
+        from uepi_api.services.daily_pipeline_service import load_daily_data_from_source
+        from uepi_api.services.data_generation_service import generate_claims_data_for_date
         
         # Step 1: Try to load data from source folder first
         try:
@@ -231,6 +262,7 @@ def run_daily_job_task(tenant_id: UUID, target_date: datetime, run_observations:
             import traceback
             traceback.print_exc()
             db.rollback()
+            _long_timeout(db)
             job = db.query(Job).filter(Job.job_id == job_id).first()
             if job:
                 job.status = JobStatus.FAILED.value
@@ -272,6 +304,7 @@ def run_daily_job_task(tenant_id: UUID, target_date: datetime, run_observations:
                     print(f"⚠️  Data period creation returned None (may already exist)")
                     job.message = f"Data loaded ({claims_loaded} claims). {'Running observations...' if run_observations else 'Done.'}"
                 db.commit()
+                _long_timeout(db)
             except Exception as period_error:
                 # Don't fail the job if data period creation fails - log and continue
                 print(f"⚠️  Warning: Failed to create data period: {period_error}")
@@ -279,6 +312,7 @@ def run_daily_job_task(tenant_id: UUID, target_date: datetime, run_observations:
                 traceback.print_exc()
                 job.message = f"Data loaded ({claims_loaded} claims). Data period creation skipped. {'Running observations...' if run_observations else 'Done.'}"
                 db.commit()
+                _long_timeout(db)
         
         # Step 3: Run observations if requested
         observations_created = 0
@@ -288,6 +322,7 @@ def run_daily_job_task(tenant_id: UUID, target_date: datetime, run_observations:
             try:
                 job.message = f"Data loaded ({claims_loaded} claims). Creating observations for active policies..."
                 db.commit()
+                _long_timeout(db)
                 
                 # Get all active policies with completed analyses
                 from uepi_api.storage_policies import list_policies
@@ -449,6 +484,9 @@ def run_daily_job_task(tenant_id: UUID, target_date: datetime, run_observations:
         print(f"Traceback: {error_trace}")
         try:
             db.rollback()
+            from uepi_api.database import set_local_statement_timeout
+
+            set_local_statement_timeout(db, 600_000)
             job = db.query(Job).filter(Job.job_id == job_id).first()
             if job:
                 job.status = JobStatus.FAILED.value

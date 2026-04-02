@@ -5,8 +5,10 @@ set -e
 
 # Configuration
 RESOURCE_GROUP="${RESOURCE_GROUP:-healthforesight-rg}"
-STATIC_WEB_APP_NAME="${STATIC_WEB_APP_NAME:-healthforesight-web-9016}"
-API_URL="${API_URL:-https://healthforesight-api-9016.azurewebsites.net}"
+STATIC_WEB_APP_NAME="${STATIC_WEB_APP_NAME:-healthforesight-web}"
+API_URL="${API_URL:-https://healthforesight-api.azurewebsites.net}"
+# Optional: VITE_AUTH_STORAGE=session — JWT in sessionStorage only (new browser session → login page).
+# Leave unset to keep default localStorage (stay signed in until logout or token expiry).
 
 echo "Deploying Frontend to Azure Static Web Apps..."
 
@@ -41,6 +43,10 @@ else
 fi
 echo "VITE_API_URL=$VITE_API_URL_VALUE" > .env.production
 echo "✅ Set VITE_API_URL=$VITE_API_URL_VALUE"
+if [ -n "${VITE_AUTH_STORAGE:-}" ]; then
+  echo "VITE_AUTH_STORAGE=$VITE_AUTH_STORAGE" >> .env.production
+  echo "✅ Set VITE_AUTH_STORAGE=$VITE_AUTH_STORAGE"
+fi
 
 # Install dependencies
 echo "Installing dependencies..."
@@ -78,34 +84,78 @@ else
     echo "✅ SWA CLI already installed"
 fi
 
-echo "Getting deployment token..."
+echo "Getting deployment token (for Static Web App)..."
 DEPLOYMENT_TOKEN=$(az staticwebapp secrets list \
   --name $STATIC_WEB_APP_NAME \
   --resource-group $RESOURCE_GROUP \
   --query "properties.apiKey" \
   --output tsv 2>/dev/null || echo "")
 
-if [ -z "$DEPLOYMENT_TOKEN" ]; then
-    echo "⚠️  Could not get deployment token automatically."
+if [ -n "$DEPLOYMENT_TOKEN" ]; then
+  echo "Deploying to Azure Static Web Apps..."
+  swa deploy ./dist \
+    --deployment-token "$DEPLOYMENT_TOKEN" \
+    --env production
+  echo ""
+  echo "✅ Deployment completed!"
+  echo "Frontend URL: https://$STATIC_WEB_APP_NAME.azurestaticapps.net"
+else
+  # App Service Web App: Node + server.mjs proxies /api → backend (no browser CORS)
+  if az webapp show --resource-group "$RESOURCE_GROUP" --name "$STATIC_WEB_APP_NAME" --output none 2>/dev/null; then
+    echo "Static Web App not found; deploying Node proxy + SPA to '$STATIC_WEB_APP_NAME'..."
+    if [[ "$API_URL" == *"/api/v1"* ]]; then
+      VITE_API_URL_VALUE="$API_URL"
+    else
+      VITE_API_URL_VALUE="$API_URL/api/v1"
+    fi
+    echo "VITE_API_URL=$VITE_API_URL_VALUE" > .env.production
+    if [ -n "${VITE_AUTH_STORAGE:-}" ]; then
+      echo "VITE_AUTH_STORAGE=$VITE_AUTH_STORAGE" >> .env.production
+      echo "✅ VITE_AUTH_STORAGE=$VITE_AUTH_STORAGE"
+    fi
+    echo "Building with VITE_API_URL=$VITE_API_URL_VALUE (direct API; proxy still serves /api if used)..."
+    npm run build:skip-check
+    if [ -f "staticwebapp.config.json" ]; then
+      cp staticwebapp.config.json dist/staticwebapp.config.json 2>/dev/null || true
+    fi
+    echo "Production node_modules for server..."
+    rm -rf node_modules
+    npm install --omit=dev --no-audit --no-fund
+    WEB_DEPLOY_ZIP="${TMPDIR:-/tmp}/web-deploy-$(date +%s)-$$.zip"
+    rm -f "$WEB_DEPLOY_ZIP"
+    zip -r -q "$WEB_DEPLOY_ZIP" package.json package-lock.json server.mjs dist node_modules
+    API_BACKEND="${API_URL%/}"
+    API_BACKEND="${API_BACKEND%/api/v1}"
+    az webapp config appsettings set \
+      --resource-group "$RESOURCE_GROUP" \
+      --name "$STATIC_WEB_APP_NAME" \
+      --settings "API_BACKEND_URL=$API_BACKEND" "WEBSITE_NODE_DEFAULT_VERSION=~20" \
+      --output none 2>/dev/null || true
+    az webapp config set \
+      --resource-group "$RESOURCE_GROUP" \
+      --name "$STATIC_WEB_APP_NAME" \
+      --linux-fx-version "NODE|20-lts" \
+      --output none 2>/dev/null || true
+    az webapp config set \
+      --resource-group "$RESOURCE_GROUP" \
+      --name "$STATIC_WEB_APP_NAME" \
+      --startup-command "node server.mjs" \
+      --output none 2>/dev/null || echo "⚠️  Portal → Configuration → General → Stack Node 20, Startup: node server.mjs"
+    az webapp deploy \
+      --resource-group "$RESOURCE_GROUP" \
+      --name "$STATIC_WEB_APP_NAME" \
+      --src-path "$WEB_DEPLOY_ZIP" \
+      --type zip
+    rm -f "$WEB_DEPLOY_ZIP"
     echo ""
-    echo "Please get the deployment token manually:"
-    echo "  1. Run: az staticwebapp secrets list --name $STATIC_WEB_APP_NAME --resource-group $RESOURCE_GROUP"
-    echo "  2. Copy the 'apiKey' value"
-    echo "  3. Then run: swa deploy ./dist --deployment-token <YOUR_TOKEN>"
+    echo "✅ Deployment completed!"
+    echo "Frontend: https://$STATIC_WEB_APP_NAME.azurewebsites.net  (API proxy → $API_BACKEND)"
+  else
+    echo "⚠️  Could not get Static Web App deployment token, and Web App '$STATIC_WEB_APP_NAME' not found."
     echo ""
-    echo "Or get it from Azure Portal:"
-    echo "  Azure Portal > Static Web Apps > $STATIC_WEB_APP_NAME > Deployment > Manage deployment token"
-    echo ""
-    echo "Build output is ready in: ./dist"
+    echo "Build output is in: ./dist"
+    echo "To deploy manually: create a Static Web App or Web App, or get the deployment token from Azure Portal."
     exit 1
+  fi
 fi
-
-echo "Deploying to Azure Static Web Apps..."
-swa deploy ./dist \
-  --deployment-token "$DEPLOYMENT_TOKEN" \
-  --env production
-
-echo ""
-echo "✅ Deployment completed!"
-echo "Frontend URL: https://$STATIC_WEB_APP_NAME.azurestaticapps.net"
 

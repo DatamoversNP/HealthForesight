@@ -43,15 +43,19 @@ class Tenant(Base):
 
 
 class User(Base):
-    """User model"""
+    """User model. Supports both OIDC (e.g. Azure AD) and local (email/password) users."""
     __tablename__ = "users"
     
     id = Column(PGUUID(as_uuid=True), primary_key=True, default=uuid4)
     tenant_id = Column(PGUUID(as_uuid=True), ForeignKey("tenants.id"), nullable=False, index=True)
-    email = Column(String, nullable=False, unique=True, index=True)
-    oidc_sub = Column(String, unique=True, nullable=True, index=True)
+    email = Column(String, nullable=False, index=True)
+    oidc_sub = Column(String, unique=True, nullable=True, index=True)  # Set for AD/OIDC users
     full_name = Column(String, nullable=True)
     is_active = Column(String, default="true", nullable=False)  # Using String for compatibility
+    # auth_source: "oidc" (Azure AD / external IdP) or "local" (email/password)
+    auth_source = Column(String(32), nullable=True, default="local")
+    # password_hash: only set for local users; OIDC users authenticate via IdP
+    password_hash = Column(String(255), nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
     
@@ -100,4 +104,9 @@ class Role(Base):
     
     # Note: User relationship via user_roles is removed to avoid SQLAlchemy join condition issues
     # To query users with a role: db.execute(select(user_roles.c.user_id).where(user_roles.c.role == role.name)).scalars().all()
+
+
+# User.notifications / User.notification_preferences use string refs to these classes; load the module
+# so SQLAlchemy can configure the User mapper (otherwise db.query(User) raises InvalidRequestError).
+import uepi_api.models.notification  # noqa: E402, F401
 

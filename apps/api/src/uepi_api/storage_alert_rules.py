@@ -338,10 +338,24 @@ def list_alert_events(
     policy_id: Optional[UUID] = None,
     rule_id: Optional[UUID] = None,
     severity: Optional[str] = None,
-    resolved_only: Optional[bool] = None
+    resolved_only: Optional[bool] = None,
+    provider_id: Optional[str] = None,
+    acknowledged_only: Optional[bool] = None,
 ) -> List[AlertEvent]:
-    """List alert events - from database"""
-    return _list_alert_events(tenant_id, policy_id, rule_id, severity, resolved_only)
+    """List alert events - from database.
+
+    ``provider_id`` filters on ``details_json`` when present (substring match on stringified details).
+    ``acknowledged_only`` maps to resolved state: True => only resolved events, False => only open.
+    """
+    return _list_alert_events(
+        tenant_id,
+        policy_id,
+        rule_id,
+        severity,
+        resolved_only,
+        provider_id=provider_id,
+        acknowledged_only=acknowledged_only,
+    )
 
 
 def _list_alert_events(
@@ -349,7 +363,9 @@ def _list_alert_events(
     policy_id: Optional[UUID] = None,
     rule_id: Optional[UUID] = None,
     severity: Optional[str] = None,
-    resolved_only: Optional[bool] = None
+    resolved_only: Optional[bool] = None,
+    provider_id: Optional[str] = None,
+    acknowledged_only: Optional[bool] = None,
 ) -> List[AlertEvent]:
     """List alert events from database"""
     from uepi_api.database import SessionLocal
@@ -377,31 +393,57 @@ def _list_alert_events(
                 query = query.filter(AlertEventDB.resolved_at.isnot(None))
             else:
                 query = query.filter(AlertEventDB.resolved_at.is_(None))
-        
+        elif acknowledged_only is not None:
+            if acknowledged_only:
+                query = query.filter(AlertEventDB.resolved_at.isnot(None))
+            else:
+                query = query.filter(AlertEventDB.resolved_at.is_(None))
+
         # Sort by triggered_at descending
         events_db = query.order_by(desc(AlertEventDB.triggered_at)).all()
         
         # Convert to Pydantic models
         result = []
         for event_db in events_db:
-            # Get rule_id string for compatibility
-            rule_id_str = None
-            if event_db.rule_id:
-                rule = db.query(AlertRuleDB).filter(AlertRuleDB.id == event_db.rule_id).first()
-                if rule:
-                    rule_id_str = rule.rule_id
-            
-            result.append(AlertEvent(
-                event_id=UUID(event_db.event_id),
-                rule_id=UUID(rule_id_str) if rule_id_str else None,
-                policy_id=event_db.policy_id,
-                severity=event_db.severity,
-                details=event_db.details_json if event_db.details_json else {},
-                triggered_at=event_db.triggered_at,
-                resolved_at=event_db.resolved_at,
-                resolved_by_user_id=event_db.resolved_by_user_id,
-            ))
-        
+            try:
+                # Get rule_id string for compatibility
+                rule_id_str = None
+                if event_db.rule_id:
+                    rule = db.query(AlertRuleDB).filter(AlertRuleDB.id == event_db.rule_id).first()
+                    if rule:
+                        rule_id_str = rule.rule_id
+                rid = None
+                if rule_id_str:
+                    try:
+                        rid = UUID(rule_id_str)
+                    except (ValueError, TypeError):
+                        rid = None
+                result.append(AlertEvent(
+                    event_id=UUID(str(event_db.event_id)),
+                    rule_id=rid,
+                    policy_id=event_db.policy_id,
+                    severity=event_db.severity,
+                    details=event_db.details_json if event_db.details_json else {},
+                    triggered_at=event_db.triggered_at,
+                    resolved_at=event_db.resolved_at,
+                    resolved_by_user_id=event_db.resolved_by_user_id,
+                ))
+            except (ValueError, TypeError) as conv_err:
+                print(f"WARN list_alert_events skip row id={getattr(event_db, 'id', '?')}: {conv_err}")
+                continue
+
+        if provider_id and provider_id.strip():
+            pid = provider_id.strip()
+            filtered: List[AlertEvent] = []
+            for ev in result:
+                try:
+                    blob = ev.details if isinstance(ev.details, dict) else {}
+                    if pid in str(blob):
+                        filtered.append(ev)
+                except Exception:
+                    continue
+            result = filtered
+
         return result
         
     except Exception as e:

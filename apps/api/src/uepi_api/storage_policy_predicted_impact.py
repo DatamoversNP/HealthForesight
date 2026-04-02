@@ -1,4 +1,5 @@
 """Policy predicted impact storage operations - database only"""
+import json
 from typing import Optional, Dict, Any
 from uuid import UUID
 from datetime import datetime
@@ -60,6 +61,13 @@ def _get_predicted_impact(policy_id: UUID | str, tenant_id: UUID) -> Optional[Di
         # Convert to dict format (same as file-based)
         # Extract all fields from metrics_json (which may contain full predicted impact)
         metrics_data = predicted_impact.metrics_json if predicted_impact.metrics_json else {}
+        if isinstance(metrics_data, str):
+            try:
+                metrics_data = json.loads(metrics_data)
+            except (json.JSONDecodeError, TypeError):
+                metrics_data = {}
+        if not isinstance(metrics_data, dict):
+            metrics_data = {}
         
         pred_metrics = metrics_data.get("metrics", metrics_data) if isinstance(metrics_data, dict) else metrics_data
         if not isinstance(pred_metrics, dict):

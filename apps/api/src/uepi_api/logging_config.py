@@ -9,10 +9,10 @@ from typing import Any, Dict, Optional
 import json
 import traceback
 
-# Get project root (6 levels up from this file: apps/api/src/uepi_api/logging_config.py)
+# Project root: .../apps (from apps/api/src/uepi_api/logging_config.py)
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent
 LOG_DIR = PROJECT_ROOT / "logs"
-LOG_DIR.mkdir(exist_ok=True)
+# Do not mkdir at import — Azure App Service may use a read-only app dir; setup_logging handles dirs safely.
 
 # Log file paths
 API_LOG_FILE = LOG_DIR / "api.log"
@@ -80,7 +80,14 @@ class DetailedFormatter(logging.Formatter):
 
 def setup_logging(log_level: str = "INFO", enable_file_logging: bool = True) -> None:
     """Setup comprehensive logging configuration"""
-    
+    from uepi_api.runtime_env import is_azure_app_service
+
+    # Linux Web App for Containers: WEBSITE_INSTANCE_ID is often missing; file logs under /app fail
+    # and can abort FastAPI lifespan before Uvicorn binds → HTML 503. Console-only unless opted in.
+    if enable_file_logging and is_azure_app_service():
+        if os.getenv("UEPI_ENABLE_FILE_LOG", "").strip().lower() not in ("1", "true", "yes"):
+            enable_file_logging = False
+
     # Root logger
     root_logger = logging.getLogger()
     root_logger.setLevel(getattr(logging, log_level.upper(), logging.INFO))
@@ -95,51 +102,78 @@ def setup_logging(log_level: str = "INFO", enable_file_logging: bool = True) -> 
     root_logger.addHandler(console_handler)
     
     if enable_file_logging:
-        # API log file (all logs)
-        api_handler = logging.handlers.RotatingFileHandler(
-            API_LOG_FILE,
-            maxBytes=10 * 1024 * 1024,  # 10MB
-            backupCount=5,
-            encoding='utf-8'
-        )
-        api_handler.setLevel(logging.DEBUG)
-        api_handler.setFormatter(JSONFormatter())
-        root_logger.addHandler(api_handler)
-        
-        # Error log file (errors only)
-        error_handler = logging.handlers.RotatingFileHandler(
-            ERROR_LOG_FILE,
-            maxBytes=10 * 1024 * 1024,  # 10MB
-            backupCount=10,
-            encoding='utf-8'
-        )
-        error_handler.setLevel(logging.ERROR)
-        error_handler.setFormatter(JSONFormatter())
-        root_logger.addHandler(error_handler)
-        
-        # Actions log file (action tracking)
-        actions_handler = logging.handlers.RotatingFileHandler(
-            ACTIONS_LOG_FILE,
-            maxBytes=10 * 1024 * 1024,  # 10MB
-            backupCount=5,
-            encoding='utf-8'
-        )
-        actions_handler.setLevel(logging.INFO)
-        actions_handler.addFilter(lambda record: hasattr(record, "action_type"))
-        actions_handler.setFormatter(JSONFormatter())
-        root_logger.addHandler(actions_handler)
-        
-        # Requests log file (HTTP requests)
-        requests_handler = logging.handlers.RotatingFileHandler(
-            REQUESTS_LOG_FILE,
-            maxBytes=10 * 1024 * 1024,  # 10MB
-            backupCount=5,
-            encoding='utf-8'
-        )
-        requests_handler.setLevel(logging.INFO)
-        requests_handler.addFilter(lambda record: hasattr(record, "request_id"))
-        requests_handler.setFormatter(JSONFormatter())
-        root_logger.addHandler(requests_handler)
+        log_dir = LOG_DIR
+        try:
+            log_dir.mkdir(parents=True, exist_ok=True)
+        except OSError as e:
+            # Azure Linux containers often disallow writes under /app — fall back to /tmp
+            log_dir = Path(os.environ.get("TMPDIR", "/tmp")) / "uepi_logs"
+            try:
+                log_dir.mkdir(parents=True, exist_ok=True)
+            except OSError:
+                logging.warning(
+                    "File logging disabled: could not create log directory (%s); using console only",
+                    e,
+                )
+                enable_file_logging = False
+
+        if enable_file_logging:
+            try:
+                api_path = log_dir / "api.log"
+                err_path = log_dir / "errors.log"
+                act_path = log_dir / "actions.log"
+                req_path = log_dir / "requests.log"
+                # API log file (all logs)
+                api_handler = logging.handlers.RotatingFileHandler(
+                    api_path,
+                    maxBytes=10 * 1024 * 1024,  # 10MB
+                    backupCount=5,
+                    encoding='utf-8'
+                )
+                api_handler.setLevel(logging.DEBUG)
+                api_handler.setFormatter(JSONFormatter())
+                root_logger.addHandler(api_handler)
+
+                # Error log file (errors only)
+                error_handler = logging.handlers.RotatingFileHandler(
+                    err_path,
+                    maxBytes=10 * 1024 * 1024,  # 10MB
+                    backupCount=10,
+                    encoding='utf-8'
+                )
+                error_handler.setLevel(logging.ERROR)
+                error_handler.setFormatter(JSONFormatter())
+                root_logger.addHandler(error_handler)
+
+                # Actions log file (action tracking)
+                actions_handler = logging.handlers.RotatingFileHandler(
+                    act_path,
+                    maxBytes=10 * 1024 * 1024,  # 10MB
+                    backupCount=5,
+                    encoding='utf-8'
+                )
+                actions_handler.setLevel(logging.INFO)
+                actions_handler.addFilter(lambda record: hasattr(record, "action_type"))
+                actions_handler.setFormatter(JSONFormatter())
+                root_logger.addHandler(actions_handler)
+
+                # Requests log file (HTTP requests)
+                requests_handler = logging.handlers.RotatingFileHandler(
+                    req_path,
+                    maxBytes=10 * 1024 * 1024,  # 10MB
+                    backupCount=5,
+                    encoding='utf-8'
+                )
+                requests_handler.setLevel(logging.INFO)
+                requests_handler.addFilter(lambda record: hasattr(record, "request_id"))
+                requests_handler.setFormatter(JSONFormatter())
+                root_logger.addHandler(requests_handler)
+            except OSError as e:
+                logging.warning(
+                    "File logging disabled: RotatingFileHandler failed (%s); console only",
+                    e,
+                )
+                enable_file_logging = False
     
     # Set specific logger levels
     logging.getLogger("uvicorn").setLevel(logging.INFO)
@@ -149,7 +183,7 @@ def setup_logging(log_level: str = "INFO", enable_file_logging: bool = True) -> 
     logging.info("Logging configured", extra={
         "log_level": log_level,
         "file_logging": enable_file_logging,
-        "log_dir": str(LOG_DIR)
+        "log_dir": str(LOG_DIR),
     })
 
 

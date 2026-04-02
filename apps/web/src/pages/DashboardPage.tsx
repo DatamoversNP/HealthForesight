@@ -554,8 +554,8 @@ export default function DashboardPage() {
                     <Area
                       type="monotone"
                       dataKey="change"
-                      stroke={healthForesightColors.primary}
-                      fill={healthForesightColors.primary}
+                      stroke={healthForesightColors.primary?.main ?? '#3B2F8F'}
+                      fill={healthForesightColors.primary?.main ?? '#3B2F8F'}
                       fillOpacity={0.3}
                       name="Utilization Change (%)"
                     />

@@ -1,4 +1,5 @@
-"""Authentication and authorization"""
+"""Authentication and authorization. Supports both OIDC (e.g. Azure AD) and local (email/password) users."""
+from datetime import datetime, timedelta
 from typing import Annotated
 from uuid import UUID, uuid4
 from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutureTimeoutError
@@ -16,7 +17,10 @@ from uepi_api.storage_auth import get_demo_user
 from uepi_api.models.tenant import User, Tenant
 from uepi_common.models import TenantRole as CommonTenantRole
 
-security = HTTPBearer(auto_error=False)  # Don't auto-error, handle manually
+security = HTTPBearer(auto_error=False)
+
+# Issuer for JWTs we issue for local (email/password) login. Enables distinguishing from OIDC tokens.
+LOCAL_JWT_ISSUER = "healthforesight-local"  # Don't auto-error, handle manually
 
 # Thread pool for database operations with timeout
 _db_executor = ThreadPoolExecutor(max_workers=5)
@@ -61,86 +65,35 @@ async def get_jwks(issuer: str) -> dict:
             )
 
 
-async def get_demo_current_user(db=None) -> CurrentUser:
-    """Get demo user as CurrentUser - database only"""
-    # Database mode - Fixed UUIDs for demo user/tenant (consistent across calls)
-    # Use same tenant ID as DEFAULT_TENANT_ID for consistency with seeding scripts
+def get_demo_current_user() -> CurrentUser:
+    """Return demo user as CurrentUser without any database call (fast path for access/roles/permissions)."""
     demo_user_id = UUID("00000000-0000-0000-0000-000000000001")
-    demo_tenant_id = UUID("00000000-0000-0000-0000-000000000001")  # Match DEFAULT_TENANT_ID
-    
-    # Try to get/create from database if available, but don't fail if DB is unavailable
-    if db:
-        try:
-            # Test database connection first with timeout protection (5 second timeout)
-            def test_connection():
-                try:
-                    db.execute(text("SELECT 1"))
-                    return True
-                except Exception:
-                    return False
-            
-            try:
-                # Run connection test with 5 second timeout
-                future = _db_executor.submit(test_connection)
-                connection_ok = future.result(timeout=5)
-                if not connection_ok:
-                    raise Exception("Connection test failed")
-            except (FutureTimeoutError, Exception) as conn_error:
-                # Database connection failed or timed out - skip DB queries
-                print(f"WARNING: Database connection failed/timed out in get_demo_current_user: {conn_error}")
-                db = None  # Skip all database operations
-            
-            if db:
-                # Try to get existing demo user from DB
-                demo_user = db.query(User).filter(User.email == "demo@example.com").first()
-                if demo_user:
-                    return CurrentUser(
-                        user_id=demo_user.id,
-                        tenant_id=demo_user.tenant_id,
-                        email=demo_user.email,
-                        roles=["POLICY_ADMIN", "UM_LEADER"],
-                    )
-                
-                # Try to create demo tenant and user
-                demo_tenant = db.query(Tenant).filter(Tenant.id == demo_tenant_id).first()
-                if not demo_tenant:
-                    demo_tenant = Tenant(id=demo_tenant_id, name="Demo Tenant", domain="demo")
-                    db.add(demo_tenant)
-                
-                demo_user = User(
-                    id=demo_user_id,
-                    tenant_id=demo_tenant_id,
-                    email="demo@example.com",
-                    full_name="Demo User",
-                    is_active="true",
-                    is_admin="true",
-                    is_tenant_admin="true",
-                )
-                db.add(demo_user)
-                db.commit()
-                db.refresh(demo_user)
-                
-                return CurrentUser(
-                    user_id=demo_user.id,
-                    tenant_id=demo_user.tenant_id,
-                    email=demo_user.email,
-                    roles=["POLICY_ADMIN", "UM_LEADER"],
-                )
-        except Exception as e:
-            # Database unavailable or error - use fixed UUIDs without DB
-            print(f"WARNING: Database error in get_demo_current_user: {e}")
-            if db:
-                try:
-                    db.rollback()
-                except:
-                    pass
-    
-    # Return CurrentUser with fixed UUIDs (no database required)
+    demo_tenant_id = UUID("00000000-0000-0000-0000-000000000001")
     return CurrentUser(
         user_id=demo_user_id,
         tenant_id=demo_tenant_id,
         email="demo@example.com",
         roles=["POLICY_ADMIN", "UM_LEADER"],
+    )
+
+
+def create_local_jwt(user_id: UUID, tenant_id: UUID, email: str, roles: list[str]) -> str:
+    """Create a JWT for local (email/password) users. Used after successful login."""
+    settings = get_settings()
+    expire = datetime.utcnow() + timedelta(minutes=settings.jwt_expiration_minutes)
+    payload = {
+        "sub": str(user_id),
+        "iss": LOCAL_JWT_ISSUER,
+        "email": email,
+        "tenant_id": str(tenant_id),
+        "roles": roles,
+        "exp": expire,
+        "iat": datetime.utcnow(),
+    }
+    return jwt.encode(
+        payload,
+        settings.jwt_secret,
+        algorithm=settings.jwt_algorithm,
     )
 
 
@@ -175,19 +128,41 @@ async def verify_token(
     if not credentials or not credentials.credentials:
         # In dev mode or if OIDC not configured, allow no credentials
         if is_dev_mode or not oidc_configured:
-            return await get_demo_current_user(db)
+            return get_demo_current_user()
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Authentication required",
         )
     
     token = credentials.credentials
-    
-    # ALWAYS check for mock tokens FIRST (before environment/OIDC checks)
-    # This allows testing in any environment
-    if token.startswith("dev-token-") or token.startswith("mock-") or (len(token) < 50 and not token.count(".") >= 2):
-        # Mock token - fallback to demo user
-        return await get_demo_current_user(db)
+
+    # Reject legacy dev/mock tokens so that only real login (JWT or OIDC) is accepted
+    if token.startswith("dev-token-") or token.startswith("mock-") or (len(token) < 50 and token.count(".") < 2):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid or expired token")
+
+    # Local JWT (email/password login): decode with our secret and load user from DB
+    try:
+        decoded = jwt.decode(
+            token,
+            settings.jwt_secret,
+            algorithms=[settings.jwt_algorithm],
+        )
+        if decoded.get("iss") == LOCAL_JWT_ISSUER and decoded.get("sub"):
+            user_id = UUID(decoded["sub"])
+            user = db.query(User).filter(User.id == user_id).first()
+            if user and (getattr(user, "is_active", "true") or "true") == "true":
+                roles = user.get_roles(db)
+                if not roles:
+                    roles = ["POLICY_ADMIN"]
+                return CurrentUser(
+                    user_id=user.id,
+                    tenant_id=user.tenant_id,
+                    email=user.email,
+                    roles=roles,
+                    oidc_sub=user.oidc_sub,
+                )
+    except (JWTError, ValueError, TypeError):
+        pass  # Not our JWT or invalid; fall through to OIDC
     
     try:
         # Try to decode token without verification first to check if it's a JWT
@@ -197,7 +172,7 @@ async def verify_token(
         except Exception:
             # Not a valid JWT format - in dev mode or if OIDC not configured, treat as mock token
             if is_dev_mode or not oidc_configured:
-                return await get_demo_current_user(db)
+                return get_demo_current_user()
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Invalid token format",
@@ -206,7 +181,7 @@ async def verify_token(
         if not issuer:
             # No issuer - in dev mode or if OIDC not configured, use demo user
             if is_dev_mode or not oidc_configured:
-                return await get_demo_current_user(db)
+                return get_demo_current_user()
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Invalid token: no issuer",
@@ -231,7 +206,7 @@ async def verify_token(
             except Exception as e:
                 # If JWKS fetch fails, fall back to demo user in dev mode
                 if is_dev_mode or not oidc_configured:
-                    return await get_demo_current_user(db)
+                    return get_demo_current_user()
                 raise
         else:
             # No OIDC configured - decode without verification
@@ -246,7 +221,7 @@ async def verify_token(
         if not email:
             # Fallback to demo user in dev mode or if OIDC not configured
             if is_dev_mode or not oidc_configured:
-                return await get_demo_current_user(db)
+                return get_demo_current_user()
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Invalid token: missing required claims",
@@ -272,7 +247,7 @@ async def verify_token(
                 # Database connection failed or timed out - skip DB queries
                 print(f"WARNING: Database connection failed/timed out in verify_token: {conn_error}")
                 if is_dev_mode or not oidc_configured:
-                    return await get_demo_current_user(None)  # Pass None to skip DB
+                    return get_demo_current_user()
                 raise HTTPException(
                     status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
                     detail=f"Database connection failed: {str(conn_error)}",
@@ -301,6 +276,7 @@ async def verify_token(
                     email=email,
                     tenant_id=tenant_id,
                     full_name=decoded.get("name"),
+                    auth_source="oidc",
                 )
                 db.add(user)
                 db.commit()
@@ -326,7 +302,7 @@ async def verify_token(
             # Database unavailable - fall back to demo user
             print(f"WARNING: Database error in verify_token: {db_error}")
             if is_dev_mode or not oidc_configured:
-                return await get_demo_current_user(None)  # Pass None to skip DB
+                return get_demo_current_user()
             # In production with OIDC, this is a real error
             raise HTTPException(
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
@@ -336,7 +312,7 @@ async def verify_token(
     except JWTError as e:
         # JWT error - in dev mode or if OIDC not configured, fallback to demo user
         if is_dev_mode or not oidc_configured:
-            return await get_demo_current_user(db)
+            return get_demo_current_user()
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=f"Invalid token: {str(e)}",
@@ -347,7 +323,7 @@ async def verify_token(
     except Exception as e:
         # Any other error - in dev mode or if OIDC not configured, fallback to demo user
         if is_dev_mode or not oidc_configured:
-            return await get_demo_current_user(db)
+            return get_demo_current_user()
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=f"Authentication failed: {str(e)}",

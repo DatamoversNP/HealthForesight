@@ -1,69 +1,58 @@
-"""API routers"""
-# Core routers (always available)
-from . import (
-    analyses,
-    auth,
-    decisions,
-    exports,
-    lineage,
-    notifications,
-    policies,
-    policy_import,
-    scorecards,
-    admin,
-    access,
-    data_health,
+"""API routers — lazy package.
+
+Previously this module did ``from . import analyses, policies, …`` at import time, so any
+``from uepi_api.routers import auth`` (as used by ``main.py``) still loaded analyses,
+policies, optional datasets (Polars), etc. That defeats lazy startup and OOMs small Azure SKUs.
+
+Submodules load on first access via :func:`__getattr__` (PEP 562).
+"""
+from __future__ import annotations
+
+import importlib
+from typing import Any
+
+# Match legacy try/except: these may fail import; expose as None
+_OPTIONAL_SUBMODULES = frozenset(
+    {
+        "datasets",
+        "cohorts",
+        "ingestions",
+        "pipeline_monitoring",
+        "policies_file",
+    }
 )
 
-# Optional routers (may have dependencies like boto3)
-try:
-    from . import datasets
-except (ImportError, PermissionError, OSError):
-    datasets = None  # Use datasets_file instead
 
-# Optional routers (may have dependencies)
-try:
-    from . import cohorts
-except (ImportError, PermissionError, OSError):
-    cohorts = None
+def __getattr__(name: str) -> Any:
+    if name.startswith("_"):
+        raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+    try:
+        mod = importlib.import_module(f"{__name__}.{name}")
+    except (ImportError, PermissionError, OSError):
+        if name in _OPTIONAL_SUBMODULES:
+            globals()[name] = None
+            return None
+        raise AttributeError(f"module {__name__!r} has no attribute {name!r}") from None
+    globals()[name] = mod
+    return mod
 
-# Optional imports (may fail if dependencies not available)
-# ingestions router requires boto3 which may have permission issues
-# We use ingestions_file instead for file storage
-ingestions = None
-try:
-    from . import ingestions
-except (ImportError, PermissionError, OSError):
-    pass  # ingestions router not available - use ingestions_file instead
 
-# Optional routers (may have dependencies like polars)
-pipeline_monitoring = None
-try:
-    from . import pipeline_monitoring
-except (ImportError, PermissionError, OSError):
-    pass  # pipeline_monitoring router not available
-
-# File-based routers (only when USE_FILE_STORAGE is enabled)
-try:
-    from . import policies_file
-except ImportError:
-    policies_file = None
-
-__all__ = [
-    "analyses",
-    "auth",
-    "cohorts",
-    "decisions",
-    "exports",
-    "ingestions",
-    "lineage",
-    "notifications",
-    "policies",
-    "policies_file",
-    "policy_import",
-    "scorecards",
-    "admin",
-    "access",
-    "datasets",
-    "data_health",
-]
+def __dir__() -> list[str]:
+    return sorted(
+        {k for k in globals() if not k.startswith("_")}
+        | set(_OPTIONAL_SUBMODULES)
+        | {
+            "analyses",
+            "auth",
+            "decisions",
+            "exports",
+            "lineage",
+            "notifications",
+            "policies",
+            "policy_import",
+            "scorecards",
+            "admin",
+            "access",
+            "data_health",
+        }
+    )

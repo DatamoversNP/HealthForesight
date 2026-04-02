@@ -45,7 +45,7 @@ def _create_decision(
     decision_data: Dict[str, Any]
 ) -> Decision:
     """Create decision in database - stored as JSONB"""
-    from uepi_api.database import SessionLocal, engine
+    from uepi_api.database import SessionLocal
     
     db: Session = SessionLocal()
     try:

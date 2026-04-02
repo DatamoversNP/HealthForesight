@@ -1,18 +1,21 @@
 """Policy endpoints - database-only"""
 from __future__ import annotations
 
-from typing import Annotated, Optional, Union
+from typing import Annotated, Any, Optional, Union
 from datetime import datetime
+from decimal import Decimal
 from uuid import UUID
 import sqlalchemy.exc
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Body
+from fastapi.encoders import jsonable_encoder
+import logging
 from pydantic import BaseModel as PydanticBaseModel
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from uepi_api.auth import CurrentUser, verify_token
-from uepi_api.database import get_db
+from uepi_api.database import get_db, set_local_statement_timeout
 from uepi_api.models.policy import Policy, PolicyVersion, PolicyCodeSet
 from uepi_common.models import (
     ChangeType, CodeType, EnforcementStrength, PolicyType, 
@@ -22,6 +25,24 @@ from uepi_common.models import (
 )
 
 router = APIRouter()
+logger = logging.getLogger(__name__)
+
+
+def _deep_json_safe(obj: Any) -> Any:
+    """Coerce nested dicts/lists to JSON-serializable primitives (Decimal, UUID, datetime, etc.)."""
+    if obj is None or isinstance(obj, (bool, int, float, str)):
+        return obj
+    if isinstance(obj, Decimal):
+        return float(obj)
+    if isinstance(obj, UUID):
+        return str(obj)
+    if isinstance(obj, datetime):
+        return obj.isoformat()
+    if isinstance(obj, dict):
+        return {str(k): _deep_json_safe(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple, set)):
+        return [_deep_json_safe(v) for v in obj]
+    return str(obj)
 
 
 class PolicyCodeSetCreate(BaseModel):
@@ -435,6 +456,7 @@ async def list_policies_with_claim_counts(
 
     tenant_id_uuid = current_user.tenant_id if isinstance(current_user.tenant_id, UUID) else UUID(str(current_user.tenant_id))
     repo = CanonicalDataRepository(db)
+    set_local_statement_timeout(db, 180_000)
     end_date = date.today()
     start_date = end_date - timedelta(days=365)
 
@@ -455,16 +477,21 @@ async def list_policies_with_claim_counts(
             pf = build_policy_claims_filters(policy_dict)
         except Exception:
             pf = {}
-        count = repo.count_claims_for_filters(
-            tenant_id=tenant_id_uuid,
-            start_date=start_date,
-            end_date=end_date,
-            lob=pf.get("lob"),
-            market=pf.get("markets") or pf.get("market"),
-            cpt_codes=pf.get("cpt_codes"),
-            hcpcs_codes=pf.get("cpt_codes"),
-            service_categories=pf.get("service_categories"),
-        )
+        try:
+            count = repo.count_claims_for_filters(
+                tenant_id=tenant_id_uuid,
+                start_date=start_date,
+                end_date=end_date,
+                lob=pf.get("lob"),
+                market=pf.get("markets") or pf.get("market"),
+                cpt_codes=pf.get("cpt_codes"),
+                hcpcs_codes=pf.get("cpt_codes"),
+                service_categories=pf.get("service_categories"),
+            )
+        except Exception as e:
+            import logging
+            logging.getLogger(__name__).warning("count_claims_for_filters failed for policy %s: %s", policy.id, e)
+            count = 0
         out.append(
             PolicyWithClaimCount(
                 id=str(policy.id),
@@ -492,6 +519,7 @@ async def list_policies_claim_counts_breakdown(
 
     tenant_id_uuid = current_user.tenant_id if isinstance(current_user.tenant_id, UUID) else UUID(str(current_user.tenant_id))
     repo = CanonicalDataRepository(db)
+    set_local_statement_timeout(db, 300_000)
     end_date = date.today()
     start_date = end_date - timedelta(days=365)
 
@@ -532,35 +560,39 @@ async def list_policies_claim_counts_breakdown(
         lob_filter = scope.get("lob")
         market_filter = scope.get("markets") or scope.get("market")
 
-        # Count at each level
-        c_tenant = repo.count_claims_for_filters(
-            tenant_id=tenant_id_uuid, start_date=start_date, end_date=end_date,
-        )
-        c_lob_market = repo.count_claims_for_filters(
-            tenant_id=tenant_id_uuid, start_date=start_date, end_date=end_date,
-            lob=lob_filter, market=market_filter,
-        )
-        c_plus_cpt = repo.count_claims_for_filters(
-            tenant_id=tenant_id_uuid, start_date=start_date, end_date=end_date,
-            lob=lob_filter, market=market_filter,
-            cpt_codes=merged_procedure if merged_procedure else None,
-            hcpcs_codes=merged_procedure if merged_procedure else None,
-        )
-        c_full = repo.count_claims_for_filters(
-            tenant_id=tenant_id_uuid, start_date=start_date, end_date=end_date,
-            lob=lob_filter, market=market_filter,
-            cpt_codes=merged_procedure if merged_procedure else None,
-            hcpcs_codes=merged_procedure if merged_procedure else None,
-            service_categories=merged_service if merged_service else None,
-        )
-        # Current endpoint behavior (levers only, no scope procedure/service)
-        c_current = repo.count_claims_for_filters(
-            tenant_id=tenant_id_uuid, start_date=start_date, end_date=end_date,
-            lob=lob_filter, market=market_filter,
-            cpt_codes=lever_procedure if lever_procedure else None,
-            hcpcs_codes=lever_procedure if lever_procedure else None,
-            service_categories=lever_service if lever_service else None,
-        )
+        # Count at each level (per-policy try so one failure doesn't fail whole response)
+        try:
+            c_tenant = repo.count_claims_for_filters(
+                tenant_id=tenant_id_uuid, start_date=start_date, end_date=end_date,
+            )
+            c_lob_market = repo.count_claims_for_filters(
+                tenant_id=tenant_id_uuid, start_date=start_date, end_date=end_date,
+                lob=lob_filter, market=market_filter,
+            )
+            c_plus_cpt = repo.count_claims_for_filters(
+                tenant_id=tenant_id_uuid, start_date=start_date, end_date=end_date,
+                lob=lob_filter, market=market_filter,
+                cpt_codes=merged_procedure if merged_procedure else None,
+                hcpcs_codes=merged_procedure if merged_procedure else None,
+            )
+            c_full = repo.count_claims_for_filters(
+                tenant_id=tenant_id_uuid, start_date=start_date, end_date=end_date,
+                lob=lob_filter, market=market_filter,
+                cpt_codes=merged_procedure if merged_procedure else None,
+                hcpcs_codes=merged_procedure if merged_procedure else None,
+                service_categories=merged_service if merged_service else None,
+            )
+            c_current = repo.count_claims_for_filters(
+                tenant_id=tenant_id_uuid, start_date=start_date, end_date=end_date,
+                lob=lob_filter, market=market_filter,
+                cpt_codes=lever_procedure if lever_procedure else None,
+                hcpcs_codes=lever_procedure if lever_procedure else None,
+                service_categories=lever_service if lever_service else None,
+            )
+        except Exception as e:
+            import logging
+            logging.getLogger(__name__).warning("claim-counts (list) failed for policy %s: %s", policy.id, e)
+            c_tenant = c_lob_market = c_plus_cpt = c_full = c_current = 0
 
         policies_breakdown.append({
             "policy_id": str(policy.id),
@@ -624,17 +656,26 @@ async def get_policy_claim_counts_breakdown(
     }
     pf = build_policy_claims_filters(policy_dict)
 
-    c_tenant = repo.count_claims_for_filters(tenant_id=tenant_id_uuid, start_date=start_date, end_date=end_date)
-    c_lob_market = repo.count_claims_for_filters(
-        tenant_id=tenant_id_uuid, start_date=start_date, end_date=end_date,
-        lob=pf.get("lob"), market=pf.get("markets") or pf.get("market"),
-    )
-    c_full = repo.count_claims_for_filters(
-        tenant_id=tenant_id_uuid, start_date=start_date, end_date=end_date,
-        lob=pf.get("lob"), market=pf.get("markets") or pf.get("market"),
-        cpt_codes=pf.get("cpt_codes"), hcpcs_codes=pf.get("cpt_codes"),
-        service_categories=pf.get("service_categories"),
-    )
+    try:
+        set_local_statement_timeout(db, 120_000)
+        c_tenant = repo.count_claims_for_filters(tenant_id=tenant_id_uuid, start_date=start_date, end_date=end_date)
+        c_lob_market = repo.count_claims_for_filters(
+            tenant_id=tenant_id_uuid, start_date=start_date, end_date=end_date,
+            lob=pf.get("lob"), market=pf.get("markets") or pf.get("market"),
+        )
+        c_full = repo.count_claims_for_filters(
+            tenant_id=tenant_id_uuid, start_date=start_date, end_date=end_date,
+            lob=pf.get("lob"), market=pf.get("markets") or pf.get("market"),
+            cpt_codes=pf.get("cpt_codes"), hcpcs_codes=pf.get("cpt_codes"),
+            service_categories=pf.get("service_categories"),
+        )
+    except Exception as e:
+        import logging
+        logging.getLogger(__name__).warning("claim-counts-breakdown failed for policy %s: %s", policy_id, e)
+        raise HTTPException(
+            status_code=503,
+            detail="Claim counts temporarily unavailable. Check that claims data is loaded and schema matches.",
+        ) from e
 
     validation = validate_policy_scope(policy_dict) if policy_dict else {"valid": False, "issues": []}
 
@@ -956,19 +997,23 @@ async def get_policy_predicted_impact(
     db: Session = Depends(get_db),
 ):
     """Get predicted impact for a policy (Stage 3.5) - from database"""
-    from uepi_api.storage_policy_predicted_impact import get_predicted_impact
-    
+    def _empty():
+        return {
+            "policy_id": str(policy_id),
+            "metrics": {},
+            "summary": "No predicted impact for this policy",
+        }
+
     try:
-        # Get from dedicated database table (primary source - database-only)
+        from uepi_api.policy_predicted_impact_metadata import get_predicted_impact_from_metadata
+        from uepi_api.storage_policy_predicted_impact import get_predicted_impact
+
         predicted_impact = get_predicted_impact(
             policy_id=policy_id,
             tenant_id=current_user.tenant_id,
         )
-        
-        # Fallback to metadata if not in dedicated table (backward compatibility)
+
         if not predicted_impact:
-            from uepi_api.routers.policy_predicted_impact import get_predicted_impact_from_metadata
-            # Load only metadata column to avoid fetching full policy row (faster)
             row = db.query(Policy.policy_metadata_json).filter(
                 Policy.id == policy_id,
                 Policy.tenant_id == current_user.tenant_id,
@@ -977,15 +1022,30 @@ async def get_policy_predicted_impact(
                 raise HTTPException(status_code=404, detail="Policy not found")
             policy_metadata = row[0] if hasattr(row, "__getitem__") else row
             predicted_impact = get_predicted_impact_from_metadata(policy_metadata)
-        
+
         if not predicted_impact:
-            raise HTTPException(status_code=404, detail="Predicted impact not found for this policy")
-        
-        return predicted_impact
+            return jsonable_encoder(_empty())
+
+        try:
+            return jsonable_encoder(_deep_json_safe(predicted_impact))
+        except Exception as enc_err:
+            logger.warning(
+                "predicted-impact JSON encode failed policy_id=%s: %s",
+                policy_id,
+                enc_err,
+                exc_info=True,
+            )
+            return jsonable_encoder(_empty())
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to retrieve predicted impact: {e}")
+        logger.warning(
+            "predicted-impact failed policy_id=%s: %s",
+            policy_id,
+            e,
+            exc_info=True,
+        )
+        return jsonable_encoder(_empty())
 
 
 @router.post("/policies/{policy_id}/predicted-impact")
@@ -1139,10 +1199,10 @@ async def generate_all_policies_predicted_impact(
     Args:
         force: If True, regenerate predicted impact even if it already exists
     """
+    from uepi_api.policy_predicted_impact_metadata import get_predicted_impact_from_metadata
     from uepi_api.routers.policy_predicted_impact import (
         generate_predicted_impact_for_policy,
         store_predicted_impact_in_metadata,
-        get_predicted_impact_from_metadata,
     )
     
     results = {

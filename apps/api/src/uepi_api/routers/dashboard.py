@@ -374,7 +374,7 @@ async def get_dashboard_summary(
 async def get_policy_performance(
     current_user: Annotated[CurrentUser, Depends(get_demo_current_user)],
     db: Session = Depends(get_db),
-    limit: int = Query(10, ge=1, le=50),
+    limit: int = Query(10, ge=1, le=100),
 ):
     """Get policy performance metrics"""
     try:

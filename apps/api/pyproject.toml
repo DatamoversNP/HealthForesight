@@ -13,6 +13,7 @@ alembic = "^1.12.1"
 pydantic = "^2.5.0"
 pydantic-settings = "^2.1.0"
 python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+bcrypt = "^4.0.0"
 httpx = "^0.25.0"
 requests = "^2.31.0"  # For daily job scripts
 psycopg2-binary = "^2.9.9"  # For PostgreSQL

@@ -158,9 +158,8 @@ async def get_policy_predicted_impact(
     policy_id: str,  # Accept both UUID and string IDs
     current_user: Annotated[CurrentUser, Depends(get_demo_current_user)],
 ):
-    """Get predicted impact for a policy - returns 404 if not found, empty dict if exists but no metrics"""
-    """Get predicted impact for a policy (Stage 3.5) - File storage only"""
-    from uepi_api.routers.policy_predicted_impact import get_predicted_impact_from_metadata
+    """Get predicted impact for a policy - returns 404 if not found, empty dict if exists but no metrics (file storage)."""
+    from uepi_api.policy_predicted_impact_metadata import get_predicted_impact_from_metadata
     from uepi_api.storage_policies import get_policy
     from uepi_api.storage_file import BASE_PATH
     import json
@@ -467,10 +466,10 @@ async def generate_all_policies_predicted_impact(
     Args:
         force: If True, regenerate predicted impact even if it already exists
     """
+    from uepi_api.policy_predicted_impact_metadata import get_predicted_impact_from_metadata
     from uepi_api.routers.policy_predicted_impact import (
         generate_predicted_impact_for_policy,
         store_predicted_impact_in_metadata,
-        get_predicted_impact_from_metadata,
     )
     
     results = {

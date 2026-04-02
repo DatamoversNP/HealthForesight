@@ -687,7 +687,7 @@ export default function RuleGroupBuilder({ ruleGroups, onChange }: RuleGroupBuil
           ))}
 
           {ruleGroups.length > 1 && (
-            <Paper variant="outlined" sx={{ p: 2, bgcolor: 'info.light', bgcolor: 'rgba(25, 118, 210, 0.08)' }}>
+            <Paper variant="outlined" sx={{ p: 2, bgcolor: 'rgba(25, 118, 210, 0.08)' }}>
               <Box sx={{ display: 'flex', alignItems: 'start', gap: 1 }}>
                 <InfoIcon color="info" sx={{ mt: 0.5 }} />
                 <Box>

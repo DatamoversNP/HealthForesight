@@ -1229,9 +1229,9 @@ export default function WhatIfAnalysisPage() {
                         policy_id: selectedPolicy.id,
                         service_categories: undefined, // Will model all categories
                       })
-                      // Poll for results (elasticity job completes quickly; allow up to 3 min)
+                      // Poll for results (large tenants / Celery queue: allow up to ~8 min)
                       let attempts = 0
-                      const maxAttempts = 90
+                      const maxAttempts = 240
                       while (attempts < maxAttempts) {
                         await new Promise((resolve) => setTimeout(resolve, 2000))
                         try {

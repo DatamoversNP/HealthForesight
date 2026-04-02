@@ -5,8 +5,8 @@ set -e
 
 # Configuration from migration
 RESOURCE_GROUP="${RESOURCE_GROUP:-healthforesight-rg}"
-API_APP_NAME="${API_APP_NAME:-healthforesight-api-9016}"
-STATIC_WEB_APP_NAME="${STATIC_WEB_APP_NAME:-healthforesight-web-9016}"
+API_APP_NAME="${API_APP_NAME:-healthforesight-api}"
+STATIC_WEB_APP_NAME="${STATIC_WEB_APP_NAME:-healthforesight-web}"
 API_URL="https://$API_APP_NAME.azurewebsites.net"
 
 echo "=========================================="
@@ -37,12 +37,13 @@ zip -r ../../api-deployment.zip . \
   -x "*.zip" \
   -x "data/*" 2>/dev/null || true
 
-# Deploy to Azure
+# Deploy to Azure (use az webapp deploy; config-zip is deprecated)
 echo "Deploying to Azure..."
-az webapp deployment source config-zip \
+az webapp deploy \
   --resource-group $RESOURCE_GROUP \
   --name $API_APP_NAME \
-  --src ../../api-deployment.zip
+  --src-path ../../api-deployment.zip \
+  --type zip
 
 # Clean up
 rm -f ../../api-deployment.zip

@@ -1,77 +1,45 @@
-#!/bin/bash
-# Fix CORS to allow frontend Static Web App
+#!/usr/bin/env bash
+# Fix CORS so the frontend can call the API. Uses Azure App Service CORS (gateway-level)
+# so preflight requests get the right headers even before hitting your container.
+# Run when you see "No 'Access-Control-Allow-Origin' header" in the browser.
+#
+# Usage: ./scripts/azure/fix-cors-for-frontend.sh
+# Optional: FRONTEND_ORIGIN="https://your-app.azurestaticapps.net" ./scripts/azure/fix-cors-for-frontend.sh
+set -e
 
 RESOURCE_GROUP="${RESOURCE_GROUP:-healthforesight-rg}"
-API_APP_NAME="${API_APP_NAME:-healthforesight-api-9016}"
-STATIC_WEB_APP_NAME="${STATIC_WEB_APP_NAME:-healthforesight-web-9016}"
+API_APP_NAME="${API_APP_NAME:-healthforesight-api}"
+FRONTEND_ORIGIN="${FRONTEND_ORIGIN:-https://healthforesight-web.azurewebsites.net}"
 
-echo "Fixing CORS configuration to allow frontend..."
-echo ""
+echo "Adding CORS allowed origins at Azure App Service level (gateway)..."
+# Include Web App frontend (.azurewebsites.net) and Static Web Apps (.azurestaticapps.net)
+ORIGINS_STR="$FRONTEND_ORIGIN https://healthforesight-web.azurestaticapps.net https://proud-glacier-0c52b8e0f.6.azurestaticapps.net https://healthforesight-api.azurewebsites.net http://localhost:3050 http://localhost:3000"
+for ORIGIN in $ORIGINS_STR; do
+  az webapp cors add \
+    --resource-group "$RESOURCE_GROUP" \
+    --name "$API_APP_NAME" \
+    --allowed-origins "$ORIGIN" \
+    --output none 2>/dev/null || true
+done
+echo "Current CORS origins:"
+az webapp cors show --resource-group "$RESOURCE_GROUP" --name "$API_APP_NAME" --query allowedOrigins -o tsv 2>/dev/null || true
 
-# Get the actual Static Web App URL (it might be different from the name)
-STATIC_WEB_URL=$(az staticwebapp show \
-  --name $STATIC_WEB_APP_NAME \
-  --resource-group $RESOURCE_GROUP \
-  --query "defaultHostname" \
-  --output tsv 2>/dev/null || echo "")
-
-if [ -z "$STATIC_WEB_URL" ]; then
-    # Fallback: construct URL from name
-    STATIC_WEB_URL="https://${STATIC_WEB_APP_NAME}.azurestaticapps.net"
-    echo "⚠️  Could not get Static Web App URL, using: $STATIC_WEB_URL"
-else
-    STATIC_WEB_URL="https://${STATIC_WEB_URL}"
-    echo "✅ Found Static Web App URL: $STATIC_WEB_URL"
-fi
-
-# Also check for the actual deployed URL (gentle-flower-01dffcd0f.2.azurestaticapps.net)
-# This might be different from the resource name
-ACTUAL_FRONTEND_URL="https://gentle-flower-01dffcd0f.2.azurestaticapps.net"
-
-echo ""
-echo "Setting CORS_ORIGINS to include:"
-echo "  - $STATIC_WEB_URL"
-echo "  - $ACTUAL_FRONTEND_URL"
-echo "  - https://$API_APP_NAME.azurewebsites.net"
-echo ""
-
-# Set CORS_ORIGINS as JSON array
-CORS_ORIGINS_JSON="[\"$STATIC_WEB_URL\",\"$ACTUAL_FRONTEND_URL\",\"https://$API_APP_NAME.azurewebsites.net\",\"http://localhost:3050\",\"http://localhost:3000\"]"
-
+# Also set app setting so the app code (when it runs) uses the same list
+CORS_ORIGINS="${FRONTEND_ORIGIN},https://healthforesight-web.azurestaticapps.net,https://proud-glacier-0c52b8e0f.6.azurestaticapps.net,https://healthforesight-api.azurewebsites.net,http://localhost:3050,http://localhost:3000"
 az webapp config appsettings set \
-  --resource-group $RESOURCE_GROUP \
-  --name $API_APP_NAME \
-  --settings \
-    CORS_ORIGINS="$CORS_ORIGINS_JSON" \
+  --resource-group "$RESOURCE_GROUP" \
+  --name "$API_APP_NAME" \
+  --settings "CORS_ORIGINS=$CORS_ORIGINS" \
   --output none
 
-echo "✅ CORS_ORIGINS updated"
-echo ""
-
-# Restart app to apply changes
-echo "Restarting API app..."
-az webapp restart \
-  --resource-group $RESOURCE_GROUP \
-  --name $API_APP_NAME \
-  --output none
-
-echo "✅ API app restarted"
-echo ""
-echo "Waiting 30 seconds for app to restart..."
-sleep 30
+echo "Restarting app..."
+az webapp restart --resource-group "$RESOURCE_GROUP" --name "$API_APP_NAME" --output none
 
 echo ""
-echo "Testing API CORS..."
-API_URL="https://$API_APP_NAME.azurewebsites.net"
-# Test with OPTIONS request (preflight)
-if curl -X OPTIONS -H "Origin: $ACTUAL_FRONTEND_URL" -H "Access-Control-Request-Method: GET" \
-   -v "$API_URL/api/v1/health" 2>&1 | grep -q "access-control-allow-origin"; then
-    echo "✅ CORS is working!"
-else
-    echo "⏳ CORS might still be configuring. Check the API logs if issues persist."
-fi
-
+echo "Done. Wait ~30–60 seconds, then:"
+echo "  1. Hard-refresh the frontend (Ctrl+Shift+R or Cmd+Shift+R)."
+echo "  2. If the login screen still never appears, clear site data for the frontend URL"
+echo "     (DevTools → Application → Storage → Clear site data) so any old token is removed, then reload."
+echo "If CORS errors persist, add the origin in Azure Portal:"
+echo "  App Service → $API_APP_NAME → API → CORS → add $FRONTEND_ORIGIN"
 echo ""
-echo "Frontend URL: $ACTUAL_FRONTEND_URL"
-echo "API URL: $API_URL"
-

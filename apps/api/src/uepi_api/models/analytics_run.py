@@ -37,7 +37,7 @@ class AnalyticsRun(Base):
     tenant_id = Column(PGUUID(as_uuid=True), nullable=False, index=True)
 
     run_type = Column(String(32), nullable=False, index=True)  # BASELINE | PREDICTION | OBSERVATION
-    status = Column(String(32), nullable=False, default="RUNNING", index=True)  # RUNNING | COMPLETED | FAILED
+    status = Column(String(32), nullable=False, default="RUNNING")  # RUNNING | COMPLETED | FAILED; ix in __table_args__
     started_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     completed_at = Column(DateTime, nullable=True)
     error_message = Column(Text, nullable=True)

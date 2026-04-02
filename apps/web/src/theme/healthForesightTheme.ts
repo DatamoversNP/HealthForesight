@@ -45,6 +45,31 @@ const colors = {
     risk: '#C04A4A', // Muted Red
     info: '#6366F1', // Indigo Tint
   },
+  // Expose semantic as top-level so healthForesightColors.success.main etc. work in components
+  success: {
+    main: '#2E8B57',
+    light: '#4CAF50',
+    dark: '#1B5E20',
+    contrastText: '#FFFFFF',
+  },
+  warning: {
+    main: '#E6A23C',
+    light: '#FFB74D',
+    dark: '#E65100',
+    contrastText: '#FFFFFF',
+  },
+  error: {
+    main: '#C04A4A',
+    light: '#E57373',
+    dark: '#B71C1C',
+    contrastText: '#FFFFFF',
+  },
+  info: {
+    main: '#6366F1',
+    light: '#818CF8',
+    dark: '#4338CA',
+    contrastText: '#FFFFFF',
+  },
 }
 
 // Typography Configuration

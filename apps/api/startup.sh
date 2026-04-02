@@ -1,80 +1,42 @@
 #!/bin/bash
-# Startup script for Azure App Service
-# Finds the code location and starts uvicorn with correct Python
+# Startup script for Azure App Service (Linux)
+# Use absolute paths and PORT. Log to stderr so output appears in Azure log stream.
 
-# First, check if Oryx extracted to /tmp (this happens during build)
-EXTRACTED_DIR=""
-for dir in /tmp/8de* /tmp/*; do
-    if [ -d "$dir/src/uepi_api" ] 2>/dev/null || [ -d "$dir/uepi_api" ] 2>/dev/null; then
-        EXTRACTED_DIR="$dir"
-        break
-    fi
-done
+WWWROOT="${WWWROOT:-/home/site/wwwroot}"
+cd "$WWWROOT" || exit 1
 
-# If Oryx extracted directory found, use it
-if [ -n "$EXTRACTED_DIR" ] && [ -d "$EXTRACTED_DIR/src/uepi_api" ]; then
-    export PYTHONPATH="$EXTRACTED_DIR/src:$EXTRACTED_DIR/packages/common/src:$PYTHONPATH"
-    cd "$EXTRACTED_DIR/src"
-    echo "Using Oryx extracted directory: $EXTRACTED_DIR/src"
-elif [ -n "$EXTRACTED_DIR" ] && [ -d "$EXTRACTED_DIR/uepi_api" ]; then
-    export PYTHONPATH="$EXTRACTED_DIR:$EXTRACTED_DIR/packages/common/src:$PYTHONPATH"
-    cd "$EXTRACTED_DIR"
-    echo "Using Oryx extracted directory: $EXTRACTED_DIR"
-else
-    # Fallback to /home/site/wwwroot
-    cd /home/site/wwwroot
-    
-    # Find uepi_api directory
-    UEPI_DIR=$(find . -maxdepth 3 -type d -name "uepi_api" 2>/dev/null | head -1 | xargs dirname)
-    COMMON_DIR=$(find . -maxdepth 3 -type d -path "*/packages/common/src" 2>/dev/null | head -1)
-    
-    # Set PYTHONPATH
-    if [ -n "$UEPI_DIR" ] && [ -d "$UEPI_DIR/uepi_api" ]; then
-        export PYTHONPATH="$UEPI_DIR:${COMMON_DIR}:$PYTHONPATH"
-        cd "$UEPI_DIR"
-        echo "Found uepi_api at: $UEPI_DIR"
-    elif [ -d "src/uepi_api" ]; then
-        export PYTHONPATH="/home/site/wwwroot/src:${COMMON_DIR}:$PYTHONPATH"
-        cd src
-        echo "Using src/uepi_api"
-    else
-        export PYTHONPATH="/home/site/wwwroot/src:/home/site/wwwroot/packages/common/src:$PYTHONPATH"
-        cd /home/site/wwwroot/src 2>/dev/null || cd /home/site/wwwroot
-        echo "Using fallback paths"
-    fi
+# Absolute paths for PYTHONPATH
+SRC_DIR="$WWWROOT/src"
+COMMON_DIR="$WWWROOT/packages/common/src"
+
+if [ ! -d "$SRC_DIR/uepi_api" ]; then
+  FOUND=$(find "$WWWROOT" -maxdepth 4 -type d -name "uepi_api" 2>/dev/null | head -1)
+  if [ -n "$FOUND" ]; then
+    SRC_DIR=$(dirname "$FOUND")
+    COMMON_DIR=$(find "$WWWROOT" -maxdepth 4 -type d -path "*/packages/common/src" 2>/dev/null | head -1)
+    [ -z "$COMMON_DIR" ] && COMMON_DIR="$WWWROOT/packages/common/src"
+  fi
 fi
 
-# Use Oryx virtual environment Python if available
-# Check both /home/site/wwwroot/antenv and extracted directory antenv
-if [ -n "$EXTRACTED_DIR" ] && [ -f "$EXTRACTED_DIR/antenv/bin/python" ]; then
-    PYTHON_CMD="$EXTRACTED_DIR/antenv/bin/python"
-    echo "Using Oryx virtual environment Python from extracted directory"
-elif [ -n "$EXTRACTED_DIR" ] && [ -f "$EXTRACTED_DIR/antenv/bin/python3" ]; then
-    PYTHON_CMD="$EXTRACTED_DIR/antenv/bin/python3"
-    echo "Using Oryx virtual environment Python3 from extracted directory"
-elif [ -f "/home/site/wwwroot/antenv/bin/python" ]; then
-    PYTHON_CMD="/home/site/wwwroot/antenv/bin/python"
-    echo "Using Oryx virtual environment Python"
-elif [ -f "/home/site/wwwroot/antenv/bin/python3" ]; then
-    PYTHON_CMD="/home/site/wwwroot/antenv/bin/python3"
-    echo "Using Oryx virtual environment Python3"
-else
-    PYTHON_CMD="python3"
-    echo "Using system Python3, installing dependencies..."
-    REQ_FILE=$(find /home/site/wwwroot -name "requirements.txt" 2>/dev/null | head -1)
-    if [ -z "$REQ_FILE" ] && [ -n "$EXTRACTED_DIR" ]; then
-        REQ_FILE=$(find "$EXTRACTED_DIR" -name "requirements.txt" 2>/dev/null | head -1)
-    fi
-    if [ -n "$REQ_FILE" ]; then
-        python3 -m pip install --user -r "$REQ_FILE" > /tmp/pip-install.log 2>&1
-    else
-        python3 -m pip install --user uvicorn fastapi pydantic pydantic-settings > /tmp/pip-install.log 2>&1
-    fi
+if [ ! -d "$SRC_DIR/uepi_api" ]; then
+  echo "ERROR: uepi_api not found under $WWWROOT" >&2
+  ls -la "$WWWROOT" >&2
+  exit 1
 fi
 
-# Use PORT environment variable (Azure provides this)
-PORT=${PORT:-8000}
-echo "Starting uvicorn with PYTHONPATH=$PYTHONPATH using $PYTHON_CMD on port $PORT"
+export PYTHONPATH="$SRC_DIR:$COMMON_DIR"
+cd "$SRC_DIR" || exit 1
 
-# Start uvicorn (use exec to replace shell process)
-exec $PYTHON_CMD -m uvicorn uepi_api.main:app --host 0.0.0.0 --port $PORT
+# Prefer Oryx venv (created when SCM_DO_BUILD_DURING_DEPLOYMENT=true)
+if [ -f "$WWWROOT/antenv/bin/python" ]; then
+  PYTHON_CMD="$WWWROOT/antenv/bin/python"
+elif [ -f "$WWWROOT/antenv/bin/python3" ]; then
+  PYTHON_CMD="$WWWROOT/antenv/bin/python3"
+else
+  PYTHON_CMD="python3"
+  echo "WARN: No antenv; using system python. Set SCM_DO_BUILD_DURING_DEPLOYMENT=true and redeploy." >&2
+fi
+
+PORT="${PORT:-8000}"
+echo "Starting uvicorn port=$PORT PYTHONPATH=$PYTHONPATH" >&2
+exec "$PYTHON_CMD" -m uvicorn uepi_api.main:app --host 0.0.0.0 --port "$PORT"

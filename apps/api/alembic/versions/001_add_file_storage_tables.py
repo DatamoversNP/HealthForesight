@@ -1,7 +1,7 @@
 """Add file storage tables (migrated from file-based to database)
 
 Revision ID: 001_file_storage
-Revises: 
+Revises: 000_bootstrap
 Create Date: 2025-02-02 20:15:00.000000
 
 """
@@ -11,12 +11,23 @@ from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
 revision = '001_file_storage'
-down_revision = None
+down_revision = '000_bootstrap'
 branch_labels = None
 depends_on = None
 
 
 def upgrade():
+    # After 000_bootstrap (create_all), these tables often already exist.
+    # Legacy DBs may have applied 001 before 000 existed; keep DDL for those.
+    conn = op.get_bind()
+    if conn.execute(
+        sa.text(
+            "SELECT 1 FROM information_schema.tables "
+            "WHERE table_schema = 'public' AND table_name = 'policy_assumptions'"
+        )
+    ).scalar():
+        return
+
     # Policy Workspace Tables
     op.create_table(
         'policy_assumptions',

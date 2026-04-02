@@ -2,6 +2,7 @@
 .env
 .env.local
 .env.*.local
+scripts/azure/production.azure.env
 *.bak
 
 # === Data (too large for GitHub push – use DB/local; share via other means) ===

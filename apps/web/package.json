@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
+    "start": "node server.mjs",
     "dev": "vite",
     "dev:docs": "vite --config vite.docs.config.ts",
     "dev:marketing": "vite --config vite.marketing.config.ts",
@@ -24,6 +25,8 @@
     "@mui/x-date-pickers": "^6.19.0",
     "@types/react-joyride": "^2.0.2",
     "axios": "^1.6.2",
+    "express": "^4.21.0",
+    "http-proxy-middleware": "^3.0.3",
     "date-fns": "^2.30.0",
     "gsap": "^3.14.2",
     "playwright": "^1.58.0",

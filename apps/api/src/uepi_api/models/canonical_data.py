@@ -39,8 +39,8 @@ class ClaimsLineDB(Base):
     member_id = Column(String, nullable=False, index=True)
     provider_id = Column(String, nullable=False, index=True)
     
-    # Temporal Fields
-    service_date = Column(Date, nullable=False, index=True)
+    # Temporal Fields (ix_claims_lines_service_date is in __table_args__)
+    service_date = Column(Date, nullable=False)
     paid_date = Column(Date, nullable=True)
     adjudication_date = Column(Date, nullable=True)
     
@@ -55,8 +55,8 @@ class ClaimsLineDB(Base):
     icd10_diagnosis_codes = Column(ARRAY(String), nullable=True)  # Array of strings
     icd10_procedure_codes = Column(ARRAY(String), nullable=True)  # Array of strings
     
-    # Service Classification
-    service_category = Column(String, nullable=False, index=True)
+    # Service Classification (ix_claims_lines_service_category is in __table_args__)
+    service_category = Column(String, nullable=False)
     place_of_service = Column(String, nullable=False)
     
     # Utilization Metrics
@@ -160,22 +160,22 @@ class ProviderRecordDB(Base):
     id = Column(PGUUID(as_uuid=True), primary_key=True, default=uuid4)
     tenant_id = Column(PGUUID(as_uuid=True), nullable=False, index=True)
     
-    # Primary Keys & Identifiers
+    # Primary Keys & Identifiers (ix_provider_npi in __table_args__)
     provider_id = Column(String, nullable=False, index=True)
-    npi = Column(String, nullable=True, index=True)
+    npi = Column(String, nullable=True)
     
     # Provider Classification
     provider_type = Column(String, nullable=False)
     specialty = Column(String, nullable=True)
     facility_type = Column(String, nullable=True)
     
-    # Geographic & Market
-    market = Column(String, nullable=False, index=True)
+    # Geographic & Market (ix_provider_market in __table_args__)
+    market = Column(String, nullable=False)
     state = Column(String, nullable=True)
     zip_code = Column(String, nullable=True)
     
-    # Network Information
-    network_status = Column(String, nullable=False, index=True)
+    # Network Information (ix_provider_network_status in __table_args__)
+    network_status = Column(String, nullable=False)
     effective_date = Column(Date, nullable=False, index=True)
     termination_date = Column(Date, nullable=True)
     

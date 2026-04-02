@@ -282,7 +282,13 @@ async def get_risk_register_endpoint(
             policy_id=policy_uuid,
         )
         if not risk_register:
-            raise HTTPException(status_code=404, detail="Risk register not found")
+            # Empty register — same shape as RiskRegister (avoids 404 noise when unseeded).
+            return {
+                "policy_id": str(policy_uuid),
+                "top_drivers": [],
+                "overall_risk_score": 0.0,
+                "last_updated": datetime.utcnow().isoformat(),
+            }
         return risk_register.model_dump(mode='json', exclude_none=True)
     except HTTPException:
         raise

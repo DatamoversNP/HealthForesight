@@ -38,6 +38,7 @@ from uepi_worker.tasks import (  # noqa: F401, E402
     provider_segmentation_job,
     whatif_scenario_job,
     elasticity_job,
+    daily_data_and_observations_job,
     scorecard_job,
     export_pdf_job,
     export_pptx_job,

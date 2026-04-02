@@ -18,10 +18,10 @@ sys.path.insert(0, str(common_dir))
 
 from uepi_api.database import SessionLocal
 from uepi_api.models.policy import Policy
+from uepi_api.policy_predicted_impact_metadata import get_predicted_impact_from_metadata
 from uepi_api.routers.policy_predicted_impact import (
     generate_predicted_impact_for_policy,
     store_predicted_impact_in_metadata,
-    get_predicted_impact_from_metadata,
 )
 from uepi_api.storage_auth import DEFAULT_TENANT_ID
 from sqlalchemy.orm.attributes import flag_modified
