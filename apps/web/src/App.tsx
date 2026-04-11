@@ -20,6 +20,7 @@ import IngestionDashboardPage from './pages/IngestionDashboardPage'
 import DataHealthPage from './pages/DataHealthPage'
 import AnalysisWorkspacePage from './pages/AnalysisWorkspacePage'
 import WhatIfAnalysisPage from './pages/WhatIfAnalysisPage'
+import WhatIfScenariosListPage from './pages/WhatIfScenariosListPage'
 import ScorecardsPage from './pages/ScorecardsPage'
 import ExportsPage from './pages/ExportsPage'
 import DecisionsPage from './pages/DecisionsPage'
@@ -48,6 +49,7 @@ import QATestingPage from './pages/QATestingPage'
 import DatabaseViewerPage from './pages/DatabaseViewerPage'
 import ObjectivesHealthPage from './pages/ObjectivesHealthPage'
 import PolicyVerdictsPage from './pages/PolicyVerdictsPage'
+import PolicyRolloutRecommendationsPage from './pages/PolicyRolloutRecommendationsPage'
 import RunWorkflowPage from './pages/RunWorkflowPage'
 import AuditLogPage from './pages/AuditLogPage'
 import AdminPage from './pages/AdminPage'
@@ -88,6 +90,7 @@ function App() {
                 <Route path="dashboard/customize" element={<DashboardCustomizationPage />} />
                 <Route path="policies" element={<PolicyCatalogPage />} />
                 <Route path="policy-verdicts" element={<PolicyVerdictsPage />} />
+                <Route path="policy-rollout-recommendations" element={<PolicyRolloutRecommendationsPage />} />
                 <Route path="objectives-health" element={<ObjectivesHealthPage />} />
                 <Route path="run-workflow" element={<RunWorkflowPage />} />
                 <Route path="audit-log" element={<AuditLogPage />} />
@@ -109,7 +112,8 @@ function App() {
                     <Route path="observation-analysis" element={<ObservationAnalysisPage />} />
                     <Route path="observation-run-history" element={<ObservationRunHistoryPage />} />
                     <Route path="predicted-impacts" element={<PredictedImpactsOverviewPage />} />
-                    <Route path="whatif" element={<WhatIfAnalysisPage />} /> {/* NEW */}
+                    <Route path="whatif" element={<WhatIfAnalysisPage />} />
+                    <Route path="whatif/scenarios" element={<WhatIfScenariosListPage />} />
                     <Route path="scorecards" element={<ScorecardsPage />} />
                     <Route path="cohorts" element={<CohortsPage />} />
                 <Route path="exports" element={<ExportsPage />} />

@@ -11,7 +11,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, BackgroundTasks
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
-from uepi_api.auth import CurrentUser, get_demo_current_user
+from uepi_api.auth import CurrentUser, require_role
 from uepi_api.database import get_db, SessionLocal
 from uepi_api.models.job import Job, JobStatus
 
@@ -59,7 +59,7 @@ class DailyJobResponse(BaseModel):
 @router.post("/jobs/daily-data-and-observations", response_model=DailyJobResponse, status_code=status.HTTP_202_ACCEPTED)
 async def trigger_daily_job(
     background_tasks: BackgroundTasks,
-    current_user: Annotated[CurrentUser, Depends(get_demo_current_user)],
+    current_user: Annotated[CurrentUser, Depends(require_role("POLICY_ADMIN", "UM_LEADER"))],
     target_date: str | None = None,
     run_observations: bool = True,
     db: Session = Depends(get_db),
@@ -124,28 +124,32 @@ async def trigger_daily_job(
                 detail=f"Failed to create job record: {str(db_error)}"
             )
         
-        # Prefer Celery so work is not tied to the API Gunicorn worker; fallback to BackgroundTasks.
+        # Celery only when explicitly enabled and broker accepts the task; otherwise BackgroundTasks
+        # (Azure often has Redis but no worker — tasks would stay PENDING forever).
         job_queued = False
-        try:
-            from uepi_api.celery_client import send_task
+        from uepi_api.config import get_settings as _get_api_settings
 
-            send_task(
-                "uepi_worker.tasks.daily_data_and_observations_job",
-                args=[
-                    str(current_user.tenant_id),
-                    target_date_obj.isoformat(),
-                    run_observations,
-                    job_id,
-                ],
-            )
-            job_queued = True
-        except Exception as celery_err:
-            import logging
+        if _get_api_settings().use_celery_for_daily_job:
+            try:
+                from uepi_api.celery_client import send_task
 
-            logging.getLogger(__name__).warning(
-                "Daily job: Celery enqueue failed; using FastAPI BackgroundTasks: %s",
-                celery_err,
-            )
+                send_task(
+                    "uepi_worker.tasks.daily_data_and_observations_job",
+                    args=[
+                        str(current_user.tenant_id),
+                        target_date_obj.isoformat(),
+                        run_observations,
+                        job_id,
+                    ],
+                )
+                job_queued = True
+            except Exception as celery_err:
+                import logging
+
+                logging.getLogger(__name__).warning(
+                    "Daily job: Celery enqueue failed; using FastAPI BackgroundTasks: %s",
+                    celery_err,
+                )
 
         try:
             if not job_queued:
@@ -503,7 +507,7 @@ def run_daily_job_task(tenant_id: UUID, target_date: datetime, run_observations:
 @router.get("/jobs/daily-data-and-observations/status/{job_id}")
 async def get_daily_job_status(
     job_id: str,
-    current_user: Annotated[CurrentUser, Depends(get_demo_current_user)],
+    current_user: Annotated[CurrentUser, Depends(require_role("POLICY_ADMIN", "UM_LEADER"))],
     db: Session = Depends(get_db),
 ):
     """Get status of a daily job"""

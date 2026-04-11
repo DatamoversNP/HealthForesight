@@ -1,5 +1,6 @@
 """Policy predicted impact storage operations - database only"""
 import json
+import math
 from typing import Optional, Dict, Any
 from uuid import UUID
 from datetime import datetime
@@ -7,7 +8,41 @@ from datetime import datetime
 from sqlalchemy.orm import Session
 from uepi_api.models.predicted_impact import PolicyPredictedImpact
 from uepi_api.models.policy import Policy
-from sqlalchemy import or_, desc
+from sqlalchemy import or_, desc, text
+
+
+def _scrub_metrics_json_for_jsonb(obj: Any) -> Any:
+    """Ensure nested payload is safe for PostgreSQL JSONB (reject NaN/Inf; numpy → Python)."""
+    if obj is None:
+        return None
+    if isinstance(obj, bool):
+        return obj
+    if isinstance(obj, int) and not isinstance(obj, bool):
+        return obj
+    if isinstance(obj, float):
+        if math.isnan(obj) or math.isinf(obj):
+            return None
+        return obj
+    if isinstance(obj, str):
+        return obj
+    if isinstance(obj, dict):
+        return {str(k): _scrub_metrics_json_for_jsonb(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [_scrub_metrics_json_for_jsonb(v) for v in obj]
+    try:
+        import numpy as np
+
+        if isinstance(obj, np.ndarray):
+            return _scrub_metrics_json_for_jsonb(obj.tolist())
+        if isinstance(obj, np.generic):
+            return _scrub_metrics_json_for_jsonb(obj.item())
+    except ImportError:
+        pass
+    if isinstance(obj, UUID):
+        return str(obj)
+    if isinstance(obj, datetime):
+        return obj.isoformat()
+    return str(obj)
 
 
 def get_predicted_impact(policy_id: UUID | str, tenant_id: UUID) -> Optional[Dict[str, Any]]:
@@ -83,9 +118,11 @@ def _get_predicted_impact(policy_id: UUID | str, tenant_id: UUID) -> Optional[Di
             pred_metrics = dict(pred_metrics, cost_change=cost_change)
         
         # If metrics_json contains the full predicted impact structure, extract all fields
+        pred_at = predicted_impact.predicted_at.isoformat() if predicted_impact.predicted_at else None
         result = {
             "policy_id": str(predicted_impact.policy_id),
-            "predicted_at": predicted_impact.predicted_at.isoformat() if predicted_impact.predicted_at else None,
+            "predicted_at": pred_at,
+            "computed_at": pred_at,
             "metrics": pred_metrics,
             "model_version": predicted_impact.model_version,
             "confidence": predicted_impact.confidence,
@@ -114,6 +151,10 @@ def _get_predicted_impact(policy_id: UUID | str, tenant_id: UUID) -> Optional[Di
                 result["confidence_intervals"] = metrics_data["confidence_intervals"]
             if "ramp_up_projections" in metrics_data:
                 result["ramp_up_projections"] = metrics_data["ramp_up_projections"]
+            if "provider_archetype_predictions" in metrics_data:
+                result["provider_archetype_predictions"] = metrics_data["provider_archetype_predictions"]
+            if "patient_segment_predictions" in metrics_data:
+                result["patient_segment_predictions"] = metrics_data["patient_segment_predictions"]
         
         return result
         
@@ -140,9 +181,21 @@ def _store_predicted_impact(
 ) -> Optional[Dict[str, Any]]:
     """Store predicted impact in database"""
     from uepi_api.database import SessionLocal
-    
+    from uepi_api.baseline_segmentation_from_claims import enrich_predicted_impact_for_ui_row
+
+    predicted_impact_data = {**predicted_impact_data}
+    try:
+        enrich_predicted_impact_for_ui_row(predicted_impact_data)
+    except Exception:
+        pass
+
     db: Session = SessionLocal()
     try:
+        try:
+            db.execute(text("SET LOCAL statement_timeout = 600000"))
+        except Exception:
+            pass
+
         # Convert policy_id to UUID if needed
         if isinstance(policy_id, str):
             try:
@@ -195,18 +248,46 @@ def _store_predicted_impact(
             full_metrics_data["confidence_intervals"] = predicted_impact_data["confidence_intervals"]
         if "ramp_up_projections" in predicted_impact_data and predicted_impact_data["ramp_up_projections"]:
             full_metrics_data["ramp_up_projections"] = predicted_impact_data["ramp_up_projections"]
+        if predicted_impact_data.get("provider_archetype_predictions"):
+            full_metrics_data["provider_archetype_predictions"] = predicted_impact_data["provider_archetype_predictions"]
+        if predicted_impact_data.get("patient_segment_predictions"):
+            full_metrics_data["patient_segment_predictions"] = predicted_impact_data["patient_segment_predictions"]
         
+        full_metrics_data = _scrub_metrics_json_for_jsonb(full_metrics_data)
+
+        conf_val = predicted_impact_data.get("confidence")
+        if conf_val is not None:
+            try:
+                conf_val = float(conf_val)
+                if math.isnan(conf_val) or math.isinf(conf_val):
+                    conf_val = None
+            except (TypeError, ValueError):
+                conf_val = None
+
+        baseline_uuid = None
+        if predicted_impact_data.get("baseline_id"):
+            try:
+                baseline_uuid = UUID(str(predicted_impact_data["baseline_id"]).strip())
+            except (ValueError, TypeError, AttributeError):
+                baseline_uuid = None
+        data_period_uuid = None
+        if predicted_impact_data.get("data_period_id"):
+            try:
+                data_period_uuid = UUID(str(predicted_impact_data["data_period_id"]).strip())
+            except (ValueError, TypeError, AttributeError):
+                data_period_uuid = None
+
         # Create predicted impact in database
         predicted_impact = PolicyPredictedImpact(
             tenant_id=tenant_id,
             policy_id=policy_id_uuid,
             metrics_json=full_metrics_data,  # Store full data structure
             model_version=predicted_impact_data.get("model_version"),
-            confidence=predicted_impact_data.get("confidence"),
+            confidence=conf_val,
             predicted_at=predicted_at,
             prediction_method=predicted_impact_data.get("prediction_method"),
-            baseline_id=UUID(predicted_impact_data["baseline_id"]) if predicted_impact_data.get("baseline_id") else None,
-            data_period_id=UUID(predicted_impact_data["data_period_id"]) if predicted_impact_data.get("data_period_id") else None,
+            baseline_id=baseline_uuid,
+            data_period_id=data_period_uuid,
         )
         
         db.add(predicted_impact)

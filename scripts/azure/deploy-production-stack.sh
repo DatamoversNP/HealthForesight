@@ -115,7 +115,7 @@ SETTINGS_ARGS=(
   "CORS_ORIGINS=$CORS_ORIGINS"
   "WEBSITES_PORT=8080"
   "PORT=8080"
-  "PYTHONPATH=/app/apps/api/src:/app/packages/common/src"
+  "PYTHONPATH=/app/apps/api/src:/app/packages/common/src:/app/apps/worker/src"
 )
 if [[ -n "${JWT_SECRET:-}" ]]; then
   SETTINGS_ARGS+=("JWT_SECRET=$JWT_SECRET")

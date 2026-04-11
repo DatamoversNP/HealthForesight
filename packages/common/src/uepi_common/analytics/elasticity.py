@@ -216,7 +216,11 @@ class ElasticityModeler:
             service_categories=elasticity_curves,
             overall_elasticity=overall_elasticity,
             model_quality="POOR",
-            warnings=["Insufficient historical data - using default elasticity estimates"],
+            warnings=[
+                "Using catalog default elasticity curves: historical impact time series are not "
+                "loaded into this estimator yet (MVP). Estimates are still usable for What-If; "
+                "learned curves would require wiring past impact analyses into the modeler."
+            ],
         )
     
     def get_elasticity_for_friction(

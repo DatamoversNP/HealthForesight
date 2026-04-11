@@ -150,7 +150,12 @@ async def verify_token(
         if decoded.get("iss") == LOCAL_JWT_ISSUER and decoded.get("sub"):
             user_id = UUID(decoded["sub"])
             user = db.query(User).filter(User.id == user_id).first()
-            if user and (getattr(user, "is_active", "true") or "true") == "true":
+            if user:
+                if (getattr(user, "is_active", "true") or "true") != "true":
+                    raise HTTPException(
+                        status_code=status.HTTP_403_FORBIDDEN,
+                        detail="Account is disabled",
+                    )
                 roles = user.get_roles(db)
                 if not roles:
                     roles = ["POLICY_ADMIN"]
@@ -161,9 +166,28 @@ async def verify_token(
                     roles=roles,
                     oidc_sub=user.oidc_sub,
                 )
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid or expired token",
+            )
+    except HTTPException:
+        raise
     except (JWTError, ValueError, TypeError):
-        pass  # Not our JWT or invalid; fall through to OIDC
-    
+        pass  # Not our JWT or invalid; fall through (may still be OIDC)
+
+    # Tokens we issued locally must never be validated as OIDC (avoids misleading "issuer mismatch")
+    try:
+        peek_iss = jwt.get_unverified_claims(token).get("iss")
+        if peek_iss == LOCAL_JWT_ISSUER:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid or expired token",
+            )
+    except HTTPException:
+        raise
+    except Exception:
+        pass
+
     try:
         # Try to decode token without verification first to check if it's a JWT
         try:

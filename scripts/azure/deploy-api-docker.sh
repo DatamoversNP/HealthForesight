@@ -77,7 +77,7 @@ az webapp config appsettings set \
   --settings \
     WEBSITES_PORT=8080 \
     PORT=8080 \
-    PYTHONPATH=/app/apps/api/src:/app/packages/common/src \
+    PYTHONPATH=/app/apps/api/src:/app/packages/common/src:/app/apps/worker/src \
   --output none
 
 # Portal "Startup command: startup.sh" is for ZIP/Oryx; it is NOT in the Docker image → container exits → 503.

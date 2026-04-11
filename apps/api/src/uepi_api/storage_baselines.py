@@ -361,11 +361,17 @@ def get_latest_baseline(
     policy_id: Optional[UUID] = None,
     baseline_type: Optional[str] = None,
 ) -> Optional[Dict[str, Any]]:
-    """Get the latest baseline for a tenant (optionally filtered by policy and baseline_type)"""
+    """Get the latest baseline for a tenant (optionally filtered by policy and baseline_type).
+
+    When policy_id is None, only tenant-wide baselines (policy_id not set) are considered
+    so policy-scoped rows do not mask the global rolling baseline.
+    """
     baselines = list_baselines(tenant_id=tenant_id, policy_id=policy_id, baseline_type=baseline_type)
+    if policy_id is None:
+        baselines = [b for b in baselines if not b.get("policy_id")]
     if not baselines:
         return None
-    
+
     # Already sorted by computed_at descending, so return first
     return baselines[0]
 

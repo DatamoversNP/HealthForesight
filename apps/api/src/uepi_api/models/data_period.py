@@ -59,3 +59,8 @@ class DataPeriod(Base):
     # Relationships
     data_snapshot = relationship("DatasetSnapshot", backref="data_periods")
 
+
+# Ensure DatasetSnapshot is registered on the same Base before mapper configuration.
+# Direct imports (e.g. ``from uepi_api.models.data_period import DataPeriod``) skip
+# ``uepi_api.models`` lazy loading order, which left the string "DatasetSnapshot" unresolved.
+from uepi_api.models.lineage import DatasetSnapshot as _DatasetSnapshot  # noqa: F401

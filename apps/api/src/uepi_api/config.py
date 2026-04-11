@@ -3,7 +3,7 @@ from functools import lru_cache
 from typing import Optional, Union
 import json
 
-from pydantic import field_validator
+from pydantic import AliasChoices, Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from uepi_common.config import (
     DatabaseSettings,
@@ -108,6 +108,37 @@ class APISettings(BaseSettings):
     # Cost Tracking
     enable_cost_tracking: bool = True  # Track LLM API costs
     cost_tracking_path: str = "./data/cost_tracking"  # Path for cost logs
+
+    # Async jobs: when False (default), elasticity runs via FastAPI BackgroundTasks after POST returns.
+    # Set UEPI_USE_CELERY_FOR_ELASTICITY=true only if a Celery worker consumes the same Redis broker;
+    # otherwise tasks sit in the queue and the UI polls until timeout.
+    use_celery_for_elasticity: bool = Field(
+        default=False,
+        validation_alias=AliasChoices(
+            "UEPI_USE_CELERY_FOR_ELASTICITY",
+            "USE_CELERY_FOR_ELASTICITY",
+        ),
+    )
+
+    # When False (default), daily pipeline runs via FastAPI BackgroundTasks. If True, enqueue
+    # uepi_worker.tasks.daily_data_and_observations_job (requires a worker on the same Redis).
+    use_celery_for_daily_job: bool = Field(
+        default=False,
+        validation_alias=AliasChoices(
+            "UEPI_USE_CELERY_FOR_DAILY_JOB",
+            "USE_CELERY_FOR_DAILY_JOB",
+        ),
+    )
+
+    # When False (default), what-if POST /analyses/simulate runs via FastAPI BackgroundTasks on the API
+    # process (no separate worker). If True, enqueue uepi_worker.tasks.whatif_scenario_job on Redis.
+    use_celery_for_whatif_simulation: bool = Field(
+        default=False,
+        validation_alias=AliasChoices(
+            "UEPI_USE_CELERY_FOR_WHATIF_SIMULATION",
+            "USE_CELERY_FOR_WHATIF_SIMULATION",
+        ),
+    )
 
 
 @lru_cache()

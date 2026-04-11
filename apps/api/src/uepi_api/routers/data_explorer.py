@@ -1,15 +1,26 @@
-"""Data Explorer API - Browse files and folders, view data"""
-from typing import Annotated, List, Optional, Dict, Any
+"""Data Explorer API - Browse files and folders, view data.
+
+In database-only mode (USE_FILE_STORAGE=false), ``source_data`` / ``target_data_model`` list
+PostgreSQL tables as virtual files (path prefix ``__db__/``) instead of on-disk folders.
+"""
+from decimal import Decimal
+from typing import Annotated, Any, Dict, Optional
 from uuid import UUID
 from fastapi import APIRouter, HTTPException, Depends, Query
 from pathlib import Path
 import pandas as pd
 import json
 
-from uepi_api.auth import CurrentUser, get_demo_current_user
-import os
+from sqlalchemy import inspect, text
+from sqlalchemy.orm import Session
+
+from uepi_api.auth import CurrentUser, verify_token
+from uepi_api.database import USE_FILE_STORAGE, get_db, get_engine
 
 router = APIRouter()
+
+# Virtual paths for PostgreSQL-backed rows (no on-disk file)
+DB_VIRTUAL_PREFIX = "__db__"
 
 # Base data directory - resolve to project root data directory
 # Calculate project root from current file location
@@ -20,15 +31,153 @@ project_root = current_file.parent.parent.parent.parent.parent.parent
 DATA_BASE_PATH = (project_root / "data").resolve()
 
 
+def _quote_table(engine, table_name: str) -> str:
+    return engine.dialect.identifier_preparer.quote(table_name)
+
+
+def _quote_col(engine, col_name: str) -> str:
+    return engine.dialect.identifier_preparer.quote(col_name)
+
+
+def _serialize_cell(value: Any) -> Any:
+    if value is None:
+        return None
+    if isinstance(value, UUID):
+        return str(value)
+    if isinstance(value, Decimal):
+        return float(value)
+    if hasattr(value, "isoformat"):
+        return value.isoformat()
+    return value
+
+
+def _parse_db_virtual_path(path: str) -> Optional[str]:
+    if not path.startswith(f"{DB_VIRTUAL_PREFIX}/"):
+        return None
+    table = path[len(DB_VIRTUAL_PREFIX) + 1 :].strip()
+    return table or None
+
+
+def _db_virtual_listing(path: str) -> Optional[Dict[str, Any]]:
+    """If path is served from PostgreSQL in DB-only mode, return listing payload; else None."""
+    if USE_FILE_STORAGE:
+        return None
+
+    path = (path or "").strip()
+
+    # Root: mirror legacy folder names so the SPA tabs keep working
+    if path == "":
+        return {
+            "path": "",
+            "items": [
+                {"name": "source_data", "type": "folder", "path": "source_data", "size": None},
+                {"name": "target_data_model", "type": "folder", "path": "target_data_model", "size": None},
+            ],
+            "parent_path": None,
+        }
+
+    if path in ("source_data", "target_data_model"):
+        engine = get_engine()
+        inspector = inspect(engine)
+        tables = sorted(inspector.get_table_names())
+        items = []
+        for t in tables:
+            items.append(
+                {
+                    "name": t,
+                    "type": "file",
+                    "path": f"{DB_VIRTUAL_PREFIX}/{t}",
+                    "size": None,
+                    "size_mb": None,
+                    "extension": ".db",
+                }
+            )
+        return {"path": path, "items": items, "parent_path": "" if path else None}
+
+    if path.startswith("source_data/") or path.startswith("target_data_model/"):
+        parent = path.rsplit("/", 1)[0] if "/" in path else path
+        return {"path": path, "items": [], "parent_path": parent if parent != path else ""}
+
+    return None
+
+
+def _db_virtual_table_rows(
+    db: Session,
+    table_name: str,
+    limit: int,
+    offset: int,
+) -> Dict[str, Any]:
+    engine = get_engine()
+    inspector = inspect(engine)
+    if table_name not in inspector.get_table_names():
+        raise HTTPException(status_code=404, detail="Table not found")
+
+    qtable = _quote_table(engine, table_name)
+    count_result = db.execute(text(f"SELECT COUNT(*) FROM {qtable}"))
+    total_count = int(count_result.scalar() or 0)
+
+    query = f"SELECT * FROM {qtable}"
+    pk_constraint = inspector.get_pk_constraint(table_name)
+    if pk_constraint and pk_constraint.get("constrained_columns"):
+        qc = _quote_col(engine, pk_constraint["constrained_columns"][0])
+        query += f" ORDER BY {qc}"
+    else:
+        cols = inspector.get_columns(table_name)
+        if cols:
+            qc = _quote_col(engine, cols[0]["name"])
+            query += f" ORDER BY {qc}"
+
+    query += f" LIMIT {limit} OFFSET {offset}"
+
+    result = db.execute(text(query))
+    rows = result.fetchall()
+    columns = list(result.keys()) if hasattr(result, "keys") else []
+    if not columns and result.description:
+        columns = [d[0] for d in result.description]
+
+    records = []
+    for row in rows:
+        rec = {}
+        for i, col_name in enumerate(columns):
+            val = row[i] if isinstance(row, (tuple, list)) else getattr(row, col_name, None)
+            rec[col_name] = _serialize_cell(val)
+        records.append(rec)
+
+    return {
+        "path": f"{DB_VIRTUAL_PREFIX}/{table_name}",
+        "columns": columns,
+        "rows": records,
+        "total_count": total_count,
+        "limit": limit,
+        "offset": offset,
+        "file_size": 0,
+        "file_type": ".db",
+    }
+
+
 @router.get("/data-explorer/list")
 async def list_files_and_folders(
-    current_user: Annotated[CurrentUser, Depends(get_demo_current_user)],
+    current_user: Annotated[CurrentUser, Depends(verify_token)],
     path: str = Query("", description="Relative path from data directory"),
     include_files: bool = Query(True, description="Include files in listing"),
     include_folders: bool = Query(True, description="Include folders in listing"),
 ):
     """List files and folders in the data directory"""
     try:
+        virtual = _db_virtual_listing(path)
+        if virtual is not None:
+            if not include_files:
+                virtual = {
+                    **virtual,
+                    "items": [i for i in virtual["items"] if i["type"] == "folder"],
+                }
+            if not include_folders:
+                virtual = {
+                    **virtual,
+                    "items": [i for i in virtual["items"] if i["type"] == "file"],
+                }
+            return virtual
+
         # Handle empty path - list root data directory
         if not path or path == "":
             full_path = DATA_BASE_PATH.resolve()
@@ -157,13 +306,18 @@ async def list_files_and_folders(
 
 @router.get("/data-explorer/view")
 async def view_file_data(
-    current_user: Annotated[CurrentUser, Depends(get_demo_current_user)],
+    current_user: Annotated[CurrentUser, Depends(verify_token)],
+    db: Session = Depends(get_db),
     path: str = Query(..., description="Relative path from data directory"),
-    limit: int = Query(100, ge=1, le=1000, description="Number of rows to return"),
+    limit: int = Query(100, ge=1, le=5000, description="Number of rows to return"),
     offset: int = Query(0, ge=0, description="Offset for pagination"),
 ):
     """View data from a file"""
     try:
+        table_name = _parse_db_virtual_path(path)
+        if table_name:
+            return _db_virtual_table_rows(db, table_name, limit, offset)
+
         # Sanitize path
         safe_path = Path(path)
         if ".." in str(safe_path) or safe_path.is_absolute():
@@ -258,12 +412,25 @@ async def view_file_data(
 
 @router.get("/data-explorer/preview")
 async def preview_file(
-    current_user: Annotated[CurrentUser, Depends(get_demo_current_user)],
+    current_user: Annotated[CurrentUser, Depends(verify_token)],
+    db: Session = Depends(get_db),
     path: str = Query(..., description="Relative path from data directory"),
     rows: int = Query(10, ge=1, le=100, description="Number of preview rows"),
 ):
     """Get a quick preview of a file (first N rows)"""
     try:
+        table_name = _parse_db_virtual_path(path)
+        if table_name:
+            data = _db_virtual_table_rows(db, table_name, rows, 0)
+            return {
+                "path": data["path"],
+                "columns": data["columns"],
+                "rows": data["rows"],
+                "row_count": len(data["rows"]),
+                "file_size": 0,
+                "file_type": ".db",
+            }
+
         safe_path = Path(path)
         if ".." in str(safe_path) or safe_path.is_absolute():
             raise HTTPException(status_code=400, detail="Invalid path")

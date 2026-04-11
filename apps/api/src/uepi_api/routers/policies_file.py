@@ -416,7 +416,9 @@ async def generate_policy_predicted_impact(
                     "member_months": baseline_metrics_dict.get("member_months", 10000),
                 }
                 # Remove None values and zeros
-                baseline_metrics_for_prediction = {k: v for k, v in baseline_metrics_for_prediction.items() if v is not None and v != 0}
+                baseline_metrics_for_prediction = {
+                    k: v for k, v in baseline_metrics_for_prediction.items() if v is not None
+                }
                 if not baseline_metrics_for_prediction:
                     baseline_metrics_for_prediction = None
     except Exception as baseline_error:

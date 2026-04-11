@@ -1,4 +1,5 @@
 """Shared configuration and settings"""
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -30,6 +31,14 @@ class DatabaseSettings(BaseSettings):
     pool_size: int = 10
     max_overflow: int = 20
     echo: bool = False
+
+    @field_validator("url", mode="before")
+    @classmethod
+    def strip_database_url(cls, v):
+        """Avoid psycopg2 invalid sslmode when env has trailing/leading whitespace."""
+        if isinstance(v, str):
+            return v.strip()
+        return v
 
 
 class ObjectStorageSettings(BaseSettings):

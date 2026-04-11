@@ -224,7 +224,10 @@ def _create_policy(tenant_id: UUID, policy_data: Dict[str, Any]) -> Dict[str, An
                 policy_data=_policy_db_to_dict(policy_db),
             )
             if version:
-                print(f"Created initial policy version {version.get('version_number')} for policy {policy_id}")
+                vn = getattr(version, "version_number", None)
+                if vn is None and isinstance(version, dict):
+                    vn = version.get("version_number")
+                print(f"Created initial policy version {vn} for policy {policy_id}")
         except Exception as e:
             print(f"Warning: Failed to create initial policy version for policy {policy_id}: {e}")
         

@@ -8,6 +8,10 @@
 #   ./scripts/azure/redeploy-all.sh --web-only
 #   SKIP_VERIFY=1 ./scripts/azure/redeploy-all.sh    # skip post-deploy HTTP checks
 #
+# Web target: App Service (WEB_APP_NAME, default healthforesight-web → *.azurewebsites.net).
+# Do NOT use scripts/azure/deploy-frontend.sh for that host if you also have a Static Web App
+# with the same name — deploy-frontend.sh may deploy to *.azurestaticapps.net instead.
+#
 # Prerequisites:
 #   - az login (subscription with the resource group)
 #   - Node.js + npm, zip (for web)
@@ -161,12 +165,15 @@ if [[ "$DO_WEB" == true ]]; then
   if ! wait_for_http "$WEB_PUBLIC/" "Web GET /" 24 10; then
     VERIFY_FAILED=1
   fi
-  echo ">>> Verifying Web → API proxy (optional) ..."
-  proxy_code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 "$WEB_PUBLIC/api/v1/ping" 2>/dev/null || echo "000")
-  if [[ "$proxy_code" == "200" ]]; then
-    echo "✅ Web proxy GET /api/v1/ping (HTTP 200)"
+  echo ">>> Verifying Web → API proxy (same-origin /api; Node cold start can lag root /) ..."
+  if wait_for_http "$WEB_PUBLIC/api/v1/ping" "Web proxy GET /api/v1/ping" 18 10; then
+    curl -sS "$WEB_PUBLIC/api/v1/ping" | head -c 200 || true
+    echo ""
   else
-    echo "⚠️  Web proxy GET /api/v1/ping → HTTP $proxy_code (SPA may still work via baked VITE_API_URL)"
+    echo "⚠️  Web proxy did not return HTTP 200 in time."
+    echo "   Common causes: Startup Command not \`node server.mjs\`, or App Service still warming up — retry:"
+    echo "   curl -sS \"$WEB_PUBLIC/api/v1/ping\""
+    echo "   SPA may still work via baked VITE_API_URL if CORS is allowed on the API."
   fi
 fi
 

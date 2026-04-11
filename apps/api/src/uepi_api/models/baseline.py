@@ -79,3 +79,7 @@ class Baseline(Base):
     parent_baseline = relationship("Baseline", remote_side=[id], backref="child_baselines")
     analytics_run = relationship("AnalyticsRun", backref="baselines")
 
+
+# Register related models before mapper config (direct imports skip lazy ``uepi_api.models``).
+from uepi_api.models.analytics_run import AnalyticsRun as _AnalyticsRun  # noqa: F401
+from uepi_api.models.policy import Policy as _Policy  # noqa: F401

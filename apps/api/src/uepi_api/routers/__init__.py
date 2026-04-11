@@ -54,5 +54,6 @@ def __dir__() -> list[str]:
             "admin",
             "access",
             "data_health",
+            "policy_rollout_recommendations",
         }
     )

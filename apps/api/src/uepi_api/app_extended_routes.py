@@ -59,9 +59,13 @@ def register_extended_routes(app: FastAPI) -> None:
         from uepi_api.routers import narratives
 
         from uepi_api.routers import policies
+        from uepi_api.routers import policy_rollout_recommendations
         from uepi_api.routers import ingestions, datasets
 
         app.include_router(policies.router, prefix="/api/v1", tags=["Policies"])
+        app.include_router(
+            policy_rollout_recommendations.router, prefix="/api/v1", tags=["Policy Recommendations"]
+        )
         if ingestions is not None:
             app.include_router(ingestions.router, prefix="/api/v1", tags=["Ingestions"])
         if datasets is not None:

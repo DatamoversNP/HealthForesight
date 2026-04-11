@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, Query, Body
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
-from uepi_api.auth import CurrentUser, get_demo_current_user
+from uepi_api.auth import CurrentUser, get_demo_current_user, require_role
 from uepi_api.database import get_db
 from uepi_api.storage_baselines import (
     create_baseline,
@@ -101,7 +101,7 @@ async def refresh_baseline_route(
 
 @router.post("/baselines/refresh-all", response_model=RefreshAllBaselinesResponse, status_code=status.HTTP_200_OK)
 async def refresh_all_baselines_route(
-    current_user: Annotated[CurrentUser, Depends(get_demo_current_user)],
+    current_user: Annotated[CurrentUser, Depends(require_role("POLICY_ADMIN", "UM_LEADER"))],
     db: Session = Depends(get_db),
     baseline_type: str = "ROLLING",
     window_months: int = 12,

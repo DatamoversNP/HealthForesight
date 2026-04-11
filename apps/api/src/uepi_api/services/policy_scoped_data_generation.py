@@ -1,5 +1,5 @@
 """Policy-scoped data generation - Generate claims data that matches policy scopes"""
-from typing import Dict, Any, List, Optional, Set
+from typing import Any, Dict, List, Optional, Set
 from uuid import UUID, uuid4
 from datetime import date, datetime, timedelta
 from pathlib import Path
@@ -72,23 +72,36 @@ def extract_policy_target_codes(policy: Dict[str, Any]) -> Dict[str, List[str]]:
         if parameters:
             all_codes.update(parameters)
         
-        # Procedure codes (CPT/HCPCS) - check multiple field names
-        for code_field in ["procedure_codes", "cpt_codes", "hcpcs_codes", "codes"]:
+        # Procedure codes (CPT/HCPCS) - check multiple field names (target_codes = step therapy / specialty drugs)
+        for code_field in ["procedure_codes", "cpt_codes", "hcpcs_codes", "codes", "target_codes"]:
             if all_codes.get(code_field):
                 codes = all_codes[code_field]
-                if isinstance(codes, list):
-                    target_codes["procedure_codes"].extend(codes)
-                else:
-                    target_codes["procedure_codes"].append(codes)
+                if not isinstance(codes, list):
+                    codes = [codes]
+                for c in codes:
+                    if c is None or str(c).strip().upper() in ("ALL", "*", ""):
+                        continue
+                    target_codes["procedure_codes"].append(str(c).strip())
+
+        if all_codes.get("specialty_codes"):
+            sc = all_codes["specialty_codes"]
+            if not isinstance(sc, list):
+                sc = [sc]
+            for c in sc:
+                if c is None or str(c).strip().upper() in ("ALL", "*", ""):
+                    continue
+                target_codes["procedure_codes"].append(str(c).strip())
         
         # Diagnosis codes (ICD) - check multiple field names
         for code_field in ["diagnosis_codes", "icd_codes", "diagnosis"]:
             if all_codes.get(code_field):
                 codes = all_codes[code_field]
-                if isinstance(codes, list):
-                    target_codes["diagnosis_codes"].extend(codes)
-                else:
-                    target_codes["diagnosis_codes"].append(codes)
+                if not isinstance(codes, list):
+                    codes = [codes]
+                for c in codes:
+                    if c is None or str(c).strip().upper() in ("ALL", "*", ""):
+                        continue
+                    target_codes["diagnosis_codes"].append(str(c).strip())
         
         # Service categories
         for cat_field in ["service_categories", "service_category", "categories"]:
@@ -105,6 +118,20 @@ def extract_policy_target_codes(policy: Dict[str, Any]) -> Dict[str, List[str]]:
     target_codes["service_categories"] = list(set(target_codes["service_categories"]))
     
     return target_codes
+
+
+def _scope_dimension_is_unrestricted(val: Any) -> bool:
+    """True if scope value means 'do not filter' (ALL / any / empty)."""
+    if val is None:
+        return True
+    if isinstance(val, str):
+        return val.strip().upper() in ("ALL", "*", "ANY", "")
+    if isinstance(val, list):
+        if not val:
+            return True
+        ups = {str(x).strip().upper() for x in val}
+        return bool(ups & {"ALL", "*", "ANY"})
+    return False
 
 
 def build_policy_claims_filters(policy: Dict[str, Any]) -> Dict[str, Any]:
@@ -152,10 +179,19 @@ def build_policy_claims_filters(policy: Dict[str, Any]) -> Dict[str, Any]:
     lob = scope.get("lob")
     market = scope.get("markets") or scope.get("market")
 
+    if _scope_dimension_is_unrestricted(lob):
+        lob = None
+    if _scope_dimension_is_unrestricted(market):
+        market = None
+
+    markets_list = None
+    if market is not None:
+        markets_list = market if isinstance(market, list) else [market]
+
     return {
         "lob": lob,
         "market": market,
-        "markets": market if isinstance(market, list) else ([market] if market else None),
+        "markets": markets_list,
         "procedure_codes": merged_procedure if merged_procedure else None,
         "cpt_codes": merged_procedure if merged_procedure else None,
         "hcpcs_codes": merged_procedure if merged_procedure else None,

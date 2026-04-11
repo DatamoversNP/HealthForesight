@@ -16,12 +16,14 @@ COPY apps/api/src ./apps/api/src
 COPY apps/api/alembic ./apps/api/alembic
 COPY apps/api/alembic.ini ./apps/api/
 COPY packages/common/src ./packages/common/src
+# What-if / simulate runs inline on the API via BackgroundTasks and imports uepi_worker.whatif
+COPY apps/worker/src ./apps/worker/src
 
 # Install Python dependencies at build time (avoids 10-min startup on Azure)
 RUN pip install --no-cache-dir -r apps/api/requirements.txt
 
 WORKDIR /app/apps/api/src
-ENV PYTHONPATH=/app/apps/api/src:/app/packages/common/src
+ENV PYTHONPATH=/app/apps/api/src:/app/packages/common/src:/app/apps/worker/src
 # Do not set PORT here — Azure injects it. Default 8080 only in entrypoint when unset.
 EXPOSE 8080
 

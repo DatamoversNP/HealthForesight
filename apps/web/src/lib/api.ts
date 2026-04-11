@@ -6,6 +6,19 @@ import logger from './logger'
 
 const TOKEN_KEY = 'uepi_token'
 
+function jwtExpSeconds(token: string): number | null {
+  try {
+    const parts = token.split('.')
+    if (parts.length < 2) return null
+    let b64 = parts[1].replace(/-/g, '+').replace(/_/g, '/')
+    while (b64.length % 4) b64 += '='
+    const payload = JSON.parse(atob(b64)) as { exp?: number }
+    return typeof payload.exp === 'number' ? payload.exp : null
+  } catch {
+    return null
+  }
+}
+
 /** localStorage (default) keeps you signed in across visits; VITE_AUTH_STORAGE=session uses sessionStorage. */
 function authStorage(): Storage | null {
   if (typeof window === 'undefined') return null
@@ -172,21 +185,31 @@ export class ApiClient {
           })
         }
         
-        // Log error response
-        logger.logApiCall(
-          error.config?.method?.toUpperCase() || 'UNKNOWN',
-          error.config?.url || '',
-          error.response.status,
-          duration,
-          error.config?.data,
-          error.response.data,
-          error
-        )
-        
+        const method = error.config?.method?.toUpperCase() || 'UNKNOWN'
+        const url = error.config?.url || ''
+        const status = error.response.status
+        const silentSession401 =
+          status === 401 && (error.config as any)?.silentSessionExpiredCheck === true
+
+        // Startup /auth/me with a stale token: expected 401; avoid noisy info+warn in console
+        if (silentSession401) {
+          logger.debug(
+            'API',
+            `${method} ${url} -> 401 (${duration}ms) (stored session invalid or expired; not an error)`,
+            { method, url, status, duration }
+          )
+        } else {
+          logger.logApiCall(method, url, status, duration, error.config?.data, error.response.data, error)
+        }
+
         if (error.response?.status === 401) {
           // Token expired or invalid - don't redirect immediately, let components handle it
           this.setToken(null)
-          logger.warn('API_AUTH', 'Authentication failed', { url: error.config?.url })
+          if (silentSession401) {
+            logger.debug('API_AUTH', 'Cleared stored token after session check', { url })
+          } else {
+            logger.warn('API_AUTH', 'Authentication failed', { url })
+          }
         }
         
         return Promise.reject(this.formatError(error))
@@ -224,6 +247,15 @@ export class ApiClient {
     return t
   }
 
+  /** True if JWT `exp` is in the past (with skew). Opaque / non-JWT tokens return false (still verify via /auth/me). */
+  isAccessTokenExpired(skewMs = 15_000): boolean {
+    const t = this.getToken()
+    if (!t) return true
+    const exp = jwtExpSeconds(t)
+    if (exp == null) return false
+    return exp * 1000 < Date.now() + skewMs
+  }
+
   private formatError(error: AxiosError): ApiError {
     const apiError: ApiError = {
       message: error.message,
@@ -238,6 +270,12 @@ export class ApiClient {
     return apiError
   }
 
+  /** Generic GET for endpoints without a dedicated wrapper (e.g. database viewer). */
+  async get<T = unknown>(url: string, config?: import('axios').AxiosRequestConfig): Promise<T> {
+    const response = await this.client.get<T>(url, config)
+    return response.data
+  }
+
   // Auth endpoints (supports AD/SSO and local email+password)
   async getMe() {
     const response = await this.client.get('/auth/me')
@@ -246,7 +284,10 @@ export class ApiClient {
 
   /** Session check at startup — short timeout so users reach login quickly if API/CORS is down */
   async getMeSessionVerify(timeoutMs = 12000) {
-    const response = await this.client.get('/auth/me', { timeout: timeoutMs })
+    const response = await this.client.get('/auth/me', {
+      timeout: timeoutMs,
+      silentSessionExpiredCheck: true,
+    } as import('axios').AxiosRequestConfig & { silentSessionExpiredCheck?: boolean })
     return response.data
   }
 
@@ -810,6 +851,16 @@ export class ApiClient {
   // Observation endpoints
   async listObservations(params?: { policy_id?: string; data_period_id?: string; observation_type?: string; include_trends?: boolean; latest_only?: boolean }) {
     const response = await this.client.get('/observations', { params })
+    return response.data
+  }
+
+  /** Enterprise policy rollout recommender: claims + catalog + dedup + explainability */
+  async getPolicyRolloutRecommendations(params?: {
+    months_lookback?: number
+    limit?: number
+    jaccard_threshold?: number
+  }) {
+    const response = await this.client.get('/recommendations/policy-rollouts', { params })
     return response.data
   }
 

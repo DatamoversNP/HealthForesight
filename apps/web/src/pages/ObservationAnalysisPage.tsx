@@ -1,7 +1,7 @@
 /**
  * Observation Analysis Page - Compare Predicted vs Observed Outcomes
  */
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import {
   Box,
   Button,
@@ -128,6 +128,9 @@ interface Observation {
       baseline_version_id?: string
     }
     vs_predicted?: {
+      /** Pre-policy reference used to compute predicted (mirrors vs_baseline when that block is empty) */
+      baseline_utilization_per_1k?: number
+      baseline_cost_pmpm?: number
       predicted_utilization?: number
       observed_utilization?: number
       predicted_utilization_per_1k?: number
@@ -208,6 +211,48 @@ interface Policy {
   policy_type: string
 }
 
+function buildPrescriptiveRecommendations(obs: Observation): string[] {
+  const lines: string[] = []
+  if (obs.recommendation?.trim()) {
+    lines.push(obs.recommendation.trim())
+  }
+  const be = obs.behavioral_explanation || {}
+  if (Array.isArray(be.recommendations)) {
+    be.recommendations.forEach((r: unknown) => {
+      if (typeof r === 'string' && r.trim()) lines.push(r.trim())
+    })
+  }
+  if (Array.isArray(be.risk_factors)) {
+    be.risk_factors.forEach((r: unknown) => {
+      if (typeof r === 'string' && r.trim()) lines.push(`Mitigate risk: ${r.trim()}`)
+    })
+  }
+  const vs = obs.comparisons?.vs_predicted
+  if (vs && vs.prediction_accuracy_pct != null && vs.prediction_accuracy_pct < 65) {
+    lines.push('Refresh predicted impact or elasticity inputs—model fit is weak versus recent experience.')
+  }
+  if (vs && vs.prediction_accuracy_pct != null && vs.prediction_accuracy_pct >= 85) {
+    lines.push('Forecasts are tracking well; maintain monitoring cadence and document assumptions for audit.')
+  }
+  const vb = obs.comparisons?.vs_baseline
+  const uchg = vb?.utilization_change_pct ?? vb?.change_from_baseline_pct
+  if (typeof uchg === 'number' && Math.abs(uchg) > 15) {
+    lines.push(
+      uchg > 0
+        ? 'Utilization is materially above baseline—investigate access, network, or coding shifts.'
+        : 'Utilization is materially below baseline—confirm whether this reflects intended policy effect or under-capture.'
+    )
+  }
+  if (obs.verdict_status === 'BACKFIRE') {
+    lines.push('Escalate for clinical and network review; consider pausing intensification until drivers are understood.')
+  } else if (obs.verdict_status === 'AT_RISK') {
+    lines.push('Set explicit checkpoints and owner actions before the next observation window closes.')
+  } else if (obs.verdict_status === 'ON_TRACK') {
+    lines.push('Keep standard governance; capture what is working for replication across similar policies.')
+  }
+  return [...new Set(lines)]
+}
+
 export default function ObservationAnalysisPage() {
   const [observations, setObservations] = useState<Observation[]>([])
   const [policies, setPolicies] = useState<Policy[]>([])
@@ -226,6 +271,33 @@ export default function ObservationAnalysisPage() {
   const [loadingForecast, setLoadingForecast] = useState(false)
   const [forecastMetricType, setForecastMetricType] = useState<'utilization' | 'cost'>('utilization')
   const navigate = useNavigate()
+
+  const latestByPolicy = useMemo(() => {
+    const m = new Map<string, Observation>()
+    for (const o of observations) {
+      const prev = m.get(o.policy_id)
+      const t = new Date(o.observation_period_end || o.computed_at).getTime()
+      if (!prev || t > new Date(prev.observation_period_end || prev.computed_at).getTime()) {
+        m.set(o.policy_id, o)
+      }
+    }
+    return Array.from(m.values()).sort(
+      (a, b) =>
+        new Date(b.observation_period_end || b.computed_at).getTime() -
+        new Date(a.observation_period_end || a.computed_at).getTime()
+    )
+  }, [observations])
+
+  const observationHistoryForSelected = useMemo(() => {
+    if (!selectedObservation) return []
+    return [...observations]
+      .filter((o) => o.policy_id === selectedObservation.policy_id)
+      .sort(
+        (a, b) =>
+          new Date(a.observation_period_end || a.computed_at).getTime() -
+          new Date(b.observation_period_end || b.computed_at).getTime()
+      )
+  }, [observations, selectedObservation?.policy_id])
 
   useEffect(() => {
     loadData()
@@ -322,6 +394,11 @@ export default function ObservationAnalysisPage() {
       )
       
       console.log('Enriched observations:', enrichedObservations.length)
+      enrichedObservations.sort(
+        (a, b) =>
+          new Date(b.observation_period_end || b.computed_at).getTime() -
+          new Date(a.observation_period_end || a.computed_at).getTime()
+      )
       setObservations(enrichedObservations)
     } catch (err: any) {
       console.error('Error loading observations:', err)
@@ -587,21 +664,103 @@ export default function ObservationAnalysisPage() {
                   color="primary"
                   variant="outlined"
                 />
-                {selectedPolicy && observations.length > 0 && (
-                  <Chip
-                    label={observations[0].metadata?.trend?.trend_direction === 'increasing' ? '📈 Increasing Trend' :
-                           observations[0].metadata?.trend?.trend_direction === 'decreasing' ? '📉 Decreasing Trend' :
-                           '➡️ Stable Trend'}
-                    color={observations[0].metadata?.trend?.trend_direction === 'increasing' ? 'error' :
-                           observations[0].metadata?.trend?.trend_direction === 'decreasing' ? 'success' : 'default'}
-                    variant="outlined"
-                  />
-                )}
+                {selectedPolicy && observations.length > 0 && (() => {
+                  const trendObs =
+                    observations.find((o) => o.policy_id === selectedPolicy) || observations[0]
+                  const dir = trendObs.metadata?.trend?.trend_direction
+                  return (
+                    <Chip
+                      label={
+                        dir === 'increasing'
+                          ? '📈 Increasing Trend'
+                          : dir === 'decreasing'
+                            ? '📉 Decreasing Trend'
+                            : '➡️ Stable Trend'
+                      }
+                      color={
+                        dir === 'increasing' ? 'error' : dir === 'decreasing' ? 'success' : 'default'
+                      }
+                      variant="outlined"
+                    />
+                  )
+                })()}
               </Box>
             </Grid>
           </Grid>
         </CardContent>
       </Card>
+
+      {/* Latest snapshot per policy (newest run each) */}
+      {latestByPolicy.length > 0 && (
+        <Card sx={{ mb: 3, border: '1px solid', borderColor: 'divider' }}>
+          <CardContent>
+            <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
+              Current observations (latest per policy)
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+              Each tile is the most recent run for that policy (by observation period end). Click to open
+              detail, trends, and recommendations.
+            </Typography>
+            <Grid container spacing={2}>
+              {latestByPolicy.map((obs) => {
+                const name = policies.find((p) => p.id === obs.policy_id)?.name || 'Policy'
+                const acc = obs.comparisons?.vs_predicted?.prediction_accuracy_pct
+                return (
+                  <Grid item xs={12} sm={6} md={4} key={`latest-${obs.policy_id}`}>
+                    <Paper
+                      elevation={0}
+                      onClick={() => setSelectedObservation(obs)}
+                      sx={{
+                        p: 2,
+                        cursor: 'pointer',
+                        border: '1px solid',
+                        borderColor: 'divider',
+                        borderRadius: 1,
+                        transition: 'box-shadow 0.15s',
+                        '&:hover': { boxShadow: 2, borderColor: 'primary.light' },
+                      }}
+                    >
+                      <Typography variant="subtitle1" fontWeight={600} gutterBottom noWrap title={name}>
+                        {name}
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary" display="block">
+                        Through{' '}
+                        {obs.observation_period_end
+                          ? format(new Date(obs.observation_period_end), 'MMM d, yyyy')
+                          : format(new Date(obs.computed_at), 'MMM d, yyyy')}
+                      </Typography>
+                      {obs.verdict_status && (
+                        <Chip
+                          size="small"
+                          sx={{ mt: 1 }}
+                          label={obs.verdict_status}
+                          color={
+                            obs.verdict_status === 'BACKFIRE'
+                              ? 'error'
+                              : obs.verdict_status === 'AT_RISK'
+                                ? 'warning'
+                                : obs.verdict_status === 'ON_TRACK'
+                                  ? 'success'
+                                  : 'default'
+                          }
+                        />
+                      )}
+                      {acc != null && (
+                        <Typography variant="body2" sx={{ mt: 1 }}>
+                          Forecast fit:{' '}
+                          <strong>
+                            {acc.toFixed(0)}%
+                          </strong>
+                        </Typography>
+                      )}
+                    </Paper>
+                  </Grid>
+                )
+              })}
+            </Grid>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Focus Areas - Highlight observations that need attention */}
       {observations.length > 0 && (
@@ -725,7 +884,13 @@ export default function ObservationAnalysisPage() {
         </Card>
       )}
 
-      {/* Observations list */}
+      {/* Observations list (newest first) */}
+      {observations.length > 0 && (
+        <Typography variant="subtitle1" sx={{ mb: 1.5, fontWeight: 600 }}>
+          All observation runs
+          {selectedPolicy ? ' (filtered policy)' : ''}
+        </Typography>
+      )}
       <Grid container spacing={3}>
         {observations.length === 0 ? (
           <Grid item xs={12}>
@@ -803,7 +968,7 @@ export default function ObservationAnalysisPage() {
 
                   {/* Metrics summary */}
                   <Grid container spacing={2}>
-                    {observation.comparisons.vs_predicted && (
+                    {observation.comparisons?.vs_predicted && (
                       <Grid item xs={12} sm={6} md={3}>
                         <Box>
                           <Typography variant="caption" color="text.secondary">
@@ -862,17 +1027,24 @@ export default function ObservationAnalysisPage() {
       {/* Observation detail dialog */}
       <Dialog
         open={!!selectedObservation}
-        onClose={() => setSelectedObservation(null)}
+        onClose={() => {
+          setSelectedObservation(null)
+          setTabValue(0)
+        }}
         maxWidth="xl"
         fullWidth
         PaperProps={{
           sx: {
             borderRadius: 0,
             boxShadow: 'none',
-            maxHeight: '95vh',
+            height: { xs: '100vh', sm: '90vh' },
+            maxHeight: { xs: '100vh', sm: '90vh' },
+            width: '100%',
+            maxWidth: 1536,
             display: 'flex',
             flexDirection: 'column',
-          }
+            overflow: 'hidden',
+          },
         }}
       >
         <DialogTitle sx={{ 
@@ -880,7 +1052,8 @@ export default function ObservationAnalysisPage() {
           color: '#0F172A',
           py: 3,
           px: 4,
-          borderBottom: '1px solid #CBD5E1'
+          borderBottom: '1px solid #CBD5E1',
+          flexShrink: 0,
         }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
             <Box>
@@ -941,7 +1114,10 @@ export default function ObservationAnalysisPage() {
               )}
             </Box>
             <Button 
-              onClick={() => setSelectedObservation(null)}
+              onClick={() => {
+                setSelectedObservation(null)
+                setTabValue(0)
+              }}
               sx={{ 
                 color: '#0F172A', 
                 minWidth: 'auto',
@@ -953,14 +1129,25 @@ export default function ObservationAnalysisPage() {
             </Button>
           </Box>
         </DialogTitle>
-        <DialogContent sx={{ p: 0, bgcolor: '#F8FAFC', flex: 1, overflow: 'auto' }}>
+        <DialogContent
+          sx={{
+            p: 0,
+            bgcolor: '#F8FAFC',
+            flex: 1,
+            minHeight: 0,
+            overflow: 'hidden',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
           {selectedObservation && (
-            <Box>
+            <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
               <Box sx={{ 
                 bgcolor: 'white', 
                 borderBottom: '1px solid #E5E7EB',
                 px: 4,
-                pt: 2
+                pt: 2,
+                flexShrink: 0,
               }}>
                 <Tabs 
                   value={tabValue} 
@@ -994,9 +1181,219 @@ export default function ObservationAnalysisPage() {
               </Tabs>
               </Box>
 
-              <Box sx={{ p: 4 }}>
+              <Box
+                sx={{
+                  p: 4,
+                  flex: 1,
+                  minHeight: 0,
+                  overflow: 'auto',
+                  WebkitOverflowScrolling: 'touch',
+                }}
+              >
               {tabValue === 0 && (
                 <Box>
+                  {observationHistoryForSelected.length >= 1 && (
+                    <Box sx={{ mb: 4 }}>
+                      <Typography variant="h6" sx={{ mb: 1, fontWeight: 600 }}>
+                        How this policy is performing over time
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                        Each point is one observation window for this policy (chronological). Compare observed
+                        utilization and cost to baseline and to what was predicted for the same period where
+                        available.
+                      </Typography>
+                      <Grid container spacing={3}>
+                        <Grid item xs={12} md={6}>
+                          <Typography variant="subtitle2" gutterBottom>
+                            Utilization (per 1K) by period end
+                          </Typography>
+                          <Box sx={{ width: '100%', height: 260 }}>
+                            <ResponsiveContainer width="100%" height="100%">
+                              <ComposedChart
+                                data={observationHistoryForSelected.map((obs) => {
+                                  const vb = obs.comparisons?.vs_baseline
+                                  const vp = obs.comparisons?.vs_predicted
+                                  const baselineUtil =
+                                    vb?.baseline_utilization_per_1k ??
+                                    vp?.baseline_utilization_per_1k ??
+                                    null
+                                  return {
+                                    label: format(
+                                      new Date(obs.observation_period_end || obs.computed_at),
+                                      'MMM d'
+                                    ),
+                                    observed: obs.metrics?.utilization_per_1k ?? 0,
+                                    baseline: baselineUtil,
+                                    predicted:
+                                      vp?.predicted_utilization_per_1k ??
+                                      vp?.predicted_utilization ??
+                                      null,
+                                  }
+                                })}
+                              >
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="label" tick={{ fontSize: 11 }} />
+                                <YAxis tick={{ fontSize: 11 }} />
+                                <Tooltip />
+                                <Legend />
+                                <Line
+                                  type="monotone"
+                                  dataKey="observed"
+                                  name="Observed"
+                                  stroke="#3B2F8F"
+                                  strokeWidth={2}
+                                  dot
+                                />
+                                <Line
+                                  type="monotone"
+                                  dataKey="predicted"
+                                  name="Predicted level"
+                                  stroke="#f97316"
+                                  strokeDasharray="6 4"
+                                  strokeWidth={2}
+                                  dot={false}
+                                  connectNulls
+                                />
+                                <Line
+                                  type="monotone"
+                                  dataKey="baseline"
+                                  name="Baseline (ref)"
+                                  stroke="#15803d"
+                                  strokeDasharray="4 4"
+                                  strokeWidth={3}
+                                  dot={false}
+                                  connectNulls
+                                />
+                              </ComposedChart>
+                            </ResponsiveContainer>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                          <Typography variant="subtitle2" gutterBottom>
+                            Cost (PMPM) by period end
+                          </Typography>
+                          <Box sx={{ width: '100%', height: 260 }}>
+                            <ResponsiveContainer width="100%" height="100%">
+                              <ComposedChart
+                                data={observationHistoryForSelected.map((obs) => {
+                                  const vb = obs.comparisons?.vs_baseline
+                                  const vp = obs.comparisons?.vs_predicted
+                                  const baselineCost =
+                                    vb?.baseline_cost_pmpm ?? vp?.baseline_cost_pmpm ?? null
+                                  return {
+                                    label: format(
+                                      new Date(obs.observation_period_end || obs.computed_at),
+                                      'MMM d'
+                                    ),
+                                    observed:
+                                      obs.metrics?.cost_pmpm ??
+                                      obs.metrics?.cost_per_member ??
+                                      0,
+                                    baseline: baselineCost,
+                                    predicted: vp?.predicted_cost_pmpm ?? null,
+                                  }
+                                })}
+                              >
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="label" tick={{ fontSize: 11 }} />
+                                <YAxis tick={{ fontSize: 11 }} />
+                                <Tooltip formatter={(v: number) => (v != null ? `$${Number(v).toFixed(2)}` : '')} />
+                                <Legend />
+                                <Line
+                                  type="monotone"
+                                  dataKey="observed"
+                                  name="Observed"
+                                  stroke="#3B2F8F"
+                                  strokeWidth={2}
+                                  dot
+                                />
+                                <Line
+                                  type="monotone"
+                                  dataKey="predicted"
+                                  name="Predicted level"
+                                  stroke="#f97316"
+                                  strokeDasharray="6 4"
+                                  strokeWidth={2}
+                                  dot={false}
+                                  connectNulls
+                                />
+                                <Line
+                                  type="monotone"
+                                  dataKey="baseline"
+                                  name="Baseline (ref)"
+                                  stroke="#15803d"
+                                  strokeDasharray="4 4"
+                                  strokeWidth={3}
+                                  dot={false}
+                                  connectNulls
+                                />
+                              </ComposedChart>
+                            </ResponsiveContainer>
+                          </Box>
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                          <Typography variant="subtitle2" gutterBottom>
+                            Forecast fit (% accuracy vs prediction)
+                          </Typography>
+                          <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 0.5 }}>
+                            Gaps mean no predicted comparison for that run.
+                          </Typography>
+                          <Box sx={{ width: '100%', height: 220 }}>
+                            <ResponsiveContainer width="100%" height="100%">
+                              <LineChart
+                                data={observationHistoryForSelected.map((obs) => ({
+                                  label: format(
+                                    new Date(obs.observation_period_end || obs.computed_at),
+                                    'MMM d'
+                                  ),
+                                  accuracy: obs.comparisons?.vs_predicted?.prediction_accuracy_pct ?? null,
+                                }))}
+                              >
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="label" tick={{ fontSize: 11 }} />
+                                <YAxis domain={[0, 100]} tick={{ fontSize: 11 }} />
+                                <Tooltip formatter={(v: unknown) => (v == null ? '—' : `${Number(v).toFixed(1)}%`)} />
+                                <Legend />
+                                <Line
+                                  type="monotone"
+                                  dataKey="accuracy"
+                                  name="Accuracy %"
+                                  stroke="#6366f1"
+                                  strokeWidth={2}
+                                  dot
+                                  connectNulls
+                                />
+                              </LineChart>
+                            </ResponsiveContainer>
+                          </Box>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  )}
+
+                  {(() => {
+                    const recs = buildPrescriptiveRecommendations(selectedObservation)
+                    if (recs.length === 0) return null
+                    return (
+                      <Paper variant="outlined" sx={{ p: 3, mb: 4, borderColor: '#CBD5E1', borderRadius: 0 }}>
+                        <Typography variant="h6" sx={{ mb: 1.5, fontWeight: 600 }}>
+                          Prescriptive recommendations (this policy)
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                          Derived from the current verdict, model fit, baseline gap, and behavioral context.
+                          Use as a starting point for governance and clinical ops follow-up.
+                        </Typography>
+                        <Box component="ul" sx={{ m: 0, pl: 2.5 }}>
+                          {recs.map((line, i) => (
+                            <Typography component="li" variant="body1" key={i} sx={{ mb: 0.75 }}>
+                              {line}
+                            </Typography>
+                          ))}
+                        </Box>
+                      </Paper>
+                    )
+                  })()}
+
                   {/* Unified measures comparison table: Baseline | Predicted | Observed */}
                   {(() => {
                     const vsBaseline = selectedObservation.comparisons?.vs_baseline

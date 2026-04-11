@@ -1,8 +1,10 @@
 """Analysis endpoints"""
 from typing import Annotated
 from uuid import UUID
+import copy
 import os
 import json
+import logging
 from pathlib import Path
 
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query
@@ -17,6 +19,49 @@ from datetime import datetime, date, timedelta
 from uepi_common.models import FilterSpec
 
 router = APIRouter()
+_log = logging.getLogger(__name__)
+
+
+def _run_whatif_scenario_background(
+    tenant_id: str,
+    analysis_id: str,
+    policy_id: str,
+    scenario_params: dict,
+    filters: dict,
+) -> None:
+    """Execute what-if on the API host after the HTTP response (same logic as Celery whatif_scenario_job)."""
+    try:
+        from uepi_api.services.whatif_runner import run_whatif_scenario_sync
+
+        run_whatif_scenario_sync(
+            tenant_id,
+            analysis_id,
+            policy_id,
+            scenario_params,
+            filters,
+            db=None,
+        )
+    except Exception as e:
+        _log.exception("What-if background task failed (analysis_id=%s)", analysis_id)
+        try:
+            from uepi_api.database import SessionLocal
+
+            db = SessionLocal()
+            try:
+                a = db.query(Analysis).filter(Analysis.id == UUID(analysis_id)).first()
+                if a and a.status in (
+                    AnalysisStatus.PENDING.value,
+                    AnalysisStatus.RUNNING.value,
+                ):
+                    a.status = AnalysisStatus.FAILED.value
+                    if hasattr(Analysis, "error_message"):
+                        msg = str(e)[:1800] if str(e) else type(e).__name__
+                        a.error_message = f"What-if runner error: {msg}"
+                    db.commit()
+            finally:
+                db.close()
+        except Exception:
+            _log.exception("Could not mark analysis %s FAILED after what-if error", analysis_id)
 
 
 class ImpactAnalysisCreate(BaseModel):
@@ -231,6 +276,7 @@ async def create_impact_analysis(
 
 @router.post("/analyses/simulate", status_code=201)
 async def create_simulate_analysis(
+    background_tasks: BackgroundTasks,
     analysis_data: SimulateAnalysisCreate,
     current_user: Annotated[CurrentUser, Depends(verify_token)],
     db: Session = Depends(get_db),
@@ -294,23 +340,41 @@ async def create_simulate_analysis(
     db.commit()
     db.refresh(analysis)
 
-    # Trigger what-if scenario job - use consistent policy filters
-    try:
-        from uepi_api.celery_client import send_task
-        send_task(
-            "uepi_worker.tasks.whatif_scenario_job",
-            args=[
-                str(current_user.tenant_id),
-                str(analysis.id),
-                str(analysis_data.policy_id),
-                analysis_data.scenario_params,
-                worker_filters or analysis_data.filters,
-            ],
+    filters_payload = worker_filters or analysis_data.filters
+    whatif_queued = False
+    from uepi_api.config import get_settings as _get_api_settings
+
+    if _get_api_settings().use_celery_for_whatif_simulation:
+        try:
+            from uepi_api.celery_client import send_task
+
+            send_task(
+                "uepi_worker.tasks.whatif_scenario_job",
+                args=[
+                    str(current_user.tenant_id),
+                    str(analysis.id),
+                    str(analysis_data.policy_id),
+                    analysis_data.scenario_params,
+                    filters_payload,
+                ],
+            )
+            whatif_queued = True
+        except Exception as celery_err:
+            _log.warning(
+                "What-if: Celery enqueue failed; using FastAPI BackgroundTasks: %s",
+                celery_err,
+            )
+
+    if not whatif_queued:
+        background_tasks.add_task(
+            _run_whatif_scenario_background,
+            str(current_user.tenant_id),
+            str(analysis.id),
+            str(analysis_data.policy_id),
+            copy.deepcopy(analysis_data.scenario_params),
+            copy.deepcopy(filters_payload) if isinstance(filters_payload, dict) else (filters_payload or {}),
         )
-    except Exception as e:
-        # Log error but don't fail the request
-        print(f"Failed to trigger what-if scenario job: {e}")
-    
+
     return {
         "id": analysis.id,
         "policy_id": analysis.policy_id,
@@ -727,26 +791,29 @@ async def create_elasticity_analysis(
     db.refresh(analysis)
 
     job_queued = False
-    try:
-        from uepi_api.celery_client import send_task
+    from uepi_api.config import get_settings as _get_api_settings
 
-        send_task(
-            "uepi_worker.tasks.elasticity_job",
-            args=[
-                str(current_user.tenant_id),
-                str(analysis.id),
-                str(policy.id),
-                analysis_data.service_categories,
-            ],
-        )
-        job_queued = True
-    except Exception as e:
-        import logging
+    if _get_api_settings().use_celery_for_elasticity:
+        try:
+            from uepi_api.celery_client import send_task
 
-        logging.getLogger(__name__).warning(
-            "Elasticity: Celery enqueue failed (broker/worker down?); scheduling background task: %s",
-            e,
-        )
+            send_task(
+                "uepi_worker.tasks.elasticity_job",
+                args=[
+                    str(current_user.tenant_id),
+                    str(analysis.id),
+                    str(policy.id),
+                    analysis_data.service_categories,
+                ],
+            )
+            job_queued = True
+        except Exception as e:
+            import logging
+
+            logging.getLogger(__name__).warning(
+                "Elasticity: Celery enqueue failed (broker/worker down?); scheduling background task: %s",
+                e,
+            )
 
     if not job_queued:
         from uepi_api.services.elasticity_analysis_runner import run_elasticity_analysis_background_task
@@ -794,44 +861,7 @@ async def create_baseline_analysis(
     """Create baseline utilization and behavior profiling analysis (Stage 3)"""
     from datetime import date
     from pathlib import Path
-        
-    # Check for required dependencies BEFORE importing BaselineAnalysisEngine
-    missing_deps = []
-    try:
-        import scipy
-    except ImportError as e:
-        missing_deps.append(f"scipy ({str(e)})")
-    
-    try:
-        import sklearn
-    except ImportError as e:
-        missing_deps.append(f"scikit-learn ({str(e)})")
-    
-    try:
-        import statsmodels
-    except ImportError as e:
-        missing_deps.append(f"statsmodels ({str(e)})")
-    
-    # Try to import BaselineAnalysisEngine - this might also fail if dependencies are missing
-    try:
-        from uepi_common.analytics.baseline import BaselineAnalysisEngine
-    except ImportError as e:
-        # If import fails, add to missing deps or provide clear error
-        import_error_msg = str(e)
-        if "cannot import name" in import_error_msg.lower() or "No module named" in import_error_msg:
-            missing_deps.append(f"baseline module dependency issue: {import_error_msg}")
-        else:
-            raise HTTPException(
-                status_code=503,
-                detail=f"Failed to import BaselineAnalysisEngine: {import_error_msg}"
-            )
-    
-    if missing_deps:
-        raise HTTPException(
-            status_code=503,
-            detail=f"Missing required dependencies: {', '.join(missing_deps)}. Please install them: pip install scipy scikit-learn statsmodels"
-        )
-    
+
     # Database mode
     if db is None:
         raise HTTPException(
@@ -993,88 +1023,132 @@ async def create_baseline_analysis(
                     print("Warning: system_affiliation column not found in provider data, adding as None")
         except Exception as e:
             print(f"Warning: Could not load provider data: {e}")
-        
-        # Save DataFrames to temporary files for BaselineAnalysisEngine (it expects file paths)
-        import tempfile
-        import os
-        
-        with tempfile.TemporaryDirectory() as tmpdir:
-            claims_path = os.path.join(tmpdir, "claims.csv")
-            claims_df.to_csv(claims_path, index=False)
-            
-            enrollment_path = None
-            if enrollment_df is not None and len(enrollment_df) > 0:
-                enrollment_path = os.path.join(tmpdir, "enrollment.csv")
-                enrollment_df.to_csv(enrollment_path, index=False)
-            
-            provider_path = None
-            if provider_df is not None and len(provider_df) > 0:
-                provider_path = os.path.join(tmpdir, "providers.csv")
-                provider_df.to_csv(provider_path, index=False)
-            
-            # Run baseline analysis
-            try:
-                print(f"Starting baseline analysis with {len(claims_df):,} claims from database")
-                # Get n_clusters from request, default to 5
-                n_clusters = 5
-                if hasattr(analysis_data, 'n_clusters') and analysis_data.n_clusters is not None:
-                    try:
-                        raw_value = analysis_data.n_clusters
-                        print(f"Raw n_clusters value: {raw_value}, type: {type(raw_value)}")
-                        n_clusters = int(float(raw_value))
-                        if n_clusters < 1:
-                            n_clusters = 5
-                    except (ValueError, TypeError) as e:
-                        print(f"Error converting n_clusters to int: {e}")
-                        n_clusters = 5
-                n_clusters = int(n_clusters)
-                print(f"Using n_clusters: {n_clusters}")
-                
-                engine = BaselineAnalysisEngine(n_clusters=n_clusters)
-                result = engine.run_baseline_analysis(
+
+        # Policy-specific: scoped claims (aligned with policy baseline / predicted impact filters)
+        _bt = getattr(analysis_data, "baseline_type", "GENERAL") or "GENERAL"
+        if _bt == "POLICY_SPECIFIC" and analysis_policy_id:
+            from uepi_api.storage_policies import get_policy as _gp_claims
+            from uepi_api.services.policy_scoped_data_generation import build_policy_claims_filters
+            from uepi_api.services.database_baseline_computation import _expand_all_markets
+
+            _pol = _gp_claims(analysis_policy_id, current_user.tenant_id)
+            if _pol:
+                _pf = build_policy_claims_filters(_pol)
+                _mkt = _expand_all_markets(_pf.get("markets") or _pf.get("market"))
+                _cpts = _pf.get("cpt_codes") or _pf.get("procedure_codes") or []
+                claims_df = repository.get_claims_lines(
                     tenant_id=current_user.tenant_id,
-                    claims_data_path=claims_path,
-                    enrollment_data_path=enrollment_path,
-                    provider_data_path=provider_path,
-                    member_data_path=None,  # Not available in database yet
-                    network_data_path=None,  # Not available in database yet
-                    market_events_path=None,  # Not available in database yet
                     start_date=start_date,
                     end_date=end_date,
+                    lob=_pf.get("lob"),
+                    market=_mkt,
+                    cpt_codes=_cpts if _cpts else None,
+                    hcpcs_codes=_cpts if _cpts else None,
+                    service_categories=_pf.get("service_categories"),
+                    diagnosis_codes=_pf.get("diagnosis_codes"),
                 )
-                print(f"Baseline analysis completed successfully. Result keys: {list(result.model_dump().keys()) if hasattr(result, 'model_dump') else 'N/A'}")
-            except HTTPException:
-                # Re-raise HTTP exceptions
-                raise
-            except Exception as engine_error:
-                import traceback
-                engine_trace = traceback.format_exc()
-                print(f"BaselineAnalysisEngine error: {engine_trace}")
-                print(f"Engine error type: {type(engine_error).__name__}")
-                print(f"Engine error message: {str(engine_error)}")
-                raise HTTPException(
-                    status_code=500,
-                    detail=f"Failed to run baseline analysis engine: {str(engine_error)} (Type: {type(engine_error).__name__})"
-                )
-        
-        # Convert result to dict for JSON response
+                if claims_df is None or len(claims_df) == 0:
+                    raise HTTPException(
+                        status_code=400,
+                        detail="No claims in the selected window for this policy's scope.",
+                    )
+                print(f"Policy-scoped claims for analysis: {len(claims_df):,} rows")
+
         def convert_to_dict(obj):
             """Convert Pydantic models and datetimes to dict"""
-            if hasattr(obj, 'model_dump'):
-                return obj.model_dump(mode='json')
-            elif hasattr(obj, 'dict'):
+            if hasattr(obj, "model_dump"):
+                return obj.model_dump(mode="json")
+            if hasattr(obj, "dict"):
                 return obj.dict()
-            elif isinstance(obj, datetime):
+            if isinstance(obj, datetime):
                 return obj.isoformat()
-            elif isinstance(obj, date):
+            if isinstance(obj, date):
                 return obj.isoformat()
-            elif isinstance(obj, (list, tuple)):
+            if isinstance(obj, (list, tuple)):
                 return [convert_to_dict(item) for item in obj]
-            elif isinstance(obj, dict):
+            if isinstance(obj, dict):
                 return {k: convert_to_dict(v) for k, v in obj.items()}
             return obj
-        
-        result_dict = convert_to_dict(result)
+
+        import tempfile
+        import os
+
+        result_dict = None
+        fallback_note = ""
+
+        try:
+            import scipy  # noqa: F401
+            import sklearn  # noqa: F401
+            import statsmodels  # noqa: F401
+            from uepi_common.analytics.baseline import BaselineAnalysisEngine
+        except ImportError as ie:
+            fallback_note = f"import_error: {ie}"
+            print(f"BaselineAnalysisEngine dependencies unavailable: {ie}")
+
+        if not fallback_note:
+            with tempfile.TemporaryDirectory() as tmpdir:
+                claims_path = os.path.join(tmpdir, "claims.csv")
+                claims_df.to_csv(claims_path, index=False)
+
+                enrollment_path = None
+                if enrollment_df is not None and len(enrollment_df) > 0:
+                    enrollment_path = os.path.join(tmpdir, "enrollment.csv")
+                    enrollment_df.to_csv(enrollment_path, index=False)
+
+                provider_path = None
+                if provider_df is not None and len(provider_df) > 0:
+                    provider_path = os.path.join(tmpdir, "providers.csv")
+                    provider_df.to_csv(provider_path, index=False)
+
+                try:
+                    print(f"Starting baseline analysis with {len(claims_df):,} claims from database")
+                    n_clusters = 5
+                    if hasattr(analysis_data, "n_clusters") and analysis_data.n_clusters is not None:
+                        try:
+                            raw_value = analysis_data.n_clusters
+                            n_clusters = int(float(raw_value))
+                            if n_clusters < 1:
+                                n_clusters = 5
+                        except (ValueError, TypeError):
+                            n_clusters = 5
+                    n_clusters = int(n_clusters)
+
+                    engine = BaselineAnalysisEngine(n_clusters=n_clusters)
+                    result = engine.run_baseline_analysis(
+                        tenant_id=current_user.tenant_id,
+                        claims_data_path=claims_path,
+                        enrollment_data_path=enrollment_path,
+                        provider_data_path=provider_path,
+                        member_data_path=None,
+                        network_data_path=None,
+                        market_events_path=None,
+                        start_date=start_date,
+                        end_date=end_date,
+                    )
+                    result_dict = convert_to_dict(result)
+                    print("Baseline analysis engine completed successfully")
+                except HTTPException:
+                    raise
+                except Exception as engine_error:
+                    import traceback
+                    print(f"BaselineAnalysisEngine error: {traceback.format_exc()}")
+                    fallback_note = f"engine_error: {engine_error}"
+
+        if result_dict is None:
+            from uepi_api.baseline_segmentation_from_claims import fallback_baseline_analysis_result_dict
+
+            print(
+                "Using claims-only baseline fallback "
+                f"({fallback_note or 'unknown'}); archetypes/segments from claims, no STL/clustering."
+            )
+            result_dict = fallback_baseline_analysis_result_dict(
+                tenant_id=current_user.tenant_id,
+                analysis_id=analysis_id,
+                claims_df=claims_df,
+                start_date=start_date,
+                end_date=end_date,
+                reason=fallback_note or "engine_unavailable",
+            )
         
         # Generate data-driven narratives for provider archetypes
         try:

@@ -5,17 +5,20 @@ Demo Day Setup (Option A) – One script to prepare an impactful demo.
 1. Ensures demo tenant and user exist (tenant 00000000-0000-0000-0000-000000000001).
 2. Ensures at least 3 demo policies exist (creates minimal ones if none).
 3. Ensures at least one baseline (creates one with fixed metrics if none).
-4. Ensures predicted impact per policy (creates minimal if missing).
+4. Ensures predicted impact per policy (full Stage 3.5: provider/patient/substitution; use --stub-predicted-impact for minimal).
 5. Creates 5 observations with a clear story: 2 ON_TRACK, 2 AT_RISK, 1 BACKFIRE.
 
 Run from repo root:
   python scripts/run_demo_day.py [--tenant-id UUID] [--skip-seed]
 """
+from __future__ import annotations
+
 import argparse
 import sys
 from pathlib import Path
+from typing import Any, Dict, Optional
 from uuid import UUID, uuid4
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT / "apps" / "api" / "src"))
@@ -61,7 +64,7 @@ def ensure_policies(tenant_id: UUID, min_count: int = 3) -> list:
 
     policies = list_policies(tenant_id) or []
     if len(policies) >= min_count:
-        return policies[:5]
+        return policies
 
     db = SessionLocal()
     try:
@@ -72,7 +75,7 @@ def ensure_policies(tenant_id: UUID, min_count: int = 3) -> list:
             ("Step Therapy – Biologic", "STEP_THERAPY", ["96413"]),
             ("Urgent Care Copay", "BENEFIT", ["99281", "99282"]),
         ]
-        effective = datetime.utcnow() + timedelta(days=30)
+        effective = datetime.now(timezone.utc).replace(tzinfo=None) + timedelta(days=30)
         for name, ptype, codes in demo_policies:
             if db.query(Policy).filter(Policy.tenant_id == tenant_id, Policy.name == name).first():
                 continue
@@ -118,7 +121,7 @@ def ensure_baseline(tenant_id: UUID) -> dict:
     if baseline:
         return baseline
 
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc).replace(tzinfo=None)
     window_end = (now - timedelta(days=7)).replace(hour=0, minute=0, second=0, microsecond=0)
     window_start = window_end - timedelta(days=90)
     baseline_data = {
@@ -141,27 +144,143 @@ def ensure_baseline(tenant_id: UUID) -> dict:
     return get_latest_baseline(tenant_id, policy_id=None) or result
 
 
-def ensure_predicted_impact(tenant_id: UUID, policy_id: UUID, baseline: dict) -> bool:
-    """Ensure predicted impact exists for policy; create minimal if missing."""
-    from uepi_api.storage_policy_predicted_impact import get_predicted_impact, store_predicted_impact
+def _baseline_metrics_for_predicted_impact(
+    tenant_id: UUID, policy_id: UUID, fallback_baseline: dict
+) -> Optional[Dict[str, Any]]:
+    """Map stored baseline JSON to PredictedImpactGenerator inputs (same as policies router)."""
+    from uepi_api.storage_baselines import get_latest_baseline
 
-    if get_predicted_impact(policy_id, tenant_id):
-        return True
-    baseline_id = baseline.get("id") or baseline.get("baseline_id")
-    data = {
-        "baseline_id": baseline_id,
-        "metrics": {
-            "utilization_change_per_1k": -5.0,
-            "cost_change_pmpm": -2.0,
-            "utilization_change": -5.0,
-            "cost_change": -2.0,
-        },
-        "model_version": "demo_v1",
-        "prediction_method": "demo",
+    bl = get_latest_baseline(tenant_id, policy_id=policy_id)
+    if not bl:
+        bl = get_latest_baseline(tenant_id, policy_id=None)
+    if not bl:
+        bl = fallback_baseline
+    if not bl:
+        return None
+    d = bl.get("baseline_metrics") or bl.get("metrics") or {}
+    if not d:
+        return None
+    mapped = {
+        "utilization_per_1k": float(
+            d.get("util_rate_target_per_1000_mm")
+            or d.get("util_rate_total_per_1000_mm")
+            or d.get("utilization_per_1k")
+            or 0.0
+        ),
+        "cost_pmpm": float(
+            d.get("allowed_pmpm_target")
+            or d.get("allowed_pmpm_total")
+            or d.get("allowed_pmpm")
+            or d.get("cost_pmpm")
+            or 0.0
+        ),
+        "member_count": int(d.get("unique_members") or 0),
+        "member_months": d.get("member_months", 0),
     }
-    if store_predicted_impact(policy_id, tenant_id, data):
+    out = {k: v for k, v in mapped.items() if v is not None and v != 0}
+    return out or None
+
+
+def ensure_predicted_impact(
+    tenant_id: UUID,
+    policy_id: UUID,
+    baseline: dict,
+    *,
+    regenerate: bool = False,
+    stub_only: bool = False,
+) -> bool:
+    """Ensure predicted impact exists. Default: full Stage 3.5 model (provider/patient/substitution)."""
+    from uepi_api.storage_policy_predicted_impact import get_predicted_impact, store_predicted_impact
+    from uepi_api.storage_policies import get_policy
+
+    if not regenerate and get_predicted_impact(policy_id, tenant_id):
         return True
-    return False
+
+    baseline_id = baseline.get("id") or baseline.get("baseline_id")
+    if stub_only:
+        data = {
+            "baseline_id": baseline_id,
+            "metrics": {
+                "utilization_change_per_1k": -5.0,
+                "cost_change_pmpm": -2.0,
+                "utilization_change": -5.0,
+                "cost_change": -2.0,
+                "utilization_change_pct": -5.0,
+                "cost_change_pct": -3.0,
+                "cost_change_total": -60000.0,
+                "confidence_score": 70.0,
+                "prediction_method": "demo_stub",
+            },
+            "model_version": "demo_v1",
+            "prediction_method": "demo_stub",
+            "confidence": 70.0,
+        }
+        return bool(store_predicted_impact(policy_id, tenant_id, data))
+
+    policy = get_policy(policy_id, tenant_id)
+    if not policy:
+        return False
+    policy_levers = policy.get("policy_levers") or []
+    if not policy_levers:
+        return False
+    policy_scope = policy.get("scope") or {}
+
+    try:
+        from uepi_api.routers.policy_predicted_impact import generate_predicted_impact_for_policy
+
+        baseline_metrics = _baseline_metrics_for_predicted_impact(tenant_id, policy_id, baseline)
+        predicted_impact = generate_predicted_impact_for_policy(
+            tenant_id=tenant_id,
+            policy_id=policy_id,
+            policy_levers=policy_levers,
+            policy_scope=policy_scope,
+            baseline_metrics=baseline_metrics,
+        )
+        predicted_impact_dict = predicted_impact.model_dump(mode="json")
+        enhanced_data = getattr(predicted_impact, "_enhanced_data", None) or {}
+        m = predicted_impact_dict.get("metrics") or {}
+        stored = store_predicted_impact(
+            policy_id=policy_id,
+            tenant_id=tenant_id,
+            predicted_impact_data={
+                "metrics": m,
+                "model_version": (predicted_impact_dict.get("model_versions") or {}).get("elasticity", "1.0"),
+                "confidence": m.get("confidence_score"),
+                "predicted_at": datetime.now(timezone.utc).isoformat(),
+                "prediction_method": m.get("prediction_method", "ELASTICITY_MODEL"),
+                "baseline_id": str(baseline_id) if baseline_id else None,
+                "provider_response": predicted_impact_dict.get("provider_response"),
+                "patient_response": predicted_impact_dict.get("patient_response"),
+                "substitution_effects": predicted_impact_dict.get("substitution_effects", []),
+                "warnings": predicted_impact_dict.get("warnings", []),
+                "limitations": predicted_impact_dict.get("limitations", []),
+                "baseline_reference": predicted_impact_dict.get("baseline_reference"),
+                "model_versions": predicted_impact_dict.get("model_versions", {}),
+                "confidence_intervals": enhanced_data.get("confidence_intervals"),
+                "ramp_up_projections": enhanced_data.get("ramp_up_projections"),
+            },
+        )
+        return bool(stored)
+    except Exception as e:
+        print(f"  Full predicted impact failed for {policy_id}, using stub: {e}")
+        data = {
+            "baseline_id": baseline_id,
+            "metrics": {
+                "utilization_change_per_1k": -5.0,
+                "cost_change_pmpm": -2.0,
+                "utilization_change": -5.0,
+                "cost_change": -2.0,
+                "utilization_change_pct": -5.0,
+                "cost_change_pct": -3.0,
+                "cost_change_total": -60000.0,
+                "confidence_score": 50.0,
+                "prediction_method": "demo_fallback",
+            },
+            "model_version": "demo_v1",
+            "prediction_method": "demo_fallback",
+            "confidence": 50.0,
+        }
+        return bool(store_predicted_impact(policy_id, tenant_id, data))
 
 
 def create_observation_with_verdict(
@@ -221,7 +340,7 @@ def create_observation_with_verdict(
     if not vs_predicted:
         return False
 
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc).replace(tzinfo=None)
     start = (now - timedelta(days=30)).replace(hour=0, minute=0, second=0, microsecond=0)
     end = now
     observation_data = {
@@ -255,6 +374,26 @@ def main():
     parser = argparse.ArgumentParser(description="Demo Day setup – tenant, policies, baseline, predicted impact, mixed verdict observations")
     parser.add_argument("--tenant-id", type=str, default=str(DEFAULT_TENANT_ID))
     parser.add_argument("--skip-seed", action="store_true", help="Skip ensuring tenant/policies/baseline/predicted impact; only create observations")
+    parser.add_argument(
+        "--predicted-all",
+        action="store_true",
+        help="Write predicted impact for every policy (default: first 5 only)",
+    )
+    parser.add_argument(
+        "--no-observations",
+        action="store_true",
+        help="Skip creating demo observations (useful before seed_complete_policy_workspace, then run with --skip-seed)",
+    )
+    parser.add_argument(
+        "--regenerate-predicted-impact",
+        action="store_true",
+        help="Write new predicted impact even if one exists (full Stage 3.5 payload)",
+    )
+    parser.add_argument(
+        "--stub-predicted-impact",
+        action="store_true",
+        help="Minimal metrics only (no provider/patient/substitution blocks; faster)",
+    )
     args = parser.parse_args()
     tenant_id = UUID(args.tenant_id)
 
@@ -279,9 +418,16 @@ def main():
             sys.exit(1)
 
         print("\n4. Ensuring predicted impact per policy...")
-        for p in policies[:5]:
+        pred_targets = policies if args.predicted_all else policies[:5]
+        for p in pred_targets:
             pid = UUID(p["id"]) if isinstance(p["id"], str) else p["id"]
-            ensure_predicted_impact(tenant_id, pid, baseline)
+            ensure_predicted_impact(
+                tenant_id,
+                pid,
+                baseline,
+                regenerate=args.regenerate_predicted_impact,
+                stub_only=args.stub_predicted_impact,
+            )
     else:
         from uepi_api.storage_baselines import get_latest_baseline
         from uepi_api.storage_policies import list_policies
@@ -291,18 +437,24 @@ def main():
             print("  With --skip-seed, need existing policies and baseline. Aborting.")
             sys.exit(1)
 
-    print("\n5. Creating observations (2 ON_TRACK, 2 AT_RISK, 1 BACKFIRE)...")
-    verdict_plan = ["ON_TRACK", "ON_TRACK", "AT_RISK", "AT_RISK", "BACKFIRE"]
     created = 0
-    for i, p in enumerate(policies[:5]):
-        kind = verdict_plan[i] if i < len(verdict_plan) else "ON_TRACK"
-        pid = UUID(p["id"]) if isinstance(p["id"], str) else p["id"]
-        name = p.get("name", str(pid))
-        if create_observation_with_verdict(tenant_id, pid, name, baseline, kind):
-            created += 1
+    if args.no_observations:
+        print("\n5. Skipping observations (--no-observations).")
+    else:
+        print("\n5. Creating observations (2 ON_TRACK, 2 AT_RISK, 1 BACKFIRE)...")
+        verdict_plan = ["ON_TRACK", "ON_TRACK", "AT_RISK", "AT_RISK", "BACKFIRE"]
+        for i, p in enumerate(policies[:5]):
+            kind = verdict_plan[i] if i < len(verdict_plan) else "ON_TRACK"
+            pid = UUID(p["id"]) if isinstance(p["id"], str) else p["id"]
+            name = p.get("name", str(pid))
+            if create_observation_with_verdict(tenant_id, pid, name, baseline, kind):
+                created += 1
 
     print("\n" + "=" * 60)
-    print(f"Done. Created {created} demo observations. Use GET /observations and GET /observations/{{id}}/evidence-pack to demo.")
+    if args.no_observations:
+        print("Done (no observations). Re-run with --skip-seed to add demo observations.")
+    else:
+        print(f"Done. Created {created} demo observations. Use GET /observations and GET /observations/{{id}}/evidence-pack to demo.")
     print("=" * 60)
 
 

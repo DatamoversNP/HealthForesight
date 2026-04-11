@@ -167,3 +167,6 @@ class PolicyChangelog(Base):
     policy = relationship("Policy", backref="changelog_entries")
     user = relationship("User", backref="policy_changes")
 
+
+from uepi_api.models.tenant import User as _User  # noqa: F401
+

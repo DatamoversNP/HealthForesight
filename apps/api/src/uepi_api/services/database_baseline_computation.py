@@ -13,6 +13,40 @@ from uepi_api.services.policy_scoped_data_generation import extract_policy_targe
 # When policy scope uses market "ALL", expand to concrete markets present in demo data so the query matches.
 DEMO_MARKETS_WHEN_ALL = ["NYC", "CHICAGO", "LA", "DFW"]
 
+# Policy-scoped segmentation uses a bounded claims sample (full tenant load uses all rows already in memory).
+_POLICY_BASELINE_SEGMENTATION_ROW_CAP = 100_000
+# General baseline: sample for segmentation only (counts come from aggregate).
+_GENERAL_BASELINE_SEGMENTATION_ROW_CAP = 100_000
+
+
+def _baseline_calendar_months_inclusive(start_date: date, end_date: date) -> int:
+    """Count of calendar months touched by [start_date, end_date], inclusive.
+
+    Matches baselines already persisted in the DB (e.g. Jan 2023–Dec 2025 → 36).
+    The old formula (end.month - start.month) without +1 undercounted by one when
+    spanning multiple years (e.g. 35 instead of 36).
+    """
+    if end_date < start_date:
+        return 1
+    return max(1, (end_date.year - start_date.year) * 12 + (end_date.month - start_date.month) + 1)
+
+
+def _merge_baseline_segmentation_from_claims_df(metrics: Dict[str, Any], claims_df: pd.DataFrame) -> None:
+    """Attach provider_archetypes and patient_segments from a claims DataFrame (in-place)."""
+    if claims_df is None or claims_df.empty:
+        return
+    from uepi_api.baseline_segmentation_from_claims import (
+        patient_segments_from_claims_df,
+        provider_archetypes_from_claims_df,
+    )
+
+    pa = provider_archetypes_from_claims_df(claims_df)
+    ps = patient_segments_from_claims_df(claims_df)
+    if pa:
+        metrics["provider_archetypes"] = pa
+    if ps:
+        metrics["patient_segments"] = ps
+
 
 def _expand_all_markets(market_filter: Any) -> Optional[Any]:
     """If market filter is or contains 'ALL', return concrete demo markets list; else return as-is."""
@@ -37,48 +71,55 @@ def compute_general_baseline_from_database(
     
     Returns baseline metrics computed from actual database data only.
     Returns empty dict if no data exists.
+
+    Uses DB aggregates for volumes (same as policy baselines) so counts are not
+    truncated by in-memory row caps; optional bounded pull only for segmentation.
     """
     repo = CanonicalDataRepository(db)
-    
-    # Load claims for the date range
-    claims_df = repo.get_claims_lines(
+
+    agg = repo.aggregate_claims_for_baseline(
         tenant_id=tenant_id,
         start_date=start_date,
         end_date=end_date,
     )
-    
-    if claims_df.empty:
+    if not agg:
         return {}
-    
-    # Compute member count
-    unique_members = claims_df['member_id'].nunique() if 'member_id' in claims_df.columns else 0
-    
-    # Compute date range in months
-    months = max(1, (end_date.year - start_date.year) * 12 + (end_date.month - start_date.month))
-    member_months = unique_members * months if unique_members > 0 else 0
-    
-    # Compute metrics
-    total_claims = len(claims_df)
-    total_paid = claims_df['paid_amount'].sum() if 'paid_amount' in claims_df.columns else 0.0
-    total_allowed = claims_df['allowed_amount'].sum() if 'allowed_amount' in claims_df.columns else 0.0
-    
-    # Industry standard: utilization = services per 1,000 member-months (SMPM)
+
+    unique_members = int(agg["unique_members"])
+    total_claims = int(agg["total_claims"])
+    total_paid = float(agg["total_paid"])
+    total_allowed = float(agg["total_allowed"])
+
+    months = _baseline_calendar_months_inclusive(start_date, end_date)
+    member_months = float(unique_members * months) if unique_members > 0 else 0.0
+
     utilization_per_1k = (total_claims / member_months * 1000) if member_months > 0 else 0.0
     cost_pmpm = (total_paid / member_months) if member_months > 0 else 0.0
     allowed_pmpm = (total_allowed / member_months) if member_months > 0 else 0.0
-    
-    return {
-        "member_months": float(member_months),
-        "unique_members": int(unique_members),
-        "total_claims": int(total_claims),
-        "total_paid": float(total_paid),
-        "total_allowed": float(total_allowed),
+
+    out: Dict[str, Any] = {
+        "member_months": member_months,
+        "unique_members": unique_members,
+        "total_claims": total_claims,
+        "total_paid": total_paid,
+        "total_allowed": total_allowed,
         "util_rate_total_per_1000_mm": float(utilization_per_1k),
         "allowed_pmpm_total": float(allowed_pmpm),
         "paid_pmpm_total": float(cost_pmpm),
         "claims_per_member": (total_claims / unique_members) if unique_members > 0 else 0.0,
         "cost_per_claim": (total_paid / total_claims) if total_claims > 0 else 0.0,
     }
+    try:
+        seg_df = repo.get_claims_lines(
+            tenant_id=tenant_id,
+            start_date=start_date,
+            end_date=end_date,
+            limit=_GENERAL_BASELINE_SEGMENTATION_ROW_CAP,
+        )
+        _merge_baseline_segmentation_from_claims_df(out, seg_df)
+    except Exception:
+        pass
+    return out
 
 
 def compute_policy_specific_baseline_from_database(
@@ -197,13 +238,13 @@ def compute_policy_specific_baseline_from_database(
 
     print(f"   ✅ Aggregated {total_claims} claims, {unique_members} members (no row limit)")
 
-    months = max(1, (end_date.year - start_date.year) * 12 + (end_date.month - start_date.month))
+    months = _baseline_calendar_months_inclusive(start_date, end_date)
     member_months = unique_members * months if unique_members > 0 else 0
     utilization_per_1k = (total_claims / member_months * 1000) if member_months > 0 else 0.0
     cost_pmpm = (total_paid / member_months) if member_months > 0 else 0.0
     allowed_pmpm = (total_allowed / member_months) if member_months > 0 else 0.0
 
-    return {
+    out = {
         "member_months": float(member_months),
         "unique_members": int(unique_members),
         "total_claims": int(total_claims),
@@ -216,3 +257,20 @@ def compute_policy_specific_baseline_from_database(
         "cost_per_claim": (total_paid / total_claims) if total_claims > 0 else 0.0,
         "policy_id": str(policy_id),
     }
+    try:
+        seg_df = repo.get_claims_lines(
+            tenant_id=tenant_id,
+            start_date=start_date,
+            end_date=end_date,
+            lob=lob_filter,
+            market=market_for_query,
+            limit=_POLICY_BASELINE_SEGMENTATION_ROW_CAP,
+            cpt_codes=procedure_codes_for_query if procedure_codes_for_query else None,
+            hcpcs_codes=procedure_codes_for_query if procedure_codes_for_query else None,
+            service_categories=merged_service_categories if merged_service_categories else None,
+            diagnosis_codes=merged_diagnosis_codes if merged_diagnosis_codes else None,
+        )
+        _merge_baseline_segmentation_from_claims_df(out, seg_df)
+    except Exception:
+        pass
+    return out

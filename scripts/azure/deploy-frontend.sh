@@ -1,7 +1,15 @@
 #!/bin/bash
-# Deploy Frontend to Azure Static Web Apps
+# Deploy Frontend — Static Web Apps OR App Service (auto-detect)
+#
+# ⚠️  If your team uses https://<app>.azurewebsites.net, you MUST deploy with:
+#       ./scripts/azure/redeploy-all.sh --web-only
+#     or: ./scripts/azure/deploy-web-appservice-full.sh
+#     This script tries Static Web Apps FIRST (swa deploy). That targets *.azurestaticapps.net,
+#     NOT the App Service web app — so healthforesight-web.azurewebsites.net would stay stale.
 
 set -e
+
+REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 
 # Configuration
 RESOURCE_GROUP="${RESOURCE_GROUP:-healthforesight-rg}"
@@ -43,6 +51,9 @@ else
 fi
 echo "VITE_API_URL=$VITE_API_URL_VALUE" > .env.production
 echo "✅ Set VITE_API_URL=$VITE_API_URL_VALUE"
+VITE_APP_BUILD_VALUE="${VITE_APP_BUILD:-$(date -u +%Y%m%dT%H%MZ)-$(git -C "$REPO_ROOT" rev-parse --short HEAD 2>/dev/null || echo local)}"
+echo "VITE_APP_BUILD=$VITE_APP_BUILD_VALUE" >> .env.production
+echo "✅ Set VITE_APP_BUILD=$VITE_APP_BUILD_VALUE (shown in app sidebar when deployed)"
 if [ -n "${VITE_AUTH_STORAGE:-}" ]; then
   echo "VITE_AUTH_STORAGE=$VITE_AUTH_STORAGE" >> .env.production
   echo "✅ Set VITE_AUTH_STORAGE=$VITE_AUTH_STORAGE"
@@ -92,13 +103,36 @@ DEPLOYMENT_TOKEN=$(az staticwebapp secrets list \
   --output tsv 2>/dev/null || echo "")
 
 if [ -n "$DEPLOYMENT_TOKEN" ]; then
+  SWA_HOST=$(az staticwebapp show \
+    --name "$STATIC_WEB_APP_NAME" \
+    --resource-group "$RESOURCE_GROUP" \
+    --query "defaultHostname" \
+    --output tsv 2>/dev/null || echo "")
+  echo ""
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo "SWA resource: $STATIC_WEB_APP_NAME (RG: $RESOURCE_GROUP)"
+  if [ -n "$SWA_HOST" ]; then
+    echo "Default hostname: https://$SWA_HOST"
+    echo "If you use a different URL in the browser, set STATIC_WEB_APP_NAME to that app’s name in Azure Portal."
+  else
+    echo "Could not read defaultHostname; confirm Portal → Static Web App name matches STATIC_WEB_APP_NAME."
+  fi
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo ""
   echo "Deploying to Azure Static Web Apps..."
   swa deploy ./dist \
     --deployment-token "$DEPLOYMENT_TOKEN" \
     --env production
   echo ""
   echo "✅ Deployment completed!"
-  echo "Frontend URL: https://$STATIC_WEB_APP_NAME.azurestaticapps.net"
+  if [ -n "$SWA_HOST" ]; then
+    echo "Open: https://$SWA_HOST"
+  else
+    echo "Frontend URL (typical): https://$STATIC_WEB_APP_NAME.azurestaticapps.net"
+  fi
+  echo ""
+  echo "⚠️  That is STATIC WEB APPS. If users open *.azurewebsites.net instead, redeploy with:"
+  echo "    ./scripts/azure/redeploy-all.sh --web-only"
 else
   # App Service Web App: Node + server.mjs proxies /api → backend (no browser CORS)
   if az webapp show --resource-group "$RESOURCE_GROUP" --name "$STATIC_WEB_APP_NAME" --output none 2>/dev/null; then
@@ -109,6 +143,8 @@ else
       VITE_API_URL_VALUE="$API_URL/api/v1"
     fi
     echo "VITE_API_URL=$VITE_API_URL_VALUE" > .env.production
+    VITE_APP_BUILD_VALUE="${VITE_APP_BUILD:-$(date -u +%Y%m%dT%H%MZ)-$(git -C "$REPO_ROOT" rev-parse --short HEAD 2>/dev/null || echo local)}"
+    echo "VITE_APP_BUILD=$VITE_APP_BUILD_VALUE" >> .env.production
     if [ -n "${VITE_AUTH_STORAGE:-}" ]; then
       echo "VITE_AUTH_STORAGE=$VITE_AUTH_STORAGE" >> .env.production
       echo "✅ VITE_AUTH_STORAGE=$VITE_AUTH_STORAGE"

@@ -43,6 +43,7 @@ import {
   Refresh as RefreshIcon,
   Settings as BuildIcon,
   Assignment as AssignmentIcon,
+  Lightbulb as LightbulbIcon,
 } from '@mui/icons-material'
 import { apiClient } from '../lib/api'
 import { format } from 'date-fns'
@@ -502,10 +503,29 @@ export default function PolicyCatalogPage() {
             Manage and track policies that are being analyzed for downstream impact assessment.
           </Typography>
         </Box>
-        <Box sx={{ mt: 1 }}>
+        <Box sx={{ mt: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 1 }}>
+          <Button
+            variant="contained"
+            color="secondary"
+            size="medium"
+            startIcon={<LightbulbIcon />}
+            onClick={() => navigate('/policy-rollout-recommendations')}
+          >
+            Policy rollout ideas
+          </Button>
           <TourButton module="policies" showBadge={true} />
         </Box>
       </Box>
+
+      <Alert severity="info" sx={{ mb: 3 }} icon={<LightbulbIcon />}>
+        <Typography variant="body2" component="span" sx={{ display: 'block', mb: 1 }}>
+          <strong>Net-new policy recommendations</strong> — data-driven rollout ideas with explainability, deduplicated
+          against policies you already have. Also in the left nav under &quot;Policy rollout ideas&quot;.
+        </Typography>
+        <Button size="small" variant="outlined" startIcon={<LightbulbIcon />} onClick={() => navigate('/policy-rollout-recommendations')}>
+          Open policy rollout ideas
+        </Button>
+      </Alert>
       
       <Box className="policy-search-filters" sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', mb: 3, gap: 2, flexWrap: 'wrap' }}>
         <Button

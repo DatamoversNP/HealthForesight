@@ -297,9 +297,16 @@ def create_app() -> FastAPI:
             headers["Access-Control-Allow-Origin"] = origin
             headers["Access-Control-Allow-Credentials"] = "true"
         
+        settings = getattr(request.app.state, "settings", None)
+        expose = os.getenv("UEPI_EXPOSE_ERRORS", "").strip().lower() in ("1", "true", "yes")
+        if settings and getattr(settings, "debug", False):
+            expose = True
+        detail_msg = "Internal server error"
+        if expose:
+            detail_msg = f"{type(exc).__name__}: {exc}"
         return JSONResponse(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            content={"detail": "Internal server error", "status_code": 500},
+            content={"detail": detail_msg, "status_code": 500},
             headers=headers
         )
     

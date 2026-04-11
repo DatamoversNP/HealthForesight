@@ -185,6 +185,7 @@ export default function BaselineAnalysisPage() {
     policy_id: '' as string | '',
   })
   const [refreshingBaseline, setRefreshingBaseline] = useState(false)
+  const [refreshingAllStoredBaselines, setRefreshingAllStoredBaselines] = useState(false)
   const [generatingAllBaselines, setGeneratingAllBaselines] = useState(false)
   const [generatingProgress, setGeneratingProgress] = useState<{ current: number; total: number; name: string } | null>(null)
   const [generateAllDialogOpen, setGenerateAllDialogOpen] = useState(false)
@@ -259,6 +260,28 @@ export default function BaselineAnalysisPage() {
       console.error('Error refreshing baseline:', err)
     } finally {
       setRefreshingBaseline(false)
+    }
+  }
+
+  /** Stored baselines from DB (tenant + each policy) — includes claim-derived archetypes/segments; no sklearn required. */
+  const handleRefreshAllStoredBaselines = async () => {
+    try {
+      setRefreshingAllStoredBaselines(true)
+      setError(null)
+      const res = await apiClient.refreshAllBaselines('ROLLING', 12)
+      const nPolicy = Array.isArray(res?.policy_baselines) ? res.policy_baselines.length : 0
+      const hasGen = Boolean(res?.general_baseline)
+      alert(
+        `Stored baselines refreshed.\nGeneral: ${hasGen ? 'yes' : 'no'}\nPolicy rows: ${nPolicy}` +
+          (res?.errors?.length ? `\nWarnings: ${res.errors.slice(0, 3).join('; ')}` : '')
+      )
+      await loadBaselines()
+    } catch (err: any) {
+      const detail = err?.response?.data?.detail ?? err?.detail ?? err?.message ?? 'Failed to refresh all baselines'
+      setError(typeof detail === 'string' ? detail : JSON.stringify(detail))
+      console.error('Error refresh-all baselines:', err)
+    } finally {
+      setRefreshingAllStoredBaselines(false)
     }
   }
 
@@ -714,10 +737,19 @@ export default function BaselineAnalysisPage() {
             variant="outlined"
             startIcon={refreshingBaseline ? <CircularProgress size={16} /> : <TrendingIcon />}
             onClick={() => handleRefreshBaseline()}
-            disabled={refreshingBaseline}
+            disabled={refreshingBaseline || refreshingAllStoredBaselines}
             color="primary"
           >
             {refreshingBaseline ? 'Refreshing...' : 'Refresh General Baseline'}
+          </Button>
+          <Button
+            variant="outlined"
+            startIcon={refreshingAllStoredBaselines ? <CircularProgress size={16} /> : <RefreshIcon />}
+            onClick={() => handleRefreshAllStoredBaselines()}
+            disabled={refreshingBaseline || refreshingAllStoredBaselines || generatingAllBaselines}
+            color="secondary"
+          >
+            {refreshingAllStoredBaselines ? 'Refreshing all…' : 'Refresh all stored baselines'}
           </Button>
           <Button
             variant="outlined"
@@ -1887,6 +1919,133 @@ function EmptyStateView({ onRunAnalysis }: { onRunAnalysis: () => void }) {
   )
 }
 
+/** Keys stored in baseline_metrics as structured JSON — omit from flat metric tables. */
+const STORED_BASELINE_NESTED_KEYS = new Set(['provider_archetypes', 'patient_segments', 'top_service_category_share'])
+
+function scalarStoredBaselineMetricEntries(metrics: Record<string, unknown> | null | undefined): [string, unknown][] {
+  return Object.entries(metrics || {}).filter(([key, value]) => {
+    if (STORED_BASELINE_NESTED_KEYS.has(key)) return false
+    const t = typeof value
+    return t === 'number' || t === 'string' || t === 'boolean' || value === null
+  })
+}
+
+type StoredBaselineArchetype = {
+  archetype_id?: number
+  archetype_name?: string
+  provider_count?: number
+  characteristics?: Record<string, unknown>
+  representative_providers?: string[]
+}
+
+type StoredBaselinePatientSegment = {
+  segment_id?: number
+  segment_name?: string
+  member_count?: number
+  characteristics?: Record<string, unknown>
+  utilization_profile?: Record<string, unknown>
+}
+
+function StoredProviderArchetypesSection({ metrics }: { metrics: Record<string, unknown> }) {
+  const arches = (metrics?.provider_archetypes as StoredBaselineArchetype[] | undefined) || []
+  if (!arches.length) {
+    return (
+      <>
+        <Typography variant="h6" sx={{ mb: 2 }}>Provider archetypes</Typography>
+        <Typography color="text.secondary" sx={{ mb: 2 }}>
+          No provider clusters are stored on this baseline yet. They are computed when you refresh baselines from canonical claims (historical demo script) or run a full baseline analysis.
+        </Typography>
+        <Alert severity="info">Run <strong>Run Baseline Analysis</strong> or re-run baseline refresh from claims to populate archetypes.</Alert>
+      </>
+    )
+  }
+  return (
+    <>
+      <Typography variant="h6" sx={{ mb: 2 }}>Provider archetypes</Typography>
+      <Typography color="text.secondary" sx={{ mb: 2 }}>
+        Clusters derived from claim volume by dominant service category (stored baseline snapshot).
+      </Typography>
+      <Grid container spacing={2}>
+        {arches.map((a, idx) => (
+          <Grid item xs={12} md={6} key={a.archetype_id ?? `arch-${idx}`}>
+            <Paper variant="outlined" sx={{ p: 2, height: '100%' }}>
+              <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1 }}>{a.archetype_name}</Typography>
+              <Chip label={`${a.provider_count ?? 0} providers`} size="small" color="primary" sx={{ mb: 1.5 }} />
+              {a.characteristics && Object.keys(a.characteristics).length > 0 && (
+                <Box sx={{ mb: 1.5 }}>
+                  {Object.entries(a.characteristics).map(([k, v]) => (
+                    <Typography key={k} variant="body2" color="text.secondary" sx={{ mb: 0.25 }}>
+                      <strong>{k.replace(/_/g, ' ')}:</strong>{' '}
+                      {typeof v === 'number' ? (Number.isInteger(v) ? v : v.toFixed(2)) : String(v)}
+                    </Typography>
+                  ))}
+                </Box>
+              )}
+              {a.representative_providers && a.representative_providers.length > 0 && (
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                  {a.representative_providers.slice(0, 6).map((id) => (
+                    <Chip key={id} label={id.length > 20 ? `${id.slice(0, 18)}…` : id} size="small" variant="outlined" />
+                  ))}
+                </Box>
+              )}
+            </Paper>
+          </Grid>
+        ))}
+      </Grid>
+    </>
+  )
+}
+
+function StoredPatientSegmentsSection({ metrics }: { metrics: Record<string, unknown> }) {
+  const segs = (metrics?.patient_segments as StoredBaselinePatientSegment[] | undefined) || []
+  if (!segs.length) {
+    return (
+      <>
+        <Typography variant="h6" sx={{ mb: 2 }}>Patient segments</Typography>
+        <Typography color="text.secondary" sx={{ mb: 2 }}>
+          No patient segments are stored on this baseline yet. Refresh from canonical claims or run a full baseline analysis to populate LOB × utilization bands.
+        </Typography>
+        <Alert severity="info">Run <strong>Run Baseline Analysis</strong> or re-run baseline refresh from claims to populate segments.</Alert>
+      </>
+    )
+  }
+  return (
+    <>
+      <Typography variant="h6" sx={{ mb: 2 }}>Patient segments</Typography>
+      <Typography color="text.secondary" sx={{ mb: 2 }}>
+        Members grouped by line of business and utilization band (stored baseline snapshot).
+      </Typography>
+      <Grid container spacing={2}>
+        {segs.map((s, idx) => (
+          <Grid item xs={12} md={6} key={s.segment_id ?? `seg-${idx}`}>
+            <Paper variant="outlined" sx={{ p: 2, height: '100%' }}>
+              <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1 }}>{s.segment_name}</Typography>
+              <Chip label={`${s.member_count ?? 0} members`} size="small" color="secondary" sx={{ mb: 1.5 }} />
+              {s.characteristics && Object.keys(s.characteristics).length > 0 && (
+                <Box sx={{ mb: 1 }}>
+                  {Object.entries(s.characteristics).map(([k, v]) => (
+                    <Typography key={k} variant="body2" color="text.secondary" sx={{ mb: 0.25 }}>
+                      <strong>{k.replace(/_/g, ' ')}:</strong> {String(v)}
+                    </Typography>
+                  ))}
+                </Box>
+              )}
+              {s.utilization_profile && Object.keys(s.utilization_profile).length > 0 && (
+                <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.5 }}>Utilization profile</Typography>
+              )}
+              {s.utilization_profile && Object.entries(s.utilization_profile).map(([k, v]) => (
+                <Typography key={k} variant="body2" sx={{ mb: 0.25 }}>
+                  {k.replace(/_/g, ' ')}: {typeof v === 'number' ? v.toFixed(2) : String(v)}
+                </Typography>
+              ))}
+            </Paper>
+          </Grid>
+        ))}
+      </Grid>
+    </>
+  )
+}
+
 /** Single stored baseline: full 5-tab detail (same tabs as full analysis). Used when user selects a stored baseline from the unified list. */
 function StoredBaselineDetailView({
   baseline,
@@ -1966,7 +2125,7 @@ function StoredBaselineDetailView({
               <Table size="small">
                 <TableHead><TableRow><TableCell>Metric</TableCell><TableCell>Value</TableCell></TableRow></TableHead>
                 <TableBody>
-                  {Object.entries(baseline.baseline_metrics || baseline.metrics || {}).map(([key, value]: [string, any]) => (
+                  {scalarStoredBaselineMetricEntries(baseline.baseline_metrics || baseline.metrics).map(([key, value]: [string, any]) => (
                     <TableRow key={key}>
                       <TableCell>{(BASELINE_METRIC_LABELS[key]?.label) || key.replace(/_/g, ' ')}</TableCell>
                       <TableCell sx={{ fontWeight: 500 }}>
@@ -1989,7 +2148,7 @@ function StoredBaselineDetailView({
               <Table size="small">
                 <TableHead><TableRow><TableCell>Metric</TableCell><TableCell>Value</TableCell><TableCell>Unit</TableCell></TableRow></TableHead>
                 <TableBody>
-                  {Object.entries(baseline.baseline_metrics || baseline.metrics || {}).map(([key, value]: [string, any]) => {
+                  {scalarStoredBaselineMetricEntries(baseline.baseline_metrics || baseline.metrics).map(([key, value]: [string, any]) => {
                     const meta = BASELINE_METRIC_LABELS[key]
                     const unit = meta?.unit || '—'
                     return (
@@ -2009,16 +2168,12 @@ function StoredBaselineDetailView({
 
       {detailTab === 2 && (
         <Card><CardContent>
-          <Typography variant="h6" sx={{ mb: 2 }}>Provider archetypes</Typography>
-          <Typography color="text.secondary" sx={{ mb: 2 }}>Provider archetypes are generated by a full baseline analysis.</Typography>
-          <Alert severity="info">Use <strong>Run Baseline Analysis</strong> to compute provider archetypes for this baseline.</Alert>
+          <StoredProviderArchetypesSection metrics={(baseline.baseline_metrics || baseline.metrics || {}) as Record<string, unknown>} />
         </CardContent></Card>
       )}
       {detailTab === 3 && (
         <Card><CardContent>
-          <Typography variant="h6" sx={{ mb: 2 }}>Patient segments</Typography>
-          <Typography color="text.secondary" sx={{ mb: 2 }}>Patient segments are generated by a full baseline analysis.</Typography>
-          <Alert severity="info">Use <strong>Run Baseline Analysis</strong> to compute patient segments for this baseline.</Alert>
+          <StoredPatientSegmentsSection metrics={(baseline.baseline_metrics || baseline.metrics || {}) as Record<string, unknown>} />
         </CardContent></Card>
       )}
       {detailTab === 4 && (
@@ -2212,7 +2367,7 @@ function StoredBaselinesView({
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {Object.entries(selectedBaseline.baseline_metrics || selectedBaseline.metrics || {}).map(([key, value]: [string, any]) => (
+                      {scalarStoredBaselineMetricEntries(selectedBaseline.baseline_metrics || selectedBaseline.metrics).map(([key, value]: [string, any]) => (
                         <TableRow key={key}>
                           <TableCell>
                             {(BASELINE_METRIC_LABELS[key]?.label) || key.replace(/_/g, ' ')}
@@ -2245,7 +2400,7 @@ function StoredBaselinesView({
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {Object.entries(selectedBaseline.baseline_metrics || selectedBaseline.metrics || {}).map(([key, value]: [string, any]) => {
+                      {scalarStoredBaselineMetricEntries(selectedBaseline.baseline_metrics || selectedBaseline.metrics).map(([key, value]: [string, any]) => {
                         const meta = BASELINE_METRIC_LABELS[key]
                         const unit = meta?.unit || '—'
                         return (
@@ -2268,15 +2423,7 @@ function StoredBaselinesView({
           {detailTab === 2 && (
             <Card>
               <CardContent>
-                <Typography variant="h6" sx={{ mb: 2 }}>
-                  Provider archetypes
-                </Typography>
-                <Typography color="text.secondary" sx={{ mb: 2 }}>
-                  Provider archetypes (clustering and behavior profiles) are generated by a full baseline analysis.
-                </Typography>
-                <Alert severity="info">
-                  Use <strong>Run Baseline Analysis</strong> to compute provider archetypes, representative providers, and characteristic profiles for this baseline.
-                </Alert>
+                <StoredProviderArchetypesSection metrics={(selectedBaseline.baseline_metrics || selectedBaseline.metrics || {}) as Record<string, unknown>} />
               </CardContent>
             </Card>
           )}
@@ -2284,15 +2431,7 @@ function StoredBaselinesView({
           {detailTab === 3 && (
             <Card>
               <CardContent>
-                <Typography variant="h6" sx={{ mb: 2 }}>
-                  Patient segments
-                </Typography>
-                <Typography color="text.secondary" sx={{ mb: 2 }}>
-                  Patient sensitivity segments and utilization profiles are generated by a full baseline analysis.
-                </Typography>
-                <Alert severity="info">
-                  Use <strong>Run Baseline Analysis</strong> to compute patient segments, member counts, and utilization profiles for this baseline.
-                </Alert>
+                <StoredPatientSegmentsSection metrics={(selectedBaseline.baseline_metrics || selectedBaseline.metrics || {}) as Record<string, unknown>} />
               </CardContent>
             </Card>
           )}

@@ -4,7 +4,7 @@ import json
 import random
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional, Tuple
 from uuid import uuid4
 
 import pandas as pd
@@ -40,11 +40,11 @@ SERVICE_CATEGORY_MAP = {
 # Service categories and codes
 SERVICE_CATEGORIES = {
     "MRI": {
-        "codes": ["72141", "72142", "72146", "72148"],  # Lumbar MRI codes
+        "codes": ["72141", "72142", "72146", "72148", "72149", "72158"],  # align with seeded PA MRI policies
         "pos_codes": ["11", "22"],  # Office, Outpatient Hospital
     },
     "ER_IMAGING": {
-        "codes": ["70450", "70460", "72141"],  # CT Head, CT Chest, MRI
+        "codes": ["70450", "70460", "72141", "70551", "70552", "70553"],  # CT / MRI overlap with seeded imaging policies
         "pos_codes": ["23"],  # Emergency Room
     },
     "INFUSION": {
@@ -113,6 +113,7 @@ def generate_claims_lines(
     end_date: datetime,
     tenant_id: str,
     scenarios: dict[str, Any],
+    claims_per_month_range: Optional[Tuple[int, int]] = None,
 ) -> pd.DataFrame:
     """Generate claims lines with embedded behavioral scenarios"""
     claims = []
@@ -137,8 +138,12 @@ def generate_claims_lines(
         year = current_date.year
         month = current_date.month
         
-        # Generate claims for this month
-        claims_per_month = random.randint(5000, 20000)
+        # Generate claims for this month (default: heavy; use claims_per_month_range for long histories)
+        if claims_per_month_range is None:
+            lo, hi = 5000, 20000
+        else:
+            lo, hi = int(claims_per_month_range[0]), int(claims_per_month_range[1])
+        claims_per_month = random.randint(lo, hi)
         
         for _ in range(claims_per_month):
             # Select member

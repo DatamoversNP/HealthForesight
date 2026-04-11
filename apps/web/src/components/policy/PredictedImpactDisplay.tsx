@@ -64,6 +64,23 @@ interface PredictedPatientResponse {
   confidence_score: number
 }
 
+interface ProviderArchetypePredictionRow {
+  archetype_name?: string
+  share_of_target_volume_pct?: number
+  predicted_compliance_pct?: number
+  predicted_resistance_pct?: number
+  predicted_circumvention_risk_pct?: number
+  notes?: string
+}
+
+interface PatientSegmentPredictionRow {
+  segment_name?: string
+  approx_member_share_pct?: number
+  predicted_defer_rate?: number
+  predicted_substitution_rate?: number
+  predicted_er_fallback_rate?: number
+}
+
 interface PredictedImpactData {
   policy_id: string
   predicted_at: string
@@ -71,6 +88,8 @@ interface PredictedImpactData {
   substitution_effects?: PredictedSubstitutionEffect[]
   provider_response?: PredictedProviderResponse
   patient_response?: PredictedPatientResponse
+  provider_archetype_predictions?: ProviderArchetypePredictionRow[]
+  patient_segment_predictions?: PatientSegmentPredictionRow[]
   baseline_reference?: any
   model_versions?: Record<string, string>
   warnings?: string[]
@@ -119,7 +138,22 @@ export default function PredictedImpactDisplay({ predictedImpact }: PredictedImp
     )
   }
   
-  const { metrics, substitution_effects = [], provider_response, patient_response, warnings = [], limitations = [] } = predictedImpact
+  const {
+    metrics,
+    substitution_effects = [],
+    provider_response,
+    patient_response,
+    provider_archetype_predictions: archetypePredsRaw,
+    patient_segment_predictions: segmentPredsRaw,
+    baseline_reference,
+    warnings = [],
+    limitations = [],
+  } = predictedImpact
+
+  const archetypePreds =
+    archetypePredsRaw?.length ? archetypePredsRaw : baseline_reference?.provider_archetype_predictions
+  const segmentPreds =
+    segmentPredsRaw?.length ? segmentPredsRaw : baseline_reference?.patient_segment_predictions
 
   const formatDate = (dateString: string) => {
     try {
@@ -308,6 +342,60 @@ export default function PredictedImpactDisplay({ predictedImpact }: PredictedImp
         </Card>
       )}
 
+      {/* Provider archetype breakdown (Stage 3.5 detail) */}
+      {archetypePreds && archetypePreds.length > 0 && (
+        <Card sx={{ mb: 3 }}>
+          <CardContent>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+              <PeopleIcon sx={{ color: healthForesightColors.primary.main }} />
+              <Typography variant="h6" sx={{ fontFamily: 'IBM Plex Sans, sans-serif', fontWeight: 600 }}>
+                Predicted response by provider archetype
+              </Typography>
+            </Box>
+            <TableContainer>
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Archetype</TableCell>
+                    <TableCell align="right">Volume share</TableCell>
+                    <TableCell align="right">Compliance</TableCell>
+                    <TableCell align="right">Resistance</TableCell>
+                    <TableCell align="right">Circumvention risk</TableCell>
+                    <TableCell>Notes</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {archetypePreds.map((row, idx) => (
+                    <TableRow key={row.archetype_name ?? idx}>
+                      <TableCell sx={{ fontWeight: 500 }}>{row.archetype_name}</TableCell>
+                      <TableCell align="right">
+                        {row.share_of_target_volume_pct != null ? `${row.share_of_target_volume_pct.toFixed(0)}%` : '—'}
+                      </TableCell>
+                      <TableCell align="right">
+                        {row.predicted_compliance_pct != null ? `${row.predicted_compliance_pct.toFixed(0)}%` : '—'}
+                      </TableCell>
+                      <TableCell align="right">
+                        {row.predicted_resistance_pct != null ? `${row.predicted_resistance_pct.toFixed(0)}%` : '—'}
+                      </TableCell>
+                      <TableCell align="right">
+                        {row.predicted_circumvention_risk_pct != null
+                          ? `${row.predicted_circumvention_risk_pct.toFixed(0)}%`
+                          : '—'}
+                      </TableCell>
+                      <TableCell>
+                        <Typography variant="body2" color="text.secondary">
+                          {row.notes || '—'}
+                        </Typography>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Patient Response */}
       {patient_response && (
         <Card sx={{ mb: 3 }}>
@@ -355,6 +443,56 @@ export default function PredictedImpactDisplay({ predictedImpact }: PredictedImp
                 </Box>
               </Grid>
             </Grid>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Patient segment breakdown */}
+      {segmentPreds && segmentPreds.length > 0 && (
+        <Card sx={{ mb: 3 }}>
+          <CardContent>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+              <HospitalIcon sx={{ color: healthForesightColors.primary.main }} />
+              <Typography variant="h6" sx={{ fontFamily: 'IBM Plex Sans, sans-serif', fontWeight: 600 }}>
+                Predicted response by patient segment
+              </Typography>
+            </Box>
+            <TableContainer>
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Segment</TableCell>
+                    <TableCell align="right">~Member share</TableCell>
+                    <TableCell align="right">Deferral</TableCell>
+                    <TableCell align="right">Substitution</TableCell>
+                    <TableCell align="right">ER fallback</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {segmentPreds.map((row, idx) => (
+                    <TableRow key={row.segment_name ?? idx}>
+                      <TableCell sx={{ fontWeight: 500 }}>{row.segment_name}</TableCell>
+                      <TableCell align="right">
+                        {row.approx_member_share_pct != null ? `${row.approx_member_share_pct.toFixed(0)}%` : '—'}
+                      </TableCell>
+                      <TableCell align="right">
+                        {row.predicted_defer_rate != null ? `${(row.predicted_defer_rate * 100).toFixed(1)}%` : '—'}
+                      </TableCell>
+                      <TableCell align="right">
+                        {row.predicted_substitution_rate != null
+                          ? `${(row.predicted_substitution_rate * 100).toFixed(1)}%`
+                          : '—'}
+                      </TableCell>
+                      <TableCell align="right">
+                        {row.predicted_er_fallback_rate != null
+                          ? `${(row.predicted_er_fallback_rate * 100).toFixed(1)}%`
+                          : '—'}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
           </CardContent>
         </Card>
       )}

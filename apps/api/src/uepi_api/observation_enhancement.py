@@ -1372,6 +1372,9 @@ def enhance_comparisons_with_predicted(
         }
         
         vs_predicted = {
+            # Reference levels used to derive predicted (also chart baseline when vs_baseline is empty)
+            "baseline_utilization_per_1k": baseline_utilization,
+            "baseline_cost_pmpm": baseline_cost_pmpm,
             # Utilization metrics (ensure both formats are present)
             "predicted_utilization": predicted_utilization,
             "predicted_utilization_per_1k": predicted_utilization,  # Alias for consistency

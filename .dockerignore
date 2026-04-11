@@ -14,8 +14,9 @@
 **/dist
 **/build
 *.egg-info
-# Local data and env
-**/data
+# Local data and env (do not use **/data — it excludes Python pkg packages/common/.../uepi_common/data)
+/data
+/apps/api/data
 **/.env
 **/.env.*
 *.log

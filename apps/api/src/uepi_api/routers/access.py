@@ -7,7 +7,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
-from uepi_api.auth import CurrentUser, verify_token, require_role, get_demo_current_user
+from uepi_api.auth import CurrentUser, verify_token, require_role
 from uepi_api.database import get_db
 from uepi_api.models.tenant import Role, User
 from uepi_common.models import TenantRole
@@ -331,7 +331,7 @@ async def get_role_permissions(
 @router.get("/users/{user_id}/roles", response_model=UserRoleAssignment)
 async def get_user_roles(
     user_id: UUID,
-    current_user: Annotated[CurrentUser, Depends(get_demo_current_user)],
+    current_user: Annotated[CurrentUser, Depends(verify_token)],
     db: Optional[Session] = Depends(get_db),
 ):
     """Get roles for a user. For self or when no DB: returns current_user roles (fast). For POLICY_ADMIN viewing another user: optional DB lookup."""
@@ -360,7 +360,7 @@ async def get_user_roles(
 @router.get("/users/{user_id}/permissions", response_model=list[PermissionResponse])
 async def get_user_permissions(
     user_id: UUID,
-    current_user: Annotated[CurrentUser, Depends(get_demo_current_user)],
+    current_user: Annotated[CurrentUser, Depends(verify_token)],
     db: Optional[Session] = Depends(get_db),
 ):
     """Get effective permissions for a user. Uses current_user roles for self; optional DB for admin viewing another user."""

@@ -29,10 +29,11 @@ def _ensure_models_registered():
 def upgrade():
     bind = op.get_bind()
 
-    # Production DBs often have schema from app init (or partial bootstrap) while
-    # alembic_version is still empty. create_all then duplicates indexes. Skip if
-    # any known application table already exists (not only tenants — some DBs may
-    # have claims/canonical data without a full tenant row yet).
+    # Production DBs often have schema from app init while Alembic was never run.
+    # create_all then duplicates indexes. Skip only if a real app table exists.
+    #
+    # Do NOT include alembic_version: Alembic creates that table before this upgrade()
+    # runs, so a brand-new database would incorrectly skip bootstrap and leave no tables.
     if bind.execute(
         sa.text(
             """
@@ -41,7 +42,7 @@ def upgrade():
               AND table_name = ANY (ARRAY[
                 'tenants', 'users', 'roles', 'policies',
                 'claims_lines', 'enrollment_records', 'provider_records',
-                'analyses', 'alembic_version'
+                'analyses'
               ])
             LIMIT 1
             """

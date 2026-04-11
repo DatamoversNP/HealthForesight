@@ -38,6 +38,9 @@ if _env.exists():
                     continue
                 os.environ.setdefault(k, v.strip().replace('"', "").replace("'", ""))
 
+if os.environ.get("DATABASE_URL"):
+    os.environ["DATABASE_URL"] = os.environ["DATABASE_URL"].strip()
+
 from sqlalchemy import select, insert, delete
 from uepi_api.database import SessionLocal
 from uepi_api.models.tenant import Tenant, User, Role, user_roles
@@ -45,7 +48,7 @@ from uepi_api.storage_auth import DEFAULT_TENANT_ID, DEFAULT_USER_ID, ensure_rol
 from uepi_api.password_utils import hash_password
 
 # Detect placeholder URL (literal "host" / "dbname") and exit with a clear message
-_db_url = os.environ.get("DATABASE_URL", "")
+_db_url = (os.environ.get("DATABASE_URL") or "").strip()
 if "@host:" in _db_url or "@host/" in _db_url:
     print("ERROR: DATABASE_URL contains placeholder 'host'. Use your real database host.")
     print("Example (Azure): postgresql://USER:PASSWORD@YOUR-SERVER.postgres.database.azure.com:5432/yourdb?sslmode=require")

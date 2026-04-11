@@ -3,6 +3,45 @@
  */
 import { io, Socket } from 'socket.io-client'
 
+/** Socket.IO expects http(s) origin; derive from VITE_API_URL when VITE_WS_URL is unset. */
+function getSocketIoServerUrl(): string {
+  const explicit = import.meta.env.VITE_WS_URL as string | undefined
+  if (explicit?.trim()) {
+    return explicit
+      .trim()
+      .replace(/^wss:\/\//, 'https://')
+      .replace(/^ws:\/\//, 'http://')
+  }
+  const api = import.meta.env.VITE_API_URL as string | undefined
+  if (api) {
+    try {
+      const u = new URL(api)
+      return `${u.protocol}//${u.host}`
+    } catch {
+      /* ignore */
+    }
+  }
+  if (typeof window !== 'undefined') {
+    const host = window.location.hostname.toLowerCase()
+    if (host.endsWith('.azurewebsites.net') && !host.startsWith('healthforesight-api')) {
+      return window.location.origin
+    }
+    if (host.includes('azurestaticapps.net')) {
+      return 'https://healthforesight-api.azurewebsites.net'
+    }
+  }
+  return 'http://localhost:8000'
+}
+
+/** API has no Socket.IO server today; production builds skip connecting unless explicitly enabled. */
+function shouldConnectWebSocket(): boolean {
+  const flag = import.meta.env.VITE_ENABLE_WEBSOCKET as string | undefined
+  if (flag === 'false') return false
+  if (flag === 'true') return true
+  if (import.meta.env.PROD) return false
+  return true
+}
+
 class WebSocketClient {
   private socket: Socket | null = null
   private reconnectAttempts = 0
@@ -14,7 +53,11 @@ class WebSocketClient {
       return
     }
 
-    const wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:8000'
+    if (!shouldConnectWebSocket()) {
+      return
+    }
+
+    const wsUrl = getSocketIoServerUrl()
     
     this.socket = io(wsUrl, {
       auth: token ? { token } : undefined,

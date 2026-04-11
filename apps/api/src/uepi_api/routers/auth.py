@@ -5,9 +5,9 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel
 
-from uepi_api.auth import CurrentUser, verify_token, get_demo_current_user, create_local_jwt
+from uepi_api.auth import CurrentUser, verify_token, create_local_jwt
 from uepi_api.database import get_db
-from uepi_api.models.tenant import User
+from uepi_api.models.tenant import User, Tenant
 from uepi_api.password_utils import verify_password
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
@@ -98,21 +98,26 @@ async def login(
 
 @router.get("/me", response_model=UserResponse)
 async def get_current_user(
-    current_user: Annotated[CurrentUser, Depends(get_demo_current_user)],
+    current_user: Annotated[CurrentUser, Depends(verify_token)],
+    db: Session = Depends(get_db),
 ):
-    """Get current user information - Uses demo user (non-blocking, no database required)"""
-    # Return info from CurrentUser (non-blocking, doesn't require database)
-    # Extract name from email or use "Demo User"
-    name = current_user.email.split("@")[0] if "@" in current_user.email else "Demo User"
-    if name == "demo":
+    """Return the authenticated user (same JWT rules as the rest of the API)."""
+    name = current_user.email.split("@")[0] if "@" in current_user.email else "User"
+    if name.lower() == "demo":
         name = "Demo User"
-    
+    tenant_name = "Demo Tenant"
+    try:
+        tenant = db.query(Tenant).filter(Tenant.id == current_user.tenant_id).first()
+        if tenant and getattr(tenant, "name", None):
+            tenant_name = tenant.name
+    except Exception:
+        pass
     return UserResponse(
         id=current_user.user_id,
         email=current_user.email,
         full_name=name,
         tenant_id=current_user.tenant_id,
-        tenant_name="Demo Tenant",
+        tenant_name=tenant_name,
         roles=current_user.roles,
     )
 

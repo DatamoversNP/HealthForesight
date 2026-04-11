@@ -83,3 +83,9 @@ class Observation(Base):
     analysis = relationship("Analysis", backref="observations")
     analytics_run = relationship("AnalyticsRun", backref="observations")
 
+
+from uepi_api.models.analytics_run import AnalyticsRun as _AnalyticsRun  # noqa: F401
+from uepi_api.models.policy import Policy as _Policy  # noqa: F401
+from uepi_api.models.baseline import Baseline as _Baseline  # noqa: F401
+from uepi_api.models.predicted_impact import PolicyPredictedImpact as _PolicyPredictedImpact  # noqa: F401
+from uepi_api.models.analysis import Analysis as _Analysis  # noqa: F401

@@ -8,6 +8,28 @@ from uepi_api.models.risk import Risk
 from uepi_common.models_enhanced import RiskRegister, RiskDriver
 
 
+def _driver_probability(driver_data: Dict[str, Any]) -> float:
+    p = driver_data.get("probability")
+    if p is not None:
+        return max(0.0, min(1.0, float(p)))
+    uc = float(driver_data.get("uncertainty_contribution", 0.0))
+    if uc > 1.0:
+        return max(0.0, min(1.0, uc / 100.0))
+    return max(0.0, min(1.0, uc))
+
+
+def _driver_impact_label(driver_data: Dict[str, Any]) -> str:
+    explicit = driver_data.get("impact")
+    if explicit and isinstance(explicit, str) and explicit.strip():
+        return explicit.strip().upper()
+    score = float(driver_data.get("impact_score", 0.5))
+    if score >= 0.65:
+        return "HIGH"
+    if score >= 0.35:
+        return "MEDIUM"
+    return "LOW"
+
+
 def _safe_uuid(value: Any) -> Optional[UUID]:
     """Safely convert value to UUID"""
     if value is None:
@@ -69,19 +91,25 @@ def _create_or_update_risk_register(
             if driver_name in existing_by_driver:
                 # Update existing risk
                 risk = existing_by_driver[driver_name]
+                if not risk.risk_id:
+                    risk.risk_id = str(uuid4())
                 risk.risk_score = driver_data.get("impact_score", 0.0)
-                risk.probability = driver_data.get("uncertainty_contribution", 0.0) / 100.0  # Convert from percentage
+                risk.probability = _driver_probability(driver_data)
+                risk.impact = _driver_impact_label(driver_data)
                 risk.description = driver_data.get("mitigation_action")
                 risk.owner_user_id = _safe_uuid(driver_data.get("owner"))
                 risk.status = risk_data.get("status", "ACTIVE")
             else:
                 # Create new risk
+                risk_id = driver_data.get("risk_id") or str(uuid4())
                 risk = Risk(
                     tenant_id=tenant_id,
                     policy_id=policy_id,
+                    risk_id=risk_id,
                     risk_driver=driver_name,
                     risk_score=driver_data.get("impact_score", 0.0),
-                    probability=driver_data.get("uncertainty_contribution", 0.0) / 100.0,
+                    probability=_driver_probability(driver_data),
+                    impact=_driver_impact_label(driver_data),
                     description=driver_data.get("mitigation_action"),
                     owner_user_id=_safe_uuid(driver_data.get("owner")),
                     status=risk_data.get("status", "ACTIVE"),
@@ -104,7 +132,7 @@ def _create_or_update_risk_register(
             risk_drivers.append(RiskDriver(
                 driver_name=risk.risk_driver,
                 impact_score=risk.risk_score if risk.risk_score else 0.0,
-                uncertainty_contribution=risk.probability * 100.0 if risk.probability else 0.0,
+                uncertainty_contribution=(risk.probability or 0.0) * 100.0,
                 mitigation_action=risk.description,
                 owner=risk.owner_user_id,
             ))
@@ -161,7 +189,7 @@ def _get_risk_register(
             risk_drivers.append(RiskDriver(
                 driver_name=risk.risk_driver,
                 impact_score=risk.risk_score if risk.risk_score else 0.0,
-                uncertainty_contribution=risk.probability * 100.0 if risk.probability else 0.0,
+                uncertainty_contribution=(risk.probability or 0.0) * 100.0,
                 mitigation_action=risk.description,
                 owner=risk.owner_user_id,
             ))
@@ -227,7 +255,7 @@ def _list_risk_registers(
                 risk_drivers.append(RiskDriver(
                     driver_name=risk.risk_driver,
                     impact_score=risk.risk_score if risk.risk_score else 0.0,
-                    uncertainty_contribution=risk.probability * 100.0 if risk.probability else 0.0,
+                    uncertainty_contribution=(risk.probability or 0.0) * 100.0,
                     mitigation_action=risk.description,
                     owner=risk.owner_user_id,
                 ))
@@ -276,7 +304,9 @@ def update_risk_driver(
         if "impact_score" in updates:
             risk.risk_score = updates["impact_score"]
         if "uncertainty_contribution" in updates:
-            risk.probability = updates["uncertainty_contribution"] / 100.0
+            risk.probability = _driver_probability(
+                {"uncertainty_contribution": updates["uncertainty_contribution"]}
+            )
         if "mitigation_action" in updates:
             risk.description = updates["mitigation_action"]
         if "owner" in updates:

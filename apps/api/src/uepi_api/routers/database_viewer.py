@@ -1,31 +1,44 @@
 """Database Viewer API - For inspecting database tables and data"""
+import re
+from decimal import Decimal
 from typing import List, Dict, Any, Optional, Annotated
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import inspect, text
 from sqlalchemy.orm import Session
 
-from uepi_api.auth import CurrentUser, get_demo_current_user
-from uepi_api.database import get_db, Base, get_engine
+from uepi_api.auth import CurrentUser, verify_token
+from uepi_api.database import get_db, get_engine
 
 router = APIRouter()
 
 
+def _quoted_table(engine, table_name: str) -> str:
+    """Safely quote a table name for the connected dialect (PostgreSQL reserved words, case)."""
+    return engine.dialect.identifier_preparer.quote(table_name)
+
+
+def _quoted_ident(engine, name: str) -> str:
+    return engine.dialect.identifier_preparer.quote(name)
+
+
 @router.get("/database/tables")
 async def list_tables(
-    current_user: Annotated[CurrentUser, Depends(get_demo_current_user)],
+    current_user: Annotated[CurrentUser, Depends(verify_token)],
     db: Session = Depends(get_db),
 ) -> List[Dict[str, Any]]:
     """List all database tables"""
     try:
-        inspector = inspect(get_engine())
+        engine = get_engine()
+        inspector = inspect(engine)
         tables = inspector.get_table_names()
         
         result = []
         for table_name in sorted(tables):
             # Get row count
             try:
-                count_result = db.execute(text(f"SELECT COUNT(*) FROM {table_name}"))
+                qn = _quoted_table(engine, table_name)
+                count_result = db.execute(text(f"SELECT COUNT(*) FROM {qn}"))
                 row_count = count_result.scalar() or 0
             except Exception:
                 row_count = None
@@ -43,7 +56,7 @@ async def list_tables(
 @router.get("/database/tables/{table_name}/schema")
 async def get_table_schema(
     table_name: str,
-    current_user: Annotated[CurrentUser, Depends(get_demo_current_user)],
+    current_user: Annotated[CurrentUser, Depends(verify_token)],
     db: Session = Depends(get_db),
 ) -> Dict[str, Any]:
     """Get schema information for a table"""
@@ -106,32 +119,33 @@ async def get_table_schema(
 @router.get("/database/tables/{table_name}/data")
 async def get_table_data(
     table_name: str,
-    current_user: Annotated[CurrentUser, Depends(get_demo_current_user)],
+    current_user: Annotated[CurrentUser, Depends(verify_token)],
     db: Session = Depends(get_db),
-    limit: int = Query(100, ge=1, le=1000, description="Maximum number of rows to return"),
+    limit: int = Query(100, ge=1, le=5000, description="Maximum number of rows to return"),
     offset: int = Query(0, ge=0, description="Number of rows to skip"),
     order_by: Optional[str] = Query(None, description="Column to order by (e.g., 'id DESC')"),
 ) -> Dict[str, Any]:
     """Get data from a table with pagination"""
     try:
-        inspector = inspect(get_engine())
+        engine = get_engine()
+        inspector = inspect(engine)
+        qtable = _quoted_table(engine, table_name)
         
         # Check if table exists
         if table_name not in inspector.get_table_names():
             raise HTTPException(status_code=404, detail=f"Table '{table_name}' not found")
         
         # Get total count
-        count_result = db.execute(text(f"SELECT COUNT(*) FROM {table_name}"))
+        count_result = db.execute(text(f"SELECT COUNT(*) FROM {qtable}"))
         total_count = count_result.scalar() or 0
         
         # Build query
-        query = f"SELECT * FROM {table_name}"
+        query = f"SELECT * FROM {qtable}"
         
         # Add ordering
         if order_by:
             # Sanitize order_by to prevent SQL injection
             # Only allow alphanumeric, underscore, space, comma, and DESC/ASC
-            import re
             if re.match(r'^[a-zA-Z0-9_,\s]+(?: DESC| ASC)?$', order_by, re.IGNORECASE):
                 query += f" ORDER BY {order_by}"
             else:
@@ -140,11 +154,13 @@ async def get_table_data(
             # Default ordering by first primary key or first column
             pk_constraint = inspector.get_pk_constraint(table_name)
             if pk_constraint and pk_constraint.get("constrained_columns"):
-                query += f" ORDER BY {pk_constraint['constrained_columns'][0]}"
+                qc = _quoted_ident(engine, pk_constraint["constrained_columns"][0])
+                query += f" ORDER BY {qc}"
             else:
                 columns = inspector.get_columns(table_name)
                 if columns:
-                    query += f" ORDER BY {columns[0]['name']}"
+                    qc = _quoted_ident(engine, columns[0]["name"])
+                    query += f" ORDER BY {qc}"
         
         # Add pagination
         query += f" LIMIT {limit} OFFSET {offset}"
@@ -164,9 +180,11 @@ async def get_table_data(
             row_dict = {}
             for i, col_name in enumerate(columns):
                 value = row[i] if isinstance(row, (tuple, list)) else getattr(row, col_name, None)
-                # Convert UUID and datetime to strings for JSON serialization
+                # JSON-serializable scalars
                 if isinstance(value, UUID):
                     value = str(value)
+                elif isinstance(value, Decimal):
+                    value = float(value)
                 elif hasattr(value, 'isoformat'):  # datetime, date
                     value = value.isoformat()
                 row_dict[col_name] = value
@@ -189,18 +207,20 @@ async def get_table_data(
 @router.get("/database/tables/{table_name}/count")
 async def get_table_count(
     table_name: str,
-    current_user: Annotated[CurrentUser, Depends(get_demo_current_user)],
+    current_user: Annotated[CurrentUser, Depends(verify_token)],
     db: Session = Depends(get_db),
 ) -> Dict[str, Any]:
     """Get row count for a table"""
     try:
-        inspector = inspect(get_engine())
+        engine = get_engine()
+        inspector = inspect(engine)
         
         # Check if table exists
         if table_name not in inspector.get_table_names():
             raise HTTPException(status_code=404, detail=f"Table '{table_name}' not found")
         
-        count_result = db.execute(text(f"SELECT COUNT(*) FROM {table_name}"))
+        qn = _quoted_table(engine, table_name)
+        count_result = db.execute(text(f"SELECT COUNT(*) FROM {qn}"))
         count = count_result.scalar() or 0
         
         return {

@@ -2,7 +2,8 @@
  * What-If Analysis Page
  * Allows users to adjust policy parameters and see projected impact
  */
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+import { Link as RouterLink, useSearchParams } from 'react-router-dom'
 import {
   Box,
   Button,
@@ -22,6 +23,7 @@ import {
   Typography,
   MenuItem,
   Alert,
+  Link,
   Tabs,
   Tab,
   FormControl,
@@ -126,6 +128,11 @@ interface ScenarioResult {
 }
 
 export default function WhatIfAnalysisPage() {
+  const [searchParams] = useSearchParams()
+  const urlPolicyId = searchParams.get('policy')
+  const urlScenarioId = searchParams.get('scenario')
+  const loadedUrlScenarioKey = useRef<string | null>(null)
+
   const [policies, setPolicies] = useState<Policy[]>([])
   const [selectedPolicy, setSelectedPolicy] = useState<Policy | null>(null)
   const [selectedPolicies, setSelectedPolicies] = useState<Policy[]>([]) // Multi-policy support
@@ -180,6 +187,64 @@ export default function WhatIfAnalysisPage() {
   useEffect(() => {
     loadPolicies()
   }, [])
+
+  useEffect(() => {
+    if (!urlPolicyId || policies.length === 0) return
+    const p = policies.find((x) => x.id === urlPolicyId)
+    if (p) setSelectedPolicy(p)
+  }, [urlPolicyId, policies])
+
+  useEffect(() => {
+    if (!urlScenarioId || !urlPolicyId) {
+      loadedUrlScenarioKey.current = null
+      return
+    }
+    if (!selectedPolicy || selectedPolicy.id !== urlPolicyId) return
+    const dedupeKey = `${urlPolicyId}:${urlScenarioId}`
+    if (loadedUrlScenarioKey.current === dedupeKey) return
+    loadedUrlScenarioKey.current = dedupeKey
+    let cancelled = false
+    setError(null)
+    ;(async () => {
+      try {
+        const analysis = await apiClient.getAnalysis(urlScenarioId)
+        if (cancelled) return
+        if (String(analysis.policy_id) !== selectedPolicy.id) return
+        setCurrentScenarioAnalysisId(urlScenarioId)
+        if (analysis.status === 'COMPLETED') {
+          const results = await apiClient.getAnalysisResults(urlScenarioId, 'whatif_scenario')
+          if (cancelled) return
+          if (results.results) {
+            const scenarioData =
+              results.results.whatif_scenario ||
+              results.results.WHATIF_SCENARIO ||
+              results.results
+            if (scenarioData && scenarioData.scenario_id) {
+              setScenarioResult({
+                ...scenarioData,
+                scenario_name:
+                  scenarioData.scenario_name || `Run ${urlScenarioId.slice(0, 8)}…`,
+                _analysis_id: urlScenarioId,
+                _created_at: analysis.created_at,
+              } as ScenarioResult & { _analysis_id: string; _created_at?: string })
+              setActiveTab('results')
+            }
+          }
+        } else if (analysis.status === 'FAILED') {
+          setError(
+            `This run failed: ${(analysis as { error_message?: string }).error_message || 'Unknown error'}`
+          )
+        } else {
+          setError(`This run is still ${analysis.status}. Results will appear when it completes.`)
+        }
+      } catch (e) {
+        if (!cancelled) console.error('Open scenario from URL failed:', e)
+      }
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [urlScenarioId, urlPolicyId, selectedPolicy?.id])
 
   useEffect(() => {
     if (selectedPolicy) {
@@ -409,53 +474,84 @@ export default function WhatIfAnalysisPage() {
   const loadElasticityData = async (policyId: string) => {
     try {
       setElasticityLoading(true)
-      // First, check if elasticity analysis exists for this policy
       const analyses = await apiClient.getAnalyses({ analysis_type: 'ELASTICITY' })
-      const elasticityAnalysis = Array.isArray(analyses) 
-        ? analyses.find((a: any) => a.policy_id === policyId)
-        : null
-      
-      if (elasticityAnalysis) {
-        // If analysis failed, show error_message instead of "old format"
-        if (elasticityAnalysis.status === 'FAILED') {
-          const analysisDetail = await apiClient.getAnalysis(elasticityAnalysis.id).catch(() => ({}))
-          const detail = analysisDetail?.error_message || 'Job failed (check worker logs).'
-          const msg = `${detail} Create a new elasticity analysis to regenerate (results are now saved to the database).`
-          console.warn('Elasticity analysis failed:', detail)
-          setElasticityData(null)
-          setError(`Elasticity: ${msg}`)
-          return
-        }
-        // Load elasticity results
-        const results = await apiClient.getAnalysisResults(elasticityAnalysis.id, 'ELASTICITY')
-        if (results?.status === 'FAILED' && results?.error_message) {
-          console.warn('Elasticity analysis failed:', results.error_message)
-          setElasticityData(null)
-          setError(`Elasticity: ${results.error_message}`)
-          return
-        }
-        let elasticityData = null
-        if (results.results && results.results.ELASTICITY) {
-          elasticityData = results.results.ELASTICITY
-        } else if (results.service_categories) {
-          elasticityData = results
-        } else if (results.results) {
-          elasticityData = results.results[Object.keys(results.results)[0]]
-        }
-        if (elasticityData && elasticityData.service_categories && Object.keys(elasticityData.service_categories).length > 0) {
-          setElasticityData(elasticityData)
-          setError(null)
-        } else {
-          console.warn('Elasticity data missing service_categories. Create a new elasticity analysis.')
-          setElasticityData(null)
-        }
-      } else {
-        // No elasticity analysis exists - could trigger one or show default
+      const forPolicy = Array.isArray(analyses)
+        ? analyses.filter((a: any) => a.policy_id === policyId)
+        : []
+
+      if (forPolicy.length === 0) {
         setElasticityData(null)
+        return
       }
+
+      const parseElasticityPayload = (results: any) => {
+        if (results?.status === 'FAILED' && results?.error_message) {
+          return { error: results.error_message as string, payload: null }
+        }
+        let payload: any = null
+        if (results?.results?.ELASTICITY) {
+          payload = results.results.ELASTICITY
+        } else if (results?.service_categories) {
+          payload = results
+        } else if (results?.results && Object.keys(results.results).length > 0) {
+          const k = Object.keys(results.results)[0]
+          payload = results.results[k]
+        }
+        if (payload?.service_categories && Object.keys(payload.service_categories).length > 0) {
+          return { error: null, payload }
+        }
+        return { error: null, payload: null }
+      }
+
+      let lastFailedDetail: string | null = null
+      for (const row of forPolicy) {
+        if (row.status === 'FAILED') {
+          const analysisDetail = await apiClient.getAnalysis(row.id).catch(() => ({}))
+          lastFailedDetail =
+            analysisDetail?.error_message || 'Job failed (check API logs).'
+          continue
+        }
+        if (row.status === 'PENDING' || row.status === 'RUNNING') {
+          continue
+        }
+        if (row.status !== 'COMPLETED') {
+          continue
+        }
+        const results = await apiClient.getAnalysisResults(row.id, 'ELASTICITY')
+        const { error, payload } = parseElasticityPayload(results)
+        if (error) {
+          lastFailedDetail = error
+          continue
+        }
+        if (payload) {
+          setElasticityData(payload)
+          setError(null)
+          return
+        }
+      }
+
+      const inFlight = forPolicy.some(
+        (a: any) => a.status === 'PENDING' || a.status === 'RUNNING',
+      )
+      if (inFlight) {
+        setElasticityData(null)
+        return
+      }
+
+      if (lastFailedDetail) {
+        setElasticityData(null)
+        setError(
+          `Elasticity: ${lastFailedDetail} Create a new elasticity analysis if you need fresh curves.`,
+        )
+        return
+      }
+
+      setElasticityData(null)
+      console.warn(
+        'Elasticity: no completed analysis with curve data for this policy. Create a new elasticity analysis if needed.',
+      )
     } catch (err) {
       console.error('Error loading elasticity data:', err)
-      // Don't show error - elasticity is optional
       setElasticityData(null)
     } finally {
       setElasticityLoading(false)
@@ -622,7 +718,7 @@ export default function WhatIfAnalysisPage() {
         
         // Poll for results (if async). What-if with large claims can take 2–5+ minutes.
         let attempts = 0
-        const maxAttempts = 300 // ~10 min at 2s interval
+        const maxAttempts = 450 // ~15 min at 2s interval (large claims / cold DB)
         const pollIntervalMs = 2000
         const workerHintAfterPolls = 15 // ~30s: show hint if Celery worker may not be running
 
@@ -635,7 +731,9 @@ export default function WhatIfAnalysisPage() {
               console.log(`Polling attempt ${attempts + 1}: status = ${analysis.status}`)
             }
             if (attempts + 1 >= workerHintAfterPolls && analysis.status === 'PENDING') {
-              setWorkerHint('Simulation is still running. If it doesn\'t complete, the Celery worker may not be running. From the project root run: ./apps/worker/start_worker.sh')
+              setWorkerHint(
+                'Simulation is still queued or starting. Large scopes can take several minutes on the server. If status stays PENDING for many minutes, check API logs or the analyses list—or run a Celery worker (./apps/worker/start_worker.sh) if your deployment uses UEPI_USE_CELERY_FOR_WHATIF_SIMULATION=true.'
+              )
             }
             
             if (analysis.status === 'COMPLETED') {
@@ -691,7 +789,9 @@ export default function WhatIfAnalysisPage() {
         
         if (attempts >= maxAttempts) {
           setWorkerHint(null)
-          setError('Scenario simulation timed out. The Celery worker may not be running—from the project root run: ./apps/worker/start_worker.sh (requires Redis). You can also check analysis status later from the analyses list.')
+          setError(
+            'Scenario simulation timed out. Check the analyses list for final status (runs can be slow for large policies). If your API is configured to use Celery for simulations (UEPI_USE_CELERY_FOR_WHATIF_SIMULATION=true), ensure the worker is running: ./apps/worker/start_worker.sh with Redis.'
+          )
         }
       }
     } catch (err: any) {
@@ -753,10 +853,13 @@ export default function WhatIfAnalysisPage() {
           sx={{
             color: healthForesightColors.neutral.mid,
             lineHeight: 1.6,
-            mb: 2,
+            mb: 1,
           }}
         >
-          Adjust policy parameters and examine projected impact before implementation.
+          Adjust policy parameters and examine projected impact before implementation.{' '}
+          <Link component={RouterLink} to="/whatif/scenarios" underline="hover" sx={{ fontWeight: 500 }}>
+            View all scenario runs
+          </Link>
         </Typography>
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 3, gap: 1 }}>
@@ -1244,6 +1347,10 @@ export default function WhatIfAnalysisPage() {
                               setError(null)
                               break
                             }
+                            setError(
+                              'Elasticity finished but no curve data was returned. Refresh the page or contact support if this persists.',
+                            )
+                            break
                           } else if (analysis.status === 'FAILED') {
                             setError(analysis.error_message || 'Elasticity analysis failed')
                             break

@@ -85,6 +85,9 @@ else
   VITE_API_URL_VALUE="${API_BACKEND_NORM}/api/v1"
 fi
 echo "VITE_API_URL=$VITE_API_URL_VALUE" > .env.production
+VITE_APP_BUILD_VALUE="${VITE_APP_BUILD:-$(date -u +%Y%m%dT%H%MZ)-$(git -C "$REPO_ROOT" rev-parse --short HEAD 2>/dev/null || echo local)}"
+echo "VITE_APP_BUILD=$VITE_APP_BUILD_VALUE" >> .env.production
+echo ">>> VITE_APP_BUILD=$VITE_APP_BUILD_VALUE (sidebar stamp in UI)"
 if [[ -n "${VITE_AUTH_STORAGE:-}" ]]; then
   echo "VITE_AUTH_STORAGE=$VITE_AUTH_STORAGE" >> .env.production
   echo ">>> VITE_AUTH_STORAGE=$VITE_AUTH_STORAGE"

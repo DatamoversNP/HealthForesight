@@ -95,7 +95,10 @@ def generate_predicted_impact_for_policy(
     try:
         from uepi_api.services.prediction_enhancement_service import enhance_prediction_with_confidence_and_ramp_up
         
-        result_dict = result.model_dump(mode='json')
+        try:
+            result_dict = result.model_dump(mode="json")
+        except Exception:
+            result_dict = json.loads(result.model_dump_json())
         enhanced_result = enhance_prediction_with_confidence_and_ramp_up(
             tenant_id=tenant_id,
             policy_id=policy_id if isinstance(policy_id, UUID) else UUID(str(policy_id)),
@@ -135,8 +138,11 @@ def store_predicted_impact_in_metadata(
         policy_metadata = {}
     
     # Convert PredictedImpactResult to dict for JSON storage
-    predicted_impact_dict = predicted_impact.model_dump(mode='json')
-    
+    try:
+        predicted_impact_dict = predicted_impact.model_dump(mode="json")
+    except Exception:
+        predicted_impact_dict = json.loads(predicted_impact.model_dump_json())
+
     policy_metadata["predicted_impact"] = predicted_impact_dict
     
     return policy_metadata

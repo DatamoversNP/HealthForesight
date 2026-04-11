@@ -27,6 +27,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import RefreshIcon from '@mui/icons-material/Refresh'
+import LightbulbIcon from '@mui/icons-material/Lightbulb'
 import { format, parseISO } from 'date-fns'
 
 function VerdictChip({ row }: { row: PolicyVerdictRow }) {
@@ -105,15 +106,26 @@ export default function PolicyVerdictsPage() {
             One view: policy name, verdict, savings or cost impact, confidence, and recommendation. Period = effective date through run date.
           </Typography>
         </Box>
-        <Button
-          variant="outlined"
-          startIcon={loading ? <CircularProgress size={18} /> : <RefreshIcon />}
-          onClick={loadVerdicts}
-          disabled={loading}
-          size="medium"
-        >
-          {loading ? 'Loading...' : 'Refresh'}
-        </Button>
+        <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+          <Button
+            variant="contained"
+            color="secondary"
+            startIcon={<LightbulbIcon />}
+            onClick={() => navigate('/policy-rollout-recommendations')}
+            size="medium"
+          >
+            Policy rollout ideas
+          </Button>
+          <Button
+            variant="outlined"
+            startIcon={loading ? <CircularProgress size={18} /> : <RefreshIcon />}
+            onClick={loadVerdicts}
+            disabled={loading}
+            size="medium"
+          >
+            {loading ? 'Loading...' : 'Refresh'}
+          </Button>
+        </Box>
       </Box>
 
       {backfireRows.length > 0 && (

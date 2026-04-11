@@ -5,7 +5,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from pydantic import BaseModel
 
-from uepi_api.auth import CurrentUser, get_demo_current_user
+from uepi_api.auth import CurrentUser, get_demo_current_user, require_role
 from uepi_api.storage_learning import (
     create_elasticity_model,
     get_elasticity_model,
@@ -146,7 +146,7 @@ async def get_accuracy_history_route(
 
 @router.post("/learning/update-elasticity", response_model=ElasticityModelResponse, status_code=status.HTTP_201_CREATED)
 async def update_elasticity_model_route(
-    current_user: Annotated[CurrentUser, Depends(get_demo_current_user)],
+    current_user: Annotated[CurrentUser, Depends(require_role("POLICY_ADMIN", "UM_LEADER"))],
     policy_id: UUID = Query(..., description="Policy ID"),
     policy_type: str = Query(..., description="Policy type"),
     service_category: Optional[str] = Query(None, description="Service category"),

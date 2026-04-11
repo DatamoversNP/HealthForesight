@@ -179,28 +179,28 @@ class CanonicalDataRepository:
                 pass
         
         # For baseline computation, we need all records but process efficiently
-        # Use yield_per to avoid loading everything into memory at once
         records = []
         try:
-            chunk_size = 50000  # Process 50k records at a time
-            max_records = 1_000_000  # Safety limit
-            record_count = 0
-            for record in query.yield_per(chunk_size):
-                records.append(record)
-                record_count += 1
-                if record_count >= max_records:
-                    print(f"⚠️  Reached safety limit of {max_records} records")
-                    break
-        except Exception as e:
-            print(f"⚠️  Error in yield_per: {e}")
-            # Fallback to all() for smaller result sets
-            if limit and limit < 10000:
+            if limit:
+                # Bounded pull (e.g. segmentation sample) — avoid scanning the full table
                 records = query.limit(limit).all()
             else:
+                # Use yield_per to avoid loading everything into memory at once
+                chunk_size = 50000  # Process 50k records at a time
+                max_records = 1_000_000  # Safety limit
+                record_count = 0
+                for record in query.yield_per(chunk_size):
+                    records.append(record)
+                    record_count += 1
+                    if record_count >= max_records:
+                        print(f"⚠️  Reached safety limit of {max_records} records")
+                        break
+        except Exception as e:
+            print(f"⚠️  Error in claims line fetch: {e}")
+            try:
+                records = query.limit(limit).all() if limit else []
+            except Exception:
                 records = []
-        
-        if limit:
-            records = records[:limit]
         
         if not records:
             return pd.DataFrame()

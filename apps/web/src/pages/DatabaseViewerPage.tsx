@@ -26,6 +26,10 @@ import {
   ListItemText,
   ListItemIcon,
   Button,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
 } from '@mui/material';
 import {
   Storage as StorageIcon,
@@ -91,7 +95,8 @@ export default function DatabaseViewerPage() {
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(1);
-  const [rowsPerPage] = useState(50);
+  const [rowsPerPage, setRowsPerPage] = useState(50);
+  const rowsPerPageOptions = [50, 100, 500, 1000, 2500, 5000] as const;
 
   useEffect(() => {
     loadTables();
@@ -100,21 +105,22 @@ export default function DatabaseViewerPage() {
   useEffect(() => {
     if (selectedTable) {
       loadSchema(selectedTable);
-      loadData(selectedTable, 1);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTable]);
 
   useEffect(() => {
     if (selectedTable) {
-      loadData(selectedTable, page);
+      loadData(selectedTable, page, rowsPerPage);
     }
-  }, [page, selectedTable]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, selectedTable, rowsPerPage]);
 
   const loadTables = async () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await apiClient.get('/database/tables');
+      const response = await apiClient.get<TableInfo[]>('/database/tables');
       setTables(response);
     } catch (err: any) {
       setError(err.message || 'Failed to load tables');
@@ -127,7 +133,7 @@ export default function DatabaseViewerPage() {
     setLoading(true);
     setError(null);
     try {
-      const response = await apiClient.get(`/database/tables/${tableName}/schema`);
+      const response = await apiClient.get<TableSchema>(`/database/tables/${tableName}/schema`);
       setSchema(response);
     } catch (err: any) {
       setError(err.message || 'Failed to load table schema');
@@ -136,14 +142,14 @@ export default function DatabaseViewerPage() {
     }
   };
 
-  const loadData = async (tableName: string, pageNum: number) => {
+  const loadData = async (tableName: string, pageNum: number, perPage: number) => {
     setLoading(true);
     setError(null);
     try {
-      const offset = (pageNum - 1) * rowsPerPage;
-      const response = await apiClient.get(`/database/tables/${tableName}/data`, {
+      const offset = (pageNum - 1) * perPage;
+      const response = await apiClient.get<TableData>(`/database/tables/${tableName}/data`, {
         params: {
-          limit: rowsPerPage,
+          limit: perPage,
           offset: offset,
         },
       });
@@ -157,6 +163,11 @@ export default function DatabaseViewerPage() {
 
   const handleTableSelect = (tableName: string) => {
     setSelectedTable(tableName);
+    setPage(1);
+  };
+
+  const handleRowsPerPageChange = (perPage: number) => {
+    setRowsPerPage(perPage);
     setPage(1);
   };
 
@@ -366,9 +377,24 @@ export default function DatabaseViewerPage() {
               {/* Data Card */}
               <Card sx={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
                 <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
-                  <Typography variant="h6" gutterBottom>
-                    Data
-                  </Typography>
+                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 1, mb: 1 }}>
+                    <Typography variant="h6">Data</Typography>
+                    <FormControl size="small" sx={{ minWidth: 160 }}>
+                      <InputLabel id="dbv-rows-label">Rows per page</InputLabel>
+                      <Select
+                        labelId="dbv-rows-label"
+                        label="Rows per page"
+                        value={rowsPerPage}
+                        onChange={(e) => handleRowsPerPageChange(Number(e.target.value))}
+                      >
+                        {rowsPerPageOptions.map((n) => (
+                          <MenuItem key={n} value={n}>
+                            {n.toLocaleString()}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Box>
                   {data ? (
                     <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
                       <TableContainer sx={{ flex: 1, overflow: 'auto' }}>

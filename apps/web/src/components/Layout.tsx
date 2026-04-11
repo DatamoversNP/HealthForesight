@@ -49,6 +49,7 @@ import {
   PlayArrow as PlayArrowIcon,
   History as HistoryIcon,
   StackedBarChart as PolicyImpactIcon,
+  Lightbulb as RolloutRecIcon,
 } from '@mui/icons-material'
 import { useAuth } from '../contexts/AuthContext'
 import { useTour } from '../contexts/TourContext'
@@ -64,6 +65,11 @@ const menuGroups: { text: string; icon: React.ReactNode; path: string }[][] = [
     { text: 'Dashboard', icon: <DashboardIcon />, path: '/' },
     { text: 'Policy Verdicts', icon: <PolicyImpactIcon />, path: '/policy-verdicts' },
     { text: 'Policies', icon: <PolicyIcon />, path: '/policies' },
+    {
+      text: 'Policy rollout ideas',
+      icon: <RolloutRecIcon />,
+      path: '/policy-rollout-recommendations',
+    },
     { text: 'Policy Impact & Guidance', icon: <PolicyImpactIcon />, path: '/predicted-impacts' },
   ],
   [
@@ -73,6 +79,7 @@ const menuGroups: { text: string; icon: React.ReactNode; path: string }[][] = [
     { text: 'Observation Run History', icon: <HistoryIcon />, path: '/observation-run-history' },
     { text: 'Predicted Impacts', icon: <PsychologyIcon />, path: '/predicted-impacts' },
     { text: 'What-If Scenarios', icon: <WhatIfIcon />, path: '/whatif' },
+    { text: 'What-If run history', icon: <HistoryIcon />, path: '/whatif/scenarios' },
     { text: 'Scorecards', icon: <AssessmentIcon />, path: '/scorecards' },
   ],
   [
@@ -264,7 +271,7 @@ export default function Layout() {
               <React.Fragment key={groupIndex}>
                 {groupIndex > 0 && <Divider sx={{ my: 0.5 }} />}
                 {group.map((item) => (
-                  <ListItem key={item.text} disablePadding>
+                  <ListItem key={`${groupIndex}-${item.text}`} disablePadding>
                     <ListItemButton onClick={() => navigate(item.path)}>
                       <ListItemIcon>{item.icon}</ListItemIcon>
                       <ListItemText primary={item.text} />
@@ -274,6 +281,27 @@ export default function Layout() {
               </React.Fragment>
             ))}
           </List>
+          {import.meta.env.VITE_APP_BUILD && (
+            <Box
+              sx={{
+                flexShrink: 0,
+                p: 1.5,
+                borderTop: 1,
+                borderColor: 'divider',
+                bgcolor: 'action.hover',
+              }}
+            >
+              <Typography variant="caption" color="text.secondary" sx={{ display: 'block', lineHeight: 1.3 }}>
+                UI build
+              </Typography>
+              <Typography
+                variant="caption"
+                sx={{ fontFamily: 'monospace', fontSize: '0.65rem', wordBreak: 'break-all', display: 'block' }}
+              >
+                {import.meta.env.VITE_APP_BUILD}
+              </Typography>
+            </Box>
+          )}
         </Box>
       </Drawer>
       <Box

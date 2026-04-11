@@ -92,6 +92,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setLoading(false)
       return
     }
+    if (apiClient.isAccessTokenExpired()) {
+      apiClient.setToken(null)
+      setUser(null)
+      setLoading(false)
+      return
+    }
     loadUser({ sessionOnly: true }).catch(() => setLoading(false))
   }, [])
 

@@ -115,7 +115,8 @@ class PolicyAssumption(BaseModel):
     assumption_type: str  # "elasticity", "substitution", "lag", etc.
     description: str
     range: Optional[ElasticityRange] = None
-    value: Optional[float] = None
+    # Seeds and DB store human-readable ranges ("0.10-0.15", "TBD"), not only floats.
+    value: Optional[float | str] = None
     source: Optional[str] = None  # Where assumption came from
     confidence: float = 0.5  # 0-1 confidence score
 

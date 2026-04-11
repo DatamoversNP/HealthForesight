@@ -1,6 +1,8 @@
 """Policy endpoints - database-only"""
 from __future__ import annotations
 
+import json
+import math
 from typing import Annotated, Any, Optional, Union
 from datetime import datetime
 from decimal import Decimal
@@ -9,6 +11,7 @@ import sqlalchemy.exc
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Body
 from fastapi.encoders import jsonable_encoder
+from starlette.responses import Response
 import logging
 from pydantic import BaseModel as PydanticBaseModel
 from pydantic import BaseModel
@@ -30,7 +33,17 @@ logger = logging.getLogger(__name__)
 
 def _deep_json_safe(obj: Any) -> Any:
     """Coerce nested dicts/lists to JSON-serializable primitives (Decimal, UUID, datetime, etc.)."""
-    if obj is None or isinstance(obj, (bool, int, float, str)):
+    if obj is None:
+        return None
+    if isinstance(obj, bool):
+        return obj
+    if isinstance(obj, int) and not isinstance(obj, bool):
+        return obj
+    if isinstance(obj, float):
+        if math.isnan(obj) or math.isinf(obj):
+            return None
+        return obj
+    if isinstance(obj, str):
         return obj
     if isinstance(obj, Decimal):
         return float(obj)
@@ -42,7 +55,47 @@ def _deep_json_safe(obj: Any) -> Any:
         return {str(k): _deep_json_safe(v) for k, v in obj.items()}
     if isinstance(obj, (list, tuple, set)):
         return [_deep_json_safe(v) for v in obj]
+    try:
+        import numpy as np
+
+        if isinstance(obj, np.ndarray):
+            return _deep_json_safe(obj.tolist())
+        if isinstance(obj, np.generic):
+            return _deep_json_safe(obj.item())
+    except ImportError:
+        pass
     return str(obj)
+
+
+def _policy_levers_as_list(raw: Any) -> list[dict[str, Any]]:
+    """Normalize policy_levers to a list of dicts (JSON string / mixed lists break the generator)."""
+    parsed: list[Any] = []
+    if raw is None:
+        parsed = []
+    elif isinstance(raw, list):
+        parsed = raw
+    elif isinstance(raw, str):
+        s = raw.strip()
+        if not s:
+            parsed = []
+        else:
+            try:
+                j = json.loads(s)
+                parsed = j if isinstance(j, list) else []
+            except (json.JSONDecodeError, TypeError):
+                parsed = []
+    else:
+        parsed = []
+    return [x for x in parsed if isinstance(x, dict)]
+
+
+def _safe_int(val: Any, default: int = 0) -> int:
+    try:
+        if val is None:
+            return default
+        return int(val)
+    except (TypeError, ValueError):
+        return default
 
 
 class PolicyCodeSetCreate(BaseModel):
@@ -1109,8 +1162,8 @@ async def generate_policy_predicted_impact(
                         "member_count": int(baseline_metrics_dict.get("unique_members", 0)),
                         "member_months": baseline_metrics_dict.get("member_months", 0),
                     }
-                    # Remove None values
-                    baseline_metrics = {k: v for k, v in baseline_metrics.items() if v is not None and v != 0}
+                    # Drop None only — keep zeros (0 is valid for member_count / utilization)
+                    baseline_metrics = {k: v for k, v in baseline_metrics.items() if v is not None}
                     if not baseline_metrics:
                         baseline_metrics = None
         except Exception as e:
@@ -1189,22 +1242,18 @@ async def generate_policy_predicted_impact(
 
 
 @router.post("/policies/generate-predicted-impact")
-async def generate_all_policies_predicted_impact(
+def generate_all_policies_predicted_impact(
     current_user: Annotated[CurrentUser, Depends(verify_token)],
     db: Session = Depends(get_db),
     force: bool = Query(False, description="Force regenerate even if predicted impact exists"),
 ):
     """Generate predicted impact for all policies that don't have it (Stage 3.5)
     
+    Sync handler: avoids async + sync SQLAlchemy session edge cases. Heavy work runs in thread pool.
+
     Args:
         force: If True, regenerate predicted impact even if it already exists
     """
-    from uepi_api.policy_predicted_impact_metadata import get_predicted_impact_from_metadata
-    from uepi_api.routers.policy_predicted_impact import (
-        generate_predicted_impact_for_policy,
-        store_predicted_impact_in_metadata,
-    )
-    
     results = {
         "total_policies": 0,
         "generated": 0,
@@ -1214,6 +1263,12 @@ async def generate_all_policies_predicted_impact(
     }
     
     try:
+        from uepi_api.policy_predicted_impact_metadata import get_predicted_impact_from_metadata
+        from uepi_api.routers.policy_predicted_impact import (
+            generate_predicted_impact_for_policy,
+            store_predicted_impact_in_metadata,
+        )
+
         # Get all policies for the tenant
         policies = db.query(Policy).filter(
             Policy.tenant_id == current_user.tenant_id,
@@ -1223,27 +1278,34 @@ async def generate_all_policies_predicted_impact(
         
         for policy in policies:
             try:
+                # SET LOCAL only applies for the current transaction; we commit per policy, so refresh each iter
+                try:
+                    set_local_statement_timeout(db, 600_000)
+                except Exception:
+                    pass
+
                 # Check if predicted impact already exists
-                policy_metadata = policy.policy_metadata_json if hasattr(policy, 'policy_metadata_json') else {}
+                _raw_meta = getattr(policy, "policy_metadata_json", None)
+                policy_metadata = _raw_meta if isinstance(_raw_meta, dict) else {}
                 existing_predicted_impact = get_predicted_impact_from_metadata(policy_metadata)
                 
                 if existing_predicted_impact and not force:
                     results["skipped"] += 1
                     results["details"].append({
                         "policy_id": str(policy.id),
-                        "policy_name": policy.name,
+                        "policy_name": policy.name or "",
                         "status": "skipped",
                         "reason": "Predicted impact already exists",
                     })
                     continue
                 
                 # Extract policy levers
-                policy_levers = policy_metadata.get("policy_levers", [])
+                policy_levers = _policy_levers_as_list(policy_metadata.get("policy_levers"))
                 if not policy_levers:
                     results["skipped"] += 1
                     results["details"].append({
                         "policy_id": str(policy.id),
-                        "policy_name": policy.name,
+                        "policy_name": policy.name or "",
                         "status": "skipped",
                         "reason": "Policy does not have policy levers",
                     })
@@ -1253,6 +1315,7 @@ async def generate_all_policies_predicted_impact(
                 
                 # Load baseline metrics from database (policy-specific if available, otherwise general)
                 baseline_metrics = None
+                policy_baseline = None
                 try:
                     from uepi_api.storage_baselines import get_latest_baseline
                     # Try policy-specific baseline first
@@ -1268,8 +1331,8 @@ async def generate_all_policies_predicted_impact(
                             baseline_metrics = {
                                 "utilization_per_1k": baseline_metrics_dict.get("util_rate_target_per_1000_mm") or baseline_metrics_dict.get("util_rate_total_per_1000_mm") or 0.0,
                                 "cost_pmpm": baseline_metrics_dict.get("allowed_pmpm_target") or baseline_metrics_dict.get("allowed_pmpm_total") or 0.0,
-                                "member_count": int(baseline_metrics_dict.get("unique_members", 0)),
-                                "member_months": baseline_metrics_dict.get("member_months", 0),
+                                "member_count": _safe_int(baseline_metrics_dict.get("unique_members"), 0),
+                                "member_months": _safe_int(baseline_metrics_dict.get("member_months"), 0),
                             }
                 except Exception as e:
                     print(f"Warning: Could not load baseline metrics for policy {policy.id}: {e}")
@@ -1293,7 +1356,10 @@ async def generate_all_policies_predicted_impact(
                     baseline_id = str(policy_baseline.get("id"))
                 
                 # Store in dedicated database table (primary storage; include enhanced data)
-                predicted_impact_dict = predicted_impact.model_dump(mode='json')
+                try:
+                    predicted_impact_dict = predicted_impact.model_dump(mode="json")
+                except Exception:
+                    predicted_impact_dict = json.loads(predicted_impact.model_dump_json())
                 enhanced_data = getattr(predicted_impact, '_enhanced_data', None) or {}
                 stored_result = store_predicted_impact(
                     policy_id=policy.id,
@@ -1323,38 +1389,60 @@ async def generate_all_policies_predicted_impact(
                     policy_metadata or {},
                     predicted_impact,
                 )
-                policy.policy_metadata_json = policy_metadata
+                policy.policy_metadata_json = _deep_json_safe(policy_metadata)
                 db.commit()
                 db.refresh(policy)
                 
                 results["generated"] += 1
+                cs = predicted_impact.metrics.confidence_score
+                try:
+                    csn = float(cs) if cs is not None else None
+                    if csn is not None and (math.isnan(csn) or math.isinf(csn)):
+                        csn = None
+                except (TypeError, ValueError):
+                    csn = None
                 results["details"].append({
                     "policy_id": str(policy.id),
-                    "policy_name": policy.name,
+                    "policy_name": policy.name or "",
                     "status": "generated",
-                    "confidence_score": predicted_impact.metrics.confidence_score,
+                    "confidence_score": csn,
                 })
                 
             except Exception as e:
                 results["errors"] += 1
                 results["details"].append({
                     "policy_id": str(policy.id),
-                    "policy_name": policy.name,
+                    "policy_name": getattr(policy, "name", None) or "",
                     "status": "error",
                     "error": str(e),
                 })
+                try:
+                    db.rollback()
+                except Exception:
+                    pass
                 continue
         
-        # Commit all changes
-        db.commit()
-        
-        return results
-        
+        # Explicit JSON body so FastAPI/Starlette never fails serializing the return value
+        # (unhandled serialization errors become generic 500 via main.py exception handler).
+        body = _deep_json_safe(results)
+        try:
+            payload = json.dumps(body, default=str, ensure_ascii=False)
+        except (TypeError, ValueError) as ser_err:
+            logger.warning("generate-predicted-impact JSON fallback: %s", ser_err)
+            payload = json.dumps(_deep_json_safe({"error": "serialization", "results": str(body)[:8000]}))
+        return Response(content=payload, media_type="application/json; charset=utf-8")
+
+    except HTTPException:
+        raise
     except Exception as e:
         db.rollback()
+        logger.exception("generate_all_policies_predicted_impact failed: %s", e)
         import traceback
         traceback.print_exc()
-        raise HTTPException(status_code=500, detail=f"Failed to generate predicted impact for policies: {str(e)}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to generate predicted impact for policies: {type(e).__name__}: {e}",
+        ) from e
 
 
 @router.post("/policies/complete-scope-and-regenerate")

@@ -7,7 +7,7 @@ Links to: Predicted Impact, Baselines, What-If Scenarios
 import sys
 import json
 from pathlib import Path
-from uuid import UUID, uuid4
+from uuid import UUID
 from datetime import datetime, timedelta
 import hashlib
 
@@ -23,7 +23,7 @@ from uepi_api.storage_policy_versions import create_policy_version
 from uepi_api.storage_policy_changelog import create_changelog_entry
 from uepi_api.storage_decisions import create_decision
 from uepi_api.storage_risks import create_or_update_risk_register
-from uepi_api.storage_auth import DEFAULT_TENANT_ID
+from uepi_api.storage_auth import DEFAULT_TENANT_ID, DEFAULT_USER_ID
 from uepi_api.storage_baselines import get_latest_baseline
 from uepi_api.storage_scenarios import list_scenarios
 
@@ -209,7 +209,7 @@ def create_versions_for_policy(tenant_id: UUID, policy_id: UUID, policy_data: di
             "scope": policy_data.get('scope', {}),
             "enforcement": policy_data.get('enforcement', {})
         },
-        "created_by": str(uuid4()),  # System user
+        "created_by": str(DEFAULT_USER_ID),
         "created_at": effective_start
     }
     
@@ -227,7 +227,7 @@ def create_changelog_for_policy(tenant_id: UUID, policy_id: UUID, policy_data: d
     changelog_entries = [
         {
             "version_number": version_number,
-            "changed_by": str(uuid4()),  # System user
+            "changed_by": str(DEFAULT_USER_ID),
             "change_type": "created",
             "field_name": "policy",
             "new_value": policy_data.get('name', 'Policy'),
@@ -235,7 +235,7 @@ def create_changelog_for_policy(tenant_id: UUID, policy_id: UUID, policy_data: d
         },
         {
             "version_number": version_number,
-            "changed_by": str(uuid4()),
+            "changed_by": str(DEFAULT_USER_ID),
             "change_type": "updated",
             "field_name": "status",
             "old_value": "DRAFT",
@@ -248,7 +248,7 @@ def create_changelog_for_policy(tenant_id: UUID, policy_id: UUID, policy_data: d
     if policy_data.get('scope'):
         changelog_entries.append({
             "version_number": version_number,
-            "changed_by": str(uuid4()),
+            "changed_by": str(DEFAULT_USER_ID),
             "change_type": "updated",
             "field_name": "scope",
             "new_value": policy_data.get('scope'),
@@ -276,7 +276,7 @@ def create_decisions_for_policy(tenant_id: UUID, policy_id: UUID, policy_data: d
             "confidence_score": 0.80,
             "status": "FINALIZED",
             "policy_id": str(policy_id),
-            "created_by": str(uuid4()),
+            "created_by": str(DEFAULT_USER_ID),
             "created_at": datetime.utcnow().isoformat()
         }
     ]

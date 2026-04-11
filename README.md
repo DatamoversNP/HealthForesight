@@ -12,6 +12,8 @@ A cloud-agnostic SaaS platform for analyzing healthcare policy impacts, utilizat
 - **Infrastructure**: Kubernetes + Terraform + Helm
 - **Observability**: OpenTelemetry + Prometheus + Grafana + Loki
 
+**Cursor / session continuity:** after a restart, open [docs/CURSOR_SESSION_CONTEXT.md](docs/CURSOR_SESSION_CONTEXT.md) (Azure demo setup, canonical data checks, recent fixes, open follow-ups—no secrets).
+
 ## Quick Start
 
 ### Prerequisites

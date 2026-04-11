@@ -1,4 +1,5 @@
 """File-based decision storage - database only"""
+import json
 from typing import Dict, List, Optional, Any
 from uuid import UUID, uuid4
 from datetime import datetime
@@ -143,11 +144,11 @@ def _create_decision(
         # Insert decision
         db.execute(text("""
             INSERT INTO decisions (id, tenant_id, decision_json, created_at, updated_at, policy_id, status, created_by)
-            VALUES (:id, :tenant_id, :decision_json, :created_at, :updated_at, :policy_id, :status, :created_by)
+            VALUES (:id, :tenant_id, CAST(:decision_json AS jsonb), :created_at, :updated_at, :policy_id, :status, :created_by)
         """), {
             "id": decision_id,
             "tenant_id": tenant_id,
-            "decision_json": decision_dict,
+            "decision_json": json.dumps(decision_dict),
             "created_at": decision.created_at,
             "updated_at": decision.updated_at,
             "policy_id": decision.policy_id,
@@ -401,7 +402,7 @@ def _update_decision(
         
         db.execute(text("""
             UPDATE decisions
-            SET decision_json = :decision_json,
+            SET decision_json = CAST(:decision_json AS jsonb),
                 updated_at = :updated_at,
                 policy_id = :policy_id,
                 status = :status
@@ -409,7 +410,7 @@ def _update_decision(
         """), {
             "decision_id": decision_id,
             "tenant_id": tenant_id,
-            "decision_json": decision_dict,
+            "decision_json": json.dumps(decision_dict),
             "updated_at": decision.updated_at,
             "policy_id": decision.policy_id,
             "status": decision.status,

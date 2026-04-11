@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # =============================================================================
 # Run DB migrations + seed users (admin@healthforesight.com / Swan@1234) on Azure Postgres.
+# For full demo (32 policies, pipelines, workspace, baselines, observations), use:
+#   ./scripts/azure/setup-complete-azure-demo.sh
 #
 # You need the SAME connection string as on healthforesight-api (Configuration → DATABASE_URL).
 #
@@ -21,6 +23,7 @@ if [[ -z "${DATABASE_URL:-}" ]] || [[ "$DATABASE_URL" == *"@host:"* ]]; then
   echo "❌ Set DATABASE_URL to your real Azure PostgreSQL connection string (not the doc placeholder)."
   exit 1
 fi
+export DATABASE_URL="$(printf '%s' "$DATABASE_URL" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
 # Reject copy-paste placeholders from docs
 if [[ "$DATABASE_URL" == *"YOURSERVER"* ]] || [[ "$DATABASE_URL" == *"YOURDB"* ]] || \
    [[ "$DATABASE_URL" == *":ADMIN:"* ]] || [[ "$DATABASE_URL" == *"ADMIN:PASSWORD@"* ]]; then

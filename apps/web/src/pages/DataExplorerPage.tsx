@@ -255,6 +255,14 @@ export default function DataExplorerPage() {
         </Alert>
       )}
 
+      {listing?.items?.some((i) => i.path?.startsWith('__db__/')) && (
+        <Alert severity="info" sx={{ mb: 2 }}>
+          This environment uses PostgreSQL only (no <code>/app/data/…</code> folders). Each entry is a
+          database table; open one to page through rows. For schema and row counts, use{' '}
+          <strong>Database Viewer</strong> in the nav.
+        </Alert>
+      )}
+
       {/* Tabs for Source Data and Target Data Model */}
       <Paper sx={{ mb: 2 }}>
         <Tabs 

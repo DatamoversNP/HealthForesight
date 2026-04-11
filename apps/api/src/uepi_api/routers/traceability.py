@@ -1,12 +1,12 @@
 """Traceability endpoints - File storage only"""
-from typing import Annotated, List, Optional
+from typing import Annotated, Optional
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel
 
 from uepi_api.auth import CurrentUser, get_demo_current_user
-from uepi_api.traceability import (
+from uepi_api.traceability_store import (
     add_traceability,
     get_traceability,
     query_by_traceability,
@@ -69,16 +69,8 @@ async def create_traceability_route(
     return TraceabilityResponse(**trace_record)
 
 
-@router.get("/traceability/{trace_id}", response_model=TraceabilityResponse)
-async def get_traceability_route(
-    trace_id: str,
-    current_user: Annotated[CurrentUser, Depends(get_demo_current_user)],
-):
-    """Get traceability metadata by trace ID"""
-    trace_record = get_traceability(current_user.tenant_id, UUID(trace_id))
-    if not trace_record:
-        raise HTTPException(status_code=404, detail="Traceability record not found")
-    return TraceabilityResponse(**trace_record)
+# Static paths MUST be registered before /traceability/{trace_id} or "refresh-status",
+# "query", and "audit-trail" are captured as trace_id and UUID() raises → HTTP 500.
 
 
 @router.get("/traceability/query")
@@ -158,3 +150,15 @@ async def get_audit_trail_route(
         entity_id=entity_id,
     )
     return [TraceabilityResponse(**r) for r in audit_records]
+
+
+@router.get("/traceability/{trace_id}", response_model=TraceabilityResponse)
+async def get_traceability_route(
+    trace_id: str,
+    current_user: Annotated[CurrentUser, Depends(get_demo_current_user)],
+):
+    """Get traceability metadata by trace ID"""
+    trace_record = get_traceability(current_user.tenant_id, UUID(trace_id))
+    if not trace_record:
+        raise HTTPException(status_code=404, detail="Traceability record not found")
+    return TraceabilityResponse(**trace_record)
