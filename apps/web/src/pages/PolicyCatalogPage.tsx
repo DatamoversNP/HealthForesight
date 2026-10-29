@@ -149,17 +149,10 @@ export default function PolicyCatalogPage() {
         length: Array.isArray(data) ? data.length : (data?.items?.length || 'N/A'),
         data: data 
       })
-      // Handle both array and object responses
-      if (Array.isArray(data)) {
-        console.log(`DEBUG loadPolicies: Setting ${data.length} policies`)
-        setPolicies(data)
-      } else if (data && Array.isArray(data.items)) {
-        console.log(`DEBUG loadPolicies: Setting ${data.items.length} policies from items`)
-        setPolicies(data.items)
-      } else {
-        console.log('DEBUG loadPolicies: No policies found, setting empty array')
-        setPolicies([])
-      }
+      // Hide retired seed/junk policies from the default catalog (demo-safe).
+      const raw = Array.isArray(data) ? data : (data && Array.isArray(data.items) ? data.items : [])
+      const visible = raw.filter((p: Policy) => (p.status || 'ACTIVE') !== 'RETIRED')
+      setPolicies(visible)
     } catch (err: any) {
       // Don't log timeout errors - they're expected when API is unavailable
       if (err.code !== 'ECONNABORTED' && !err.message?.includes('timeout')) {
