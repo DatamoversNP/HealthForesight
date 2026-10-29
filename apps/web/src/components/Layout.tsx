@@ -56,6 +56,7 @@ import { useTour } from '../contexts/TourContext'
 import RoleSwitcher from './rbac/RoleSwitcher'
 import ToursMenu from './tour/ToursMenu'
 import ConversationalAIButton from './conversational-ai/ConversationalAIButton'
+import { appBarFullLogo, appByline, appName, logoIconSrc, logoOnDarkSrc } from '../brand'
 
 const drawerWidth = 260
 
@@ -154,56 +155,66 @@ export default function Layout() {
       >
         <Toolbar>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexGrow: 1 }}>
-            {/* HealthForesight Logo/Brand */}
-            <Box 
+            <Box
               sx={{ display: 'flex', alignItems: 'center', gap: 1.5, cursor: 'pointer' }}
               onClick={() => navigate('/')}
             >
-              {/* Logo Icon */}
-              <Box
-                component="img"
-                src="/healthforesight-logo-icon.svg"
-                alt="HealthForesight"
-                sx={{
-                  height: 48,
-                  width: 48,
-                  backgroundColor: '#FFFFFF',
-                  borderRadius: '8px',
-                  padding: '8px',
-                  boxSizing: 'border-box',
-                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                }}
-              />
-              {/* Wordmark */}
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-                <Typography
-                  variant="h6"
-                  component="div"
-                  sx={{
-                    fontFamily: 'IBM Plex Sans, Inter, sans-serif',
-                    fontWeight: 600,
-                    fontSize: '1.25rem',
-                    letterSpacing: '-0.01em',
-                    lineHeight: 1.2,
-                    color: '#FFFFFF',
-                  }}
-                >
-                  Health<span style={{ color: '#5EEAD4' }}>Foresight</span>
-                </Typography>
-                <Typography
-                  variant="caption"
-                  sx={{
-                    fontSize: '0.7rem',
-                    opacity: 0.85,
-                    display: { xs: 'none', md: 'block' },
-                    color: 'rgba(255, 255, 255, 0.9)',
-                    letterSpacing: '0.05em',
-                    fontWeight: 500,
-                  }}
-                >
-                  by DataMovers
-                </Typography>
-              </Box>
+              {appBarFullLogo && logoOnDarkSrc ? (
+                <Box
+                  component="img"
+                  src={logoOnDarkSrc}
+                  alt={appName}
+                  sx={{ height: { xs: 32, sm: 40 }, width: 'auto', display: 'block' }}
+                />
+              ) : (
+                <>
+                  <Box
+                    component="img"
+                    src={logoIconSrc}
+                    alt={appName}
+                    sx={{
+                      height: 48,
+                      width: 48,
+                      backgroundColor: '#FFFFFF',
+                      borderRadius: '8px',
+                      padding: '8px',
+                      boxSizing: 'border-box',
+                      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                    }}
+                  />
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+                    <Typography
+                      variant="h6"
+                      component="div"
+                      sx={{
+                        fontFamily: 'IBM Plex Sans, Inter, sans-serif',
+                        fontWeight: 600,
+                        fontSize: '1.25rem',
+                        letterSpacing: '-0.01em',
+                        lineHeight: 1.2,
+                        color: '#FFFFFF',
+                      }}
+                    >
+                      Health<span style={{ color: '#5EEAD4' }}>Foresight</span>
+                    </Typography>
+                    {appByline ? (
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          fontSize: '0.7rem',
+                          opacity: 0.85,
+                          display: { xs: 'none', md: 'block' },
+                          color: 'rgba(255, 255, 255, 0.9)',
+                          letterSpacing: '0.05em',
+                          fontWeight: 500,
+                        }}
+                      >
+                        {appByline}
+                      </Typography>
+                    ) : null}
+                  </Box>
+                </>
+              )}
             </Box>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>

@@ -72,6 +72,8 @@ export default function ObservationRunHistoryPage() {
         apiClient.getPolicies(),
         apiClient.listObservations({
           include_trends: false,
+          latest_only: !filterPolicyId,
+          limit: filterPolicyId ? 200 : 100,
           ...(filterPolicyId ? { policy_id: filterPolicyId } : {}),
         }),
       ])

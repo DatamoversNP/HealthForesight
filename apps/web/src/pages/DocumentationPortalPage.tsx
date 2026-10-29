@@ -47,6 +47,7 @@ import {
   Psychology as PsychologyIcon,
   ShowChart as ShowChartIcon,
 } from '@mui/icons-material'
+import { appName } from '../brand'
 
 const drawerWidth = 320
 
@@ -133,7 +134,7 @@ export default function DocumentationPortalPage() {
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
             <MenuBookIcon />
             <Typography variant="h6" sx={{ fontWeight: 700 }}>
-              HealthForesight
+              {appName}
             </Typography>
           </Box>
           <Typography variant="caption" sx={{ opacity: 0.9, fontSize: '0.75rem' }}>
@@ -272,7 +273,7 @@ function renderOverview(subsection: string) {
       return (
         <Box>
           <Typography variant="h3" gutterBottom sx={{ mb: 4, fontWeight: 700 }}>
-            HealthForesight
+            {appName}
           </Typography>
           <Typography variant="h5" gutterBottom color="primary" sx={{ mb: 4 }}>
             Utilization Elasticity & Policy Impact Intelligence Platform
@@ -280,12 +281,12 @@ function renderOverview(subsection: string) {
           
           <Alert severity="info" sx={{ mb: 4 }}>
             <AlertTitle>Enterprise-Grade Analytics Platform</AlertTitle>
-            HealthForesight is a continuous, learning-based system that enables healthcare payers to predict, measure, and optimize the impact of utilization management policies through advanced analytics, machine learning, and behavioral modeling.
+            {appName} is a continuous, learning-based system that enables healthcare payers to predict, measure, and optimize the impact of utilization management policies through advanced analytics, machine learning, and behavioral modeling.
           </Alert>
 
           <Typography variant="body1" paragraph sx={{ fontSize: '1.1rem', lineHeight: 1.9, mb: 4 }}>
-            HealthForesight transforms healthcare policy management from reactive to predictive. Unlike traditional one-time impact analyses, 
-            HealthForesight operates as a <strong>continuous learning system</strong> that evolves with every new data point, policy change, and observed outcome.
+            {appName} transforms healthcare policy management from reactive to predictive. Unlike traditional one-time impact analyses,{' '}
+            {appName} operates as a <strong>continuous learning system</strong> that evolves with every new data point, policy change, and observed outcome.
           </Typography>
 
           <Typography variant="h6" gutterBottom sx={{ mt: 5, mb: 3, fontWeight: 600 }}>
@@ -396,7 +397,7 @@ function renderOverview(subsection: string) {
             System Architecture
           </Typography>
           <Typography variant="body1" paragraph sx={{ mb: 4 }}>
-            HealthForesight is built on a modular, file-based architecture designed for enterprise scalability, traceability, and continuous learning.
+            {appName} is built on a modular, file-based architecture designed for enterprise scalability, traceability, and continuous learning.
           </Typography>
           
           {/* Architecture Diagram */}
@@ -623,7 +624,7 @@ function renderArchitecture(subsection: string) {
       </Typography>
       <Alert severity="info" sx={{ mb: 4 }}>
         <AlertTitle>Architecture Overview</AlertTitle>
-        HealthForesight uses a modular, microservices-inspired architecture with file-based storage for local development and S3-compatible object storage for production deployments.
+        {appName} uses a modular, microservices-inspired architecture with file-based storage for local development and S3-compatible object storage for production deployments.
       </Alert>
       <Typography variant="body1">
         Detailed architecture documentation coming soon. See Overview → Architecture for initial content.

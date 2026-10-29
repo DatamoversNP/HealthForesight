@@ -359,7 +359,7 @@ export default function ObservationAnalysisPage() {
 
   const loadObservations = async (policyId?: string) => {
     try {
-      const params: any = { include_trends: true }  // Request trend data
+      const params: any = { include_trends: true, limit: 200 }
       if (policyId) {
         params.policy_id = policyId
       }

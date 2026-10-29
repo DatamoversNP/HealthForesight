@@ -41,6 +41,7 @@ import {
   Timeline as TimelineIcon,
   Settings as SettingsIcon,
 } from '@mui/icons-material'
+import { appName } from '../brand'
 
 export default function ProductManualPage() {
   return (
@@ -48,7 +49,7 @@ export default function ProductManualPage() {
       {/* Header */}
       <Box sx={{ mb: 4, textAlign: 'center' }}>
         <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
-          HealthForesight Product Manual
+          {appName} Product Manual
         </Typography>
         <Typography variant="h6" color="text.secondary" paragraph>
           Complete End-to-End Guide to All Features and Functionalities
@@ -106,7 +107,7 @@ export default function ProductManualPage() {
       {/* Section 1: Introduction */}
       <Section title="1. Introduction & Overview" icon={<DashboardIcon />}>
         <Typography variant="body1" paragraph>
-          HealthForesight is an enterprise-grade Policy Intelligence & Decision Assurance Platform that enables
+          {appName} is an enterprise-grade Policy Intelligence & Decision Assurance Platform that enables
           healthcare payers to manage policies throughout their complete lifecycle, from creation to sunset,
           with full traceability, defensibility, and continuous learning.
         </Typography>

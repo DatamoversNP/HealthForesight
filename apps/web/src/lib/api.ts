@@ -849,7 +849,14 @@ export class ApiClient {
   }
 
   // Observation endpoints
-  async listObservations(params?: { policy_id?: string; data_period_id?: string; observation_type?: string; include_trends?: boolean; latest_only?: boolean }) {
+  async listObservations(params?: {
+    policy_id?: string
+    data_period_id?: string
+    observation_type?: string
+    include_trends?: boolean
+    latest_only?: boolean
+    limit?: number
+  }) {
     const response = await this.client.get('/observations', { params })
     return response.data
   }

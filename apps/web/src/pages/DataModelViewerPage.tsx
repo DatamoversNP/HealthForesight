@@ -35,6 +35,7 @@ import {
 } from '@mui/icons-material'
 import { healthForesightColors } from '../theme/healthForesightTheme'
 import { apiClient } from '../lib/api'
+import { appName } from '../brand'
 
 interface FieldDefinition {
   name: string
@@ -619,7 +620,7 @@ export default function DataModelViewerPage() {
         <Box>
           <Alert severity="info" sx={{ mb: 3 }}>
             <Typography variant="body2">
-              <strong>Target Data Model:</strong> Complete specification of all canonical data models used in HealthForesight.
+              <strong>Target Data Model:</strong> Complete specification of all canonical data models used in {appName}.
               All models extend CanonicalBase which includes tenant_id, source_system, source_file_id, ingestion_id,
               created_at, updated_at, and record_hash.
             </Typography>

@@ -35,9 +35,18 @@ class DatabaseSettings(BaseSettings):
     @field_validator("url", mode="before")
     @classmethod
     def strip_database_url(cls, v):
-        """Avoid psycopg2 invalid sslmode when env has trailing/leading whitespace."""
-        if isinstance(v, str):
-            return v.strip()
+        """Normalize URL: strip whitespace; force psycopg2 dialect (image has psycopg2-binary)."""
+        if not isinstance(v, str):
+            return v
+        v = v.strip()
+        for prefix in (
+            "postgresql+psycopg2://",
+            "postgresql+psycopg://",
+            "postgresql://",
+            "postgres://",
+        ):
+            if v.startswith(prefix):
+                return "postgresql+psycopg2://" + v[len(prefix) :]
         return v
 
 

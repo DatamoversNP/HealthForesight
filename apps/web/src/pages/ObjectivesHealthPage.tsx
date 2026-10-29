@@ -164,7 +164,8 @@ export default function ObjectivesHealthPage() {
       const [policiesRes, performanceRes, observationsRes, decisionsRes, verdictsRes] = await Promise.all([
         apiClient.getPolicies().catch(() => null),
         apiClient.getPolicyPerformance(100).catch(() => []),
-        apiClient.getObservations().catch(() => []),
+        // latest_only + limit avoids ~2MB full observation dumps on this dashboard
+        apiClient.listObservations({ latest_only: true, limit: 100 }).catch(() => []),
         apiClient.getDecisions().catch(() => []),
         apiClient.getPolicyVerdicts().catch(() => ({ items: [] as any[], count: 0 })),
       ])
@@ -253,17 +254,25 @@ export default function ObjectivesHealthPage() {
         if (pid) policyIdsWithDecision.add(pid)
       })
 
+      // Only probe predicted-impact for policies that already have signal (avoids N+1 on full catalog)
+      const candidatesForForecast = policiesList
+        .filter((p) => policyIdsWithObservation.has(p.id) || verdictByPolicyId[p.id] || perfByPolicyId[p.id])
+        .slice(0, 40)
       const policyIdsWithForecast: string[] = []
-      await Promise.all(
-        policiesList.slice(0, 100).map(async (p) => {
-          try {
-            const impact = await apiClient.getPolicyPredictedImpact(p.id)
-            if (impact && impact.metrics) policyIdsWithForecast.push(p.id)
-          } catch {
-            // no forecast
-          }
-        })
-      )
+      const forecastChunk = 8
+      for (let i = 0; i < candidatesForForecast.length; i += forecastChunk) {
+        const chunk = candidatesForForecast.slice(i, i + forecastChunk)
+        await Promise.all(
+          chunk.map(async (p) => {
+            try {
+              const impact = await apiClient.getPolicyPredictedImpact(p.id)
+              if (impact && impact.metrics) policyIdsWithForecast.push(p.id)
+            } catch {
+              // no forecast
+            }
+          })
+        )
+      }
       const forecastSet = new Set(policyIdsWithForecast)
 
       const policyIdsEvidenceReady = [...policyIdsWithObservation].filter((pid) => forecastSet.has(pid))

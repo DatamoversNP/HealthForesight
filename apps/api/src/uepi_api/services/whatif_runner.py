@@ -44,19 +44,33 @@ def run_whatif_scenario_sync(
             db.commit()
             return {"status": "error", "message": "Policy not found"}
 
-        policy_metadata = policy_record.policy_metadata_json if hasattr(policy_record, "policy_metadata_json") else {}
+        # Column may exist but be NULL — never call .get on None (was NoneType crash).
+        policy_metadata = getattr(policy_record, "policy_metadata_json", None) or {}
+        if not isinstance(policy_metadata, dict):
+            policy_metadata = {}
+        scenario_params = scenario_params if isinstance(scenario_params, dict) else {}
+        baseline_filters = baseline_filters if isinstance(baseline_filters, dict) else {}
+
+        scope_raw = policy_metadata.get("scope") or {}
+        if not isinstance(scope_raw, dict):
+            scope_raw = {}
+        effective_raw = policy_metadata.get("effective_period") or {}
+        if not isinstance(effective_raw, dict):
+            effective_raw = {}
+        enforcement_raw = policy_metadata.get("enforcement")
+
         policy = CanonicalPolicy(
             policy_id=policy_record.id,
             policy_name=policy_record.name,
             policy_type=policy_record.policy_type,
             description=policy_record.description or "",
             status=PolicyStatus(policy_record.status) if hasattr(policy_record, "status") else PolicyStatus.ACTIVE,
-            scope=PolicyScope(**policy_metadata.get("scope", {})) if policy_metadata.get("scope") else PolicyScope(lob=None, markets=None, network=None),
+            scope=PolicyScope(**scope_raw) if scope_raw else PolicyScope(lob=None, markets=None, network=None),
             effective_period=EffectivePeriod(
-                start_date=datetime.fromisoformat(policy_metadata["effective_period"]["start_date"]) if policy_metadata.get("effective_period", {}).get("start_date") else datetime.utcnow(),
-                end_date=datetime.fromisoformat(policy_metadata["effective_period"]["end_date"]) if policy_metadata.get("effective_period", {}).get("end_date") else None,
-            ) if policy_metadata.get("effective_period") else EffectivePeriod(start_date=datetime.utcnow(), end_date=None),
-            enforcement=Enforcement(**policy_metadata["enforcement"]) if policy_metadata.get("enforcement") else None,
+                start_date=datetime.fromisoformat(effective_raw["start_date"]) if effective_raw.get("start_date") else datetime.utcnow(),
+                end_date=datetime.fromisoformat(effective_raw["end_date"]) if effective_raw.get("end_date") else None,
+            ) if effective_raw else EffectivePeriod(start_date=datetime.utcnow(), end_date=None),
+            enforcement=Enforcement(**enforcement_raw) if isinstance(enforcement_raw, dict) else None,
             policy_logic=None,
         )
 

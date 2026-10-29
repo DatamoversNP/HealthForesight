@@ -14,6 +14,7 @@ import {
 import { useAuth } from '../contexts/AuthContext'
 import { apiClient } from '../lib/api'
 import { healthForesightColors } from '../theme/healthForesightTheme'
+import { appName, logoSrc } from '../brand'
 
 const OIDC_ISSUER = import.meta.env.VITE_OIDC_ISSUER || ''
 const OIDC_CLIENT_ID = import.meta.env.VITE_OIDC_CLIENT_ID || 'uepi-web'
@@ -124,8 +125,8 @@ export default function LoginPage() {
         <Box sx={{ mb: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <Box
             component="img"
-            src="/healthforesight-logo.svg"
-            alt="HealthForesight"
+            src={logoSrc}
+            alt={appName}
             sx={{ height: { xs: 56, sm: 64, md: 72 }, width: 'auto' }}
           />
         </Box>

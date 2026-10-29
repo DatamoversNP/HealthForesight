@@ -519,7 +519,7 @@ async def list_observations_route(
     data_period_id: Optional[str] = Query(None),
     observation_type: Optional[str] = Query(None),
     include_trends: bool = Query(False, description="Include trend analysis"),
-    limit: int = Query(200, ge=1, le=500, description="Max observations to return (default 200)"),
+    limit: int = Query(100, ge=1, le=500, description="Max observations to return (default 100; use latest_only for portfolio views)"),
     latest_only: bool = Query(False, description="If true, return only latest observation per policy (by observation_period_end)"),
 ):
     """List observations for the current tenant with optional trend analysis"""
