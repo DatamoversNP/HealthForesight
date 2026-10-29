@@ -27,14 +27,10 @@ ROOT = Path(__file__).resolve().parents[2]
 CATALOG = ROOT / "scripts" / "demo" / "catalog" / "bcbs_nc_aligned_policy_catalog.json"
 LOG = Path("/tmp/catalog_claims_baseline_run.jsonl")
 
-# Dates inside typical demo claims window / rolling baseline
+# Baseline era through Dec 2025, then 2026 YTD observation anchors (mid-month).
 DEFAULT_DATES = [
-    "2025-04-15",
-    "2025-07-15",
-    "2025-10-15",
-    "2026-01-15",
-    "2026-04-15",
-    "2026-07-15",
+    *[f"2025-{m:02d}-15" for m in range(1, 13)],
+    *[f"2026-{m:02d}-15" for m in range(1, 11)],
 ]
 
 

@@ -832,28 +832,49 @@ async def update_policy(
         if not isinstance(policy.policy_metadata_json, dict):
             policy.policy_metadata_json = {}
         
-        # Update metadata fields if provided
+        # Reassign a new dict so SQLAlchemy/JSONB detects the change (in-place mutate is a no-op).
+        metadata = dict(policy.policy_metadata_json or {})
+
         if policy_data.policy_levers is not None:
-            policy.policy_metadata_json['policy_levers'] = [lever.model_dump(mode='json') if hasattr(lever, 'model_dump') else lever for lever in policy_data.policy_levers]
-        
+            metadata['policy_levers'] = [lever.model_dump(mode='json') if hasattr(lever, 'model_dump') else lever for lever in policy_data.policy_levers]
+
         if policy_data.scope is not None:
-            policy.policy_metadata_json['scope'] = policy_data.scope.model_dump(mode='json') if hasattr(policy_data.scope, 'model_dump') else policy_data.scope
-        
+            metadata['scope'] = policy_data.scope.model_dump(mode='json') if hasattr(policy_data.scope, 'model_dump') else policy_data.scope
+
         if policy_data.effective_period is not None:
-            policy.policy_metadata_json['effective_period'] = policy_data.effective_period.model_dump(mode='json') if hasattr(policy_data.effective_period, 'model_dump') else policy_data.effective_period
-        
+            metadata['effective_period'] = (
+                policy_data.effective_period.model_dump(mode='json')
+                if hasattr(policy_data.effective_period, 'model_dump')
+                else policy_data.effective_period
+            )
+
         if policy_data.enforcement is not None:
-            policy.policy_metadata_json['enforcement'] = policy_data.enforcement.model_dump(mode='json') if hasattr(policy_data.enforcement, 'model_dump') else policy_data.enforcement
-        
+            metadata['enforcement'] = policy_data.enforcement.model_dump(mode='json') if hasattr(policy_data.enforcement, 'model_dump') else policy_data.enforcement
+
         if policy_data.expected_behavioral_response is not None:
-            policy.policy_metadata_json['expected_behavioral_response'] = policy_data.expected_behavioral_response.model_dump(mode='json') if hasattr(policy_data.expected_behavioral_response, 'model_dump') else policy_data.expected_behavioral_response
-        
+            metadata['expected_behavioral_response'] = (
+                policy_data.expected_behavioral_response.model_dump(mode='json')
+                if hasattr(policy_data.expected_behavioral_response, 'model_dump')
+                else policy_data.expected_behavioral_response
+            )
+
         if policy_data.analytics_expectations is not None:
-            policy.policy_metadata_json['analytics_expectations'] = policy_data.analytics_expectations.model_dump(mode='json') if hasattr(policy_data.analytics_expectations, 'model_dump') else policy_data.analytics_expectations
-        
+            metadata['analytics_expectations'] = (
+                policy_data.analytics_expectations.model_dump(mode='json')
+                if hasattr(policy_data.analytics_expectations, 'model_dump')
+                else policy_data.analytics_expectations
+            )
+
         if policy_data.ui_hints is not None:
-            policy.policy_metadata_json['ui_hints'] = policy_data.ui_hints.model_dump(mode='json') if hasattr(policy_data.ui_hints, 'model_dump') else policy_data.ui_hints
-        
+            metadata['ui_hints'] = policy_data.ui_hints.model_dump(mode='json') if hasattr(policy_data.ui_hints, 'model_dump') else policy_data.ui_hints
+
+        policy.policy_metadata_json = metadata
+        try:
+            from sqlalchemy.orm.attributes import flag_modified
+            flag_modified(policy, "policy_metadata_json")
+        except Exception:
+            pass
+
         db.commit()
         db.refresh(policy)
         
@@ -1532,6 +1553,10 @@ async def complete_scope_and_regenerate(
 async def complete_policy_configurations(
     current_user: Annotated[CurrentUser, Depends(verify_token)],
     db: Session = Depends(get_db),
+    force_effective_start: Optional[str] = Query(
+        None,
+        description="If set (YYYY-MM-DD), overwrite effective_period.start_date for all tenant policies",
+    ),
 ):
     """Complete configurations for all policies - add missing levers, scope, conditions, exceptions"""
     try:
@@ -1543,6 +1568,7 @@ async def complete_policy_configurations(
         updated_count = 0
         skipped_count = 0
         errors_list = []
+        forced_effective = 0
         
         def get_default_scope():
             """Scope matching common claims data (LOB, markets used in claims_lines)."""
@@ -1693,14 +1719,26 @@ async def complete_policy_configurations(
         
         for policy in policies:
             try:
-                metadata = policy.policy_metadata_json if policy.policy_metadata_json else {}
+                # Copy so JSONB mutation is detected on reassignment
+                metadata = dict(policy.policy_metadata_json or {})
                 
                 # Check if policy already has complete configuration
                 has_levers = metadata.get("policy_levers") and len(metadata.get("policy_levers", [])) > 0
                 has_scope = metadata.get("scope")
                 has_effective_period = metadata.get("effective_period")
                 
-                if has_levers and has_scope and has_effective_period:
+                needs_update = False
+
+                # Optional: force demo timeline (baseline ≤ day-before; observe from this start)
+                if force_effective_start:
+                    metadata["effective_period"] = {
+                        "start_date": f"{force_effective_start}T00:00:00",
+                        "end_date": None,
+                    }
+                    needs_update = True
+                    forced_effective += 1
+
+                if has_levers and has_scope and has_effective_period and not force_effective_start:
                     skipped_count += 1
                     continue
                 
@@ -1717,12 +1755,9 @@ async def complete_policy_configurations(
                     ).all()
                     policy_codes = [cs.code for cs in code_sets]
                 
-                # Add missing configurations
-                needs_update = False
-                
                 # Add scope if missing, or complete incomplete scope
                 default_scope = get_default_scope()
-                scope = metadata.get("scope") or {}
+                scope = dict(metadata.get("scope") or {})
                 if not isinstance(scope, dict):
                     scope = {}
                 scope_updated = False
@@ -1735,7 +1770,7 @@ async def complete_policy_configurations(
                     needs_update = True
                 
                 # Add effective period if missing
-                if not has_effective_period:
+                if not metadata.get("effective_period"):
                     if version and version.effective_start_date:
                         metadata["effective_period"] = {
                             "start_date": version.effective_start_date.isoformat() if hasattr(version.effective_start_date, 'isoformat') else str(version.effective_start_date),
@@ -1763,6 +1798,11 @@ async def complete_policy_configurations(
                 # Update policy if changes were made
                 if needs_update:
                     policy.policy_metadata_json = metadata
+                    try:
+                        from sqlalchemy.orm.attributes import flag_modified
+                        flag_modified(policy, "policy_metadata_json")
+                    except Exception:
+                        pass
                     policy.updated_at = dt.utcnow()
                     db.commit()
                     updated_count += 1
@@ -1776,6 +1816,8 @@ async def complete_policy_configurations(
             "total_policies": len(policies),
             "updated": updated_count,
             "skipped": skipped_count,
+            "forced_effective": forced_effective,
+            "force_effective_start": force_effective_start,
             "errors": errors_list
         }
         

@@ -305,9 +305,9 @@ def refresh_baseline(
                 end_date = date.today()
                 start_date = end_date - timedelta(days=365)
 
-            # Clamp to actual demo data range so baselines find data (historical = 2022-01 to 2025-06)
+            # Clamp to demo data range: baseline era through 2025-12-31; 2026+ is observation era.
             DEMO_DATA_START = date(2022, 1, 1)
-            DEMO_DATA_END = date(2025, 6, 30)
+            DEMO_DATA_END = date(2025, 12, 31)
             start_date = max(start_date, DEMO_DATA_START)
             end_date = min(end_date, DEMO_DATA_END)
             if start_date >= end_date:
