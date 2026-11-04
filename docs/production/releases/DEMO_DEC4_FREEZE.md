@@ -68,3 +68,13 @@ ENABLE_DATABRICKS_ANALYTICS=false
 - Critical bugfixes with explicit approval
 - Documentation under `docs/production/` that does not alter runtime
 - Staging-only code paths behind flags defaulting to **false**
+
+## Git lock (post check-in)
+
+| Field | Value |
+|-------|-------|
+| Lock commit | `e323da9afb2759be45771a7bd2ceb8a18c1bdffe` |
+| Tag | `demo-dec4-freeze-2026-11-04` |
+| Pushed | `origin/main` |
+| Demo DB alembic | Remains **012** (do not auto-upgrade to 013/014) |
+
