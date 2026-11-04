@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_954f90811e004e6ae3a93428",
+  "policy_id": "1a1051af-9dcd-417e-a86d-129fce8db02c",
+  "name": "Speech Generating Device Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "270ccfac6d768e07",
+  "started_at": "2026-11-04T13:18:18.242524+00:00",
+  "finished_at": "2026-11-04T13:18:18.242526+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

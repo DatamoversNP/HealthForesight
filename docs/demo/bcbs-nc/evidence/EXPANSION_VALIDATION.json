@@ -1,0 +1,273 @@
+{
+  "generated_at": "2026-11-03T15:44:11.722059Z",
+  "expansion_known_answers": {
+    "ptp": {
+      "passed": true,
+      "checks": {
+        "baseline_paid": true,
+        "post_policy_paid": true,
+        "payment_impact": true,
+        "ptp_pairs_hit": true,
+        "modifier_bypass": true
+      },
+      "actual_totals": {
+        "baseline_paid": 4400.0,
+        "post_policy_paid": 3600.0,
+        "payment_impact": 800.0,
+        "payer_savings": 800.0,
+        "provider_payment_change": -800.0,
+        "ptp_pairs_hit": 3,
+        "ptp_pairs_bypassed_with_modifier": 1,
+        "volume_effect": 0.0,
+        "mix_effect": 0.0,
+        "price_effect": 800.0
+      },
+      "calculation_version": "reimbursement-ncci-ptp-v1"
+    },
+    "mue": {
+      "passed": true,
+      "checks": {
+        "baseline_paid": true,
+        "post_policy_paid": true,
+        "payment_impact": true,
+        "lines_capped": true
+      },
+      "actual_totals": {
+        "baseline_paid": 650.0,
+        "post_policy_paid": 550.0,
+        "payment_impact": 100.0,
+        "payer_savings": 100.0,
+        "provider_payment_change": -100.0,
+        "lines_capped": 1,
+        "mue_value": 4,
+        "volume_effect": 0.0,
+        "price_effect": 100.0
+      },
+      "calculation_version": "reimbursement-ncci-mue-v1"
+    },
+    "therapy": {
+      "passed": true,
+      "checks": {
+        "baseline_paid": true,
+        "post_policy_paid": true,
+        "payment_impact": true
+      },
+      "actual_totals": {
+        "baseline_paid": 420.0,
+        "post_policy_paid": 340.0,
+        "payment_impact": 80.0,
+        "payer_savings": 80.0,
+        "provider_payment_change": -80.0
+      }
+    },
+    "infusion": {
+      "passed": true,
+      "checks": {
+        "baseline_paid": true,
+        "post_policy_paid": true,
+        "payment_impact": true,
+        "episodes_steered": true
+      },
+      "actual_totals": {
+        "baseline_paid": 18200.0,
+        "post_policy_paid": 14600.0,
+        "payment_impact": 3600.0,
+        "payer_savings": 3600.0,
+        "provider_payment_change": -3600.0,
+        "episodes_steered": 2
+      }
+    }
+  },
+  "lifecycle": {
+    "ptp": {
+      "validation_class": "FULLY_VALIDATED_DEMO",
+      "whatif_status": "completed",
+      "analysis_id": "3c69c659-b741-426c-8bc9-732f6953a915"
+    },
+    "mue": {
+      "validation_class": "FULLY_VALIDATED_DEMO",
+      "whatif_status": "completed",
+      "analysis_id": "b09cfc91-b1bb-42a0-a9e4-f138d692bb28"
+    },
+    "therapy": {
+      "validation_class": "FULLY_VALIDATED_DEMO",
+      "whatif_status": null,
+      "analysis_id": null
+    },
+    "infusion": {
+      "validation_class": "FULLY_VALIDATED_DEMO",
+      "whatif_status": "completed",
+      "analysis_id": "49f2a086-6909-4d2b-951f-c79d81ae863d"
+    }
+  },
+  "scenarios": [
+    {
+      "policy_id": "58b839b5-b6e0-59e0-9406-d817877c3ce8",
+      "name": "NCCI Procedure-to-Procedure Bundling",
+      "policy_type": "CODING_AND_BILLING",
+      "mechanism": "CODING_EDIT_MODIFIER",
+      "medicare_links": [
+        [
+          "ncci_ptp",
+          "NCCI-PTP-PAIR-70553-70551",
+          "USES_CODING_EDIT"
+        ]
+      ],
+      "known_answer": {
+        "passed": true,
+        "checks": {
+          "baseline_paid": true,
+          "post_policy_paid": true,
+          "payment_impact": true,
+          "ptp_pairs_hit": true,
+          "modifier_bypass": true
+        },
+        "actual_totals": {
+          "baseline_paid": 4400.0,
+          "post_policy_paid": 3600.0,
+          "payment_impact": 800.0,
+          "payer_savings": 800.0,
+          "provider_payment_change": -800.0,
+          "ptp_pairs_hit": 3,
+          "ptp_pairs_bypassed_with_modifier": 1,
+          "volume_effect": 0.0,
+          "mix_effect": 0.0,
+          "price_effect": 800.0
+        },
+        "calculation_version": "reimbursement-ncci-ptp-v1"
+      },
+      "validation_target": "FULLY_VALIDATED_DEMO"
+    },
+    {
+      "policy_id": "e11b049d-fcce-55cc-bcd7-71329038383b",
+      "name": "NCCI Medically Unlikely Units",
+      "policy_type": "CODING_AND_BILLING",
+      "mechanism": "FEE_SCHEDULE_UNIT_PRICE",
+      "medicare_links": [
+        [
+          "ncci_mue",
+          "NCCI-MUE-97110-DEMO",
+          "USES_CODING_EDIT"
+        ]
+      ],
+      "known_answer": {
+        "passed": true,
+        "checks": {
+          "baseline_paid": true,
+          "post_policy_paid": true,
+          "payment_impact": true,
+          "lines_capped": true
+        },
+        "actual_totals": {
+          "baseline_paid": 650.0,
+          "post_policy_paid": 550.0,
+          "payment_impact": 100.0,
+          "payer_savings": 100.0,
+          "provider_payment_change": -100.0,
+          "lines_capped": 1,
+          "mue_value": 4,
+          "volume_effect": 0.0,
+          "price_effect": 100.0
+        },
+        "calculation_version": "reimbursement-ncci-mue-v1"
+      },
+      "validation_target": "FULLY_VALIDATED_DEMO"
+    },
+    {
+      "policy_id": "f2b8e7f3-1627-5dbe-8d7e-757ce21aa55b",
+      "name": "Outpatient Therapy Coverage and Payment",
+      "policy_type": "COVERAGE",
+      "mechanism": "COVERAGE_DETERMINATION",
+      "medicare_links": [
+        [
+          "mac_lcd_nc",
+          "L34428",
+          "REFERENCES_LCD"
+        ]
+      ],
+      "known_answer": {
+        "passed": true,
+        "checks": {
+          "baseline_paid": true,
+          "post_policy_paid": true,
+          "payment_impact": true
+        },
+        "actual_totals": {
+          "baseline_paid": 420.0,
+          "post_policy_paid": 340.0,
+          "payment_impact": 80.0,
+          "payer_savings": 80.0,
+          "provider_payment_change": -80.0
+        }
+      },
+      "validation_target": "FULLY_VALIDATED_DEMO",
+      "notes": "Linked to verified Palmetto JM LCD L34428 (Outpatient Physical Therapy) from Coverage API NC catalog. Mechanical known-answer is synthetic units rule."
+    },
+    {
+      "policy_id": "11218053-bdc0-569f-a415-fb61c5dcda37",
+      "name": "Infusion Site-of-Care Optimization",
+      "policy_type": "SITE_OF_CARE",
+      "mechanism": "SITE_OF_SERVICE_PAYMENT_DIFFERENTIAL",
+      "medicare_links": [],
+      "known_answer": {
+        "passed": true,
+        "checks": {
+          "baseline_paid": true,
+          "post_policy_paid": true,
+          "payment_impact": true,
+          "episodes_steered": true
+        },
+        "actual_totals": {
+          "baseline_paid": 18200.0,
+          "post_policy_paid": 14600.0,
+          "payment_impact": 3600.0,
+          "payer_savings": 3600.0,
+          "provider_payment_change": -3600.0,
+          "episodes_steered": 2
+        }
+      },
+      "validation_target": "FULLY_VALIDATED_DEMO"
+    },
+    {
+      "policy_id": "4f8c34e3-015b-509d-90ba-521261464258",
+      "name": "NCD 220.2 MRI Coverage Change Study",
+      "policy_type": "COVERAGE",
+      "mechanism": "COVERAGE_DETERMINATION",
+      "medicare_links": [
+        [
+          "cms_ncd",
+          "NCD220.2",
+          "REFERENCES_NCD"
+        ]
+      ],
+      "known_answer": {
+        "passed": true,
+        "note": "Applicability/provenance scenario; financial known-answer N/A"
+      },
+      "validation_target": "PROVENANCE_VALIDATED"
+    },
+    {
+      "policy_id": "649b4ac8-ca82-5b84-aa87-84834490731a",
+      "name": "LCD L34425 NC MRI Coverage Criteria",
+      "policy_type": "COVERAGE",
+      "mechanism": "COVERAGE_DETERMINATION",
+      "medicare_links": [
+        [
+          "mac_lcd_nc",
+          "L34425",
+          "REFERENCES_LCD"
+        ],
+        [
+          "lcd_billing_coding_articles",
+          "A56729",
+          "HAS_RELATED_ARTICLE"
+        ]
+      ],
+      "known_answer": {
+        "passed": true,
+        "note": "NC JM LCD provenance scenario"
+      },
+      "validation_target": "PROVENANCE_VALIDATED"
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "generated_at": "2026-11-03T16:16:21.204378+00:00",
+  "base": "http://127.0.0.1:7868",
+  "high_confidence_six": true,
+  "results": [
+    {
+      "key": "ptp",
+      "policy_id": "58b839b5-b6e0-59e0-9406-d817877c3ce8",
+      "ok": true,
+      "panel_kind": "mechanical",
+      "missing_first": [],
+      "forbidden_first": [],
+      "missing_after_refresh": [],
+      "forbidden_after_refresh": [],
+      "composition_tab_ok": true,
+      "causal_tab_ok": true,
+      "persistence_ok": true
+    },
+    {
+      "key": "mue",
+      "policy_id": "e11b049d-fcce-55cc-bcd7-71329038383b",
+      "ok": true,
+      "panel_kind": "mechanical",
+      "missing_first": [],
+      "forbidden_first": [],
+      "missing_after_refresh": [],
+      "forbidden_after_refresh": [],
+      "composition_tab_ok": true,
+      "causal_tab_ok": true,
+      "persistence_ok": true
+    },
+    {
+      "key": "therapy",
+      "policy_id": "f2b8e7f3-1627-5dbe-8d7e-757ce21aa55b",
+      "ok": true,
+      "panel_kind": "mechanical",
+      "missing_first": [],
+      "forbidden_first": [],
+      "missing_after_refresh": [],
+      "forbidden_after_refresh": [],
+      "composition_tab_ok": true,
+      "causal_tab_ok": true,
+      "persistence_ok": true
+    },
+    {
+      "key": "infusion",
+      "policy_id": "11218053-bdc0-569f-a415-fb61c5dcda37",
+      "ok": true,
+      "panel_kind": "mechanical",
+      "missing_first": [],
+      "forbidden_first": [],
+      "missing_after_refresh": [],
+      "forbidden_after_refresh": [],
+      "composition_tab_ok": true,
+      "causal_tab_ok": true,
+      "persistence_ok": true
+    },
+    {
+      "key": "ncd",
+      "policy_id": "4f8c34e3-015b-509d-90ba-521261464258",
+      "ok": true,
+      "panel_kind": "provenance",
+      "missing_first": [],
+      "forbidden_first": [],
+      "missing_after_refresh": [],
+      "forbidden_after_refresh": [],
+      "composition_tab_ok": true,
+      "causal_tab_ok": true,
+      "persistence_ok": true
+    },
+    {
+      "key": "lcd",
+      "policy_id": "649b4ac8-ca82-5b84-aa87-84834490731a",
+      "ok": true,
+      "panel_kind": "provenance",
+      "missing_first": [],
+      "forbidden_first": [],
+      "missing_after_refresh": [],
+      "forbidden_after_refresh": [],
+      "composition_tab_ok": true,
+      "causal_tab_ok": true,
+      "persistence_ok": true
+    },
+    {
+      "key": "ptp:whatif_page",
+      "ok": true,
+      "err": null
+    },
+    {
+      "key": "mue:whatif_page",
+      "ok": true,
+      "err": null
+    },
+    {
+      "key": "therapy:whatif_page",
+      "ok": true,
+      "err": null
+    },
+    {
+      "key": "infusion:whatif_page",
+      "ok": true,
+      "err": null
+    }
+  ],
+  "screenshots_dir": "/Users/nileshl/Private/HealthForesight/docs/demo/bcbs-nc/evidence/dec4_six_optional"
+}

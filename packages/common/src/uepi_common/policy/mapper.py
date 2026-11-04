@@ -43,6 +43,23 @@ class PolicyMapper:
         "clinical_criteria": PolicyType.CLINICAL_CRITERIA,
         "composite": PolicyType.COMPOSITE,
         "bundle": PolicyType.COMPOSITE,
+        "medical_necessity": PolicyType.MEDICAL_NECESSITY,
+        "utilization_management": PolicyType.UTILIZATION_MANAGEMENT,
+        "drug_formulary": PolicyType.DRUG_FORMULARY,
+        "formulary_management": PolicyType.DRUG_FORMULARY,
+        "specialty_pharmacy": PolicyType.SPECIALTY_PHARMACY,
+        "specialty_drug_management": PolicyType.SPECIALTY_PHARMACY,
+        "experimental_investigational": PolicyType.EXPERIMENTAL_INVESTIGATIONAL,
+        "out_of_network_coverage": PolicyType.OUT_OF_NETWORK_COVERAGE,
+        "reimbursement_methodology": PolicyType.REIMBURSEMENT_METHODOLOGY,
+        "coding_and_billing": PolicyType.CODING_AND_BILLING,
+        "clinical_pathway": PolicyType.CLINICAL_PATHWAY,
+        "continuity_of_care": PolicyType.CONTINUITY_OF_CARE,
+        "episode_bundled_payment": PolicyType.EPISODE_BUNDLED_PAYMENT,
+        "value_based_payment": PolicyType.VALUE_BASED_PAYMENT,
+        "preventive_services": PolicyType.PREVENTIVE_SERVICES,
+        "telehealth_virtual_care": PolicyType.TELEHEALTH_VIRTUAL_CARE,
+        "post_acute_care": PolicyType.POST_ACUTE_CARE,
     }
     
     def map_policy_type(self, external_type: str) -> PolicyType:

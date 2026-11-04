@@ -1,0 +1,60 @@
+{
+  "document_id": "DRUG_TESTING_FREQUENCY_LIMITS_FOR_CHRONIC_PAIN_CODESET",
+  "policy_id": "51a72ae3-e33e-46cd-8884-8363028203c9",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abDrug Testing Frequency Limits for Chronic Pain\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT/HCPCS",
+      "code": "80305",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT/HCPCS",
+      "code": "80306",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT/HCPCS",
+      "code": "80307",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT/HCPCS",
+      "code": "G0480",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT/HCPCS",
+      "code": "G0481",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT/HCPCS",
+      "code": "G0482",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT/HCPCS",
+      "code": "G0483",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Presumptive/definitive drug testing",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

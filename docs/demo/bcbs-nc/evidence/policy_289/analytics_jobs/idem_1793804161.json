@@ -1,0 +1,26 @@
+{
+  "job_id": "idem_1793804161",
+  "celery_task_id": "3cc4d2c1-5a23-42f5-b810-27277d9fae4f",
+  "policy_id": "00000000-0000-0000-0000-000000000099",
+  "configuration_digest": "idemtest",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "cohort_count": 0,
+  "started_at": "2026-11-04T14:56:01.954391+00:00",
+  "retries": 0,
+  "status": "PROVENANCE_COMPLETED",
+  "result": {
+    "actions": [
+      "source_resolution",
+      "jurisdiction_applicability",
+      "no_financial_outcomes"
+    ]
+  },
+  "error": null,
+  "reproducibility": {
+    "adapter_version": "policy_analytics_lifecycle_job.v1",
+    "snapshot_identity": "00000000-0000-0000-0000-000000000099:idemtest:PROVENANCE_ONLY"
+  },
+  "evidence_type": "PROVENANCE_RESULT",
+  "mechanism_execution": false,
+  "finished_at": "2026-11-04T14:56:01.954544+00:00"
+}

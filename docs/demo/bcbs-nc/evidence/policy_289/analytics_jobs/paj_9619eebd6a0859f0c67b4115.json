@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_9619eebd6a0859f0c67b4115",
+  "policy_id": "4133e1bc-eee9-43d6-83fb-5cd98547620a",
+  "name": "Split-Fill Specialty Program",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "316075b47e9fb5f0",
+  "started_at": "2026-11-04T13:18:18.242917+00:00",
+  "finished_at": "2026-11-04T13:18:18.242919+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

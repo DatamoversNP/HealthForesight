@@ -1,0 +1,32 @@
+{
+  "document_id": "NONINVASIVE_VENTILATION_PRIOR_AUTHORIZATION_CODESET",
+  "policy_id": "270e4ea5-5a00-4d08-8f85-e50bf412edd0",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abNoninvasive Ventilation Prior Authorization\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "HCPCS",
+      "code": "E0470",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "E0471",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "E0466",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Respiratory assist / NIV devices",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

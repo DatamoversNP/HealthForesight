@@ -1,0 +1,46 @@
+{
+  "document_id": "MEDICAL_EYE_DISEASE_VS_ROUTINE_VISION_SEPARATION_CODESET",
+  "policy_id": "5b54aa48-c951-424f-a468-3b7a2affc21c",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abMedical Eye Disease vs Routine Vision Separation\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "92002",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "92004",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "92012",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "92014",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "92250",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Ophthalmology medical eye exam anchors vs routine vision",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

@@ -1,0 +1,29 @@
+{
+  "state": "NC",
+  "generated_at": "2026-11-03T13:02:07.849788Z",
+  "source": "https://api.coverage.cms.gov/v1",
+  "catalog_class": "AUTHORITATIVE_PUBLIC",
+  "creates_payer_catalog_rows": false,
+  "ncd_count": 345,
+  "lcd_count": 939,
+  "lcd_palmetto_count": 195,
+  "article_count": 2117,
+  "code_enrichment": {
+    "A56729": {
+      "status": "ok",
+      "code_count": 3,
+      "sample_hcpc": [
+        "70540",
+        "70542",
+        "70543"
+      ]
+    }
+  },
+  "notes": [
+    "Full catalogs from Coverage API report endpoints (no permanent API key).",
+    "HCPCS code lists require short-lived license-agreement token; fetched selectively.",
+    "Does not create Representative Payer policy catalog rows.",
+    "cms.gov bulk ZIP downloads remain 403 on this host; Coverage API is the acquisition path.",
+    "NCCI PTP/MUE quarterly files are separate (cms.gov) \u2014 not in Coverage API."
+  ]
+}

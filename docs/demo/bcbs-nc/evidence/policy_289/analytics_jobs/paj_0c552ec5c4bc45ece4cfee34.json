@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_0c552ec5c4bc45ece4cfee34",
+  "policy_id": "e0ac744f-34bf-42f1-ac44-5cbaf5beb823",
+  "name": "Behavioral Health Appointment Access Standards",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "808c2281212db2a6",
+  "started_at": "2026-11-04T13:18:18.226557+00:00",
+  "finished_at": "2026-11-04T13:18:18.226559+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

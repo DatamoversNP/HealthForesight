@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_5299ce1c9b4ba4fa49e41144",
+  "policy_id": "3137bb4b-516d-44eb-b023-d5b891de1bd4",
+  "name": "Pharmacy Prior Authorization Program",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "11d4655915af07a7",
+  "started_at": "2026-11-04T13:18:18.240104+00:00",
+  "finished_at": "2026-11-04T13:18:18.240106+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_516edb8e9c3026f1810c62cf",
+  "policy_id": "f3bd54e4-caff-4aca-bc11-3551d07a9285",
+  "name": "Emergency Department Frequent Utilizer Program",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "d226207ad527c3fd",
+  "started_at": "2026-11-04T13:18:18.231373+00:00",
+  "finished_at": "2026-11-04T13:18:18.231375+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

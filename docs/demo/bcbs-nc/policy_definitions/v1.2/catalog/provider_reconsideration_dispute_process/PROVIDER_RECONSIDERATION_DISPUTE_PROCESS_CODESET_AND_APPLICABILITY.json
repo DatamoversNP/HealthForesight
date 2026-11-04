@@ -1,0 +1,10 @@
+{
+  "document_id": "PROVIDER_RECONSIDERATION_DISPUTE_PROCESS_CODESET",
+  "policy_id": "aa9f976a-cceb-49ed-8034-da80d3a3b5ef",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abProvider Reconsideration / Dispute Process\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Administrative / regulatory process policy \u2014 not a procedure code schedule",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

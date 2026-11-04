@@ -1,0 +1,32 @@
+{
+  "document_id": "ONCOLOGY_INFUSION_SITE_STEERAGE_CODESET",
+  "policy_id": "ebb00492-841d-40f5-9d40-dbcfc50f47f1",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abOncology Infusion Site Steerage\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "96413",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "96415",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "96417",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Chemo IV infusion admin",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

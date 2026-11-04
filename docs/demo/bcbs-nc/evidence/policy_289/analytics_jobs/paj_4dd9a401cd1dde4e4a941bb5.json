@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_4dd9a401cd1dde4e4a941bb5",
+  "policy_id": "ad984c52-59a0-4d39-8895-7c6ceee4cc72",
+  "name": "SUD Detoxification Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "73eb9ddbcaaa1f46",
+  "started_at": "2026-11-04T13:18:18.243118+00:00",
+  "finished_at": "2026-11-04T13:18:18.243119+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

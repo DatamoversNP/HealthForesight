@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_95194b578ab985113b5cf483",
+  "policy_id": "b889bcf0-0c68-4950-bd24-4ac656ebe0ae",
+  "name": "Assistant Surgeon Payment Rules",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "1a2fb9fa0c3c5e04",
+  "started_at": "2026-11-04T13:18:18.226164+00:00",
+  "finished_at": "2026-11-04T13:18:18.226165+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

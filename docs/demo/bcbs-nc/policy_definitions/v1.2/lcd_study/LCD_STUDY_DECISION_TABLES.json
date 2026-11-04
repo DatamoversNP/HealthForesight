@@ -1,0 +1,165 @@
+{
+  "document_id": "HF-RP-COV-L34425-001-DECISION-TABLES",
+  "version": "v1.2.1-structural-controls",
+  "policy_id": "649b4ac8-ca82-5b84-aa87-84834490731a",
+  "mechanism": "LCD_L34425_ORBIT_FACE_NECK_STUDY",
+  "status": "DEFINITION_REVIEW_REQUIRED",
+  "operational_activation": "PROHIBITED",
+  "controls_ref": "../_controls/POLICY_ENGINEERING_CONTROLS_v1.md",
+  "mri_clinical_logic_copied": false,
+  "execution_modes": {
+    "OPERATIVE": {
+      "allowed": false,
+      "reason": "Rules/schedules unsigned; RELEASE_BLOCKERS open"
+    },
+    "SYNTHETIC_SIMULATION": {
+      "allowed": true,
+      "may_emit_operative_terminals": false
+    }
+  },
+  "outcomes": [
+    "NOT_APPLICABLE",
+    "MANUAL_SCOPE_REVIEW",
+    "PENDING_INFORMATION",
+    "CLINICAL_REVIEW_REQUIRED",
+    "ADVERSE_REVIEW_REQUIRED",
+    "APPROVED",
+    "ADVERSE_DETERMINATION_ISSUED",
+    "STUDY_FINDING_ONLY"
+  ],
+  "outcome_semantics": {
+    "ADVERSE_REVIEW_REQUIRED": "Referral into adverse process \u2014 not a final denial",
+    "ADVERSE_DETERMINATION_ISSUED": "Completed adverse determination with reviewer, notice, appeal, timestamps, audit",
+    "APPLY_EDIT": "Payment/coding/site edit application \u2014 operative only when signed",
+    "STUDY_FINDING_ONLY": "Analytical/coverage study output \u2014 not enforcement"
+  },
+  "evaluation_order": [
+    "DT-ELIGIBILITY",
+    "DT-APPLICABILITY",
+    "DT-URGENCY",
+    "DT-EVIDENCE",
+    "DT-MECHANISM"
+  ],
+  "urgency_applicable": true,
+  "urgency_na_reason": null,
+  "invariants": [
+    "First match wins within ordered tables",
+    "Proposed/unsigned rules cannot emit operative terminals",
+    "ADVERSE_DETERMINATION_ISSUED requires full audit packet",
+    "Synthetic simulation must not persist as live determination",
+    "Do not copy MRI lumbar clinical criteria",
+    "DT-URGENCY before DT-EVIDENCE/DT-MECHANISM"
+  ],
+  "tables": [
+    {
+      "table_id": "DT-ELIGIBILITY",
+      "ordered": true,
+      "branches": [
+        {
+          "id": "EL-01",
+          "when": "product_not_on_approved_schedule",
+          "outcome": "NOT_APPLICABLE"
+        },
+        {
+          "id": "EL-02",
+          "when": "eligibility_unresolved",
+          "outcome": "PENDING_INFORMATION"
+        },
+        {
+          "id": "EL-03",
+          "when": "eligibility_ok",
+          "next": "DT-APPLICABILITY"
+        }
+      ]
+    },
+    {
+      "table_id": "DT-APPLICABILITY",
+      "ordered": true,
+      "branches": [
+        {
+          "id": "AP-01",
+          "when": "code_or_site_out_of_band",
+          "outcome": "NOT_APPLICABLE"
+        },
+        {
+          "id": "AP-02",
+          "when": "mapping_ambiguous",
+          "outcome": "MANUAL_SCOPE_REVIEW",
+          "auto_deny": false,
+          "auto_impose": false
+        },
+        {
+          "id": "AP-03",
+          "when": "in_scope",
+          "next": "DT-URGENCY"
+        }
+      ]
+    },
+    {
+      "table_id": "DT-URGENCY",
+      "ordered": true,
+      "priority": "BEFORE_ROUTINE_EVIDENCE_AND_MECHANISM",
+      "branches": [
+        {
+          "id": "UR-01",
+          "when": "emergency_indicators",
+          "outcome": "CLINICAL_REVIEW_REQUIRED",
+          "pathway": "EMERGENCY",
+          "bypass": [
+            "DT-EVIDENCE.routine_incomplete"
+          ]
+        },
+        {
+          "id": "UR-02",
+          "when": "urgent_indicators",
+          "outcome": "CLINICAL_REVIEW_REQUIRED",
+          "pathway": "URGENT_EXPEDITED"
+        },
+        {
+          "id": "UR-03",
+          "when": "standard",
+          "next": "DT-EVIDENCE"
+        }
+      ]
+    },
+    {
+      "table_id": "DT-EVIDENCE",
+      "ordered": true,
+      "branches": [
+        {
+          "id": "EV-01",
+          "when": "required_docs_missing",
+          "outcome": "PENDING_INFORMATION",
+          "tag": "routine_incomplete"
+        },
+        {
+          "id": "EV-02",
+          "when": "docs_complete",
+          "next": "DT-MECHANISM"
+        }
+      ]
+    },
+    {
+      "table_id": "DT-MECHANISM",
+      "ordered": true,
+      "branches": [
+        {
+          "id": "ME-01",
+          "when": "always",
+          "outcome": "STUDY_FINDING_ONLY",
+          "forbids": [
+            "APPROVED",
+            "ADVERSE_DETERMINATION_ISSUED",
+            "APPLY_EDIT"
+          ],
+          "notes": "Coverage study is non-enforcing by default"
+        },
+        {
+          "id": "ME-02",
+          "when": "commercial_adoption_requested_but_unsigned",
+          "outcome": "MANUAL_SCOPE_REVIEW"
+        }
+      ]
+    }
+  ]
+}

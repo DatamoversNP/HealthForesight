@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_824d5697c5da83e3bbbdd1c5",
+  "policy_id": "0f531198-6be7-4acf-b8fe-cd1f260772fb",
+  "name": "Audio-Only Telehealth Coverage Rules",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "762b2732ba7ef73e",
+  "started_at": "2026-11-04T13:18:18.226312+00:00",
+  "finished_at": "2026-11-04T13:18:18.226313+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

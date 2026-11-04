@@ -1,0 +1,18 @@
+{
+  "document_id": "BREAST_REDUCTION_MEDICAL_NECESSITY_CODESET",
+  "policy_id": "cadc0e95-bcd7-43c7-ab5c-7524343b07d0",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abBreast Reduction Medical Necessity\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "19318",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Reduction mammaplasty",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

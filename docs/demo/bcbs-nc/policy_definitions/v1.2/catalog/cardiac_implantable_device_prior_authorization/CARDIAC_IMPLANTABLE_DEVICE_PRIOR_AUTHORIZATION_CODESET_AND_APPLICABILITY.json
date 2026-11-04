@@ -1,0 +1,46 @@
+{
+  "document_id": "CARDIAC_IMPLANTABLE_DEVICE_PRIOR_AUTHORIZATION_CODESET",
+  "policy_id": "c6c042ae-22ef-409c-bc4b-3b4e31ea5073",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abCardiac Implantable Device Prior Authorization\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "33206",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "33207",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "33208",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "33249",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "33270",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Pacemaker / ICD insert family (representative)",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

@@ -1,0 +1,10 @@
+{
+  "document_id": "SPECIALTY_PHARMACY_EXCLUSIVE_NETWORK_CODESET",
+  "policy_id": "b3c3e480-68ea-4028-87d6-d1e40fa09068",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abSpecialty Pharmacy Exclusive Network\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Specialty pharmacy network rule",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_4a1e4e96273a18da656ccce5",
+  "policy_id": "54557fec-f2ee-431e-8deb-59215fee527b",
+  "name": "Colonoscopy Screening and Surveillance Intervals",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "9dfeb003171d3d97",
+  "started_at": "2026-11-04T13:18:18.228748+00:00",
+  "finished_at": "2026-11-04T13:18:18.228750+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

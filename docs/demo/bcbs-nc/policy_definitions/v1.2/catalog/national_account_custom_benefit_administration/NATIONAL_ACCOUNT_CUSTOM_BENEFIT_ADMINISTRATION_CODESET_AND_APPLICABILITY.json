@@ -1,0 +1,10 @@
+{
+  "document_id": "NATIONAL_ACCOUNT_CUSTOM_BENEFIT_ADMINISTRATION_CODESET",
+  "policy_id": "6e6a71ff-e0a3-4fe0-b4d7-32a82ed95f8c",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abNational Account Custom Benefit Administration\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Administrative / regulatory process policy \u2014 not a procedure code schedule",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

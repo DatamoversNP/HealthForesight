@@ -1,0 +1,18 @@
+{
+  "job_id": "paj_970e6495f782ab86e830733f",
+  "policy_id": "fc8541ac-c246-40f2-afdc-9e1d8b50180c",
+  "name": "Oncology Immunotherapy Step Therapy",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "db44dff22f352842",
+  "started_at": "2026-11-04T13:18:18.238424+00:00",
+  "finished_at": "2026-11-04T13:18:18.238426+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "scope.states"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

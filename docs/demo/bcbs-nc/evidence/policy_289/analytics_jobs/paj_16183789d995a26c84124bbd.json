@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_16183789d995a26c84124bbd",
+  "policy_id": "4f8c34e3-015b-509d-90ba-521261464258",
+  "name": "NCD 220.2 MRI Coverage Change Study",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "52e4540b67161ea7",
+  "started_at": "2026-11-04T13:18:18.237064+00:00",
+  "finished_at": "2026-11-04T13:18:18.237066+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

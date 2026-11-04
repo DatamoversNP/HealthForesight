@@ -1,0 +1,2525 @@
+[
+  {
+    "policy_id": "d403f101-08dd-45c9-ab83-d42e37c62018",
+    "name": "Outpatient MRI Prior Authorization",
+    "policy_type": "PRIOR_AUTH",
+    "status": "ACTIVE",
+    "description": "Require prior authorization for outpatient MRI to reduce inappropriate imaging.",
+    "owner_role": null,
+    "metadata": {
+      "scope": {
+        "lob": [
+          "COMMERCIAL"
+        ],
+        "markets": [
+          "NYC",
+          "DFW"
+        ],
+        "network": [
+          "IN"
+        ],
+        "procedure_codes": [
+          "99213",
+          "99214",
+          "72148",
+          "72149"
+        ],
+        "service_categories": [
+          "PRIMARY_CARE",
+          "ADVANCED_IMAGING"
+        ]
+      },
+      "domain": "Medical PA",
+      "inputs": {
+        "data_sources": [
+          "claims"
+        ],
+        "required_fields": [
+          "member_id",
+          "service_date"
+        ]
+      },
+      "outputs": {
+        "metrics": [
+          "utilization_rate",
+          "cost_pmpm"
+        ],
+        "reports": [
+          "monthly_utilization_report"
+        ]
+      },
+      "version": 1,
+      "metadata": {
+        "inputs": {
+          "data_sources": [
+            "claims"
+          ],
+          "required_fields": [
+            "member_id",
+            "service_date"
+          ]
+        },
+        "outputs": {
+          "metrics": [
+            "utilization_rate",
+            "cost_pmpm"
+          ],
+          "reports": [
+            "monthly_utilization_report"
+          ]
+        },
+        "version": 1,
+        "policy_id": "PA_MRI_OP_001",
+        "guardrails": [
+          {
+            "action": "alert",
+            "description": "Monitor utilization changes for Outpatient MRI Prior Authorization",
+            "metric_name": "utilization_rate",
+            "threshold_type": "change_pct",
+            "threshold_value": 20.0
+          }
+        ],
+        "assumptions": [
+          {
+            "value": "TBD",
+            "source": "Initial estimate",
+            "confidence": 0.5,
+            "description": "Expected impact for Outpatient MRI Prior Authorization",
+            "assumption_type": "ELASTICITY"
+          }
+        ]
+      },
+      "policy_id": "PA_MRI_OP_001",
+      "subdomain": "Imaging & radiology",
+      "apply_when": [],
+      "guardrails": [
+        {
+          "action": "alert",
+          "description": "Monitor utilization changes for Outpatient MRI Prior Authorization",
+          "metric_name": "utilization_rate",
+          "threshold_type": "change_pct",
+          "threshold_value": 20.0
+        }
+      ],
+      "assumptions": [
+        {
+          "value": "TBD",
+          "source": "Initial estimate",
+          "confidence": 0.5,
+          "description": "Expected impact for Outpatient MRI Prior Authorization",
+          "assumption_type": "ELASTICITY"
+        }
+      ],
+      "enforcement": {
+        "mechanism": "HARD",
+        "touchpoint": [
+          "PA_WORKFLOW"
+        ],
+        "override_allowed": false
+      },
+      "jurisdiction": "NC",
+      "policy_levers": [
+        {
+          "lever_type": "PRIOR_AUTH",
+          "parameters": {
+            "codes": [
+              "72148",
+              "72149",
+              "72158"
+            ],
+            "site_of_care": "OUTPATIENT"
+          }
+        }
+      ],
+      "standards_basis": [
+        "U.S. payer UM common practice",
+        "Blues-style medical/pharmacy program structure",
+        "CMS/ACA/MHPAEA concepts where noted by LOB"
+      ],
+      "effective_period": {
+        "end_date": null,
+        "start_date": "2026-01-01T00:00:00"
+      },
+      "global_exceptions": [],
+      "enterprise_classification": {
+        "stamped_at": "2026-11-03T09:07:04.414978Z",
+        "stamped_by": "stamp_catalog_classification.py",
+        "code_sets_status": "MISSING",
+        "provenance_status": "MISSING_AUTHORITATIVE_SOURCE",
+        "data_classification": "illustrative_catalog",
+        "catalog_accuracy_contract": {
+          "why": "Proprietary BCBS NC policy text is not publicly reproducible at 100% fidelity; mislabeling would reduce credibility",
+          "claim": "Industry-standard / Blues-aligned illustrative program catalog for NC-oriented demos",
+          "not_claiming": "Verbatim Blue Cross NC medical policies, CUMG text, or formulary NDC lists"
+        },
+        "not_verbatim_bcbsnc_policy": true,
+        "illustrative_standards_aligned": true,
+        "authoritative_source_reconciled": false
+      }
+    },
+    "assumptions_db": [
+      {
+        "assumption_type": "ELASTICITY",
+        "description": "Expected impact for Outpatient MRI Prior Authorization",
+        "value": "TBD",
+        "source": "Initial estimate",
+        "confidence": 0.5
+      },
+      {
+        "assumption_type": "ELASTICITY",
+        "description": "Price elasticity of demand for Outpatient MRI Prior Authorization",
+        "value": "-0.3",
+        "source": "Historical claims analysis",
+        "confidence": 0.75
+      },
+      {
+        "assumption_type": "SUBSTITUTION_RATE",
+        "description": "Expected substitution to alternative services",
+        "value": "0.15",
+        "source": "Provider behavior modeling",
+        "confidence": 0.7
+      },
+      {
+        "assumption_type": "LAG_DAYS",
+        "description": "Expected lag before policy impact is observed",
+        "value": "60",
+        "source": "Policy implementation timeline",
+        "confidence": 0.8
+      }
+    ],
+    "guardrails_db": [
+      {
+        "metric_name": "utilization_rate",
+        "threshold_type": "change_pct",
+        "threshold_value": 20.0,
+        "action": "alert",
+        "description": "Monitor utilization changes for Outpatient MRI Prior Authorization"
+      },
+      {
+        "metric_name": "UTILIZATION_INCREASE",
+        "threshold_type": "max",
+        "threshold_value": 0.2,
+        "action": "alert",
+        "description": "Alert if utilization increases more than 20% above baseline"
+      },
+      {
+        "metric_name": "COST_INCREASE",
+        "threshold_type": "max",
+        "threshold_value": 0.15,
+        "action": "alert",
+        "description": "Alert if cost per member per month increases more than 15%"
+      },
+      {
+        "metric_name": "ER_UTILIZATION",
+        "threshold_type": "max",
+        "threshold_value": 0.1,
+        "action": "alert",
+        "description": "Alert if ER utilization increases more than 10% (potential substitution effect)"
+      }
+    ],
+    "versions": [
+      {
+        "version_number": 1,
+        "effective_start_date": "2024-01-01T00:00:00",
+        "effective_end_date": null,
+        "change_type": "MINOR",
+        "enforcement_strength": "STANDARD",
+        "justification": "Initial policy version",
+        "version_metadata": {
+          "state": "ACTIVE",
+          "created_by": "00000000-0000-0000-0000-000000000001",
+          "approved_at": null,
+          "approved_by": null,
+          "change_details": {
+            "policy_snapshot": {
+              "id": "d403f101-08dd-45c9-ab83-d42e37c62018",
+              "name": "Outpatient MRI Prior Authorization",
+              "scope": {
+                "lob": [
+                  "COMMERCIAL"
+                ],
+                "markets": [
+                  "NYC",
+                  "DFW"
+                ],
+                "network": [
+                  "IN"
+                ]
+              },
+              "status": "ACTIVE",
+              "metadata": {
+                "scope": {
+                  "lob": [
+                    "COMMERCIAL"
+                  ],
+                  "markets": [
+                    "NYC",
+                    "DFW"
+                  ],
+                  "network": [
+                    "IN"
+                  ]
+                },
+                "inputs": {
+                  "data_sources": [
+                    "claims"
+                  ],
+                  "required_fields": [
+                    "member_id",
+                    "service_date"
+                  ]
+                },
+                "outputs": {
+                  "metrics": [
+                    "utilization_rate",
+                    "cost_pmpm"
+                  ],
+                  "reports": [
+                    "monthly_utilization_report"
+                  ]
+                },
+                "version": 1,
+                "metadata": {
+                  "inputs": {
+                    "data_sources": [
+                      "claims"
+                    ],
+                    "required_fields": [
+                      "member_id",
+                      "service_date"
+                    ]
+                  },
+                  "outputs": {
+                    "metrics": [
+                      "utilization_rate",
+                      "cost_pmpm"
+                    ],
+                    "reports": [
+                      "monthly_utilization_report"
+                    ]
+                  },
+                  "version": 1,
+                  "policy_id": "PA_MRI_OP_001",
+                  "guardrails": [
+                    {
+                      "action": "alert",
+                      "description": "Monitor utilization changes for Outpatient MRI Prior Authorization",
+                      "metric_name": "utilization_rate",
+                      "threshold_type": "change_pct",
+                      "threshold_value": 20.0
+                    }
+                  ],
+                  "assumptions": [
+                    {
+                      "value": "TBD",
+                      "source": "Initial estimate",
+                      "confidence": 0.5,
+                      "description": "Expected impact for Outpatient MRI Prior Authorization",
+                      "assumption_type": "ELASTICITY"
+                    }
+                  ]
+                },
+                "policy_id": "PA_MRI_OP_001",
+                "guardrails": [
+                  {
+                    "action": "alert",
+                    "description": "Monitor utilization changes for Outpatient MRI Prior Authorization",
+                    "metric_name": "utilization_rate",
+                    "threshold_type": "change_pct",
+                    "threshold_value": 20.0
+                  }
+                ],
+                "assumptions": [
+                  {
+                    "value": "TBD",
+                    "source": "Initial estimate",
+                    "confidence": 0.5,
+                    "description": "Expected impact for Outpatient MRI Prior Authorization",
+                    "assumption_type": "ELASTICITY"
+                  }
+                ],
+                "enforcement": {
+                  "mechanism": "HARD",
+                  "touchpoint": [
+                    "PA_WORKFLOW"
+                  ],
+                  "override_allowed": false
+                },
+                "policy_levers": [
+                  {
+                    "lever_type": "PRIOR_AUTH",
+                    "parameters": {
+                      "codes": [
+                        "72148",
+                        "72149",
+                        "72158"
+                      ],
+                      "site_of_care": "OUTPATIENT"
+                    }
+                  }
+                ],
+                "effective_period": {
+                  "end_date": null,
+                  "start_date": "2024-01-01"
+                }
+              },
+              "versions": [],
+              "changelog": [],
+              "policy_id": "d403f101-08dd-45c9-ab83-d42e37c62018",
+              "tenant_id": "00000000-0000-0000-0000-000000000001",
+              "created_at": "2026-04-03T14:00:03.686112",
+              "guardrails": [],
+              "owner_role": null,
+              "updated_at": "2026-04-03T14:00:03.686121",
+              "assumptions": [],
+              "description": "Require prior authorization for outpatient MRI to reduce inappropriate imaging.",
+              "enforcement": {
+                "mechanism": "HARD",
+                "touchpoint": [
+                  "PA_WORKFLOW"
+                ],
+                "override_allowed": false
+              },
+              "policy_name": "Outpatient MRI Prior Authorization",
+              "policy_type": "PRIOR AUTH",
+              "policy_levers": [
+                {
+                  "lever_type": "PRIOR_AUTH",
+                  "parameters": {
+                    "codes": [
+                      "72148",
+                      "72149",
+                      "72158"
+                    ],
+                    "site_of_care": "OUTPATIENT"
+                  }
+                }
+              ],
+              "effective_period": {
+                "end_date": null,
+                "start_date": "2024-01-01"
+              }
+            },
+            "changes_from_previous": {}
+          },
+          "change_summary": "Initial policy version"
+        },
+        "codes": []
+      },
+      {
+        "version_number": 2,
+        "effective_start_date": "2024-01-01T00:00:00",
+        "effective_end_date": null,
+        "change_type": "MINOR",
+        "enforcement_strength": "STANDARD",
+        "justification": "Initial policy version",
+        "version_metadata": {
+          "state": "ACTIVE",
+          "created_by": "00000000-0000-0000-0000-000000000001",
+          "approved_at": null,
+          "approved_by": null,
+          "change_details": {
+            "scope": {
+              "lob": [
+                "COMMERCIAL"
+              ],
+              "markets": [
+                "NYC",
+                "DFW"
+              ],
+              "network": [
+                "IN"
+              ]
+            },
+            "enforcement": {
+              "mechanism": "HARD",
+              "touchpoint": [
+                "PA_WORKFLOW"
+              ],
+              "override_allowed": false
+            },
+            "policy_type": "PRIOR AUTH"
+          },
+          "change_summary": "Initial policy version"
+        },
+        "codes": []
+      }
+    ],
+    "medicare_source_links": [
+      {
+        "link_role": "REFERENCES_NCD",
+        "family_id": "cms_ncd",
+        "source_document_id": "NCD220.2",
+        "title": "Magnetic Resonance Imaging",
+        "authority": "CMS",
+        "source_url": "https://www.cms.gov/medicare-coverage-database/view/ncd.aspx?NCDId=252"
+      },
+      {
+        "link_role": "REFERENCES_NCD",
+        "family_id": "cms_ncd",
+        "source_document_id": "NCD220.2",
+        "title": "Magnetic Resonance Imaging",
+        "authority": "CMS",
+        "source_url": "https://www.cms.gov/medicare-coverage-database/view/ncd.aspx?NCDId=177"
+      },
+      {
+        "link_role": "REFERENCES_LCD",
+        "family_id": "mac_lcd_nc",
+        "source_document_id": "L34425",
+        "title": "Magnetic Resonance Imaging of the Orbit, Face, and/or Neck",
+        "authority": "Palmetto GBA",
+        "source_url": "https://www.cms.gov/medicare-coverage-database/view/lcd.aspx?lcdId=34425"
+      },
+      {
+        "link_role": "HAS_RELATED_ARTICLE",
+        "family_id": "lcd_billing_coding_articles",
+        "source_document_id": "A56729",
+        "title": "Billing and Coding: Magnetic Resonance Imaging of the Orbit, Face, and/or Neck",
+        "authority": "Palmetto GBA",
+        "source_url": "https://www.cms.gov/medicare-coverage-database/view/article.aspx?articleId=56729"
+      },
+      {
+        "link_role": "USES_CODING_EDIT",
+        "family_id": "ncci_ptp",
+        "source_document_id": "NCCI-PTP-PAIR-70553-70551",
+        "title": "Demo PTP pair 70553/70551 (synthetic edit illustration)",
+        "authority": "CMS NCCI",
+        "source_url": "https://www.cms.gov/medicare/coding-billing/national-correct-coding-initiative-ncci-edits"
+      }
+    ],
+    "generated_at": "2026-11-03T14:38:38.859711+00:00"
+  },
+  {
+    "policy_id": "d0eeb370-df14-4478-8755-dad6c3a35a47",
+    "name": "Multiple Procedure Payment Reduction",
+    "policy_type": "PAYMENT_POLICY",
+    "status": "ACTIVE",
+    "description": "Applies MPPR to secondary procedures in same session. Illustrative industry-standard program definition aligned with typical Blues / North Carolina payer UM structures. Not a verbatim Blue Cross NC medical policy, clinical guideline, or formulary row.",
+    "owner_role": "PAYMENT_INTEGRITY",
+    "metadata": {
+      "scope": {
+        "lob": [
+          "COMMERCIAL",
+          "MA",
+          "MEDICAID"
+        ],
+        "plans": null,
+        "states": [
+          "NC"
+        ],
+        "markets": [
+          "NC"
+        ],
+        "network": [
+          "IN"
+        ],
+        "regions": null,
+        "exclude_er": null,
+        "allowed_sites": null,
+        "network_tiers": null,
+        "product_types": null,
+        "applies_to_all": false,
+        "gender_filters": null,
+        "member_age_max": null,
+        "member_age_min": null,
+        "procedure_codes": [
+          "99213",
+          "99214",
+          "72148",
+          "72149"
+        ],
+        "exclude_pregnant": null,
+        "service_categories": [
+          "PRIMARY_CARE",
+          "ADVANCED_IMAGING"
+        ],
+        "exclude_hospital_op": null,
+        "provider_specialties": null,
+        "exclude_provider_types": null,
+        "include_provider_types": null,
+        "exclude_centers_of_excellence": null
+      },
+      "domain": "Payment",
+      "ui_hints": {
+        "elasticity_model": false,
+        "show_accumulator": false,
+        "require_warning_ack": false,
+        "show_compound_policy": false,
+        "show_site_comparison": false,
+        "show_financial_impact": false,
+        "show_substitution_warning": false
+      },
+      "mppr_demo": {
+        "known_answer": {
+          "checks": {
+            "baseline_paid": true,
+            "payment_impact": true,
+            "post_policy_paid": true,
+            "volume_effect_zero": true,
+            "price_equals_impact": true,
+            "multi_procedure_claims": true,
+            "secondary_lines_reduced": true
+          },
+          "passed": true,
+          "expected": {
+            "baseline_paid": 3150.0,
+            "payment_impact": 600.0,
+            "post_policy_paid": 2550.0,
+            "multi_procedure_claims": 2,
+            "secondary_lines_reduced": 3
+          },
+          "actual_totals": {
+            "line_count": 6,
+            "claim_count": 3,
+            "volume_units": 6.0,
+            "baseline_paid": 3150.0,
+            "payment_impact": 600.0,
+            "reconciliation": {
+              "identity": "payment_impact = price_effect (volume & mix held at 0)",
+              "residual": 0.0,
+              "mix_effect": 0.0,
+              "price_effect": 600.0,
+              "volume_effect": 0.0
+            },
+            "baseline_allowed": 3150.0,
+            "post_policy_paid": 2550.0,
+            "payment_impact_pct": 19.0476,
+            "multi_procedure_claims": 2,
+            "secondary_lines_reduced": 3
+          },
+          "calculation_version": "reimbursement-mppr-v1"
+        },
+        "fixture_line_count": 6,
+        "calculation_version": "reimbursement-mppr-v1"
+      },
+      "subdomain": "Payment & integrity",
+      "apply_when": [],
+      "guardrails": [
+        {
+          "action": "alert",
+          "description": "Alert if MPPR payer savings exceed 30% of baseline paid on multi-procedure claims",
+          "metric_name": "mppr_payment_impact_pct",
+          "threshold_type": "max",
+          "threshold_value": 30.0
+        },
+        {
+          "action": "alert",
+          "description": "Alert if share of secondary lines reduced falls below 40% of multi-proc claims",
+          "metric_name": "secondary_lines_reduced_share",
+          "threshold_type": "min",
+          "threshold_value": 0.4
+        }
+      ],
+      "assumptions": [
+        {
+          "value": "secondary_pct_0.50_base",
+          "source": "reimbursement-mppr-v1 known-answer",
+          "confidence": 0.9,
+          "description": "Secondary procedure lines paid at reduced % of allowed under MPPR",
+          "assumption_type": "COST"
+        },
+        {
+          "value": "0",
+          "source": "Analytical strategy registry",
+          "confidence": 0.95,
+          "description": "Volume held constant \u2014 MPPR is a payment-rule effect, not utilization elasticity",
+          "assumption_type": "UTILIZATION"
+        },
+        {
+          "value": "not_modeled",
+          "source": "Disclosed limitation",
+          "confidence": 0.7,
+          "description": "Providers may resequence / unbundle claims; fixture does not model behavioral gaming",
+          "assumption_type": "BEHAVIOR"
+        }
+      ],
+      "enforcement": {
+        "mechanism": "HARD",
+        "touchpoint": [
+          "CLAIMS_EDIT"
+        ],
+        "override_allowed": false
+      },
+      "jurisdiction": "NC",
+      "policy_levers": [
+        {
+          "targets": {
+            "codes": [
+              "72148",
+              "72149"
+            ],
+            "code_type": "CPT",
+            "code_groups": []
+          },
+          "lever_type": "PRIOR_AUTH",
+          "parameters": {
+            "requires_pa": true
+          }
+        }
+      ],
+      "standards_basis": [
+        "U.S. payer UM common practice",
+        "Blues-style medical/pharmacy program structure",
+        "CMS/ACA/MHPAEA concepts where noted by LOB"
+      ],
+      "effective_period": {
+        "end_date": null,
+        "start_date": "2026-01-01T00:00:00"
+      },
+      "global_exceptions": [],
+      "analytical_strategy": {
+        "engine_id": "reimbursement_mppr_v1",
+        "mechanism": "MULTIPLE_PROCEDURE_PAYMENT_REDUCTION",
+        "registry_version": "analytical-strategy-registry-v1",
+        "calculation_version": "reimbursement-mppr-v1"
+      },
+      "analytics_expectations": null,
+      "enterprise_classification": {
+        "mechanism": "MULTIPLE_PROCEDURE_PAYMENT_REDUCTION",
+        "stamped_at": "2026-11-03T09:07:04.414582Z",
+        "stamped_by": "stamp_catalog_classification.py",
+        "catalog_class": "DEMO_SYNTHETIC",
+        "display_label": "Representative Payer Policies",
+        "code_sets_status": "MISSING",
+        "provenance_status": "MISSING_AUTHORITATIVE_SOURCE",
+        "calculation_version": "reimbursement-mppr-v1",
+        "data_classification": "illustrative_catalog",
+        "lifecycle_validation": "FULLY_VALIDATED_DEMO",
+        "display_label_contextual": "Representative Payer Policies (Blue Cross NC-like)",
+        "catalog_accuracy_contract": {
+          "why": "Proprietary BCBS NC policy text is not publicly reproducible at 100% fidelity; mislabeling would reduce credibility",
+          "claim": "Industry-standard / Blues-aligned illustrative program catalog for NC-oriented demos",
+          "not_claiming": "Verbatim Blue Cross NC medical policies, CUMG text, or formulary NDC lists"
+        },
+        "not_verbatim_bcbsnc_policy": true,
+        "illustrative_standards_aligned": true,
+        "authoritative_source_reconciled": false
+      },
+      "expected_behavioral_response": null
+    },
+    "assumptions_db": [
+      {
+        "assumption_type": "COST",
+        "description": "Secondary procedure lines paid at reduced % of allowed under MPPR",
+        "value": "secondary_pct_0.50_base",
+        "source": "reimbursement-mppr-v1 known-answer",
+        "confidence": 0.9
+      },
+      {
+        "assumption_type": "UTILIZATION",
+        "description": "Volume held constant \u2014 MPPR is a payment-rule effect, not utilization elasticity",
+        "value": "0",
+        "source": "Analytical strategy registry",
+        "confidence": 0.95
+      },
+      {
+        "assumption_type": "BEHAVIOR",
+        "description": "Providers may resequence / unbundle claims; fixture does not model behavioral gaming",
+        "value": "not_modeled",
+        "source": "Disclosed limitation",
+        "confidence": 0.7
+      }
+    ],
+    "guardrails_db": [
+      {
+        "metric_name": "mppr_payment_impact_pct",
+        "threshold_type": "max",
+        "threshold_value": 30.0,
+        "action": "alert",
+        "description": "Alert if MPPR payer savings exceed 30% of baseline paid on multi-procedure claims"
+      },
+      {
+        "metric_name": "secondary_lines_reduced_share",
+        "threshold_type": "min",
+        "threshold_value": 0.4,
+        "action": "alert",
+        "description": "Alert if share of secondary lines reduced falls below 40% of multi-proc claims"
+      }
+    ],
+    "versions": [
+      {
+        "version_number": 1,
+        "effective_start_date": "2024-01-01T00:00:00",
+        "effective_end_date": null,
+        "change_type": "INITIAL",
+        "enforcement_strength": "STRONG",
+        "justification": "Completed assumptions/guardrails/codes for Dec 4 reimbursement policy",
+        "version_metadata": {
+          "state": "ACTIVE"
+        },
+        "codes": [
+          {
+            "code_type": "CPT",
+            "code": "72148",
+            "code_group": "MRI"
+          },
+          {
+            "code_type": "CPT",
+            "code": "72149",
+            "code_group": "MRI"
+          },
+          {
+            "code_type": "CPT",
+            "code": "70553",
+            "code_group": "MRI"
+          }
+        ]
+      }
+    ],
+    "medicare_source_links": [],
+    "generated_at": "2026-11-03T14:38:40.719545+00:00"
+  },
+  {
+    "policy_id": "d7441dd9-3bfe-405e-ae6c-0377204bbb7e",
+    "name": "Freestanding Imaging Steerage",
+    "policy_type": "SITE_OF_CARE",
+    "status": "ACTIVE",
+    "description": "Steers advanced imaging to freestanding centers vs hospital outpatient when equivalent. Illustrative industry-standard program definition aligned with typical Blues / North Carolina payer UM structures. Not a verbatim Blue Cross NC medical policy, clinical guideline, or formulary row.",
+    "owner_role": "UM_LEADER",
+    "metadata": {
+      "scope": {
+        "lob": [
+          "COMMERCIAL",
+          "MA"
+        ],
+        "plans": null,
+        "states": [
+          "NC"
+        ],
+        "markets": [
+          "NC"
+        ],
+        "network": [
+          "IN"
+        ],
+        "regions": null,
+        "exclude_er": null,
+        "allowed_sites": null,
+        "network_tiers": null,
+        "product_types": null,
+        "applies_to_all": false,
+        "gender_filters": null,
+        "member_age_max": null,
+        "member_age_min": null,
+        "procedure_codes": [
+          "99213",
+          "99214",
+          "72148",
+          "72149"
+        ],
+        "exclude_pregnant": null,
+        "service_categories": [
+          "PRIMARY_CARE",
+          "ADVANCED_IMAGING"
+        ],
+        "exclude_hospital_op": null,
+        "provider_specialties": null,
+        "exclude_provider_types": null,
+        "include_provider_types": null,
+        "exclude_centers_of_excellence": null
+      },
+      "domain": "Site of care",
+      "ui_hints": {
+        "elasticity_model": false,
+        "show_accumulator": false,
+        "require_warning_ack": false,
+        "show_compound_policy": false,
+        "show_site_comparison": false,
+        "show_financial_impact": false,
+        "show_substitution_warning": false
+      },
+      "subdomain": "Channel management",
+      "apply_when": [],
+      "guardrails": [
+        {
+          "action": "alert",
+          "description": "Alert if hospital outpatient share of eligible imaging remains above 50%",
+          "metric_name": "hospital_imaging_share",
+          "threshold_type": "max",
+          "threshold_value": 0.5
+        },
+        {
+          "action": "alert",
+          "description": "Alert if SOS payer savings fall below 5% of baseline paid",
+          "metric_name": "sos_payment_impact_pct",
+          "threshold_type": "min",
+          "threshold_value": 5.0
+        }
+      ],
+      "assumptions": [
+        {
+          "value": "hospital_pct_0.80_base",
+          "source": "reimbursement-sos-v1 known-answer",
+          "confidence": 0.85,
+          "description": "Hospital outpatient imaging paid at reduced % of allowed vs freestanding",
+          "assumption_type": "COST"
+        },
+        {
+          "value": "0",
+          "source": "Analytical strategy registry",
+          "confidence": 0.95,
+          "description": "Volume held constant \u2014 site differential is price/mix, not UM elasticity",
+          "assumption_type": "UTILIZATION"
+        },
+        {
+          "value": null,
+          "source": "Site-of-care quality assumption",
+          "confidence": 0.7,
+          "description": "Quality outcomes maintained at freestanding sites for eligible imaging",
+          "assumption_type": "QUALITY"
+        }
+      ],
+      "enforcement": {
+        "mechanism": "SOFT",
+        "touchpoint": [
+          "PRIOR_AUTH",
+          "SITE_OF_CARE_REVIEW"
+        ],
+        "override_allowed": true
+      },
+      "jurisdiction": "NC",
+      "policy_levers": [
+        {
+          "targets": {
+            "codes": [
+              "72148",
+              "72149"
+            ],
+            "code_type": "CPT",
+            "code_groups": []
+          },
+          "lever_type": "SITE_OF_CARE",
+          "parameters": {
+            "redirect_to": "FREESTANDING",
+            "allowed_sites": [
+              "FREESTANDING",
+              "OFFICE"
+            ],
+            "disallowed_sites": [
+              "HOSPITAL_OP"
+            ],
+            "deny_if_disallowed": false
+          }
+        }
+      ],
+      "standards_basis": [
+        "U.S. payer UM common practice",
+        "Blues-style medical/pharmacy program structure",
+        "CMS/ACA/MHPAEA concepts where noted by LOB"
+      ],
+      "effective_period": {
+        "end_date": null,
+        "start_date": "2026-01-01T00:00:00"
+      },
+      "global_exceptions": [],
+      "analytical_strategy": {
+        "engine_id": "reimbursement_sos_v1",
+        "mechanism": "SITE_OF_SERVICE_PAYMENT_DIFFERENTIAL",
+        "registry_version": "analytical-strategy-registry-v1",
+        "calculation_version": "reimbursement-sos-v1"
+      },
+      "analytics_expectations": null,
+      "enterprise_classification": {
+        "mechanism": "SITE_OF_SERVICE_PAYMENT_DIFFERENTIAL",
+        "stamped_at": "2026-11-03T09:07:04.414608Z",
+        "stamped_by": "stamp_catalog_classification.py",
+        "catalog_class": "DEMO_SYNTHETIC",
+        "display_label": "Representative Payer Policies",
+        "code_sets_status": "MISSING",
+        "provenance_status": "MISSING_AUTHORITATIVE_SOURCE",
+        "calculation_version": "reimbursement-sos-v1",
+        "data_classification": "illustrative_catalog",
+        "lifecycle_validation": "FULLY_VALIDATED_DEMO",
+        "catalog_accuracy_contract": {
+          "why": "Proprietary BCBS NC policy text is not publicly reproducible at 100% fidelity; mislabeling would reduce credibility",
+          "claim": "Industry-standard / Blues-aligned illustrative program catalog for NC-oriented demos",
+          "not_claiming": "Verbatim Blue Cross NC medical policies, CUMG text, or formulary NDC lists"
+        },
+        "not_verbatim_bcbsnc_policy": true,
+        "illustrative_standards_aligned": true,
+        "authoritative_source_reconciled": false
+      },
+      "expected_behavioral_response": null
+    },
+    "assumptions_db": [
+      {
+        "assumption_type": "COST",
+        "description": "Hospital outpatient imaging paid at reduced % of allowed vs freestanding",
+        "value": "hospital_pct_0.80_base",
+        "source": "reimbursement-sos-v1 known-answer",
+        "confidence": 0.85
+      },
+      {
+        "assumption_type": "UTILIZATION",
+        "description": "Volume held constant \u2014 site differential is price/mix, not UM elasticity",
+        "value": "0",
+        "source": "Analytical strategy registry",
+        "confidence": 0.95
+      },
+      {
+        "assumption_type": "QUALITY",
+        "description": "Quality outcomes maintained at freestanding sites for eligible imaging",
+        "value": null,
+        "source": "Site-of-care quality assumption",
+        "confidence": 0.7
+      }
+    ],
+    "guardrails_db": [
+      {
+        "metric_name": "hospital_imaging_share",
+        "threshold_type": "max",
+        "threshold_value": 0.5,
+        "action": "alert",
+        "description": "Alert if hospital outpatient share of eligible imaging remains above 50%"
+      },
+      {
+        "metric_name": "sos_payment_impact_pct",
+        "threshold_type": "min",
+        "threshold_value": 5.0,
+        "action": "alert",
+        "description": "Alert if SOS payer savings fall below 5% of baseline paid"
+      }
+    ],
+    "versions": [
+      {
+        "version_number": 1,
+        "effective_start_date": "2024-01-01T00:00:00",
+        "effective_end_date": null,
+        "change_type": "INITIAL",
+        "enforcement_strength": "MODERATE",
+        "justification": "Completed assumptions/guardrails/codes for Dec 4 reimbursement policy",
+        "version_metadata": {
+          "state": "ACTIVE"
+        },
+        "codes": [
+          {
+            "code_type": "CPT",
+            "code": "72148",
+            "code_group": "MRI"
+          },
+          {
+            "code_type": "CPT",
+            "code": "72149",
+            "code_group": "MRI"
+          },
+          {
+            "code_type": "CPT",
+            "code": "70553",
+            "code_group": "MRI"
+          }
+        ]
+      }
+    ],
+    "medicare_source_links": [],
+    "generated_at": "2026-11-03T14:38:42.802569+00:00"
+  },
+  {
+    "policy_id": "58b839b5-b6e0-59e0-9406-d817877c3ce8",
+    "name": "NCCI Procedure-to-Procedure Bundling",
+    "policy_type": "CODING_AND_BILLING",
+    "status": "ACTIVE",
+    "description": "Applies NCCI procedure-to-procedure bundling edits with modifier-indicator semantics (indicator 1 allows clinically appropriate modifiers such as 59/X{E,P,S,U}). Representative Payer coding-integrity policy for NC markets.",
+    "owner_role": null,
+    "metadata": {
+      "scope": {
+        "lob": [
+          "COMMERCIAL",
+          "MA",
+          "MEDICAID"
+        ],
+        "plans": null,
+        "states": [
+          "NC"
+        ],
+        "markets": [
+          "NC"
+        ],
+        "network": [
+          "IN"
+        ],
+        "regions": null,
+        "applies_to_all": false,
+        "procedure_codes": [
+          "70553",
+          "70551"
+        ],
+        "service_categories": [
+          "ADVANCED_IMAGING"
+        ]
+      },
+      "domain": "Payment",
+      "policy_id": "58b839b5-b6e0-59e0-9406-d817877c3ce8",
+      "subdomain": "Coding integrity",
+      "apply_when": [],
+      "guardrails": [
+        {
+          "action": "alert",
+          "description": "Alert if PTP pair hit rate exceeds 35% of eligible imaging claims",
+          "metric_name": "ptp_pair_hit_rate",
+          "threshold_type": "max",
+          "threshold_value": 0.35
+        },
+        {
+          "action": "alert",
+          "description": "Alert if modifier-59/X{E,P,S,U} bypass exceeds 50% of PTP hits",
+          "metric_name": "modifier_bypass_rate",
+          "threshold_type": "max",
+          "threshold_value": 0.5
+        },
+        {
+          "action": "alert",
+          "description": "Alert if payer savings exceed 25% of baseline paid on PTP-eligible claims",
+          "metric_name": "payment_impact_pct",
+          "threshold_type": "max",
+          "threshold_value": 25.0
+        }
+      ],
+      "assumptions": [
+        {
+          "value": "price_effect_only",
+          "source": "NCCI PTP mechanical known-answer fixture",
+          "confidence": 0.9,
+          "description": "Column-two denial under PTP reduces paid amount when no appropriate modifier is present",
+          "assumption_type": "COST"
+        },
+        {
+          "value": "0",
+          "source": "Analytical strategy registry",
+          "confidence": 0.95,
+          "description": "Volume held constant \u2014 PTP is a payment edit, not utilization management",
+          "assumption_type": "UTILIZATION"
+        },
+        {
+          "value": "modifier_bypass_eligible",
+          "source": "NCCI modifier-indicator guidance",
+          "confidence": 0.7,
+          "description": "Some claims will bypass via clinically appropriate modifiers under indicator 1",
+          "assumption_type": "BEHAVIOR"
+        }
+      ],
+      "enforcement": {
+        "mechanism": "HARD",
+        "touchpoint": [
+          "CLAIMS_EDIT"
+        ],
+        "override_allowed": true,
+        "override_requires": "clinically_appropriate_modifier"
+      },
+      "jurisdiction": "NC",
+      "display_label": "Representative Payer Policies",
+      "policy_levers": [
+        {
+          "targets": {
+            "codes": [
+              "70553",
+              "70551"
+            ],
+            "code_type": "CPT"
+          },
+          "lever_type": "CODING_EDIT",
+          "parameters": {
+            "edit_type": "NCCI_PTP",
+            "column_one": "70553",
+            "column_two": "70551",
+            "modifier_indicator": "1",
+            "appropriate_modifiers": [
+              "59",
+              "XE",
+              "XP",
+              "XS",
+              "XU"
+            ]
+          }
+        }
+      ],
+      "standards_basis": [
+        "CMS National Correct Coding Initiative (NCCI) PTP edit framework",
+        "Modifier indicator 0/1/9 semantics"
+      ],
+      "effective_period": {
+        "end_date": null,
+        "start_date": "2024-01-01T00:00:00"
+      },
+      "global_exceptions": [],
+      "analytical_strategy": {
+        "engine_id": "reimbursement_ncci_ptp_v1",
+        "mechanism": "NCCI_PTP_FIXTURE"
+      },
+      "enterprise_classification": {
+        "mechanism": "CODING_EDIT_MODIFIER",
+        "catalog_class": "DEMO_SYNTHETIC",
+        "sub_mechanism": "NCCI_PTP",
+        "dec4_expansion": true,
+        "validation_target": "FULLY_VALIDATED_DEMO",
+        "representative_payer": true,
+        "not_blue_cross_nc_proprietary": true
+      }
+    },
+    "assumptions_db": [
+      {
+        "assumption_type": "COST",
+        "description": "Column-two denial under PTP reduces paid amount when no appropriate modifier is present",
+        "value": "price_effect_only",
+        "source": "NCCI PTP mechanical known-answer fixture",
+        "confidence": 0.9
+      },
+      {
+        "assumption_type": "UTILIZATION",
+        "description": "Volume held constant \u2014 PTP is a payment edit, not utilization management",
+        "value": "0",
+        "source": "Analytical strategy registry",
+        "confidence": 0.95
+      },
+      {
+        "assumption_type": "BEHAVIOR",
+        "description": "Some claims will bypass via clinically appropriate modifiers under indicator 1",
+        "value": "modifier_bypass_eligible",
+        "source": "NCCI modifier-indicator guidance",
+        "confidence": 0.7
+      }
+    ],
+    "guardrails_db": [
+      {
+        "metric_name": "ptp_pair_hit_rate",
+        "threshold_type": "max",
+        "threshold_value": 0.35,
+        "action": "alert",
+        "description": "Alert if PTP pair hit rate exceeds 35% of eligible imaging claims"
+      },
+      {
+        "metric_name": "modifier_bypass_rate",
+        "threshold_type": "max",
+        "threshold_value": 0.5,
+        "action": "alert",
+        "description": "Alert if modifier-59/X{E,P,S,U} bypass exceeds 50% of PTP hits"
+      },
+      {
+        "metric_name": "payment_impact_pct",
+        "threshold_type": "max",
+        "threshold_value": 25.0,
+        "action": "alert",
+        "description": "Alert if payer savings exceed 25% of baseline paid on PTP-eligible claims"
+      }
+    ],
+    "versions": [
+      {
+        "version_number": 1,
+        "effective_start_date": "2024-01-01T00:00:00",
+        "effective_end_date": null,
+        "change_type": "INITIAL",
+        "enforcement_strength": "STRONG",
+        "justification": "Dec 4 expansion synthetic demo version",
+        "version_metadata": {
+          "scope": {
+            "lob": [
+              "COMMERCIAL",
+              "MA",
+              "MEDICAID"
+            ],
+            "plans": null,
+            "states": [
+              "NC"
+            ],
+            "markets": [
+              "NC"
+            ],
+            "network": [
+              "IN"
+            ],
+            "regions": null,
+            "applies_to_all": false,
+            "procedure_codes": [
+              "70553",
+              "70551"
+            ],
+            "service_categories": [
+              "ADVANCED_IMAGING"
+            ]
+          },
+          "state": "ACTIVE",
+          "mechanism": "CODING_EDIT_MODIFIER",
+          "enforcement": {
+            "mechanism": "HARD",
+            "touchpoint": [
+              "CLAIMS_EDIT"
+            ],
+            "override_allowed": true,
+            "override_requires": "clinically_appropriate_modifier"
+          },
+          "catalog_class": "DEMO_SYNTHETIC",
+          "policy_levers": [
+            {
+              "targets": {
+                "codes": [
+                  "70553",
+                  "70551"
+                ],
+                "code_type": "CPT"
+              },
+              "lever_type": "CODING_EDIT",
+              "parameters": {
+                "edit_type": "NCCI_PTP",
+                "column_one": "70553",
+                "column_two": "70551",
+                "modifier_indicator": "1",
+                "appropriate_modifiers": [
+                  "59",
+                  "XE",
+                  "XP",
+                  "XS",
+                  "XU"
+                ]
+              }
+            }
+          ]
+        },
+        "codes": [
+          {
+            "code_type": "CPT",
+            "code": "70553",
+            "code_group": "MRI_BRAIN"
+          },
+          {
+            "code_type": "CPT",
+            "code": "70551",
+            "code_group": "MRI_BRAIN"
+          }
+        ]
+      }
+    ],
+    "medicare_source_links": [
+      {
+        "link_role": "USES_CODING_EDIT",
+        "family_id": "ncci_ptp",
+        "source_document_id": "NCCI-PTP-PAIR-70553-70551",
+        "title": "Demo PTP pair 70553/70551 (synthetic edit illustration)",
+        "authority": "CMS NCCI",
+        "source_url": "https://www.cms.gov/medicare/coding-billing/national-correct-coding-initiative-ncci-edits"
+      }
+    ],
+    "generated_at": "2026-11-03T14:38:44.489996+00:00"
+  },
+  {
+    "policy_id": "e11b049d-fcce-55cc-bcd7-71329038383b",
+    "name": "NCCI Medically Unlikely Units",
+    "policy_type": "CODING_AND_BILLING",
+    "status": "ACTIVE",
+    "description": "Applies NCCI Medically Unlikely Edits (MUE) unit caps at the claim-line level. Synthetic published-style MUE value used for known-answer validation until authorized quarterly MUE files are reconciled.",
+    "owner_role": null,
+    "metadata": {
+      "scope": {
+        "lob": [
+          "COMMERCIAL",
+          "MA",
+          "MEDICAID"
+        ],
+        "plans": null,
+        "states": [
+          "NC"
+        ],
+        "markets": [
+          "NC"
+        ],
+        "network": [
+          "IN"
+        ],
+        "regions": null,
+        "applies_to_all": false,
+        "procedure_codes": [
+          "97110"
+        ],
+        "service_categories": [
+          "THERAPY",
+          "OUTPATIENT"
+        ]
+      },
+      "domain": "Payment",
+      "policy_id": "e11b049d-fcce-55cc-bcd7-71329038383b",
+      "subdomain": "Coding integrity",
+      "apply_when": [],
+      "guardrails": [
+        {
+          "action": "alert",
+          "description": "Alert if more than 20% of 97110 lines are MUE-capped",
+          "metric_name": "mue_cap_rate",
+          "threshold_type": "max",
+          "threshold_value": 0.2
+        },
+        {
+          "action": "alert",
+          "description": "Alert if average billed units per 97110 line exceed 8",
+          "metric_name": "avg_units_per_line",
+          "threshold_type": "max",
+          "threshold_value": 8.0
+        }
+      ],
+      "assumptions": [
+        {
+          "value": "unpaid_excess_units",
+          "source": "NCCI MUE mechanical known-answer fixture",
+          "confidence": 0.85,
+          "description": "Units above MUE are unpaid (hard MAI-style limit in fixture)",
+          "assumption_type": "COST"
+        },
+        {
+          "value": "4",
+          "source": "Disclosed synthetic fixture",
+          "confidence": 1.0,
+          "description": "MUE value 4 for 97110 is SYNTHETIC \u2014 not asserted as live CMS confidential value",
+          "assumption_type": "DATA"
+        }
+      ],
+      "enforcement": {
+        "mechanism": "HARD",
+        "touchpoint": [
+          "CLAIMS_EDIT"
+        ],
+        "override_allowed": false
+      },
+      "jurisdiction": "NC",
+      "display_label": "Representative Payer Policies",
+      "policy_levers": [
+        {
+          "targets": {
+            "codes": [
+              "97110"
+            ],
+            "code_type": "CPT"
+          },
+          "lever_type": "UNIT_LIMIT",
+          "parameters": {
+            "edit_type": "NCCI_MUE",
+            "mue_value": 4,
+            "synthetic_mue": true,
+            "mue_adjudication_indicator": "2"
+          }
+        }
+      ],
+      "standards_basis": [
+        "CMS NCCI Medically Unlikely Edits framework",
+        "MUE adjudication indicator semantics"
+      ],
+      "effective_period": {
+        "end_date": null,
+        "start_date": "2024-01-01T00:00:00"
+      },
+      "global_exceptions": [],
+      "analytical_strategy": {
+        "engine_id": null,
+        "mechanism": "FEE_SCHEDULE_UNIT_PRICE"
+      },
+      "enterprise_classification": {
+        "mechanism": "FEE_SCHEDULE_UNIT_PRICE",
+        "catalog_class": "DEMO_SYNTHETIC",
+        "sub_mechanism": null,
+        "dec4_expansion": true,
+        "validation_target": "FULLY_VALIDATED_DEMO",
+        "representative_payer": true,
+        "not_blue_cross_nc_proprietary": true
+      }
+    },
+    "assumptions_db": [
+      {
+        "assumption_type": "COST",
+        "description": "Units above MUE are unpaid (hard MAI-style limit in fixture)",
+        "value": "unpaid_excess_units",
+        "source": "NCCI MUE mechanical known-answer fixture",
+        "confidence": 0.85
+      },
+      {
+        "assumption_type": "DATA",
+        "description": "MUE value 4 for 97110 is SYNTHETIC \u2014 not asserted as live CMS confidential value",
+        "value": "4",
+        "source": "Disclosed synthetic fixture",
+        "confidence": 1.0
+      }
+    ],
+    "guardrails_db": [
+      {
+        "metric_name": "mue_cap_rate",
+        "threshold_type": "max",
+        "threshold_value": 0.2,
+        "action": "alert",
+        "description": "Alert if more than 20% of 97110 lines are MUE-capped"
+      },
+      {
+        "metric_name": "avg_units_per_line",
+        "threshold_type": "max",
+        "threshold_value": 8.0,
+        "action": "alert",
+        "description": "Alert if average billed units per 97110 line exceed 8"
+      }
+    ],
+    "versions": [
+      {
+        "version_number": 1,
+        "effective_start_date": "2024-01-01T00:00:00",
+        "effective_end_date": null,
+        "change_type": "INITIAL",
+        "enforcement_strength": "STRONG",
+        "justification": "Dec 4 expansion synthetic demo version",
+        "version_metadata": {
+          "scope": {
+            "lob": [
+              "COMMERCIAL",
+              "MA",
+              "MEDICAID"
+            ],
+            "plans": null,
+            "states": [
+              "NC"
+            ],
+            "markets": [
+              "NC"
+            ],
+            "network": [
+              "IN"
+            ],
+            "regions": null,
+            "applies_to_all": false,
+            "procedure_codes": [
+              "97110"
+            ],
+            "service_categories": [
+              "THERAPY",
+              "OUTPATIENT"
+            ]
+          },
+          "state": "ACTIVE",
+          "mechanism": "FEE_SCHEDULE_UNIT_PRICE",
+          "enforcement": {
+            "mechanism": "HARD",
+            "touchpoint": [
+              "CLAIMS_EDIT"
+            ],
+            "override_allowed": false
+          },
+          "catalog_class": "DEMO_SYNTHETIC",
+          "policy_levers": [
+            {
+              "targets": {
+                "codes": [
+                  "97110"
+                ],
+                "code_type": "CPT"
+              },
+              "lever_type": "UNIT_LIMIT",
+              "parameters": {
+                "edit_type": "NCCI_MUE",
+                "mue_value": 4,
+                "synthetic_mue": true,
+                "mue_adjudication_indicator": "2"
+              }
+            }
+          ]
+        },
+        "codes": [
+          {
+            "code_type": "CPT",
+            "code": "97110",
+            "code_group": "THERAPY"
+          }
+        ]
+      }
+    ],
+    "medicare_source_links": [
+      {
+        "link_role": "USES_CODING_EDIT",
+        "family_id": "ncci_mue",
+        "source_document_id": "NCCI-MUE-97110-DEMO",
+        "title": "Demo MUE for 97110 (synthetic published-style value)",
+        "authority": "CMS NCCI",
+        "source_url": "https://www.cms.gov/medicare/coding-billing/national-correct-coding-initiative-ncci-edits"
+      }
+    ],
+    "generated_at": "2026-11-03T14:38:46.175817+00:00"
+  },
+  {
+    "policy_id": "f2b8e7f3-1627-5dbe-8d7e-757ce21aa55b",
+    "name": "Outpatient Therapy Coverage and Payment",
+    "policy_type": "COVERAGE",
+    "status": "ACTIVE",
+    "description": "Outpatient physical therapy coverage and payment rules aligned to Palmetto JM LCD L34428 (Outpatient Physical Therapy). Pays only medically necessary units under the configured coverage frequency rule.",
+    "owner_role": null,
+    "metadata": {
+      "scope": {
+        "lob": [
+          "COMMERCIAL",
+          "MA",
+          "MEDICAID"
+        ],
+        "plans": null,
+        "states": [
+          "NC"
+        ],
+        "markets": [
+          "NC"
+        ],
+        "network": [
+          "IN"
+        ],
+        "regions": null,
+        "applies_to_all": false,
+        "procedure_codes": [
+          "97110",
+          "97140"
+        ],
+        "service_categories": [
+          "THERAPY",
+          "OUTPATIENT"
+        ]
+      },
+      "domain": "Coverage",
+      "policy_id": "f2b8e7f3-1627-5dbe-8d7e-757ce21aa55b",
+      "subdomain": "Outpatient therapy",
+      "apply_when": [],
+      "guardrails": [
+        {
+          "action": "alert",
+          "description": "Alert if >40% of therapy units are denied as not medically necessary",
+          "metric_name": "therapy_units_denied_pct",
+          "threshold_type": "max",
+          "threshold_value": 40.0
+        },
+        {
+          "action": "alert",
+          "description": "Alert if therapy access complaints exceed threshold",
+          "metric_name": "member_access_complaints",
+          "threshold_type": "max",
+          "threshold_value": 25.0
+        }
+      ],
+      "assumptions": [
+        {
+          "value": "medically_necessary_units_cap",
+          "source": "Coverage frequency known-answer fixture",
+          "confidence": 0.8,
+          "description": "Units billed above medically necessary threshold are non-payable",
+          "assumption_type": "UTILIZATION"
+        },
+        {
+          "value": "price_effect_only",
+          "source": "coverage-therapy-v1",
+          "confidence": 0.85,
+          "description": "Payment impact is price/unit effect with volume of necessary units held",
+          "assumption_type": "COST"
+        }
+      ],
+      "enforcement": {
+        "mechanism": "HARD",
+        "touchpoint": [
+          "CLAIMS_ADJUDICATION",
+          "COVERAGE_REVIEW"
+        ],
+        "override_allowed": true
+      },
+      "jurisdiction": "NC",
+      "display_label": "Representative Payer Policies",
+      "policy_levers": [
+        {
+          "targets": {
+            "codes": [
+              "97110",
+              "97140"
+            ],
+            "code_type": "CPT"
+          },
+          "lever_type": "COVERAGE_CRITERIA",
+          "parameters": {
+            "lcd_id": "L34428",
+            "pay_medically_necessary_units_only": true
+          }
+        }
+      ],
+      "standards_basis": [
+        "Palmetto GBA Jurisdiction M LCD L34428",
+        "Medicare outpatient therapy coverage principles"
+      ],
+      "effective_period": {
+        "end_date": null,
+        "start_date": "2024-01-01T00:00:00"
+      },
+      "global_exceptions": [],
+      "analytical_strategy": {
+        "engine_id": null,
+        "mechanism": "COVERAGE_DETERMINATION"
+      },
+      "enterprise_classification": {
+        "mechanism": "COVERAGE_DETERMINATION",
+        "catalog_class": "DEMO_SYNTHETIC",
+        "sub_mechanism": null,
+        "dec4_expansion": true,
+        "validation_target": "FULLY_VALIDATED_DEMO",
+        "representative_payer": true,
+        "not_blue_cross_nc_proprietary": true
+      }
+    },
+    "assumptions_db": [
+      {
+        "assumption_type": "UTILIZATION",
+        "description": "Units billed above medically necessary threshold are non-payable",
+        "value": "medically_necessary_units_cap",
+        "source": "Coverage frequency known-answer fixture",
+        "confidence": 0.8
+      },
+      {
+        "assumption_type": "COST",
+        "description": "Payment impact is price/unit effect with volume of necessary units held",
+        "value": "price_effect_only",
+        "source": "coverage-therapy-v1",
+        "confidence": 0.85
+      }
+    ],
+    "guardrails_db": [
+      {
+        "metric_name": "therapy_units_denied_pct",
+        "threshold_type": "max",
+        "threshold_value": 40.0,
+        "action": "alert",
+        "description": "Alert if >40% of therapy units are denied as not medically necessary"
+      },
+      {
+        "metric_name": "member_access_complaints",
+        "threshold_type": "max",
+        "threshold_value": 25.0,
+        "action": "alert",
+        "description": "Alert if therapy access complaints exceed threshold"
+      }
+    ],
+    "versions": [
+      {
+        "version_number": 1,
+        "effective_start_date": "2024-01-01T00:00:00",
+        "effective_end_date": null,
+        "change_type": "INITIAL",
+        "enforcement_strength": "STRONG",
+        "justification": "Dec 4 expansion synthetic demo version",
+        "version_metadata": {
+          "scope": {
+            "lob": [
+              "COMMERCIAL",
+              "MA",
+              "MEDICAID"
+            ],
+            "plans": null,
+            "states": [
+              "NC"
+            ],
+            "markets": [
+              "NC"
+            ],
+            "network": [
+              "IN"
+            ],
+            "regions": null,
+            "applies_to_all": false,
+            "procedure_codes": [
+              "97110",
+              "97140"
+            ],
+            "service_categories": [
+              "THERAPY",
+              "OUTPATIENT"
+            ]
+          },
+          "state": "ACTIVE",
+          "mechanism": "COVERAGE_DETERMINATION",
+          "enforcement": {
+            "mechanism": "HARD",
+            "touchpoint": [
+              "CLAIMS_ADJUDICATION",
+              "COVERAGE_REVIEW"
+            ],
+            "override_allowed": true
+          },
+          "catalog_class": "DEMO_SYNTHETIC",
+          "policy_levers": [
+            {
+              "targets": {
+                "codes": [
+                  "97110",
+                  "97140"
+                ],
+                "code_type": "CPT"
+              },
+              "lever_type": "COVERAGE_CRITERIA",
+              "parameters": {
+                "lcd_id": "L34428",
+                "pay_medically_necessary_units_only": true
+              }
+            }
+          ]
+        },
+        "codes": [
+          {
+            "code_type": "CPT",
+            "code": "97110",
+            "code_group": "THERAPY"
+          },
+          {
+            "code_type": "CPT",
+            "code": "97140",
+            "code_group": "THERAPY"
+          }
+        ]
+      }
+    ],
+    "medicare_source_links": [
+      {
+        "link_role": "REFERENCES_LCD",
+        "family_id": "mac_lcd_nc",
+        "source_document_id": "L34428",
+        "title": "Outpatient Physical Therapy",
+        "authority": "Palmetto GBA",
+        "source_url": "https://www.cms.gov/medicare-coverage-database/view/lcd.aspx?lcdId=34428"
+      },
+      {
+        "link_role": "REFERENCES_LCD",
+        "family_id": "mac_lcd_nc",
+        "source_document_id": "L34428",
+        "title": "Outpatient Physical Therapy",
+        "authority": "Palmetto GBA",
+        "source_url": "https://www.cms.gov/medicare-coverage-database/view/lcd.aspx?lcdid=34428&ver=93"
+      }
+    ],
+    "generated_at": "2026-11-03T14:38:48.151128+00:00"
+  },
+  {
+    "policy_id": "11218053-bdc0-569f-a415-fb61c5dcda37",
+    "name": "Infusion Site-of-Care Optimization",
+    "policy_type": "SITE_OF_CARE",
+    "status": "ACTIVE",
+    "description": "Steers eligible specialty infusion episodes from hospital outpatient (HOPD) to lower-cost ASC/office sites when clinically appropriate.",
+    "owner_role": null,
+    "metadata": {
+      "scope": {
+        "lob": [
+          "COMMERCIAL",
+          "MA",
+          "MEDICAID"
+        ],
+        "plans": null,
+        "states": [
+          "NC"
+        ],
+        "markets": [
+          "NC"
+        ],
+        "network": [
+          "IN"
+        ],
+        "regions": null,
+        "allowed_sites": [
+          "ASC_OR_OFFICE",
+          "HOPD"
+        ],
+        "applies_to_all": false,
+        "procedure_codes": [],
+        "service_categories": [
+          "INFUSION",
+          "SPECIALTY_DRUG"
+        ]
+      },
+      "domain": "Payment",
+      "policy_id": "11218053-bdc0-569f-a415-fb61c5dcda37",
+      "subdomain": "Site of care",
+      "apply_when": [],
+      "guardrails": [
+        {
+          "action": "alert",
+          "description": "Monitor successful infusion site-of-care redirections",
+          "metric_name": "site_of_care_redirect_rate",
+          "threshold_type": "min",
+          "threshold_value": 0.5
+        },
+        {
+          "action": "alert",
+          "description": "Alert if HOPD share of infusion episodes remains above 40%",
+          "metric_name": "hopd_infusion_share",
+          "threshold_type": "max",
+          "threshold_value": 0.4
+        }
+      ],
+      "assumptions": [
+        {
+          "value": "1800_per_steered_episode_fixture",
+          "source": "Infusion SOC known-answer fixture",
+          "confidence": 0.8,
+          "description": "HOPD to office steerage saves hospital\u2212office differential per episode",
+          "assumption_type": "COST"
+        },
+        {
+          "value": null,
+          "source": "Site-of-care quality assumption",
+          "confidence": 0.7,
+          "description": "Quality outcomes maintained at preferred sites for eligible members",
+          "assumption_type": "QUALITY"
+        },
+        {
+          "value": "2/3",
+          "source": "reimbursement-infusion-soc-v1",
+          "confidence": 0.75,
+          "description": "Not all HOPD episodes are steerable; fixture steers 2 of 3 HOPD lines",
+          "assumption_type": "BEHAVIOR"
+        }
+      ],
+      "enforcement": {
+        "mechanism": "SOFT",
+        "touchpoint": [
+          "PRIOR_AUTH",
+          "SITE_OF_CARE_REVIEW"
+        ],
+        "override_allowed": true
+      },
+      "jurisdiction": "NC",
+      "display_label": "Representative Payer Policies",
+      "policy_levers": [
+        {
+          "targets": {
+            "code_groups": [
+              "INFUSION_SPECIALTY"
+            ]
+          },
+          "lever_type": "SITE_OF_CARE",
+          "parameters": {
+            "preferred_sites": [
+              "ASC_OR_OFFICE"
+            ],
+            "hospital_allowed_when": "clinical_exception",
+            "office_allowed_amount": 3200.0
+          }
+        }
+      ],
+      "standards_basis": [
+        "Payer site-of-care optimization common practice",
+        "Hospital outpatient vs freestanding/office differential payment"
+      ],
+      "effective_period": {
+        "end_date": null,
+        "start_date": "2024-01-01T00:00:00"
+      },
+      "global_exceptions": [],
+      "analytical_strategy": {
+        "engine_id": null,
+        "mechanism": "SITE_OF_SERVICE_PAYMENT_DIFFERENTIAL"
+      },
+      "enterprise_classification": {
+        "mechanism": "SITE_OF_SERVICE_PAYMENT_DIFFERENTIAL",
+        "catalog_class": "DEMO_SYNTHETIC",
+        "sub_mechanism": null,
+        "dec4_expansion": true,
+        "validation_target": "FULLY_VALIDATED_DEMO",
+        "representative_payer": true,
+        "not_blue_cross_nc_proprietary": true
+      }
+    },
+    "assumptions_db": [
+      {
+        "assumption_type": "COST",
+        "description": "HOPD to office steerage saves hospital\u2212office differential per episode",
+        "value": "1800_per_steered_episode_fixture",
+        "source": "Infusion SOC known-answer fixture",
+        "confidence": 0.8
+      },
+      {
+        "assumption_type": "QUALITY",
+        "description": "Quality outcomes maintained at preferred sites for eligible members",
+        "value": null,
+        "source": "Site-of-care quality assumption",
+        "confidence": 0.7
+      },
+      {
+        "assumption_type": "BEHAVIOR",
+        "description": "Not all HOPD episodes are steerable; fixture steers 2 of 3 HOPD lines",
+        "value": "2/3",
+        "source": "reimbursement-infusion-soc-v1",
+        "confidence": 0.75
+      }
+    ],
+    "guardrails_db": [
+      {
+        "metric_name": "site_of_care_redirect_rate",
+        "threshold_type": "min",
+        "threshold_value": 0.5,
+        "action": "alert",
+        "description": "Monitor successful infusion site-of-care redirections"
+      },
+      {
+        "metric_name": "hopd_infusion_share",
+        "threshold_type": "max",
+        "threshold_value": 0.4,
+        "action": "alert",
+        "description": "Alert if HOPD share of infusion episodes remains above 40%"
+      }
+    ],
+    "versions": [
+      {
+        "version_number": 1,
+        "effective_start_date": "2024-01-01T00:00:00",
+        "effective_end_date": null,
+        "change_type": "INITIAL",
+        "enforcement_strength": "MODERATE",
+        "justification": "Dec 4 expansion synthetic demo version",
+        "version_metadata": {
+          "scope": {
+            "lob": [
+              "COMMERCIAL",
+              "MA",
+              "MEDICAID"
+            ],
+            "plans": null,
+            "states": [
+              "NC"
+            ],
+            "markets": [
+              "NC"
+            ],
+            "network": [
+              "IN"
+            ],
+            "regions": null,
+            "allowed_sites": [
+              "ASC_OR_OFFICE",
+              "HOPD"
+            ],
+            "applies_to_all": false,
+            "procedure_codes": [],
+            "service_categories": [
+              "INFUSION",
+              "SPECIALTY_DRUG"
+            ]
+          },
+          "state": "ACTIVE",
+          "mechanism": "SITE_OF_SERVICE_PAYMENT_DIFFERENTIAL",
+          "enforcement": {
+            "mechanism": "SOFT",
+            "touchpoint": [
+              "PRIOR_AUTH",
+              "SITE_OF_CARE_REVIEW"
+            ],
+            "override_allowed": true
+          },
+          "catalog_class": "DEMO_SYNTHETIC",
+          "policy_levers": [
+            {
+              "targets": {
+                "code_groups": [
+                  "INFUSION_SPECIALTY"
+                ]
+              },
+              "lever_type": "SITE_OF_CARE",
+              "parameters": {
+                "preferred_sites": [
+                  "ASC_OR_OFFICE"
+                ],
+                "hospital_allowed_when": "clinical_exception",
+                "office_allowed_amount": 3200.0
+              }
+            }
+          ]
+        },
+        "codes": []
+      }
+    ],
+    "medicare_source_links": [],
+    "generated_at": "2026-11-03T14:38:49.620116+00:00"
+  },
+  {
+    "policy_id": "4f8c34e3-015b-509d-90ba-521261464258",
+    "name": "NCD 220.2 MRI Coverage Change Study",
+    "policy_type": "COVERAGE",
+    "status": "ACTIVE",
+    "description": "Coverage change study keyed to CMS NCD 220.2 (Magnetic Resonance Imaging). Used for Medicare applicability / provenance analytics.",
+    "owner_role": null,
+    "metadata": {
+      "scope": {
+        "lob": [
+          "COMMERCIAL",
+          "MA",
+          "MEDICAID"
+        ],
+        "plans": null,
+        "states": [
+          "NC"
+        ],
+        "markets": [
+          "NC"
+        ],
+        "network": [
+          "IN"
+        ],
+        "regions": null,
+        "applies_to_all": false,
+        "procedure_codes": [
+          "70551",
+          "70552",
+          "70553",
+          "72148",
+          "72149",
+          "72158"
+        ],
+        "service_categories": [
+          "ADVANCED_IMAGING"
+        ]
+      },
+      "domain": "Coverage",
+      "policy_id": "4f8c34e3-015b-509d-90ba-521261464258",
+      "subdomain": "National coverage",
+      "apply_when": [],
+      "guardrails": [
+        {
+          "action": "alert",
+          "description": "Alert if non-covered MRI claim rate exceeds 5%",
+          "metric_name": "noncovered_mri_claim_rate",
+          "threshold_type": "max",
+          "threshold_value": 0.05
+        }
+      ],
+      "assumptions": [
+        {
+          "value": "NCD220.2",
+          "source": "CMS Coverage API national-coverage-ncd report",
+          "confidence": 0.95,
+          "description": "NCD 220.2 is the national Medicare coverage authority for MRI",
+          "assumption_type": "COVERAGE"
+        }
+      ],
+      "enforcement": {
+        "mechanism": "HARD",
+        "touchpoint": [
+          "COVERAGE_REVIEW",
+          "CLAIMS_ADJUDICATION"
+        ],
+        "override_allowed": false
+      },
+      "jurisdiction": "NATIONAL",
+      "display_label": "Representative Payer Policies",
+      "policy_levers": [
+        {
+          "targets": {
+            "codes": [
+              "70551",
+              "70552",
+              "70553",
+              "72148",
+              "72149",
+              "72158"
+            ],
+            "code_type": "CPT"
+          },
+          "lever_type": "COVERAGE_CRITERIA",
+          "parameters": {
+            "ncd_id": "NCD220.2"
+          }
+        }
+      ],
+      "standards_basis": [
+        "CMS NCD 220.2 Magnetic Resonance Imaging"
+      ],
+      "effective_period": {
+        "end_date": null,
+        "start_date": "2024-01-01T00:00:00"
+      },
+      "global_exceptions": [],
+      "analytical_strategy": {
+        "engine_id": null,
+        "mechanism": "COVERAGE_DETERMINATION"
+      },
+      "enterprise_classification": {
+        "mechanism": "COVERAGE_DETERMINATION",
+        "catalog_class": "DEMO_SYNTHETIC",
+        "sub_mechanism": null,
+        "dec4_expansion": true,
+        "validation_target": "PROVENANCE_VALIDATED",
+        "representative_payer": true,
+        "not_blue_cross_nc_proprietary": true
+      }
+    },
+    "assumptions_db": [
+      {
+        "assumption_type": "COVERAGE",
+        "description": "NCD 220.2 is the national Medicare coverage authority for MRI",
+        "value": "NCD220.2",
+        "source": "CMS Coverage API national-coverage-ncd report",
+        "confidence": 0.95
+      }
+    ],
+    "guardrails_db": [
+      {
+        "metric_name": "noncovered_mri_claim_rate",
+        "threshold_type": "max",
+        "threshold_value": 0.05,
+        "action": "alert",
+        "description": "Alert if non-covered MRI claim rate exceeds 5%"
+      }
+    ],
+    "versions": [
+      {
+        "version_number": 1,
+        "effective_start_date": "2024-01-01T00:00:00",
+        "effective_end_date": null,
+        "change_type": "INITIAL",
+        "enforcement_strength": "STRONG",
+        "justification": "Dec 4 expansion synthetic demo version",
+        "version_metadata": {
+          "scope": {
+            "lob": [
+              "COMMERCIAL",
+              "MA",
+              "MEDICAID"
+            ],
+            "plans": null,
+            "states": [
+              "NC"
+            ],
+            "markets": [
+              "NC"
+            ],
+            "network": [
+              "IN"
+            ],
+            "regions": null,
+            "applies_to_all": false,
+            "procedure_codes": [
+              "70551",
+              "70552",
+              "70553",
+              "72148",
+              "72149",
+              "72158"
+            ],
+            "service_categories": [
+              "ADVANCED_IMAGING"
+            ]
+          },
+          "state": "ACTIVE",
+          "mechanism": "COVERAGE_DETERMINATION",
+          "enforcement": {
+            "mechanism": "HARD",
+            "touchpoint": [
+              "COVERAGE_REVIEW",
+              "CLAIMS_ADJUDICATION"
+            ],
+            "override_allowed": false
+          },
+          "catalog_class": "DEMO_SYNTHETIC",
+          "policy_levers": [
+            {
+              "targets": {
+                "codes": [
+                  "70551",
+                  "70552",
+                  "70553",
+                  "72148",
+                  "72149",
+                  "72158"
+                ],
+                "code_type": "CPT"
+              },
+              "lever_type": "COVERAGE_CRITERIA",
+              "parameters": {
+                "ncd_id": "NCD220.2"
+              }
+            }
+          ]
+        },
+        "codes": [
+          {
+            "code_type": "CPT",
+            "code": "70551",
+            "code_group": "MRI"
+          },
+          {
+            "code_type": "CPT",
+            "code": "70552",
+            "code_group": "MRI"
+          },
+          {
+            "code_type": "CPT",
+            "code": "70553",
+            "code_group": "MRI"
+          },
+          {
+            "code_type": "CPT",
+            "code": "72148",
+            "code_group": "MRI"
+          },
+          {
+            "code_type": "CPT",
+            "code": "72149",
+            "code_group": "MRI"
+          },
+          {
+            "code_type": "CPT",
+            "code": "72158",
+            "code_group": "MRI"
+          }
+        ]
+      }
+    ],
+    "medicare_source_links": [
+      {
+        "link_role": "REFERENCES_NCD",
+        "family_id": "cms_ncd",
+        "source_document_id": "NCD220.2",
+        "title": "Magnetic Resonance Imaging",
+        "authority": "CMS",
+        "source_url": "https://www.cms.gov/medicare-coverage-database/view/ncd.aspx?NCDId=177"
+      },
+      {
+        "link_role": "REFERENCES_NCD",
+        "family_id": "cms_ncd",
+        "source_document_id": "NCD220.2",
+        "title": "Magnetic Resonance Imaging",
+        "authority": "CMS",
+        "source_url": "/data/ncd?ncdid=177&ncdver=6"
+      }
+    ],
+    "generated_at": "2026-11-03T14:38:51.553163+00:00"
+  },
+  {
+    "policy_id": "649b4ac8-ca82-5b84-aa87-84834490731a",
+    "name": "LCD L34425 NC MRI Coverage Criteria",
+    "policy_type": "COVERAGE",
+    "status": "ACTIVE",
+    "description": "Local coverage criteria for MRI soft tissue of head and neck under Palmetto JM LCD L34425 with related billing/coding article A56729 (codes 70540/70542/70543).",
+    "owner_role": null,
+    "metadata": {
+      "scope": {
+        "lob": [
+          "COMMERCIAL",
+          "MA",
+          "MEDICAID"
+        ],
+        "plans": null,
+        "states": [
+          "NC"
+        ],
+        "markets": [
+          "NC"
+        ],
+        "network": [
+          "IN"
+        ],
+        "regions": null,
+        "applies_to_all": false,
+        "procedure_codes": [
+          "70540",
+          "70542",
+          "70543"
+        ],
+        "service_categories": [
+          "ADVANCED_IMAGING"
+        ]
+      },
+      "domain": "Coverage",
+      "policy_id": "649b4ac8-ca82-5b84-aa87-84834490731a",
+      "subdomain": "Local coverage",
+      "apply_when": [],
+      "guardrails": [
+        {
+          "action": "alert",
+          "description": "Alert if LCD L34425 denial rate exceeds 15%",
+          "metric_name": "lcd_denial_rate",
+          "threshold_type": "max",
+          "threshold_value": 0.15
+        }
+      ],
+      "assumptions": [
+        {
+          "value": "PARTIAL_CODE_OVERLAP",
+          "source": "Coverage API article HCPCS enrichment",
+          "confidence": 0.95,
+          "description": "A56729 lists only 70540/70542/70543 \u2014 PARTIAL clinical match for broader MRI UM",
+          "assumption_type": "COVERAGE"
+        }
+      ],
+      "enforcement": {
+        "mechanism": "HARD",
+        "touchpoint": [
+          "COVERAGE_REVIEW",
+          "CLAIMS_ADJUDICATION"
+        ],
+        "override_allowed": false
+      },
+      "jurisdiction": "NC",
+      "display_label": "Representative Payer Policies",
+      "policy_levers": [
+        {
+          "targets": {
+            "codes": [
+              "70540",
+              "70542",
+              "70543"
+            ],
+            "code_type": "CPT"
+          },
+          "lever_type": "COVERAGE_CRITERIA",
+          "parameters": {
+            "lcd_id": "L34425",
+            "article_id": "A56729"
+          }
+        }
+      ],
+      "standards_basis": [
+        "Palmetto GBA Jurisdiction M LCD L34425",
+        "Billing and Coding Article A56729"
+      ],
+      "effective_period": {
+        "end_date": null,
+        "start_date": "2024-01-01T00:00:00"
+      },
+      "global_exceptions": [],
+      "analytical_strategy": {
+        "engine_id": null,
+        "mechanism": "COVERAGE_DETERMINATION"
+      },
+      "enterprise_classification": {
+        "mechanism": "COVERAGE_DETERMINATION",
+        "catalog_class": "DEMO_SYNTHETIC",
+        "sub_mechanism": null,
+        "dec4_expansion": true,
+        "validation_target": "PROVENANCE_VALIDATED",
+        "representative_payer": true,
+        "not_blue_cross_nc_proprietary": true
+      }
+    },
+    "assumptions_db": [
+      {
+        "assumption_type": "COVERAGE",
+        "description": "A56729 lists only 70540/70542/70543 \u2014 PARTIAL clinical match for broader MRI UM",
+        "value": "PARTIAL_CODE_OVERLAP",
+        "source": "Coverage API article HCPCS enrichment",
+        "confidence": 0.95
+      }
+    ],
+    "guardrails_db": [
+      {
+        "metric_name": "lcd_denial_rate",
+        "threshold_type": "max",
+        "threshold_value": 0.15,
+        "action": "alert",
+        "description": "Alert if LCD L34425 denial rate exceeds 15%"
+      }
+    ],
+    "versions": [
+      {
+        "version_number": 1,
+        "effective_start_date": "2024-01-01T00:00:00",
+        "effective_end_date": null,
+        "change_type": "INITIAL",
+        "enforcement_strength": "STRONG",
+        "justification": "Dec 4 expansion synthetic demo version",
+        "version_metadata": {
+          "scope": {
+            "lob": [
+              "COMMERCIAL",
+              "MA",
+              "MEDICAID"
+            ],
+            "plans": null,
+            "states": [
+              "NC"
+            ],
+            "markets": [
+              "NC"
+            ],
+            "network": [
+              "IN"
+            ],
+            "regions": null,
+            "applies_to_all": false,
+            "procedure_codes": [
+              "70540",
+              "70542",
+              "70543"
+            ],
+            "service_categories": [
+              "ADVANCED_IMAGING"
+            ]
+          },
+          "state": "ACTIVE",
+          "mechanism": "COVERAGE_DETERMINATION",
+          "enforcement": {
+            "mechanism": "HARD",
+            "touchpoint": [
+              "COVERAGE_REVIEW",
+              "CLAIMS_ADJUDICATION"
+            ],
+            "override_allowed": false
+          },
+          "catalog_class": "DEMO_SYNTHETIC",
+          "policy_levers": [
+            {
+              "targets": {
+                "codes": [
+                  "70540",
+                  "70542",
+                  "70543"
+                ],
+                "code_type": "CPT"
+              },
+              "lever_type": "COVERAGE_CRITERIA",
+              "parameters": {
+                "lcd_id": "L34425",
+                "article_id": "A56729"
+              }
+            }
+          ]
+        },
+        "codes": [
+          {
+            "code_type": "CPT",
+            "code": "70540",
+            "code_group": "MRI_HEAD_NECK"
+          },
+          {
+            "code_type": "CPT",
+            "code": "70542",
+            "code_group": "MRI_HEAD_NECK"
+          },
+          {
+            "code_type": "CPT",
+            "code": "70543",
+            "code_group": "MRI_HEAD_NECK"
+          }
+        ]
+      }
+    ],
+    "medicare_source_links": [
+      {
+        "link_role": "REFERENCES_LCD",
+        "family_id": "mac_lcd_nc",
+        "source_document_id": "L34425",
+        "title": "Magnetic Resonance Imaging of the Orbit, Face, and/or Neck",
+        "authority": "Palmetto GBA",
+        "source_url": "https://www.cms.gov/medicare-coverage-database/view/lcd.aspx?lcdId=34425"
+      },
+      {
+        "link_role": "HAS_RELATED_ARTICLE",
+        "family_id": "lcd_billing_coding_articles",
+        "source_document_id": "A56729",
+        "title": "Billing and Coding: Magnetic Resonance Imaging of the Orbit, Face, and/or Neck",
+        "authority": "Palmetto GBA",
+        "source_url": "https://www.cms.gov/medicare-coverage-database/view/article.aspx?articleId=56729"
+      },
+      {
+        "link_role": "REFERENCES_LCD",
+        "family_id": "mac_lcd_nc",
+        "source_document_id": "L34425",
+        "title": "Magnetic Resonance Imaging of the Head and Neck",
+        "authority": "Palmetto GBA",
+        "source_url": "https://www.cms.gov/medicare-coverage-database/view/lcd.aspx?lcdid=34425&ver=43"
+      },
+      {
+        "link_role": "HAS_RELATED_ARTICLE",
+        "family_id": "lcd_billing_coding_articles",
+        "source_document_id": "A56729",
+        "title": "Billing and Coding: Magnetic Resonance Imaging of the Head and Neck",
+        "authority": "Palmetto GBA",
+        "source_url": "https://www.cms.gov/medicare-coverage-database/view/article.aspx?articleid=56729&ver=24"
+      }
+    ],
+    "generated_at": "2026-11-03T14:38:54.030869+00:00"
+  }
+]

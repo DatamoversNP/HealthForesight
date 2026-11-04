@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_7b941c44fc6800b988fb1dfd",
+  "policy_id": "1a49ed4c-f5f7-473b-9f39-b3caaefdc99c",
+  "name": "Partial Hospitalization and IOP Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "97b13b8dc3f89861",
+  "started_at": "2026-11-04T13:18:18.239620+00:00",
+  "finished_at": "2026-11-04T13:18:18.239621+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

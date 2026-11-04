@@ -1,0 +1,18 @@
+{
+  "job_id": "paj_53bf28f759bdf74e30f2a8e8",
+  "policy_id": "17415dd5-1a1a-4e82-959e-a1924cc9c121",
+  "name": "GLP-1 Step Therapy for Type 2 Diabetes",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "20930cf80aed0f25",
+  "started_at": "2026-11-04T13:18:18.232762+00:00",
+  "finished_at": "2026-11-04T13:18:18.232764+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "scope.states"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

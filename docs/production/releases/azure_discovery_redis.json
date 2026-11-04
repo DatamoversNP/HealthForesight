@@ -1,0 +1,8 @@
+[
+  {
+    "location": "West US 2",
+    "name": "nilesh-healthforesight-redis01",
+    "rg": "healthforesight-rg",
+    "sku": "Basic"
+  }
+]

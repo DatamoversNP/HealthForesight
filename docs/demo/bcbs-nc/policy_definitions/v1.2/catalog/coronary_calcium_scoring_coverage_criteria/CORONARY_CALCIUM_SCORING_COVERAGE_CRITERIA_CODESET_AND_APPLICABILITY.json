@@ -1,0 +1,18 @@
+{
+  "document_id": "CORONARY_CALCIUM_SCORING_COVERAGE_CRITERIA_CODESET",
+  "policy_id": "6aa74e48-4e34-4ba6-b3c1-11112b16b5ef",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abCoronary Calcium Scoring Coverage Criteria\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "75571",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

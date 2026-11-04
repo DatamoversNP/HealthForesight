@@ -1,0 +1,245 @@
+{
+  "policy_id": "649b4ac8-ca82-5b84-aa87-84834490731a",
+  "name": "LCD L34425 NC MRI Coverage Criteria",
+  "policy_type": "COVERAGE",
+  "status": "ACTIVE",
+  "description": "Local coverage criteria for MRI soft tissue of head and neck under Palmetto JM LCD L34425 with related billing/coding article A56729 (codes 70540/70542/70543).",
+  "owner_role": null,
+  "metadata": {
+    "scope": {
+      "lob": [
+        "COMMERCIAL",
+        "MA",
+        "MEDICAID"
+      ],
+      "plans": null,
+      "states": [
+        "NC"
+      ],
+      "markets": [
+        "NC"
+      ],
+      "network": [
+        "IN"
+      ],
+      "regions": null,
+      "applies_to_all": false,
+      "procedure_codes": [
+        "70540",
+        "70542",
+        "70543"
+      ],
+      "service_categories": [
+        "ADVANCED_IMAGING"
+      ]
+    },
+    "domain": "Coverage",
+    "policy_id": "649b4ac8-ca82-5b84-aa87-84834490731a",
+    "subdomain": "Local coverage",
+    "apply_when": [],
+    "guardrails": [
+      {
+        "action": "alert",
+        "description": "Alert if LCD L34425 denial rate exceeds 15%",
+        "metric_name": "lcd_denial_rate",
+        "threshold_type": "max",
+        "threshold_value": 0.15
+      }
+    ],
+    "assumptions": [
+      {
+        "value": "PARTIAL_CODE_OVERLAP",
+        "source": "Coverage API article HCPCS enrichment",
+        "confidence": 0.95,
+        "description": "A56729 lists only 70540/70542/70543 \u2014 PARTIAL clinical match for broader MRI UM",
+        "assumption_type": "COVERAGE"
+      }
+    ],
+    "enforcement": {
+      "mechanism": "HARD",
+      "touchpoint": [
+        "COVERAGE_REVIEW",
+        "CLAIMS_ADJUDICATION"
+      ],
+      "override_allowed": false
+    },
+    "jurisdiction": "NC",
+    "display_label": "Representative Payer Policies",
+    "policy_levers": [
+      {
+        "targets": {
+          "codes": [
+            "70540",
+            "70542",
+            "70543"
+          ],
+          "code_type": "CPT"
+        },
+        "lever_type": "COVERAGE_CRITERIA",
+        "parameters": {
+          "lcd_id": "L34425",
+          "article_id": "A56729"
+        }
+      }
+    ],
+    "standards_basis": [
+      "Palmetto GBA Jurisdiction M LCD L34425",
+      "Billing and Coding Article A56729"
+    ],
+    "effective_period": {
+      "end_date": null,
+      "start_date": "2024-01-01T00:00:00"
+    },
+    "global_exceptions": [],
+    "analytical_strategy": {
+      "engine_id": null,
+      "mechanism": "COVERAGE_DETERMINATION"
+    },
+    "enterprise_classification": {
+      "mechanism": "COVERAGE_DETERMINATION",
+      "catalog_class": "DEMO_SYNTHETIC",
+      "sub_mechanism": null,
+      "dec4_expansion": true,
+      "validation_target": "PROVENANCE_VALIDATED",
+      "representative_payer": true,
+      "not_blue_cross_nc_proprietary": true
+    }
+  },
+  "assumptions_db": [
+    {
+      "assumption_type": "COVERAGE",
+      "description": "A56729 lists only 70540/70542/70543 \u2014 PARTIAL clinical match for broader MRI UM",
+      "value": "PARTIAL_CODE_OVERLAP",
+      "source": "Coverage API article HCPCS enrichment",
+      "confidence": 0.95
+    }
+  ],
+  "guardrails_db": [
+    {
+      "metric_name": "lcd_denial_rate",
+      "threshold_type": "max",
+      "threshold_value": 0.15,
+      "action": "alert",
+      "description": "Alert if LCD L34425 denial rate exceeds 15%"
+    }
+  ],
+  "versions": [
+    {
+      "version_number": 1,
+      "effective_start_date": "2024-01-01T00:00:00",
+      "effective_end_date": null,
+      "change_type": "INITIAL",
+      "enforcement_strength": "STRONG",
+      "justification": "Dec 4 expansion synthetic demo version",
+      "version_metadata": {
+        "scope": {
+          "lob": [
+            "COMMERCIAL",
+            "MA",
+            "MEDICAID"
+          ],
+          "plans": null,
+          "states": [
+            "NC"
+          ],
+          "markets": [
+            "NC"
+          ],
+          "network": [
+            "IN"
+          ],
+          "regions": null,
+          "applies_to_all": false,
+          "procedure_codes": [
+            "70540",
+            "70542",
+            "70543"
+          ],
+          "service_categories": [
+            "ADVANCED_IMAGING"
+          ]
+        },
+        "state": "ACTIVE",
+        "mechanism": "COVERAGE_DETERMINATION",
+        "enforcement": {
+          "mechanism": "HARD",
+          "touchpoint": [
+            "COVERAGE_REVIEW",
+            "CLAIMS_ADJUDICATION"
+          ],
+          "override_allowed": false
+        },
+        "catalog_class": "DEMO_SYNTHETIC",
+        "policy_levers": [
+          {
+            "targets": {
+              "codes": [
+                "70540",
+                "70542",
+                "70543"
+              ],
+              "code_type": "CPT"
+            },
+            "lever_type": "COVERAGE_CRITERIA",
+            "parameters": {
+              "lcd_id": "L34425",
+              "article_id": "A56729"
+            }
+          }
+        ]
+      },
+      "codes": [
+        {
+          "code_type": "CPT",
+          "code": "70540",
+          "code_group": "MRI_HEAD_NECK"
+        },
+        {
+          "code_type": "CPT",
+          "code": "70542",
+          "code_group": "MRI_HEAD_NECK"
+        },
+        {
+          "code_type": "CPT",
+          "code": "70543",
+          "code_group": "MRI_HEAD_NECK"
+        }
+      ]
+    }
+  ],
+  "medicare_source_links": [
+    {
+      "link_role": "REFERENCES_LCD",
+      "family_id": "mac_lcd_nc",
+      "source_document_id": "L34425",
+      "title": "Magnetic Resonance Imaging of the Orbit, Face, and/or Neck",
+      "authority": "Palmetto GBA",
+      "source_url": "https://www.cms.gov/medicare-coverage-database/view/lcd.aspx?lcdId=34425"
+    },
+    {
+      "link_role": "HAS_RELATED_ARTICLE",
+      "family_id": "lcd_billing_coding_articles",
+      "source_document_id": "A56729",
+      "title": "Billing and Coding: Magnetic Resonance Imaging of the Orbit, Face, and/or Neck",
+      "authority": "Palmetto GBA",
+      "source_url": "https://www.cms.gov/medicare-coverage-database/view/article.aspx?articleId=56729"
+    },
+    {
+      "link_role": "REFERENCES_LCD",
+      "family_id": "mac_lcd_nc",
+      "source_document_id": "L34425",
+      "title": "Magnetic Resonance Imaging of the Head and Neck",
+      "authority": "Palmetto GBA",
+      "source_url": "https://www.cms.gov/medicare-coverage-database/view/lcd.aspx?lcdid=34425&ver=43"
+    },
+    {
+      "link_role": "HAS_RELATED_ARTICLE",
+      "family_id": "lcd_billing_coding_articles",
+      "source_document_id": "A56729",
+      "title": "Billing and Coding: Magnetic Resonance Imaging of the Head and Neck",
+      "authority": "Palmetto GBA",
+      "source_url": "https://www.cms.gov/medicare-coverage-database/view/article.aspx?articleid=56729&ver=24"
+    }
+  ],
+  "generated_at": "2026-11-03T14:38:54.030869+00:00"
+}

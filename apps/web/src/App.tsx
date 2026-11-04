@@ -48,6 +48,7 @@ import ProductManualPage from './pages/ProductManualPage'
 import QATestingPage from './pages/QATestingPage'
 import DatabaseViewerPage from './pages/DatabaseViewerPage'
 import ObjectivesHealthPage from './pages/ObjectivesHealthPage'
+import MedicareRulesExplorerPage from './pages/MedicareRulesExplorerPage'
 import PolicyVerdictsPage from './pages/PolicyVerdictsPage'
 import PolicyRolloutRecommendationsPage from './pages/PolicyRolloutRecommendationsPage'
 import RunWorkflowPage from './pages/RunWorkflowPage'
@@ -92,6 +93,7 @@ function App() {
                 <Route path="policy-verdicts" element={<PolicyVerdictsPage />} />
                 <Route path="policy-rollout-recommendations" element={<PolicyRolloutRecommendationsPage />} />
                 <Route path="objectives-health" element={<ObjectivesHealthPage />} />
+                <Route path="medicare-rules" element={<MedicareRulesExplorerPage />} />
                 <Route path="run-workflow" element={<RunWorkflowPage />} />
                 <Route path="audit-log" element={<AuditLogPage />} />
                 <Route path="admin" element={<AdminPage />} />

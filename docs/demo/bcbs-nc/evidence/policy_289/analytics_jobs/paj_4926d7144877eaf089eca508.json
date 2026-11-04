@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_4926d7144877eaf089eca508",
+  "policy_id": "60615c97-11f9-458c-880e-cb76ae3bd65a",
+  "name": "Prostate Procedure Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "e86882711827a4d8",
+  "started_at": "2026-11-04T13:18:18.240751+00:00",
+  "finished_at": "2026-11-04T13:18:18.240752+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://healthforesight.local/schemas/policy_definition_package_v1.json",
+  "title": "Representative Payer Policy Definition Package",
+  "type": "object",
+  "required": [
+    "document_id",
+    "policy_id",
+    "policy_name",
+    "archetype",
+    "classification",
+    "identity",
+    "scope",
+    "applicability",
+    "codeset",
+    "levers",
+    "rules",
+    "exceptions",
+    "precedence",
+    "assumptions",
+    "guardrails",
+    "sources",
+    "analytics",
+    "governance",
+    "acceptance_tests",
+    "release_blockers"
+  ],
+  "properties": {
+    "document_id": { "type": "string" },
+    "policy_id": { "type": "string", "format": "uuid" },
+    "policy_name": { "type": "string", "minLength": 3 },
+    "archetype": { "type": "string" },
+    "package_version": { "type": "string" },
+    "classification": {
+      "type": "string",
+      "enum": [
+        "REPRESENTATIVE_PAYER_POLICY",
+        "SYNTHETIC_DEMO_FIXTURE",
+        "PROVENANCE_STUDY"
+      ]
+    },
+    "not_claiming": {
+      "type": "string",
+      "const": "Authoritative Blue Cross NC operative proprietary policy text"
+    },
+    "identity": {
+      "type": "object",
+      "required": ["objective", "mechanism", "family"],
+      "properties": {
+        "objective": { "type": "string" },
+        "mechanism": { "type": "string" },
+        "family": { "type": "string" },
+        "owner_role": { "type": ["string", "null"] }
+      }
+    },
+    "scope": {
+      "type": "object",
+      "required": ["lob", "geography", "setting", "effective"],
+      "properties": {
+        "lob": { "type": "array", "items": { "type": "string" } },
+        "geography": {
+          "type": "object",
+          "required": ["states", "markets", "market_claim_note"],
+          "properties": {
+            "states": { "type": "array", "items": { "type": "string" } },
+            "markets": { "type": "array", "items": { "type": "string" } },
+            "market_claim_note": { "type": "string" }
+          }
+        },
+        "setting": { "type": "array", "items": { "type": "string" } },
+        "effective": {
+          "type": "object",
+          "properties": {
+            "start": { "type": ["string", "null"] },
+            "end": { "type": ["string", "null"] }
+          }
+        }
+      }
+    },
+    "applicability": {
+      "type": "object",
+      "required": ["inclusions", "exclusions"],
+      "properties": {
+        "inclusions": { "type": "array", "items": { "type": "string" } },
+        "exclusions": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "codeset": {
+      "type": "object",
+      "required": ["status", "codes"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "CANDIDATE_SCHEDULE",
+            "APPROVED_SCHEDULE",
+            "NOT_APPLICABLE",
+            "UNRESOLVED"
+          ]
+        },
+        "not_applicable_reason": { "type": ["string", "null"] },
+        "codes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["code_system", "code", "inclusion_status", "evidence_class"],
+            "properties": {
+              "code_system": { "type": "string" },
+              "code": { "type": "string" },
+              "description": { "type": "string" },
+              "inclusion_status": {
+                "type": "string",
+                "enum": [
+                  "CANDIDATE_INCLUDE",
+                  "APPROVED_INCLUDE",
+                  "EXCLUDE",
+                  "NOT_APPLICABLE"
+                ]
+              },
+              "evidence_class": {
+                "type": "string",
+                "enum": [
+                  "VERIFIED_SOURCE",
+                  "REPRESENTATIVE_DESIGN",
+                  "SYNTHETIC_FIXTURE",
+                  "CONFIG_DEFECT",
+                  "UNRESOLVED"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "levers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["lever_type", "parameters", "evidence_class"],
+        "properties": {
+          "lever_type": { "type": "string" },
+          "parameters": { "type": "object" },
+          "units": { "type": ["string", "null"] },
+          "direction": { "type": ["string", "null"] },
+          "evidence_class": { "type": "string" }
+        }
+      }
+    },
+    "rules": { "type": "array", "items": { "type": "object" } },
+    "exceptions": { "type": "array", "items": { "type": "object" } },
+    "precedence": { "type": "array", "items": { "type": "string" } },
+    "assumptions": { "type": "array", "items": { "type": "object" } },
+    "guardrails": { "type": "array", "items": { "type": "object" } },
+    "sources": { "type": "array", "items": { "type": "object" } },
+    "analytics": {
+      "type": "object",
+      "required": ["strategy", "supported_stages", "insufficiency_stages"],
+      "properties": {
+        "strategy": { "type": "string" },
+        "supported_stages": { "type": "array", "items": { "type": "string" } },
+        "insufficiency_stages": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "governance": {
+      "type": "object",
+      "required": ["definition_status", "operational_activation"],
+      "properties": {
+        "definition_status": { "type": "string" },
+        "operational_activation": {
+          "type": "string",
+          "enum": ["PROHIBITED", "APPROVED"]
+        }
+      }
+    },
+    "acceptance_tests": { "type": "array", "items": { "type": "object" } },
+    "release_blockers": { "type": "array", "items": { "type": "object" } }
+  }
+}

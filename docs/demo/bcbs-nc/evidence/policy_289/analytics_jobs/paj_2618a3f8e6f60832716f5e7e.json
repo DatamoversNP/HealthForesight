@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_2618a3f8e6f60832716f5e7e",
+  "policy_id": "b8f0b7a6-940e-41f7-b272-d751a82a290d",
+  "name": "Cosmetic Surgery Exclusion Policy",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "d9b88540ee160b99",
+  "started_at": "2026-11-04T13:18:18.229712+00:00",
+  "finished_at": "2026-11-04T13:18:18.229714+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

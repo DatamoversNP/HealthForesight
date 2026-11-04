@@ -1,0 +1,32 @@
+{
+  "document_id": "SUD_DETOXIFICATION_AUTHORIZATION_CODESET",
+  "policy_id": "ad984c52-59a0-4d39-8895-7c6ceee4cc72",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abSUD Detoxification Authorization\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "HCPCS",
+      "code": "H0010",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "H0011",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "H0012",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Alcohol/drug services detox HCPCS",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

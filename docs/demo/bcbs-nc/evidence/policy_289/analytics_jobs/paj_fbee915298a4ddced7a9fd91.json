@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_fbee915298a4ddced7a9fd91",
+  "policy_id": "cadc0e95-bcd7-43c7-ab5c-7524343b07d0",
+  "name": "Breast Reduction Medical Necessity",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "f779b7d60675b263",
+  "started_at": "2026-11-04T13:18:18.227348+00:00",
+  "finished_at": "2026-11-04T13:18:18.227350+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

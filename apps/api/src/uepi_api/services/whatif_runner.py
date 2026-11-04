@@ -19,9 +19,6 @@ def run_whatif_scenario_sync(
     """
     from uepi_api.models.analysis import Analysis, AnalysisStatus, AnalysisResultIndex, WhatIfScenarioResult
     from uepi_api.models.policy import Policy
-    from uepi_common.models import CanonicalPolicy, PolicyStatus, PolicyScope, EffectivePeriod, Enforcement
-    from uepi_worker.whatif import simulate_scenario, ScenarioParameters
-    from uepi_worker.analytics import load_claims_data
 
     own_db = False
     if db is None:
@@ -51,6 +48,100 @@ def run_whatif_scenario_sync(
         scenario_params = scenario_params if isinstance(scenario_params, dict) else {}
         baseline_filters = baseline_filters if isinstance(baseline_filters, dict) else {}
 
+        # Mechanism registry: reimbursement engines never fall through to UM elasticity.
+        # Import uepi_worker only for the utilization path below — reimbursement engines
+        # must run without the worker package (API-only hosts).
+        from uepi_api.services.analytical_strategy_registry import resolve_strategy
+        from uepi_api.services.reimbursement_whatif import run_reimbursement_whatif
+
+        _strategy = resolve_strategy(
+            policy_type=policy_record.policy_type,
+            policy_name=policy_record.name,
+            metadata=policy_metadata,
+            policy_id=str(policy_record.id),
+        )
+        if _strategy.get("forbid_utilization_elasticity") or _strategy.get(
+            "calculation_family"
+        ) in ("REIMBURSEMENT", "BLOCKED"):
+            reimb = run_reimbursement_whatif(
+                policy_type=policy_record.policy_type,
+                policy_name=policy_record.name,
+                metadata=policy_metadata,
+                policy_id=str(policy_record.id),
+                scenario_params=scenario_params,
+            )
+            if reimb.get("status") == "completed":
+                result_dict = reimb["result"]
+                try:
+                    existing_result = db.query(WhatIfScenarioResult).filter(
+                        WhatIfScenarioResult.analysis_id == UUID(analysis_id)
+                    ).first()
+                    if existing_result:
+                        existing_result.result_data_json = result_dict
+                        existing_result.updated_at = datetime.utcnow()
+                        db.add(existing_result)
+                    else:
+                        db.add(
+                            WhatIfScenarioResult(
+                                tenant_id=UUID(tenant_id),
+                                analysis_id=UUID(analysis_id),
+                                policy_id=UUID(policy_id),
+                                result_data_json=result_dict,
+                                schema_version="1.0",
+                            )
+                        )
+                    existing_index = db.query(AnalysisResultIndex).filter(
+                        AnalysisResultIndex.analysis_id == UUID(analysis_id),
+                        AnalysisResultIndex.result_type == "WHATIF_SCENARIO",
+                    ).first()
+                    if not existing_index:
+                        db.add(
+                            AnalysisResultIndex(
+                                tenant_id=UUID(tenant_id),
+                                analysis_id=UUID(analysis_id),
+                                result_type="WHATIF_SCENARIO",
+                                data_uri=None,
+                                schema_version="1.0",
+                            )
+                        )
+                    analysis.status = AnalysisStatus.COMPLETED.value
+                    db.commit()
+                except Exception as persist_err:
+                    db.rollback()
+                    analysis.status = AnalysisStatus.FAILED.value
+                    if hasattr(Analysis, "error_message"):
+                        analysis.error_message = str(persist_err)
+                    db.commit()
+                    return {"status": "error", "message": str(persist_err)}
+                return {
+                    "status": "completed",
+                    "analysis_id": analysis_id,
+                    "result_uri": "database",
+                    "confidence_score": 1.0,
+                    "result": result_dict,
+                    "strategy": reimb.get("strategy"),
+                }
+            # Registered reimbursement/blocked without engine — hard reject (no UM default)
+            err_msg = reimb.get("message") or (
+                f"Analytical mechanism {_strategy.get('mechanism')} cannot use "
+                "utilization elasticity; mechanism-specific engine required."
+            )
+            analysis.status = AnalysisStatus.FAILED.value
+            if hasattr(Analysis, "error_message"):
+                analysis.error_message = err_msg
+            db.commit()
+            return {
+                "status": "error",
+                "message": err_msg,
+                "strategy": _strategy,
+            }
+
+        # Utilization / default path — requires worker simulation stack
+        from uepi_common.models import CanonicalPolicy, PolicyStatus, PolicyScope, EffectivePeriod, Enforcement
+        from uepi_common.models import normalize_policy_type_value
+        from uepi_worker.whatif import simulate_scenario, ScenarioParameters
+        from uepi_worker.analytics import load_claims_data
+
         scope_raw = policy_metadata.get("scope") or {}
         if not isinstance(scope_raw, dict):
             scope_raw = {}
@@ -62,7 +153,7 @@ def run_whatif_scenario_sync(
         policy = CanonicalPolicy(
             policy_id=policy_record.id,
             policy_name=policy_record.name,
-            policy_type=policy_record.policy_type,
+            policy_type=normalize_policy_type_value(policy_record.policy_type),
             description=policy_record.description or "",
             status=PolicyStatus(policy_record.status) if hasattr(policy_record, "status") else PolicyStatus.ACTIVE,
             scope=PolicyScope(**scope_raw) if scope_raw else PolicyScope(lob=None, markets=None, network=None),

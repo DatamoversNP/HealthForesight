@@ -1,0 +1,32 @@
+{
+  "document_id": "BONE_GROWTH_STIMULATOR_PRIOR_AUTHORIZATION_CODESET",
+  "policy_id": "10b61f7d-ace5-4946-853f-ce9654f484ca",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abBone Growth Stimulator Prior Authorization\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "HCPCS",
+      "code": "E0747",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "E0748",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "E0760",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Osteogenesis stimulators",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

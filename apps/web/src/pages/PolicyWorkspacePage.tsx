@@ -58,6 +58,17 @@ import ActivityFeed from '../components/collaboration/ActivityFeed'
 import NarrativeView from '../components/narrative/NarrativeView'
 import TourButton from '../components/tour/TourButton'
 import PolicyClaimCounts from '../components/policy/PolicyClaimCounts'
+import PolicyMonitoringPanel from '../components/policy/PolicyMonitoringPanel'
+import {
+  ApplicabilityExplorerPanel,
+  ApplicableMedicareRulesPanel,
+  CausalImpactPanel,
+  ColdStartPanel,
+  PolicyCompositionPanel,
+  PolicyDefinitionPackagePanel,
+  ProviderBehaviorExplorerPanel,
+  UnifiedVerdictEvidencePanel,
+} from '../components/policy/EnterpriseIntelligencePanels'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -76,11 +87,17 @@ function TabPanel(props: TabPanelProps) {
 
 const WORKSPACE_TABS = [
   'Overview',
+  'Definition', // v1.2 policy definition packages (docs → UI)
   'Scope',
   'Levers',
   'Assumptions',
   'Guardrails',
   'Monitoring',
+  'Composition', // Dec 4 — composable policy
+  'Causal Impact', // Dec 4
+  'Cold Start', // Dec 4
+  'Applicability', // Dec 4 — NCD/LCD/NCCI
+  'Verdict Evidence', // Dec 4 — unified assessments
   'Versions',
   'Changelog',
   'Decisions',  // Epic 3
@@ -88,7 +105,7 @@ const WORKSPACE_TABS = [
   'Forecasts',  // Epic 4
   'Scenarios',  // Epic 4
   'Risk Register', // Epic 4
-  'Behavior',   // Epic 5
+  'Behavior',   // Epic 5 + Dec 4 explorer
   'Alerts',     // Epic 5
   'Comments',   // Epic 6
   'Tasks',      // Epic 6
@@ -104,6 +121,7 @@ export default function PolicyWorkspacePage() {
   const [activeTab, setActiveTab] = useState(0)
   const [workspaceData, setWorkspaceData] = useState<any>(null)
   const [policy, setPolicy] = useState<any>(null)
+  const [liveObservationVerdict, setLiveObservationVerdict] = useState<string | undefined>(undefined)
 
   useEffect(() => {
     if (id) {
@@ -339,8 +357,13 @@ export default function PolicyWorkspacePage() {
             </Grid>
           </TabPanel>
 
-          {/* Scope Tab */}
+          {/* Definition — v1.2 package (docs → UI) */}
           <TabPanel value={activeTab} index={1}>
+            <PolicyDefinitionPackagePanel policyId={id!} />
+          </TabPanel>
+
+          {/* Scope Tab */}
+          <TabPanel value={activeTab} index={2}>
             <Card variant="outlined">
               <CardContent>
                 <Typography variant="h6" gutterBottom>
@@ -376,7 +399,7 @@ export default function PolicyWorkspacePage() {
           </TabPanel>
 
           {/* Levers Tab */}
-          <TabPanel value={activeTab} index={2}>
+          <TabPanel value={activeTab} index={3}>
             <Card variant="outlined">
               <CardContent>
                 <Typography variant="h6" gutterBottom>
@@ -406,7 +429,7 @@ export default function PolicyWorkspacePage() {
           </TabPanel>
 
           {/* Assumptions Tab */}
-          <TabPanel value={activeTab} index={3}>
+          <TabPanel value={activeTab} index={4}>
             <Box className="assumptions-manager">
               <AssumptionsManager
                 policyId={id!}
@@ -417,7 +440,7 @@ export default function PolicyWorkspacePage() {
           </TabPanel>
 
           {/* Guardrails Tab */}
-          <TabPanel value={activeTab} index={4}>
+          <TabPanel value={activeTab} index={5}>
             <Box className="guardrails-manager">
               <GuardrailsManager
                 policyId={id!}
@@ -428,30 +451,46 @@ export default function PolicyWorkspacePage() {
           </TabPanel>
 
           {/* Monitoring Tab */}
-          <TabPanel value={activeTab} index={5}>
-            <Card variant="outlined">
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Performance Metrics
-                </Typography>
-                <Alert severity="info" sx={{ mb: 2 }}>
-                  Performance metrics will be displayed here once observations are available.
-                </Alert>
-                <Typography variant="body2" color="text.secondary">
-                  This tab will show:
-                </Typography>
-                <ul>
-                  <li>Utilization change trends</li>
-                  <li>Cost impact metrics</li>
-                  <li>Guardrail status</li>
-                  <li>Alert history</li>
-                </ul>
-              </CardContent>
-            </Card>
+          <TabPanel value={activeTab} index={6}>
+            <PolicyMonitoringPanel
+              policyId={id!}
+              policyName={policy.name || policy.policy_name}
+              guardrails={workspaceData?.guardrails || []}
+              onObservationVerdict={(v) => setLiveObservationVerdict(v)}
+            />
+          </TabPanel>
+
+          {/* Composition — Dec 4 P0 */}
+          <TabPanel value={activeTab} index={7}>
+            <PolicyCompositionPanel policyId={id!} />
+          </TabPanel>
+
+          {/* Causal Impact — Dec 4 P0 */}
+          <TabPanel value={activeTab} index={8}>
+            <CausalImpactPanel policyId={id!} />
+          </TabPanel>
+
+          {/* Cold Start — Dec 4 P0 */}
+          <TabPanel value={activeTab} index={9}>
+            <ColdStartPanel policyId={id!} />
+          </TabPanel>
+
+          {/* Applicability — Dec 4 P0 */}
+          <TabPanel value={activeTab} index={10}>
+            <ApplicableMedicareRulesPanel policyId={id!} />
+            <ApplicabilityExplorerPanel policyId={id!} />
+          </TabPanel>
+
+          {/* Verdict Evidence — Dec 4 integration gate */}
+          <TabPanel value={activeTab} index={11}>
+            <UnifiedVerdictEvidencePanel
+              policyId={id!}
+              observationVerdict={liveObservationVerdict || 'UNKNOWN'}
+            />
           </TabPanel>
 
           {/* Versions Tab */}
-          <TabPanel value={activeTab} index={6}>
+          <TabPanel value={activeTab} index={12}>
             <Box className="versions-list">
               <PolicyVersionsList
                 policyId={id!}
@@ -462,7 +501,7 @@ export default function PolicyWorkspacePage() {
           </TabPanel>
 
           {/* Changelog Tab */}
-          <TabPanel value={activeTab} index={7}>
+          <TabPanel value={activeTab} index={13}>
             <PolicyChangelog
               policyId={id!}
               changelog={workspaceData?.changelog || []}
@@ -471,7 +510,7 @@ export default function PolicyWorkspacePage() {
           </TabPanel>
 
           {/* Decisions Tab - Epic 3 */}
-          <TabPanel value={activeTab} index={8}>
+          <TabPanel value={activeTab} index={14}>
             <DecisionManager
               policyId={id!}
               onDecisionCreated={loadWorkspaceData}
@@ -479,7 +518,7 @@ export default function PolicyWorkspacePage() {
           </TabPanel>
 
           {/* Evidence Tab - Epic 3 */}
-          <TabPanel value={activeTab} index={9}>
+          <TabPanel value={activeTab} index={15}>
             <EvidenceManager
               policyId={id!}
               onEvidenceLinked={loadWorkspaceData}
@@ -487,47 +526,50 @@ export default function PolicyWorkspacePage() {
           </TabPanel>
 
           {/* Forecasts Tab - Epic 4 */}
-          <TabPanel value={activeTab} index={10}>
+          <TabPanel value={activeTab} index={16}>
             <ForecastManager policyId={id!} />
           </TabPanel>
 
           {/* Scenarios Tab - Epic 4 */}
-          <TabPanel value={activeTab} index={11}>
+          <TabPanel value={activeTab} index={17}>
             <ScenarioManager policyId={id!} />
           </TabPanel>
 
           {/* Risk Register Tab - Epic 4 */}
-          <TabPanel value={activeTab} index={12}>
+          <TabPanel value={activeTab} index={18}>
             <RiskRegister policyId={id!} />
           </TabPanel>
 
-          {/* Behavior Tab - Epic 5 */}
-          <TabPanel value={activeTab} index={13}>
-            <BehaviorDashboard policyId={id!} />
+          {/* Behavior Tab - Epic 5 + Dec 4 explorer */}
+          <TabPanel value={activeTab} index={19}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+              <ProviderBehaviorExplorerPanel policyId={id!} />
+              <BehaviorDashboard policyId={id!} />
+            </Box>
           </TabPanel>
 
           {/* Alerts Tab - Epic 5 */}
-          <TabPanel value={activeTab} index={14}>
+          <TabPanel value={activeTab} index={20}>
             <AlertManager policyId={id!} />
           </TabPanel>
 
           {/* Comments Tab - Epic 6 */}
-          <TabPanel value={activeTab} index={15}>
+          <TabPanel value={activeTab} index={21}>
             <CommentsPanel resourceType="POLICY" resourceId={id!} />
           </TabPanel>
 
           {/* Tasks Tab - Epic 6 */}
-          <TabPanel value={activeTab} index={16}>
+          <TabPanel value={activeTab} index={22}>
             <TasksPanel resourceType="POLICY" resourceId={id!} />
           </TabPanel>
 
           {/* Activity Tab - Epic 6 */}
-          <TabPanel value={activeTab} index={17}>
+          <TabPanel value={activeTab} index={23}>
             <ActivityFeed resourceType="POLICY" resourceId={id!} />
           </TabPanel>
 
           {/* Narrative Tab - Epic 7 */}
-          <TabPanel value={activeTab} index={18}>
+          <TabPanel value={activeTab} index={24}>
             <NarrativeView resourceType="POLICY" resourceId={id!} />
           </TabPanel>
         </CardContent>

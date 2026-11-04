@@ -1,0 +1,10 @@
+{
+  "document_id": "EXPERIMENTAL_AND_INVESTIGATIONAL_SERVICES_POLICY_CODESET",
+  "policy_id": "4ac3f722-8cf9-40d6-b023-efc0b950633c",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abExperimental and Investigational Services Policy\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Framework E&I policy",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

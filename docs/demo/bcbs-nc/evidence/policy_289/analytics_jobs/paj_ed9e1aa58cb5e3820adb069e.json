@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_ed9e1aa58cb5e3820adb069e",
+  "policy_id": "3360b3cc-a24f-48a8-8529-b406ae56883c",
+  "name": "Bunion and Forefoot Elective Surgery Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "84c5ae20d551b0dd",
+  "started_at": "2026-11-04T13:18:18.227477+00:00",
+  "finished_at": "2026-11-04T13:18:18.227478+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

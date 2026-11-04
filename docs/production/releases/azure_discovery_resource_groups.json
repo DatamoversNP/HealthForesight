@@ -1,0 +1,42 @@
+[
+  {
+    "location": "eastus",
+    "name": "rg-datamovers-p1-qual"
+  },
+  {
+    "location": "eastus",
+    "name": "rg--dev"
+  },
+  {
+    "location": "eastus",
+    "name": "rg--staging"
+  },
+  {
+    "location": "eastus",
+    "name": "rg--prod"
+  },
+  {
+    "location": "eastus",
+    "name": "rg--shared"
+  },
+  {
+    "location": "eastus",
+    "name": "rg-terraform-demo"
+  },
+  {
+    "location": "eastus2",
+    "name": "rg-hdf-prod"
+  },
+  {
+    "location": "eastus2",
+    "name": "rg-datamovers-nonprod"
+  },
+  {
+    "location": "centralus",
+    "name": "NetworkWatcherRG"
+  },
+  {
+    "location": "westus2",
+    "name": "healthforesight-rg"
+  }
+]

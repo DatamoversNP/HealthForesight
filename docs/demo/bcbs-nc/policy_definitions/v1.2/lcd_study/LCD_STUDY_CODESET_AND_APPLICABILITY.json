@@ -1,0 +1,118 @@
+{
+  "document_id": "HF-RP-COV-L34425-001-CODESET",
+  "policy_id": "649b4ac8-ca82-5b84-aa87-84834490731a",
+  "version": "v1.2.1-structural-controls",
+  "schema": "../_controls/POLICY_CODESET_RECORD.schema.json",
+  "status": "DEFINITION_REVIEW_REQUIRED",
+  "operational_activation": "PROHIBITED",
+  "mechanism": "LCD_L34425_ORBIT_FACE_NECK_STUDY",
+  "intended_scope": "ORBIT_FACE_NECK_ONLY",
+  "controls_ref": "../_controls/POLICY_ENGINEERING_CONTROLS_v1.md",
+  "mri_clinical_logic_copied": false,
+  "notes": [
+    "CANDIDATE_INCLUDE is not APPROVED_INCLUDE",
+    "Do not alter frozen Dec 4 demo fixtures",
+    "Mechanism-specific \u2014 not MRI lumbar PA criteria"
+  ],
+  "codes": [
+    {
+      "code_system": "CPT",
+      "code": "70540",
+      "description": "MRI orbit/face/neck without contrast",
+      "anatomical_region": "ORBIT_FACE_NECK_ONLY",
+      "contrast_variant": "WITHOUT",
+      "setting": "OUTPATIENT",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "effective_from": "2026-10-01T00:00:00",
+      "effective_to": null,
+      "evidence_class": "VERIFIED_SOURCE",
+      "source_evidence_note": "Verified on A56729; study band ORBIT_FACE_NECK only \u2014 never lumbar authority",
+      "evidence": {
+        "evidence_id": "EV-ART-A56729-HCPCS",
+        "source_system": "cms_coverage_api",
+        "source_document_id": "A56729",
+        "source_version": "24",
+        "source_url": "https://www.cms.gov/medicare-coverage-database/view/article.aspx?articleid=56729&ver=24",
+        "retrieved_at": "2026-11-03T13:02:24.568026+00:00",
+        "content_checksum_sha256": "80d90feed877911cbebeebe15e0d83f3c814dfc6a52a7b698008e63aacacf731",
+        "applicability_period_start": "2026-10-01T00:00:00",
+        "applicability_period_end": null,
+        "notes": "A56729 HCPCS enrichment; LCD study band only"
+      },
+      "medicare_applicability": {
+        "ncd_220_2": "REFERENCE_ONLY_FFS",
+        "lcd_l34425": "PARTIAL_APPLICABLE_JM",
+        "article_a56729": "APPLICABLE_TO_THIS_CODE"
+      },
+      "scope_role": null
+    },
+    {
+      "code_system": "CPT",
+      "code": "70542",
+      "description": "MRI orbit/face/neck with contrast",
+      "anatomical_region": "ORBIT_FACE_NECK_ONLY",
+      "contrast_variant": "WITH",
+      "setting": "OUTPATIENT",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "effective_from": "2026-10-01T00:00:00",
+      "effective_to": null,
+      "evidence_class": "VERIFIED_SOURCE",
+      "source_evidence_note": "Verified on A56729; study band ORBIT_FACE_NECK only \u2014 never lumbar authority",
+      "evidence": {
+        "evidence_id": "EV-ART-A56729-HCPCS",
+        "source_system": "cms_coverage_api",
+        "source_document_id": "A56729",
+        "source_version": "24",
+        "source_url": "https://www.cms.gov/medicare-coverage-database/view/article.aspx?articleid=56729&ver=24",
+        "retrieved_at": "2026-11-03T13:02:24.568026+00:00",
+        "content_checksum_sha256": "80d90feed877911cbebeebe15e0d83f3c814dfc6a52a7b698008e63aacacf731",
+        "applicability_period_start": "2026-10-01T00:00:00",
+        "applicability_period_end": null,
+        "notes": "A56729 HCPCS enrichment; LCD study band only"
+      },
+      "medicare_applicability": {
+        "ncd_220_2": "REFERENCE_ONLY_FFS",
+        "lcd_l34425": "PARTIAL_APPLICABLE_JM",
+        "article_a56729": "APPLICABLE_TO_THIS_CODE"
+      },
+      "scope_role": null
+    },
+    {
+      "code_system": "CPT",
+      "code": "70543",
+      "description": "MRI orbit/face/neck without then with contrast",
+      "anatomical_region": "ORBIT_FACE_NECK_ONLY",
+      "contrast_variant": "WITHOUT_THEN_WITH",
+      "setting": "OUTPATIENT",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "effective_from": "2026-10-01T00:00:00",
+      "effective_to": null,
+      "evidence_class": "VERIFIED_SOURCE",
+      "source_evidence_note": "Verified on A56729; study band ORBIT_FACE_NECK only \u2014 never lumbar authority",
+      "evidence": {
+        "evidence_id": "EV-ART-A56729-HCPCS",
+        "source_system": "cms_coverage_api",
+        "source_document_id": "A56729",
+        "source_version": "24",
+        "source_url": "https://www.cms.gov/medicare-coverage-database/view/article.aspx?articleid=56729&ver=24",
+        "retrieved_at": "2026-11-03T13:02:24.568026+00:00",
+        "content_checksum_sha256": "80d90feed877911cbebeebe15e0d83f3c814dfc6a52a7b698008e63aacacf731",
+        "applicability_period_start": "2026-10-01T00:00:00",
+        "applicability_period_end": null,
+        "notes": "A56729 HCPCS enrichment; LCD study band only"
+      },
+      "medicare_applicability": {
+        "ncd_220_2": "REFERENCE_ONLY_FFS",
+        "lcd_l34425": "PARTIAL_APPLICABLE_JM",
+        "article_a56729": "APPLICABLE_TO_THIS_CODE"
+      },
+      "scope_role": null
+    }
+  ],
+  "fixtures_note": "PROVENANCE_VALIDATED \u2014 PARTIAL clinical match",
+  "ambiguous_mapping_policy": {
+    "auto_deny": false,
+    "auto_impose_pa": false,
+    "route": "MANUAL_SCOPE_REVIEW"
+  }
+}

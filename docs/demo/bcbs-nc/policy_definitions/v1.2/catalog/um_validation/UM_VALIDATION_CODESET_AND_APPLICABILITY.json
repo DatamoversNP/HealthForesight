@@ -1,0 +1,10 @@
+{
+  "document_id": "UM_VALIDATION_CODESET",
+  "policy_id": "5e7a1a2b-5cbd-4a65-858f-a9b4f49fa7c4",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abUM Validation \u00bb",
+  "status": "UNRESOLVED",
+  "candidate_codes": [],
+  "notes": "Placeholder catalog name \u2014 schedule UNRESOLVED until product renames/defines policy",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

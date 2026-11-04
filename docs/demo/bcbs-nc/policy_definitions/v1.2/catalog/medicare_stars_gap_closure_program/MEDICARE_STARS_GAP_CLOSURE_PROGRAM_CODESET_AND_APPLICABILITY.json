@@ -1,0 +1,10 @@
+{
+  "document_id": "MEDICARE_STARS_GAP_CLOSURE_PROGRAM_CODESET",
+  "policy_id": "6cf80c62-e9bd-4db7-8a35-84836c001982",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abMedicare Stars Gap Closure Program\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Program/composite policy \u2014 constituent mechanisms configured separately",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

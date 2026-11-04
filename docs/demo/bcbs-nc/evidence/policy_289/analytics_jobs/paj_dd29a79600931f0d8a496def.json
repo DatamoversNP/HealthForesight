@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_dd29a79600931f0d8a496def",
+  "policy_id": "c922a9bd-0292-4df1-9bdd-f4bda3709fbf",
+  "name": "ADHD Stimulant Quantity Limits and Preferred Agents",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "704685f221279d8a",
+  "started_at": "2026-11-04T13:18:18.225573+00:00",
+  "finished_at": "2026-11-04T13:18:18.225575+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "codeset_UNRESOLVED",
+      "definition_incomplete"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

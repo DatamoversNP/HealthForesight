@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_a45befa578e1d7a79fe588c4",
+  "policy_id": "f029e87f-4b1e-4934-91e6-6fd238da85c9",
+  "name": "Biosimilar Preferencing Policy",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "dd5c1b70a1a5cc0c",
+  "started_at": "2026-11-04T13:18:18.226798+00:00",
+  "finished_at": "2026-11-04T13:18:18.226799+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

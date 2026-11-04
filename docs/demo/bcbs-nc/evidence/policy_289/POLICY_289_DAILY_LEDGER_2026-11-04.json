@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-04",
+  "generated_at": "2026-11-04T08:34:57.271444+00:00",
+  "total_policies": 289,
+  "definition_complete": 267,
+  "live_configured_accuracy_validated": 267,
+  "mechanism_executable": 3,
+  "supported_lifecycle_execution": 9,
+  "browser_validated_dec4_primary": 3,
+  "source_verified": 0,
+  "synthetic_only": 9,
+  "data_insufficient": 22,
+  "operationally_approved": 0,
+  "registry_packages": 289,
+  "policies_with_codes_on_levers": 167,
+  "persist_candidate_levers_ok": 155,
+  "overnight_batch": 8,
+  "overnight_platform_health_high": "reliability \u2260 definition completeness",
+  "incomplete_policy_names": [
+    "ADHD Stimulant Quantity Limits and Preferred Agents",
+    "Benzodiazepine Quantity Limits",
+    "Digital Therapeutics Coverage Criteria",
+    "Facility Fee Schedule and Bundled Payment Adjustments",
+    "Hepatitis C Direct-Acting Antiviral Prior Authorization",
+    "HIV Antiretroviral Formulary Management",
+    "MCG Clinical Criteria for Inpatient Admissions",
+    "MCG-Style Clinical Criteria for Inpatient Admissions",
+    "Medical Oncology Regimen Prior Authorization",
+    "NCCI and MUE Claims Edit Policy",
+    "Oncology Evidence-Based Clinical Pathway",
+    "Oncology Oral Specialty Prior Authorization",
+    "Opioid Quantity Limit - Chronic Pain",
+    "Opioid Quantity Limit \u2014 Acute Pain",
+    "Opioid Quantity Limit \u2014 Chronic Pain",
+    "Retransplant Prior Authorization",
+    "Specialty Drug Days\u2019 Supply Limits",
+    "Transplant Evaluation and Listing Authorization",
+    "UM Reduction for under age 45 and B1C",
+    "UM Reduction for under age 45 and B1C",
+    "UM Validation ",
+    "Unbundling and Incidental Denial Policy"
+  ],
+  "critical_blockers": [
+    "22 policies UNRESOLVED (NDC/MUE/rates/MCG/placeholder UM) \u2014 not invented",
+    "Operational activation prohibited for all 289",
+    "Analytical lifecycle execution for non-nine still mostly NOT_STARTED"
+  ],
+  "throughput_observed": {
+    "packages_generated": 289,
+    "definition_complete_pass": 267,
+    "candidate_levers_persisted": 155,
+    "live_policies_with_codes": 167
+  },
+  "forecast_note": "Do not invent NDCs/MUEs/rates to close the remaining 22. Next bottleneck is lifecycle execution + claim-coverage validation.",
+  "next_24h": [
+    "Mechanism execution for PRIOR_AUTH cohorts with claim coverage",
+    "Keep Dec4 MRI/MPPR/SOS regression green",
+    "Continue overnight HC separately",
+    "Only resolve UNRESOLVED with public/product evidence"
+  ],
+  "note": "DEFINITION_COMPLETE = CANDIDATE_SCHEDULE | NOT_APPLICABLE | LEGACY_NINE. Representative Payer \u2014 not proprietary BCBS NC."
+}

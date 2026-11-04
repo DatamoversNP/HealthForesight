@@ -1,0 +1,18 @@
+{
+  "document_id": "ACL_RECONSTRUCTION_PRIOR_AUTHORIZATION_CODESET",
+  "policy_id": "0a6506e3-3813-49cf-ab1a-002109fe1a02",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abACL Reconstruction Prior Authorization\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "29888",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Arthroscopically aided ACL repair/reconstruction",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

@@ -1,0 +1,141 @@
+{
+  "archetype": "SITE_OF_CARE",
+  "offset": 0,
+  "count": 13,
+  "candidate_schedule": 11,
+  "unresolved": 0,
+  "not_applicable": 2,
+  "persisted_ok": 0,
+  "results": [
+    {
+      "policy_id": "ce65ce76-ea5b-4a7d-8260-84c11ae54bb2",
+      "name": "Ambulatory Surgery Center Preference",
+      "folder": "catalog/ambulatory_surgery_center_preference",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 4,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "e3193305-ea18-498f-a610-8f0eae608adc",
+      "name": "Dialysis Home Modality Preference",
+      "folder": "catalog/dialysis_home_modality_preference",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 4,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "7e2ac9e6-7493-40c1-8bc3-7c4fe7347fdb",
+      "name": "Home Health Care Preference",
+      "folder": "catalog/home_health_care_preference",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 3,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "b5d48dc5-2d6a-4a32-b3c7-54d4f9e77b77",
+      "name": "Home Infusion Preference",
+      "folder": "catalog/home_infusion_preference",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 2,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "75d2a776-fdb2-4fe6-b121-5b6d90611238",
+      "name": "Home Sleep Apnea Testing Preference",
+      "folder": "catalog/home_sleep_apnea_testing_preference",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 5,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "db5707ec-2db5-4243-a77e-0da91dada128",
+      "name": "Home Sleep Testing Before Facility PSG",
+      "folder": "catalog/home_sleep_testing_before_facility_psg",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 3,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "7e9ec991-76a0-4da9-86f0-f0a940b063e7",
+      "name": "Infusion Site-of-Care Optimization",
+      "folder": "catalog/infusion_site_of_care_optimization",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 4,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "ebb00492-841d-40f5-9d40-dbcfc50f47f1",
+      "name": "Oncology Infusion Site Steerage",
+      "folder": "catalog/oncology_infusion_site_steerage",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 3,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "3daf6f28-4e94-4996-a26c-e92237d15aaf",
+      "name": "Preferred Laboratory Network Steerage",
+      "folder": "catalog/preferred_laboratory_network_steerage",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 3,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "f54e4310-7f4b-4d6e-a6ab-c7b748722c8d",
+      "name": "SNF and Home Health Authorization Coverage Rules",
+      "folder": "catalog/snf_and_home_health_authorization_coverage_rules",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "e5bd7da6-9f1b-4add-8a44-175a1cb6846f",
+      "name": "Specialty Infusion Site-of-Care Optimization",
+      "folder": "catalog/specialty_infusion_site_of_care_optimization",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 2,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "12165f88-21a6-4363-9b65-4ba785203c7c",
+      "name": "Tiered Network Specialist Steerage",
+      "folder": "catalog/tiered_network_specialist_steerage",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "5ec5df8d-671e-45ca-8d27-fff922bff897",
+      "name": "Urgent Care Preference Over Non-Emergent ER",
+      "folder": "catalog/urgent_care_preference_over_non_emergent_er",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 7,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    }
+  ]
+}

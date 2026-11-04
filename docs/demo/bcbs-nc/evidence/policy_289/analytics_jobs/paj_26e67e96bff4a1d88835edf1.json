@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_26e67e96bff4a1d88835edf1",
+  "policy_id": "0a6f2596-15d2-47e1-a979-06e46a061fb3",
+  "name": "Related Readmission Payment Adjustment",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "74044ab36a5b141d",
+  "started_at": "2026-11-04T13:18:18.241499+00:00",
+  "finished_at": "2026-11-04T13:18:18.241501+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

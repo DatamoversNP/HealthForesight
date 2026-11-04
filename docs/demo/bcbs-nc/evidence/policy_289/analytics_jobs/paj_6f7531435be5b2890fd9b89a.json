@@ -1,0 +1,16 @@
+{
+  "job_id": "paj_6f7531435be5b2890fd9b89a",
+  "policy_id": "d0eeb370-df14-4478-8755-dad6c3a35a47",
+  "name": "Multiple Procedure Payment Reduction",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "ed4cdfca04d777d8",
+  "started_at": "2026-11-04T13:18:18.236708+00:00",
+  "finished_at": "2026-11-04T13:18:18.236710+00:00",
+  "status": "SYNTHETIC_VERIFY_ONLY",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Dec4 frozen KA \u2014 verify path only; no rewrite",
+    "ka_frozen": true
+  },
+  "error": null
+}

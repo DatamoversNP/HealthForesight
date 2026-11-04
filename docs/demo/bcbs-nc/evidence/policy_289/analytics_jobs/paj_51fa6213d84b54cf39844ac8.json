@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_51fa6213d84b54cf39844ac8",
+  "policy_id": "cf421497-513a-4038-adcf-d5d6b176b940",
+  "name": "Retransplant Prior Authorization",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "309c005e71dd1fb3",
+  "started_at": "2026-11-04T13:18:18.241607+00:00",
+  "finished_at": "2026-11-04T13:18:18.241608+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "codeset_UNRESOLVED",
+      "definition_incomplete"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_cb5d9e3cd83527c74323f58a",
+  "policy_id": "3476e04f-6f18-40b7-a7a6-28fad5c84048",
+  "name": "Specialist Provider Eligibility for Specialty Services",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "b5aa1b3c5288bfea",
+  "started_at": "2026-11-04T13:18:18.242027+00:00",
+  "finished_at": "2026-11-04T13:18:18.242029+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

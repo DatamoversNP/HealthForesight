@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_8b2751b97f224ab87aa3c450",
+  "policy_id": "c262b624-22ab-489d-81f2-f51fc0ac2d89",
+  "name": "Preferred Generic Drug Tier Design",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "b1e5f8fef3f51c99",
+  "started_at": "2026-11-04T13:18:18.240397+00:00",
+  "finished_at": "2026-11-04T13:18:18.240398+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

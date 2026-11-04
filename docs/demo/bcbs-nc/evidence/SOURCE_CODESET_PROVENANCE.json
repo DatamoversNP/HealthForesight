@@ -1,0 +1,206 @@
+{
+  "acquisition": {
+    "state": "NC",
+    "generated_at": "2026-11-03T13:02:07.849788Z",
+    "source": "https://api.coverage.cms.gov/v1",
+    "catalog_class": "AUTHORITATIVE_PUBLIC",
+    "creates_payer_catalog_rows": false,
+    "ncd_count": 345,
+    "lcd_count": 939,
+    "lcd_palmetto_count": 195,
+    "article_count": 2117,
+    "code_enrichment": {
+      "A56729": {
+        "status": "ok",
+        "code_count": 3,
+        "sample_hcpc": [
+          "70540",
+          "70542",
+          "70543"
+        ]
+      }
+    },
+    "notes": [
+      "Full catalogs from Coverage API report endpoints (no permanent API key).",
+      "HCPCS code lists require short-lived license-agreement token; fetched selectively.",
+      "Does not create Representative Payer policy catalog rows.",
+      "cms.gov bulk ZIP downloads remain 403 on this host; Coverage API is the acquisition path.",
+      "NCCI PTP/MUE quarterly files are separate (cms.gov) \u2014 not in Coverage API."
+    ]
+  },
+  "reconcile": {
+    "batch_id": "reconcile-20261103T131135Z",
+    "tenant_id": "00000000-0000-0000-0000-000000000001",
+    "reconciled_at": "2026-11-03T13:13:28.475059Z",
+    "families": [
+      {
+        "family_id": "bcnc_commercial_reimbursement",
+        "label": "Representative Payer commercial reimbursement (Blue Cross NC-like)",
+        "catalog_class": "DEMO_SYNTHETIC",
+        "adapter_status": "DEMO_SYNTHETIC_CATALOG",
+        "acquisition_state": "DEMO_SYNTHETIC_CATALOG",
+        "discovered": 13,
+        "ingested": 13,
+        "excluded": 0,
+        "inaccessible": 0,
+        "failed": 0,
+        "notes": "Loaded 13 illustrative catalog definitions for bcnc_commercial_reimbursement. These are Blue Cross NC-like representative payer policies \u2014 not verbatim BCBS NC."
+      },
+      {
+        "family_id": "bcnc_medicare_reimbursement",
+        "label": "Representative Payer Medicare reimbursement (Blue Cross NC-like)",
+        "catalog_class": "DEMO_SYNTHETIC",
+        "adapter_status": "DEMO_SYNTHETIC_CATALOG",
+        "acquisition_state": "DEMO_SYNTHETIC_CATALOG",
+        "discovered": 73,
+        "ingested": 73,
+        "excluded": 0,
+        "inaccessible": 0,
+        "failed": 0,
+        "notes": "Loaded 73 illustrative catalog definitions for bcnc_medicare_reimbursement. These are Blue Cross NC-like representative payer policies \u2014 not verbatim BCBS NC."
+      },
+      {
+        "family_id": "bcnc_medical",
+        "label": "Representative Payer medical / UM policies (Blue Cross NC-like)",
+        "catalog_class": "DEMO_SYNTHETIC",
+        "adapter_status": "DEMO_SYNTHETIC_CATALOG",
+        "acquisition_state": "DEMO_SYNTHETIC_CATALOG",
+        "discovered": 172,
+        "ingested": 172,
+        "excluded": 0,
+        "inaccessible": 0,
+        "failed": 0,
+        "notes": "Loaded 172 illustrative catalog definitions for bcnc_medical. These are Blue Cross NC-like representative payer policies \u2014 not verbatim BCBS NC."
+      },
+      {
+        "family_id": "bcnc_administrative",
+        "label": "Representative Payer administrative policies (Blue Cross NC-like)",
+        "catalog_class": "DEMO_SYNTHETIC",
+        "adapter_status": "DEMO_SYNTHETIC_CATALOG",
+        "acquisition_state": "DEMO_SYNTHETIC_CATALOG",
+        "discovered": 53,
+        "ingested": 53,
+        "excluded": 0,
+        "inaccessible": 0,
+        "failed": 0,
+        "notes": "Loaded 53 illustrative catalog definitions for bcnc_administrative. These are Blue Cross NC-like representative payer policies \u2014 not verbatim BCBS NC."
+      },
+      {
+        "family_id": "bcnc_pricing",
+        "label": "Representative Payer pricing policies (Blue Cross NC-like)",
+        "catalog_class": "DEMO_SYNTHETIC",
+        "adapter_status": "DEMO_SYNTHETIC_CATALOG",
+        "acquisition_state": "DEMO_SYNTHETIC_CATALOG",
+        "discovered": 6,
+        "ingested": 6,
+        "excluded": 0,
+        "inaccessible": 0,
+        "failed": 0,
+        "notes": "Loaded 6 illustrative catalog definitions for bcnc_pricing. These are Blue Cross NC-like representative payer policies \u2014 not verbatim BCBS NC."
+      },
+      {
+        "family_id": "cms_ncd",
+        "label": "CMS National Coverage Determinations",
+        "catalog_class": "AUTHORITATIVE_PUBLIC",
+        "adapter_status": "RECONCILED",
+        "acquisition_state": "RECONCILED",
+        "discovered": 345,
+        "ingested": 345,
+        "excluded": 0,
+        "inaccessible": 0,
+        "failed": 0,
+        "notes": "Loaded 345 unique documents from 2 file(s) under /Users/nileshl/Private/HealthForesight/data/policy_sources/cms_ncd"
+      },
+      {
+        "family_id": "mac_lcd_nc",
+        "label": "MAC LCDs (NC / Palmetto JM)",
+        "catalog_class": "AUTHORITATIVE_PUBLIC",
+        "adapter_status": "RECONCILED",
+        "acquisition_state": "RECONCILED",
+        "discovered": 938,
+        "ingested": 938,
+        "excluded": 0,
+        "inaccessible": 0,
+        "failed": 0,
+        "notes": "Loaded 938 unique documents from 2 file(s) under /Users/nileshl/Private/HealthForesight/data/policy_sources/mac_lcd_nc"
+      },
+      {
+        "family_id": "lcd_billing_coding_articles",
+        "label": "LCD billing/coding articles",
+        "catalog_class": "AUTHORITATIVE_PUBLIC",
+        "adapter_status": "RECONCILED",
+        "acquisition_state": "RECONCILED",
+        "discovered": 2118,
+        "ingested": 2118,
+        "excluded": 0,
+        "inaccessible": 0,
+        "failed": 0,
+        "notes": "Loaded 2118 unique documents from 2 file(s) under /Users/nileshl/Private/HealthForesight/data/policy_sources/lcd_billing_coding_articles"
+      },
+      {
+        "family_id": "ncci_ptp",
+        "label": "Medicare NCCI PTP edits",
+        "catalog_class": "AUTHORITATIVE_PUBLIC",
+        "adapter_status": "ACCESS_BLOCKED",
+        "acquisition_state": "ACCESS_BLOCKED",
+        "discovered": 0,
+        "ingested": 0,
+        "excluded": 0,
+        "inaccessible": 1,
+        "failed": 0,
+        "notes": "PTP inventory incomplete until quarterly files are dropped and reconciled. Ignored 2 demo-stub row(s)."
+      },
+      {
+        "family_id": "ncci_mue",
+        "label": "Medicare NCCI MUE edits",
+        "catalog_class": "AUTHORITATIVE_PUBLIC",
+        "adapter_status": "ACCESS_BLOCKED",
+        "acquisition_state": "ACCESS_BLOCKED",
+        "discovered": 0,
+        "ingested": 0,
+        "excluded": 0,
+        "inaccessible": 1,
+        "failed": 0,
+        "notes": "MUE adapter waits for authorized/complete release files. Ignored 2 demo-stub row(s)."
+      },
+      {
+        "family_id": "medicare_other_payment",
+        "label": "Other Medicare payment rules (MPPR, global, fee schedule, modifiers, POS)",
+        "catalog_class": "AUTHORITATIVE_PUBLIC",
+        "adapter_status": "RECONCILED",
+        "acquisition_state": "RECONCILED",
+        "discovered": 1,
+        "ingested": 1,
+        "excluded": 0,
+        "inaccessible": 0,
+        "failed": 0,
+        "notes": "Loaded 1 unique documents from 1 file(s) under /Users/nileshl/Private/HealthForesight/data/policy_sources/medicare_other_payment"
+      },
+      {
+        "family_id": "payer_adaptations",
+        "label": "Illustrative payer adaptations of Medicare/industry rules (Blue Cross NC-like)",
+        "catalog_class": "DEMO_SYNTHETIC",
+        "adapter_status": "DEMO_SYNTHETIC_CATALOG",
+        "acquisition_state": "DEMO_SYNTHETIC_CATALOG",
+        "discovered": 11,
+        "ingested": 11,
+        "excluded": 0,
+        "inaccessible": 0,
+        "failed": 0,
+        "notes": "Loaded 11 illustrative catalog definitions for payer_adaptations. These are Blue Cross NC-like representative payer policies \u2014 not verbatim BCBS NC."
+      }
+    ],
+    "complete": false,
+    "demo_payer_catalog_ready": true,
+    "authoritative_public_ready": false
+  },
+  "ncci_status": "ACCESS_BLOCKED_cms_gov_403",
+  "creates_payer_catalog_rows": false,
+  "honesty": {
+    "representative_payer_is_blue_cross_nc_like_not_verbatim": true,
+    "cms_ncci_remain_authoritative_public_when_acquired": true,
+    "requires_bcbs_nc_authorization": false,
+    "display_label_default": "Representative Payer Policies",
+    "display_label_contextual": "Representative Payer Policies (Blue Cross NC-like)"
+  }
+}

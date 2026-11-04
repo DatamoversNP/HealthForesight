@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_d2d20cf8852983f559cd83ef",
+  "policy_id": "130ecc03-cbc0-418e-ab51-e6f1a3a688b9",
+  "name": "Surrogacy Exclusion Policy",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "550c8325508131ce",
+  "started_at": "2026-11-04T13:18:18.243243+00:00",
+  "finished_at": "2026-11-04T13:18:18.243245+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

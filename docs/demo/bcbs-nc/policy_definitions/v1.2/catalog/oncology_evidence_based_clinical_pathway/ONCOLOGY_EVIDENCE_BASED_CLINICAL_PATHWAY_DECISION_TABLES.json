@@ -1,0 +1,21 @@
+{
+  "rules": [
+    {
+      "id": "R1_APPLICABILITY",
+      "text": "Rules pending resolved schedule or non-code applicability design",
+      "evidence_class": "UNRESOLVED"
+    },
+    {
+      "id": "R2_NO_AUTO_DENY",
+      "text": "Do not auto-deny without clinical review pathway when PA applies",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "exceptions": [
+    {
+      "id": "E1_EMERGENCY",
+      "text": "Emergency / urgent exceptions per applicable federal/state emergency access rules",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ]
+}

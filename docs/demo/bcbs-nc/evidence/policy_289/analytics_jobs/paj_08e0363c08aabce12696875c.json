@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_08e0363c08aabce12696875c",
+  "policy_id": "74517c19-82cd-4bca-b6b1-e046403df9f0",
+  "name": "No Surprises Act Emergency Services No-PA Rule",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "2b20ebe69ab7331c",
+  "started_at": "2026-11-04T13:18:18.237422+00:00",
+  "finished_at": "2026-11-04T13:18:18.237423+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_6a44c72564097c39558fad5a",
+  "policy_id": "0a6506e3-3813-49cf-ab1a-002109fe1a02",
+  "name": "ACL Reconstruction Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "2f64b625554f57ed",
+  "started_at": "2026-11-04T13:18:18.225418+00:00",
+  "finished_at": "2026-11-04T13:18:18.225420+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

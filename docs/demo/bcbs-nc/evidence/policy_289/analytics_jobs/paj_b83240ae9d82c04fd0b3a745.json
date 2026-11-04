@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_b83240ae9d82c04fd0b3a745",
+  "policy_id": "143c43fc-f4ba-4c69-80b6-3dd6bd8367cb",
+  "name": "GLP-1 Coverage Criteria for Obesity",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "21d7d763ac47dfe7",
+  "started_at": "2026-11-04T13:18:18.232697+00:00",
+  "finished_at": "2026-11-04T13:18:18.232698+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

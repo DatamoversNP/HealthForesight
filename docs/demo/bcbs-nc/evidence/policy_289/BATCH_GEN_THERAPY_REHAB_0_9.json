@@ -1,0 +1,101 @@
+{
+  "archetype": "THERAPY_REHAB",
+  "offset": 0,
+  "count": 9,
+  "candidate_schedule": 9,
+  "unresolved": 0,
+  "not_applicable": 0,
+  "persisted_ok": 0,
+  "results": [
+    {
+      "policy_id": "ebc41eb8-b094-4884-989a-e7470a753676",
+      "name": "CAR-T and Cellular Therapy Prior Authorization",
+      "folder": "catalog/car_t_and_cellular_therapy_prior_authorization",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 6,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "6a322ff5-08cb-47cc-8a4e-ac4391286a45",
+      "name": "Gene Therapy One-Time High-Cost Prior Authorization",
+      "folder": "catalog/gene_therapy_one_time_high_cost_prior_authorization",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 2,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "4ea16ea6-9434-4c0d-b864-cfc9c06cc20a",
+      "name": "Hyperbaric Oxygen Therapy Prior Authorization",
+      "folder": "catalog/hyperbaric_oxygen_therapy_prior_authorization",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 2,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "d85a0b27-9972-4591-ae52-62e0ac732ab8",
+      "name": "MS Disease-Modifying Therapy Prior Authorization",
+      "folder": "catalog/ms_disease_modifying_therapy_prior_authorization",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 3,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "5d32b25b-591f-4dc2-bedb-40175803daeb",
+      "name": "Negative Pressure Wound Therapy Prior Authorization",
+      "folder": "catalog/negative_pressure_wound_therapy_prior_authorization",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 4,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "3be7daf8-c492-46d4-9980-e9c860b8cca7",
+      "name": "PAP Therapy Initiation and Compliance",
+      "folder": "catalog/pap_therapy_initiation_and_compliance",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 3,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "3d1d4a09-c7ce-4935-ad95-b477831a1002",
+      "name": "Proton Beam Therapy Coverage Criteria",
+      "folder": "catalog/proton_beam_therapy_coverage_criteria",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 4,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "778736a4-8a5a-44be-8c55-517797ff0ea5",
+      "name": "Radiation Therapy Modality Prior Authorization",
+      "folder": "catalog/radiation_therapy_modality_prior_authorization",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 4,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "2c003e47-6137-4402-bbaa-67589ef2654b",
+      "name": "Speech Therapy Visit Limit",
+      "folder": "catalog/speech_therapy_visit_limit",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 6,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    }
+  ]
+}

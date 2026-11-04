@@ -1,0 +1,16 @@
+{
+  "job_id": "paj_b3af1f8e3a35fefda0adc467",
+  "policy_id": "8de16b8c-7bbb-49ca-850a-73b8e8f81908",
+  "name": "Commercial Preferred Drug Formulary Design",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "c5f42aca13f94ac9",
+  "started_at": "2026-11-04T13:18:18.228820+00:00",
+  "finished_at": "2026-11-04T13:18:18.228822+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

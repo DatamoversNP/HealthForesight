@@ -1,0 +1,16 @@
+{
+  "job_id": "paj_3974415f2cee87e1cd6e35ee",
+  "policy_id": "d1bffe1f-683f-4086-a873-7d1bcf4fa059",
+  "name": "Preferred Generic Drug Tier",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "1b8dd59746d8d222",
+  "started_at": "2026-11-04T13:18:18.240333+00:00",
+  "finished_at": "2026-11-04T13:18:18.240335+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

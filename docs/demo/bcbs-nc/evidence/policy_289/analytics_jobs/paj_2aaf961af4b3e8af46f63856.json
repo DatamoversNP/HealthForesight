@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_2aaf961af4b3e8af46f63856",
+  "policy_id": "eea5fdd2-b04b-4dfb-9222-087946bcbe6e",
+  "name": "Heart Failure Disease Management Program",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "3073106d3774cacc",
+  "started_at": "2026-11-04T13:18:18.233045+00:00",
+  "finished_at": "2026-11-04T13:18:18.233047+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

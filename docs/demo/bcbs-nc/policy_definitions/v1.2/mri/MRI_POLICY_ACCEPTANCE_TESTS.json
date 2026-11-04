@@ -1,0 +1,207 @@
+{
+  "document_id": "HF-RP-UM-MRI-001-ACCEPTANCE-TESTS",
+  "version": "v1.2.1-technical-closure",
+  "policy_id": "d403f101-08dd-45c9-ab83-d42e37c62018",
+  "status": "DEFINITION_REVIEW_REQUIRED",
+  "operational_activation": "PROHIBITED",
+  "decision_tables_ref": "MRI_DECISION_TABLES.json",
+  "coverage_classes": ["positive", "negative", "boundary", "missing_data"],
+  "tests": [
+    {
+      "id": "AT-MKT-01",
+      "category": "scope",
+      "coverage": "negative",
+      "given": "markets include NYC or DFW",
+      "expect": "FAIL_GATE — NC-only or empty until product schedule"
+    },
+    {
+      "id": "AT-CODE-01",
+      "category": "codeset",
+      "coverage": "negative",
+      "given": "request CPT 99213",
+      "expect": "NOT_APPLICABLE — EXCLUDE_PA_TARGET"
+    },
+    {
+      "id": "AT-CODE-02",
+      "category": "codeset",
+      "coverage": "positive",
+      "given": "request CPT 72148 outpatient nonemergent on adopted product",
+      "expect": "enter DT-URGENCY then evidence/clinical path (not NOT_APPLICABLE for anatomy)"
+    },
+    {
+      "id": "AT-CODE-03",
+      "category": "codeset",
+      "coverage": "boundary",
+      "given": "request CPT 70540 under proposed lumbar PA",
+      "expect": "NOT_APPLICABLE / OUT_OF_BAND — never inherit L34425 as lumbar rule"
+    },
+    {
+      "id": "AT-CODE-04",
+      "category": "codeset",
+      "coverage": "boundary",
+      "given": "72158 on lever but missing from approved scope schedule",
+      "expect": "MANUAL_SCOPE_REVIEW — no auto deny, no silent broaden"
+    },
+    {
+      "id": "AT-CODE-05",
+      "category": "codeset_schema",
+      "coverage": "positive",
+      "given": "every codes[] record validated against MRI_CODESET_RECORD.schema.json",
+      "expect": "PASS — all required keys present; optional fields explicitly null"
+    },
+    {
+      "id": "AT-EVD-VER-01",
+      "category": "evidence",
+      "coverage": "positive",
+      "given": "evidence_class == VERIFIED_SOURCE",
+      "expect": "evidence.evidence_id, source_version, retrieved_at, content_checksum_sha256, applicability_period_start all non-null"
+    },
+    {
+      "id": "AT-LCD-01",
+      "category": "medicare",
+      "coverage": "negative",
+      "given": "lumbar MRI + L34425/A56729",
+      "expect": "NOT_APPLICABLE for those authorities"
+    },
+    {
+      "id": "AT-NCD-01",
+      "category": "medicare",
+      "coverage": "boundary",
+      "given": "commercial program + NCD220.2",
+      "expect": "REFERENCE_ONLY unless explicit commercial adoption documented"
+    },
+    {
+      "id": "AT-URG-01",
+      "category": "urgency",
+      "coverage": "positive",
+      "given": "emergency indicators / suspected cauda equina",
+      "expect": "CLINICAL_REVIEW_REQUIRED pathway=EMERGENCY; bypass DT-EVIDENCE.routine_incomplete and conservative-care gate"
+    },
+    {
+      "id": "AT-URG-02",
+      "category": "urgency",
+      "coverage": "positive",
+      "given": "urgent indicators",
+      "expect": "CLINICAL_REVIEW_REQUIRED pathway=URGENT_EXPEDITED; distinct from emergency"
+    },
+    {
+      "id": "AT-URG-03",
+      "category": "urgency",
+      "coverage": "boundary",
+      "given": "emergency indicators AND missing routine documentation",
+      "expect": "must NOT emit PENDING_INFORMATION; urgency evaluated before evidence table"
+    },
+    {
+      "id": "AT-EVID-01",
+      "category": "evidence",
+      "coverage": "missing_data",
+      "given": "standard pathway + missing required clinical docs",
+      "expect": "PENDING_INFORMATION with clock tracking"
+    },
+    {
+      "id": "AT-CLIN-01",
+      "category": "clinical",
+      "coverage": "negative",
+      "given": "criteria schedule not signed + operative mode",
+      "expect": "no operative APPROVED or ADVERSE_DETERMINATION_ISSUED; CLINICAL_REVIEW_REQUIRED (CL-01)"
+    },
+    {
+      "id": "AT-CLIN-02",
+      "category": "clinical",
+      "coverage": "boundary",
+      "given": "LUMBAR-01 criteria appear met but schedule unsigned",
+      "expect": "disposition_while_unsigned = CLINICAL_REVIEW_REQUIRED; proposed APPROVED inactive"
+    },
+    {
+      "id": "AT-CLIN-03",
+      "category": "clinical",
+      "coverage": "positive",
+      "given": "SYNTHETIC_SIMULATION + proposed_row_match",
+      "expect": "CLINICAL_REVIEW_REQUIRED with PROPOSED annotation; must not persist as member determination"
+    },
+    {
+      "id": "AT-ADV-01",
+      "category": "adverse",
+      "coverage": "positive",
+      "given": "signed schedule + does_not_meet + no exception (operative)",
+      "expect": "ADVERSE_REVIEW_REQUIRED — referral only"
+    },
+    {
+      "id": "AT-ADV-02",
+      "category": "adverse",
+      "coverage": "positive",
+      "given": "adverse process complete with reviewer_id, notice_ref, appeal_rights_ref, decided_at, audit_packet_id",
+      "expect": "ADVERSE_DETERMINATION_ISSUED"
+    },
+    {
+      "id": "AT-ADV-03",
+      "category": "adverse",
+      "coverage": "missing_data",
+      "given": "attempt ADVERSE_DETERMINATION_ISSUED without notice_ref or audit_packet_id",
+      "expect": "FAIL — remain ADVERSE_REVIEW_REQUIRED or blocked"
+    },
+    {
+      "id": "AT-EXC-01",
+      "category": "exception",
+      "coverage": "positive",
+      "given": "authorized clinical exception documented after schedule approval",
+      "expect": "APPROVED with audit trail"
+    },
+    {
+      "id": "AT-APL-01",
+      "category": "appeals",
+      "coverage": "positive",
+      "given": "ADVERSE_DETERMINATION_ISSUED",
+      "expect": "notice + appeal rights pathway exercisable (ops matrix clocks may still be UNRESOLVED)"
+    },
+    {
+      "id": "AT-SYN-01",
+      "category": "fixtures",
+      "coverage": "boundary",
+      "given": "synthetic MRI known-answer / causal units",
+      "expect": "reconcile independently; never labeled BCBS NC actual; must not inherit lumbar-only operative meaning silently"
+    },
+    {
+      "id": "AT-SYN-02",
+      "category": "fixtures",
+      "coverage": "negative",
+      "given": "NCCI PTP demo pair",
+      "expect": "SYNTHETIC_FIXTURE label only"
+    },
+    {
+      "id": "AT-MIG-01",
+      "category": "scope_migration",
+      "coverage": "boundary",
+      "given": "historical analytics under general OP MRI title",
+      "expect": "remain interpretable as PRE_LUMBAR_NARROWING until migration signed; frozen demo not silently redefined"
+    },
+    {
+      "id": "AT-VER-01",
+      "category": "versioning",
+      "coverage": "negative",
+      "given": "v1 and v2 same effective start",
+      "expect": "FAIL_GATE until precedence resolved"
+    },
+    {
+      "id": "AT-ANL-01",
+      "category": "analytics",
+      "coverage": "negative",
+      "given": "elasticity -0.3 in config",
+      "expect": "treated as UNESTIMATED/demo-only — not enforcement"
+    },
+    {
+      "id": "AT-REL-01",
+      "category": "release",
+      "coverage": "positive",
+      "given": "DEFINITION_REVIEW_REQUIRED",
+      "expect": "OPERATIONAL_ACTIVATION_PROHIBITED; FULLY_VALIDATED_DEMO analytics may remain independent"
+    },
+    {
+      "id": "AT-DET-01",
+      "category": "determinism",
+      "coverage": "positive",
+      "given": "identical inputs twice through evaluation_order",
+      "expect": "identical first-match outcomes; tables mutually consistent with invariants"
+    }
+  ]
+}

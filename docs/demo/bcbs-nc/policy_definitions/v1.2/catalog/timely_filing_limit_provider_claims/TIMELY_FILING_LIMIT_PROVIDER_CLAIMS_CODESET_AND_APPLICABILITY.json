@@ -1,0 +1,10 @@
+{
+  "document_id": "TIMELY_FILING_LIMIT_PROVIDER_CLAIMS_CODESET",
+  "policy_id": "04a80815-bf9d-4a6f-b01e-5a9f756f500e",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abTimely Filing Limit \u2014 Provider Claims\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Claim filing deadline policy",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

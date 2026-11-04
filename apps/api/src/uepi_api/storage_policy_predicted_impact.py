@@ -59,6 +59,102 @@ def get_predicted_impact(policy_id: UUID | str, tenant_id: UUID) -> Optional[Dic
     return _get_predicted_impact(policy_id, tenant_id)
 
 
+def list_latest_predicted_impacts(tenant_id: UUID, limit: int = 500) -> list[Dict[str, Any]]:
+    """Latest predicted impact per policy for a tenant (slim payload for overview grids)."""
+    from uepi_api.database import SessionLocal
+
+    db: Session = SessionLocal()
+    try:
+        # DISTINCT ON (Postgres) — one row per policy, most recent predicted_at
+        rows = db.execute(
+            text(
+                """
+                SELECT DISTINCT ON (pi.policy_id)
+                  pi.policy_id,
+                  p.name AS policy_name,
+                  p.policy_type,
+                  p.status,
+                  pi.predicted_at,
+                  pi.confidence,
+                  pi.prediction_method,
+                  pi.metrics_json,
+                  pi.baseline_id
+                FROM policy_predicted_impacts pi
+                JOIN policies p ON p.id = pi.policy_id AND p.tenant_id = pi.tenant_id
+                WHERE pi.tenant_id = :tenant_id
+                  AND COALESCE(p.status, 'ACTIVE') <> 'RETIRED'
+                ORDER BY pi.policy_id, pi.predicted_at DESC NULLS LAST
+                LIMIT :lim
+                """
+            ),
+            {"tenant_id": str(tenant_id), "lim": limit},
+        ).mappings().all()
+
+        out: list[Dict[str, Any]] = []
+        for r in rows:
+            metrics_data = r["metrics_json"] or {}
+            if isinstance(metrics_data, str):
+                try:
+                    metrics_data = json.loads(metrics_data)
+                except (json.JSONDecodeError, TypeError):
+                    metrics_data = {}
+            if not isinstance(metrics_data, dict):
+                metrics_data = {}
+            pred_metrics = metrics_data.get("metrics", metrics_data)
+            if not isinstance(pred_metrics, dict):
+                pred_metrics = {}
+            # Skip empty shells
+            if not any(
+                pred_metrics.get(k) is not None
+                for k in (
+                    "cost_change_pmpm",
+                    "utilization_change_pct",
+                    "cost_change",
+                    "utilization_change",
+                    "utilization_change_per_1k",
+                )
+            ):
+                continue
+            pred_at = r["predicted_at"].isoformat() if r["predicted_at"] else None
+            out.append(
+                {
+                    "policy_id": str(r["policy_id"]),
+                    "policy_name": r["policy_name"],
+                    "policy_type": r["policy_type"],
+                    "status": r["status"],
+                    "predicted_at": pred_at,
+                    "computed_at": pred_at,
+                    "confidence": r["confidence"],
+                    "prediction_method": r["prediction_method"],
+                    "baseline_id": str(r["baseline_id"]) if r["baseline_id"] else None,
+                    "metrics": {
+                        "cost_change_pmpm": pred_metrics.get("cost_change_pmpm")
+                        if pred_metrics.get("cost_change_pmpm") is not None
+                        else pred_metrics.get("cost_change"),
+                        "utilization_change_pct": pred_metrics.get("utilization_change_pct"),
+                        "utilization_change_per_1k": pred_metrics.get("utilization_change_per_1k")
+                        if pred_metrics.get("utilization_change_per_1k") is not None
+                        else pred_metrics.get("utilization_change"),
+                        "cost_change_total": pred_metrics.get("cost_change_total"),
+                        "cost_change_pct": pred_metrics.get("cost_change_pct"),
+                        "confidence_score": pred_metrics.get("confidence_score")
+                        if pred_metrics.get("confidence_score") is not None
+                        else r["confidence"],
+                        "prediction_method": pred_metrics.get("prediction_method")
+                        or r["prediction_method"],
+                    },
+                }
+            )
+        # Prefer largest absolute cost impact first for overview default sort
+        out.sort(
+            key=lambda x: abs(float((x.get("metrics") or {}).get("cost_change_pmpm") or 0)),
+            reverse=True,
+        )
+        return out
+    finally:
+        db.close()
+
+
 def _get_predicted_impact(policy_id: UUID | str, tenant_id: UUID) -> Optional[Dict[str, Any]]:
     """Get predicted impact from database"""
     from uepi_api.database import SessionLocal
@@ -296,6 +392,7 @@ def _store_predicted_impact(
         
         # Return as dict (same format as file-based)
         return {
+            "id": str(predicted_impact.id),
             "policy_id": str(predicted_impact.policy_id),
             "predicted_at": predicted_impact.predicted_at.isoformat() if predicted_impact.predicted_at else None,
             "metrics": predicted_impact.metrics_json,

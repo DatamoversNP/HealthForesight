@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_b8ec61399bd0ff04a4b07a5b",
+  "policy_id": "4895b362-3a5d-4c74-9566-d6ba559a2949",
+  "name": "Concurrent DUR Safety Edits",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "01268238a728d8c3",
+  "started_at": "2026-11-04T13:18:18.229046+00:00",
+  "finished_at": "2026-11-04T13:18:18.229047+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

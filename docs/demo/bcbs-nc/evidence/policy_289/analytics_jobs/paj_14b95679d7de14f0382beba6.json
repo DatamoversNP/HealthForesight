@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_14b95679d7de14f0382beba6",
+  "policy_id": "064c3a08-e3c4-4627-a701-7e83aaee2a52",
+  "name": "Cardiac Imaging Comprehensive Control",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "2a2f542b82f10af6",
+  "started_at": "2026-11-04T13:18:18.227893+00:00",
+  "finished_at": "2026-11-04T13:18:18.227894+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

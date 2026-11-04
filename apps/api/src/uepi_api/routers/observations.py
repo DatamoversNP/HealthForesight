@@ -521,6 +521,7 @@ async def list_observations_route(
     include_trends: bool = Query(False, description="Include trend analysis"),
     limit: int = Query(100, ge=1, le=500, description="Max observations to return (default 100; use latest_only for portfolio views)"),
     latest_only: bool = Query(False, description="If true, return only latest observation per policy (by observation_period_end)"),
+    summary: bool = Query(False, description="If true, slim metrics/comparisons and omit behavioral_explanation (faster lists)"),
 ):
     """List observations for the current tenant with optional trend analysis"""
     # Convert string ID to UUID if needed
@@ -542,28 +543,19 @@ async def list_observations_route(
             else:
                 policy_id_uuid = policy_id  # Use as-is if not found
     
+    # Trends need multi-row history; ignore latest_only when include_trends + policy scoped
+    use_latest = bool(latest_only) and not (include_trends and policy_id_uuid)
+
     observations = list_observations(
         tenant_id=current_user.tenant_id,
         policy_id=policy_id_uuid,
         data_period_id=data_period_id,
         observation_type=observation_type,
         limit=limit,
+        latest_only=use_latest,
+        summary=summary,
     )
-    
-    if latest_only and observations:
-        from collections import defaultdict
-        by_policy = defaultdict(list)
-        for obs in observations:
-            pid = obs.get("policy_id")
-            if pid:
-                by_policy[str(pid)].append(obs)
-        for pid in by_policy:
-            by_policy[pid].sort(
-                key=lambda x: (x.get("observation_period_end") or "", x.get("computed_at") or ""),
-                reverse=True,
-            )
-        observations = [by_policy[pid][0] for pid in by_policy]
-    
+
     # Add trend data if requested
     if include_trends and observations:
         # Group by policy and calculate trends
@@ -626,11 +618,29 @@ async def list_policy_verdicts_route(
     Returns one row per policy: policy_name | verdict | savings/cost impact | confidence | one-line reason | recommendation.
     Uses latest observation per policy for verdict; policies with no observation appear as UNKNOWN.
     """
+    import asyncio
     from uepi_api.storage_policies import list_policies
     from collections import defaultdict
 
-    observations = list_observations(tenant_id=current_user.tenant_id, limit=500)
-    policies = {str(p.get("id") or p.get("policy_id")): p for p in (list_policies(current_user.tenant_id) or [])}
+    tenant_id = current_user.tenant_id
+
+    def _load_inputs():
+        # Must use latest_only: a flat limit=500 truncates older policies (e.g. MRI) and
+        # falsely shows UNKNOWN despite observations existing — blocks the demo climax.
+        # summary policies: avoid per-row workspace N+1 that wedges the API over Azure RTT.
+        observations = list_observations(
+            tenant_id=tenant_id,
+            latest_only=True,
+            summary=True,
+            limit=500,
+        )
+        policies = {
+            str(p.get("id") or p.get("policy_id")): p
+            for p in (list_policies(tenant_id, summary=True) or [])
+        }
+        return observations, policies
+
+    observations, policies = await asyncio.to_thread(_load_inputs)
 
     # Latest observation per policy: by observation_period_end (run date) then computed_at
     by_policy: dict = defaultdict(list)

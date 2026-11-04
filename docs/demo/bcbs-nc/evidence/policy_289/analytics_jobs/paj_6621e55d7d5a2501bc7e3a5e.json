@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_6621e55d7d5a2501bc7e3a5e",
+  "policy_id": "6cf80c62-e9bd-4db7-8a35-84836c001982",
+  "name": "Medicare Stars Gap Closure Program",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "9e535b504937155e",
+  "started_at": "2026-11-04T13:18:18.236071+00:00",
+  "finished_at": "2026-11-04T13:18:18.236072+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

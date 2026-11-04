@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_1d2be3653fcf4a3433f35301",
+  "policy_id": "5ec5df8d-671e-45ca-8d27-fff922bff897",
+  "name": "Urgent Care Preference Over Non-Emergent ER",
+  "evidence_pathway": "EMPIRICAL_COHORT",
+  "configuration_digest": "67ce4edf465434a2",
+  "started_at": "2026-11-04T13:18:18.244557+00:00",
+  "finished_at": "2026-11-04T13:18:18.244558+00:00",
+  "status": "EMPIRICAL_ELIGIBLE_QUEUED",
+  "duplicate_prevented": false,
+  "result": {
+    "cohort_count": 315719,
+    "message": "Preflight PASS \u2014 enqueue Celery/worker analytical services; not executed via bulk HTTP",
+    "next": "uepi_worker.tasks.policy_analytics_lifecycle_job"
+  },
+  "error": null
+}

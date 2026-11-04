@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_e1480104289b7c31a4707d35",
+  "policy_id": "a0e0b722-562e-495a-a4e4-bc1ec2fea5de",
+  "name": "Rheumatology Biologic Step Therapy for RA",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "1c5b380b13eef833",
+  "started_at": "2026-11-04T13:18:18.241726+00:00",
+  "finished_at": "2026-11-04T13:18:18.241728+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

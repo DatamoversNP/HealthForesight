@@ -44,6 +44,7 @@ import {
   ArrowForward as ArrowForwardIcon,
 } from '@mui/icons-material'
 import { apiClient } from '../lib/api'
+import { CATALOG_POLICY_TYPES, formatPolicyTypeLabel } from '../lib/policyType'
 
 const STEPS = ['Upload Package', 'Review Mapping', 'Save Policy']
 
@@ -387,13 +388,11 @@ export default function PolicyImportPage() {
                               setCanonicalPolicy({ ...canonicalPolicy, policy_type: e.target.value })
                             }
                           >
-                            <MenuItem value="PRIOR_AUTH">Prior Authorization</MenuItem>
-                            <MenuItem value="SITE_OF_CARE">Site of Care</MenuItem>
-                            <MenuItem value="DURATION_FREQUENCY_LIMIT">Duration/Frequency Limit</MenuItem>
-                            <MenuItem value="COST_SHARING">Cost Sharing</MenuItem>
-                            <MenuItem value="NETWORK_RESTRICTION">Network Restriction</MenuItem>
-                            <MenuItem value="REFERRAL_REQUIREMENT">Referral Requirement</MenuItem>
-                            <MenuItem value="COMPOSITE">Composite</MenuItem>
+                            {CATALOG_POLICY_TYPES.map((type) => (
+                              <MenuItem key={type} value={type}>
+                                {formatPolicyTypeLabel(type)}
+                              </MenuItem>
+                            ))}
                           </Select>
                         </FormControl>
                       </TableCell>

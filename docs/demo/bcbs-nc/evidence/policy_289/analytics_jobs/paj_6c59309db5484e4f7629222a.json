@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_6c59309db5484e4f7629222a",
+  "policy_id": "6aa74e48-4e34-4ba6-b3c1-11112b16b5ef",
+  "name": "Coronary Calcium Scoring Coverage Criteria",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "fb979c639882a390",
+  "started_at": "2026-11-04T13:18:18.229577+00:00",
+  "finished_at": "2026-11-04T13:18:18.229579+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

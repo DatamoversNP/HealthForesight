@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_6c92638f2782c7090414d7be",
+  "policy_id": "1efc68c9-ac40-4fa0-bc3c-433f6ef3cf26",
+  "name": "Medicaid EPSDT Coverage Obligation",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "1cb7cd0371dfe848",
+  "started_at": "2026-11-04T13:18:18.235591+00:00",
+  "finished_at": "2026-11-04T13:18:18.235593+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

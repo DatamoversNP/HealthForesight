@@ -1,0 +1,26 @@
+{
+  "document_id": "UM_REDUCTION_FOR_UNDER_AGE_45_AND_B1C_RELEASE_BLOCKERS",
+  "package_version": "v1.2.0-representative-batch",
+  "blocks_operational_activation": true,
+  "blocker_count": 3,
+  "blockers": [
+    {
+      "id": "CLINICAL_PRODUCT_UNSIGNED",
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "text": "Clinical/product schedule not signed for operative use"
+    },
+    {
+      "id": "NOT_PROPRIETARY_BCBS_NC",
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "text": "Package is Representative Payer design \u2014 not proprietary BCBS NC operative policy"
+    },
+    {
+      "id": "CODESET_UNRESOLVED",
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "text": "Internal program label \u2014 scope/codes require product clarification; do not invent cohort rules"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_afac924d83b3840a49ccbfeb",
+  "policy_id": "21ead512-8fd6-490e-a679-0808693de1fb",
+  "name": "Prior Authorization Submission and Turnaround Standards",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "ac8e6e3d3cbc0a17",
+  "started_at": "2026-11-04T13:18:18.240632+00:00",
+  "finished_at": "2026-11-04T13:18:18.240633+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

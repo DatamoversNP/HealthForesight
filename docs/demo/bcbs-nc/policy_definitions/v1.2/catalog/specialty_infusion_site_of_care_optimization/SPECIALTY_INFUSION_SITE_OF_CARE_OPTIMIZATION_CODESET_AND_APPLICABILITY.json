@@ -1,0 +1,25 @@
+{
+  "document_id": "SPECIALTY_INFUSION_SITE_OF_CARE_OPTIMIZATION_CODESET",
+  "policy_id": "e5bd7da6-9f1b-4add-8a44-175a1cb6846f",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abSpecialty Infusion Site-of-Care Optimization\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "96413",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "96365",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Specialty infusion admin; J-codes UNRESOLVED",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

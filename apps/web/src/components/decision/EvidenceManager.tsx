@@ -3,6 +3,7 @@
  * Manages evidence links for a policy
  */
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   Box,
   Button,
@@ -27,6 +28,7 @@ import {
   CircularProgress,
   IconButton,
   Link,
+  Paper,
 } from '@mui/material'
 import {
   Add as AddIcon,
@@ -34,9 +36,18 @@ import {
   Link as LinkIcon,
   CheckCircle as CheckCircleIcon,
   Warning as WarningIcon,
+  OpenInNew as OpenInNewIcon,
 } from '@mui/icons-material'
 import { format } from 'date-fns'
 import { apiClient } from '../../lib/api'
+
+interface RelatedArtifact {
+  kind: string
+  id: string
+  title: string
+  subtitle?: string
+  href: string
+}
 
 interface EvidenceLink {
   evidence_type: string
@@ -52,7 +63,9 @@ interface EvidenceManagerProps {
 }
 
 export default function EvidenceManager({ policyId, onEvidenceLinked }: EvidenceManagerProps) {
+  const navigate = useNavigate()
   const [evidence, setEvidence] = useState<any[]>([])
+  const [relatedArtifacts, setRelatedArtifacts] = useState<RelatedArtifact[]>([])
   const [decisions, setDecisions] = useState<any[]>([])
   const [availableEvidence, setAvailableEvidence] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
@@ -72,7 +85,82 @@ export default function EvidenceManager({ policyId, onEvidenceLinked }: Evidence
   useEffect(() => {
     loadEvidence()
     loadDecisions()
+    loadRelatedArtifacts()
   }, [policyId])
+
+  const loadRelatedArtifacts = async () => {
+    try {
+      const [obsList, impact, analyses] = await Promise.all([
+        apiClient
+          .listObservations({
+            policy_id: policyId,
+            latest_only: true,
+            summary: true,
+            limit: 5,
+          })
+          .catch(() => []),
+        apiClient.getPolicyPredictedImpact(policyId).catch(() => null),
+        apiClient.getAnalyses({ limit: 50 }).catch(() => []),
+      ])
+
+      const artifacts: RelatedArtifact[] = []
+      const observations = (Array.isArray(obsList) ? obsList : []).filter(
+        (o: any) => String(o.policy_id) === String(policyId)
+      )
+      for (const o of observations.slice(0, 3)) {
+        const oid = o.observation_id || o.id
+        if (!oid) continue
+        artifacts.push({
+          kind: 'Observation',
+          id: String(oid),
+          title: o.verdict_status
+            ? `Observation — ${String(o.verdict_status).replace(/_/g, ' ')}`
+            : 'Latest observation',
+          subtitle: o.observation_period_end
+            ? `Through ${format(new Date(o.observation_period_end), 'MMM d, yyyy')}`
+            : undefined,
+          href: `/observation-analysis?policy=${encodeURIComponent(policyId)}&observation=${encodeURIComponent(oid)}`,
+        })
+      }
+
+      if (impact && apiClient.hasUsablePredictedImpact(impact)) {
+        artifacts.push({
+          kind: 'Predicted impact',
+          id: String(impact.id || policyId),
+          title: 'Stage 3.5 predicted impact',
+          subtitle:
+            impact.metrics?.cost_change_pmpm != null
+              ? `Cost PMPM Δ $${Number(impact.metrics.cost_change_pmpm).toFixed(2)}`
+              : undefined,
+          href: '/predicted-impacts',
+        })
+      }
+
+      const forPolicy = (Array.isArray(analyses) ? analyses : [])
+        .filter((a: any) => String(a.policy_id) === String(policyId))
+        .slice(0, 8)
+      for (const a of forPolicy) {
+        const type = String(a.analysis_type || 'Analysis').toUpperCase()
+        const isWhatIf = type === 'SIMULATE' || type.includes('WHAT')
+        artifacts.push({
+          kind: isWhatIf ? 'What-If' : type,
+          id: String(a.id),
+          title: a.name?.trim() || `${type} ${String(a.id).slice(0, 8)}…`,
+          subtitle: a.created_at
+            ? format(new Date(a.created_at), 'MMM d, yyyy HH:mm')
+            : a.status,
+          href: isWhatIf
+            ? `/whatif?policy=${encodeURIComponent(policyId)}&scenario=${encodeURIComponent(a.id)}`
+            : `/analyses/${a.id}`,
+        })
+      }
+
+      setRelatedArtifacts(artifacts)
+    } catch (err) {
+      console.warn('Failed to load related policy artifacts:', err)
+      setRelatedArtifacts([])
+    }
+  }
 
   const loadDecisions = async () => {
     try {
@@ -267,11 +355,59 @@ export default function EvidenceManager({ policyId, onEvidenceLinked }: Evidence
         </Alert>
       )}
 
+      <Paper variant="outlined" sx={{ p: 2, mb: 3 }}>
+        <Typography variant="subtitle1" fontWeight={700} gutterBottom>
+          Related artifacts for this policy
+        </Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+          Auto-discovered observations, predicted impact, and analyses — open without manually linking.
+        </Typography>
+        {relatedArtifacts.length === 0 ? (
+          <Typography variant="body2" color="text.secondary">
+            No observation, predicted impact, or analysis artifacts found for this policy yet.
+          </Typography>
+        ) : (
+          <List dense disablePadding>
+            {relatedArtifacts.map((a) => (
+              <ListItem
+                key={`${a.kind}-${a.id}`}
+                secondaryAction={
+                  <IconButton edge="end" aria-label="open" onClick={() => navigate(a.href)} size="small">
+                    <OpenInNewIcon fontSize="small" />
+                  </IconButton>
+                }
+                sx={{
+                  borderBottom: '1px solid',
+                  borderColor: 'divider',
+                  pr: 6,
+                }}
+              >
+                <ListItemText
+                  primary={
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <Chip size="small" label={a.kind} />
+                      <Typography variant="body2" component="span">
+                        {a.title}
+                      </Typography>
+                    </Box>
+                  }
+                  secondary={a.subtitle}
+                />
+              </ListItem>
+            ))}
+          </List>
+        )}
+      </Paper>
+
+      <Typography variant="subtitle1" fontWeight={700} sx={{ mb: 1 }}>
+        Decision-linked evidence
+      </Typography>
+
       {evidence.length === 0 ? (
         <Card>
           <CardContent>
             <Typography color="text.secondary" align="center">
-              No evidence linked to this policy yet.
+              No evidence linked to decisions for this policy yet.
             </Typography>
             <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 1 }}>
               Link evidence from analyses, datasets, models, or baselines to support decisions.

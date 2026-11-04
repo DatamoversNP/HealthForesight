@@ -1,0 +1,117 @@
+{
+  "generated_at": "2026-11-03T16:00:16.170852+00:00",
+  "base": "http://127.0.0.1:7868",
+  "primary_route_passed": true,
+  "all_workspaces_passed": true,
+  "results": [
+    {
+      "gate": "primary:executive",
+      "ok": true,
+      "matched": "Executive Dashboard",
+      "err": null
+    },
+    {
+      "gate": "primary:mri_workspace",
+      "ok": true,
+      "matched": "Outpatient MRI Prior Authorization",
+      "err": null
+    },
+    {
+      "gate": "primary:mppr_workspace",
+      "ok": true,
+      "matched": "Multiple Procedure Payment Reduction",
+      "err": null
+    },
+    {
+      "gate": "primary:sos_workspace",
+      "ok": true,
+      "matched": "Freestanding Imaging Steerage",
+      "err": null
+    },
+    {
+      "gate": "primary:medicare",
+      "ok": true,
+      "matched": "Medicare",
+      "err": null
+    },
+    {
+      "gate": "primary:objectives",
+      "ok": true,
+      "matched": "Objectives",
+      "err": null
+    },
+    {
+      "gate": "workspace:mri",
+      "policy_id": "d403f101-08dd-45c9-ab83-d42e37c62018",
+      "ok": true,
+      "matched": "Monitoring",
+      "monitoring_ok": null,
+      "err": null
+    },
+    {
+      "gate": "workspace:mppr",
+      "policy_id": "d0eeb370-df14-4478-8755-dad6c3a35a47",
+      "ok": true,
+      "matched": "Monitoring",
+      "monitoring_ok": null,
+      "err": null
+    },
+    {
+      "gate": "workspace:sos",
+      "policy_id": "d7441dd9-3bfe-405e-ae6c-0377204bbb7e",
+      "ok": true,
+      "matched": "Monitoring",
+      "monitoring_ok": null,
+      "err": null
+    },
+    {
+      "gate": "workspace:ptp",
+      "policy_id": "58b839b5-b6e0-59e0-9406-d817877c3ce8",
+      "ok": true,
+      "matched": "Monitoring",
+      "monitoring_ok": null,
+      "err": null
+    },
+    {
+      "gate": "workspace:mue",
+      "policy_id": "e11b049d-fcce-55cc-bcd7-71329038383b",
+      "ok": true,
+      "matched": "Monitoring",
+      "monitoring_ok": null,
+      "err": null
+    },
+    {
+      "gate": "workspace:therapy",
+      "policy_id": "f2b8e7f3-1627-5dbe-8d7e-757ce21aa55b",
+      "ok": true,
+      "matched": "Monitoring",
+      "monitoring_ok": null,
+      "err": null
+    },
+    {
+      "gate": "workspace:infusion",
+      "policy_id": "11218053-bdc0-569f-a415-fb61c5dcda37",
+      "ok": true,
+      "matched": "Monitoring",
+      "monitoring_ok": null,
+      "err": null
+    },
+    {
+      "gate": "workspace:ncd",
+      "policy_id": "4f8c34e3-015b-509d-90ba-521261464258",
+      "ok": true,
+      "matched": "Monitoring",
+      "monitoring_ok": null,
+      "err": null
+    },
+    {
+      "gate": "workspace:lcd",
+      "policy_id": "649b4ac8-ca82-5b84-aa87-84834490731a",
+      "ok": true,
+      "matched": "Monitoring",
+      "monitoring_ok": null,
+      "err": null
+    }
+  ],
+  "screenshots_dir": "/Users/nileshl/Private/HealthForesight/docs/demo/bcbs-nc/evidence/dec4_nine_browser"
+}

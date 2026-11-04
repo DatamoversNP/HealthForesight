@@ -8,6 +8,7 @@ from uepi_api.storage_baselines import (
     create_baseline,
     get_latest_baseline,
     list_baselines,
+    find_baseline_for_window,
     update_baseline,
 )
 from uepi_api.storage_data_periods import (
@@ -19,6 +20,53 @@ from uepi_api.database import SessionLocal
 
 # Avoid spamming "No baseline-eligible periods" when computing many policy baselines
 _no_periods_warned: set = set()
+
+
+def _persist_baseline_for_window(
+    tenant_id: UUID,
+    baseline_data: Dict[str, Any],
+    input_refs: Optional[Dict[str, Any]] = None,
+    config_snapshot: Optional[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
+    """Upsert: one active baseline per (tenant, policy_id|general, window). Refresh updates in place."""
+    policy_raw = baseline_data.get("policy_id")
+    policy_uuid: Optional[UUID] = None
+    if policy_raw:
+        policy_uuid = policy_raw if isinstance(policy_raw, UUID) else UUID(str(policy_raw))
+
+    existing = find_baseline_for_window(
+        tenant_id=tenant_id,
+        window_start_date=baseline_data.get("window_start_date"),
+        window_end_date=baseline_data.get("window_end_date"),
+        policy_id=policy_uuid,
+    )
+    if existing:
+        next_version = int(existing.get("version") or 0) + 1
+        updates = {
+            "version": next_version,
+            "baseline_type": baseline_data.get("baseline_type", existing.get("baseline_type")),
+            "data_period_ids": baseline_data.get("data_period_ids", existing.get("data_period_ids") or []),
+            "baseline_metrics": baseline_data.get("baseline_metrics", {}),
+            "computed_at": datetime.utcnow().isoformat(),
+            "computed_by": baseline_data.get("computed_by", "system"),
+            "shift_detected": baseline_data.get("shift_detected", False),
+            "shift_summary": baseline_data.get("shift_summary", {}),
+            "refresh_reason": baseline_data.get("refresh_reason", "NEW_DATA"),
+        }
+        updated = update_baseline(
+            tenant_id=tenant_id,
+            baseline_id=existing["baseline_id"],
+            updates=updates,
+        )
+        return updated or existing
+
+    return create_baseline(
+        tenant_id=tenant_id,
+        baseline_data=baseline_data,
+        input_refs=input_refs,
+        config_snapshot=config_snapshot,
+    )
+
 
 
 def _get_policy_effective_date(policy: Optional[Dict[str, Any]]) -> Optional[date]:
@@ -353,7 +401,12 @@ def refresh_baseline(
                     }
                     input_refs = {"policy_id": str(policy_id) if policy_id else None, "data_period_ids": []}
                     config_snapshot = {"window_start_date": baseline_data["window_start_date"], "window_end_date": baseline_data["window_end_date"]}
-                    baseline = create_baseline(tenant_id=tenant_id, baseline_data=baseline_data, input_refs=input_refs, config_snapshot=config_snapshot)
+                    baseline = _persist_baseline_for_window(
+                        tenant_id=tenant_id,
+                        baseline_data=baseline_data,
+                        input_refs=input_refs,
+                        config_snapshot=config_snapshot,
+                    )
                     return baseline
                 else:
                     print(f"No data found in database for baseline computation")
@@ -456,7 +509,12 @@ def refresh_baseline(
         
         input_refs = {"policy_id": baseline_data.get("policy_id"), "parent_baseline_id": baseline_data.get("parent_baseline_id"), "data_period_ids": baseline_data.get("data_period_ids", [])}
         config_snapshot = {"window_start_date": baseline_data.get("window_start_date"), "window_end_date": baseline_data.get("window_end_date")}
-        baseline = create_baseline(tenant_id=tenant_id, baseline_data=baseline_data, input_refs=input_refs, config_snapshot=config_snapshot)
+        baseline = _persist_baseline_for_window(
+            tenant_id=tenant_id,
+            baseline_data=baseline_data,
+            input_refs=input_refs,
+            config_snapshot=config_snapshot,
+        )
         
         return baseline
         

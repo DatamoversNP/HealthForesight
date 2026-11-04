@@ -1,0 +1,39 @@
+{
+  "document_id": "ASSISTANT_SURGEON_PAYMENT_RULES_CODESET",
+  "policy_id": "b889bcf0-0c68-4950-bd24-4ac656ebe0ae",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abAssistant Surgeon Payment Rules\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "MODIFIER",
+      "code": "80",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "MODIFIER",
+      "code": "81",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "MODIFIER",
+      "code": "82",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "MODIFIER",
+      "code": "AS",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Assistant surgeon modifiers \u2014 % reduction is Representative design not contracted rate",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

@@ -1,0 +1,10 @@
+{
+  "document_id": "MCG_CLINICAL_CRITERIA_FOR_INPATIENT_ADMISSIONS_CODESET",
+  "policy_id": "46e3ebd7-3f65-43f2-9d3e-5bdeabdddacc",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abMCG Clinical Criteria for Inpatient Admissions\u00bb",
+  "status": "UNRESOLVED",
+  "candidate_codes": [],
+  "notes": "Licensed MCG content not redistributed \u2014 criteria UNRESOLVED",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

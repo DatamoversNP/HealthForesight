@@ -1,0 +1,16 @@
+{
+  "job_id": "paj_31d7c46d0473738beab8d597",
+  "policy_id": "38525bee-e8b4-483c-85e1-5abdc2747be9",
+  "name": "Annual Maximum Benefit for Durable Medical Equipment",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "ce70b14e02d9d3a7",
+  "started_at": "2026-11-04T13:18:18.225953+00:00",
+  "finished_at": "2026-11-04T13:18:18.225955+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

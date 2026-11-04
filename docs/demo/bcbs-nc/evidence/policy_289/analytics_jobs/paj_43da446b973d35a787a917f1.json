@@ -1,0 +1,20 @@
+{
+  "job_id": "paj_43da446b973d35a787a917f1",
+  "policy_id": "5e7a1a2b-5cbd-4a65-858f-a9b4f49fa7c4",
+  "name": "UM Validation ",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "dba7de588a05ae08",
+  "started_at": "2026-11-04T13:18:18.244302+00:00",
+  "finished_at": "2026-11-04T13:18:18.244303+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "scope.states",
+      "codeset_UNRESOLVED",
+      "definition_incomplete"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

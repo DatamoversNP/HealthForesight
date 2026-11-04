@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_f647a5565b683678f827011c",
+  "policy_id": "dacd8143-d53b-4ef8-ad40-65be55bd55d3",
+  "name": "NCCI and MUE Claims Edit Policy",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "d10ab8d3f6dc4f4c",
+  "started_at": "2026-11-04T13:18:18.236846+00:00",
+  "finished_at": "2026-11-04T13:18:18.236848+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "codeset_UNRESOLVED",
+      "definition_incomplete"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

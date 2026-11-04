@@ -99,44 +99,37 @@ export default function PredictedImpactsOverviewPage() {
     setLoading(true)
     setError(null)
     try {
-      const data = await apiClient.getPolicies()
-      const policiesList = Array.isArray(data) ? data : (data.items || [])
-      
-      // Load predicted impacts for all policies
-      // First check if predicted impact is already in policy data
-      const policiesWithImpacts: PolicyWithImpact[] = await Promise.all(
-        policiesList.map(async (policy: Policy) => {
-          // Check if predicted impact is already in policy data
-          let impact = policy.predicted_impact || policy.predictedImpact || null
-          
-          // If not in policy data, try to fetch it
-          if (!impact) {
-            try {
-              impact = await apiClient.getPolicyPredictedImpact(policy.id)
-            } catch (err) {
-              // Policy doesn't have predicted impact yet - that's okay
-              impact = null
-            }
-          }
-          
-          // Only set hasImpact to true if impact has valid metrics
-          const hasValidImpact = impact && impact.metrics && 
-            (impact.metrics.cost_change_pmpm !== undefined || 
-             impact.metrics.utilization_change_pct !== undefined)
-          
-          return {
-            ...policy,
-            predictedImpact: impact,
-            hasImpact: hasValidImpact || false,
-            loadingImpact: false,
-          }
-        })
-      )
+      // One bulk query (latest impact per policy) — avoids N× predicted-impact stampede
+      const summary = await apiClient.listPredictedImpactsSummary(500)
+      const rows = Array.isArray(summary) ? summary : []
+      const policiesWithImpacts: PolicyWithImpact[] = rows.map((row: any) => {
+        const impact = {
+          policy_id: row.policy_id,
+          predicted_at: row.predicted_at || row.computed_at,
+          metrics: row.metrics || {},
+          warnings: row.warnings,
+          limitations: row.limitations,
+        }
+        return {
+          id: row.policy_id,
+          name: row.policy_name || 'Policy',
+          policy_type: row.policy_type || 'UNKNOWN',
+          status: row.status || 'ACTIVE',
+          created_at: row.predicted_at || '',
+          updated_at: row.predicted_at || '',
+          predictedImpact: impact,
+          hasImpact: apiClient.hasUsablePredictedImpact(impact),
+          loadingImpact: false,
+        }
+      })
 
       setPolicies(policiesWithImpacts)
+      if (!policiesWithImpacts.length) {
+        setError('No predicted impacts found. Generate them from the Policy Catalog if needed.')
+      }
     } catch (err: any) {
-      console.error('Error loading policies:', err)
-      setError(err.detail || err.message || 'Failed to load policies')
+      console.error('Error loading predicted impacts:', err)
+      setError(err.detail || err.message || 'Failed to load predicted impacts')
     } finally {
       setLoading(false)
     }

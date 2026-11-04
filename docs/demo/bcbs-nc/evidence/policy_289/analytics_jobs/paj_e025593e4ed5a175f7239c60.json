@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_e025593e4ed5a175f7239c60",
+  "policy_id": "e8241516-9493-49f2-8fab-7208cb6eaa53",
+  "name": "Gender-Affirming Surgery Coverage Criteria",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "7a074a07bc352078",
+  "started_at": "2026-11-04T13:18:18.232547+00:00",
+  "finished_at": "2026-11-04T13:18:18.232549+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

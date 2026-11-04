@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_af9242285adebd19cd78d137",
+  "policy_id": "dbab1f6e-ca9a-459d-9091-3fc2a412cf47",
+  "name": "Hysterectomy Route Medical Necessity",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "d7efadc79e6415c2",
+  "started_at": "2026-11-04T13:18:18.233992+00:00",
+  "finished_at": "2026-11-04T13:18:18.233994+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

@@ -1,0 +1,10 @@
+{
+  "document_id": "OPIOID_ANALGESIC_UTILIZATION_MANAGEMENT_CODESET",
+  "policy_id": "177be323-166d-4c45-8d34-f124245e651e",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abOpioid Analgesic Utilization Management\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Program/composite policy \u2014 constituent mechanisms configured separately",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

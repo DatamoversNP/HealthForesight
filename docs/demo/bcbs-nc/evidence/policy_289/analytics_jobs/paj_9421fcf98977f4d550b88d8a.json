@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_9421fcf98977f4d550b88d8a",
+  "policy_id": "83a95c87-1821-4391-9311-59d1fc8d7853",
+  "name": "BlueCard Host Plan Local Rules Application",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "79ca480fb88efeec",
+  "started_at": "2026-11-04T13:18:18.227110+00:00",
+  "finished_at": "2026-11-04T13:18:18.227112+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

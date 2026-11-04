@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_497bce669c86badf08c7ede5",
+  "policy_id": "0a19b3f5-f5b5-4ceb-8ea5-39eab4d937eb",
+  "name": "PCP Referral Requirement for Specialist Visits",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "668e9ca862534d52",
+  "started_at": "2026-11-04T13:18:18.239750+00:00",
+  "finished_at": "2026-11-04T13:18:18.239752+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

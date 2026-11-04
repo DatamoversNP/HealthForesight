@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_ab007a5d22d2b137271bf567",
+  "policy_id": "58f3f2b9-e9dc-4ee3-8a94-3fbc7c24ff02",
+  "name": "Interventional Pain Regenerative Injection Noncoverage",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "a71c7d1ad0585e8a",
+  "started_at": "2026-11-04T13:18:18.234773+00:00",
+  "finished_at": "2026-11-04T13:18:18.234775+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

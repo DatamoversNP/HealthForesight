@@ -1,0 +1,32 @@
+{
+  "document_id": "INTRATHECAL_DRUG_PUMP_PRIOR_AUTHORIZATION_CODESET",
+  "policy_id": "6564cb6e-1e71-4f3f-a06d-48c62a1e3efa",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abIntrathecal Drug Pump Prior Authorization\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "62362",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "62350",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "62351",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Implantable pump / catheter",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

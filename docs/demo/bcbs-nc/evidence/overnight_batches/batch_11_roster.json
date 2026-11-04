@@ -1,0 +1,206 @@
+{
+  "batch": 11,
+  "offset": 250,
+  "policies": [
+    {
+      "policy_id": "681baebb-e999-405f-b647-b23a91db761c",
+      "name": "Structural Heart Procedure Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "ad984c52-59a0-4d39-8895-7c6ceee4cc72",
+      "name": "SUD Detoxification Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "109f444c-c466-4361-ae15-c62509746a58",
+      "name": "SUD Residential and IOP Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "130ecc03-cbc0-418e-ab51-e6f1a3a688b9",
+      "name": "Surrogacy Exclusion Policy",
+      "policy_type": "COVERAGE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "6c9cac8c-65f6-4214-8d9d-50dcf5f98bda",
+      "name": "Telehealth Cost Sharing Parity",
+      "policy_type": "COST_SHARING",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "27f6a2d1-7d74-420b-8102-0b1bfe37a309",
+      "name": "Telehealth Cost Sharing Parity Policy",
+      "policy_type": "COST_SHARING",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "e5a26938-d36d-40f8-9ebc-acc30db80c53",
+      "name": "Telehealth Covered Services List",
+      "policy_type": "COVERAGE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "b0b19eb0-1ec0-45b6-87c0-06d0f7cef655",
+      "name": "Telehealth Vendor Network Rules",
+      "policy_type": "NETWORK_RESTRICTION",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "4951238b-b979-4718-bfc7-4e57f2cd7b8e",
+      "name": "Third-Party Liability and Subrogation",
+      "policy_type": "PAYMENT_POLICY",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "2b82352a-b10a-41b8-a086-8f272b26872f",
+      "name": "Tiered Network Restriction for High-Cost Procedures",
+      "policy_type": "NETWORK_RESTRICTION",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "12165f88-21a6-4363-9b65-4ba785203c7c",
+      "name": "Tiered Network Specialist Steerage",
+      "policy_type": "NETWORK_RESTRICTION",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "04a80815-bf9d-4a6f-b01e-5a9f756f500e",
+      "name": "Timely Filing Limit \u2014 Provider Claims",
+      "policy_type": "PAYMENT_POLICY",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "ec24f241-f302-4a80-b44d-f758508d24db",
+      "name": "TMS Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "6a55bc25-74a2-492f-b755-8049e2248ee0",
+      "name": "Tonsillectomy and Adenoidectomy Criteria",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "68a488b3-1e25-4e3f-aeea-9a45d3c53602",
+      "name": "Total Joint Replacement Episode Bundled Payment",
+      "policy_type": "EPISODE_BUNDLED_PAYMENT",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "50ce59e9-06e4-4391-9845-60f419d834e2",
+      "name": "Transition of Care Post-Discharge Program",
+      "policy_type": "COMPOSITE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "b5895596-41cb-4f48-9f82-72d5ac388ea2",
+      "name": "Transplant Evaluation and Listing Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "d35e2fff-659c-4988-ab30-d55498631c2a",
+      "name": "UM Reduction for under age 45 and B1C",
+      "policy_type": "PRIOR_AUTH",
+      "status": "RETIRED",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "2c1ed7ac-99f1-44c4-9d38-8c0bb77b79c4",
+      "name": "UM Reduction for under age 45 and B1C",
+      "policy_type": "PRIOR_AUTH",
+      "status": "RETIRED",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "5e7a1a2b-5cbd-4a65-858f-a9b4f49fa7c4",
+      "name": "UM Validation ",
+      "policy_type": "PRIOR_AUTH",
+      "status": "RETIRED",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "d9f83c02-fd70-41fa-b2c3-c93c103582eb",
+      "name": "Unbundling and Incidental Denial Policy",
+      "policy_type": "PAYMENT_POLICY",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "4f39ad90-52ea-4435-bbb0-8df4722c6010",
+      "name": "Upper Endoscopy Frequency Criteria",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "b815e37b-98c9-40b4-8e17-b0821566fcaf",
+      "name": "Urgent Care Copay Increase",
+      "policy_type": "COST_SHARING",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "5ec5df8d-671e-45ca-8d27-fff922bff897",
+      "name": "Urgent Care Preference Over Non-Emergent ER",
+      "policy_type": "SITE_OF_CARE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "22f5c407-92b5-4c96-9e34-cd8b5f37c918",
+      "name": "Value Prior Authorization Program",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    }
+  ]
+}

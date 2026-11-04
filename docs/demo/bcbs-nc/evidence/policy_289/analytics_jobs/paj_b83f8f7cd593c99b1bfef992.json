@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_b83f8f7cd593c99b1bfef992",
+  "policy_id": "a9b7b4dc-9077-4aae-b221-8e74da571ab6",
+  "name": "Member Appeal and Grievance Timelines",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "5c2be123a03258fb",
+  "started_at": "2026-11-04T13:18:18.236273+00:00",
+  "finished_at": "2026-11-04T13:18:18.236274+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

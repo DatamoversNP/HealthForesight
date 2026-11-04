@@ -1,0 +1,10 @@
+{
+  "document_id": "ONCOLOGY_ORAL_SPECIALTY_PRIOR_AUTHORIZATION_CODESET",
+  "policy_id": "99dca188-8edd-4293-839f-29508666780d",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abOncology Oral Specialty Prior Authorization\u00bb",
+  "status": "UNRESOLVED",
+  "candidate_codes": [],
+  "notes": "Oral oncolytic NDCs required \u2014 UNRESOLVED",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

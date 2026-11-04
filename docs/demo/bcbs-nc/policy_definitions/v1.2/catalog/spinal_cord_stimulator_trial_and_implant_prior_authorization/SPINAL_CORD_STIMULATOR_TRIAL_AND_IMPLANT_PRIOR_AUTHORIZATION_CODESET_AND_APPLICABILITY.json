@@ -1,0 +1,32 @@
+{
+  "document_id": "SPINAL_CORD_STIMULATOR_TRIAL_AND_IMPLANT_PRIOR_AUTHORIZATION_CODESET",
+  "policy_id": "54bbdff6-bb39-4027-bab7-4ae9302e1f55",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abSpinal Cord Stimulator Trial and Implant Prior Authorization\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "63650",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "63655",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "63685",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "SCS percutaneous/laminectomy implant + generator",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

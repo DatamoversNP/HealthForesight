@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_5c3d5de7aa1fdc99196193e1",
+  "policy_id": "99dca188-8edd-4293-839f-29508666780d",
+  "name": "Oncology Oral Specialty Prior Authorization",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "6cd77571e29e2d0b",
+  "started_at": "2026-11-04T13:18:18.238581+00:00",
+  "finished_at": "2026-11-04T13:18:18.238582+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "codeset_UNRESOLVED",
+      "definition_incomplete"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

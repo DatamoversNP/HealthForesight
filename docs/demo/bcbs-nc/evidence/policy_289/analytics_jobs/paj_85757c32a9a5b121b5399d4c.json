@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_85757c32a9a5b121b5399d4c",
+  "policy_id": "7101e2ed-96fe-4339-9d54-7e96f317f0dc",
+  "name": "NICU Concurrent Review",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "21a78b08b3a170a7",
+  "started_at": "2026-11-04T13:18:18.237277+00:00",
+  "finished_at": "2026-11-04T13:18:18.237279+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

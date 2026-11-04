@@ -1,0 +1,32 @@
+{
+  "document_id": "PULMONARY_REHABILITATION_AUTHORIZATION_CODESET",
+  "policy_id": "f0ebff27-e3b9-4998-8d35-9cfe3c81d608",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abPulmonary Rehabilitation Authorization\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT/HCPCS",
+      "code": "G0424",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT/HCPCS",
+      "code": "94625",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT/HCPCS",
+      "code": "94626",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Pulmonary rehab sessions",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

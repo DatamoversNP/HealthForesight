@@ -1,0 +1,10 @@
+{
+  "document_id": "TELEHEALTH_VENDOR_NETWORK_RULES_CODESET",
+  "policy_id": "b0b19eb0-1ec0-45b6-87c0-06d0f7cef655",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abTelehealth Vendor Network Rules\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Network / access / COE / referral rule \u2014 taxonomy/network IDs not CPT schedule",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

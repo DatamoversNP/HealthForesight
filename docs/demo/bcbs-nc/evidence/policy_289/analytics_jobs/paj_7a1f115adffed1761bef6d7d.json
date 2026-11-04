@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_7a1f115adffed1761bef6d7d",
+  "policy_id": "37d49884-84d8-4dfe-b18a-9c2cdebc225b",
+  "name": "Non-Emergency Ambulance Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "e0156f9d0765a533",
+  "started_at": "2026-11-04T13:18:18.237492+00:00",
+  "finished_at": "2026-11-04T13:18:18.237493+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

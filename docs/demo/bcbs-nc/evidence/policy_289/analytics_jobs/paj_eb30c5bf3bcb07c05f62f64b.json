@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_eb30c5bf3bcb07c05f62f64b",
+  "policy_id": "aa9f976a-cceb-49ed-8034-da80d3a3b5ef",
+  "name": "Provider Reconsideration / Dispute Process",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "19e76f3cbce7fd4c",
+  "started_at": "2026-11-04T13:18:18.240979+00:00",
+  "finished_at": "2026-11-04T13:18:18.240980+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

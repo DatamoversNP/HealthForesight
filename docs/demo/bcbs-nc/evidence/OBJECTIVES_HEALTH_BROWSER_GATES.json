@@ -1,0 +1,60 @@
+{
+  "executed_at_utc": "2026-11-03T08:01:11Z",
+  "api": {
+    "oh1_http_time": "200 / ~11.3s",
+    "oh2_http_time": "200 / ~11.1s",
+    "equal_aside_generated_at": true,
+    "summary": {
+      "total": 283,
+      "on_track": 186,
+      "at_risk": 79,
+      "no_data": 18
+    },
+    "pv_http_time": "200 / ~2.8s",
+    "mri": {
+      "policy_id": "d403f101-08dd-45c9-ab83-d42e37c62018",
+      "oh_verdict": "ON_TRACK",
+      "pv_verdict": "ON_TRACK",
+      "aligned": true
+    },
+    "live_ready": {
+      "live": 200,
+      "ready": 200,
+      "db": "connected"
+    }
+  },
+  "browser": {
+    "row1_load_x2": {
+      "result": "PASS",
+      "load1_snapshot": "11/3/2026, 1:29:25 PM",
+      "load2_snapshot_after_refresh": "11/3/2026, 1:29:55 PM",
+      "counts": {
+        "policies": 283,
+        "on_track": 186,
+        "at_risk": 79,
+        "no_data": 18
+      },
+      "chip": "4 of 6 objectives met",
+      "calc": "objectives-health-v1"
+    },
+    "row4_two_tabs": {
+      "result": "PASS",
+      "tab_a_snapshot": "11/3/2026, 1:29:55 PM",
+      "tab_b_snapshot": "11/3/2026, 1:30:12 PM",
+      "counts_match": true,
+      "contradictory_status": false
+    },
+    "row7_oh_pv_align": {
+      "result": "PASS",
+      "policy": "Outpatient MRI Prior Authorization",
+      "oh_status": "on_track / Saving / on track (API ON_TRACK)",
+      "pv_status": "Saving / on track"
+    }
+  },
+  "engineering_fixes": [
+    "list_policies(summary=True) for OH/PV/coverage/readiness/reconciliation \u2014 removes N+1 workspace loads",
+    "asyncio.to_thread for OH, PV inputs, coverage, readiness, reconciliation",
+    "LazyExtendedRoutesMiddleware uses to_thread",
+    "/live + /ready split; pool_timeout=10"
+  ]
+}

@@ -1,0 +1,784 @@
+{
+  "batch": 11,
+  "generated_at": "2026-11-04T11:35:45.930291+00:00",
+  "n": 25,
+  "high": 25,
+  "fail": 0,
+  "results": [
+    {
+      "policy_id": "681baebb-e999-405f-b647-b23a91db761c",
+      "name": "Structural Heart Procedure Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 11,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T10:18:59.873298+00:00"
+    },
+    {
+      "policy_id": "ad984c52-59a0-4d39-8895-7c6ceee4cc72",
+      "name": "SUD Detoxification Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 11,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T10:20:32.010479+00:00"
+    },
+    {
+      "policy_id": "109f444c-c466-4361-ae15-c62509746a58",
+      "name": "SUD Residential and IOP Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 11,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T10:22:04.777106+00:00"
+    },
+    {
+      "policy_id": "130ecc03-cbc0-418e-ab51-e6f1a3a688b9",
+      "name": "Surrogacy Exclusion Policy",
+      "policy_type": "COVERAGE",
+      "status": "ACTIVE",
+      "batch": 11,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T10:23:35.889477+00:00"
+    },
+    {
+      "policy_id": "6c9cac8c-65f6-4214-8d9d-50dcf5f98bda",
+      "name": "Telehealth Cost Sharing Parity",
+      "policy_type": "COST_SHARING",
+      "status": "ACTIVE",
+      "batch": 11,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T10:25:10.312602+00:00"
+    },
+    {
+      "policy_id": "27f6a2d1-7d74-420b-8102-0b1bfe37a309",
+      "name": "Telehealth Cost Sharing Parity Policy",
+      "policy_type": "COST_SHARING",
+      "status": "ACTIVE",
+      "batch": 11,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T10:26:42.401198+00:00"
+    },
+    {
+      "policy_id": "e5a26938-d36d-40f8-9ebc-acc30db80c53",
+      "name": "Telehealth Covered Services List",
+      "policy_type": "COVERAGE",
+      "status": "ACTIVE",
+      "batch": 11,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T10:28:12.704723+00:00"
+    },
+    {
+      "policy_id": "b0b19eb0-1ec0-45b6-87c0-06d0f7cef655",
+      "name": "Telehealth Vendor Network Rules",
+      "policy_type": "NETWORK_RESTRICTION",
+      "status": "ACTIVE",
+      "batch": 11,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T10:29:45.194975+00:00"
+    },
+    {
+      "policy_id": "4951238b-b979-4718-bfc7-4e57f2cd7b8e",
+      "name": "Third-Party Liability and Subrogation",
+      "policy_type": "PAYMENT_POLICY",
+      "status": "ACTIVE",
+      "batch": 11,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T10:31:17.633557+00:00"
+    },
+    {
+      "policy_id": "2b82352a-b10a-41b8-a086-8f272b26872f",
+      "name": "Tiered Network Restriction for High-Cost Procedures",
+      "policy_type": "NETWORK_RESTRICTION",
+      "status": "ACTIVE",
+      "batch": 11,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T10:32:54.998893+00:00"
+    },
+    {
+      "policy_id": "12165f88-21a6-4363-9b65-4ba785203c7c",
+      "name": "Tiered Network Specialist Steerage",
+      "policy_type": "NETWORK_RESTRICTION",
+      "status": "ACTIVE",
+      "batch": 11,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T10:34:27.485945+00:00"
+    },
+    {
+      "policy_id": "04a80815-bf9d-4a6f-b01e-5a9f756f500e",
+      "name": "Timely Filing Limit \u2014 Provider Claims",
+      "policy_type": "PAYMENT_POLICY",
+      "status": "ACTIVE",
+      "batch": 11,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T10:35:59.413954+00:00"
+    },
+    {
+      "policy_id": "ec24f241-f302-4a80-b44d-f758508d24db",
+      "name": "TMS Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 11,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T10:37:29.824897+00:00"
+    },
+    {
+      "policy_id": "6a55bc25-74a2-492f-b755-8049e2248ee0",
+      "name": "Tonsillectomy and Adenoidectomy Criteria",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 11,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T10:39:04.022092+00:00"
+    },
+    {
+      "policy_id": "68a488b3-1e25-4e3f-aeea-9a45d3c53602",
+      "name": "Total Joint Replacement Episode Bundled Payment",
+      "policy_type": "EPISODE_BUNDLED_PAYMENT",
+      "status": "ACTIVE",
+      "batch": 11,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T10:40:35.052129+00:00"
+    },
+    {
+      "policy_id": "50ce59e9-06e4-4391-9845-60f419d834e2",
+      "name": "Transition of Care Post-Discharge Program",
+      "policy_type": "COMPOSITE",
+      "status": "ACTIVE",
+      "batch": 11,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T10:42:06.165930+00:00"
+    },
+    {
+      "policy_id": "b5895596-41cb-4f48-9f82-72d5ac388ea2",
+      "name": "Transplant Evaluation and Listing Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 11,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T10:43:37.236402+00:00"
+    },
+    {
+      "policy_id": "d35e2fff-659c-4988-ab30-d55498631c2a",
+      "name": "UM Reduction for under age 45 and B1C",
+      "policy_type": "PRIOR_AUTH",
+      "status": "RETIRED",
+      "batch": 11,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T10:45:10.650532+00:00"
+    },
+    {
+      "policy_id": "2c1ed7ac-99f1-44c4-9d38-8c0bb77b79c4",
+      "name": "UM Reduction for under age 45 and B1C",
+      "policy_type": "PRIOR_AUTH",
+      "status": "RETIRED",
+      "batch": 11,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T10:46:40.816118+00:00"
+    },
+    {
+      "policy_id": "5e7a1a2b-5cbd-4a65-858f-a9b4f49fa7c4",
+      "name": "UM Validation ",
+      "policy_type": "PRIOR_AUTH",
+      "status": "RETIRED",
+      "batch": 11,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T10:48:12.249806+00:00"
+    },
+    {
+      "policy_id": "d9f83c02-fd70-41fa-b2c3-c93c103582eb",
+      "name": "Unbundling and Incidental Denial Policy",
+      "policy_type": "PAYMENT_POLICY",
+      "status": "ACTIVE",
+      "batch": 11,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T10:49:42.093007+00:00"
+    },
+    {
+      "policy_id": "4f39ad90-52ea-4435-bbb0-8df4722c6010",
+      "name": "Upper Endoscopy Frequency Criteria",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 11,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T10:51:13.288996+00:00"
+    },
+    {
+      "policy_id": "b815e37b-98c9-40b4-8e17-b0821566fcaf",
+      "name": "Urgent Care Copay Increase",
+      "policy_type": "COST_SHARING",
+      "status": "ACTIVE",
+      "batch": 11,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T10:52:45.142940+00:00"
+    },
+    {
+      "policy_id": "5ec5df8d-671e-45ca-8d27-fff922bff897",
+      "name": "Urgent Care Preference Over Non-Emergent ER",
+      "policy_type": "SITE_OF_CARE",
+      "status": "ACTIVE",
+      "batch": 11,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T10:54:17.855561+00:00"
+    },
+    {
+      "policy_id": "22f5c407-92b5-4c96-9e34-cd8b5f37c918",
+      "name": "Value Prior Authorization Program",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 11,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T10:55:49.711952+00:00"
+    }
+  ]
+}

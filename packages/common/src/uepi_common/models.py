@@ -6,7 +6,7 @@ from enum import Enum
 from typing import Any, Optional, Union
 from uuid import UUID, uuid4
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 
 class TenantRole(str, Enum):
@@ -21,12 +21,19 @@ class TenantRole(str, Enum):
 
 class PolicyType(str, Enum):
     """Policy types - Comprehensive real-world taxonomy
-    
+
+    Note: a single flat type is a compatibility surface. Real enterprise policies
+    often combine a primary domain + multiple mechanisms + clinical scope
+    (e.g. PRIOR_AUTH + MEDICAL_NECESSITY + SITE_OF_CARE). Prefer adding
+    genuinely missing domains/mechanisms here rather than forcing unrelated
+    policies into COVERAGE / CLINICAL_CRITERIA / PAYMENT_POLICY.
+
     Tier 1: Core Utilization Controls (Primary UI options)
     Tier 2: Utilization Management Extensions
     Tier 3: Network & Provider-Based Controls
     Tier 4: Financial & Incentive-Based Policies
     Tier 5: Administrative & Access Controls
+    Tier 6: Enterprise domain extensions (BCBS / health-plan catalog coverage)
     """
     # Tier 1: Core Utilization Controls (Primary - default view)
     PRIOR_AUTH = "PRIOR_AUTH"  # Prior Authorization
@@ -36,7 +43,7 @@ class PolicyType(str, Enum):
     BENEFIT = "BENEFIT"
     
     # Tier 2: Utilization Management Extensions (Advanced - expandable)
-    CLINICAL_CRITERIA = "CLINICAL_CRITERIA"  # Medical necessity, MCG/InterQual
+    CLINICAL_CRITERIA = "CLINICAL_CRITERIA"  # Decision-rule criteria (MCG/InterQual)
     DURATION_FREQUENCY_LIMIT = "DURATION_FREQUENCY_LIMIT"  # Visit limits, time-based restrictions
     QUANTITY_LIMIT = "QUANTITY_LIMIT"  # Units per day/episode, dose limits
     
@@ -55,10 +62,68 @@ class PolicyType(str, Enum):
     
     # Composite type for compound policies
     COMPOSITE = "COMPOSITE"  # Multiple levers (e.g., PA + frequency limit)
+
+    # Tier 6: Enterprise domain extensions (explicit catalog types for health plans)
+    MEDICAL_NECESSITY = "MEDICAL_NECESSITY"
+    UTILIZATION_MANAGEMENT = "UTILIZATION_MANAGEMENT"
+    DRUG_FORMULARY = "DRUG_FORMULARY"
+    SPECIALTY_PHARMACY = "SPECIALTY_PHARMACY"
+    EXPERIMENTAL_INVESTIGATIONAL = "EXPERIMENTAL_INVESTIGATIONAL"
+    OUT_OF_NETWORK_COVERAGE = "OUT_OF_NETWORK_COVERAGE"
+    REIMBURSEMENT_METHODOLOGY = "REIMBURSEMENT_METHODOLOGY"
+    CODING_AND_BILLING = "CODING_AND_BILLING"
+    CLINICAL_PATHWAY = "CLINICAL_PATHWAY"
+    CONTINUITY_OF_CARE = "CONTINUITY_OF_CARE"
+    EPISODE_BUNDLED_PAYMENT = "EPISODE_BUNDLED_PAYMENT"
+    VALUE_BASED_PAYMENT = "VALUE_BASED_PAYMENT"
+    PREVENTIVE_SERVICES = "PREVENTIVE_SERVICES"
+    TELEHEALTH_VIRTUAL_CARE = "TELEHEALTH_VIRTUAL_CARE"
+    POST_ACUTE_CARE = "POST_ACUTE_CARE"
     
     # Legacy aliases for backward compatibility
     PA = "PRIOR_AUTH"  # Alias for PRIOR_AUTH
     FREQUENCY_LIMIT = "FREQUENCY_LIMIT"  # Alias for DURATION_FREQUENCY_LIMIT (DB/seed data)
+    FORMULARY_MANAGEMENT = "DRUG_FORMULARY"
+    SPECIALTY_DRUG_MANAGEMENT = "SPECIALTY_PHARMACY"
+    EXPERIMENTAL = "EXPERIMENTAL_INVESTIGATIONAL"
+
+
+def normalize_policy_type_value(value: Any) -> Any:
+    """Coerce display/legacy forms (e.g. 'PRIOR AUTH') to PolicyType enum values."""
+    if value is None or isinstance(value, PolicyType):
+        return value
+    if isinstance(value, Enum):
+        value = getattr(value, "value", value)
+    s = str(value).strip().upper()
+    if not s:
+        return value
+    s = s.replace("/", " ").replace("-", " ")
+    s = "_".join(part for part in s.split() if part)
+    aliases = {
+        "PA": "PRIOR_AUTH",
+        "PRIOR_AUTHORIZATION": "PRIOR_AUTH",
+        "FREQUENCY_LIMIT": "FREQUENCY_LIMIT",
+        "DURATION_FREQUENCY_LIMIT": "DURATION_FREQUENCY_LIMIT",
+        "FORMULARY": "DRUG_FORMULARY",
+        "FORMULARY_MANAGEMENT": "DRUG_FORMULARY",
+        "SPECIALTY_DRUG": "SPECIALTY_PHARMACY",
+        "SPECIALTY_DRUG_MANAGEMENT": "SPECIALTY_PHARMACY",
+        "EXPERIMENTAL": "EXPERIMENTAL_INVESTIGATIONAL",
+        "INVESTIGATIONAL": "EXPERIMENTAL_INVESTIGATIONAL",
+        "OON_COVERAGE": "OUT_OF_NETWORK_COVERAGE",
+        "OUT_OF_NETWORK": "OUT_OF_NETWORK_COVERAGE",
+        "REIMBURSEMENT": "REIMBURSEMENT_METHODOLOGY",
+        "CODING": "CODING_AND_BILLING",
+        "BILLING": "CODING_AND_BILLING",
+        "BUNDLED_PAYMENT": "EPISODE_BUNDLED_PAYMENT",
+        "EPISODE_PAYMENT": "EPISODE_BUNDLED_PAYMENT",
+        "VBP": "VALUE_BASED_PAYMENT",
+        "TELEHEALTH": "TELEHEALTH_VIRTUAL_CARE",
+        "VIRTUAL_CARE": "TELEHEALTH_VIRTUAL_CARE",
+        "POST_ACUTE": "POST_ACUTE_CARE",
+        "UM": "UTILIZATION_MANAGEMENT",
+    }
+    return aliases.get(s, s)
 
 
 class LineOfBusiness(str, Enum):
@@ -370,6 +435,11 @@ class CanonicalPolicy(BaseModel):
     ui_hints: Optional[UIHints] = None
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None
+
+    @field_validator("policy_type", mode="before")
+    @classmethod
+    def _coerce_policy_type(cls, value: Any) -> Any:
+        return normalize_policy_type_value(value)
     
     class Config:
         use_enum_values = True

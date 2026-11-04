@@ -1,0 +1,31 @@
+{
+  "archetype": "CLINICAL_PATHWAY",
+  "offset": 0,
+  "count": 2,
+  "candidate_schedule": 0,
+  "unresolved": 1,
+  "not_applicable": 1,
+  "persisted_ok": 0,
+  "results": [
+    {
+      "policy_id": "c5c9e942-0649-46b5-82e0-20e660ead31d",
+      "name": "Oncology Evidence-Based Clinical Pathway",
+      "folder": "catalog/oncology_evidence_based_clinical_pathway",
+      "codeset_status": "UNRESOLVED",
+      "code_count": 0,
+      "definition_status": "DEFINITION_INCOMPLETE_UNRESOLVED_CODESET",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "535dfe9a-ca0a-4ad1-a252-ffe72a9d4df0",
+      "name": "Provider Network Change Continuity of Care Coverage",
+      "folder": "catalog/provider_network_change_continuity_of_care_coverage",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    }
+  ]
+}

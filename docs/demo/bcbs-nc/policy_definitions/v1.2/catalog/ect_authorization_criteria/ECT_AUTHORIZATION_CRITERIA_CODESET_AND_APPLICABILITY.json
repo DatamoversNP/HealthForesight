@@ -1,0 +1,18 @@
+{
+  "document_id": "ECT_AUTHORIZATION_CRITERIA_CODESET",
+  "policy_id": "5ad603c9-ff09-4908-a45b-5cfce47314c2",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abECT Authorization Criteria\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "90870",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Electroconvulsive therapy",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

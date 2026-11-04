@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_64b0d79b92235af49bdea261",
+  "policy_id": "f6c26ac2-a949-45d9-a4da-b65bb783a60f",
+  "name": "Cosmetic Services Exclusion",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "546b7c5cd5bf76d8",
+  "started_at": "2026-11-04T13:18:18.229642+00:00",
+  "finished_at": "2026-11-04T13:18:18.229644+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

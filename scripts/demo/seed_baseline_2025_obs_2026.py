@@ -71,6 +71,9 @@ def http(method: str, url: str, token: str | None = None, body: dict | None = No
         except Exception:
             parsed = raw
         return e.code, parsed
+    except Exception as e:
+        # App Service often times out while daily jobs monopolize the worker
+        return 0, str(e)
 
 
 def login(api: str, email: str, password: str) -> str:
@@ -234,29 +237,60 @@ def generate_claims(
     print(f"Claims ({label}) done. ok={ok} fail={fail} claims_loaded={loaded:,}", flush=True)
 
 
-def refresh_baselines(api: str, token: str, targets: list[dict]) -> None:
-    print("\n=== Refresh baselines (ROLLING 12m) ===", flush=True)
+def refresh_one_baseline(api: str, token: str, policy_id: str | None) -> dict:
+    body = {
+        "policy_id": policy_id,
+        "baseline_type": "ROLLING",
+        "window_months": 12,
+        "refresh_reason": "DEMO_SEED_2025_2026",
+    }
     t0 = time.time()
-    code, data = http(
-        "POST",
-        f"{api}/baselines/refresh-all?baseline_type=ROLLING&window_months=12",
-        token=token,
-        body={},
-        timeout=1200,
-    )
-    print(f"refresh-all -> {code} in {time.time()-t0:.1f}s", flush=True)
-    Path("/tmp/seed_baselines_refresh.json").write_text(json.dumps(data, indent=2, default=str))
-    if isinstance(data, dict):
-        print(
-            f"  policy_baselines={len(data.get('policy_baselines') or [])} "
-            f"errors={len(data.get('errors') or [])} general={bool(data.get('general_baseline'))}",
-            flush=True,
-        )
-        errs = data.get("errors") or []
-        if errs[:5]:
-            print("  sample errors:", errs[:5], flush=True)
+    code, data = http("POST", f"{api}/baselines/refresh", token=token, body=body, timeout=180)
+    return {
+        "policy_id": policy_id,
+        "http": code,
+        "ok": code in (200, 201) and isinstance(data, dict) and bool(data.get("baseline_id") or data.get("id")),
+        "elapsed_s": round(time.time() - t0, 2),
+        "error": None if code in (200, 201) else data,
+    }
 
-    code, bals = http("GET", f"{api}/baselines", token=token, timeout=180)
+
+def refresh_baselines(api: str, token: str, targets: list[dict], workers: int = 3) -> None:
+    """Per-policy refresh — refresh-all often 504s on App Service for ~244 policies."""
+    print("\n=== Refresh baselines (per-policy ROLLING 12m) ===", flush=True)
+    # General baseline first
+    gen = refresh_one_baseline(api, token, None)
+    print(f"  general -> http={gen['http']} ok={gen['ok']} {gen['elapsed_s']}s", flush=True)
+
+    ok = fail = 0
+    t0 = time.time()
+    with ThreadPoolExecutor(max_workers=workers) as ex:
+        futs = {
+            ex.submit(refresh_one_baseline, api, token, str(p["id"])): p.get("name")
+            for p in targets
+        }
+        done = 0
+        for fut in as_completed(futs):
+            name = futs[fut]
+            try:
+                row = fut.result()
+            except Exception as e:
+                row = {"ok": False, "http": 0, "error": str(e)}
+            done += 1
+            if row.get("ok"):
+                ok += 1
+            else:
+                fail += 1
+                if fail <= 8:
+                    print(f"  FAIL {name}: {row.get('http')} {str(row.get('error'))[:140]}", flush=True)
+            if done % 25 == 0 or done == len(targets):
+                print(
+                    f"  … {done}/{len(targets)} ok={ok} fail={fail} elapsed={(time.time()-t0)/60:.1f}m",
+                    flush=True,
+                )
+    print(f"Baseline refresh done. ok={ok} fail={fail}", flush=True)
+
+    code, bals = http("GET", f"{api}/baselines", token=token, timeout=300)
     if code == 200 and isinstance(bals, list):
         with_pid = {str(b.get("policy_id")) for b in bals if b.get("policy_id")}
         target_ids = {str(p["id"]) for p in targets}
@@ -264,31 +298,47 @@ def refresh_baselines(api: str, token: str, targets: list[dict]) -> None:
             f"  Coverage: {len(with_pid & target_ids)}/{len(target_ids)} catalog policies have baseline rows",
             flush=True,
         )
+    else:
+        print(f"  Coverage check skipped (GET /baselines -> {code})", flush=True)
 
 
 def wait_job(api: str, token: str, job_id: str, timeout_s: int = 180) -> dict | None:
-    """Poll briefly; daily jobs over large portfolios can run long in Azure BackgroundTasks."""
+    """Poll; daily jobs over large portfolios can run long on Azure BackgroundTasks."""
     t0 = time.time()
+    last_msg = ""
     while time.time() - t0 < timeout_s:
         code, data = http(
             "GET",
             f"{api}/jobs/daily-data-and-observations/status/{job_id}",
             token=token,
-            timeout=60,
+            timeout=30,
         )
         if code == 200 and isinstance(data, dict):
             st = (data.get("status") or "").upper()
+            msg = str(data.get("message") or "")[:120]
+            if msg and msg != last_msg:
+                print(f"    … status={st} {msg}", flush=True)
+                last_msg = msg
             if st in ("COMPLETED", "FAILED", "CANCELLED"):
                 return data
-        time.sleep(10)
+        elif code == 0:
+            print(f"    … poll timeout/error (will retry): {str(data)[:100]}", flush=True)
+        time.sleep(20)
     return None
 
 
 def run_observations(api: str, token: str, dates: list[str]) -> None:
     print("\n=== Observation analyses (daily job per interval) ===", flush=True)
     print(f"  Target dates: {dates}", flush=True)
+    print("  Note: jobs run on Azure BackgroundTasks; we enqueue then poll without failing the seed.", flush=True)
     for d in dates:
         print(f"\n  Daily job target_date={d} …", flush=True)
+        # refresh token periodically
+        try:
+            # token may age during long waits — caller re-logs between phases; here we just continue
+            pass
+        except Exception:
+            pass
         code, data = http(
             "POST",
             f"{api}/jobs/daily-data-and-observations?target_date={d}&run_observations=true",
@@ -302,14 +352,20 @@ def run_observations(api: str, token: str, dates: list[str]) -> None:
         job_id = data.get("job_id") or data.get("id")
         if not job_id:
             continue
-        result = wait_job(api, token, job_id)
+        # Wait longer — 244-policy observation creation is slow; tolerate poll timeouts
+        result = wait_job(api, token, job_id, timeout_s=2400)
         if result:
             print(
                 f"    job {job_id}: status={result.get('status')} msg={str(result.get('message') or '')[:180]}",
                 flush=True,
             )
         else:
-            print(f"    job {job_id}: still running after wait window", flush=True)
+            print(
+                f"    job {job_id}: still running after wait window — continuing to next date",
+                flush=True,
+            )
+        # brief pause so App Service can recover between heavy jobs
+        time.sleep(15)
 
 
 def main() -> None:
@@ -363,7 +419,7 @@ def main() -> None:
         token = login(args.api, args.email, args.password)
 
     if "baselines" in phases:
-        refresh_baselines(args.api, token, targets)
+        refresh_baselines(args.api, token, targets, workers=max(1, min(args.workers, 3)))
         token = login(args.api, args.email, args.password)
 
     if "observations" in phases:

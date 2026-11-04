@@ -1,0 +1,99 @@
+{
+  "document_id": "HF-RP-UM-MRI-001-RELEASE-BLOCKERS",
+  "package_version": "v1.2.1-technical-closure",
+  "generated_at": "2026-11-03T15:32:32.189928+00:00",
+  "rule": "These are hard release blockers, not informational warnings. Clearance requires signed owner decision \u2014 engineering must not self-clear.",
+  "blocks_operational_activation": true,
+  "blocker_count": 8,
+  "blockers": [
+    {
+      "id": "CLINICAL_SCHEDULE_UNSIGNED",
+      "artifact": "MRI_CLINICAL_CRITERIA_SCHEDULE.md",
+      "blocks": [
+        "operative APPROVED",
+        "ADVERSE_DETERMINATION_ISSUED"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "blocks_clinical_product_approval": true,
+      "informational_only": false
+    },
+    {
+      "id": "PRODUCT_SCHEDULE_UNRESOLVED",
+      "artifact": "MRI_OPERATIONAL_REQUIREMENTS_MATRIX.md",
+      "blocks": [
+        "activation"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "blocks_clinical_product_approval": true,
+      "informational_only": false
+    },
+    {
+      "id": "LEGAL_CLOCKS_UNRESOLVED",
+      "artifact": "MRI_OPERATIONAL_REQUIREMENTS_MATRIX.md",
+      "blocks": [
+        "activation"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "blocks_clinical_product_approval": true,
+      "informational_only": false
+    },
+    {
+      "id": "SCOPE_MIGRATION_UNSIGNED",
+      "artifact": "MRI_SCOPE_MIGRATION_DECISION_v1.2.md",
+      "blocks": [
+        "lumbar-only operative rename"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "blocks_clinical_product_approval": true,
+      "informational_only": false
+    },
+    {
+      "id": "LIVE_CONFIG_MARKET_DEFECT",
+      "artifact": "Outpatient_MRI_Prior_Authorization.json",
+      "blocks": [
+        "NC-only gate"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "blocks_clinical_product_approval": true,
+      "informational_only": false
+    },
+    {
+      "id": "GUARDRAIL_THRESHOLDS_UNAPPROVED",
+      "artifact": "MRI_OPERATIONAL_REQUIREMENTS_MATRIX.md",
+      "blocks": [
+        "production monitoring gates"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "blocks_clinical_product_approval": true,
+      "informational_only": false
+    },
+    {
+      "id": "CONSERVATIVE_CARE_UNRESOLVED",
+      "artifact": "MRI_CLINICAL_CRITERIA_SCHEDULE.md",
+      "blocks": [
+        "LUMBAR-01 operative gate"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "blocks_clinical_product_approval": true,
+      "informational_only": false
+    },
+    {
+      "id": "CONTRAST_RULES_UNRESOLVED",
+      "artifact": "MRI_CLINICAL_CRITERIA_SCHEDULE.md",
+      "blocks": [
+        "LUMBAR-02/03 modality"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "blocks_clinical_product_approval": true,
+      "informational_only": false
+    }
+  ]
+}

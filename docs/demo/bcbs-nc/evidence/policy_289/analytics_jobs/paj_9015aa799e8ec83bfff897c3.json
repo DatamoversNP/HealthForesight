@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_9015aa799e8ec83bfff897c3",
+  "policy_id": "55b43f1d-f022-408d-bf72-5a53850f6a75",
+  "name": "Long-Term Acute Care Hospital Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "db3b350038dd593b",
+  "started_at": "2026-11-04T13:18:18.235033+00:00",
+  "finished_at": "2026-11-04T13:18:18.235035+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

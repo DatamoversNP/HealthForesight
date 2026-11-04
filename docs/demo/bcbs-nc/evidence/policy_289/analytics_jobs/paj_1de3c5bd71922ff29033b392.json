@@ -1,0 +1,18 @@
+{
+  "job_id": "paj_1de3c5bd71922ff29033b392",
+  "policy_id": "51886386-a86a-4eb3-ae8e-b7f807464c96",
+  "name": "Virtual Visit Eligibility and Reimbursement Rules",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "17e5748363d72965",
+  "started_at": "2026-11-04T13:18:18.244869+00:00",
+  "finished_at": "2026-11-04T13:18:18.244870+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "scope.states"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

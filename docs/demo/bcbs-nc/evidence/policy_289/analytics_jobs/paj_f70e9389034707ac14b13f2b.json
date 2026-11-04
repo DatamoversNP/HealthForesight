@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_f70e9389034707ac14b13f2b",
+  "policy_id": "cdcb58e2-d0fc-471f-ae21-7dcc2c960205",
+  "name": "Epidural Steroid Injection Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "6488725a8a040a97",
+  "started_at": "2026-11-04T13:18:18.231645+00:00",
+  "finished_at": "2026-11-04T13:18:18.231647+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

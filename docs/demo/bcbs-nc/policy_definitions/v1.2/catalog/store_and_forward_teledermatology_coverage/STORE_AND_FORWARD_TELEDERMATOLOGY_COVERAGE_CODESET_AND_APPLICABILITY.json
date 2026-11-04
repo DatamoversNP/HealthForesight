@@ -1,0 +1,32 @@
+{
+  "document_id": "STORE_AND_FORWARD_TELEDERMATOLOGY_COVERAGE_CODESET",
+  "policy_id": "06df64a5-f08f-4589-98d3-a7c5af894a4c",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abStore-and-Forward Teledermatology Coverage\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT/HCPCS",
+      "code": "G2010",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT/HCPCS",
+      "code": "99451",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT/HCPCS",
+      "code": "99452",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Store-and-forward / e-consult",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

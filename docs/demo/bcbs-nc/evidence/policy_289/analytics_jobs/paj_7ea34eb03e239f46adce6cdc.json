@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_7ea34eb03e239f46adce6cdc",
+  "policy_id": "68a488b3-1e25-4e3f-aeea-9a45d3c53602",
+  "name": "Total Joint Replacement Episode Bundled Payment",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "b58a8aa18ae0b1f6",
+  "started_at": "2026-11-04T13:18:18.243966+00:00",
+  "finished_at": "2026-11-04T13:18:18.243967+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

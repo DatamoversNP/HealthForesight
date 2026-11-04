@@ -1,0 +1,10 @@
+{
+  "document_id": "PROVIDER_SPECIALTY_ELIGIBILITY_FOR_HIGH_COST_CODES_CODESET",
+  "policy_id": "6190a653-b9d5-4aec-ba49-58927eb13bb8",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abProvider Specialty Eligibility for High-Cost Codes\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Network / access / COE / referral rule \u2014 taxonomy/network IDs not CPT schedule",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

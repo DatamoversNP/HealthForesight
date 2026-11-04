@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_c74a163f83c2a6975dc1f9cc",
+  "policy_id": "91516741-edb2-4598-ad04-f2dee7c46ef8",
+  "name": "Complex Hernia Repair Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "1d6b9407f9183a48",
+  "started_at": "2026-11-04T13:18:18.228978+00:00",
+  "finished_at": "2026-11-04T13:18:18.228979+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

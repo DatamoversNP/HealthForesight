@@ -1,0 +1,32 @@
+{
+  "document_id": "PULMONARY_REHABILITATION_SESSION_LIMIT_CODESET",
+  "policy_id": "5b976f98-6922-42a8-8175-5047c160ca9e",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abPulmonary Rehabilitation Session Limit\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT/HCPCS",
+      "code": "G0424",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT/HCPCS",
+      "code": "94625",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT/HCPCS",
+      "code": "94626",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

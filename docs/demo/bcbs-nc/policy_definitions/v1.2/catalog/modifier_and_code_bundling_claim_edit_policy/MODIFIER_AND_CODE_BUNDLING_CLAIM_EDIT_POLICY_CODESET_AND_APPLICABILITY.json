@@ -1,0 +1,60 @@
+{
+  "document_id": "MODIFIER_AND_CODE_BUNDLING_CLAIM_EDIT_POLICY_CODESET",
+  "policy_id": "ef5789ab-9dd5-4950-b64d-3e70a98f4503",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abModifier and Code-Bundling Claim Edit Policy\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "MODIFIER",
+      "code": "59",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "MODIFIER",
+      "code": "XE",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "MODIFIER",
+      "code": "XP",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "MODIFIER",
+      "code": "XS",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "MODIFIER",
+      "code": "XU",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "MODIFIER",
+      "code": "25",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "MODIFIER",
+      "code": "NCCI",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Bundling/modifier edit semantics \u2014 NCCI tables versioned externally",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

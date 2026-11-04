@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_bbc59e832f5de94fcfd957cb",
+  "policy_id": "97c8760c-9fac-4fdf-872c-5fbe449d7ddc",
+  "name": "Pharmacogenomic Testing Coverage Criteria",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "d9a0446c37072cf1",
+  "started_at": "2026-11-04T13:18:18.240038+00:00",
+  "finished_at": "2026-11-04T13:18:18.240039+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

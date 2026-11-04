@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_5bc78c7cc7f4402d6819ba95",
+  "policy_id": "1e608a41-9560-4ce5-b677-f3a0085940e9",
+  "name": "Specialty Drug Site-of-Administration Management",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "d7c4ab505890bbf9",
+  "started_at": "2026-11-04T13:18:18.242213+00:00",
+  "finished_at": "2026-11-04T13:18:18.242214+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

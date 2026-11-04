@@ -1,0 +1,32 @@
+{
+  "document_id": "PAP_THERAPY_INITIATION_AND_COMPLIANCE_CODESET",
+  "policy_id": "3be7daf8-c492-46d4-9980-e9c860b8cca7",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abPAP Therapy Initiation and Compliance\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "HCPCS",
+      "code": "E0601",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "A7030",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "A7034",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "PAP initiation supplies",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

@@ -1,0 +1,381 @@
+{
+  "archetype": "MEDICAL_NECESSITY_COVERAGE",
+  "offset": 0,
+  "count": 37,
+  "candidate_schedule": 20,
+  "unresolved": 3,
+  "not_applicable": 14,
+  "persisted_ok": 0,
+  "results": [
+    {
+      "policy_id": "5032227f-90d7-4bc3-bfc1-092ba76df743",
+      "name": "ACA Preventive Screening Coverage Requirements",
+      "folder": "catalog/aca_preventive_screening_coverage_requirements",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 5,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "0f531198-6be7-4acf-b8fe-cd1f260772fb",
+      "name": "Audio-Only Telehealth Coverage Rules",
+      "folder": "catalog/audio_only_telehealth_coverage_rules",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 3,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "ec25e932-b9e1-411d-a6ff-021a1e35d033",
+      "name": "Behavioral Health Inpatient Concurrent Review",
+      "folder": "catalog/behavioral_health_inpatient_concurrent_review",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "9f06d32c-82f0-4dd9-a3ff-b0e11d3ecc4d",
+      "name": "Cochlear Implant Prior Authorization",
+      "folder": "catalog/cochlear_implant_prior_authorization",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 3,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "90449142-fbf5-47fb-a302-e46ba9b173f4",
+      "name": "Convenience Care Exclusion",
+      "folder": "catalog/convenience_care_exclusion",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "6aa74e48-4e34-4ba6-b3c1-11112b16b5ef",
+      "name": "Coronary Calcium Scoring Coverage Criteria",
+      "folder": "catalog/coronary_calcium_scoring_coverage_criteria",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 1,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "f6c26ac2-a949-45d9-a4da-b65bb783a60f",
+      "name": "Cosmetic Services Exclusion",
+      "folder": "catalog/cosmetic_services_exclusion",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 6,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "b8f0b7a6-940e-41f7-b272-d751a82a290d",
+      "name": "Cosmetic Surgery Exclusion Policy",
+      "folder": "catalog/cosmetic_surgery_exclusion_policy",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 4,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "510b1e80-0c2f-4477-83e9-d2747e0c7200",
+      "name": "Custodial Care Exclusion",
+      "folder": "catalog/custodial_care_exclusion",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "a196ff6f-047b-4809-b83d-5df4194e4820",
+      "name": "Digital Therapeutics Coverage Criteria",
+      "folder": "catalog/digital_therapeutics_coverage_criteria",
+      "codeset_status": "UNRESOLVED",
+      "code_count": 0,
+      "definition_status": "DEFINITION_INCOMPLETE_UNRESOLVED_CODESET",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "c1dd30a3-de81-4743-8433-c9c5b40a9d92",
+      "name": "Direct-to-Consumer Lab Noncoverage",
+      "folder": "catalog/direct_to_consumer_lab_noncoverage",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 3,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "6b36eacc-0ea0-4089-bbf5-2ee51fced2a3",
+      "name": "Discharge Planning Requirements",
+      "folder": "catalog/discharge_planning_requirements",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "f0fb116f-2ef1-48d3-bbe1-3d4c7b5cf7d8",
+      "name": "Emerging Treatment Experimental Investigational Exclusion",
+      "folder": "catalog/emerging_treatment_experimental_investigational_exclusion",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "dde13087-5e41-45d2-9e51-21e6c42ce16c",
+      "name": "Experimental and Investigational Exclusion Framework",
+      "folder": "catalog/experimental_and_investigational_exclusion_framework",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "4ac3f722-8cf9-40d6-b023-efc0b950633c",
+      "name": "Experimental and Investigational Services Policy",
+      "folder": "catalog/experimental_and_investigational_services_policy",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "90592b6e-95a3-4f83-aee5-ed17ddfa1d1b",
+      "name": "Experimental Treatment Coverage Exclusion",
+      "folder": "catalog/experimental_treatment_coverage_exclusion",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "dedb13ab-fc24-447e-a53a-0034287a665b",
+      "name": "Hearing Aid Benefit and Replacement Cycle",
+      "folder": "catalog/hearing_aid_benefit_and_replacement_cycle",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 7,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "f7d9efc7-2a22-4197-aeda-7fb830651990",
+      "name": "Hearing Aid Coverage Criteria",
+      "folder": "catalog/hearing_aid_coverage_criteria",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 5,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "8bb505a9-fd83-4954-b890-f1b18182679f",
+      "name": "Inpatient Concurrent Stay Review",
+      "folder": "catalog/inpatient_concurrent_stay_review",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "647c52c7-3619-42d3-899b-387936096ee2",
+      "name": "Inpatient vs Observation Status Determination",
+      "folder": "catalog/inpatient_vs_observation_status_determination",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "58f3f2b9-e9dc-4ee3-8a94-3fbc7c24ff02",
+      "name": "Interventional Pain Regenerative Injection Noncoverage",
+      "folder": "catalog/interventional_pain_regenerative_injection_noncoverage",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 2,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "46e3ebd7-3f65-43f2-9d3e-5bdeabdddacc",
+      "name": "MCG Clinical Criteria for Inpatient Admissions",
+      "folder": "catalog/mcg_clinical_criteria_for_inpatient_admissions",
+      "codeset_status": "UNRESOLVED",
+      "code_count": 0,
+      "definition_status": "DEFINITION_INCOMPLETE_UNRESOLVED_CODESET",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "258dc9fb-8530-4d18-9b49-5a42f46c3469",
+      "name": "MCG-Style Clinical Criteria for Inpatient Admissions",
+      "folder": "catalog/mcg_style_clinical_criteria_for_inpatient_admissions",
+      "codeset_status": "UNRESOLVED",
+      "code_count": 0,
+      "definition_status": "DEFINITION_INCOMPLETE_UNRESOLVED_CODESET",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "5b54aa48-c951-424f-a468-3b7a2affc21c",
+      "name": "Medical Eye Disease vs Routine Vision Separation",
+      "folder": "catalog/medical_eye_disease_vs_routine_vision_separation",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 5,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "e101da7e-8c98-4b56-a931-70443af24316",
+      "name": "Medical-Dental Crossover Trauma Policy",
+      "folder": "catalog/medical_dental_crossover_trauma_policy",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 2,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "9ec59e47-daf0-49c7-99d5-023335e33847",
+      "name": "Medication-Assisted Treatment Access Policy",
+      "folder": "catalog/medication_assisted_treatment_access_policy",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 6,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "7101e2ed-96fe-4339-9d54-7e96f317f0dc",
+      "name": "NICU Concurrent Review",
+      "folder": "catalog/nicu_concurrent_review",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "81486a70-41fe-4252-8c2b-50298886e9f8",
+      "name": "Oncology-Related Dental Clearance Coverage",
+      "folder": "catalog/oncology_related_dental_clearance_coverage",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 2,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "e1202a7b-e876-4783-acb0-024eeec84f40",
+      "name": "Orthobiologics and PRP Noncoverage",
+      "folder": "catalog/orthobiologics_and_prp_noncoverage",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 1,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "1170dd01-14a9-44fe-a708-32f7ad20e7d4",
+      "name": "Out-of-Network Inpatient Authorization",
+      "folder": "catalog/out_of_network_inpatient_authorization",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "d8167a61-8d8a-4b7b-b1d8-889bfe5fedfd",
+      "name": "Outpatient Advanced Imaging Medical Necessity Criteria",
+      "folder": "catalog/outpatient_advanced_imaging_medical_necessity_criteria",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 16,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "5f4e30e8-ee6f-4d6a-b88d-24b03e58ed48",
+      "name": "Readmission Relatedness Review",
+      "folder": "catalog/readmission_relatedness_review",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "404878f7-d266-4d5c-adaf-46168de3499c",
+      "name": "Remote Patient Monitoring Coverage Criteria",
+      "folder": "catalog/remote_patient_monitoring_coverage_criteria",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 4,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "06df64a5-f08f-4589-98d3-a7c5af894a4c",
+      "name": "Store-and-Forward Teledermatology Coverage",
+      "folder": "catalog/store_and_forward_teledermatology_coverage",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 3,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "130ecc03-cbc0-418e-ab51-e6f1a3a688b9",
+      "name": "Surrogacy Exclusion Policy",
+      "folder": "catalog/surrogacy_exclusion_policy",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "e5a26938-d36d-40f8-9ebc-acc30db80c53",
+      "name": "Telehealth Covered Services List",
+      "folder": "catalog/telehealth_covered_services_list",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 7,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "9b632583-b59b-4a1d-8c63-d9e6eb8282fa",
+      "name": "Vision Hardware vs Medical Eye Disease",
+      "folder": "catalog/vision_hardware_vs_medical_eye_disease",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 4,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    }
+  ]
+}

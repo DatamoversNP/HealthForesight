@@ -17,24 +17,35 @@ export default function PolicyClaimCounts({ policyId, compact = false }: PolicyC
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    if (policyId) {
-      loadCounts()
+    if (!policyId) return
+    let cancelled = false
+    const loadCounts = async () => {
+      try {
+        setLoading(true)
+        setError(null)
+        const result = await apiClient.getPolicyClaimCountsBreakdown(policyId)
+        if (!cancelled) setData(result)
+      } catch (err: any) {
+        if (cancelled) return
+        const timedOut =
+          err?.code === 'ECONNABORTED' ||
+          err?.message?.includes('timeout') ||
+          err?.status === 0
+        setError(
+          timedOut
+            ? 'Claim counts are taking too long — open again later or use a narrower policy scope.'
+            : err.detail || err.message || 'Failed to load claim counts'
+        )
+        setData(null)
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    }
+    loadCounts()
+    return () => {
+      cancelled = true
     }
   }, [policyId])
-
-  const loadCounts = async () => {
-    try {
-      setLoading(true)
-      setError(null)
-      const result = await apiClient.getPolicyClaimCountsBreakdown(policyId)
-      setData(result)
-    } catch (err: any) {
-      setError(err.detail || err.message || 'Failed to load claim counts')
-      setData(null)
-    } finally {
-      setLoading(false)
-    }
-  }
 
   if (loading) {
     return (

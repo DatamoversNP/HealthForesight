@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_24d61f2ea8c529d7f4ae3b80",
+  "policy_id": "681baebb-e999-405f-b647-b23a91db761c",
+  "name": "Structural Heart Procedure Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "dda6a3f389fee6e3",
+  "started_at": "2026-11-04T13:18:18.243054+00:00",
+  "finished_at": "2026-11-04T13:18:18.243055+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

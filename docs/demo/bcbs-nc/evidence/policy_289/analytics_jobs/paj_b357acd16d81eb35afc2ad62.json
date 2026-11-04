@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_b357acd16d81eb35afc2ad62",
+  "policy_id": "c09ab8fc-f4df-46f1-9cb7-e5e86cf1617d",
+  "name": "ACA Preventive Services Zero Cost Share",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "454a50be1d342c28",
+  "started_at": "2026-11-04T13:18:18.225341+00:00",
+  "finished_at": "2026-11-04T13:18:18.225343+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

@@ -1,0 +1,295 @@
+{
+  "document_id": "HF-RP-UM-MRI-001-CODESET",
+  "policy_id": "d403f101-08dd-45c9-ab83-d42e37c62018",
+  "version": "2026-11-03-v1.2.1-technical-closure",
+  "schema": "MRI_CODESET_RECORD.schema.json",
+  "status": "DEFINITION_REVIEW_REQUIRED",
+  "operational_activation": "PROHIBITED",
+  "intended_anatomy": "LUMBAR_SPINE_OUTPATIENT",
+  "scope_migration_ref": "MRI_SCOPE_MIGRATION_DECISION_v1.2.md",
+  "notes": [
+    "No operative code set is approved. CANDIDATE_INCLUDE is not APPROVED_INCLUDE.",
+    "Never apply L34425/A56729 to lumbar codes.",
+    "VERIFIED_SOURCE requires populated evidence.* fields; otherwise use a weaker class.",
+    "Do not overwrite frozen demo fixtures without approved migration."
+  ],
+  "codes": [
+    {
+      "code_system": "CPT",
+      "code": "72148",
+      "description": "MRI lumbar spine without contrast",
+      "anatomical_region": "LUMBAR_SPINE",
+      "contrast_variant": "WITHOUT",
+      "setting": "OUTPATIENT",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "effective_from": null,
+      "effective_to": null,
+      "evidence_class": "REPRESENTATIVE_DESIGN",
+      "source_evidence_note": "Platform lever/scope candidate; clinical schedule approval pending",
+      "evidence": {
+        "evidence_id": null,
+        "source_system": "platform_config",
+        "source_document_id": "d403f101-08dd-45c9-ab83-d42e37c62018",
+        "source_version": null,
+        "source_url": null,
+        "retrieved_at": null,
+        "content_checksum_sha256": null,
+        "applicability_period_start": null,
+        "applicability_period_end": null,
+        "notes": "Not a CMS verification claim"
+      },
+      "medicare_applicability": {
+        "ncd_220_2": "REFERENCE_ONLY_FFS",
+        "lcd_l34425": "NOT_APPLICABLE",
+        "article_a56729": "NOT_APPLICABLE"
+      }
+    },
+    {
+      "code_system": "CPT",
+      "code": "72149",
+      "description": "MRI lumbar spine with contrast",
+      "anatomical_region": "LUMBAR_SPINE",
+      "contrast_variant": "WITH",
+      "setting": "OUTPATIENT",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "effective_from": null,
+      "effective_to": null,
+      "evidence_class": "REPRESENTATIVE_DESIGN",
+      "source_evidence_note": "Platform lever/scope candidate",
+      "evidence": {
+        "evidence_id": null,
+        "source_system": "platform_config",
+        "source_document_id": "d403f101-08dd-45c9-ab83-d42e37c62018",
+        "source_version": null,
+        "source_url": null,
+        "retrieved_at": null,
+        "content_checksum_sha256": null,
+        "applicability_period_start": null,
+        "applicability_period_end": null,
+        "notes": "Not a CMS verification claim"
+      },
+      "medicare_applicability": {
+        "ncd_220_2": "REFERENCE_ONLY_FFS",
+        "lcd_l34425": "NOT_APPLICABLE",
+        "article_a56729": "NOT_APPLICABLE"
+      }
+    },
+    {
+      "code_system": "CPT",
+      "code": "72158",
+      "description": "MRI lumbar spine without then with contrast",
+      "anatomical_region": "LUMBAR_SPINE",
+      "contrast_variant": "WITHOUT_THEN_WITH",
+      "setting": "OUTPATIENT",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "effective_from": null,
+      "effective_to": null,
+      "evidence_class": "REPRESENTATIVE_DESIGN",
+      "source_evidence_note": "Present on platform lever; must be in approved scope if operative",
+      "evidence": {
+        "evidence_id": null,
+        "source_system": "platform_config",
+        "source_document_id": "d403f101-08dd-45c9-ab83-d42e37c62018",
+        "source_version": null,
+        "source_url": null,
+        "retrieved_at": null,
+        "content_checksum_sha256": null,
+        "applicability_period_start": null,
+        "applicability_period_end": null,
+        "notes": "Not a CMS verification claim"
+      },
+      "medicare_applicability": {
+        "ncd_220_2": "REFERENCE_ONLY_FFS",
+        "lcd_l34425": "NOT_APPLICABLE",
+        "article_a56729": "NOT_APPLICABLE"
+      }
+    },
+    {
+      "code_system": "CPT",
+      "code": "99213",
+      "description": "Office/outpatient E/M",
+      "anatomical_region": null,
+      "contrast_variant": "NOT_APPLICABLE",
+      "setting": "OUTPATIENT",
+      "inclusion_status": "EXCLUDE_PA_TARGET",
+      "effective_from": null,
+      "effective_to": null,
+      "evidence_class": "CONFIG_DEFECT",
+      "source_evidence_note": "Present in live scope incorrectly; not an MRI authorization target",
+      "evidence": {
+        "evidence_id": "EV-CFG-LIVE-EM",
+        "source_system": "platform_config_export",
+        "source_document_id": "Outpatient_MRI_Prior_Authorization.json",
+        "source_version": null,
+        "source_url": null,
+        "retrieved_at": "2026-11-03T14:37:00Z",
+        "content_checksum_sha256": null,
+        "applicability_period_start": null,
+        "applicability_period_end": null,
+        "notes": "Defect quarantine"
+      },
+      "medicare_applicability": {
+        "ncd_220_2": "NOT_APPLICABLE",
+        "lcd_l34425": "NOT_APPLICABLE",
+        "article_a56729": "NOT_APPLICABLE"
+      }
+    },
+    {
+      "code_system": "CPT",
+      "code": "99214",
+      "description": "Office/outpatient E/M",
+      "anatomical_region": null,
+      "contrast_variant": "NOT_APPLICABLE",
+      "setting": "OUTPATIENT",
+      "inclusion_status": "EXCLUDE_PA_TARGET",
+      "effective_from": null,
+      "effective_to": null,
+      "evidence_class": "CONFIG_DEFECT",
+      "source_evidence_note": "Present in live scope incorrectly; not an MRI authorization target",
+      "evidence": {
+        "evidence_id": "EV-CFG-LIVE-EM",
+        "source_system": "platform_config_export",
+        "source_document_id": "Outpatient_MRI_Prior_Authorization.json",
+        "source_version": null,
+        "source_url": null,
+        "retrieved_at": "2026-11-03T14:37:00Z",
+        "content_checksum_sha256": null,
+        "applicability_period_start": null,
+        "applicability_period_end": null,
+        "notes": "Defect quarantine"
+      },
+      "medicare_applicability": {
+        "ncd_220_2": "NOT_APPLICABLE",
+        "lcd_l34425": "NOT_APPLICABLE",
+        "article_a56729": "NOT_APPLICABLE"
+      }
+    },
+    {
+      "code_system": "CPT",
+      "code": "70540",
+      "description": "MRI orbit/face/neck without contrast",
+      "anatomical_region": "ORBIT_FACE_NECK",
+      "contrast_variant": "WITHOUT",
+      "setting": "OUTPATIENT",
+      "inclusion_status": "OUT_OF_BAND_FOR_THIS_PA",
+      "effective_from": "2026-10-01T00:00:00",
+      "effective_to": null,
+      "evidence_class": "VERIFIED_SOURCE",
+      "source_evidence_note": "Code listed on A56729 (article ver 24) via Coverage API HCPCS enrichment; OUT OF BAND for proposed lumbar PA",
+      "evidence": {
+        "evidence_id": "EV-ART-A56729-HCPCS",
+        "source_system": "cms_coverage_api",
+        "source_document_id": "A56729",
+        "source_version": "24",
+        "source_url": "https://www.cms.gov/medicare-coverage-database/view/article.aspx?articleid=56729&ver=24",
+        "retrieved_at": "2026-11-03T13:02:24.568026+00:00",
+        "content_checksum_sha256": "80d90feed877911cbebeebe15e0d83f3c814dfc6a52a7b698008e63aacacf731",
+        "applicability_period_start": "2026-10-01T00:00:00",
+        "applicability_period_end": null,
+        "notes": "Local sidecar checksum of codes/A56729.json; article content_hash 2555c265c3ee591b06b14031e1dc6b52904f4384a5e8d7b11bd6ce0a61bdcf8a"
+      },
+      "medicare_applicability": {
+        "ncd_220_2": "REFERENCE_ONLY_FFS",
+        "lcd_l34425": "PARTIAL_APPLICABLE_JM",
+        "article_a56729": "APPLICABLE_TO_THIS_CODE"
+      }
+    },
+    {
+      "code_system": "CPT",
+      "code": "70542",
+      "description": "MRI orbit/face/neck with contrast",
+      "anatomical_region": "ORBIT_FACE_NECK",
+      "contrast_variant": "WITH",
+      "setting": "OUTPATIENT",
+      "inclusion_status": "OUT_OF_BAND_FOR_THIS_PA",
+      "effective_from": "2026-10-01T00:00:00",
+      "effective_to": null,
+      "evidence_class": "VERIFIED_SOURCE",
+      "source_evidence_note": "Code listed on A56729 (article ver 24); OUT OF BAND for proposed lumbar PA",
+      "evidence": {
+        "evidence_id": "EV-ART-A56729-HCPCS",
+        "source_system": "cms_coverage_api",
+        "source_document_id": "A56729",
+        "source_version": "24",
+        "source_url": "https://www.cms.gov/medicare-coverage-database/view/article.aspx?articleid=56729&ver=24",
+        "retrieved_at": "2026-11-03T13:02:24.568026+00:00",
+        "content_checksum_sha256": "80d90feed877911cbebeebe15e0d83f3c814dfc6a52a7b698008e63aacacf731",
+        "applicability_period_start": "2026-10-01T00:00:00",
+        "applicability_period_end": null,
+        "notes": "Same A56729 HCPCS enrichment artifact as 70540/70543"
+      },
+      "medicare_applicability": {
+        "ncd_220_2": "REFERENCE_ONLY_FFS",
+        "lcd_l34425": "PARTIAL_APPLICABLE_JM",
+        "article_a56729": "APPLICABLE_TO_THIS_CODE"
+      }
+    },
+    {
+      "code_system": "CPT",
+      "code": "70543",
+      "description": "MRI orbit/face/neck without then with contrast",
+      "anatomical_region": "ORBIT_FACE_NECK",
+      "contrast_variant": "WITHOUT_THEN_WITH",
+      "setting": "OUTPATIENT",
+      "inclusion_status": "OUT_OF_BAND_FOR_THIS_PA",
+      "effective_from": "2026-10-01T00:00:00",
+      "effective_to": null,
+      "evidence_class": "VERIFIED_SOURCE",
+      "source_evidence_note": "Code listed on A56729 (article ver 24); OUT OF BAND for proposed lumbar PA",
+      "evidence": {
+        "evidence_id": "EV-ART-A56729-HCPCS",
+        "source_system": "cms_coverage_api",
+        "source_document_id": "A56729",
+        "source_version": "24",
+        "source_url": "https://www.cms.gov/medicare-coverage-database/view/article.aspx?articleid=56729&ver=24",
+        "retrieved_at": "2026-11-03T13:02:24.568026+00:00",
+        "content_checksum_sha256": "80d90feed877911cbebeebe15e0d83f3c814dfc6a52a7b698008e63aacacf731",
+        "applicability_period_start": "2026-10-01T00:00:00",
+        "applicability_period_end": null,
+        "notes": "Same A56729 HCPCS enrichment artifact as 70540/70542"
+      },
+      "medicare_applicability": {
+        "ncd_220_2": "REFERENCE_ONLY_FFS",
+        "lcd_l34425": "PARTIAL_APPLICABLE_JM",
+        "article_a56729": "APPLICABLE_TO_THIS_CODE"
+      }
+    }
+  ],
+  "evidence_registry_refs": [
+    {
+      "evidence_id": "EV-ART-A56729-HCPCS",
+      "artifact": "data/policy_sources/lcd_billing_coding_articles/codes/A56729.json",
+      "sha256_full": "80d90feed877911cbebeebe15e0d83f3c814dfc6a52a7b698008e63aacacf731",
+      "lcd_support": {
+        "evidence_id": "EV-LCD-L34425",
+        "source_document_id": "L34425",
+        "source_version": "43",
+        "content_hash": "b5ab4139d9dcc9a7a9aa684be2a2fcb9f12d07c0a125a7ebf0a15d1a29d7e19c",
+        "effective_start": "2025-03-27T00:00:00",
+        "url": "https://www.cms.gov/medicare-coverage-database/view/lcd.aspx?lcdid=34425&ver=43"
+      }
+    },
+    {
+      "evidence_id": "EV-NCD-220.2",
+      "source_document_id": "NCD220.2",
+      "source_version": "6",
+      "content_hash": "7f8301d92aa8ac15e8e18012d5c748dbc950c06b34ace7d19a587438f965e277",
+      "last_updated": "12/03/2024",
+      "url": "https://www.cms.gov/medicare-coverage-database/view/ncd.aspx?NCDId=177"
+    }
+  ],
+  "ambiguous_mapping_policy": {
+    "auto_deny": false,
+    "auto_impose_pa": false,
+    "route": "MANUAL_SCOPE_REVIEW",
+    "preserve_member_protections": true,
+    "record_resolution_and_version": true
+  },
+  "synthetic_fixtures": [
+    {
+      "id": "NCCI-PTP-PAIR-70553-70551",
+      "class": "SYNTHETIC_FIXTURE",
+      "note": "Not an authoritative published CMS PTP row; not a lumbar PA code-set authority"
+    }
+  ]
+}

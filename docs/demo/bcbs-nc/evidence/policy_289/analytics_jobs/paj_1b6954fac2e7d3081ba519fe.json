@@ -1,0 +1,20 @@
+{
+  "job_id": "paj_1b6954fac2e7d3081ba519fe",
+  "policy_id": "d35e2fff-659c-4988-ab30-d55498631c2a",
+  "name": "UM Reduction for under age 45 and B1C",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "80bc1c882a8e8983",
+  "started_at": "2026-11-04T13:18:18.244163+00:00",
+  "finished_at": "2026-11-04T13:18:18.244164+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "scope.states",
+      "codeset_UNRESOLVED",
+      "definition_incomplete"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

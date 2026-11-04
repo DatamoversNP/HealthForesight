@@ -1,0 +1,10 @@
+{
+  "document_id": "SNF_AND_HOME_HEALTH_AUTHORIZATION_COVERAGE_RULES_CODESET",
+  "policy_id": "f54e4310-7f4b-4d6e-a6ab-c7b748722c8d",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abSNF and Home Health Authorization Coverage Rules\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Post-acute auth coverage rules \u2014 LOC/revenue",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

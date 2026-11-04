@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_2d4fa9411386cf1e97b3d383",
+  "policy_id": "8e4ff210-8d77-4b27-9a86-1e6f50986033",
+  "name": "Centers of Excellence Requirement \u2014 Complex Cancer",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "219bfe48cfbd5c22",
+  "started_at": "2026-11-04T13:18:18.228361+00:00",
+  "finished_at": "2026-11-04T13:18:18.228362+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

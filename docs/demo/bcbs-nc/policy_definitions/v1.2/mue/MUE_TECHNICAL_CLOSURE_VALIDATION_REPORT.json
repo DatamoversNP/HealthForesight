@@ -1,0 +1,117 @@
+{
+  "document_id": "HF-RP-CODE-MUE-001-TECHNICAL-CLOSURE-VALIDATION",
+  "generated_at": "2026-11-03T15:32:32.189928+00:00",
+  "package_version": "v1.2.1-structural-controls",
+  "reference_implementation": "mri/v1.2.1-technical-closure",
+  "self_approval": false,
+  "activation": false,
+  "frozen_fixtures_modified": false,
+  "statuses": {
+    "DEFINITION_REVIEW_REQUIRED": true,
+    "FULLY_VALIDATED_DEMO": "independent_where_supported",
+    "OPERATIONAL_ACTIVATION_PROHIBITED": true
+  },
+  "verdict": {
+    "structural_controls_applied": true,
+    "structural_technical_closure": "CONTROLS_IN_PLACE_AWAITING_INDEPENDENT_VERIFICATION",
+    "clinically_complete_policy": "NOT_APPROVED",
+    "production_enforceability": "NOT_APPROVED",
+    "mri_pass_does_not_imply_this_pass": true,
+    "summary": "MRI-derived engineering controls applied with mechanism-specific tables. Do not treat as technical closure PASS. Independent verification + blocker clearance required."
+  },
+  "requirements": [
+    {
+      "id": "R1_CODESET_SCHEMA",
+      "result": "PASS"
+    },
+    {
+      "id": "R2_VERIFIED_SOURCE_EVIDENCE",
+      "result": "N/A",
+      "note": "No VERIFIED_SOURCE rows; weaker classes OK"
+    },
+    {
+      "id": "R3_NON_OPERATIVE_PROPOSED_CRITERIA",
+      "result": "PASS"
+    },
+    {
+      "id": "R4_URGENCY_BEFORE_ROUTINE",
+      "result": "PASS"
+    },
+    {
+      "id": "R5_ADVERSE_SPLIT",
+      "result": "PASS"
+    },
+    {
+      "id": "R6_SCOPE_MIGRATION_RECORDED",
+      "result": "N/A",
+      "note": "Add SCOPE_MIGRATION_DECISION if material scope change vs prior title/config"
+    },
+    {
+      "id": "R7_DETERMINISTIC_TEST_COVERAGE",
+      "result": "PASS",
+      "note": "Tests specified; independent execution not yet evidenced"
+    },
+    {
+      "id": "R8_STATUS_TRIAD_PRESERVED",
+      "result": "PASS"
+    }
+  ],
+  "failed_requirements": [],
+  "release_blockers": [
+    {
+      "id": "NCCI_MUE_AUTHORITATIVE_FILE_UNAVAILABLE",
+      "blocks": [
+        "VERIFIED_SOURCE MUE"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "MUE_*"
+    },
+    {
+      "id": "PRODUCT_SCHEDULE_UNRESOLVED",
+      "blocks": [
+        "activation"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "MUE_*"
+    },
+    {
+      "id": "SYNTHETIC_MUST_NOT_BE_LABELED_CMS",
+      "blocks": [
+        "production authority"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "MUE_*"
+    },
+    {
+      "id": "GUARDRAIL_THRESHOLDS_UNAPPROVED",
+      "blocks": [
+        "production monitoring"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "MUE_*"
+    }
+  ],
+  "release_gate": {
+    "rule": "Any RELEASE_BLOCKER prevents OPERATIONAL_ACTIVATION",
+    "blocker_count": 4
+  },
+  "acceptance_tests_execution": "SPECIFIED_NOT_INDEPENDENTLY_EXECUTED",
+  "affected_artifacts": [
+    "v1.2/mue/MUE_POLICY_ACCEPTANCE_TESTS.json",
+    "v1.2/mue/MUE_DECISION_TABLES.json",
+    "v1.2/mue/MUE_CONFIG_RECONCILIATION_REPORT.md",
+    "v1.2/mue/MUE_RELEASE_BLOCKERS.json",
+    "v1.2/mue/MUE_CODESET_AND_APPLICABILITY.json",
+    "v1.2/mue/MUE_OPERATIONAL_REQUIREMENTS_MATRIX.md",
+    "v1.2/mue/MUE_POLICY_DEFINITION_v1.2.md",
+    "v1.2/mue/MUE_SOURCE_EVIDENCE_REGISTER.md"
+  ]
+}

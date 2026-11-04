@@ -1,0 +1,46 @@
+{
+  "document_id": "HOME_HEALTH_EPISODE_AUTHORIZATION_CODESET",
+  "policy_id": "961da9ed-a175-4746-bdf0-304e6b5ab071",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abHome Health Episode Authorization\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "HCPCS",
+      "code": "G0151",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "G0152",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "G0153",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "G0299",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "G0300",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Home health discipline visit HCPCS",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

@@ -1,0 +1,235 @@
+{
+  "document_id": "HF-RP-UM-MRI-001-DECISION-TABLES",
+  "version": "v1.2.1-technical-closure",
+  "policy_id": "d403f101-08dd-45c9-ab83-d42e37c62018",
+  "status": "DEFINITION_REVIEW_REQUIRED",
+  "operational_activation": "PROHIBITED",
+  "execution_modes": {
+    "OPERATIVE": {
+      "allowed": false,
+      "reason": "Clinical criteria schedule not approved; product/legal matrices unresolved"
+    },
+    "SYNTHETIC_SIMULATION": {
+      "allowed": true,
+      "isolates": ["known_answer_fixtures", "workflow_dry_run"],
+      "may_emit_operative_APPROVED_or_ADVERSE_ISSUED": false
+    }
+  },
+  "outcomes": [
+    "NOT_APPLICABLE",
+    "MANUAL_SCOPE_REVIEW",
+    "PENDING_INFORMATION",
+    "CLINICAL_REVIEW_REQUIRED",
+    "ADVERSE_REVIEW_REQUIRED",
+    "APPROVED",
+    "ADVERSE_DETERMINATION_ISSUED"
+  ],
+  "outcome_semantics": {
+    "NOT_APPLICABLE": "Out of product/service/setting scope — not a denial",
+    "MANUAL_SCOPE_REVIEW": "Ambiguous mapping; no auto-deny; no auto-PA imposition",
+    "PENDING_INFORMATION": "Missing necessary clinical info on a non-emergent/non-urgent path; clock tracked",
+    "CLINICAL_REVIEW_REQUIRED": "Requires qualified clinical reviewer (includes emergency/urgent routing)",
+    "ADVERSE_REVIEW_REQUIRED": "Referral into authorized adverse-determination review process — not a final denial",
+    "APPROVED": "Operative approval only when signed criteria schedule + authorized reviewer path allow; blocked in OPERATIVE mode while DEFINITION_REVIEW_REQUIRED",
+    "ADVERSE_DETERMINATION_ISSUED": "Completed adverse determination requiring authorized reviewer decision, applicable notice, appeal information, timestamps, and full audit record"
+  },
+  "evaluation_order": [
+    "DT-ELIGIBILITY",
+    "DT-APPLICABILITY",
+    "DT-URGENCY",
+    "DT-EVIDENCE",
+    "DT-CLINICAL"
+  ],
+  "invariants": [
+    "DT-URGENCY is evaluated before DT-EVIDENCE and DT-CLINICAL",
+    "Emergency/urgent indicators short-circuit past PENDING_INFORMATION for routine incomplete docs",
+    "Proposed unapproved criteria rows cannot emit APPROVED or ADVERSE_DETERMINATION_ISSUED in OPERATIVE mode",
+    "ADVERSE_DETERMINATION_ISSUED requires reviewer_id, notice_ref, appeal_rights_ref, decided_at, audit_packet_id",
+    "Branches within a table are ordered; first match wins; tables are mutually exclusive by evaluation_order"
+  ],
+  "tables": [
+    {
+      "table_id": "DT-ELIGIBILITY",
+      "ordered": true,
+      "branches": [
+        {
+          "id": "EL-01",
+          "when": "product_not_on_approved_schedule",
+          "outcome": "NOT_APPLICABLE",
+          "notes": "Not a denial"
+        },
+        {
+          "id": "EL-02",
+          "when": "benefit_excludes_imaging",
+          "outcome": "NOT_APPLICABLE"
+        },
+        {
+          "id": "EL-03",
+          "when": "member_eligibility_unresolved",
+          "outcome": "PENDING_INFORMATION",
+          "notes": "Administrative pend — urgency still checked if clinical red flags already known"
+        },
+        {
+          "id": "EL-04",
+          "when": "eligibility_ok",
+          "next": "DT-APPLICABILITY"
+        }
+      ]
+    },
+    {
+      "table_id": "DT-APPLICABILITY",
+      "ordered": true,
+      "branches": [
+        {
+          "id": "AP-01",
+          "when": "code_in_EXCLUDE_PA_TARGET",
+          "outcome": "NOT_APPLICABLE",
+          "example": "99213/99214"
+        },
+        {
+          "id": "AP-02",
+          "when": "code_OUT_OF_BAND_FOR_THIS_PA",
+          "outcome": "NOT_APPLICABLE",
+          "example": "70540 under proposed lumbar-only PA"
+        },
+        {
+          "id": "AP-03",
+          "when": "code_mapping_ambiguous",
+          "outcome": "MANUAL_SCOPE_REVIEW",
+          "auto_deny": false,
+          "auto_impose_pa": false
+        },
+        {
+          "id": "AP-04",
+          "when": "setting_not_outpatient",
+          "outcome": "NOT_APPLICABLE"
+        },
+        {
+          "id": "AP-05",
+          "when": "code_CANDIDATE_INCLUDE_and_setting_ok",
+          "next": "DT-URGENCY"
+        }
+      ]
+    },
+    {
+      "table_id": "DT-URGENCY",
+      "ordered": true,
+      "priority": "BEFORE_ROUTINE_EVIDENCE_AND_CLINICAL",
+      "branches": [
+        {
+          "id": "UR-01",
+          "when": "emergency_indicators_or_red_flag_cauda_equina_or_equivalent",
+          "outcome": "CLINICAL_REVIEW_REQUIRED",
+          "pathway": "EMERGENCY",
+          "bypass": ["DT-EVIDENCE.routine_incomplete", "DT-CLINICAL.conservative_care_gate"],
+          "notes": "Must not be delayed by routine PENDING_INFORMATION / conservative-care gates"
+        },
+        {
+          "id": "UR-02",
+          "when": "urgent_indicators",
+          "outcome": "CLINICAL_REVIEW_REQUIRED",
+          "pathway": "URGENT_EXPEDITED",
+          "bypass": ["DT-EVIDENCE.routine_incomplete"],
+          "notes": "Separate clocks from emergency and standard; exact deadlines UNRESOLVED"
+        },
+        {
+          "id": "UR-03",
+          "when": "standard_nonemergent",
+          "next": "DT-EVIDENCE"
+        }
+      ]
+    },
+    {
+      "table_id": "DT-EVIDENCE",
+      "ordered": true,
+      "applies_when": "pathway == STANDARD_NONEMERGENT",
+      "branches": [
+        {
+          "id": "EV-01",
+          "when": "required_documentation_missing",
+          "outcome": "PENDING_INFORMATION",
+          "tag": "routine_incomplete"
+        },
+        {
+          "id": "EV-02",
+          "when": "documentation_complete",
+          "next": "DT-CLINICAL"
+        }
+      ]
+    },
+    {
+      "table_id": "DT-CLINICAL",
+      "ordered": true,
+      "notes": "Proposed criteria are non-operative. OPERATIVE mode cannot emit APPROVED or ADVERSE_DETERMINATION_ISSUED until schedule signed.",
+      "branches": [
+        {
+          "id": "CL-01",
+          "when": "execution_mode == OPERATIVE && criteria_schedule_not_approved",
+          "outcome": "CLINICAL_REVIEW_REQUIRED",
+          "forbids": ["APPROVED", "ADVERSE_DETERMINATION_ISSUED"]
+        },
+        {
+          "id": "CL-02",
+          "when": "execution_mode == SYNTHETIC_SIMULATION && proposed_row_match",
+          "outcome": "CLINICAL_REVIEW_REQUIRED",
+          "simulation_annotation": "PROPOSED_REPRESENTATIVE_NOT_APPROVED — dry-run only; do not persist as member determination"
+        },
+        {
+          "id": "CL-03",
+          "when": "execution_mode == OPERATIVE && meets_signed_indication_row",
+          "outcome": "APPROVED",
+          "requires": ["signed_criteria_schedule", "authorized_reviewer_or_auto_rule_approved"]
+        },
+        {
+          "id": "CL-04",
+          "when": "execution_mode == OPERATIVE && exception_granted_by_authorized_clinician",
+          "outcome": "APPROVED",
+          "requires": ["documented_exception", "reviewer_id"]
+        },
+        {
+          "id": "CL-05",
+          "when": "execution_mode == OPERATIVE && does_not_meet_and_no_exception",
+          "outcome": "ADVERSE_REVIEW_REQUIRED",
+          "notes": "Referral only — not a final denial"
+        },
+        {
+          "id": "CL-06",
+          "when": "execution_mode == OPERATIVE && adverse_process_complete",
+          "outcome": "ADVERSE_DETERMINATION_ISSUED",
+          "requires": [
+            "reviewer_id",
+            "notice_ref",
+            "appeal_rights_ref",
+            "decided_at",
+            "audit_packet_id"
+          ]
+        }
+      ]
+    },
+    {
+      "table_id": "DT-MEDICARE_REFERENCE",
+      "ordered": true,
+      "notes": "Commercial PA does not auto-inherit Medicare FFS rules",
+      "branches": [
+        {
+          "id": "MD-01",
+          "when": "program_is_commercial",
+          "medicare_ncd_lcd": "REFERENCE_ONLY_UNLESS_EXPLICIT_ADOPTION"
+        },
+        {
+          "id": "MD-02",
+          "when": "service_is_lumbar_mri",
+          "lcd_l34425": "NOT_APPLICABLE",
+          "article_a56729": "NOT_APPLICABLE"
+        },
+        {
+          "id": "MD-03",
+          "when": "service_is_orbit_face_neck_70540_42_43",
+          "lcd_l34425": "PARTIAL_JM",
+          "article_a56729": "APPLICABLE",
+          "this_pa_band": "OUT_OF_BAND"
+        }
+      ]
+    }
+  ]
+}

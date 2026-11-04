@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://healthforesight.local/schemas/mri-codeset-record-v1.2.json",
+  "title": "MRICodeSetRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "code_system",
+    "code",
+    "description",
+    "anatomical_region",
+    "contrast_variant",
+    "setting",
+    "inclusion_status",
+    "effective_from",
+    "effective_to",
+    "evidence_class",
+    "evidence",
+    "medicare_applicability",
+    "source_evidence_note"
+  ],
+  "properties": {
+    "code_system": { "type": "string", "enum": ["CPT", "HCPCS"] },
+    "code": { "type": "string", "minLength": 1 },
+    "description": { "type": "string" },
+    "anatomical_region": {
+      "type": ["string", "null"],
+      "enum": ["LUMBAR_SPINE", "ORBIT_FACE_NECK", "BRAIN", "OTHER", null]
+    },
+    "contrast_variant": {
+      "type": ["string", "null"],
+      "enum": ["WITHOUT", "WITH", "WITHOUT_THEN_WITH", "NOT_APPLICABLE", null]
+    },
+    "setting": {
+      "type": ["string", "null"],
+      "enum": ["OUTPATIENT", "INPATIENT", "ANY", null]
+    },
+    "inclusion_status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE_INCLUDE",
+        "EXCLUDE_PA_TARGET",
+        "OUT_OF_BAND_FOR_THIS_PA",
+        "APPROVED_INCLUDE",
+        "APPROVED_EXCLUDE"
+      ]
+    },
+    "effective_from": { "type": ["string", "null"], "format": "date-time" },
+    "effective_to": { "type": ["string", "null"], "format": "date-time" },
+    "evidence_class": {
+      "type": "string",
+      "enum": [
+        "VERIFIED_SOURCE",
+        "REPRESENTATIVE_DESIGN",
+        "PROPOSED_REPRESENTATIVE_NOT_APPROVED",
+        "SYNTHETIC_FIXTURE",
+        "CONFIG_DEFECT",
+        "UNRESOLVED"
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_id",
+        "source_system",
+        "source_document_id",
+        "source_version",
+        "source_url",
+        "retrieved_at",
+        "content_checksum_sha256",
+        "applicability_period_start",
+        "applicability_period_end",
+        "notes"
+      ],
+      "properties": {
+        "evidence_id": { "type": ["string", "null"] },
+        "source_system": { "type": ["string", "null"] },
+        "source_document_id": { "type": ["string", "null"] },
+        "source_version": { "type": ["string", "null"] },
+        "source_url": { "type": ["string", "null"] },
+        "retrieved_at": { "type": ["string", "null"], "format": "date-time" },
+        "content_checksum_sha256": { "type": ["string", "null"] },
+        "applicability_period_start": { "type": ["string", "null"], "format": "date-time" },
+        "applicability_period_end": { "type": ["string", "null"], "format": "date-time" },
+        "notes": { "type": ["string", "null"] }
+      }
+    },
+    "medicare_applicability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ncd_220_2", "lcd_l34425", "article_a56729"],
+      "properties": {
+        "ncd_220_2": {
+          "type": "string",
+          "enum": [
+            "REFERENCE_ONLY_FFS",
+            "NOT_APPLICABLE",
+            "APPLICABLE_FFS",
+            "UNRESOLVED"
+          ]
+        },
+        "lcd_l34425": {
+          "type": "string",
+          "enum": [
+            "NOT_APPLICABLE",
+            "PARTIAL_APPLICABLE_JM",
+            "APPLICABLE_JM",
+            "UNRESOLVED"
+          ]
+        },
+        "article_a56729": {
+          "type": "string",
+          "enum": [
+            "NOT_APPLICABLE",
+            "APPLICABLE_TO_THIS_CODE",
+            "PARTIAL",
+            "UNRESOLVED"
+          ]
+        }
+      }
+    },
+    "source_evidence_note": { "type": "string" }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_390d5296bb588bbbc4bc7ea1",
+  "policy_id": "f0ebff27-e3b9-4998-8d35-9cfe3c81d608",
+  "name": "Pulmonary Rehabilitation Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "1dafc86b5bc83426",
+  "started_at": "2026-11-04T13:18:18.241201+00:00",
+  "finished_at": "2026-11-04T13:18:18.241202+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

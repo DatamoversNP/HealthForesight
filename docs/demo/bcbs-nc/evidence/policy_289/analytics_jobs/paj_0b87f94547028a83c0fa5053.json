@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_0b87f94547028a83c0fa5053",
+  "policy_id": "8fba9095-7a93-4b20-8cd8-f13731e6df1e",
+  "name": "Elective Delivery Before 39 Weeks Restriction",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "034b8f82843900e7",
+  "started_at": "2026-11-04T13:18:18.230990+00:00",
+  "finished_at": "2026-11-04T13:18:18.230991+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

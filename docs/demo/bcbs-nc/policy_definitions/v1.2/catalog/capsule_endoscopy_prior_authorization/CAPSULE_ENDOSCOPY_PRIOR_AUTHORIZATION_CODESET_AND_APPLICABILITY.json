@@ -1,0 +1,25 @@
+{
+  "document_id": "CAPSULE_ENDOSCOPY_PRIOR_AUTHORIZATION_CODESET",
+  "policy_id": "787ea442-3c27-4a3d-8a19-6f103be70e2a",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abCapsule Endoscopy Prior Authorization\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "91110",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "91111",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "GI tract capsule endoscopy",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

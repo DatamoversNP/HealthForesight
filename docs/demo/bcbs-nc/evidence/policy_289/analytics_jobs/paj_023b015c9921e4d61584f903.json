@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_023b015c9921e4d61584f903",
+  "policy_id": "444130ea-9eb9-497a-9c9a-c9f7779f657d",
+  "name": "Continuity of Care After Provider Termination",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "c5a84fe3e17450de",
+  "started_at": "2026-11-04T13:18:18.229115+00:00",
+  "finished_at": "2026-11-04T13:18:18.229116+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

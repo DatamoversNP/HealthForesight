@@ -1,0 +1,10 @@
+{
+  "document_id": "MANDATORY_MAIL_ORDER_MAINTENANCE_MEDICATIONS_CODESET",
+  "policy_id": "36228118-affa-48f1-abad-c3fb6091d870",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abMandatory Mail-Order Maintenance Medications\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Mail-order channel rule",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

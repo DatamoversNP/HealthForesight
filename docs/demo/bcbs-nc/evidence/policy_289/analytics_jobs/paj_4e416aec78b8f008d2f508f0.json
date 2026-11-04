@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_4e416aec78b8f008d2f508f0",
+  "policy_id": "e87b67ff-d969-4f98-a823-86765ca1be33",
+  "name": "Cataract Surgery Second-Eye and Specialty Lens Rules",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "f4b6e31adfa76e71",
+  "started_at": "2026-11-04T13:18:18.228234+00:00",
+  "finished_at": "2026-11-04T13:18:18.228235+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

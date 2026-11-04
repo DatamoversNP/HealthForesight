@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_76236eec979b62addbe20b84",
+  "policy_id": "cc1327fa-c66b-46dd-9271-03fb65a5bc73",
+  "name": "Medical Oncology Regimen Prior Authorization",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "0064083714fc4517",
+  "started_at": "2026-11-04T13:18:18.235737+00:00",
+  "finished_at": "2026-11-04T13:18:18.235738+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "codeset_UNRESOLVED",
+      "definition_incomplete"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

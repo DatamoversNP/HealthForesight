@@ -1,0 +1,25 @@
+{
+  "document_id": "SPECIALTY_DRUG_SITE_OF_ADMINISTRATION_MANAGEMENT_CODESET",
+  "policy_id": "1e608a41-9560-4ce5-b677-f3a0085940e9",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abSpecialty Drug Site-of-Administration Management\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "96413",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "96365",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Admin codes for site channeling; drug J-codes product-specific",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

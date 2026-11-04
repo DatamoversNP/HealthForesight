@@ -1,0 +1,26 @@
+{
+  "document_id": "ONCOLOGY_EVIDENCE_BASED_CLINICAL_PATHWAY_RELEASE_BLOCKERS",
+  "package_version": "v1.2.0-representative-batch",
+  "blocks_operational_activation": true,
+  "blocker_count": 3,
+  "blockers": [
+    {
+      "id": "CLINICAL_PRODUCT_UNSIGNED",
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "text": "Clinical/product schedule not signed for operative use"
+    },
+    {
+      "id": "NOT_PROPRIETARY_BCBS_NC",
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "text": "Package is Representative Payer design \u2014 not proprietary BCBS NC operative policy"
+    },
+    {
+      "id": "CODESET_UNRESOLVED",
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "text": "Pathway content licensed/product-specific UNRESOLVED"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_c8f3ba98bbc42a352e0b6db7",
+  "policy_id": "dedb13ab-fc24-447e-a53a-0034287a665b",
+  "name": "Hearing Aid Benefit and Replacement Cycle",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "ef0ba7d85f63f44c",
+  "started_at": "2026-11-04T13:18:18.232895+00:00",
+  "finished_at": "2026-11-04T13:18:18.232897+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

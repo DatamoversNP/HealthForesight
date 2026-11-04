@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_721988c42450941311feac74",
+  "policy_id": "5032227f-90d7-4bc3-bfc1-092ba76df743",
+  "name": "ACA Preventive Screening Coverage Requirements",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "f30786104d15f85a",
+  "started_at": "2026-11-04T13:18:18.225251+00:00",
+  "finished_at": "2026-11-04T13:18:18.225255+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

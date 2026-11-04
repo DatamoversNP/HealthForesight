@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_85bd06797f7f73f936f10674",
+  "policy_id": "6a322ff5-08cb-47cc-8a4e-ac4391286a45",
+  "name": "Gene Therapy One-Time High-Cost Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "6a5c0c20f53eddaf",
+  "started_at": "2026-11-04T13:18:18.232609+00:00",
+  "finished_at": "2026-11-04T13:18:18.232611+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

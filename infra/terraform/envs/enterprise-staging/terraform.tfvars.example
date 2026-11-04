@@ -1,0 +1,14 @@
+# Copy to terraform.tfvars (do not commit secrets). enable_provision stays false until authorized.
+
+enable_provision = false
+deployment_mode  = "saas" # or "customer_subscription"
+name_prefix      = "hfentstg"
+location         = "eastus2"
+resource_group_name = "rg-healthforesight-enterprise-staging"
+owner_subscription_label = "healthforesight"
+
+# Customer-subscription example:
+# deployment_mode            = "customer_subscription"
+# name_prefix                = "payeracme"
+# resource_group_name        = "rg-acme-healthforesight"
+# owner_subscription_label   = "payer:acme"

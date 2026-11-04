@@ -1,0 +1,10 @@
+{
+  "document_id": "SPLIT_FILL_SPECIALTY_PROGRAM_CODESET",
+  "policy_id": "4133e1bc-eee9-43d6-83fb-5cd98547620a",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abSplit-Fill Specialty Program\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Specialty fill program rule",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

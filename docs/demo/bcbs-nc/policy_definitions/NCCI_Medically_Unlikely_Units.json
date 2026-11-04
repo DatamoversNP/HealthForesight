@@ -1,0 +1,235 @@
+{
+  "policy_id": "e11b049d-fcce-55cc-bcd7-71329038383b",
+  "name": "NCCI Medically Unlikely Units",
+  "policy_type": "CODING_AND_BILLING",
+  "status": "ACTIVE",
+  "description": "Applies NCCI Medically Unlikely Edits (MUE) unit caps at the claim-line level. Synthetic published-style MUE value used for known-answer validation until authorized quarterly MUE files are reconciled.",
+  "owner_role": null,
+  "metadata": {
+    "scope": {
+      "lob": [
+        "COMMERCIAL",
+        "MA",
+        "MEDICAID"
+      ],
+      "plans": null,
+      "states": [
+        "NC"
+      ],
+      "markets": [
+        "NC"
+      ],
+      "network": [
+        "IN"
+      ],
+      "regions": null,
+      "applies_to_all": false,
+      "procedure_codes": [
+        "97110"
+      ],
+      "service_categories": [
+        "THERAPY",
+        "OUTPATIENT"
+      ]
+    },
+    "domain": "Payment",
+    "policy_id": "e11b049d-fcce-55cc-bcd7-71329038383b",
+    "subdomain": "Coding integrity",
+    "apply_when": [],
+    "guardrails": [
+      {
+        "action": "alert",
+        "description": "Alert if more than 20% of 97110 lines are MUE-capped",
+        "metric_name": "mue_cap_rate",
+        "threshold_type": "max",
+        "threshold_value": 0.2
+      },
+      {
+        "action": "alert",
+        "description": "Alert if average billed units per 97110 line exceed 8",
+        "metric_name": "avg_units_per_line",
+        "threshold_type": "max",
+        "threshold_value": 8.0
+      }
+    ],
+    "assumptions": [
+      {
+        "value": "unpaid_excess_units",
+        "source": "NCCI MUE mechanical known-answer fixture",
+        "confidence": 0.85,
+        "description": "Units above MUE are unpaid (hard MAI-style limit in fixture)",
+        "assumption_type": "COST"
+      },
+      {
+        "value": "4",
+        "source": "Disclosed synthetic fixture",
+        "confidence": 1.0,
+        "description": "MUE value 4 for 97110 is SYNTHETIC \u2014 not asserted as live CMS confidential value",
+        "assumption_type": "DATA"
+      }
+    ],
+    "enforcement": {
+      "mechanism": "HARD",
+      "touchpoint": [
+        "CLAIMS_EDIT"
+      ],
+      "override_allowed": false
+    },
+    "jurisdiction": "NC",
+    "display_label": "Representative Payer Policies",
+    "policy_levers": [
+      {
+        "targets": {
+          "codes": [
+            "97110"
+          ],
+          "code_type": "CPT"
+        },
+        "lever_type": "UNIT_LIMIT",
+        "parameters": {
+          "edit_type": "NCCI_MUE",
+          "mue_value": 4,
+          "synthetic_mue": true,
+          "mue_adjudication_indicator": "2"
+        }
+      }
+    ],
+    "standards_basis": [
+      "CMS NCCI Medically Unlikely Edits framework",
+      "MUE adjudication indicator semantics"
+    ],
+    "effective_period": {
+      "end_date": null,
+      "start_date": "2024-01-01T00:00:00"
+    },
+    "global_exceptions": [],
+    "analytical_strategy": {
+      "engine_id": null,
+      "mechanism": "FEE_SCHEDULE_UNIT_PRICE"
+    },
+    "enterprise_classification": {
+      "mechanism": "FEE_SCHEDULE_UNIT_PRICE",
+      "catalog_class": "DEMO_SYNTHETIC",
+      "sub_mechanism": null,
+      "dec4_expansion": true,
+      "validation_target": "FULLY_VALIDATED_DEMO",
+      "representative_payer": true,
+      "not_blue_cross_nc_proprietary": true
+    }
+  },
+  "assumptions_db": [
+    {
+      "assumption_type": "COST",
+      "description": "Units above MUE are unpaid (hard MAI-style limit in fixture)",
+      "value": "unpaid_excess_units",
+      "source": "NCCI MUE mechanical known-answer fixture",
+      "confidence": 0.85
+    },
+    {
+      "assumption_type": "DATA",
+      "description": "MUE value 4 for 97110 is SYNTHETIC \u2014 not asserted as live CMS confidential value",
+      "value": "4",
+      "source": "Disclosed synthetic fixture",
+      "confidence": 1.0
+    }
+  ],
+  "guardrails_db": [
+    {
+      "metric_name": "mue_cap_rate",
+      "threshold_type": "max",
+      "threshold_value": 0.2,
+      "action": "alert",
+      "description": "Alert if more than 20% of 97110 lines are MUE-capped"
+    },
+    {
+      "metric_name": "avg_units_per_line",
+      "threshold_type": "max",
+      "threshold_value": 8.0,
+      "action": "alert",
+      "description": "Alert if average billed units per 97110 line exceed 8"
+    }
+  ],
+  "versions": [
+    {
+      "version_number": 1,
+      "effective_start_date": "2024-01-01T00:00:00",
+      "effective_end_date": null,
+      "change_type": "INITIAL",
+      "enforcement_strength": "STRONG",
+      "justification": "Dec 4 expansion synthetic demo version",
+      "version_metadata": {
+        "scope": {
+          "lob": [
+            "COMMERCIAL",
+            "MA",
+            "MEDICAID"
+          ],
+          "plans": null,
+          "states": [
+            "NC"
+          ],
+          "markets": [
+            "NC"
+          ],
+          "network": [
+            "IN"
+          ],
+          "regions": null,
+          "applies_to_all": false,
+          "procedure_codes": [
+            "97110"
+          ],
+          "service_categories": [
+            "THERAPY",
+            "OUTPATIENT"
+          ]
+        },
+        "state": "ACTIVE",
+        "mechanism": "FEE_SCHEDULE_UNIT_PRICE",
+        "enforcement": {
+          "mechanism": "HARD",
+          "touchpoint": [
+            "CLAIMS_EDIT"
+          ],
+          "override_allowed": false
+        },
+        "catalog_class": "DEMO_SYNTHETIC",
+        "policy_levers": [
+          {
+            "targets": {
+              "codes": [
+                "97110"
+              ],
+              "code_type": "CPT"
+            },
+            "lever_type": "UNIT_LIMIT",
+            "parameters": {
+              "edit_type": "NCCI_MUE",
+              "mue_value": 4,
+              "synthetic_mue": true,
+              "mue_adjudication_indicator": "2"
+            }
+          }
+        ]
+      },
+      "codes": [
+        {
+          "code_type": "CPT",
+          "code": "97110",
+          "code_group": "THERAPY"
+        }
+      ]
+    }
+  ],
+  "medicare_source_links": [
+    {
+      "link_role": "USES_CODING_EDIT",
+      "family_id": "ncci_mue",
+      "source_document_id": "NCCI-MUE-97110-DEMO",
+      "title": "Demo MUE for 97110 (synthetic published-style value)",
+      "authority": "CMS NCCI",
+      "source_url": "https://www.cms.gov/medicare/coding-billing/national-correct-coding-initiative-ncci-edits"
+    }
+  ],
+  "generated_at": "2026-11-03T14:38:46.175817+00:00"
+}

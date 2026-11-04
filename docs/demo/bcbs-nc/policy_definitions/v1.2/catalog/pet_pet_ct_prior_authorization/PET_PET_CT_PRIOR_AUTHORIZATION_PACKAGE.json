@@ -1,0 +1,233 @@
+{
+  "document_id": "HF-RP-PET_PET_CT_PRIOR_AUTHORIZATION-PACKAGE",
+  "policy_id": "6aeff184-cd74-4d4d-8f4d-8853661d3607",
+  "policy_name": "PET / PET-CT Prior Authorization",
+  "archetype": "PRIOR_AUTH_UM",
+  "package_version": "v1.2.0-representative-batch",
+  "classification": "REPRESENTATIVE_PAYER_POLICY",
+  "not_claiming": "Authoritative Blue Cross NC operative proprietary policy text",
+  "generated_at": "2026-11-04T08:29:09Z",
+  "identity": {
+    "objective": "Representative Payer configuration for catalog policy \u00abPET / PET-CT Prior Authorization\u00bb",
+    "mechanism": "PRIOR_AUTH_UM",
+    "family": "PRIOR_AUTH",
+    "owner_role": "DEFINITION_REVIEW"
+  },
+  "scope": {
+    "lob": [
+      "COMMERCIAL",
+      "MA",
+      "MEDICAID"
+    ],
+    "geography": {
+      "states": [
+        "NC"
+      ],
+      "markets": [
+        "NC"
+      ],
+      "market_claim_note": "Claim markets are for cohort matching in synthetic claims; states define Representative NC jurisdiction. NC geography \u2260 complete configuration."
+    },
+    "setting": [
+      "OUTPATIENT"
+    ],
+    "effective": {
+      "start": "2026-01-01T00:00:00",
+      "end": null
+    }
+  },
+  "applicability": {
+    "inclusions": [
+      "Services matching candidate CPT schedule"
+    ],
+    "exclusions": [
+      "Emergency services where PA is prohibited by No Surprises / emergency rules",
+      "Services outside candidate schedule",
+      "Proprietary BCBS NC criteria not present in this Representative package"
+    ]
+  },
+  "codeset": {
+    "status": "CANDIDATE_SCHEDULE",
+    "not_applicable_reason": null,
+    "code_system": "CPT",
+    "notes": "PET / PET-CT tumor imaging",
+    "codes": [
+      {
+        "code_system": "CPT",
+        "code": "78811",
+        "description": "",
+        "inclusion_status": "CANDIDATE_INCLUDE",
+        "evidence_class": "REPRESENTATIVE_DESIGN"
+      },
+      {
+        "code_system": "CPT",
+        "code": "78812",
+        "description": "",
+        "inclusion_status": "CANDIDATE_INCLUDE",
+        "evidence_class": "REPRESENTATIVE_DESIGN"
+      },
+      {
+        "code_system": "CPT",
+        "code": "78813",
+        "description": "",
+        "inclusion_status": "CANDIDATE_INCLUDE",
+        "evidence_class": "REPRESENTATIVE_DESIGN"
+      },
+      {
+        "code_system": "CPT",
+        "code": "78814",
+        "description": "",
+        "inclusion_status": "CANDIDATE_INCLUDE",
+        "evidence_class": "REPRESENTATIVE_DESIGN"
+      },
+      {
+        "code_system": "CPT",
+        "code": "78815",
+        "description": "",
+        "inclusion_status": "CANDIDATE_INCLUDE",
+        "evidence_class": "REPRESENTATIVE_DESIGN"
+      },
+      {
+        "code_system": "CPT",
+        "code": "78816",
+        "description": "",
+        "inclusion_status": "CANDIDATE_INCLUDE",
+        "evidence_class": "REPRESENTATIVE_DESIGN"
+      }
+    ]
+  },
+  "levers": [
+    {
+      "lever_type": "PRIOR_AUTH",
+      "parameters": {
+        "codes": [
+          "78811",
+          "78812",
+          "78813",
+          "78814",
+          "78815",
+          "78816"
+        ],
+        "requires_pa": true,
+        "evidence_class": "REPRESENTATIVE_DESIGN"
+      },
+      "units": null,
+      "direction": "utilization_control",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "rules": [
+    {
+      "id": "R1_APPLICABILITY",
+      "text": "If request code \u2208 candidate schedule and setting/LOB in scope \u2192 PA or mechanism review required",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "id": "R2_NO_AUTO_DENY",
+      "text": "Do not auto-deny without clinical review pathway when PA applies",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "exceptions": [
+    {
+      "id": "E1_EMERGENCY",
+      "text": "Emergency / urgent exceptions per applicable federal/state emergency access rules",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "precedence": [
+    "Emergency exception > elective PA requirement",
+    "Product benefit exclusions > utilization management",
+    "Effective-dated schedule version > prior schedule"
+  ],
+  "assumptions": [
+    {
+      "id": "A1",
+      "text": "Synthetic claims substrate used for demo analytics unless labeled empirical",
+      "evidence_class": "SYNTHETIC_FIXTURE"
+    },
+    {
+      "id": "A2",
+      "text": "Candidate codes are industry-aligned Representative design, not verified payer operative schedule",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "guardrails": [
+    {
+      "id": "G_ACCESS",
+      "family": "access",
+      "text": "Monitor inappropriate access barriers"
+    },
+    {
+      "id": "G_FIN",
+      "family": "financial",
+      "text": "Do not present representative parameters as contracted rates"
+    },
+    {
+      "id": "G_CLIN",
+      "family": "clinical",
+      "text": "Clinical thresholds remain unsigned until product approval"
+    }
+  ],
+  "sources": [
+    {
+      "id": "S_CPT_PUBLIC",
+      "citation": "Public CPT/HCPCS nomenclature for code identity",
+      "applicability": "code_identity_only",
+      "evidence_class": "VERIFIED_SOURCE",
+      "does_not_establish": "Payer-specific coverage criteria or contracted rates"
+    }
+  ],
+  "analytics": {
+    "strategy": "PRIOR_AUTH_UM",
+    "supported_stages": [
+      "definition",
+      "applicability",
+      "baseline",
+      "predicted_impact",
+      "observation",
+      "causal_feasibility"
+    ],
+    "insufficiency_stages": []
+  },
+  "governance": {
+    "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+    "operational_activation": "PROHIBITED"
+  },
+  "acceptance_tests": [
+    {
+      "id": "T_SCOPE_PRESENT",
+      "given": "package loaded",
+      "expect": "states and markets non-empty"
+    },
+    {
+      "id": "T_LEVER_IN_SCOPE",
+      "given": "candidate codes present",
+      "expect": "every lever code listed in codeset.codes"
+    },
+    {
+      "id": "T_NO_BCBS_CLAIM",
+      "given": "classification",
+      "expect": "REPRESENTATIVE_PAYER_POLICY and not_claiming set"
+    }
+  ],
+  "release_blockers": [
+    {
+      "id": "CLINICAL_PRODUCT_UNSIGNED",
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "text": "Clinical/product schedule not signed for operative use"
+    },
+    {
+      "id": "NOT_PROPRIETARY_BCBS_NC",
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "text": "Package is Representative Payer design \u2014 not proprietary BCBS NC operative policy"
+    }
+  ],
+  "_validation": {
+    "schema_sections_ok": true,
+    "missing": [],
+    "accuracy_failures": []
+  }
+}

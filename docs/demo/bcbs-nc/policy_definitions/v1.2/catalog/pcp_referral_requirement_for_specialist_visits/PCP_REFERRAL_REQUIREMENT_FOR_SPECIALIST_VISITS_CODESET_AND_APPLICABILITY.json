@@ -1,0 +1,10 @@
+{
+  "document_id": "PCP_REFERRAL_REQUIREMENT_FOR_SPECIALIST_VISITS_CODESET",
+  "policy_id": "0a19b3f5-f5b5-4ceb-8ea5-39eab4d937eb",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abPCP Referral Requirement for Specialist Visits\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Network / access / COE / referral rule \u2014 taxonomy/network IDs not CPT schedule",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

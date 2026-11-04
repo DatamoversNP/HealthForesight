@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_0aa9e01659459965dd0406cd",
+  "policy_id": "b8bfd79c-1790-4f3d-b019-189c59a81717",
+  "name": "Medical Records Request Standards",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "6bd3986d70d4d362",
+  "started_at": "2026-11-04T13:18:18.235804+00:00",
+  "finished_at": "2026-11-04T13:18:18.235806+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

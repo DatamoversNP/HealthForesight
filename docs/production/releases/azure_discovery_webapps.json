@@ -1,0 +1,20 @@
+[
+  {
+    "kind": "app,linux,container",
+    "name": "healthforesight-worker",
+    "rg": "healthforesight-rg",
+    "state": "Running"
+  },
+  {
+    "kind": "app,linux",
+    "name": "healthforesight-web",
+    "rg": "healthforesight-rg",
+    "state": "Running"
+  },
+  {
+    "kind": "app,linux,container",
+    "name": "healthforesight-api",
+    "rg": "healthforesight-rg",
+    "state": "Running"
+  }
+]

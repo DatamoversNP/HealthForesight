@@ -1,0 +1,87 @@
+{
+  "document_id": "HF-RP-CODE-PTP-001-CODESET",
+  "policy_id": "58b839b5-b6e0-59e0-9406-d817877c3ce8",
+  "version": "v1.2.1-structural-controls",
+  "schema": "../_controls/POLICY_CODESET_RECORD.schema.json",
+  "status": "DEFINITION_REVIEW_REQUIRED",
+  "operational_activation": "PROHIBITED",
+  "mechanism": "NCCI_PTP_BUNDLING",
+  "intended_scope": "PTP_PAIR_70553_70551",
+  "controls_ref": "../_controls/POLICY_ENGINEERING_CONTROLS_v1.md",
+  "mri_clinical_logic_copied": false,
+  "notes": [
+    "CANDIDATE_INCLUDE is not APPROVED_INCLUDE",
+    "Do not alter frozen Dec 4 demo fixtures",
+    "Mechanism-specific \u2014 not MRI lumbar PA criteria"
+  ],
+  "codes": [
+    {
+      "code_system": "CPT",
+      "code": "70553",
+      "description": "MRI brain without then with contrast",
+      "anatomical_region": "PTP_PAIR_70553_70551",
+      "contrast_variant": "WITHOUT_THEN_WITH",
+      "setting": "OUTPATIENT",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "effective_from": null,
+      "effective_to": null,
+      "evidence_class": "SYNTHETIC_FIXTURE",
+      "source_evidence_note": "SYNTHETIC_FIXTURE PTP pair \u2014 not published CMS quarterly row",
+      "evidence": {
+        "evidence_id": "EV-SYN-PTP",
+        "source_system": "demo_fixture",
+        "source_document_id": "NCCI-PTP-PAIR-70553-70551",
+        "source_version": null,
+        "source_url": null,
+        "retrieved_at": null,
+        "content_checksum_sha256": null,
+        "applicability_period_start": null,
+        "applicability_period_end": null,
+        "notes": "Not CMS published"
+      },
+      "medicare_applicability": {
+        "ncd_220_2": "REFERENCE_ONLY_FFS",
+        "lcd_l34425": "NOT_APPLICABLE",
+        "article_a56729": "NOT_APPLICABLE"
+      },
+      "scope_role": "column_one"
+    },
+    {
+      "code_system": "CPT",
+      "code": "70551",
+      "description": "MRI brain without contrast",
+      "anatomical_region": "PTP_PAIR_70553_70551",
+      "contrast_variant": "WITHOUT",
+      "setting": "OUTPATIENT",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "effective_from": null,
+      "effective_to": null,
+      "evidence_class": "SYNTHETIC_FIXTURE",
+      "source_evidence_note": "SYNTHETIC_FIXTURE PTP pair \u2014 not published CMS quarterly row",
+      "evidence": {
+        "evidence_id": "EV-SYN-PTP",
+        "source_system": "demo_fixture",
+        "source_document_id": "NCCI-PTP-PAIR-70553-70551",
+        "source_version": null,
+        "source_url": null,
+        "retrieved_at": null,
+        "content_checksum_sha256": null,
+        "applicability_period_start": null,
+        "applicability_period_end": null,
+        "notes": "Not CMS published"
+      },
+      "medicare_applicability": {
+        "ncd_220_2": "REFERENCE_ONLY_FFS",
+        "lcd_l34425": "NOT_APPLICABLE",
+        "article_a56729": "NOT_APPLICABLE"
+      },
+      "scope_role": "column_two"
+    }
+  ],
+  "fixtures_note": "SYNTHETIC_FIXTURE PTP pair \u2014 not published CMS quarterly row",
+  "ambiguous_mapping_policy": {
+    "auto_deny": false,
+    "auto_impose_pa": false,
+    "route": "MANUAL_SCOPE_REVIEW"
+  }
+}

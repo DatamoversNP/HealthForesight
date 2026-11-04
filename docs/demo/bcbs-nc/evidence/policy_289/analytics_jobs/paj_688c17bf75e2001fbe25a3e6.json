@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_688c17bf75e2001fbe25a3e6",
+  "policy_id": "dafaa8ed-6a06-4824-8284-9cab56cf6eea",
+  "name": "Insertable Cardiac Monitor Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "1c3fcbed6ef1426e",
+  "started_at": "2026-11-04T13:18:18.234598+00:00",
+  "finished_at": "2026-11-04T13:18:18.234599+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

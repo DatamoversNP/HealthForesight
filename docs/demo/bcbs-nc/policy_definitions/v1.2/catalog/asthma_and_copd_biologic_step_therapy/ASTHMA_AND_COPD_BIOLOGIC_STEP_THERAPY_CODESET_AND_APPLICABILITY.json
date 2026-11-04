@@ -1,0 +1,32 @@
+{
+  "document_id": "ASTHMA_AND_COPD_BIOLOGIC_STEP_THERAPY_CODESET",
+  "policy_id": "280f62d7-7b49-40a0-9a47-862a4cf636e9",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abAsthma and COPD Biologic Step Therapy\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "HCPCS",
+      "code": "J2182",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "J2356",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "J0517",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Respiratory biologic J-code anchors",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_e15bef0fc85da3c676a3d110",
+  "policy_id": "5ad603c9-ff09-4908-a45b-5cfce47314c2",
+  "name": "ECT Authorization Criteria",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "b702d51d0d95b1a2",
+  "started_at": "2026-11-04T13:18:18.230912+00:00",
+  "finished_at": "2026-11-04T13:18:18.230913+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

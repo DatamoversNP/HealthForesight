@@ -2,7 +2,7 @@
  * HealthForesight Executive Dashboard Page
  * Phase 9: Enhanced with metrics, visualizations, and insights
  */
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import {
   Box,
   Button,
@@ -22,6 +22,7 @@ import {
   Chip,
   Link,
   IconButton,
+  TextField,
 } from '@mui/material'
 import {
   TrendingUp as TrendingUpIcon,
@@ -68,6 +69,14 @@ export default function DashboardPage() {
   const [dashboardData, setDashboardData] = useState<any>(null)
   const [policyPerformance, setPolicyPerformance] = useState<any[]>([])
   const [widgetConfig, setWidgetConfig] = useState<any[]>([])
+  const [perfSearch, setPerfSearch] = useState('')
+  const filteredPolicyPerformance = useMemo(() => {
+    const q = perfSearch.trim().toLowerCase()
+    if (!q) return policyPerformance
+    return policyPerformance.filter((p: any) =>
+      `${p.policy_name || ''} ${p.status || ''}`.toLowerCase().includes(q)
+    )
+  }, [policyPerformance, perfSearch])
 
   // Route to persona-specific dashboard if persona is set
   useEffect(() => {
@@ -152,9 +161,21 @@ export default function DashboardPage() {
 
   useEffect(() => {
     loadWidgetConfig()
+    // Persona dashboards have their own loaders. Fetching here + redirect
+    // stampedes /dashboard/summary (often 15–30s on Azure) and causes timeouts.
+    const personaRoutes: Record<string, string> = {
+      EXECUTIVE: '/dashboard/executive',
+      POLICY_OWNER: '/dashboard/policy-owner',
+      ANALYST: '/dashboard/analyst',
+      OPS_CLINICAL: '/dashboard/ops-clinical',
+    }
+    if (currentPersona && personaRoutes[currentPersona]) {
+      setLoading(false)
+      return
+    }
     loadDashboardData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [currentPersona])
 
   // NOW we can do conditional returns AFTER all hooks are called
   // Note: Persona-specific dashboards have their own routes (/dashboard/executive, etc.)
@@ -576,15 +597,24 @@ export default function DashboardPage() {
         <Grid item xs={12}>
           <Card>
             <CardContent>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, gap: 2, flexWrap: 'wrap' }}>
                 <Typography variant="h6">Policy Performance</Typography>
-                <IconButton size="small" onClick={loadDashboardData}>
-                  <Typography variant="caption">Refresh</Typography>
-                </IconButton>
+                <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+                  <TextField
+                    size="small"
+                    label="Search policies"
+                    value={perfSearch}
+                    onChange={(e) => setPerfSearch(e.target.value)}
+                    sx={{ minWidth: 200 }}
+                  />
+                  <IconButton size="small" onClick={loadDashboardData}>
+                    <Typography variant="caption">Refresh</Typography>
+                  </IconButton>
+                </Box>
               </Box>
               {policyPerformance.length > 0 ? (
-                <TableContainer>
-                  <Table>
+                <TableContainer sx={{ maxHeight: 420 }}>
+                  <Table stickyHeader size="small">
                     <TableHead>
                       <TableRow>
                         <TableCell>Policy Name</TableCell>
@@ -598,7 +628,7 @@ export default function DashboardPage() {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {policyPerformance.map((policy: any) => (
+                      {filteredPolicyPerformance.map((policy: any) => (
                         <TableRow key={policy.policy_id} hover>
                           <TableCell>
                             <Link

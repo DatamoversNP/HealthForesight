@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_4f865300d277f705a9455622",
+  "policy_id": "993e9110-2623-4e41-b87c-ad8666cbb92c",
+  "name": "Air Ambulance Medical Necessity Review",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "ac4092d7acaaf8fd",
+  "started_at": "2026-11-04T13:18:18.225824+00:00",
+  "finished_at": "2026-11-04T13:18:18.225826+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

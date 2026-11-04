@@ -1,0 +1,25 @@
+{
+  "document_id": "URGENT_CARE_COPAY_INCREASE_CODESET",
+  "policy_id": "b815e37b-98c9-40b4-8e17-b0821566fcaf",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abUrgent Care Copay Increase\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "99213",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "99214",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "UC E/M anchors \u2014 copay amount is Representative design parameter UNRESOLVED numeric",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

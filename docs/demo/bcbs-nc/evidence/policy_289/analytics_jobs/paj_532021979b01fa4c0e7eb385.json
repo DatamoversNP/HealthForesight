@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_532021979b01fa4c0e7eb385",
+  "policy_id": "81d9a78e-cf2d-4667-8032-98a8c7c984d6",
+  "name": "Acupuncture Visit Limit",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "40cc640b4ef86af5",
+  "started_at": "2026-11-04T13:18:18.225500+00:00",
+  "finished_at": "2026-11-04T13:18:18.225501+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

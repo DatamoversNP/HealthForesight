@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_da8dfd422440d3dd2b618371",
+  "policy_id": "6af40fde-2b70-43c0-90db-eef306f3badc",
+  "name": "Growth Hormone Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "44ed3d014353690a",
+  "started_at": "2026-11-04T13:18:18.232829+00:00",
+  "finished_at": "2026-11-04T13:18:18.232831+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

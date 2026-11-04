@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_8c0a453b596a161167a541f6",
+  "policy_id": "778736a4-8a5a-44be-8c55-517797ff0ea5",
+  "name": "Radiation Therapy Modality Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "5227fbb02d573412",
+  "started_at": "2026-11-04T13:18:18.241333+00:00",
+  "finished_at": "2026-11-04T13:18:18.241335+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

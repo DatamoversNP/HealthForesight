@@ -1,0 +1,25 @@
+{
+  "document_id": "INSERTABLE_CARDIAC_MONITOR_PRIOR_AUTHORIZATION_CODESET",
+  "policy_id": "dafaa8ed-6a06-4824-8284-9cab56cf6eea",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abInsertable Cardiac Monitor Prior Authorization\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "33285",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "33286",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Subcutaneous cardiac rhythm monitor insert/removal",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

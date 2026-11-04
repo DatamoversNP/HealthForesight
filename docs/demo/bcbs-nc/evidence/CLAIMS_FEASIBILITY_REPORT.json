@@ -1,0 +1,310 @@
+{
+  "generated_at": "2026-11-03T09:27:12.855168+00:00",
+  "table": "claims_lines",
+  "columns": [
+    "id",
+    "tenant_id",
+    "claim_id",
+    "claim_line_id",
+    "member_id",
+    "provider_id",
+    "service_date",
+    "paid_date",
+    "adjudication_date",
+    "lob",
+    "market",
+    "cpt_code",
+    "hcpcs_code",
+    "drg_code",
+    "icd10_diagnosis_codes",
+    "icd10_procedure_codes",
+    "service_category",
+    "place_of_service",
+    "units",
+    "allowed_amount",
+    "paid_amount",
+    "member_cost_share",
+    "in_network",
+    "requires_prior_auth",
+    "prior_auth_approved",
+    "prior_auth_id",
+    "facility_type",
+    "system_affiliation",
+    "rendering_provider_id",
+    "billing_provider_id",
+    "referring_provider_id",
+    "source_system",
+    "source_file_id",
+    "ingestion_id",
+    "record_hash",
+    "created_at",
+    "updated_at"
+  ],
+  "column_count": 37,
+  "missing_for_mechanisms": {
+    "utilization_um": {
+      "required": [
+        "cpt_code",
+        "service_date",
+        "member_id",
+        "units",
+        "allowed_amount",
+        "paid_amount"
+      ],
+      "missing_columns": [],
+      "eligible_if_populated": true
+    },
+    "reimbursement_pricing": {
+      "required": [
+        "cpt_code",
+        "units",
+        "allowed_amount",
+        "paid_amount",
+        "place_of_service",
+        "lob"
+      ],
+      "missing_columns": [],
+      "eligible_if_populated": true
+    },
+    "coding_edits": {
+      "required": [
+        "cpt_code",
+        "hcpcs_code",
+        "units"
+      ],
+      "missing_columns": [],
+      "eligible_if_populated": true
+    },
+    "prior_auth": {
+      "required": [
+        "requires_prior_auth",
+        "prior_auth_id",
+        "prior_auth_approved"
+      ],
+      "missing_columns": [],
+      "eligible_if_populated": true
+    },
+    "provider_behavior": {
+      "required": [
+        "provider_id",
+        "rendering_provider_id",
+        "billing_provider_id"
+      ],
+      "missing_columns": [],
+      "eligible_if_populated": true
+    },
+    "enrollment_denominators": {
+      "required": [],
+      "missing_columns": [],
+      "eligible_if_populated": true
+    },
+    "modifiers": {
+      "required": [
+        "modifier",
+        "modifiers"
+      ],
+      "missing_columns": [
+        "modifier",
+        "modifiers"
+      ],
+      "eligible_if_populated": false,
+      "note": "No modifier column on claims_lines \u2014 NCCI PTP/modifier analytics blocked at schema level"
+    },
+    "denials_adjustments": {
+      "required": [
+        "denial_reason",
+        "adjustment_amount",
+        "claim_status"
+      ],
+      "missing_columns": [
+        "denial_reason",
+        "adjustment_amount",
+        "claim_status"
+      ],
+      "eligible_if_populated": false,
+      "note": "No denial/adjustment/status columns \u2014 edit/denial pattern baselines blocked"
+    },
+    "claim_status_reversals": {
+      "required": [
+        "claim_status",
+        "replacement_claim_id",
+        "void_indicator"
+      ],
+      "missing_columns": [
+        "claim_status",
+        "replacement_claim_id",
+        "void_indicator"
+      ],
+      "eligible_if_populated": false
+    }
+  },
+  "null_rates": {
+    "cpt_code": {
+      "sample_n": 68945,
+      "nulls": 0,
+      "null_pct": 0.0
+    },
+    "hcpcs_code": {
+      "sample_n": 68945,
+      "nulls": 700,
+      "null_pct": 1.02
+    },
+    "drg_code": {
+      "sample_n": 68945,
+      "nulls": 68945,
+      "null_pct": 100.0
+    },
+    "units": {
+      "sample_n": 68945,
+      "nulls": 0,
+      "null_pct": 0.0
+    },
+    "allowed_amount": {
+      "sample_n": 68945,
+      "nulls": 0,
+      "null_pct": 0.0
+    },
+    "paid_amount": {
+      "sample_n": 68945,
+      "nulls": 0,
+      "null_pct": 0.0
+    },
+    "member_cost_share": {
+      "sample_n": 68945,
+      "nulls": 0,
+      "null_pct": 0.0
+    },
+    "place_of_service": {
+      "sample_n": 68945,
+      "nulls": 0,
+      "null_pct": 0.0
+    },
+    "lob": {
+      "sample_n": 68945,
+      "nulls": 0,
+      "null_pct": 0.0
+    },
+    "market": {
+      "sample_n": 68945,
+      "nulls": 0,
+      "null_pct": 0.0
+    },
+    "in_network": {
+      "sample_n": 68945,
+      "nulls": 0,
+      "null_pct": 0.0
+    },
+    "requires_prior_auth": {
+      "sample_n": 68945,
+      "nulls": 0,
+      "null_pct": 0.0
+    },
+    "prior_auth_id": {
+      "sample_n": 68945,
+      "nulls": 68945,
+      "null_pct": 100.0
+    },
+    "icd10_diagnosis_codes": {
+      "sample_n": 68945,
+      "nulls": 68028,
+      "null_pct": 98.67
+    },
+    "adjudication_date": {
+      "sample_n": 68945,
+      "nulls": 68945,
+      "null_pct": 100.0
+    },
+    "paid_date": {
+      "sample_n": 68945,
+      "nulls": 0,
+      "null_pct": 0.0
+    },
+    "source_system": {
+      "sample_n": 68945,
+      "nulls": 0,
+      "null_pct": 0.0
+    },
+    "source_file_id": {
+      "sample_n": 68945,
+      "nulls": 0,
+      "null_pct": 0.0
+    },
+    "prior_auth_approved": {
+      "sample_n": 68945,
+      "nulls": 68574,
+      "null_pct": 99.46
+    },
+    "facility_type": {
+      "sample_n": 68945,
+      "nulls": 379,
+      "null_pct": 0.55
+    }
+  },
+  "coverage": {
+    "row_count": 3505919,
+    "sample_2pct": {
+      "dmin": "2023-01-02",
+      "dmax": "2026-10-29",
+      "n": 68945,
+      "members": 11942,
+      "providers": 423,
+      "claims": 68945
+    },
+    "service_date_min": "2023-01-01",
+    "service_date_max": "2026-10-29"
+  },
+  "classification": {
+    "source_system_sample": [
+      {
+        "source_system": "DATA_GENERATOR",
+        "n": 67515
+      },
+      {
+        "source_system": "Q1_2026_DEMO",
+        "n": 700
+      },
+      {
+        "source_system": "synthetic_historical_loader",
+        "n": 379
+      },
+      {
+        "source_system": "MONDAY_DEMO_5",
+        "n": 351
+      }
+    ]
+  },
+  "enrollment": {
+    "table": "enrollment_records",
+    "columns": [
+      "id",
+      "tenant_id",
+      "member_id",
+      "enrollment_month",
+      "lob",
+      "market",
+      "age_band",
+      "gender",
+      "risk_score",
+      "network_tier",
+      "enrolled_flag",
+      "enrollment_start_date",
+      "enrollment_end_date",
+      "product_type",
+      "segment",
+      "source_system",
+      "source_file_id",
+      "ingestion_id",
+      "record_hash",
+      "created_at",
+      "updated_at"
+    ],
+    "row_count": 43200,
+    "denominator_signal": "inspect_columns",
+    "note": "Confirm member-month grain from columns listed"
+  },
+  "synthetic_vs_empirical": {
+    "claim": "Treat claims_lines as DEMO/SYNTHETIC analytical substrate unless source_system proves otherwise",
+    "not_claiming": "Actual Blue Cross NC claims experience",
+    "known_answer_workflows": "Supported for labeled synthetic validation; not empirical BCBS NC outcomes"
+  }
+}

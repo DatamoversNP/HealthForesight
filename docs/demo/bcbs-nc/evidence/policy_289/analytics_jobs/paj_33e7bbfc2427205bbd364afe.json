@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_33e7bbfc2427205bbd364afe",
+  "policy_id": "3ba4ce28-35b0-4d96-a2fc-342fe54a42d0",
+  "name": "Neuropsychological Testing Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "7f3c86c003740d41",
+  "started_at": "2026-11-04T13:18:18.237207+00:00",
+  "finished_at": "2026-11-04T13:18:18.237209+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

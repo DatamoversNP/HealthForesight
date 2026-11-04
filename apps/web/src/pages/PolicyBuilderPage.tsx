@@ -35,6 +35,7 @@ import RuleGroupBuilder from '../components/policy/RuleGroupBuilder'
 import ExceptionsBuilder from '../components/policy/ExceptionsBuilder'
 import PolicyPreview from '../components/policy/PolicyPreview'
 import { POLICY_TEMPLATES } from '../lib/policyTemplates'
+import { CATALOG_POLICY_TYPES, formatPolicyTypeLabel } from '../lib/policyType'
 import TourButton from '../components/tour/TourButton'
 
 const STEPS = [
@@ -463,15 +464,11 @@ export default function PolicyBuilderPage() {
                 onChange={(e) => setState({ ...state, policy_type: e.target.value })}
                 label="Policy Type"
               >
-                <MenuItem value="PRIOR_AUTH">Prior Authorization</MenuItem>
-                <MenuItem value="SITE_OF_CARE">Site of Care</MenuItem>
-                <MenuItem value="DURATION_FREQUENCY_LIMIT">Frequency Limit</MenuItem>
-                <MenuItem value="QUANTITY_LIMIT">Quantity Limit</MenuItem>
-                <MenuItem value="COST_SHARING">Cost Sharing</MenuItem>
-                <MenuItem value="NETWORK_RESTRICTION">Network Restriction</MenuItem>
-                <MenuItem value="REFERRAL_REQUIREMENT">Referral Requirement</MenuItem>
-                <MenuItem value="CLINICAL_CRITERIA">Clinical Criteria</MenuItem>
-                <MenuItem value="COMPOSITE">Composite (Multiple Levers)</MenuItem>
+                {CATALOG_POLICY_TYPES.map((type) => (
+                  <MenuItem key={type} value={type}>
+                    {formatPolicyTypeLabel(type)}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
             

@@ -1,0 +1,10 @@
+{
+  "document_id": "NICU_LEVEL_OF_CARE_AUTHORIZATION_CODESET",
+  "policy_id": "c5866ab7-f9af-4d7d-aac4-5735c1b21cf3",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abNICU Level-of-Care Authorization\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "NICU LOC / revenue codes \u2014 not outpatient CPT PA",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

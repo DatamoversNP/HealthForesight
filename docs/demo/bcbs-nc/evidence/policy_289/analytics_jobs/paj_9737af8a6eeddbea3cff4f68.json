@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_9737af8a6eeddbea3cff4f68",
+  "policy_id": "5f41b00f-0449-489a-b743-78ab2a92580b",
+  "name": "Home Oxygen Qualification Criteria",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "30d931063b552fa2",
+  "started_at": "2026-11-04T13:18:18.233590+00:00",
+  "finished_at": "2026-11-04T13:18:18.233592+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_040d5b1204c692a8c92ae34f",
+  "policy_id": "4951238b-b979-4718-bfc7-4e57f2cd7b8e",
+  "name": "Third-Party Liability and Subrogation",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "c31d0718ff0fe504",
+  "started_at": "2026-11-04T13:18:18.243584+00:00",
+  "finished_at": "2026-11-04T13:18:18.243586+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

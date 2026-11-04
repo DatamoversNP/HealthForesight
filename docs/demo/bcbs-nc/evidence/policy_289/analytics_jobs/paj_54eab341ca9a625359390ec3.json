@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_54eab341ca9a625359390ec3",
+  "policy_id": "096fea69-7f63-4bca-859b-12dfa779f3d0",
+  "name": "Vertebral Augmentation Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "87a2d4eb7fe98399",
+  "started_at": "2026-11-04T13:18:18.244806+00:00",
+  "finished_at": "2026-11-04T13:18:18.244807+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

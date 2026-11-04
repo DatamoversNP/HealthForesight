@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_a9673867e2554533c15d3a92",
+  "policy_id": "704d748b-7bf5-4dbf-a3cc-d62edd43f434",
+  "name": "High-Risk Obstetrics Case Management Referral",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "4695beb3407bb420",
+  "started_at": "2026-11-04T13:18:18.233262+00:00",
+  "finished_at": "2026-11-04T13:18:18.233263+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

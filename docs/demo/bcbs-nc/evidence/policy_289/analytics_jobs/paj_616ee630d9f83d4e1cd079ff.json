@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_616ee630d9f83d4e1cd079ff",
+  "policy_id": "d02a7792-16e3-4c8e-bd35-4917514de11e",
+  "name": "Facet Joint Intervention Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "54958e394d218c1e",
+  "started_at": "2026-11-04T13:18:18.232139+00:00",
+  "finished_at": "2026-11-04T13:18:18.232140+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

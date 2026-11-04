@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_117e109a0f117d2428695501",
+  "policy_id": "ebc41eb8-b094-4884-989a-e7470a753676",
+  "name": "CAR-T and Cellular Therapy Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "7866ea828ffbc7c0",
+  "started_at": "2026-11-04T13:18:18.227684+00:00",
+  "finished_at": "2026-11-04T13:18:18.227686+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

@@ -122,6 +122,37 @@ async def get_current_user(
     )
 
 
+@router.post("/refresh", response_model=LoginResponse)
+async def refresh_token(
+    current_user: Annotated[CurrentUser, Depends(verify_token)],
+    db: Session = Depends(get_db),
+):
+    """
+    Sliding session: issue a fresh JWT while the current token is still valid.
+    Used by the web client keep-alive so idle demo/warm tabs are not signed out.
+    """
+    roles = list(current_user.roles or [])
+    if not roles:
+        try:
+            user = db.query(User).filter(User.id == current_user.user_id).first()
+            if user:
+                roles = user.get_roles(db) or ["POLICY_ADMIN"]
+        except Exception:
+            roles = ["POLICY_ADMIN"]
+    token = create_local_jwt(
+        current_user.user_id,
+        current_user.tenant_id,
+        current_user.email,
+        roles,
+    )
+    return LoginResponse(
+        access_token=token,
+        user_id=str(current_user.user_id),
+        email=current_user.email,
+        roles=roles,
+    )
+
+
 @router.get("/tenants/{tenant_id}")
 async def get_tenant(
     tenant_id: UUID,

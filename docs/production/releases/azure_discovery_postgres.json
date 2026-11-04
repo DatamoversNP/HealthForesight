@@ -1,0 +1,23 @@
+[
+  {
+    "location": "East US 2",
+    "name": "psql-dm-nonprod01",
+    "rg": "rg-datamovers-nonprod",
+    "sku": "Standard_D2s_v3",
+    "state": "Ready"
+  },
+  {
+    "location": "East US 2",
+    "name": "psql-dm-p1-qual01",
+    "rg": "rg-datamovers-p1-qual",
+    "sku": "Standard_D4s_v3",
+    "state": "Ready"
+  },
+  {
+    "location": "West US 2",
+    "name": "healthforesight-db",
+    "rg": "healthforesight-rg",
+    "sku": "Standard_B1ms",
+    "state": "Ready"
+  }
+]

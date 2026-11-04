@@ -1,0 +1,77 @@
+API gates...
+{
+  "sos_api": {
+    "http": 200,
+    "base_savings": 520.0,
+    "delta": 260.0,
+    "util": null,
+    "fully_validated": true,
+    "pass": true
+  },
+  "mppr_api": {
+    "http": 200,
+    "base_savings": 600.0,
+    "delta": 120.0,
+    "pass": true
+  },
+  "medicare_seed": {
+    "http": 200,
+    "body": {
+      "policy_id": "d403f101-08dd-45c9-ab83-d42e37c62018",
+      "links": [
+        {
+          "role": "REFERENCES_NCD",
+          "source": "NCD220.2",
+          "status": "exists"
+        },
+        {
+          "role": "REFERENCES_LCD",
+          "source": "L35175",
+          "status": "exists"
+        },
+        {
+          "role": "HAS_RELATED_ARTICLE",
+          "source": "A54118",
+          "status": "exists"
+        },
+        {
+          "role": "USES_CODING_EDIT",
+          "source": "NCCI-PTP-2024Q4-EXAMPLE",
+          "status": "exists"
+        }
+      ],
+      "catalog_class": "DEMO_SYNTHETIC_POLICY_WITH_PUBLIC_MEDICARE_LINKS",
+      "analytical_outcomes": "SYNTHETIC"
+    }
+  },
+  "medicare_rules": {
+    "http": 200,
+    "count": 6
+  },
+  "mri_applicable": {
+    "http": 200,
+    "linked": 4,
+    "status": "MATCHED_FFS_CHAIN",
+    "rule_set": "medicare-ruleset:d403f101-08dd-45c9-ab83-d42e37c62018:Original_Medicare_FFS:North_Carolina:2024-06-01:4"
+  },
+  "oh": {
+    "http": 200,
+    "summary": {
+      "total": 283,
+      "on_track": 186,
+      "at_risk": 79,
+      "no_data": 18
+    }
+  },
+  "registry": {
+    "http": 200,
+    "version": "analytical-strategy-registry-v1",
+    "n": 6
+  }
+}
+SOS browser...
+sos_browser True
+Rehearsals...
+rehearsal 1 True 156.34
+rehearsal 2 True 157.63
+DECISION DEMO_READY_WITH_DISCLOSED_LIMITATIONS

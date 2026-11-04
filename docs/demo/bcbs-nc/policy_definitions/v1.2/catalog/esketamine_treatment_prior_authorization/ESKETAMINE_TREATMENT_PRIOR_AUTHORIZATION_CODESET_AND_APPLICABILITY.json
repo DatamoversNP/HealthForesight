@@ -1,0 +1,25 @@
+{
+  "document_id": "ESKETAMINE_TREATMENT_PRIOR_AUTHORIZATION_CODESET",
+  "policy_id": "d36d2783-37b6-4b30-9787-fea2dfcccb14",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abEsketamine Treatment Prior Authorization\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "HCPCS",
+      "code": "G2082",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "G2083",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Esketamine nasal spray administration",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_497dff998ad19a8a88b400f9",
+  "policy_id": "6aeff184-cd74-4d4d-8f4d-8853661d3607",
+  "name": "PET / PET-CT Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "32c140009db1fbd8",
+  "started_at": "2026-11-04T13:18:18.239981+00:00",
+  "finished_at": "2026-11-04T13:18:18.239982+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

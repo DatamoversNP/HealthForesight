@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_5138614e9dc796defd1d1531",
+  "policy_id": "270e4ea5-5a00-4d08-8f85-e50bf412edd0",
+  "name": "Noninvasive Ventilation Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "83b331bb1c3bd02e",
+  "started_at": "2026-11-04T13:18:18.237625+00:00",
+  "finished_at": "2026-11-04T13:18:18.237626+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

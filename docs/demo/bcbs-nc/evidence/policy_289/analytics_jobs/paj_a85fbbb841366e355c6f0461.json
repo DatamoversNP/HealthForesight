@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_a85fbbb841366e355c6f0461",
+  "policy_id": "df16f9b5-c431-4240-ab5d-5c66a8634f5a",
+  "name": "Mental Health Parity NQTL Documentation Policy",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "09c3afd85153a1a4",
+  "started_at": "2026-11-04T13:18:18.236405+00:00",
+  "finished_at": "2026-11-04T13:18:18.236407+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

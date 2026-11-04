@@ -1,0 +1,124 @@
+{
+  "generated_at": "2026-11-03T10:52:01.796906+00:00",
+  "policy_id": "d7441dd9-3bfe-405e-ae6c-0377204bbb7e",
+  "policy_name": "Freestanding Imaging Steerage",
+  "validation_class": "FULLY_VALIDATED_DEMO",
+  "mechanism": "SITE_OF_SERVICE_PAYMENT_DIFFERENTIAL",
+  "known_answer": {
+    "passed": true,
+    "checks": {
+      "baseline_paid": true,
+      "post_policy_paid": true,
+      "payment_impact": true,
+      "hospital_lines": true,
+      "volume_effect_zero": true,
+      "price_equals_impact": true,
+      "provider_change_negates_savings": true
+    },
+    "expected": {
+      "baseline_paid": 4000.0,
+      "post_policy_paid": 3480.0,
+      "payment_impact": 520.0,
+      "hospital_lines": 3,
+      "freestanding_lines": 2
+    },
+    "actual_totals": {
+      "line_count": 5,
+      "hospital_lines": 3,
+      "freestanding_lines": 2,
+      "volume_units": 5.0,
+      "baseline_allowed": 4000.0,
+      "baseline_paid": 4000.0,
+      "post_policy_paid": 3480.0,
+      "payment_impact": 520.0,
+      "payer_savings": 520.0,
+      "provider_payment_change": -520.0,
+      "payment_impact_pct": 13.0,
+      "reconciliation": {
+        "volume_effect": 0.0,
+        "mix_effect": 0.0,
+        "price_effect": 520.0,
+        "residual": 0.0,
+        "identity": "payment_impact = price_effect (volume & mix held at 0)"
+      }
+    },
+    "calculation_version": "reimbursement-sos-v1"
+  },
+  "predicted_impact_id": "64cb8900-92af-4cb8-9c76-e4ebe0efb627",
+  "baseline_id": "sos-ka-baseline-reimbursement-sos-v1",
+  "observation_id": "sos-ka-obs-reimbursement-sos-v1",
+  "verdict": "ON_TRACK",
+  "what_if": {
+    "base_hospital_pct": 0.8,
+    "alt_hospital_pct": 0.7,
+    "base": {
+      "line_count": 5,
+      "hospital_lines": 3,
+      "freestanding_lines": 2,
+      "volume_units": 5.0,
+      "baseline_allowed": 4000.0,
+      "baseline_paid": 4000.0,
+      "post_policy_paid": 3480.0,
+      "payment_impact": 520.0,
+      "payer_savings": 520.0,
+      "provider_payment_change": -520.0,
+      "payment_impact_pct": 13.0,
+      "reconciliation": {
+        "volume_effect": 0.0,
+        "mix_effect": 0.0,
+        "price_effect": 520.0,
+        "residual": 0.0,
+        "identity": "payment_impact = price_effect (volume & mix held at 0)"
+      }
+    },
+    "alt": {
+      "line_count": 5,
+      "hospital_lines": 3,
+      "freestanding_lines": 2,
+      "volume_units": 5.0,
+      "baseline_allowed": 4000.0,
+      "baseline_paid": 4000.0,
+      "post_policy_paid": 3220.0,
+      "payment_impact": 780.0,
+      "payer_savings": 780.0,
+      "provider_payment_change": -780.0,
+      "payment_impact_pct": 19.5,
+      "reconciliation": {
+        "volume_effect": 0.0,
+        "mix_effect": 0.0,
+        "price_effect": 780.0,
+        "residual": 0.0,
+        "identity": "payment_impact = price_effect (volume & mix held at 0)"
+      }
+    },
+    "delta_payment_impact": 260.0
+  },
+  "totals": {
+    "line_count": 5,
+    "hospital_lines": 3,
+    "freestanding_lines": 2,
+    "volume_units": 5.0,
+    "baseline_allowed": 4000.0,
+    "baseline_paid": 4000.0,
+    "post_policy_paid": 3480.0,
+    "payment_impact": 520.0,
+    "payer_savings": 520.0,
+    "provider_payment_change": -520.0,
+    "payment_impact_pct": 13.0,
+    "reconciliation": {
+      "volume_effect": 0.0,
+      "mix_effect": 0.0,
+      "price_effect": 520.0,
+      "residual": 0.0,
+      "identity": "payment_impact = price_effect (volume & mix held at 0)"
+    }
+  },
+  "sign_convention": {
+    "payment_impact": "Payer savings; positive = payer pays less",
+    "delta_payment_impact": "Additional payer savings vs base scenario"
+  },
+  "honesty": {
+    "catalog_class": "DEMO_SYNTHETIC",
+    "not_utilization_elasticity": true
+  }
+}

@@ -60,7 +60,9 @@ class APISettings(BaseSettings):
     
     jwt_secret: str = "dev-secret-change-in-prod"
     jwt_algorithm: str = "HS256"
-    jwt_expiration_minutes: int = 30
+    # Workday-length sessions by default so idle demo/warm tabs are not forced to re-login.
+    # Override with JWT_EXPIRATION_MINUTES (e.g. 720 = 12h).
+    jwt_expiration_minutes: int = 720
     
     # File-based storage (no database)
     use_file_storage: bool = True  # Use file storage instead of database

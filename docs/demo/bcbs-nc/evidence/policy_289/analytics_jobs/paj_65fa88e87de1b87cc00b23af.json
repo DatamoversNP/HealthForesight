@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_65fa88e87de1b87cc00b23af",
+  "policy_id": "aa2d1fda-cb03-4899-ae72-dec657d9b09d",
+  "name": "Medical vs Pharmacy Benefit Channeling",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "a013e079d5f67d52",
+  "started_at": "2026-11-04T13:18:18.235869+00:00",
+  "finished_at": "2026-11-04T13:18:18.235871+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_e9f58ef8843d7ea819e45e84",
+  "policy_id": "ab3aa18a-45db-4a8d-a9fb-6e3f134b464b",
+  "name": "Value-Based Insurance Design Waivers",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "158def2383e8c220",
+  "started_at": "2026-11-04T13:18:18.244682+00:00",
+  "finished_at": "2026-11-04T13:18:18.244684+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

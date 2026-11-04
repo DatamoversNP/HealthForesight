@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_33df096438c41668056bf1e2",
+  "policy_id": "814e7fbd-2ae4-4314-aa1b-a1ad104e5f7f",
+  "name": "CKD Disease Management Program",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "c6222d343d86c966",
+  "started_at": "2026-11-04T13:18:18.228607+00:00",
+  "finished_at": "2026-11-04T13:18:18.228609+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

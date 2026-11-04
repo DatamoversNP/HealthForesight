@@ -1,0 +1,10 @@
+{
+  "document_id": "OUT_OF_NETWORK_ELECTIVE_SERVICES_RESTRICTION_CODESET",
+  "policy_id": "828e0c91-a8ad-454b-b667-01fb13470117",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abOut-of-Network Elective Services Restriction\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Network / access / COE / referral rule \u2014 taxonomy/network IDs not CPT schedule",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

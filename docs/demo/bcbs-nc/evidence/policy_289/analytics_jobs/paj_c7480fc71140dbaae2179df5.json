@@ -1,0 +1,18 @@
+{
+  "job_id": "paj_c7480fc71140dbaae2179df5",
+  "policy_id": "9fb617a1-2718-47dd-995d-b4fe2a77ca3a",
+  "name": "Physical Therapy Visit Limit",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "cfce538958368f56",
+  "started_at": "2026-11-04T13:18:18.240166+00:00",
+  "finished_at": "2026-11-04T13:18:18.240168+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "scope.states"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

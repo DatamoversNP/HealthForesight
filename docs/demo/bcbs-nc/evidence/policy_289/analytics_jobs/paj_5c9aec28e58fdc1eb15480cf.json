@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_5c9aec28e58fdc1eb15480cf",
+  "policy_id": "6e6a71ff-e0a3-4fe0-b4d7-32a82ed95f8c",
+  "name": "National Account Custom Benefit Administration",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "84423cc321e96057",
+  "started_at": "2026-11-04T13:18:18.236780+00:00",
+  "finished_at": "2026-11-04T13:18:18.236781+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

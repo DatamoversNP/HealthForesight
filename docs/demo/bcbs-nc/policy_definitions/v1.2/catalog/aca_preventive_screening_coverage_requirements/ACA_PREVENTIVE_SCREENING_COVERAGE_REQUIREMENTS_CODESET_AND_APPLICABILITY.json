@@ -1,0 +1,46 @@
+{
+  "document_id": "ACA_PREVENTIVE_SCREENING_COVERAGE_REQUIREMENTS_CODESET",
+  "policy_id": "5032227f-90d7-4bc3-bfc1-092ba76df743",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abACA Preventive Screening Coverage Requirements\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT/HCPCS",
+      "code": "77067",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT/HCPCS",
+      "code": "G0101",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT/HCPCS",
+      "code": "G0121",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT/HCPCS",
+      "code": "45378",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT/HCPCS",
+      "code": "71271",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Preventive screening anchors",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_10d2d7561aa44945422e22b4",
+  "policy_id": "a86519ff-8aa4-4878-9fdf-da4ef87e6a4b",
+  "name": "Bone Densitometry Frequency Limits",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "4a392eda7f32782d",
+  "started_at": "2026-11-04T13:18:18.227170+00:00",
+  "finished_at": "2026-11-04T13:18:18.227171+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

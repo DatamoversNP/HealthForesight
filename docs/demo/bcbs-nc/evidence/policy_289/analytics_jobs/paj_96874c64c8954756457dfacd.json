@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_96874c64c8954756457dfacd",
+  "policy_id": "109f444c-c466-4361-ae15-c62509746a58",
+  "name": "SUD Residential and IOP Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "c182340b03c807b2",
+  "started_at": "2026-11-04T13:18:18.243181+00:00",
+  "finished_at": "2026-11-04T13:18:18.243182+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

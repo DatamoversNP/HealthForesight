@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_486d6772fb76becd1e912a01",
+  "policy_id": "c8c59559-b4b7-4cdc-9b48-9efed253be2b",
+  "name": "HIV Antiretroviral Formulary Management",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "fd1a1bace26b5f2c",
+  "started_at": "2026-11-04T13:18:18.233328+00:00",
+  "finished_at": "2026-11-04T13:18:18.233330+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "codeset_UNRESOLVED",
+      "definition_incomplete"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

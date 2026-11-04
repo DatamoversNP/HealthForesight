@@ -9,7 +9,11 @@ import {
   Button,
   Chip,
   CircularProgress,
+  FormControl,
+  InputLabel,
+  MenuItem,
   Paper,
+  Select,
   Table,
   TableBody,
   TableCell,
@@ -22,6 +26,8 @@ import { Refresh as RefreshIcon, Psychology as WhatIfIcon } from '@mui/icons-mat
 import { format, parseISO } from 'date-fns'
 import { apiClient } from '../lib/api'
 import { healthForesightColors } from '../theme/healthForesightTheme'
+import ListFilterBar from '../components/common/ListFilterBar'
+import PolicyAutocomplete from '../components/common/PolicyAutocomplete'
 
 interface SimRow {
   id: string
@@ -36,8 +42,12 @@ interface SimRow {
 export default function WhatIfScenariosListPage() {
   const [rows, setRows] = useState<SimRow[]>([])
   const [policies, setPolicies] = useState<Record<string, string>>({})
+  const [policyOptions, setPolicyOptions] = useState<Array<{ id: string; name: string }>>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [search, setSearch] = useState('')
+  const [statusFilter, setStatusFilter] = useState('')
+  const [policyFilter, setPolicyFilter] = useState('')
 
   const load = useCallback(async () => {
     setLoading(true)
@@ -45,7 +55,7 @@ export default function WhatIfScenariosListPage() {
     try {
       const [analysesRaw, policiesRaw] = await Promise.all([
         apiClient.getAnalyses({ analysis_type: 'SIMULATE', limit: 500, skip: 0 }),
-        apiClient.getPolicies(),
+        apiClient.getPolicies({ limit: 1000 }),
       ])
       const list = Array.isArray(analysesRaw) ? analysesRaw : []
       setRows(
@@ -61,10 +71,17 @@ export default function WhatIfScenariosListPage() {
       )
       const plist = Array.isArray(policiesRaw) ? policiesRaw : (policiesRaw as any)?.items || []
       const map: Record<string, string> = {}
+      const opts: Array<{ id: string; name: string }> = []
       for (const p of plist) {
-        if (p?.id) map[String(p.id)] = p.name || String(p.id)
+        if (p?.id) {
+          const id = String(p.id)
+          const name = p.name || id
+          map[id] = name
+          opts.push({ id, name })
+        }
       }
       setPolicies(map)
+      setPolicyOptions(opts)
     } catch (e: any) {
       setError(e?.message || 'Failed to load scenarios')
       setRows([])
@@ -84,6 +101,23 @@ export default function WhatIfScenariosListPage() {
       return tb - ta
     })
   }, [rows])
+
+  const filtered = useMemo(() => {
+    const q = search.trim().toLowerCase()
+    return sorted.filter((r) => {
+      if (statusFilter && r.status !== statusFilter) return false
+      if (policyFilter && r.policy_id !== policyFilter) return false
+      if (!q) return true
+      const policyName = r.policy_id ? policies[r.policy_id] || r.policy_id : ''
+      const hay = `${r.name || ''} ${policyName} ${r.status} ${r.id}`.toLowerCase()
+      return hay.includes(q)
+    })
+  }, [sorted, search, statusFilter, policyFilter, policies])
+
+  const statusOptions = useMemo(
+    () => Array.from(new Set(rows.map((r) => r.status).filter(Boolean))).sort(),
+    [rows]
+  )
 
   const statusColor = (s: string) => {
     switch (s) {
@@ -119,8 +153,8 @@ export default function WhatIfScenariosListPage() {
             What-If scenario runs
           </Typography>
           <Typography variant="body1" sx={{ color: healthForesightColors.neutral.mid, maxWidth: 720 }}>
-            All scenario simulations for your tenant (newest first). Open a run in the builder to view charts and
-            compare with other scenarios.
+            All scenario simulations for your tenant (newest first). Open a completed run to jump straight to its
+            results charts (not a blank configuration form).
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', gap: 1, flexShrink: 0 }}>
@@ -139,7 +173,46 @@ export default function WhatIfScenariosListPage() {
         </Alert>
       )}
 
-      <Paper variant="outlined" sx={{ borderRadius: 0, borderColor: '#E2E8F0' }}>
+      <Paper variant="outlined" sx={{ borderRadius: 0, borderColor: '#E2E8F0', overflow: 'hidden' }}>
+        <ListFilterBar
+          search={search}
+          onSearchChange={setSearch}
+          searchLabel="Search runs"
+          searchPlaceholder="Name, policy, status…"
+          shown={filtered.length}
+          total={rows.length}
+          onClear={() => {
+            setSearch('')
+            setStatusFilter('')
+            setPolicyFilter('')
+          }}
+          clearDisabled={!search && !statusFilter && !policyFilter}
+        >
+          <Box sx={{ minWidth: 220, flex: '1 1 200px', bgcolor: 'background.paper', borderRadius: 1 }}>
+            <PolicyAutocomplete
+              policies={policyOptions}
+              value={policyFilter}
+              label="Policy"
+              onChange={setPolicyFilter}
+            />
+          </Box>
+          <FormControl size="small" sx={{ minWidth: 140, bgcolor: 'background.paper' }}>
+            <InputLabel>Status</InputLabel>
+            <Select
+              label="Status"
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+            >
+              <MenuItem value="">All</MenuItem>
+              {statusOptions.map((s) => (
+                <MenuItem key={s} value={s}>
+                  {s}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </ListFilterBar>
+
         {loading ? (
           <Box sx={{ display: 'flex', justifyContent: 'center', py: 6 }}>
             <CircularProgress />
@@ -153,8 +226,12 @@ export default function WhatIfScenariosListPage() {
               Go to What-If Scenarios
             </Button>
           </Box>
+        ) : filtered.length === 0 ? (
+          <Box sx={{ p: 4, textAlign: 'center' }}>
+            <Typography color="text.secondary">No runs match these filters.</Typography>
+          </Box>
         ) : (
-          <TableContainer>
+          <TableContainer sx={{ maxHeight: '70vh' }}>
             <Table size="small" stickyHeader>
               <TableHead>
                 <TableRow>
@@ -166,7 +243,7 @@ export default function WhatIfScenariosListPage() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {sorted.map((r) => {
+                {filtered.map((r) => {
                   const policyName = r.policy_id ? policies[r.policy_id] || r.policy_id : '—'
                   const when = r.created_at
                     ? format(parseISO(r.created_at), 'MMM d, yyyy HH:mm')
@@ -174,7 +251,7 @@ export default function WhatIfScenariosListPage() {
                   const openHref =
                     r.policy_id != null
                       ? `/whatif?policy=${encodeURIComponent(r.policy_id)}&scenario=${encodeURIComponent(r.id)}`
-                      : `/whatif`
+                      : `/whatif?scenario=${encodeURIComponent(r.id)}`
                   return (
                     <TableRow key={r.id} hover>
                       <TableCell sx={{ whiteSpace: 'nowrap' }}>{when}</TableCell>
@@ -190,7 +267,7 @@ export default function WhatIfScenariosListPage() {
                       <TableCell sx={{ maxWidth: 280 }}>{r.name?.trim() || '—'}</TableCell>
                       <TableCell align="right">
                         <Button size="small" component={RouterLink} to={openHref}>
-                          Open
+                          {r.status === 'COMPLETED' ? 'Open results' : 'Open'}
                         </Button>
                       </TableCell>
                     </TableRow>

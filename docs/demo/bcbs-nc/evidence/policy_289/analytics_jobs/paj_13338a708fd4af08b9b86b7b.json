@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_13338a708fd4af08b9b86b7b",
+  "policy_id": "726212a1-47e2-4e33-94c0-13f855c6aa7c",
+  "name": "DRG Inpatient Payment Policy",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "dddcc330b47b6485",
+  "started_at": "2026-11-04T13:18:18.230650+00:00",
+  "finished_at": "2026-11-04T13:18:18.230651+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

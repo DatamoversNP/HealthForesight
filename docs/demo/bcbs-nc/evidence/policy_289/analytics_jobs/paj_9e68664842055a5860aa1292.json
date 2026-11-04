@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_9e68664842055a5860aa1292",
+  "policy_id": "4f39ad90-52ea-4435-bbb0-8df4722c6010",
+  "name": "Upper Endoscopy Frequency Criteria",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "2d5968417d535e11",
+  "started_at": "2026-11-04T13:18:18.244427+00:00",
+  "finished_at": "2026-11-04T13:18:18.244428+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

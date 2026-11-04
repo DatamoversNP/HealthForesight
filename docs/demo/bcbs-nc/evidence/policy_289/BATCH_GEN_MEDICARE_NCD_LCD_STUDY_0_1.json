@@ -1,0 +1,21 @@
+{
+  "archetype": "MEDICARE_NCD_LCD_STUDY",
+  "offset": 0,
+  "count": 1,
+  "candidate_schedule": 0,
+  "unresolved": 0,
+  "not_applicable": 1,
+  "persisted_ok": 0,
+  "results": [
+    {
+      "policy_id": "d98beb20-e1c1-41a4-b7bd-2e32cdf533a5",
+      "name": "Medicare NCD and LCD Precedence Policy",
+      "folder": "catalog/medicare_ncd_and_lcd_precedence_policy",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    }
+  ]
+}

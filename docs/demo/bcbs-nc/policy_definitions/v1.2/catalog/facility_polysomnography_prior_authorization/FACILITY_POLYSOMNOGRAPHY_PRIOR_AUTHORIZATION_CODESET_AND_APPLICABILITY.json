@@ -1,0 +1,25 @@
+{
+  "document_id": "FACILITY_POLYSOMNOGRAPHY_PRIOR_AUTHORIZATION_CODESET",
+  "policy_id": "8b5d081a-74e3-4faf-bed7-7511ee5db984",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abFacility Polysomnography Prior Authorization\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "95810",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "95811",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Attended PSG / titration",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

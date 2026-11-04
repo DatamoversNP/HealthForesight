@@ -1,0 +1,506 @@
+{
+  "batch": "batch_0_dec4_nine_verify",
+  "count": 9,
+  "mechanism_execution_success": 9,
+  "supported_lifecycle_complete": 9,
+  "baseline_pass": 7,
+  "prediction_pass": 7,
+  "observation_pass": 3,
+  "data_insufficient": 0,
+  "candidate_levers": 0,
+  "failed": 0,
+  "results": [
+    {
+      "policy_id": "d7441dd9-3bfe-405e-ae6c-0377204bbb7e",
+      "name": "Freestanding Imaging Steerage",
+      "archetype": "SITE_OF_CARE",
+      "executed_at": "2026-11-04T08:42:52.299289+00:00",
+      "definition_complete": "PASS",
+      "codeset_status": "LEGACY_NINE",
+      "package_version": "v1.2-legacy-nine",
+      "configuration_digest": "7705c57ee2866e93",
+      "lever_runtime_state": "EMPTY",
+      "code_count": 0,
+      "codes_sample": [],
+      "plan_mode": "VERIFY_FROZEN_PRIMARY",
+      "plan_reason": "Dec4 primary KA freeze \u2014 verify existing evidence only",
+      "SCOPE_VALIDATED": "PASS",
+      "LEVERS_VALIDATED": "FAIL",
+      "EXECUTION_INPUTS_READY": "PASS",
+      "BASELINE_STATUS": "PASS",
+      "PREDICTION_STATUS": "PASS",
+      "OBSERVATION_STATUS": "PASS",
+      "CAUSAL_FEASIBILITY_STATUS": "PASS",
+      "CAUSAL_ESTIMATE_STATUS": "DATA_INSUFFICIENT",
+      "WHAT_IF_STATUS": "NOT_APPLICABLE",
+      "VERDICT_STATUS": "PASS",
+      "PERSISTENCE_PASS": "PASS",
+      "UI_PASS": "NOT_RUN",
+      "DEMO_READY": "PASS",
+      "RELEASE_BLOCKERS": [
+        "OPERATIONAL_ACTIVATION_PROHIBITED"
+      ],
+      "evidence_classification": "FROZEN_DEMO",
+      "details": {
+        "baseline": {
+          "source": "existing",
+          "id": "27bdad81-4cef-47bf-b036-c1a14675ea31"
+        },
+        "predicted": {
+          "source": "existing_get",
+          "http": 200
+        },
+        "observation": {
+          "source": "existing",
+          "id": "sos-ka-obs-reimbursement-sos-v1"
+        },
+        "causal_feasibility": {
+          "http": 200,
+          "feasibility": "CAUSAL_DESIGN_POSSIBLE_DATA_INSUFFICIENT"
+        },
+        "causal_estimate": {
+          "http": 200
+        },
+        "workspace": {
+          "http": 200
+        }
+      },
+      "mechanism_execution_success": true,
+      "supported_lifecycle_complete": true,
+      "partial_prediction_without_cohort": false
+    },
+    {
+      "policy_id": "11218053-bdc0-569f-a415-fb61c5dcda37",
+      "name": "Infusion Site-of-Care Optimization",
+      "archetype": "SITE_OF_CARE",
+      "executed_at": "2026-11-04T08:43:49.883335+00:00",
+      "definition_complete": "PASS",
+      "codeset_status": "LEGACY_NINE",
+      "package_version": "v1.2-legacy-nine",
+      "configuration_digest": "0122e9fe3ccd25b5",
+      "lever_runtime_state": "EMPTY",
+      "code_count": 0,
+      "codes_sample": [],
+      "plan_mode": "VERIFY_FROZEN_NINE",
+      "plan_reason": "Dec4 nine protected \u2014 verify existing; no KA mutation",
+      "SCOPE_VALIDATED": "PASS",
+      "LEVERS_VALIDATED": "FAIL",
+      "EXECUTION_INPUTS_READY": "PASS",
+      "BASELINE_STATUS": "PASS",
+      "PREDICTION_STATUS": "PASS",
+      "OBSERVATION_STATUS": "DATA_INSUFFICIENT",
+      "CAUSAL_FEASIBILITY_STATUS": "PASS",
+      "CAUSAL_ESTIMATE_STATUS": "DATA_INSUFFICIENT",
+      "WHAT_IF_STATUS": "NOT_APPLICABLE",
+      "VERDICT_STATUS": "DATA_INSUFFICIENT",
+      "PERSISTENCE_PASS": "PASS",
+      "UI_PASS": "NOT_RUN",
+      "DEMO_READY": "PARTIAL",
+      "RELEASE_BLOCKERS": [
+        "OPERATIONAL_ACTIVATION_PROHIBITED"
+      ],
+      "evidence_classification": "FROZEN_DEMO",
+      "details": {
+        "baseline": {
+          "source": "existing",
+          "id": "2f49cee1-d5c1-4c8c-93e4-fba8ec0f1733"
+        },
+        "predicted": {
+          "source": "existing_get",
+          "http": 200
+        },
+        "causal_feasibility": {
+          "http": 200,
+          "feasibility": "CAUSAL_DESIGN_POSSIBLE_DATA_INSUFFICIENT"
+        },
+        "causal_estimate": {
+          "http": 200
+        },
+        "workspace": {
+          "http": 200
+        }
+      },
+      "mechanism_execution_success": true,
+      "supported_lifecycle_complete": true,
+      "partial_prediction_without_cohort": false
+    },
+    {
+      "policy_id": "649b4ac8-ca82-5b84-aa87-84834490731a",
+      "name": "LCD L34425 NC MRI Coverage Criteria",
+      "archetype": "MEDICARE_NCD_LCD_STUDY",
+      "executed_at": "2026-11-04T08:44:38.842495+00:00",
+      "definition_complete": "PASS",
+      "codeset_status": "LEGACY_NINE",
+      "package_version": "v1.2-legacy-nine",
+      "configuration_digest": "104f175bc58ab44f",
+      "lever_runtime_state": "EMPTY",
+      "code_count": 0,
+      "codes_sample": [],
+      "plan_mode": "PROVENANCE_ONLY",
+      "plan_reason": "Medicare NCD/LCD provenance study \u2014 no financial lifecycle",
+      "SCOPE_VALIDATED": "PASS",
+      "LEVERS_VALIDATED": "FAIL",
+      "EXECUTION_INPUTS_READY": "PASS",
+      "BASELINE_STATUS": "NOT_APPLICABLE",
+      "PREDICTION_STATUS": "NOT_APPLICABLE",
+      "OBSERVATION_STATUS": "NOT_APPLICABLE",
+      "CAUSAL_FEASIBILITY_STATUS": "PASS",
+      "CAUSAL_ESTIMATE_STATUS": "NOT_APPLICABLE",
+      "WHAT_IF_STATUS": "NOT_APPLICABLE",
+      "VERDICT_STATUS": "NOT_APPLICABLE",
+      "PERSISTENCE_PASS": "PASS",
+      "UI_PASS": "NOT_RUN",
+      "DEMO_READY": "PARTIAL",
+      "RELEASE_BLOCKERS": [
+        "OPERATIONAL_ACTIVATION_PROHIBITED"
+      ],
+      "evidence_classification": "FROZEN_DEMO",
+      "details": {
+        "causal_feasibility": {
+          "http": 200,
+          "feasibility": "CAUSAL_DESIGN_POSSIBLE_DATA_INSUFFICIENT"
+        },
+        "workspace": {
+          "http": 200
+        }
+      },
+      "mechanism_execution_success": true,
+      "supported_lifecycle_complete": true,
+      "partial_prediction_without_cohort": false
+    },
+    {
+      "policy_id": "d0eeb370-df14-4478-8755-dad6c3a35a47",
+      "name": "Multiple Procedure Payment Reduction",
+      "archetype": "PAYMENT_REIMBURSEMENT",
+      "executed_at": "2026-11-04T08:45:09.301405+00:00",
+      "definition_complete": "PASS",
+      "codeset_status": "LEGACY_NINE",
+      "package_version": "v1.2-legacy-nine",
+      "configuration_digest": "f19ba9c0add63c4e",
+      "lever_runtime_state": "EMPTY",
+      "code_count": 0,
+      "codes_sample": [],
+      "plan_mode": "VERIFY_FROZEN_PRIMARY",
+      "plan_reason": "Dec4 primary KA freeze \u2014 verify existing evidence only",
+      "SCOPE_VALIDATED": "PASS",
+      "LEVERS_VALIDATED": "FAIL",
+      "EXECUTION_INPUTS_READY": "PASS",
+      "BASELINE_STATUS": "PASS",
+      "PREDICTION_STATUS": "PASS",
+      "OBSERVATION_STATUS": "PASS",
+      "CAUSAL_FEASIBILITY_STATUS": "PASS",
+      "CAUSAL_ESTIMATE_STATUS": "DATA_INSUFFICIENT",
+      "WHAT_IF_STATUS": "NOT_APPLICABLE",
+      "VERDICT_STATUS": "PASS",
+      "PERSISTENCE_PASS": "PASS",
+      "UI_PASS": "NOT_RUN",
+      "DEMO_READY": "PASS",
+      "RELEASE_BLOCKERS": [
+        "OPERATIONAL_ACTIVATION_PROHIBITED"
+      ],
+      "evidence_classification": "FROZEN_DEMO",
+      "details": {
+        "baseline": {
+          "source": "existing",
+          "id": "e3546d65-1db2-48e4-bd3b-d01f27b3b7bc"
+        },
+        "predicted": {
+          "source": "existing_get",
+          "http": 200
+        },
+        "observation": {
+          "source": "existing",
+          "id": "mppr-ka-obs-reimbursement-mppr-v1"
+        },
+        "causal_feasibility": {
+          "http": 200,
+          "feasibility": "CAUSAL_DESIGN_POSSIBLE_DATA_INSUFFICIENT"
+        },
+        "causal_estimate": {
+          "http": 200
+        },
+        "workspace": {
+          "http": 200
+        }
+      },
+      "mechanism_execution_success": true,
+      "supported_lifecycle_complete": true,
+      "partial_prediction_without_cohort": false
+    },
+    {
+      "policy_id": "e11b049d-fcce-55cc-bcd7-71329038383b",
+      "name": "NCCI Medically Unlikely Units",
+      "archetype": "CODING_CLAIM_INTEGRITY",
+      "executed_at": "2026-11-04T08:46:05.460603+00:00",
+      "definition_complete": "PASS",
+      "codeset_status": "LEGACY_NINE",
+      "package_version": "v1.2-legacy-nine",
+      "configuration_digest": "0101dc9927fe0cc7",
+      "lever_runtime_state": "EMPTY",
+      "code_count": 0,
+      "codes_sample": [],
+      "plan_mode": "VERIFY_FROZEN_NINE",
+      "plan_reason": "Dec4 nine protected \u2014 verify existing; no KA mutation",
+      "SCOPE_VALIDATED": "PASS",
+      "LEVERS_VALIDATED": "FAIL",
+      "EXECUTION_INPUTS_READY": "PASS",
+      "BASELINE_STATUS": "PASS",
+      "PREDICTION_STATUS": "PASS",
+      "OBSERVATION_STATUS": "DATA_INSUFFICIENT",
+      "CAUSAL_FEASIBILITY_STATUS": "PASS",
+      "CAUSAL_ESTIMATE_STATUS": "DATA_INSUFFICIENT",
+      "WHAT_IF_STATUS": "NOT_APPLICABLE",
+      "VERDICT_STATUS": "DATA_INSUFFICIENT",
+      "PERSISTENCE_PASS": "PASS",
+      "UI_PASS": "NOT_RUN",
+      "DEMO_READY": "PARTIAL",
+      "RELEASE_BLOCKERS": [
+        "OPERATIONAL_ACTIVATION_PROHIBITED"
+      ],
+      "evidence_classification": "FROZEN_DEMO",
+      "details": {
+        "baseline": {
+          "source": "existing",
+          "id": "31ea4bce-c36e-4169-95ae-85742403e2e9"
+        },
+        "predicted": {
+          "source": "existing_get",
+          "http": 200
+        },
+        "causal_feasibility": {
+          "http": 200,
+          "feasibility": "CAUSAL_DESIGN_POSSIBLE_DATA_INSUFFICIENT"
+        },
+        "causal_estimate": {
+          "http": 200
+        },
+        "workspace": {
+          "http": 200
+        }
+      },
+      "mechanism_execution_success": true,
+      "supported_lifecycle_complete": true,
+      "partial_prediction_without_cohort": false
+    },
+    {
+      "policy_id": "58b839b5-b6e0-59e0-9406-d817877c3ce8",
+      "name": "NCCI Procedure-to-Procedure Bundling",
+      "archetype": "CODING_CLAIM_INTEGRITY",
+      "executed_at": "2026-11-04T08:46:50.236689+00:00",
+      "definition_complete": "PASS",
+      "codeset_status": "LEGACY_NINE",
+      "package_version": "v1.2-legacy-nine",
+      "configuration_digest": "88aba8f6e7fa63ad",
+      "lever_runtime_state": "EMPTY",
+      "code_count": 0,
+      "codes_sample": [],
+      "plan_mode": "VERIFY_FROZEN_NINE",
+      "plan_reason": "Dec4 nine protected \u2014 verify existing; no KA mutation",
+      "SCOPE_VALIDATED": "PASS",
+      "LEVERS_VALIDATED": "FAIL",
+      "EXECUTION_INPUTS_READY": "PASS",
+      "BASELINE_STATUS": "PASS",
+      "PREDICTION_STATUS": "PASS",
+      "OBSERVATION_STATUS": "DATA_INSUFFICIENT",
+      "CAUSAL_FEASIBILITY_STATUS": "PASS",
+      "CAUSAL_ESTIMATE_STATUS": "DATA_INSUFFICIENT",
+      "WHAT_IF_STATUS": "NOT_APPLICABLE",
+      "VERDICT_STATUS": "DATA_INSUFFICIENT",
+      "PERSISTENCE_PASS": "PASS",
+      "UI_PASS": "NOT_RUN",
+      "DEMO_READY": "PARTIAL",
+      "RELEASE_BLOCKERS": [
+        "OPERATIONAL_ACTIVATION_PROHIBITED"
+      ],
+      "evidence_classification": "FROZEN_DEMO",
+      "details": {
+        "baseline": {
+          "source": "existing",
+          "id": "b5712459-aca2-46a2-ab2a-2d8303cca3f7"
+        },
+        "predicted": {
+          "source": "existing_get",
+          "http": 200
+        },
+        "causal_feasibility": {
+          "http": 200,
+          "feasibility": "NOT_IDENTIFIABLE"
+        },
+        "causal_estimate": {
+          "http": 200
+        },
+        "workspace": {
+          "http": 200
+        }
+      },
+      "mechanism_execution_success": true,
+      "supported_lifecycle_complete": true,
+      "partial_prediction_without_cohort": false
+    },
+    {
+      "policy_id": "4f8c34e3-015b-509d-90ba-521261464258",
+      "name": "NCD 220.2 MRI Coverage Change Study",
+      "archetype": "MEDICARE_NCD_LCD_STUDY",
+      "executed_at": "2026-11-04T08:47:33.576105+00:00",
+      "definition_complete": "PASS",
+      "codeset_status": "LEGACY_NINE",
+      "package_version": "v1.2-legacy-nine",
+      "configuration_digest": "d79380efc51930d5",
+      "lever_runtime_state": "EMPTY",
+      "code_count": 0,
+      "codes_sample": [],
+      "plan_mode": "PROVENANCE_ONLY",
+      "plan_reason": "Medicare NCD/LCD provenance study \u2014 no financial lifecycle",
+      "SCOPE_VALIDATED": "PASS",
+      "LEVERS_VALIDATED": "FAIL",
+      "EXECUTION_INPUTS_READY": "PASS",
+      "BASELINE_STATUS": "NOT_APPLICABLE",
+      "PREDICTION_STATUS": "NOT_APPLICABLE",
+      "OBSERVATION_STATUS": "NOT_APPLICABLE",
+      "CAUSAL_FEASIBILITY_STATUS": "PASS",
+      "CAUSAL_ESTIMATE_STATUS": "NOT_APPLICABLE",
+      "WHAT_IF_STATUS": "NOT_APPLICABLE",
+      "VERDICT_STATUS": "NOT_APPLICABLE",
+      "PERSISTENCE_PASS": "PASS",
+      "UI_PASS": "NOT_RUN",
+      "DEMO_READY": "PARTIAL",
+      "RELEASE_BLOCKERS": [
+        "OPERATIONAL_ACTIVATION_PROHIBITED"
+      ],
+      "evidence_classification": "FROZEN_DEMO",
+      "details": {
+        "causal_feasibility": {
+          "http": 200,
+          "feasibility": "CAUSAL_DESIGN_POSSIBLE_DATA_INSUFFICIENT"
+        },
+        "workspace": {
+          "http": 200
+        }
+      },
+      "mechanism_execution_success": true,
+      "supported_lifecycle_complete": true,
+      "partial_prediction_without_cohort": false
+    },
+    {
+      "policy_id": "d403f101-08dd-45c9-ab83-d42e37c62018",
+      "name": "Outpatient MRI Prior Authorization",
+      "archetype": "PRIOR_AUTH_UM",
+      "executed_at": "2026-11-04T08:48:16.814403+00:00",
+      "definition_complete": "PASS",
+      "codeset_status": "LEGACY_NINE",
+      "package_version": "v1.2-legacy-nine",
+      "configuration_digest": "f4aac046cab89457",
+      "lever_runtime_state": "FROZEN_DEMO_LEVERS",
+      "code_count": 3,
+      "codes_sample": [
+        "72148",
+        "72149",
+        "72158"
+      ],
+      "plan_mode": "VERIFY_FROZEN_PRIMARY",
+      "plan_reason": "Dec4 primary KA freeze \u2014 verify existing evidence only",
+      "SCOPE_VALIDATED": "PASS",
+      "LEVERS_VALIDATED": "PASS",
+      "EXECUTION_INPUTS_READY": "PASS",
+      "BASELINE_STATUS": "PASS",
+      "PREDICTION_STATUS": "PASS",
+      "OBSERVATION_STATUS": "PASS",
+      "CAUSAL_FEASIBILITY_STATUS": "PASS",
+      "CAUSAL_ESTIMATE_STATUS": "PASS",
+      "WHAT_IF_STATUS": "NOT_APPLICABLE",
+      "VERDICT_STATUS": "PASS",
+      "PERSISTENCE_PASS": "PASS",
+      "UI_PASS": "NOT_RUN",
+      "DEMO_READY": "PASS",
+      "RELEASE_BLOCKERS": [
+        "OPERATIONAL_ACTIVATION_PROHIBITED"
+      ],
+      "evidence_classification": "FROZEN_DEMO",
+      "details": {
+        "baseline": {
+          "source": "existing",
+          "id": "9f996021-60b9-4252-8e84-cacac048cca8"
+        },
+        "predicted": {
+          "source": "existing_get",
+          "http": 200
+        },
+        "observation": {
+          "source": "existing",
+          "id": "obs-mon-20260731-d403f101"
+        },
+        "causal_feasibility": {
+          "http": 200,
+          "feasibility": "CAUSAL_ESTIMATE_SUPPORTED"
+        },
+        "causal_estimate": {
+          "http": 200
+        },
+        "workspace": {
+          "http": 200
+        }
+      },
+      "mechanism_execution_success": true,
+      "supported_lifecycle_complete": true,
+      "partial_prediction_without_cohort": false
+    },
+    {
+      "policy_id": "f2b8e7f3-1627-5dbe-8d7e-757ce21aa55b",
+      "name": "Outpatient Therapy Coverage and Payment",
+      "archetype": "THERAPY_REHAB",
+      "executed_at": "2026-11-04T08:49:02.765231+00:00",
+      "definition_complete": "PASS",
+      "codeset_status": "LEGACY_NINE",
+      "package_version": "v1.2-legacy-nine",
+      "configuration_digest": "ca6563fdbdf8b7fd",
+      "lever_runtime_state": "EMPTY",
+      "code_count": 0,
+      "codes_sample": [],
+      "plan_mode": "VERIFY_FROZEN_NINE",
+      "plan_reason": "Dec4 nine protected \u2014 verify existing; no KA mutation",
+      "SCOPE_VALIDATED": "PASS",
+      "LEVERS_VALIDATED": "FAIL",
+      "EXECUTION_INPUTS_READY": "PASS",
+      "BASELINE_STATUS": "PASS",
+      "PREDICTION_STATUS": "PASS",
+      "OBSERVATION_STATUS": "DATA_INSUFFICIENT",
+      "CAUSAL_FEASIBILITY_STATUS": "PASS",
+      "CAUSAL_ESTIMATE_STATUS": "DATA_INSUFFICIENT",
+      "WHAT_IF_STATUS": "NOT_APPLICABLE",
+      "VERDICT_STATUS": "DATA_INSUFFICIENT",
+      "PERSISTENCE_PASS": "PASS",
+      "UI_PASS": "NOT_RUN",
+      "DEMO_READY": "PARTIAL",
+      "RELEASE_BLOCKERS": [
+        "OPERATIONAL_ACTIVATION_PROHIBITED"
+      ],
+      "evidence_classification": "FROZEN_DEMO",
+      "details": {
+        "baseline": {
+          "source": "existing",
+          "id": "2308f847-9830-4931-a0af-234eeb2c1f28"
+        },
+        "predicted": {
+          "source": "existing_get",
+          "http": 200
+        },
+        "causal_feasibility": {
+          "http": 200,
+          "feasibility": "CAUSAL_DESIGN_POSSIBLE_DATA_INSUFFICIENT"
+        },
+        "causal_estimate": {
+          "http": 200
+        },
+        "workspace": {
+          "http": 200
+        }
+      },
+      "mechanism_execution_success": true,
+      "supported_lifecycle_complete": true,
+      "partial_prediction_without_cohort": false
+    }
+  ],
+  "partial_prediction_without_cohort": 0,
+  "reclassified_at": "2026-11-04T09:33:43.929059+00:00",
+  "success_rule": "baseline PASS OR (prediction PASS AND observation PASS) OR verify/provenance bounded"
+}

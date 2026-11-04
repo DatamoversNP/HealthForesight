@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_5c4018c8cc3de3131e8c4ca5",
+  "policy_id": "9edcde99-8eda-451a-9147-d199b4f1635f",
+  "name": "Hospice Election and Concurrent Care Rules",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "9e62aa2309798d3a",
+  "started_at": "2026-11-04T13:18:18.233796+00:00",
+  "finished_at": "2026-11-04T13:18:18.233797+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

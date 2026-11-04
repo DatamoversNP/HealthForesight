@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_8570c6b6275c7a79b8c5fbed",
+  "policy_id": "db5707ec-2db5-4243-a77e-0da91dada128",
+  "name": "Home Sleep Testing Before Facility PSG",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "21cb5146e059f443",
+  "started_at": "2026-11-04T13:18:18.233732+00:00",
+  "finished_at": "2026-11-04T13:18:18.233733+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

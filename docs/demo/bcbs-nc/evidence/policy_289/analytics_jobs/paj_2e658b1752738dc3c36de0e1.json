@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_2e658b1752738dc3c36de0e1",
+  "policy_id": "21383568-c83c-46e4-896b-b277bf779789",
+  "name": "CPAP Supply Replacement Schedules",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "8e9cec54f5fb4d51",
+  "started_at": "2026-11-04T13:18:18.229864+00:00",
+  "finished_at": "2026-11-04T13:18:18.229871+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

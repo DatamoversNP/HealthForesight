@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_6c7fc7197697cda760448aae",
+  "policy_id": "3068317f-4d26-407e-ac29-1e2ae3a7778e",
+  "name": "PCI Elective Appropriateness Review",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "250337681b927a93",
+  "started_at": "2026-11-04T13:18:18.239685+00:00",
+  "finished_at": "2026-11-04T13:18:18.239686+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

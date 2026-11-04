@@ -90,6 +90,32 @@ def _start_background_startup(settings: object) -> None:
                 import traceback
 
                 traceback.print_exc()
+        # Warm policy-rollout recommendations so the first UI hit is cache-fast.
+        if os.getenv("UEPI_WARM_POLICY_ROLLOUTS", "1").strip().lower() in ("1", "true", "yes"):
+            try:
+                from uuid import UUID
+
+                from uepi_api.database import SessionLocal
+                from uepi_api.services.policy_rollout_recommendations import (
+                    compute_policy_rollout_recommendations,
+                )
+
+                def _warm_rollouts() -> None:
+                    db = SessionLocal()
+                    try:
+                        tenant_id = UUID("00000000-0000-0000-0000-000000000001")
+                        compute_policy_rollout_recommendations(
+                            db, tenant_id, months_lookback=12, limit=25
+                        )
+                        print("uepi_api: policy rollout recommendations warmed", flush=True)
+                    except Exception as warm_err:
+                        print(f"uepi_api: rollout warm skipped: {warm_err}", flush=True)
+                    finally:
+                        db.close()
+
+                threading.Thread(target=_warm_rollouts, daemon=True, name="uepi-warm-rollouts").start()
+            except Exception as e:
+                print(f"uepi_api: rollout warm setup failed: {e}", flush=True)
 
     threading.Thread(target=_run, daemon=True, name="uepi-bg-startup").start()
 
@@ -120,6 +146,8 @@ def create_app() -> FastAPI:
         "https://proud-glacier-0c52b8e0f.6.azurestaticapps.net",
         "https://healthforesight-web.azurestaticapps.net",
         "https://healthforesight-web.azurewebsites.net",
+        "https://data-voyager.vercel.app",
+        "https://www.healthforesight.ai",
     ]
     # Add any additional origins from settings
     if hasattr(settings, 'cors_origins') and settings.cors_origins:
@@ -133,6 +161,11 @@ def create_app() -> FastAPI:
         r"^https://healthforesight-[a-z0-9-]+\.azurewebsites\.net$",
         re.IGNORECASE,
     )
+    # Data Voyager / HealthForesight Vercel (prod + preview URLs)
+    _CORS_VERCEL_APP = re.compile(
+        r"^https://([a-z0-9-]+\.)*vercel\.app$",
+        re.IGNORECASE,
+    )
 
     def _cors_allow_origin(origin: str | None) -> str | None:
         o = (origin or "").strip()
@@ -143,6 +176,8 @@ def create_app() -> FastAPI:
         if o.startswith("https://") and ".azurestaticapps.net" in o:
             return o
         if _CORS_HEALTHFORESIGHT_APP.match(o):
+            return o
+        if _CORS_VERCEL_APP.match(o):
             return o
         if o.startswith("http://localhost") or o.startswith("http://127.0.0.1"):
             return o
@@ -174,11 +209,17 @@ def create_app() -> FastAPI:
             return response
 
     class LazyExtendedRoutesMiddleware(BaseHTTPMiddleware):
-        """Load polars/pandas-heavy routers on first request that needs them (not at import)."""
+        """Load polars/pandas-heavy routers on first request that needs them (not at import).
+
+        Import/registration runs in a worker thread so DNS/DB stalls during lazy
+        warm-up cannot freeze the event loop (liveness /health must stay responsive).
+        """
 
         async def dispatch(self, request: Request, call_next):
             if not path_skips_extended_loading(request.url.path):
-                register_extended_routes(request.app)
+                import asyncio
+
+                await asyncio.to_thread(register_extended_routes, request.app)
             return await call_next(request)
 
     # Starlette: last-added middleware is outermost on the request. Order here is
@@ -311,42 +352,49 @@ def create_app() -> FastAPI:
         )
     
     # Health check endpoints
+    # Liveness (/health, /live, /ping): process + event loop only — never touch Postgres.
+    # Readiness (/ready, /health/detailed): dependency check in a worker thread with hard timeout.
     @app.get("/health")
     @app.get("/api/v1/health")
+    @app.get("/live")
+    @app.get("/api/v1/live")
     async def health():
-        """Health check endpoint - quick check without database"""
+        """Liveness — API process and event loop are responsive. No database I/O."""
         return {
             "status": "healthy",
+            "check": "liveness",
             "service": "uepi-api",
-            "database": "unknown"  # Don't check database in health endpoint to avoid timeouts
+            "database": "not_checked",
         }
     
     @app.get("/api/v1/ping")
     async def ping():
         """Instant OK — no DB. Use to verify API is reachable (through web proxy or direct)."""
-        return {"ok": True, "service": "uepi-api"}
+        return {"ok": True, "service": "uepi-api", "check": "liveness"}
 
-    @app.get("/api/v1/health/detailed")
-    async def health_detailed():
-        """DB connectivity; always returns HTTP 200 within ~6s (avoids gateway 503 on hung PostgreSQL)."""
+    def _db_ping_status() -> str:
         from uepi_api.database import SessionLocal
         from sqlalchemy import text
 
-        def _db_ping() -> str:
+        try:
+            db = SessionLocal()
             try:
-                db = SessionLocal()
-                try:
-                    db.execute(text("SELECT 1")).scalar()
-                    return "connected"
-                finally:
-                    db.close()
-            except Exception as e:
-                return f"error: {str(e)[:200]}"
+                db.execute(text("SELECT 1")).scalar()
+                return "connected"
+            finally:
+                db.close()
+        except Exception as e:
+            return f"error: {str(e)[:200]}"
 
+    @app.get("/ready")
+    @app.get("/api/v1/ready")
+    @app.get("/api/v1/health/detailed")
+    async def health_detailed():
+        """Readiness — Postgres must respond within ~6s. Never blocks the event loop."""
         db_status = "unknown"
         try:
             with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
-                fut = pool.submit(_db_ping)
+                fut = pool.submit(_db_ping_status)
                 db_status = fut.result(timeout=6)
         except concurrent.futures.TimeoutError:
             db_status = (
@@ -356,10 +404,13 @@ def create_app() -> FastAPI:
         except Exception as e:
             db_status = f"check_failed: {str(e)[:200]}"
 
+        ready = db_status == "connected"
         return {
-            "status": "healthy" if db_status == "connected" else "degraded",
+            "status": "healthy" if ready else "not_ready",
+            "check": "readiness",
             "service": "uepi-api",
             "database": db_status,
+            "ready": ready,
             "hint": "If database is not connected, login will fail. Fix Postgres access from healthforesight-api.",
         }
     

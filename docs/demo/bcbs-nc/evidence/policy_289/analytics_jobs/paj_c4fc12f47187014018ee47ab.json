@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_c4fc12f47187014018ee47ab",
+  "policy_id": "6bdaa2ef-30ab-4818-a67e-a60217cd0537",
+  "name": "90-Day Retail Maintenance Program",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "1bf6c368314a713a",
+  "started_at": "2026-11-04T13:18:18.224714+00:00",
+  "finished_at": "2026-11-04T13:18:18.224994+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

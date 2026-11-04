@@ -1,0 +1,10 @@
+{
+  "document_id": "NON_FORMULARY_EXCEPTION_REVIEW_CODESET",
+  "policy_id": "aa6b351a-e174-4ced-8a5a-e19615f52cc2",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abNon-Formulary Exception Review\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Exception process \u2014 applies to non-formulary NDCs generally",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

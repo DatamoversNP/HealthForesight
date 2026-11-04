@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_939cfa7c4e651caf63aefd34",
+  "policy_id": "a196ff6f-047b-4809-b83d-5df4194e4820",
+  "name": "Digital Therapeutics Coverage Criteria",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "2a169e7d7d5d7890",
+  "started_at": "2026-11-04T13:18:18.230396+00:00",
+  "finished_at": "2026-11-04T13:18:18.230398+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "codeset_UNRESOLVED",
+      "definition_incomplete"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

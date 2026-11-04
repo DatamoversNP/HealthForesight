@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_f5739b662d31a955b16f15be",
+  "policy_id": "71f50c77-7ab7-49f9-a4c2-03fcb73ee3a0",
+  "name": "External Review / IRO Process",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "0d0bbbfe2994382e",
+  "started_at": "2026-11-04T13:18:18.231992+00:00",
+  "finished_at": "2026-11-04T13:18:18.231993+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

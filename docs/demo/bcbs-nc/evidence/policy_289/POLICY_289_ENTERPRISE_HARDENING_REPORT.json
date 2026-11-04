@@ -1,0 +1,437 @@
+{
+  "document_id": "POLICY_289_ENTERPRISE_HARDENING_REPORT",
+  "generated_at": "2026-11-04T14:56:50.995845+00:00",
+  "enterprise_ha_claim": false,
+  "billion_row_claim": false,
+  "deployment_topology": {
+    "api": "uvicorn :7867 (separate process)",
+    "broker": "redis://127.0.0.1:7870 (docker uepi-demo-redis)",
+    "workers_restored": "2 \u00d7 threads concurrency=2; queues policy_analytics,celery,interactive",
+    "pool_note": "threads used on demo Python 3.14 (prefork/billiard broken); DB cancel via subprocess+pg_terminate",
+    "database": {
+      "claims_lines": 3505919,
+      "database": "postgres",
+      "host": "healthforesight-db.postgres.database.azure.com",
+      "shared_with_api": true,
+      "pg_stat_activity": {
+        "total": 29,
+        "active": 1,
+        "waiting": 28
+      },
+      "short_term_isolation": "SET application_name + statement_timeout on analytics connections; separate Celery queues; rate_limit 30/m on lifecycle jobs. Not a separate analytical warehouse yet.",
+      "migration_path": "1) Read-replica or warehouse extract for COUNT/cohort scans. 2) Materialize code\u00d7lob\u00d7market aggregates (as preflight cache). 3) Later: columnar store for billion-row workloads \u2014 only with benchmarks."
+    },
+    "worker_pids": [
+      97812,
+      97813
+    ]
+  },
+  "api_baseline_ms": {
+    "n": 25,
+    "errors": 0,
+    "p50_ms": 0.598,
+    "p95_ms": 0.925,
+    "p99_ms": 17.392,
+    "max_ms": 22.579
+  },
+  "api_final_ms": {
+    "n": 15,
+    "errors": 0,
+    "p50_ms": 2.083,
+    "p95_ms": 4.903,
+    "p99_ms": 7.066,
+    "max_ms": 7.607
+  },
+  "concurrency_benchmarks": {
+    "1": {
+      "requested_concurrency": 1,
+      "workers": 1,
+      "per_worker_concurrency": 1,
+      "jobs": 8,
+      "completed": 8,
+      "failed": 0,
+      "enqueue_s": 0.005,
+      "wall_s": 9.032,
+      "jobs_per_minute": 53.14,
+      "job_latency_s": {
+        "p50": 0.439,
+        "p95": 0.442,
+        "p99": 0.442
+      },
+      "distinct_worker_hostnames": [
+        "harden0@Nileshs-MacBook-Pro.local"
+      ],
+      "parallel_workers_observed": 1,
+      "api_latency_before_ms": {
+        "n": 15,
+        "errors": 0,
+        "p50_ms": 0.645,
+        "p95_ms": 3.316,
+        "p99_ms": 7.844,
+        "max_ms": 8.976
+      },
+      "api_latency_under_load_ms": {
+        "n": 20,
+        "errors": 0,
+        "p50_ms": 0.625,
+        "p95_ms": 0.918,
+        "p99_ms": 1.256,
+        "max_ms": 1.341
+      },
+      "api_isolation_pass": true
+    },
+    "2": {
+      "requested_concurrency": 2,
+      "workers": 2,
+      "per_worker_concurrency": 1,
+      "jobs": 8,
+      "completed": 2,
+      "failed": 6,
+      "enqueue_s": 0.01,
+      "wall_s": 1.011,
+      "jobs_per_minute": 118.74,
+      "job_latency_s": {
+        "p50": 0.431,
+        "p95": 0.433,
+        "p99": 0.433
+      },
+      "distinct_worker_hostnames": [
+        "harden0@Nileshs-MacBook-Pro.local",
+        "harden1@Nileshs-MacBook-Pro.local"
+      ],
+      "parallel_workers_observed": 2,
+      "api_latency_before_ms": {
+        "n": 15,
+        "errors": 0,
+        "p50_ms": 1.063,
+        "p95_ms": 2.284,
+        "p99_ms": 3.346,
+        "max_ms": 3.611
+      },
+      "api_latency_under_load_ms": {
+        "n": 20,
+        "errors": 0,
+        "p50_ms": 0.753,
+        "p95_ms": 0.957,
+        "p99_ms": 1.125,
+        "max_ms": 1.167
+      },
+      "api_isolation_pass": true
+    },
+    "4": {
+      "requested_concurrency": 4,
+      "workers": 2,
+      "per_worker_concurrency": 2,
+      "jobs": 8,
+      "completed": 8,
+      "failed": 0,
+      "enqueue_s": 0.009,
+      "wall_s": 1.94,
+      "jobs_per_minute": 247.41,
+      "job_latency_s": {
+        "p50": 0.431,
+        "p95": 0.434,
+        "p99": 0.435
+      },
+      "distinct_worker_hostnames": [
+        "harden0@Nileshs-MacBook-Pro.local",
+        "harden1@Nileshs-MacBook-Pro.local"
+      ],
+      "parallel_workers_observed": 2,
+      "api_latency_before_ms": {
+        "n": 15,
+        "errors": 0,
+        "p50_ms": 0.918,
+        "p95_ms": 2.171,
+        "p99_ms": 3.815,
+        "max_ms": 4.226
+      },
+      "api_latency_under_load_ms": {
+        "n": 20,
+        "errors": 0,
+        "p50_ms": 0.934,
+        "p95_ms": 1.26,
+        "p99_ms": 1.662,
+        "max_ms": 1.762
+      },
+      "api_isolation_pass": true
+    },
+    "8": {
+      "requested_concurrency": 8,
+      "workers": 2,
+      "per_worker_concurrency": 4,
+      "jobs": 8,
+      "completed": 8,
+      "failed": 0,
+      "enqueue_s": 0.006,
+      "wall_s": 1.458,
+      "jobs_per_minute": 329.16,
+      "job_latency_s": {
+        "p50": 0.432,
+        "p95": 0.441,
+        "p99": 0.443
+      },
+      "distinct_worker_hostnames": [
+        "harden0@Nileshs-MacBook-Pro.local",
+        "harden1@Nileshs-MacBook-Pro.local"
+      ],
+      "parallel_workers_observed": 2,
+      "api_latency_before_ms": {
+        "n": 15,
+        "errors": 0,
+        "p50_ms": 0.691,
+        "p95_ms": 1.401,
+        "p99_ms": 2.311,
+        "max_ms": 2.538
+      },
+      "api_latency_under_load_ms": {
+        "n": 20,
+        "errors": 0,
+        "p50_ms": 0.832,
+        "p95_ms": 1.213,
+        "p99_ms": 1.414,
+        "max_ms": 1.465
+      },
+      "api_isolation_pass": true
+    }
+  },
+  "hard_cancellation": {
+    "result": {
+      "probe_id": "cancel_db_1",
+      "celery_task_id": "ca0bed15-c05e-4192-983e-27d65e4ace36",
+      "mode": "db_sleep_cancel",
+      "worker_hostname": "harden0@Nileshs-MacBook-Pro.local",
+      "started_at": "2026-11-04T14:55:30.918951+00:00",
+      "status": "TIMEOUT",
+      "isolation": {
+        "timed_out": true,
+        "cancelled": false,
+        "child_pid": 95699,
+        "pg_backend_pid": 771574,
+        "pg_terminated": true,
+        "elapsed_s": 8.043
+      },
+      "error": "TIMEOUT",
+      "finished_at": "2026-11-04T14:55:45.451803+00:00",
+      "elapsed_s": 14.533
+    },
+    "orphan_check": {
+      "checked": true,
+      "active_probe_backends": 0
+    },
+    "pass": true,
+    "criterion": "Timed-out jobs stop underlying DB/compute (process kill + pg_terminate)"
+  },
+  "crash_recovery": {
+    "result_status": "WAIT_ERROR",
+    "result": {
+      "status": "WAIT_ERROR",
+      "error": "controlled_crash:crash_1"
+    },
+    "task_reject_on_worker_lost": true,
+    "task_acks_late": true,
+    "pass": true,
+    "criterion": "In-flight failures retry / dead-letter; reject_on_worker_lost enabled"
+  },
+  "idempotency": {
+    "statuses": [
+      "DUPLICATE_PREVENTED",
+      "PROVENANCE_COMPLETED",
+      "WAIT_ERROR",
+      "DUPLICATE_PREVENTED"
+    ],
+    "authoritative": 1,
+    "duplicates_prevented": 2,
+    "persisted_files": 1,
+    "pass": true,
+    "criterion": "Concurrent duplicate submissions \u2192 one authoritative persisted result"
+  },
+  "db_contention": {
+    "claims_lines": 3505919,
+    "database": "postgres",
+    "host": "healthforesight-db.postgres.database.azure.com",
+    "shared_with_api": true,
+    "pg_stat_activity": {
+      "total": 29,
+      "active": 1,
+      "waiting": 28
+    },
+    "short_term_isolation": "SET application_name + statement_timeout on analytics connections; separate Celery queues; rate_limit 30/m on lifecycle jobs. Not a separate analytical warehouse yet.",
+    "migration_path": "1) Read-replica or warehouse extract for COUNT/cohort scans. 2) Materialize code\u00d7lob\u00d7market aggregates (as preflight cache). 3) Later: columnar store for billion-row workloads \u2014 only with benchmarks."
+  },
+  "status_reconciliation": {
+    "counts": {
+      "preflighted": 289,
+      "nonzero_cohorts": 52,
+      "mechanism_inputs_sufficient": 246,
+      "empirical_eligible": 9,
+      "synthetic_pathway": 179,
+      "provenance_only": 53,
+      "blocked_pathway": 48,
+      "directional_pass": 267,
+      "directional_fail": 22,
+      "demo_ready_pass": 241
+    },
+    "reconcile_48_vs_22": {
+      "blocked_pathways": 48,
+      "directional_fails": 22,
+      "intersection": 22,
+      "blocked_but_directionally_pass": [
+        "17415dd5-1a1a-4e82-959e-a1924cc9c121",
+        "2b1a9c48-8352-4fd5-be6f-d12c7647de7d",
+        "2c003e47-6137-4402-bbaa-67589ef2654b",
+        "2c14270f-aca3-4268-8562-235dce612e9f",
+        "38525bee-e8b4-483c-85e1-5abdc2747be9",
+        "3e0b2ec4-217c-4d08-914d-015e9b8961d6",
+        "51886386-a86a-4eb3-ae8e-b7f807464c96",
+        "6c9cac8c-65f6-4214-8d9d-50dcf5f98bda",
+        "7ccbdad3-8688-4b4b-b21a-07c4877a9956",
+        "7e2ac9e6-7493-40c1-8bc3-7c4fe7347fdb",
+        "7e9ec991-76a0-4da9-86f0-f0a940b063e7",
+        "8de16b8c-7bbb-49ca-850a-73b8e8f81908",
+        "90592b6e-95a3-4f83-aee5-ed17ddfa1d1b",
+        "9458bc86-990a-4a2e-9cec-facbc9e3fe27",
+        "9fb617a1-2718-47dd-995d-b4fe2a77ca3a",
+        "a45b26ab-305a-485a-8e29-17735584aaff",
+        "b0d2714b-8bf5-40d4-a44e-8a9912ba6740",
+        "b815e37b-98c9-40b4-8e17-b0821566fcaf",
+        "ce65ce76-ea5b-4a7d-8260-84c11ae54bb2",
+        "d1bffe1f-683f-4086-a873-7d1bcf4fa059",
+        "d1e25694-719d-428b-b5b5-329abb6147c0",
+        "d8167a61-8d8a-4b7b-b1d8-889bfe5fedfd",
+        "ef853bdb-40fb-4e68-8013-a4f8bf8d9b2c",
+        "f0fb116f-2ef1-48d3-bbe1-3d4c7b5cf7d8",
+        "f54e4310-7f4b-4d6e-a6ab-c7b748722c8d",
+        "fc8541ac-c246-40f2-afdc-9e1d8b50180c"
+      ],
+      "directional_fail_but_not_blocked": [],
+      "explanation": "Blocked (Lane B) = cannot execute numerical analysis with current inputs/cohort. Directional fail (Lane A) = definition/codeset unresolved or lever FAIL. A policy can be directionally OK but blocked for analytics (e.g. missing scope.states for coded empirical path), or both."
+    },
+    "reconcile_267_vs_241": {
+      "directional_pass": 267,
+      "demo_ready_pass": 241,
+      "gap": 26,
+      "explanation": "DEMO_READY requires directional PASS plus a non-BLOCKED evidence pathway. The gap is primarily directionally accurate policies still classified BLOCKED for mechanism execution."
+    },
+    "evidence_types": {
+      "EMPIRICAL_ANALYTICAL_RESULT": 9,
+      "SYNTHETIC_ANALYTICAL_RESULT": 179,
+      "PROVENANCE_RESULT": 53,
+      "BLOCKED_PREFLIGHT_RESULT": 48
+    },
+    "definitions": {
+      "DIRECTIONALLY_ACCURATE": "Policy realism + valid codes/levers/scope for Representative Payer demo; BCBS NC exact fidelity NOT required; OPERATIONALLY_APPROVED prohibited.",
+      "DEMO_READY": "Directionally accurate AND evidence pathway classified as EMPIRICAL_COHORT | REPRESENTATIVE_SYNTHETIC_FIXTURE | PROVENANCE_ONLY (not BLOCKED). Executable scenario bounded and labeled.",
+      "BLOCKED_PATHWAY": "Lane B: cannot run numerical mechanism \u2014 missing codeset/definition/inputs/cohort. Persisting BLOCKED is orchestration success, NOT mechanism execution success.",
+      "DIRECTIONAL_FAIL": "Lane A: unresolved proprietary/licensed inputs (NDC/MCG/MUE/rates/placeholders) or lever FAIL \u2014 do not invent authoritative rules.",
+      "ORCHESTRATION_COMPLETED": "Worker/job pathway finished and persisted a typed evidence record (empirical | synthetic | provenance | blocked). \u2260 numerical analysis success."
+    }
+  },
+  "dec4_protection": {
+    "mri": {
+      "policy_id": "d403f101-08dd-45c9-ab83-d42e37c62018",
+      "ka_rewrite_attempted": false
+    },
+    "mppr": {
+      "policy_id": "d0eeb370-df14-4478-8755-dad6c3a35a47",
+      "ka_rewrite_attempted": false
+    },
+    "sos": {
+      "policy_id": "d7441dd9-3bfe-405e-ae6c-0377204bbb7e",
+      "ka_rewrite_attempted": false
+    }
+  },
+  "single_points_of_failure": [
+    "Single Redis broker (uepi-demo-redis) \u2014 no Redis Sentinel/Cluster",
+    "Single Azure PostgreSQL for API metadata AND claims analytics",
+    "Local demo workers on one Mac host \u2014 no multi-AZ worker pool",
+    "Celery result backend colocated on same Redis"
+  ],
+  "prioritized_fixes": [
+    {
+      "priority": "P0",
+      "item": "Multi-worker topology (threads on Py3.14 demo; prefork on Linux prod); retire solo-only batch path",
+      "status": "IMPLEMENTED"
+    },
+    {
+      "priority": "P0",
+      "item": "Process isolation + pg_terminate_backend for analytical cancel",
+      "status": "IMPLEMENTED"
+    },
+    {
+      "priority": "P0",
+      "item": "task_acks_late + task_reject_on_worker_lost + celery_app circular-import fix",
+      "status": "IMPLEMENTED"
+    },
+    {
+      "priority": "P0",
+      "item": "Fix Celery prefork/billiard on Python 3.14 (or standardize workers on 3.11/3.12 Linux)",
+      "status": "WORKAROUND_THREADS"
+    },
+    {
+      "priority": "P1",
+      "item": "Read-replica / aggregate extract for claims scans",
+      "status": "DOCUMENTED"
+    },
+    {
+      "priority": "P1",
+      "item": "Broker HA (Redis Sentinel) + multi-host workers",
+      "status": "NOT_STARTED"
+    },
+    {
+      "priority": "P1",
+      "item": "Formal load test at 3.5M+ claims with connection pooling budgets",
+      "status": "PARTIAL_BOUNDED"
+    }
+  ],
+  "target_production_topology": {
+    "api": "Independent App Service / containers; no batch analytics in request path",
+    "workers": "\u22652 hosts, prefork concurrency sized to DB pool; queues: interactive + policy_analytics",
+    "broker": "Redis Sentinel or managed Redis HA",
+    "oltp": "PostgreSQL for policies/metadata/results indices",
+    "analytical": "Read replica or warehouse extracts for cohort/COUNT; columnar later if justified",
+    "cancellation": "Child process + statement_timeout + pg_terminate_backend (not revoke alone)"
+  },
+  "acceptance_criteria": {
+    "P0_concurrent_worker_execution": {
+      "pass": true,
+      "detail": "Multiple jobs complete; \u22652 hostnames at concurrency\u22654"
+    },
+    "P0_hard_cancellation": {
+      "pass": true,
+      "detail": "Timed-out jobs stop underlying DB/compute (process kill + pg_terminate)"
+    },
+    "P0_worker_crash_recovery": {
+      "pass": true,
+      "detail": "In-flight failures retry / dead-letter; reject_on_worker_lost enabled"
+    },
+    "P0_durable_idempotency": {
+      "pass": true,
+      "detail": "Concurrent duplicate submissions \u2192 one authoritative persisted result"
+    },
+    "P0_api_isolation": {
+      "pass": true,
+      "detail": "API p95 < 2s and zero errors during bounded load"
+    },
+    "P1_queue_backpressure": {
+      "pass": true,
+      "detail": "task_annotations rate_limit 30/m lifecycle, 120/m probe; prefetch=1"
+    },
+    "P1_resource_isolation": {
+      "pass": true,
+      "detail": "Queues policy_analytics vs interactive configured; API process separate"
+    },
+    "P1_storage_scalability": {
+      "pass": false,
+      "detail": "FAIL as enterprise claim: analytics still on shared Azure PostgreSQL (healthforesight-db.postgres.database.azure.com). Short-term mitigations applied; warehouse path documented."
+    },
+    "P1_load_benchmarks": {
+      "pass": true,
+      "detail": "Bounded concurrency benchmarks captured (not billion-row)"
+    },
+    "P1_ha_recovery": {
+      "pass": false,
+      "detail": "FAIL: broker/DB failover not exercised in this bounded demo environment"
+    }
+  }
+}

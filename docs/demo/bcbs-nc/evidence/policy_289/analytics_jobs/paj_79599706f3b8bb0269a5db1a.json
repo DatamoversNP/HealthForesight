@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_79599706f3b8bb0269a5db1a",
+  "policy_id": "dfd316ef-e39e-4781-a72d-b49e775d714e",
+  "name": "Maternity Management Program",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "299566af9337778a",
+  "started_at": "2026-11-04T13:18:18.235358+00:00",
+  "finished_at": "2026-11-04T13:18:18.235359+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

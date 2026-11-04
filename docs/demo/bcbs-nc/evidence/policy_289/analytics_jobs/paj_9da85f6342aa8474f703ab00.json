@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_9da85f6342aa8474f703ab00",
+  "policy_id": "177be323-166d-4c45-8d34-f124245e651e",
+  "name": "Opioid Analgesic Utilization Management",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "dc63d23f1042380c",
+  "started_at": "2026-11-04T13:18:18.238714+00:00",
+  "finished_at": "2026-11-04T13:18:18.238715+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

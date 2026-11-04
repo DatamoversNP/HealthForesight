@@ -1,0 +1,321 @@
+{
+  "archetype": "PHARMACY_SPECIALTY",
+  "offset": 0,
+  "count": 31,
+  "candidate_schedule": 15,
+  "unresolved": 7,
+  "not_applicable": 9,
+  "persisted_ok": 0,
+  "results": [
+    {
+      "policy_id": "c922a9bd-0292-4df1-9bdd-f4bda3709fbf",
+      "name": "ADHD Stimulant Quantity Limits and Preferred Agents",
+      "folder": "catalog/adhd_stimulant_quantity_limits_and_preferred_agents",
+      "codeset_status": "UNRESOLVED",
+      "code_count": 0,
+      "definition_status": "DEFINITION_INCOMPLETE_UNRESOLVED_CODESET",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "280f62d7-7b49-40a0-9a47-862a4cf636e9",
+      "name": "Asthma and COPD Biologic Step Therapy",
+      "folder": "catalog/asthma_and_copd_biologic_step_therapy",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 3,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "d3b25dd6-57d6-49e9-8e1f-5f45438caa06",
+      "name": "Benzodiazepine Quantity Limits",
+      "folder": "catalog/benzodiazepine_quantity_limits",
+      "codeset_status": "UNRESOLVED",
+      "code_count": 0,
+      "definition_status": "DEFINITION_INCOMPLETE_UNRESOLVED_CODESET",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "d1e25694-719d-428b-b5b5-329abb6147c0",
+      "name": "Biologic Step Therapy for Rheumatoid Arthritis",
+      "folder": "catalog/biologic_step_therapy_for_rheumatoid_arthritis",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 4,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "f029e87f-4b1e-4934-91e6-6fd238da85c9",
+      "name": "Biosimilar Preferencing Policy",
+      "folder": "catalog/biosimilar_preferencing_policy",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "0a81b63d-60c2-4065-afa2-747da296b468",
+      "name": "Blood Glucose Test Strip Step Therapy",
+      "folder": "catalog/blood_glucose_test_strip_step_therapy",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 1,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "100e5690-fa88-4537-9d92-3d14b1c2c126",
+      "name": "CGM and Diabetes Supply Quantity Limits",
+      "folder": "catalog/cgm_and_diabetes_supply_quantity_limits",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 5,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "8de16b8c-7bbb-49ca-850a-73b8e8f81908",
+      "name": "Commercial Preferred Drug Formulary Design",
+      "folder": "catalog/commercial_preferred_drug_formulary_design",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "6dbbdca8-60c0-4867-92a2-808b003477e8",
+      "name": "Dermatology Biologic Step Therapy",
+      "folder": "catalog/dermatology_biologic_step_therapy",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 2,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "2b1a9c48-8352-4fd5-be6f-d12c7647de7d",
+      "name": "Durable Medical Equipment Quantity Limits",
+      "folder": "catalog/durable_medical_equipment_quantity_limits",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 3,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "143c43fc-f4ba-4c69-80b6-3dd6bd8367cb",
+      "name": "GLP-1 Coverage Criteria for Obesity",
+      "folder": "catalog/glp_1_coverage_criteria_for_obesity",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 1,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "17415dd5-1a1a-4e82-959e-a1924cc9c121",
+      "name": "GLP-1 Step Therapy for Type 2 Diabetes",
+      "folder": "catalog/glp_1_step_therapy_for_type_2_diabetes",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 1,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "c8c59559-b4b7-4cdc-9b48-9efed253be2b",
+      "name": "HIV Antiretroviral Formulary Management",
+      "folder": "catalog/hiv_antiretroviral_formulary_management",
+      "codeset_status": "UNRESOLVED",
+      "code_count": 0,
+      "definition_status": "DEFINITION_INCOMPLETE_UNRESOLVED_CODESET",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "7ddaaeb7-2cc9-4502-b83f-643ba0097bb3",
+      "name": "IBD Biologic Step Therapy",
+      "folder": "catalog/ibd_biologic_step_therapy",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 2,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "a89e86f3-066c-42c1-b83c-7d3f9ba952da",
+      "name": "Insulin Preferred Product and Biosimilar Step",
+      "folder": "catalog/insulin_preferred_product_and_biosimilar_step",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 2,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "aa2d1fda-cb03-4899-ae72-dec657d9b09d",
+      "name": "Medical vs Pharmacy Benefit Channeling",
+      "folder": "catalog/medical_vs_pharmacy_benefit_channeling",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "e3fdab6b-2850-4930-b293-5387476674a6",
+      "name": "Migraine CGRP Step Therapy",
+      "folder": "catalog/migraine_cgrp_step_therapy",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 2,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "aa6b351a-e174-4ced-8a5a-e19615f52cc2",
+      "name": "Non-Formulary Exception Review",
+      "folder": "catalog/non_formulary_exception_review",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "fc8541ac-c246-40f2-afdc-9e1d8b50180c",
+      "name": "Oncology Immunotherapy Step Therapy",
+      "folder": "catalog/oncology_immunotherapy_step_therapy",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 3,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "140fc121-b6b9-4166-bf5d-e2dfe2ea69db",
+      "name": "Opioid Quantity Limit - Chronic Pain",
+      "folder": "catalog/opioid_quantity_limit_chronic_pain",
+      "codeset_status": "UNRESOLVED",
+      "code_count": 0,
+      "definition_status": "DEFINITION_INCOMPLETE_UNRESOLVED_CODESET",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "7a41ebf4-ce99-45da-9039-49a7bb262bc9",
+      "name": "Opioid Quantity Limit \u2014 Acute Pain",
+      "folder": "catalog/opioid_quantity_limit_acute_pain",
+      "codeset_status": "UNRESOLVED",
+      "code_count": 0,
+      "definition_status": "DEFINITION_INCOMPLETE_UNRESOLVED_CODESET",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "e885e4fb-d001-4bc5-aa0d-91067b3e550b",
+      "name": "Opioid Quantity Limit \u2014 Chronic Pain",
+      "folder": "catalog/opioid_quantity_limit_chronic_pain",
+      "codeset_status": "UNRESOLVED",
+      "code_count": 0,
+      "definition_status": "DEFINITION_INCOMPLETE_UNRESOLVED_CODESET",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "3b1ec8e6-2943-47b6-a160-8b3c25c5ad19",
+      "name": "PCSK9 Inhibitor Step Therapy",
+      "folder": "catalog/pcsk9_inhibitor_step_therapy",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 1,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "3137bb4b-516d-44eb-b023-d5b891de1bd4",
+      "name": "Pharmacy Prior Authorization Program",
+      "folder": "catalog/pharmacy_prior_authorization_program",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "8fcee93e-ba2f-4aee-86c5-d0861232a0a4",
+      "name": "Preferred Pharmacy Network Policy",
+      "folder": "catalog/preferred_pharmacy_network_policy",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "a0e0b722-562e-495a-a4e4-bc1ec2fea5de",
+      "name": "Rheumatology Biologic Step Therapy for RA",
+      "folder": "catalog/rheumatology_biologic_step_therapy_for_ra",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 4,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "914684fd-7480-4902-89fa-e7ae006f192e",
+      "name": "Specialty Drug Days\u2019 Supply Limits",
+      "folder": "catalog/specialty_drug_days_supply_limits",
+      "codeset_status": "UNRESOLVED",
+      "code_count": 0,
+      "definition_status": "DEFINITION_INCOMPLETE_UNRESOLVED_CODESET",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "1e608a41-9560-4ce5-b677-f3a0085940e9",
+      "name": "Specialty Drug Site-of-Administration Management",
+      "folder": "catalog/specialty_drug_site_of_administration_management",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 2,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "6ba9c279-7867-429f-8e75-b20794f985d7",
+      "name": "Specialty Pharmacy Coinsurance Design",
+      "folder": "catalog/specialty_pharmacy_coinsurance_design",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "b3c3e480-68ea-4028-87d6-d1e40fa09068",
+      "name": "Specialty Pharmacy Exclusive Network",
+      "folder": "catalog/specialty_pharmacy_exclusive_network",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "4133e1bc-eee9-43d6-83fb-5cd98547620a",
+      "name": "Split-Fill Specialty Program",
+      "folder": "catalog/split_fill_specialty_program",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    }
+  ]
+}

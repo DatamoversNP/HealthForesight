@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_0f9c652127ee2bc4c295a41f",
+  "policy_id": "afd40d1a-198a-4be8-b21e-758ce5a2fcbf",
+  "name": "Sinus Surgery Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "a04a04e5bb24b027",
+  "started_at": "2026-11-04T13:18:18.241788+00:00",
+  "finished_at": "2026-11-04T13:18:18.241789+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

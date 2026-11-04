@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_d4b4885a8e9740035f234009",
+  "policy_id": "10b61f7d-ace5-4946-853f-ce9654f484ca",
+  "name": "Bone Growth Stimulator Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "635ba83828881451",
+  "started_at": "2026-11-04T13:18:18.227232+00:00",
+  "finished_at": "2026-11-04T13:18:18.227234+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

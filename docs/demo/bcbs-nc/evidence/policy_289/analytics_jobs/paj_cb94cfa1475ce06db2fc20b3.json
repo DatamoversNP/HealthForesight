@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_cb94cfa1475ce06db2fc20b3",
+  "policy_id": "ef5789ab-9dd5-4950-b64d-3e70a98f4503",
+  "name": "Modifier and Code-Bundling Claim Edit Policy",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "4c7cd80e8f991944",
+  "started_at": "2026-11-04T13:18:18.236566+00:00",
+  "finished_at": "2026-11-04T13:18:18.236567+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_9aaad4d90e4378ee0c23fe89",
+  "policy_id": "9047ba6a-a6bf-4b98-a4dd-0c0d611d8cf9",
+  "name": "Chiropractic Visit Limit",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "9fad038491936a57",
+  "started_at": "2026-11-04T13:18:18.228545+00:00",
+  "finished_at": "2026-11-04T13:18:18.228547+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

@@ -1,7 +1,12 @@
 /**
- * Objectives Health – Strategic Objectives (A–F) and policy-level drill-down
+ * Objectives Health – Strategic Objectives (A–F) and policy-level drill-down.
+ *
+ * Stability: loads a single authoritative server snapshot
+ * (GET /dashboard/objectives-health). Same tenant + data + calculation_version
+ * ⇒ same results. No silent empty fallbacks, no N+1 forecast probes,
+ * no treating predicted-only metrics as observed health.
  */
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import {
   Box,
   Card,
@@ -11,9 +16,13 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
+  FormControl,
   Grid,
+  InputLabel,
   LinearProgress,
+  MenuItem,
   Paper,
+  Select,
   Table,
   TableBody,
   TableCell,
@@ -25,6 +34,12 @@ import {
   Button,
   Link,
 } from '@mui/material'
+import ListFilterBar from '../components/common/ListFilterBar'
+import {
+  formatPolicyTypeLabel,
+  policyTypesMatch,
+  uniquePolicyTypeOptions,
+} from '../lib/policyType'
 import {
   Flag as FlagIcon,
   CheckCircle as CheckIcon,
@@ -47,23 +62,18 @@ import { healthForesightColors } from '../theme/healthForesightTheme'
 
 type HealthStatus = 'on_track' | 'at_risk' | 'no_data'
 
-interface Policy {
-  id: string
-  name: string
-  policy_type: string
-}
-
 interface ObjectiveRow {
   policyId: string
   name: string
   policyType: string
   objectiveLabel: string
   status: HealthStatus
-  utilizationChangePct?: number
-  costImpactPmpm?: number
+  utilizationChangePct?: number | null
+  costImpactPmpm?: number | null
   observationCount?: number
   policyEffectiveDate?: string | null
   latestObservationPeriodEnd?: string | null
+  verdict?: string
 }
 
 type StrategicObjectiveKey = 'A' | 'B' | 'C' | 'D' | 'E' | 'F'
@@ -79,293 +89,130 @@ interface StrategicObjective {
   policyIds: string[]
 }
 
-const POLICY_TYPE_OBJECTIVES: Record<string, string> = {
-  PRIOR_AUTH: 'Utilization & cost management',
-  STEP_THERAPY: 'Appropriate therapy progression',
-  SITE_OF_CARE: 'Site-of-care optimization',
-  QUANTITY_LIMIT: 'Quantity and cost control',
-  UM: 'Utilization management',
-  default: 'Policy objective',
-}
-
-function getObjectiveLabel(policyType: string): string {
-  return POLICY_TYPE_OBJECTIVES[policyType?.toUpperCase()] ?? POLICY_TYPE_OBJECTIVES.default
-}
-
-function deriveStatus(perf: {
-  avg_utilization_change_pct?: number
-  avg_cost_impact?: number
-  observation_count?: number
-}): HealthStatus {
-  if (perf.observation_count === 0 || (perf.avg_utilization_change_pct == null && perf.avg_cost_impact == null)) {
-    return 'no_data'
-  }
-  const util = perf.avg_utilization_change_pct ?? 0
-  const cost = perf.avg_cost_impact ?? 0
-  const utilizationOk = util <= 0
-  const costOk = cost <= 0
-  if (utilizationOk && costOk) return 'on_track'
-  if (!utilizationOk && !costOk) return 'at_risk'
-  return util > 5 || cost > 50 ? 'at_risk' : 'on_track'
-}
-
-const STRATEGIC_OBJECTIVE_CONFIG: Record<
-  StrategicObjectiveKey,
-  { title: string; description: string; icon: React.ReactNode }
-> = {
-  A: {
-    title: 'Predictable Medical Cost Outcomes',
-    description: 'Policy-level forecasts with ranges and validity window',
-    icon: <ChartIcon />,
-  },
-  B: {
-    title: 'Early Detection of Backfire',
-    description: 'Early warning signals (provider resistance, patient deferral, site-of-care)',
-    icon: <EarlyWarningIcon />,
-  },
-  C: {
-    title: 'True Measurement of Policy Effectiveness',
-    description: 'Single impact verdict per policy (expected vs observed, attribution)',
-    icon: <ImpactIcon />,
-  },
-  D: {
-    title: 'Behavioral Transparency',
-    description: 'Provider and patient behavior profiles, time-based, linked to outcomes',
-    icon: <BehaviorIcon />,
-  },
-  E: {
-    title: 'Executive-Grade Governance',
-    description: 'Decision packets: what changed, why, what if no action, recommended action',
-    icon: <GovIcon />,
-  },
-  F: {
-    title: 'Employer & Regulator Confidence',
-    description: 'Auto-generated evidence packs (pre-policy, observed, mitigations, confidence)',
-    icon: <EvidenceIcon />,
-  },
+const STRATEGIC_ICONS: Record<StrategicObjectiveKey, React.ReactNode> = {
+  A: <ChartIcon />,
+  B: <EarlyWarningIcon />,
+  C: <ImpactIcon />,
+  D: <BehaviorIcon />,
+  E: <GovIcon />,
+  F: <EvidenceIcon />,
 }
 
 export default function ObjectivesHealthPage() {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [policies, setPolicies] = useState<Policy[]>([])
   const [objectives, setObjectives] = useState<ObjectiveRow[]>([])
   const [strategic, setStrategic] = useState<StrategicObjective[]>([])
   const [summary, setSummary] = useState({ total: 0, onTrack: 0, atRisk: 0, noData: 0 })
   const [objectivesMetCount, setObjectivesMetCount] = useState(0)
+  const [calculationVersion, setCalculationVersion] = useState<string | null>(null)
+  const [generatedAt, setGeneratedAt] = useState<string | null>(null)
   const [drillDownObjective, setDrillDownObjective] = useState<StrategicObjectiveKey | null>(null)
   const [reviewedToday, setReviewedToday] = useState(false)
+  const [objSearch, setObjSearch] = useState('')
+  const [objStatusFilter, setObjStatusFilter] = useState('')
+  const [objTypeFilter, setObjTypeFilter] = useState('')
+  const [coverage, setCoverage] = useState<any | null>(null)
+  const [readiness, setReadiness] = useState<any | null>(null)
+  const [coverageError, setCoverageError] = useState<string | null>(null)
+  const loadGen = useRef(0)
+
+  const typeOptions = useMemo(
+    () => uniquePolicyTypeOptions(objectives.map((o) => o.policyType)),
+    [objectives]
+  )
+  const filteredObjectives = useMemo(() => {
+    const q = objSearch.trim().toLowerCase()
+    return objectives.filter((row) => {
+      if (objStatusFilter && row.status !== objStatusFilter) return false
+      if (objTypeFilter && !policyTypesMatch(row.policyType, objTypeFilter)) return false
+      if (!q) return true
+      const hay = `${row.name} ${row.objectiveLabel} ${row.policyType}`.toLowerCase()
+      return hay.includes(q)
+    })
+  }, [objectives, objSearch, objStatusFilter, objTypeFilter])
+
+  const applySnapshot = (snap: any) => {
+    const rows: ObjectiveRow[] = (snap.policy_rows || []).map((r: any) => ({
+      policyId: r.policy_id,
+      name: r.name,
+      policyType: r.policy_type,
+      objectiveLabel: r.objective_label,
+      status: (r.status || 'no_data') as HealthStatus,
+      utilizationChangePct: r.utilization_change_pct,
+      costImpactPmpm: r.cost_impact_pmpm,
+      observationCount: r.observation_count,
+      policyEffectiveDate: r.policy_effective_date ?? null,
+      latestObservationPeriodEnd: r.latest_observation_period_end ?? null,
+      verdict: r.verdict,
+    }))
+    setObjectives(rows)
+    const s = snap.summary || {}
+    setSummary({
+      total: s.total ?? rows.length,
+      onTrack: s.on_track ?? 0,
+      atRisk: s.at_risk ?? 0,
+      noData: s.no_data ?? 0,
+    })
+    setStrategic(
+      (snap.strategic || []).map((st: any) => ({
+        key: st.key as StrategicObjectiveKey,
+        title: st.title,
+        description: st.description,
+        icon: STRATEGIC_ICONS[st.key as StrategicObjectiveKey] || <FlagIcon />,
+        count: st.count,
+        total: st.total,
+        whyMet: st.why_met,
+        policyIds: st.policy_ids || [],
+      }))
+    )
+    setObjectivesMetCount(snap.objectives_met_count ?? 0)
+    setCalculationVersion(snap.calculation_version || null)
+    setGeneratedAt(snap.generated_at || null)
+  }
 
   const loadData = async () => {
+    const gen = ++loadGen.current
     setLoading(true)
     setError(null)
+    setCoverageError(null)
     try {
-      const [policiesRes, performanceRes, observationsRes, decisionsRes, verdictsRes] = await Promise.all([
-        apiClient.getPolicies().catch(() => null),
-        apiClient.getPolicyPerformance(100).catch(() => []),
-        // latest_only + limit avoids ~2MB full observation dumps on this dashboard
-        apiClient.listObservations({ latest_only: true, limit: 100 }).catch(() => []),
-        apiClient.getDecisions().catch(() => []),
-        apiClient.getPolicyVerdicts().catch(() => ({ items: [] as any[], count: 0 })),
-      ])
-
-      const rawPolicies = Array.isArray(policiesRes) ? policiesRes : (policiesRes as any)?.items ?? []
-      const policiesList: Policy[] = rawPolicies.map((p: any) => ({
-        id: p.id ?? p.policy_id,
-        name: p.name ?? p.policy_name ?? 'Unnamed',
-        policy_type: p.policy_type ?? 'UM',
-      }))
-      const performanceList = Array.isArray(performanceRes) ? performanceRes : []
-      const observationsList = Array.isArray(observationsRes) ? observationsRes : (observationsRes as any)?.items ?? []
-      const decisionsList = Array.isArray(decisionsRes) ? decisionsRes : (decisionsRes as any)?.items ?? []
-      const verdictItems = verdictsRes?.items ?? []
-
-      setPolicies(policiesList)
-      const totalPolicies = policiesList.length
-
-      const perfByPolicyId: Record<string, any> = {}
-      performanceList.forEach((p: any) => {
-        const id = p.policy_id ?? p.id
-        if (id) perfByPolicyId[id] = p
-      })
-      const verdictByPolicyId: Record<string, { verdict: string; cost_impact_pct?: number; savings_or_cost_impact_pmpm?: number }> = {}
-      verdictItems.forEach((v: any) => {
-        const id = v.policy_id
-        if (id) verdictByPolicyId[id] = { verdict: v.verdict, cost_impact_pct: v.cost_impact_pct, savings_or_cost_impact_pmpm: v.savings_or_cost_impact_pmpm }
-      })
-
-      const verdictToStatus = (verdict: string): HealthStatus => {
-        if (verdict === 'ON_TRACK') return 'on_track'
-        if (verdict === 'AT_RISK' || verdict === 'BACKFIRE') return 'at_risk'
-        return 'no_data'
-      }
-
-      const rows: ObjectiveRow[] = policiesList.map((p) => {
-        const id = p.id
-        const verdictRow = verdictByPolicyId[id]
-        const perf = perfByPolicyId[id]
-        const status = verdictRow ? verdictToStatus(verdictRow.verdict) : (perf ? deriveStatus(perf) : 'no_data')
-        return {
-          policyId: id,
-          name: p.name,
-          policyType: p.policy_type,
-          objectiveLabel: getObjectiveLabel(p.policy_type),
-          status,
-          utilizationChangePct: perf?.avg_utilization_change_pct,
-          costImpactPmpm: verdictRow?.savings_or_cost_impact_pmpm ?? perf?.avg_cost_impact,
-          observationCount: perf?.observations_count ?? perf?.observation_count,
-          policyEffectiveDate: perf?.policy_effective_date ?? null,
-          latestObservationPeriodEnd: perf?.latest_observation_period_end ?? null,
-        }
-      })
-      setObjectives(rows)
-      setSummary({
-        total: rows.length,
-        onTrack: rows.filter((r) => r.status === 'on_track').length,
-        atRisk: rows.filter((r) => r.status === 'at_risk').length,
-        noData: rows.filter((r) => r.status === 'no_data').length,
-      })
-
-      const policyIdsWithObservation = new Set<string>()
-      const policyIdsWithBackfireRisk = new Set<string>()
-      const policyIdsWithBehaviorProfiles = new Set<string>()
-      verdictItems.forEach((v: any) => {
-        const pid = v.policy_id
-        if (!pid) return
-        if (v.verdict !== 'UNKNOWN') policyIdsWithObservation.add(pid)
-        if (v.verdict === 'BACKFIRE') policyIdsWithBackfireRisk.add(pid)
-      })
-      observationsList.forEach((obs: any) => {
-        const pid = obs.policy_id ?? obs.policyId
-        if (!pid) return
-        policyIdsWithObservation.add(pid)
-        const beh = obs.behavioral_explanation ?? obs.metrics?.behavioral_explanation ?? {}
-        if (beh && typeof beh === 'object') {
-          if (beh.provider_response || beh.patient_response || beh.provider_archetype_shares || beh.patient_response_shares) {
-            policyIdsWithBehaviorProfiles.add(pid)
-          }
-        }
-      })
-
-      const policyIdsWithDecision = new Set<string>()
-      decisionsList.forEach((d: any) => {
-        const pid = d.policy_id ?? d.policyId
-        if (pid) policyIdsWithDecision.add(pid)
-      })
-
-      // Only probe predicted-impact for policies that already have signal (avoids N+1 on full catalog)
-      const candidatesForForecast = policiesList
-        .filter((p) => policyIdsWithObservation.has(p.id) || verdictByPolicyId[p.id] || perfByPolicyId[p.id])
-        .slice(0, 40)
-      const policyIdsWithForecast: string[] = []
-      const forecastChunk = 8
-      for (let i = 0; i < candidatesForForecast.length; i += forecastChunk) {
-        const chunk = candidatesForForecast.slice(i, i + forecastChunk)
-        await Promise.all(
-          chunk.map(async (p) => {
-            try {
-              const impact = await apiClient.getPolicyPredictedImpact(p.id)
-              if (impact && impact.metrics) policyIdsWithForecast.push(p.id)
-            } catch {
-              // no forecast
-            }
-          })
-        )
-      }
-      const forecastSet = new Set(policyIdsWithForecast)
-
-      const policyIdsEvidenceReady = [...policyIdsWithObservation].filter((pid) => forecastSet.has(pid))
-
-      const strategicData: StrategicObjective[] = [
-        {
-          key: 'A',
-          ...STRATEGIC_OBJECTIVE_CONFIG.A,
-          count: policyIdsWithForecast.length,
-          total: totalPolicies,
-          whyMet:
-            totalPolicies === 0
-              ? 'No policies in portfolio.'
-              : `${policyIdsWithForecast.length} of ${totalPolicies} policies have forecasts; ${totalPolicies - policyIdsWithForecast.length} policies have no forecast yet. Run predicted impact analysis for the remaining policies.`,
-          policyIds: policyIdsWithForecast,
-        },
-        {
-          key: 'B',
-          ...STRATEGIC_OBJECTIVE_CONFIG.B,
-          count: policyIdsWithBackfireRisk.size,
-          total: totalPolicies,
-          whyMet:
-            totalPolicies === 0
-              ? 'No policies in portfolio.'
-              : `${policyIdsWithBackfireRisk.size} of ${totalPolicies} policies have been flagged as backfire risk (aligned with Policy Verdicts). Review and act on these policies.`,
-          policyIds: [...policyIdsWithBackfireRisk],
-        },
-        {
-          key: 'C',
-          ...STRATEGIC_OBJECTIVE_CONFIG.C,
-          count: policyIdsWithObservation.size,
-          total: totalPolicies,
-          whyMet:
-            totalPolicies === 0
-              ? 'No policies in portfolio.'
-              : policyIdsWithObservation.size === totalPolicies
-                ? `All ${totalPolicies} policies have an impact verdict.`
-                : `${policyIdsWithObservation.size} of ${totalPolicies} policies have an impact verdict.`,
-          policyIds: [...policyIdsWithObservation],
-        },
-        {
-          key: 'D',
-          ...STRATEGIC_OBJECTIVE_CONFIG.D,
-          count: policyIdsWithBehaviorProfiles.size,
-          total: totalPolicies,
-          whyMet:
-            totalPolicies === 0
-              ? 'No policies in portfolio.'
-              : policyIdsWithBehaviorProfiles.size === totalPolicies
-                ? `All ${totalPolicies} policies have behavior profiles.`
-                : `${policyIdsWithBehaviorProfiles.size} of ${totalPolicies} policies have behavior profiles.`,
-          policyIds: [...policyIdsWithBehaviorProfiles],
-        },
-        {
-          key: 'E',
-          ...STRATEGIC_OBJECTIVE_CONFIG.E,
-          count: policyIdsWithDecision.size,
-          total: totalPolicies,
-          whyMet:
-            totalPolicies === 0
-              ? 'No policies in portfolio.'
-              : policyIdsWithDecision.size === totalPolicies
-                ? `All ${totalPolicies} policies have a decision packet.`
-                : `${policyIdsWithDecision.size} of ${totalPolicies} policies have a decision packet.`,
-          policyIds: [...policyIdsWithDecision],
-        },
-        {
-          key: 'F',
-          ...STRATEGIC_OBJECTIVE_CONFIG.F,
-          count: policyIdsEvidenceReady.length,
-          total: totalPolicies,
-          whyMet:
-            totalPolicies === 0
-              ? 'No policies in portfolio.'
-              : policyIdsEvidenceReady.length === totalPolicies
-                ? `All ${totalPolicies} policies have evidence-pack-ready data.`
-                : `${policyIdsEvidenceReady.length} of ${totalPolicies} policies have evidence-pack-ready data.`,
-          policyIds: policyIdsEvidenceReady,
-        },
-      ]
-      setStrategic(strategicData)
-      setObjectivesMetCount(strategicData.filter((s) => s.count > 0).length)
+      const snap = await apiClient.getObjectivesHealth()
+      if (gen !== loadGen.current) return // stale response — discard
+      applySnapshot(snap)
     } catch (err: any) {
-      setError(err.detail || err.message || 'Failed to load objectives')
-      setObjectives([])
-      setStrategic([])
+      if (gen !== loadGen.current) return
+      setError(err.detail || err.message || 'Failed to load objectives health')
+      // Do NOT clear prior good data on refresh failure — avoid flickering invented empty state
+      if (objectives.length === 0) {
+        setStrategic([])
+      }
     } finally {
-      setLoading(false)
+      if (gen === loadGen.current) setLoading(false)
+    }
+
+    // Coverage / readiness — separate; failures must not invent placeholder zeros as "complete"
+    try {
+      const [manifest, ready] = await Promise.all([
+        apiClient.getEnterpriseCoverageManifest(),
+        apiClient.getEnterpriseAnalyticalReadiness(),
+      ])
+      if (gen !== loadGen.current) return
+      setCoverage(manifest)
+      setReadiness(ready)
+    } catch (err: any) {
+      if (gen !== loadGen.current) return
+      setCoverageError(err.detail || err.message || 'Coverage/readiness unavailable')
     }
   }
 
   useEffect(() => {
     loadData()
+    return () => {
+      loadGen.current += 1 // invalidate in-flight on unmount
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const StatusChip = ({ status }: { status: HealthStatus }) => {
@@ -392,192 +239,343 @@ export default function ObjectivesHealthPage() {
 
   return (
     <Box>
-      {/* Strategic Objectives Health */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="h5" fontWeight={600} color={healthForesightColors.neutral.dark} gutterBottom>
           Strategic Objectives Health
         </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-          Track how objectives A–F are met across the policy portfolio. Drill down to see which policies meet each objective.
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+          Track how objectives A–F are met across the policy portfolio. Drill down to see which policies meet each
+          objective. Status uses the same verdict engine as Policy Verdicts.
         </Typography>
-        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: 2 }}>
+        <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', alignItems: 'center', mb: 2 }}>
           <Chip
             label={`${objectivesMetCount} of 6 objectives met`}
             color={objectivesMetCount === 6 ? 'success' : 'default'}
-            size="medium"
+            size="small"
           />
-          <Chip label={`${policies.length} policies in portfolio`} variant="outlined" size="medium" />
+          {calculationVersion && (
+            <Chip size="small" variant="outlined" label={`Calc: ${calculationVersion}`} />
+          )}
+          {generatedAt && (
+            <Typography variant="caption" color="text.secondary">
+              Snapshot: {new Date(generatedAt).toLocaleString()}
+            </Typography>
+          )}
+          <Button
+            size="small"
+            startIcon={loading ? <CircularProgress size={14} /> : <RefreshIcon />}
+            onClick={() => loadData()}
+            disabled={loading}
+          >
+            Refresh
+          </Button>
         </Box>
       </Box>
 
-      {/* Make objectives monitoring a daily habit */}
-      <Paper sx={{ p: 2, mb: 3, bgcolor: '#f0fdf4', border: '1px solid #bbf7d0' }}>
-        <Typography variant="subtitle2" fontWeight={600} sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-          <CalendarIcon fontSize="small" /> Make objectives monitoring a daily habit
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }} onClose={() => setError(null)}>
+          {error}. Prior snapshot kept when available — results are not replaced with empty/synthetic data.
+        </Alert>
+      )}
+
+      <Paper variant="outlined" sx={{ p: 2, mb: 3 }}>
+        <Typography variant="subtitle1" fontWeight={600} gutterBottom>
+          Policy Intelligence Coverage
         </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
-          Use this dashboard every day to spot gaps and drive follow-up. Focus on objectives that are &quot;Not started&quot; or have low policy counts; drill down to see which policies need attention and assign owners.
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+          Catalog inventory and analytical readiness are independent. Numbers come from the coverage
+          manifest and persisted analysis jobs — never UI placeholders.
         </Typography>
-        <Box component="ul" sx={{ m: 0, pl: 2.5, mb: 1.5, '& li': { mb: 0.5 } }}>
-          <li>Open this page daily (e.g. start of day or standup).</li>
-          <li>Note which objectives need attention and drill into &quot;View by policy&quot;.</li>
-          <li>Export or screenshot the summary for records or share with stakeholders.</li>
-          <li>Optionally set a daily digest reminder so you never miss a review.</li>
+        {coverageError && (
+          <Alert severity="warning" sx={{ mb: 1 }}>
+            {coverageError}
+          </Alert>
+        )}
+        {coverage && (
+          <Alert severity={coverage.complete ? 'success' : 'info'} sx={{ mb: 2 }}>
+            Inventory complete: {coverage.complete ? 'Yes' : 'No'}. {coverage.reason_not_complete}
+            {coverage.catalog_views && (
+              <>
+                {' '}
+                Views: {coverage.catalog_views.demonstration_policies_default || 'Representative Payer Policies'}{' '}
+                vs {coverage.catalog_views.authoritative_policies || 'Authoritative public CMS/NCCI'}.
+              </>
+            )}
+          </Alert>
+        )}
+        <TableContainer>
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell>Policy family</TableCell>
+                <TableCell>Class</TableCell>
+                <TableCell align="right">Catalog rows</TableCell>
+                <TableCell>Inventory status</TableCell>
+                <TableCell align="right">Baseline ready</TableCell>
+                <TableCell align="right">Forecast ready</TableCell>
+                <TableCell align="right">Observed</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {(coverage?.families || []).map((f: any) => (
+                <TableRow key={f.family_id}>
+                  <TableCell>{f.label}</TableCell>
+                  <TableCell>
+                    <Typography variant="caption">
+                      {f.catalog_class === 'AUTHORITATIVE_PUBLIC'
+                        ? 'Authoritative'
+                        : f.catalog_class === 'DEMO_SYNTHETIC'
+                          ? 'Demonstration'
+                          : f.catalog_class || '—'}
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="right">{f.catalog_rows_classified ?? '—'}</TableCell>
+                  <TableCell>
+                    <Typography variant="caption">{f.inventory_status}</Typography>
+                  </TableCell>
+                  <TableCell align="right">—</TableCell>
+                  <TableCell align="right">—</TableCell>
+                  <TableCell align="right">—</TableCell>
+                </TableRow>
+              ))}
+              {!coverage && !coverageError && (
+                <TableRow>
+                  <TableCell colSpan={7}>Loading coverage manifest…</TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        {readiness?.totals && (
+          <Typography variant="body2" sx={{ mt: 1.5 }}>
+            Portfolio analytical readiness (persisted): baseline {readiness.totals.baseline_ready} ·
+            forecast {readiness.totals.forecast_ready} · observed {readiness.totals.observation_ready} ·
+            impact assessable {readiness.totals.impact_assessable} / {readiness.totals.inventory} catalog
+          </Typography>
+        )}
+      </Paper>
+
+      <Paper variant="outlined" sx={{ p: 2, mb: 3, bgcolor: 'action.hover' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+          <CalendarIcon fontSize="small" />
+          <Typography variant="subtitle2" fontWeight={600}>
+            Make objectives monitoring a daily habit
+          </Typography>
         </Box>
-        <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+          Use this dashboard every day to spot gaps and drive follow-up. Focus on objectives that are &quot;Not
+          started&quot; or have low policy counts; drill down to see which policies need attention and assign
+          owners.
+        </Typography>
+        <ul style={{ margin: 0, paddingLeft: 20 }}>
+          <li>
+            <Typography variant="body2">Note which objectives need attention and drill into &quot;View by policy&quot;.</Typography>
+          </li>
+          <li>
+            <Typography variant="body2">
+              Align follow-ups with Policy Verdicts — both pages share the same observation verdict source.
+            </Typography>
+          </li>
+        </ul>
+        <Box sx={{ mt: 1.5, display: 'flex', gap: 1, flexWrap: 'wrap' }}>
           <Button
             size="small"
-            variant="contained"
-            color="success"
+            variant={reviewedToday ? 'outlined' : 'contained'}
             onClick={() => setReviewedToday(true)}
-            disabled={reviewedToday}
           >
-            {reviewedToday ? 'Marked as reviewed today' : 'Mark as reviewed today'}
+            {reviewedToday ? 'Reviewed today' : 'Mark reviewed today'}
           </Button>
-          <Button size="small" variant="outlined" startIcon={<ExportIcon />} onClick={() => alert('Export summary (CSV) – coming soon')}>
-            Export summary (CSV)
-          </Button>
-          <Button size="small" variant="outlined" startIcon={<CalendarIcon />} onClick={() => alert('Set daily reminder – coming soon')}>
-            Set daily reminder
+          <Button size="small" startIcon={<ExportIcon />} onClick={() => navigate('/policy-verdicts')}>
+            Open Policy Verdicts
           </Button>
         </Box>
       </Paper>
 
-      {/* Six objective cards */}
-      <Grid container spacing={2} sx={{ mb: 4 }}>
-        {strategic.map((obj) => (
-          <Grid item xs={12} md={6} lg={4} key={obj.key}>
-            <Card variant="outlined" sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1, mb: 1 }}>
-                  <Box sx={{ color: 'primary.main' }}>{obj.icon}</Box>
-                  <Box>
-                    <Typography variant="subtitle2" fontWeight={600}>
-                      Objective {obj.key}: {obj.title}
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      {obj.description}
-                    </Typography>
-                  </Box>
-                </Box>
-                <Chip
-                  size="small"
-                  label={obj.count >= obj.total && obj.total > 0 ? 'Met' : obj.count > 0 ? 'Partial' : 'Not started'}
-                  color={obj.count >= obj.total && obj.total > 0 ? 'success' : obj.count > 0 ? 'default' : 'default'}
-                  sx={{ mb: 1 }}
-                />
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                  {obj.whyMet}
-                </Typography>
-                <Typography variant="body2" fontWeight={500} sx={{ mb: 0.5 }}>
-                  {obj.count} of {obj.total} policies
-                </Typography>
-                <LinearProgress
-                  variant="determinate"
-                  value={obj.total ? Math.round((obj.count / obj.total) * 100) : 0}
-                  sx={{ height: 6, borderRadius: 1, mb: 1.5 }}
-                />
-                <Button
-                  size="small"
-                  startIcon={<ViewPolicyIcon />}
-                  onClick={() => setDrillDownObjective(obj.key)}
-                  fullWidth
-                  variant="outlined"
-                >
-                  View by policy
-                </Button>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
+      <Grid container spacing={2} sx={{ mb: 2 }}>
+        <Grid item xs={6} sm={3}>
+          <Paper variant="outlined" sx={{ p: 1.5, textAlign: 'center' }}>
+            <Typography variant="h5" fontWeight={700}>
+              {summary.total}
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              Policies
+            </Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={6} sm={3}>
+          <Paper variant="outlined" sx={{ p: 1.5, textAlign: 'center' }}>
+            <Typography variant="h5" fontWeight={700} color="success.main">
+              {summary.onTrack}
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              On track
+            </Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={6} sm={3}>
+          <Paper variant="outlined" sx={{ p: 1.5, textAlign: 'center' }}>
+            <Typography variant="h5" fontWeight={700} color="warning.main">
+              {summary.atRisk}
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              At risk
+            </Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={6} sm={3}>
+          <Paper variant="outlined" sx={{ p: 1.5, textAlign: 'center' }}>
+            <Typography variant="h5" fontWeight={700} color="text.secondary">
+              {summary.noData}
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              No data
+            </Typography>
+          </Paper>
+        </Grid>
       </Grid>
 
-      {error && (
-        <Alert severity="error" onClose={() => setError(null)} sx={{ mb: 2 }}>
-          {error}
-        </Alert>
-      )}
+      <Grid container spacing={2} sx={{ mb: 3 }}>
+        {strategic.map((s) => {
+          const pct = s.total > 0 ? Math.round((s.count / s.total) * 100) : 0
+          return (
+            <Grid item xs={12} sm={6} md={4} key={s.key}>
+              <Card variant="outlined" sx={{ height: '100%' }}>
+                <CardContent>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                    {s.icon}
+                    <Typography variant="subtitle1" fontWeight={600}>
+                      {s.key}. {s.title}
+                    </Typography>
+                  </Box>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 1, minHeight: 40 }}>
+                    {s.description}
+                  </Typography>
+                  <Typography variant="body2" fontWeight={600} sx={{ mb: 0.5 }}>
+                    {s.count} / {s.total} policies
+                  </Typography>
+                  <LinearProgress
+                    variant="determinate"
+                    value={pct}
+                    sx={{ mb: 1, height: 8, borderRadius: 1 }}
+                    color={s.count > 0 ? 'primary' : 'inherit'}
+                  />
+                  <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
+                    {s.whyMet}
+                  </Typography>
+                  <Button size="small" onClick={() => setDrillDownObjective(s.key)}>
+                    View by policy
+                  </Button>
+                </CardContent>
+              </Card>
+            </Grid>
+          )
+        })}
+      </Grid>
 
-      {/* Policy-level objectives table */}
-      <Typography variant="h6" fontWeight={600} sx={{ mb: 1.5 }}>
+      <Typography variant="h6" fontWeight={600} sx={{ mb: 1 }}>
         Policy-level objectives
       </Typography>
-      <TableContainer component={Paper} variant="outlined" sx={{ borderColor: '#e2e8f0', borderRadius: 1, mb: 2 }}>
+      <ListFilterBar
+        search={objSearch}
+        onSearchChange={setObjSearch}
+        searchPlaceholder="Name, objective, type…"
+        filtered={filteredObjectives.length}
+        total={objectives.length}
+        trailing={
+          <>
+            <FormControl size="small" sx={{ minWidth: 140 }}>
+              <InputLabel>Status</InputLabel>
+              <Select
+                label="Status"
+                value={objStatusFilter}
+                onChange={(e) => setObjStatusFilter(e.target.value)}
+              >
+                <MenuItem value="">All</MenuItem>
+                <MenuItem value="on_track">On track</MenuItem>
+                <MenuItem value="at_risk">At risk</MenuItem>
+                <MenuItem value="no_data">No data</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl size="small" sx={{ minWidth: 160 }}>
+              <InputLabel>Type</InputLabel>
+              <Select
+                label="Type"
+                value={objTypeFilter}
+                onChange={(e) => setObjTypeFilter(e.target.value)}
+              >
+                <MenuItem value="">All</MenuItem>
+                {typeOptions.map((t) => (
+                  <MenuItem key={t} value={t}>
+                    {formatPolicyTypeLabel(t)}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </>
+        }
+      />
+      <TableContainer component={Paper} variant="outlined">
         <Table size="small">
           <TableHead>
-            <TableRow sx={{ bgcolor: '#f1f5f9' }}>
-              <TableCell sx={{ fontWeight: 600 }}>Objective / Policy</TableCell>
-              <TableCell sx={{ fontWeight: 600 }}>Effective</TableCell>
-              <TableCell sx={{ fontWeight: 600 }}>Through</TableCell>
-              <TableCell sx={{ fontWeight: 600 }}>Type</TableCell>
-              <TableCell sx={{ fontWeight: 600 }}>Status</TableCell>
-              <TableCell align="right" sx={{ fontWeight: 600 }}>Util change %</TableCell>
-              <TableCell align="right" sx={{ fontWeight: 600 }}>Cost impact (PMPM)</TableCell>
-              <TableCell sx={{ fontWeight: 600 }}>Actions</TableCell>
+            <TableRow>
+              <TableCell>Policy</TableCell>
+              <TableCell>Objective</TableCell>
+              <TableCell>Type</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell align="right">Util Δ%</TableCell>
+              <TableCell align="right">Cost Δ PMPM</TableCell>
+              <TableCell>Obs end</TableCell>
+              <TableCell align="right">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {objectives.length === 0 ? (
+            {filteredObjectives.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={8} align="center" sx={{ py: 4 }}>
-                  <Typography color="text.secondary">
-                    No policies found. Add policies in the Policies section, then run baselines and observations to see objective health.
-                  </Typography>
-                  <Button sx={{ mt: 2 }} variant="outlined" onClick={() => navigate('/policies')}>
-                    Go to Policies
-                  </Button>
+                <TableCell colSpan={8}>
+                  {error && objectives.length === 0
+                    ? 'Objectives Health could not be loaded. Empty counts below are not a verdict — fix the API error and refresh.'
+                    : objectives.length === 0
+                      ? 'No policies found. Add policies, then run baselines and observations.'
+                      : 'No rows match the current filters.'}
                 </TableCell>
               </TableRow>
             ) : (
-              objectives.map((row) => (
+              filteredObjectives.map((row) => (
                 <TableRow key={row.policyId} hover>
                   <TableCell>
-                    <Typography fontWeight={500}>{row.name}</Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      {row.objectiveLabel}
+                    <Typography variant="body2" fontWeight={600}>
+                      {row.name}
                     </Typography>
                   </TableCell>
-                  <TableCell>
-                    {row.policyEffectiveDate
-                      ? new Date(row.policyEffectiveDate.split('T')[0]).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-                      : '—'}
-                  </TableCell>
-                  <TableCell>
-                    {row.latestObservationPeriodEnd
-                      ? new Date(row.latestObservationPeriodEnd.split('T')[0]).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-                      : '—'}
-                  </TableCell>
-                  <TableCell>
-                    <Chip label={row.policyType.replace(/_/g, ' ')} size="small" variant="outlined" />
-                  </TableCell>
+                  <TableCell>{row.objectiveLabel}</TableCell>
+                  <TableCell>{formatPolicyTypeLabel(row.policyType)}</TableCell>
                   <TableCell>
                     <StatusChip status={row.status} />
                   </TableCell>
                   <TableCell align="right">
-                    {row.utilizationChangePct != null ? `${row.utilizationChangePct.toFixed(1)}%` : '—'}
+                    {row.utilizationChangePct == null ? '—' : Number(row.utilizationChangePct).toFixed(1)}
                   </TableCell>
                   <TableCell align="right">
-                    {row.costImpactPmpm != null ? `$${row.costImpactPmpm.toFixed(2)}` : '—'}
+                    {row.costImpactPmpm == null ? '—' : Number(row.costImpactPmpm).toFixed(2)}
                   </TableCell>
-                  <TableCell>
+                  <TableCell>{row.latestObservationPeriodEnd || '—'}</TableCell>
+                  <TableCell align="right">
+                    <Button
+                      size="small"
+                      startIcon={<ViewPolicyIcon />}
+                      onClick={() => navigate(`/policies/${row.policyId}`)}
+                    >
+                      Workspace
+                    </Button>
                     <Link
                       component="button"
                       variant="body2"
-                      onClick={() => navigate('/observation-analysis', { state: { policyId: row.policyId } })}
-                      sx={{ mr: 1 }}
+                      sx={{ ml: 1 }}
+                      onClick={() =>
+                        navigate('/observation-analysis', { state: { policyId: row.policyId } })
+                      }
                     >
                       Observation
-                    </Link>
-                    <Link
-                      component="button"
-                      variant="body2"
-                      onClick={() => navigate('/baseline-analysis', { state: { policyId: row.policyId } })}
-                      sx={{ mr: 1 }}
-                    >
-                      Baseline
-                    </Link>
-                    <Link component="button" variant="body2" onClick={() => navigate('/predicted-impacts')}>
-                      Predicted
                     </Link>
                   </TableCell>
                 </TableRow>
@@ -587,63 +585,68 @@ export default function ObjectivesHealthPage() {
         </Table>
       </TableContainer>
 
-      <Button startIcon={<RefreshIcon />} onClick={loadData} disabled={loading} size="small">
-        Refresh
-      </Button>
+      <Box sx={{ mt: 2 }}>
+        <Link component="button" variant="body2" onClick={() => navigate('/predicted-impacts')}>
+          View predicted impacts portfolio →
+        </Link>
+      </Box>
 
-      {/* Drill-down: View by policy dialog */}
-      <Dialog open={!!drillDownObjective} onClose={() => setDrillDownObjective(null)} maxWidth="sm" fullWidth>
-        <DialogTitle>
-          {selectedStrategic ? `Objective ${selectedStrategic.key}: ${selectedStrategic.title} — by policy` : ''}
-        </DialogTitle>
-        <DialogContent>
-          {selectedStrategic && (
-            <>
+      <Dialog
+        open={!!selectedStrategic}
+        onClose={() => setDrillDownObjective(null)}
+        maxWidth="md"
+        fullWidth
+      >
+        {selectedStrategic && (
+          <>
+            <DialogTitle>
+              {selectedStrategic.key}. {selectedStrategic.title}
+            </DialogTitle>
+            <DialogContent>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
                 Policies that meet this objective: {selectedStrategic.count} of {selectedStrategic.total}
               </Typography>
-              <TableContainer>
-                <Table size="small">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Policy</TableCell>
-                      <TableCell>Meets objective</TableCell>
-                      <TableCell align="right">Action</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {policies.map((p) => {
-                      const meets = selectedStrategic.policyIds.includes(p.id)
-                      return (
-                        <TableRow key={p.id}>
-                          <TableCell>{p.name}</TableCell>
-                          <TableCell>
-                            <Chip size="small" label={meets ? 'Yes' : 'No'} color={meets ? 'success' : 'default'} />
-                          </TableCell>
-                          <TableCell align="right">
-                            <Button
-                              size="small"
-                              onClick={() => {
-                                setDrillDownObjective(null)
-                                if (selectedStrategic.key === 'A') navigate('/predicted-impacts')
-                                else if (selectedStrategic.key === 'B' || selectedStrategic.key === 'C' || selectedStrategic.key === 'D')
-                                  navigate('/observation-analysis', { state: { policyId: p.id } })
-                                else if (selectedStrategic.key === 'E') navigate('/decisions')
-                                else navigate('/observation-analysis', { state: { policyId: p.id } })
-                              }}
-                            >
-                              Open
-                            </Button>
-                          </TableCell>
-                        </TableRow>
-                      )
-                    })}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </>
-          )}
-        </DialogContent>
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Policy</TableCell>
+                    <TableCell>Status</TableCell>
+                    <TableCell>Meets objective</TableCell>
+                    <TableCell />
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {objectives.map((p) => {
+                    const meets = selectedStrategic.policyIds.includes(p.policyId)
+                    return (
+                      <TableRow key={p.policyId} sx={{ opacity: meets ? 1 : 0.5 }}>
+                        <TableCell>{p.name}</TableCell>
+                        <TableCell>
+                          <StatusChip status={p.status} />
+                        </TableCell>
+                        <TableCell>{meets ? 'Yes' : 'No'}</TableCell>
+                        <TableCell>
+                          <Button
+                            size="small"
+                            onClick={() => {
+                              if (selectedStrategic.key === 'A') navigate('/predicted-impacts')
+                              else
+                                navigate('/observation-analysis', {
+                                  state: { policyId: p.policyId },
+                                })
+                            }}
+                          >
+                            Open
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    )
+                  })}
+                </TableBody>
+              </Table>
+            </DialogContent>
+          </>
+        )}
       </Dialog>
     </Box>
   )

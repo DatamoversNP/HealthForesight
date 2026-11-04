@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_8ee6ef1a655c032e9d6cd798",
+  "policy_id": "1170dd01-14a9-44fe-a708-32f7ad20e7d4",
+  "name": "Out-of-Network Inpatient Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "2da6319a22682ae6",
+  "started_at": "2026-11-04T13:18:18.239089+00:00",
+  "finished_at": "2026-11-04T13:18:18.239091+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

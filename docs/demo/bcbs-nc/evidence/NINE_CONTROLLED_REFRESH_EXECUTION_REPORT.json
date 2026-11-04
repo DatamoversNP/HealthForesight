@@ -1,0 +1,533 @@
+{
+  "generated_at": "2026-11-04T06:13:09.292620+00:00",
+  "claims_mapping_note": "Lumbar CPT 72148/72149/72158 exist only in NYC/DFW/BOS claim markets; market=NC has other MRI codes (e.g. 72141/72142) but zero lumbar rows. MRI claim markets restored to NYC/DFW for cohort match; states remain NC.",
+  "preserve_frozen_kas": true,
+  "results": [
+    {
+      "key": "mri",
+      "policy_id": "d403f101-08dd-45c9-ab83-d42e37c62018",
+      "ka_frozen": true,
+      "notes": "Lumbar CPTs absent from market=NC; metros hold codes. Jurisdiction NC via states.",
+      "scope_align": {
+        "http": 200,
+        "before": {
+          "markets": [
+            "NC"
+          ],
+          "states": [
+            "NC"
+          ]
+        },
+        "after": {
+          "markets": [
+            "NYC",
+            "DFW"
+          ],
+          "states": [
+            "NC"
+          ]
+        },
+        "error": null
+      },
+      "baseline": {
+        "http": 201,
+        "elapsed_s": 13.6,
+        "baseline_id": "9f996021-60b9-4252-8e84-cacac048cca8",
+        "window": [
+          "2024-12-31T00:00:00",
+          "2025-12-31T00:00:00"
+        ],
+        "total_claims": 6722,
+        "unique_members": 2382,
+        "util": 217.07679390299037
+      },
+      "predicted": {
+        "http": 200,
+        "elapsed_s": 38.4,
+        "keys": [
+          "policy_id",
+          "predicted_at",
+          "metrics",
+          "substitution_effects",
+          "provider_response",
+          "patient_response",
+          "baseline_reference",
+          "model_versions",
+          "warnings",
+          "limitations",
+          "confidence_intervals",
+          "ramp_up_projections"
+        ],
+        "has_impact": true
+      },
+      "observation": {
+        "skipped": true,
+        "reason": "No IMPACT analysis or predicted skipped \u2014 existing obs retained",
+        "latest_impact_analysis_id": null
+      },
+      "status": "REFRESHED",
+      "ka_guard": "FROZEN_KA_PRESERVED"
+    },
+    {
+      "key": "mppr",
+      "policy_id": "d0eeb370-df14-4478-8755-dad6c3a35a47",
+      "ka_frozen": true,
+      "notes": "Preserve mechanical KA; empirical predicted skipped (no CPT levers).",
+      "scope_align": {
+        "http": 200,
+        "before": {
+          "markets": [
+            "NC"
+          ],
+          "states": [
+            "NC"
+          ]
+        },
+        "after": {
+          "markets": [
+            "NC"
+          ],
+          "states": [
+            "NC"
+          ]
+        },
+        "error": null
+      },
+      "baseline": {
+        "http": "in_process",
+        "baseline_id": "e3546d65-1db2-48e4-bd3b-d01f27b3b7bc",
+        "window": [
+          "2024-12-31T00:00:00",
+          "2025-12-31T00:00:00"
+        ],
+        "total_claims": 193386,
+        "unique_members": 12427,
+        "note": "HTTP /baselines/refresh returned 400 under load; persisted via refresh_baseline() in-process"
+      },
+      "predicted": {
+        "skipped": true,
+        "reason": "KA_FROZEN_OR_NO_LEVER_CODES"
+      },
+      "observation": {
+        "skipped": true,
+        "reason": "No IMPACT analysis or predicted skipped \u2014 existing obs retained",
+        "latest_impact_analysis_id": null
+      },
+      "status": "REFRESHED",
+      "ka_guard": "FROZEN_KA_PRESERVED"
+    },
+    {
+      "key": "sos",
+      "policy_id": "d7441dd9-3bfe-405e-ae6c-0377204bbb7e",
+      "ka_frozen": true,
+      "notes": "Preserve mechanical KA; empirical predicted skipped.",
+      "scope_align": {
+        "http": 200,
+        "before": {
+          "markets": [
+            "NC"
+          ],
+          "states": [
+            "NC"
+          ]
+        },
+        "after": {
+          "markets": [
+            "NC"
+          ],
+          "states": [
+            "NC"
+          ]
+        },
+        "error": null
+      },
+      "baseline": {
+        "http": "in_process",
+        "baseline_id": "27bdad81-4cef-47bf-b036-c1a14675ea31",
+        "window": [
+          "2024-12-31T00:00:00",
+          "2025-12-31T00:00:00"
+        ],
+        "total_claims": 149695,
+        "unique_members": 12225,
+        "note": "HTTP /baselines/refresh returned 400 under load; persisted via refresh_baseline() in-process"
+      },
+      "predicted": {
+        "skipped": true,
+        "reason": "KA_FROZEN_OR_NO_LEVER_CODES"
+      },
+      "observation": {
+        "skipped": true,
+        "reason": "No IMPACT analysis or predicted skipped \u2014 existing obs retained",
+        "latest_impact_analysis_id": null
+      },
+      "status": "REFRESHED",
+      "ka_guard": "FROZEN_KA_PRESERVED"
+    },
+    {
+      "key": "ptp",
+      "policy_id": "58b839b5-b6e0-59e0-9406-d817877c3ce8",
+      "ka_frozen": true,
+      "notes": "SYNTHETIC fixture / modifiers absent for empirical PTP.",
+      "scope_align": {
+        "http": 200,
+        "before": {
+          "markets": [
+            "NC"
+          ],
+          "states": [
+            "NC"
+          ]
+        },
+        "after": {
+          "markets": [
+            "NC"
+          ],
+          "states": [
+            "NC"
+          ]
+        },
+        "error": null
+      },
+      "baseline": {
+        "http": "in_process",
+        "baseline_id": "b5712459-aca2-46a2-ab2a-2d8303cca3f7",
+        "window": [
+          "2024-12-31T00:00:00",
+          "2025-12-31T00:00:00"
+        ],
+        "total_claims": 581577,
+        "unique_members": 12806,
+        "note": "HTTP /baselines/refresh returned 400 under load; persisted via refresh_baseline() in-process"
+      },
+      "predicted": {
+        "skipped": true,
+        "reason": "KA_FROZEN_OR_NO_LEVER_CODES"
+      },
+      "observation": {
+        "skipped": true,
+        "reason": "No IMPACT analysis or predicted skipped \u2014 existing obs retained",
+        "latest_impact_analysis_id": null
+      },
+      "status": "REFRESHED",
+      "ka_guard": "FROZEN_KA_PRESERVED"
+    },
+    {
+      "key": "mue",
+      "policy_id": "e11b049d-fcce-55cc-bcd7-71329038383b",
+      "ka_frozen": true,
+      "notes": "SYNTHETIC fixture; authoritative MUE file not on host.",
+      "scope_align": {
+        "http": 200,
+        "before": {
+          "markets": [
+            "NC"
+          ],
+          "states": [
+            "NC"
+          ]
+        },
+        "after": {
+          "markets": [
+            "NC"
+          ],
+          "states": [
+            "NC"
+          ]
+        },
+        "error": null
+      },
+      "baseline": {
+        "http": "in_process",
+        "baseline_id": "31ea4bce-c36e-4169-95ae-85742403e2e9",
+        "window": [
+          "2024-12-31T00:00:00",
+          "2025-12-31T00:00:00"
+        ],
+        "total_claims": 581577,
+        "unique_members": 12806,
+        "note": "HTTP /baselines/refresh returned 400 under load; persisted via refresh_baseline() in-process"
+      },
+      "predicted": {
+        "skipped": true,
+        "reason": "KA_FROZEN_OR_NO_LEVER_CODES"
+      },
+      "observation": {
+        "skipped": true,
+        "reason": "No IMPACT analysis or predicted skipped \u2014 existing obs retained",
+        "latest_impact_analysis_id": null
+      },
+      "status": "REFRESHED",
+      "ka_guard": "FROZEN_KA_PRESERVED"
+    },
+    {
+      "key": "therapy",
+      "policy_id": "f2b8e7f3-1627-5dbe-8d7e-757ce21aa55b",
+      "ka_frozen": true,
+      "notes": "Mechanical $80 KA; coverage what-if NOT_SUPPORTED.",
+      "scope_align": {
+        "http": 200,
+        "before": {
+          "markets": [
+            "NC"
+          ],
+          "states": [
+            "NC"
+          ]
+        },
+        "after": {
+          "markets": [
+            "NC"
+          ],
+          "states": [
+            "NC"
+          ]
+        },
+        "error": null
+      },
+      "baseline": {
+        "http": "in_process",
+        "baseline_id": "2308f847-9830-4931-a0af-234eeb2c1f28",
+        "window": [
+          "2024-12-31T00:00:00",
+          "2025-12-31T00:00:00"
+        ],
+        "total_claims": 581577,
+        "unique_members": 12806,
+        "note": "HTTP /baselines/refresh returned 400 under load; persisted via refresh_baseline() in-process"
+      },
+      "predicted": {
+        "skipped": true,
+        "reason": "KA_FROZEN_OR_NO_LEVER_CODES"
+      },
+      "observation": {
+        "skipped": true,
+        "reason": "No IMPACT analysis or predicted skipped \u2014 existing obs retained",
+        "latest_impact_analysis_id": null
+      },
+      "status": "REFRESHED",
+      "ka_guard": "FROZEN_KA_PRESERVED"
+    },
+    {
+      "key": "infusion",
+      "policy_id": "11218053-bdc0-569f-a415-fb61c5dcda37",
+      "ka_frozen": true,
+      "notes": "Mechanical KA fixture.",
+      "scope_align": {
+        "http": 200,
+        "before": {
+          "markets": [
+            "NC"
+          ],
+          "states": [
+            "NC"
+          ]
+        },
+        "after": {
+          "markets": [
+            "NC"
+          ],
+          "states": [
+            "NC"
+          ]
+        },
+        "error": null
+      },
+      "baseline": {
+        "http": "in_process",
+        "baseline_id": "2f49cee1-d5c1-4c8c-93e4-fba8ec0f1733",
+        "total_claims": 1452520,
+        "note": "effective_period aligned to 2026-01-01 for demo window"
+      },
+      "predicted": {
+        "skipped": true,
+        "reason": "KA_FROZEN_OR_NO_LEVER_CODES"
+      },
+      "observation": {
+        "skipped": true,
+        "reason": "No IMPACT analysis or predicted skipped \u2014 existing obs retained",
+        "latest_impact_analysis_id": null
+      },
+      "status": "REFRESHED",
+      "ka_guard": "FROZEN_KA_PRESERVED"
+    },
+    {
+      "key": "ncd",
+      "policy_id": "4f8c34e3-015b-509d-90ba-521261464258",
+      "ka_frozen": true,
+      "notes": "PROVENANCE_ONLY \u2014 no financial lifecycle.",
+      "scope_align": {
+        "http": 200,
+        "before": {
+          "markets": [
+            "NC"
+          ],
+          "states": [
+            "NC"
+          ]
+        },
+        "after": {
+          "markets": [
+            "NC"
+          ],
+          "states": [
+            "NC"
+          ]
+        },
+        "error": null
+      },
+      "baseline": {
+        "skipped": true,
+        "reason": "PROVENANCE_ONLY"
+      },
+      "predicted": {
+        "skipped": true,
+        "reason": "PROVENANCE_ONLY"
+      },
+      "observation": {
+        "skipped": true,
+        "reason": "PROVENANCE_ONLY"
+      },
+      "status": "PROVENANCE_ONLY"
+    },
+    {
+      "key": "lcd",
+      "policy_id": "649b4ac8-ca82-5b84-aa87-84834490731a",
+      "ka_frozen": true,
+      "notes": "PROVENANCE_ONLY \u2014 no financial lifecycle.",
+      "scope_align": {
+        "http": 200,
+        "before": {
+          "markets": [
+            "NC"
+          ],
+          "states": [
+            "NC"
+          ]
+        },
+        "after": {
+          "markets": [
+            "NC"
+          ],
+          "states": [
+            "NC"
+          ]
+        },
+        "error": null
+      },
+      "baseline": {
+        "skipped": true,
+        "reason": "PROVENANCE_ONLY"
+      },
+      "predicted": {
+        "skipped": true,
+        "reason": "PROVENANCE_ONLY"
+      },
+      "observation": {
+        "skipped": true,
+        "reason": "PROVENANCE_ONLY"
+      },
+      "status": "PROVENANCE_ONLY"
+    }
+  ],
+  "summary": {
+    "refreshed": 7,
+    "baseline_failed": 0,
+    "provenance_only": 2,
+    "errors": 0
+  },
+  "retry_baselines": {
+    "mppr": {
+      "http": 400,
+      "elapsed": 34.4,
+      "claims": null,
+      "err": "{\"detail\":\"Failed to refresh baseline. No data available in database for baseline computation.\",\"status_code\":400}"
+    },
+    "sos": {
+      "http": 400,
+      "elapsed": 22.8,
+      "claims": null,
+      "err": "{\"detail\":\"Failed to refresh baseline. No data available in database for baseline computation.\",\"status_code\":400}"
+    },
+    "ptp": {
+      "http": 400,
+      "elapsed": 45.0,
+      "claims": null,
+      "err": "{\"detail\":\"Failed to refresh baseline. No data available in database for baseline computation.\",\"status_code\":400}"
+    },
+    "mue": {
+      "http": 400,
+      "elapsed": 34.4,
+      "claims": null,
+      "err": "{\"detail\":\"Failed to refresh baseline. No data available in database for baseline computation.\",\"status_code\":400}"
+    },
+    "therapy": {
+      "http": 400,
+      "elapsed": 36.3,
+      "claims": null,
+      "err": "{\"detail\":\"Failed to refresh baseline. No data available in database for baseline computation.\",\"status_code\":400}"
+    },
+    "infusion": {
+      "http": 400,
+      "elapsed": 12.8,
+      "claims": null,
+      "err": "{\"detail\":\"Failed to refresh baseline. No data available in database for baseline computation.\",\"status_code\":400}"
+    }
+  },
+  "in_process_baseline_retry": {
+    "mppr": {
+      "ok": true,
+      "baseline_id": "e3546d65-1db2-48e4-bd3b-d01f27b3b7bc",
+      "window": [
+        "2024-12-31T00:00:00",
+        "2025-12-31T00:00:00"
+      ],
+      "total_claims": 193386,
+      "unique_members": 12427
+    },
+    "sos": {
+      "ok": true,
+      "baseline_id": "27bdad81-4cef-47bf-b036-c1a14675ea31",
+      "window": [
+        "2024-12-31T00:00:00",
+        "2025-12-31T00:00:00"
+      ],
+      "total_claims": 149695,
+      "unique_members": 12225
+    },
+    "ptp": {
+      "ok": true,
+      "baseline_id": "b5712459-aca2-46a2-ab2a-2d8303cca3f7",
+      "window": [
+        "2024-12-31T00:00:00",
+        "2025-12-31T00:00:00"
+      ],
+      "total_claims": 581577,
+      "unique_members": 12806
+    },
+    "mue": {
+      "ok": true,
+      "baseline_id": "31ea4bce-c36e-4169-95ae-85742403e2e9",
+      "window": [
+        "2024-12-31T00:00:00",
+        "2025-12-31T00:00:00"
+      ],
+      "total_claims": 581577,
+      "unique_members": 12806
+    },
+    "therapy": {
+      "ok": true,
+      "baseline_id": "2308f847-9830-4931-a0af-234eeb2c1f28",
+      "window": [
+        "2024-12-31T00:00:00",
+        "2025-12-31T00:00:00"
+      ],
+      "total_claims": 581577,
+      "unique_members": 12806
+    },
+    "infusion": {
+      "ok": false
+    }
+  },
+  "in_process_retry_at": "2026-11-04T06:32:33.781787+00:00"
+}

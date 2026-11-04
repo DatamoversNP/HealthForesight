@@ -1,0 +1,10 @@
+{
+  "document_id": "NCCI_AND_MUE_CLAIMS_EDIT_POLICY_CODESET",
+  "policy_id": "dacd8143-d53b-4ef8-ad40-65be55bd55d3",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abNCCI and MUE Claims Edit Policy\u00bb",
+  "status": "UNRESOLVED",
+  "candidate_codes": [],
+  "notes": "Authoritative NCCI/MUE files required \u2014 do not invent MUE values",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

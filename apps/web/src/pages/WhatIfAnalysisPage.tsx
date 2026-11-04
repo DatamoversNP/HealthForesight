@@ -39,6 +39,7 @@ import {
   AccordionSummary,
   AccordionDetails,
   Checkbox,
+  Autocomplete,
 } from '@mui/material'
 import {
   PlayArrow as RunIcon,
@@ -48,6 +49,7 @@ import {
   TrendingDown as TrendingDownIcon,
   Analytics as AnalyticsIcon,
 } from '@mui/icons-material'
+import PolicyAutocomplete from '../components/common/PolicyAutocomplete'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts'
 import { apiClient } from '../lib/api'
 import TrustPanel from '../components/TrustPanel'
@@ -151,7 +153,9 @@ export default function WhatIfAnalysisPage() {
     currentPolicyName: string
     completed: number
   } | null>(null)
-  const [activeTab, setActiveTab] = useState<'configure' | 'elasticity' | 'results' | 'compare' | 'sensitivity' | 'accuracy'>('configure')
+  const [activeTab, setActiveTab] = useState<'configure' | 'elasticity' | 'results' | 'compare' | 'sensitivity' | 'accuracy'>(
+    urlScenarioId ? 'results' : 'configure'
+  )
   const [elasticityData, setElasticityData] = useState<any>(null)
   const [elasticityLoading, setElasticityLoading] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
@@ -166,6 +170,7 @@ export default function WhatIfAnalysisPage() {
   const [linkDialogOpen, setLinkDialogOpen] = useState(false)
   const [accuracyDialogOpen, setAccuracyDialogOpen] = useState(false)
   const [selectedObservationId, setSelectedObservationId] = useState<string | null>(null)
+  const openingHistoricalRun = Boolean(urlScenarioId)
   
   // Scenario parameters
   const [scenarioParams, setScenarioParams] = useState({
@@ -188,105 +193,181 @@ export default function WhatIfAnalysisPage() {
     loadPolicies()
   }, [])
 
+  // Open from What-If history: /whatif?policy=…&scenario=<analysis_id>
+  // Jump to Results immediately — do not leave the user on a blank Configure form.
   useEffect(() => {
-    if (!urlPolicyId || policies.length === 0) return
-    const p = policies.find((x) => x.id === urlPolicyId)
-    if (p) setSelectedPolicy(p)
-  }, [urlPolicyId, policies])
-
-  useEffect(() => {
-    if (!urlScenarioId || !urlPolicyId) {
+    if (!urlScenarioId) {
       loadedUrlScenarioKey.current = null
       return
     }
-    if (!selectedPolicy || selectedPolicy.id !== urlPolicyId) return
-    const dedupeKey = `${urlPolicyId}:${urlScenarioId}`
-    if (loadedUrlScenarioKey.current === dedupeKey) return
-    loadedUrlScenarioKey.current = dedupeKey
+    const dedupeKey = `${urlPolicyId || ''}:${urlScenarioId}`
     let cancelled = false
     setError(null)
+    setLoading(true)
+    setActiveTab('results')
+    setScenarioResult(null)
+    setCurrentScenarioAnalysisId(urlScenarioId)
+    loadedUrlScenarioKey.current = dedupeKey
     ;(async () => {
       try {
-        const analysis = await apiClient.getAnalysis(urlScenarioId)
+        // Load analysis + results in parallel — never block charts on getPolicy
+        const [analysis, resultsPrimary] = await Promise.all([
+          apiClient.getAnalysis(urlScenarioId),
+          apiClient.getAnalysisResults(urlScenarioId, 'whatif_scenario').catch(() => null),
+        ])
         if (cancelled) return
-        if (String(analysis.policy_id) !== selectedPolicy.id) return
-        setCurrentScenarioAnalysisId(urlScenarioId)
+
+        const analysisPolicyId =
+          analysis.policy_id != null ? String(analysis.policy_id) : urlPolicyId ? String(urlPolicyId) : null
+
+        // Resolve policy label in the background (optional)
+        if (analysisPolicyId) {
+          const fromList = policies.find((x) => String(x.id) === analysisPolicyId)
+          if (fromList) {
+            setSelectedPolicy(fromList)
+          } else {
+            apiClient
+              .getPolicy(analysisPolicyId)
+              .then((p) => {
+                if (!cancelled && p) setSelectedPolicy(p as Policy)
+              })
+              .catch(() => {})
+          }
+        }
+
         if (analysis.status === 'COMPLETED') {
-          const results = await apiClient.getAnalysisResults(urlScenarioId, 'whatif_scenario')
+          let raw = resultsPrimary?.results
+          if (
+            !raw ||
+            (typeof raw === 'object' &&
+              !raw.whatif_scenario &&
+              !raw.WHATIF_SCENARIO &&
+              !raw.impact_metrics)
+          ) {
+            const resultsFallback = await apiClient.getAnalysisResults(urlScenarioId).catch(() => null)
+            if (cancelled) return
+            raw = resultsFallback?.results
+          }
           if (cancelled) return
-          if (results.results) {
-            const scenarioData =
-              results.results.whatif_scenario ||
-              results.results.WHATIF_SCENARIO ||
-              results.results
-            if (scenarioData && scenarioData.scenario_id) {
-              setScenarioResult({
-                ...scenarioData,
-                scenario_name:
-                  scenarioData.scenario_name || `Run ${urlScenarioId.slice(0, 8)}…`,
-                _analysis_id: urlScenarioId,
-                _created_at: analysis.created_at,
-              } as ScenarioResult & { _analysis_id: string; _created_at?: string })
-              setActiveTab('results')
-            }
+          const scenarioData =
+            (raw &&
+              (raw.whatif_scenario ||
+                raw.WHATIF_SCENARIO ||
+                raw.scenario ||
+                (raw.impact_metrics || raw.projected_metrics || raw.baseline_metrics ? raw : null))) ||
+            null
+          if (scenarioData && typeof scenarioData === 'object') {
+            const normalized = {
+              ...scenarioData,
+              scenario_id:
+                (scenarioData as ScenarioResult).scenario_id ||
+                `analysis-${urlScenarioId}`,
+              scenario_name:
+                (scenarioData as ScenarioResult).scenario_name ||
+                analysis.name ||
+                `Run ${urlScenarioId.slice(0, 8)}…`,
+              _analysis_id: urlScenarioId,
+              _created_at: analysis.created_at,
+            } as ScenarioResult & { _analysis_id: string; _created_at?: string }
+            setScenarioResult(normalized)
+            setScenarios([normalized])
+            setActiveTab('results')
+          } else {
+            setError('This run completed but no what-if result payload was found.')
+            setActiveTab('configure')
           }
         } else if (analysis.status === 'FAILED') {
           setError(
             `This run failed: ${(analysis as { error_message?: string }).error_message || 'Unknown error'}`
           )
+          setActiveTab('configure')
         } else {
           setError(`This run is still ${analysis.status}. Results will appear when it completes.`)
+          setActiveTab('configure')
         }
-      } catch (e) {
-        if (!cancelled) console.error('Open scenario from URL failed:', e)
+      } catch (e: any) {
+        if (!cancelled) {
+          console.error('Open scenario from URL failed:', e)
+          setError(e?.detail || e?.message || 'Failed to open this scenario run')
+          setActiveTab('configure')
+        }
+      } finally {
+        if (!cancelled) setLoading(false)
       }
     })()
     return () => {
       cancelled = true
+      // React Strict Mode remounts effects; clear so the remount actually loads again
+      if (loadedUrlScenarioKey.current === dedupeKey) {
+        loadedUrlScenarioKey.current = null
+      }
     }
-  }, [urlScenarioId, urlPolicyId, selectedPolicy?.id])
+  }, [urlScenarioId, urlPolicyId])
 
   useEffect(() => {
-    if (selectedPolicy) {
-      loadElasticityData(selectedPolicy.id)
-      loadPreviousScenarios(selectedPolicy.id)
-      loadScenarioAccuracy(selectedPolicy.id)
-      loadObservations(selectedPolicy.id)
-    } else {
-      setScenarios([])
-      setScenarioResult(null)
-      setScenarioAccuracy([])
-      setScenarioLinks([])
+    if (!selectedPolicy) {
+      if (!urlScenarioId) {
+        setScenarios([])
+        setScenarioResult(null)
+        setScenarioAccuracy([])
+        setScenarioLinks([])
+      }
+      return
     }
-  }, [selectedPolicy])
+
+    // Historical Open: the URL effect already loads THAT run's JSON.
+    // Do NOT fan out to elasticity + 30 prior results (that saturates Azure and times out).
+    if (urlScenarioId) {
+      const t = window.setTimeout(() => {
+        // Light extras only after charts are on screen
+        loadScenarioAccuracy(selectedPolicy.id, urlScenarioId).catch(() => {})
+      }, 2000)
+      return () => window.clearTimeout(t)
+    }
+
+    loadElasticityData(selectedPolicy.id)
+    loadPreviousScenarios(selectedPolicy.id, { preserveCurrent: false, limit: 8 })
+    loadScenarioAccuracy(selectedPolicy.id)
+    loadObservations(selectedPolicy.id)
+  }, [selectedPolicy, urlScenarioId])
   
   useEffect(() => {
-    if (currentScenarioAnalysisId) {
+    // Skip duplicate accuracy fetch while the historical-open path owns loading
+    if (currentScenarioAnalysisId && !urlScenarioId) {
       loadScenarioAccuracy(selectedPolicy?.id, currentScenarioAnalysisId)
     }
-  }, [currentScenarioAnalysisId])
+  }, [currentScenarioAnalysisId, urlScenarioId])
 
-  const loadPreviousScenarios = async (policyId: string) => {
+  const loadPreviousScenarios = async (
+    policyId: string,
+    opts?: { preserveCurrent?: boolean; limit?: number }
+  ) => {
     try {
-      // Get all SIMULATE analyses for this policy
-      const analyses = await apiClient.getAnalyses({ analysis_type: 'SIMULATE' })
+      const maxResults = opts?.limit ?? 8
+      // Get SIMULATE analyses for this policy (list is cheap; per-result payloads are not)
+      const analyses = await apiClient.getAnalyses({ analysis_type: 'SIMULATE', limit: 50 })
       const policyScenarios = Array.isArray(analyses)
-        ? analyses.filter((a: any) => a.policy_id === policyId && a.status === 'COMPLETED')
+        ? analyses.filter((a: any) => String(a.policy_id) === String(policyId) && a.status === 'COMPLETED')
         : []
 
-      // Load results for each completed scenario
+      // Load results for a small set only — sequential to avoid timeout stampede
       const loadedScenarios: ScenarioResult[] = []
-      for (const analysis of policyScenarios) {
+      for (const analysis of policyScenarios.slice(0, maxResults)) {
         try {
           const results = await apiClient.getAnalysisResults(analysis.id, 'whatif_scenario')
           if (results.results) {
             const scenarioData = results.results.whatif_scenario || 
                                results.results.WHATIF_SCENARIO ||
                                results.results
-            if (scenarioData && scenarioData.scenario_id) {
-              // Add analysis metadata to scenario for reference
+            if (scenarioData && typeof scenarioData === 'object') {
               loadedScenarios.push({
                 ...scenarioData,
+                scenario_id:
+                  (scenarioData as ScenarioResult).scenario_id || `analysis-${analysis.id}`,
+                scenario_name:
+                  (scenarioData as ScenarioResult).scenario_name ||
+                  analysis.name ||
+                  `Run ${String(analysis.id).slice(0, 8)}…`,
                 _analysis_id: analysis.id,
                 _created_at: analysis.created_at,
               } as ScenarioResult & { _analysis_id: string; _created_at?: string })
@@ -305,11 +386,19 @@ export default function WhatIfAnalysisPage() {
         return dateB - dateA
       })
 
-      setScenarios(loadedScenarios)
+      setScenarios((prev) => {
+        // Keep a URL-opened run at the front if it isn't in the loaded set yet
+        const opened = prev.find((s) => (s as any)._analysis_id === urlScenarioId)
+        if (opened && !loadedScenarios.some((s) => (s as any)._analysis_id === urlScenarioId)) {
+          return [opened, ...loadedScenarios]
+        }
+        return loadedScenarios
+      })
       
       // If we have scenarios but no current result, show the most recent one
-      if (loadedScenarios.length > 0 && !scenarioResult) {
-        setScenarioResult(loadedScenarios[0])
+      // (skip when opening a specific historical run from the history page)
+      if (loadedScenarios.length > 0 && !opts?.preserveCurrent) {
+        setScenarioResult((current) => current || loadedScenarios[0])
       }
     } catch (err) {
       console.error('Error loading previous scenarios:', err)
@@ -319,15 +408,18 @@ export default function WhatIfAnalysisPage() {
 
   const loadPolicies = async () => {
     try {
-      const data = await apiClient.getPolicies()
+      const data = await apiClient.getPolicies({ limit: 1000 })
       const policiesList = Array.isArray(data) ? data : (data.items || [])
       setPolicies(policiesList)
-      try {
-        const withCounts = await apiClient.getPoliciesWithClaimCounts(20)
-        setPoliciesWithClaimCounts(Array.isArray(withCounts) ? withCounts : [])
-      } catch {
-        setPoliciesWithClaimCounts(null)
-      }
+      // Optional tip only — never block What-If. Prefer Outpatient MRI for the demo path.
+      setTimeout(async () => {
+        try {
+          const withCounts = await apiClient.getPoliciesWithClaimCounts(8)
+          setPoliciesWithClaimCounts(Array.isArray(withCounts) ? withCounts : [])
+        } catch {
+          setPoliciesWithClaimCounts(null)
+        }
+      }, 2500)
     } catch (err: any) {
       console.error('Error loading policies:', err)
       setError(err.detail || err.message || 'Failed to load policies')
@@ -474,7 +566,7 @@ export default function WhatIfAnalysisPage() {
   const loadElasticityData = async (policyId: string) => {
     try {
       setElasticityLoading(true)
-      const analyses = await apiClient.getAnalyses({ analysis_type: 'ELASTICITY' })
+      const analyses = await apiClient.getAnalyses({ analysis_type: 'ELASTICITY', limit: 50 })
       const forPolicy = Array.isArray(analyses)
         ? analyses.filter((a: any) => a.policy_id === policyId)
         : []
@@ -944,16 +1036,22 @@ export default function WhatIfAnalysisPage() {
         </Alert>
       )}
 
+      {openingHistoricalRun && loading && (
+        <Alert severity="info" sx={{ mb: 2 }} icon={<CircularProgress size={20} />}>
+          Loading saved what-if results for this run…
+        </Alert>
+      )}
+
       {/* Build visible tabs array */}
       {(() => {
-        const visibleTabs: Array<{ label: string; key: typeof activeTab }> = [
-          { label: 'Configure Scenario', key: 'configure' },
-        ]
+        const visibleTabs: Array<{ label: string; key: typeof activeTab }> = []
+        // When opening a past run, Results first so we never strand the user on Configure
+        if (scenarioResult || openingHistoricalRun) {
+          visibleTabs.push({ label: 'Results', key: 'results' })
+        }
+        visibleTabs.push({ label: 'Configure Scenario', key: 'configure' })
         if (selectedPolicy) {
           visibleTabs.push({ label: 'Elasticity Curves', key: 'elasticity' })
-        }
-        if (scenarioResult) {
-          visibleTabs.push({ label: 'Results', key: 'results' })
         }
         if (scenarios.length > 0) {
           visibleTabs.push({ label: `Compare Scenarios (${scenarios.length})`, key: 'compare' })
@@ -986,6 +1084,13 @@ export default function WhatIfAnalysisPage() {
           </Tabs>
         )
       })()}
+
+      {activeTab === 'results' && openingHistoricalRun && loading && !scenarioResult && (
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, py: 6 }}>
+          <CircularProgress />
+          <Typography color="text.secondary">Loading past what-if charts…</Typography>
+        </Box>
+      )}
 
       {activeTab === 'configure' && (
         <Grid container spacing={3} className="scenario-builder">
@@ -1038,60 +1143,46 @@ export default function WhatIfAnalysisPage() {
                   />
                 </Box>
                 {multiPolicyMode ? (
-                  <FormControl fullWidth sx={{ mb: 2 }}>
-                    <InputLabel>Policies</InputLabel>
-                    <Select
-                      multiple
-                      value={selectedPolicies.map(p => p.id)}
-                      label="Policies"
-                      onChange={(e) => {
-                        const selectedIds = e.target.value as string[]
-                        const selected = policies.filter(p => selectedIds.includes(p.id))
-                        setSelectedPolicies(selected)
-                        // Also set first as selectedPolicy for backward compatibility
-                        if (selected.length > 0) {
-                          setSelectedPolicy(selected[0])
-                        } else {
-                          setSelectedPolicy(null)
-                        }
-                      }}
-                      renderValue={(selected) => (
-                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                          {(selected as string[]).map((value) => {
-                            const policy = policies.find(p => p.id === value)
-                            return policy ? (
-                              <Chip key={value} label={`${policy.name} (${policy.policy_type})`} size="small" />
-                            ) : null
-                          })}
-                        </Box>
-                      )}
-                    >
-                      {policies.map((policy) => (
-                        <MenuItem key={policy.id} value={policy.id}>
-                          <Checkbox checked={selectedPolicies.some(p => p.id === policy.id)} />
-                          {policy.name} ({policy.policy_type})
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
+                  <Autocomplete
+                    multiple
+                    fullWidth
+                    size="small"
+                    sx={{ mb: 2 }}
+                    options={[...policies].sort((a, b) => String(a.name).localeCompare(String(b.name)))}
+                    value={selectedPolicies}
+                    onChange={(_e, selected) => {
+                      setSelectedPolicies(selected)
+                      setSelectedPolicy(selected[0] || null)
+                    }}
+                    getOptionLabel={(p) => `${p.name} (${p.policy_type})`}
+                    isOptionEqualToValue={(a, b) => a.id === b.id}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Policies" placeholder="Search & select policies…" />
+                    )}
+                    renderTags={(value, getTagProps) =>
+                      value.map((policy, index) => (
+                        <Chip
+                          {...getTagProps({ index })}
+                          key={policy.id}
+                          label={`${policy.name} (${policy.policy_type})`}
+                          size="small"
+                        />
+                      ))
+                    }
+                  />
                 ) : (
-                  <FormControl fullWidth sx={{ mb: 2 }}>
-                    <InputLabel>Policy</InputLabel>
-                    <Select
+                  <Box sx={{ mb: 2 }}>
+                    <PolicyAutocomplete
+                      policies={policies}
                       value={selectedPolicy?.id || ''}
                       label="Policy"
-                      onChange={(e) => {
-                        const policy = policies.find(p => p.id === e.target.value)
+                      allowAll={false}
+                      onChange={(id) => {
+                        const policy = policies.find((p) => p.id === id)
                         setSelectedPolicy(policy || null)
                       }}
-                    >
-                      {policies.map((policy) => (
-                        <MenuItem key={policy.id} value={policy.id}>
-                          {policy.name} ({policy.policy_type})
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
+                    />
+                  </Box>
                 )}
                 {multiPolicyMode && selectedPolicies.length > 1 && (
                   <Alert severity="info" sx={{ mt: 2 }}>

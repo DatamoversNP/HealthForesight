@@ -1,0 +1,55 @@
+{
+  "generated_at": "2026-11-03T10:57:11Z",
+  "base": "http://127.0.0.1:7868",
+  "policy_id": "d0eeb370-df14-4478-8755-dad6c3a35a47",
+  "gates": [
+    {
+      "step": "login",
+      "ok": true
+    },
+    {
+      "step": "workspace",
+      "ok": true,
+      "matched": "Multiple Procedure Payment Reduction",
+      "err": null,
+      "has_utilization_elasticity_label": false
+    },
+    {
+      "step": "baseline",
+      "ok": true,
+      "matched": "Baseline",
+      "err": null,
+      "has_utilization_elasticity_label": false
+    },
+    {
+      "step": "predicted",
+      "ok": true,
+      "matched": "Predicted",
+      "err": null,
+      "has_utilization_elasticity_label": false
+    },
+    {
+      "step": "verdicts",
+      "ok": true,
+      "matched": "verdict",
+      "err": null,
+      "has_utilization_elasticity_label": false
+    },
+    {
+      "step": "whatif",
+      "ok": true,
+      "matched": "What-If",
+      "err": null,
+      "has_utilization_elasticity_label": false
+    },
+    {
+      "step": "objectives_health",
+      "ok": true,
+      "matched": "Objectives/Coverage",
+      "snippet": "admin@healthforesight.com\n\nDashboard\nPolicy Verdicts\nPolicies\nPolicy rollout ideas\nPolicy Impact & Guidance\nObjectives Health\nBaseline Analysis\nObservation Analysis\nObservation Run History\nPredicted Impacts\nWhat-If Scenarios\nWhat-If run his"
+    }
+  ],
+  "passed": true,
+  "note": "Browser presence + screenshots; financial correctness independently verified via API known-answer + persisted what-if.",
+  "mppr_lifecycle_pages_passed": true
+}

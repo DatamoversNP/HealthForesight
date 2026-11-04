@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_d3a4afe339d8a972a0f3c6f2",
+  "policy_id": "93c9c915-78e1-4b3a-8fff-20e30faa3bc1",
+  "name": "COPD Disease Management Program",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "3486ba5362b94c6f",
+  "started_at": "2026-11-04T13:18:18.229506+00:00",
+  "finished_at": "2026-11-04T13:18:18.229509+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

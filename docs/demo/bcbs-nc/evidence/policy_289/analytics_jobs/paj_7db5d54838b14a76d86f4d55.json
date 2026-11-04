@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_7db5d54838b14a76d86f4d55",
+  "policy_id": "6564cb6e-1e71-4f3f-a06d-48c62a1e3efa",
+  "name": "Intrathecal Drug Pump Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "2b0b10165f8e767d",
+  "started_at": "2026-11-04T13:18:18.234901+00:00",
+  "finished_at": "2026-11-04T13:18:18.234903+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

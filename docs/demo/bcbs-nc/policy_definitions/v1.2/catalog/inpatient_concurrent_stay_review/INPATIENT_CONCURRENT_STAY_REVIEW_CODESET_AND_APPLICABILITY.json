@@ -1,0 +1,10 @@
+{
+  "document_id": "INPATIENT_CONCURRENT_STAY_REVIEW_CODESET",
+  "policy_id": "8bb505a9-fd83-4954-b890-f1b18182679f",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abInpatient Concurrent Stay Review\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Inpatient concurrent review",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

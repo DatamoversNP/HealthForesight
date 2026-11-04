@@ -220,34 +220,157 @@ def _get_baseline_from_db(tenant_id: UUID, baseline_id: str) -> Optional[Dict[st
         db.close()
 
 
+# Scalar / list-friendly metric keys for summary list responses (omit archetypes/segments blobs)
+_BASELINE_SUMMARY_METRIC_KEYS = (
+    "util_rate_total_per_1000_mm",
+    "util_rate_target_per_1000_mm",
+    "utilization_per_1k",
+    "allowed_pmpm_total",
+    "allowed_pmpm_target",
+    "paid_pmpm_total",
+    "paid_pmpm_target",
+    "cost_pmpm",
+    "total_claims",
+    "unique_members",
+    "member_months",
+    "total_paid",
+    "total_allowed",
+)
+
+
+def _slim_baseline_metrics(metrics: Optional[Dict[str, Any]]) -> Dict[str, Any]:
+    if not metrics or not isinstance(metrics, dict):
+        return {}
+    out: Dict[str, Any] = {}
+    for k in _BASELINE_SUMMARY_METRIC_KEYS:
+        if k in metrics and metrics[k] is not None:
+            out[k] = metrics[k]
+    return out
+
+
+def _window_date_key(value: Any) -> str:
+    """Normalize window start/end to YYYY-MM-DD for dedupe / upsert matching."""
+    if value is None:
+        return ""
+    if hasattr(value, "date") and callable(getattr(value, "date", None)):
+        try:
+            return value.date().isoformat()
+        except Exception:
+            pass
+    s = str(value).replace("Z", "").replace("+00:00", "")
+    return s[:10] if len(s) >= 10 else s
+
+
+def dedupe_baselines_latest_per_window(baselines: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Keep newest row per (policy_id|general, window_start, window_end). Input should be newest-first."""
+    seen = set()
+    out: List[Dict[str, Any]] = []
+    for b in baselines:
+        key = (
+            b.get("policy_id") or "",
+            _window_date_key(b.get("window_start_date")),
+            _window_date_key(b.get("window_end_date")),
+        )
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(b)
+    return out
+
+
+def find_baseline_for_window(
+    tenant_id: UUID,
+    window_start_date: Any,
+    window_end_date: Any,
+    policy_id: Optional[UUID] = None,
+) -> Optional[Dict[str, Any]]:
+    """Find the latest baseline for the same tenant + policy scope + calendar window."""
+    from uepi_api.database import SessionLocal
+    from sqlalchemy import desc, cast, Date
+
+    start_key = _window_date_key(window_start_date)
+    end_key = _window_date_key(window_end_date)
+    if not start_key or not end_key:
+        return None
+
+    db: Session = SessionLocal()
+    try:
+        query = db.query(Baseline).filter(Baseline.tenant_id == tenant_id)
+        if policy_id is None:
+            query = query.filter(Baseline.policy_id.is_(None))
+        else:
+            query = query.filter(Baseline.policy_id == policy_id)
+        # Compare on date portion so time/tz variants still match
+        query = query.filter(
+            cast(Baseline.window_start_date, Date) == start_key,
+            cast(Baseline.window_end_date, Date) == end_key,
+        )
+        baseline = query.order_by(desc(Baseline.computed_at)).first()
+        if not baseline:
+            return None
+        full_metrics = baseline.baseline_metrics_json if baseline.baseline_metrics_json else {}
+        return {
+            "id": str(baseline.id),
+            "baseline_id": baseline.baseline_id,
+            "tenant_id": str(baseline.tenant_id),
+            "version": baseline.version,
+            "baseline_type": baseline.baseline_type,
+            "window_start_date": baseline.window_start_date.isoformat() if baseline.window_start_date else None,
+            "window_end_date": baseline.window_end_date.isoformat() if baseline.window_end_date else None,
+            "data_period_ids": baseline.data_period_ids_json if baseline.data_period_ids_json else [],
+            "baseline_metrics": full_metrics,
+            "computed_at": baseline.computed_at.isoformat() if baseline.computed_at else None,
+            "computed_by": baseline.computed_by,
+            "parent_baseline_id": str(baseline.parent_baseline_id) if baseline.parent_baseline_id else None,
+            "policy_id": str(baseline.policy_id) if baseline.policy_id else None,
+            "shift_detected": baseline.shift_detected,
+            "shift_summary": baseline.shift_summary_json if baseline.shift_summary_json else {},
+            "refresh_reason": baseline.refresh_reason,
+            "created_at": baseline.created_at.isoformat() if baseline.created_at else None,
+            "updated_at": baseline.updated_at.isoformat() if baseline.updated_at else None,
+            "metadata": {},
+        }
+    except Exception as e:
+        print(f"ERROR find_baseline_for_window: {e}")
+        return None
+    finally:
+        db.close()
+
+
 def list_baselines(
     tenant_id: UUID,
     policy_id: Optional[UUID] = None,
     baseline_type: Optional[str] = None,
+    summary: bool = False,
+    limit: Optional[int] = None,
+    general_only: bool = False,
+    latest_per_window: bool = False,
 ) -> List[Dict[str, Any]]:
-    """List baselines for a tenant - from database"""
-    return _list_baselines_from_db(tenant_id, policy_id, baseline_type)
+    """List baselines for a tenant - from database.
 
-
-def get_latest_baseline(tenant_id: UUID, policy_id: Optional[UUID] = None, baseline_type: Optional[str] = None) -> Optional[Dict[str, Any]]:
-    """Get latest baseline for tenant (optionally filtered by policy_id and baseline_type)"""
-    baselines = _list_baselines_from_db(tenant_id, policy_id, baseline_type)
-    if not baselines:
-        return None
-    
-    # Sort by computed_at descending and return latest
-    baselines_sorted = sorted(
-        baselines,
-        key=lambda b: b.get("computed_at") or "",
-        reverse=True
+    summary=True keeps response shape but slims baseline_metrics and empties shift_summary.
+    general_only=True returns only tenant-wide baselines (policy_id IS NULL).
+    latest_per_window=True keeps one newest row per (policy scope, window dates).
+    """
+    return _list_baselines_from_db(
+        tenant_id,
+        policy_id,
+        baseline_type,
+        summary=summary,
+        limit=limit,
+        general_only=general_only,
+        latest_per_window=latest_per_window,
     )
-    return baselines_sorted[0] if baselines_sorted else None
 
 
 def _list_baselines_from_db(
     tenant_id: UUID,
     policy_id: Optional[UUID] = None,
     baseline_type: Optional[str] = None,
+    summary: bool = False,
+    limit: Optional[int] = None,
+    general_only: bool = False,
+    latest_per_window: bool = False,
 ) -> List[Dict[str, Any]]:
     """List baselines from database. Falls back to raw SQL if analytics_run_id column is missing (migration not run)."""
     from uepi_api.database import SessionLocal
@@ -257,14 +380,25 @@ def _list_baselines_from_db(
     try:
         query = db.query(Baseline).filter(Baseline.tenant_id == tenant_id)
 
-        if policy_id:
+        if general_only:
+            query = query.filter(Baseline.policy_id.is_(None))
+        elif policy_id:
             query = query.filter(Baseline.policy_id == policy_id)
         if baseline_type:
             query = query.filter(Baseline.baseline_type == baseline_type)
-        baselines = query.order_by(desc(Baseline.computed_at)).all()
+        query = query.order_by(desc(Baseline.computed_at))
+        # When deduping, fetch enough rows then trim; otherwise apply SQL limit.
+        fetch_limit = None if latest_per_window else limit
+        if fetch_limit is not None:
+            query = query.limit(max(1, min(int(fetch_limit), 5000)))
+        elif latest_per_window:
+            # Cap scan so pathological tenants cannot pull unbounded history
+            query = query.limit(5000)
+        baselines = query.all()
 
         result = []
         for baseline in baselines:
+            full_metrics = baseline.baseline_metrics_json if baseline.baseline_metrics_json else {}
             result.append({
                 "id": str(baseline.id),
                 "baseline_id": baseline.baseline_id,
@@ -273,19 +407,23 @@ def _list_baselines_from_db(
                 "baseline_type": baseline.baseline_type,
                 "window_start_date": baseline.window_start_date.isoformat() if baseline.window_start_date else None,
                 "window_end_date": baseline.window_end_date.isoformat() if baseline.window_end_date else None,
-                "data_period_ids": baseline.data_period_ids_json if baseline.data_period_ids_json else [],
-                "baseline_metrics": baseline.baseline_metrics_json if baseline.baseline_metrics_json else {},
+                "data_period_ids": [] if summary else (baseline.data_period_ids_json if baseline.data_period_ids_json else []),
+                "baseline_metrics": _slim_baseline_metrics(full_metrics) if summary else full_metrics,
                 "computed_at": baseline.computed_at.isoformat() if baseline.computed_at else None,
                 "computed_by": baseline.computed_by,
                 "parent_baseline_id": str(baseline.parent_baseline_id) if baseline.parent_baseline_id else None,
                 "policy_id": str(baseline.policy_id) if baseline.policy_id else None,
                 "shift_detected": baseline.shift_detected,
-                "shift_summary": baseline.shift_summary_json if baseline.shift_summary_json else {},
+                "shift_summary": {} if summary else (baseline.shift_summary_json if baseline.shift_summary_json else {}),
                 "refresh_reason": baseline.refresh_reason,
                 "created_at": baseline.created_at.isoformat() if baseline.created_at else None,
                 "updated_at": baseline.updated_at.isoformat() if baseline.updated_at else None,
                 "metadata": {},
             })
+        if latest_per_window:
+            result = dedupe_baselines_latest_per_window(result)
+            if limit is not None:
+                result = result[: max(1, min(int(limit), 5000))]
         return result
 
     except Exception as e:
@@ -293,7 +431,21 @@ def _list_baselines_from_db(
         if "analytics_run_id" in err_msg and ("does not exist" in err_msg or "undefinedcolumn" in err_msg):
             db.rollback()
             try:
-                return _list_baselines_from_db_fallback(db, tenant_id, policy_id, baseline_type)
+                result = _list_baselines_from_db_fallback(
+                    db,
+                    tenant_id,
+                    policy_id,
+                    baseline_type,
+                    summary=summary,
+                    limit=None if latest_per_window else limit,
+                    general_only=general_only,
+                )
+                if latest_per_window:
+                    result = dedupe_baselines_latest_per_window(result)
+                    if limit is not None:
+                        result = result[: max(1, min(int(limit), 5000))]
+                return result
+
             except Exception as fb_e:
                 print(f"ERROR list_baselines (DB fallback): {fb_e}")
                 return []
@@ -308,6 +460,9 @@ def _list_baselines_from_db_fallback(
     tenant_id: UUID,
     policy_id: Optional[UUID],
     baseline_type: Optional[str],
+    summary: bool = False,
+    limit: Optional[int] = None,
+    general_only: bool = False,
 ) -> List[Dict[str, Any]]:
     """List baselines using raw SQL when analytics_run_id column is missing."""
     from sqlalchemy import text
@@ -321,17 +476,23 @@ def _list_baselines_from_db_fallback(
         WHERE tenant_id = :tid
     """
     params: Dict[str, Any] = {"tid": str(tenant_id)}
-    if policy_id:
+    if general_only:
+        sql += " AND policy_id IS NULL"
+    elif policy_id:
         sql += " AND policy_id = :pid"
         params["pid"] = str(policy_id)
     if baseline_type:
         sql += " AND baseline_type = :bt"
         params["bt"] = baseline_type
     sql += " ORDER BY computed_at DESC"
+    if limit is not None:
+        sql += " LIMIT :lim"
+        params["lim"] = max(1, min(int(limit), 5000))
 
     rows = db.execute(text(sql), params).fetchall()
     result = []
     for row in rows:
+        full_metrics = dict(row.baseline_metrics_json) if row.baseline_metrics_json else {}
         result.append({
             "id": str(row.id),
             "baseline_id": row.baseline_id,
@@ -340,14 +501,14 @@ def _list_baselines_from_db_fallback(
             "baseline_type": row.baseline_type,
             "window_start_date": row.window_start_date.isoformat() if row.window_start_date else None,
             "window_end_date": row.window_end_date.isoformat() if row.window_end_date else None,
-            "data_period_ids": list(row.data_period_ids_json) if row.data_period_ids_json else [],
-            "baseline_metrics": dict(row.baseline_metrics_json) if row.baseline_metrics_json else {},
+            "data_period_ids": [] if summary else (list(row.data_period_ids_json) if row.data_period_ids_json else []),
+            "baseline_metrics": _slim_baseline_metrics(full_metrics) if summary else full_metrics,
             "computed_at": row.computed_at.isoformat() if row.computed_at else None,
             "computed_by": row.computed_by,
             "parent_baseline_id": str(row.parent_baseline_id) if row.parent_baseline_id else None,
             "policy_id": str(row.policy_id) if row.policy_id else None,
             "shift_detected": row.shift_detected,
-            "shift_summary": dict(row.shift_summary_json) if row.shift_summary_json else {},
+            "shift_summary": {} if summary else (dict(row.shift_summary_json) if row.shift_summary_json else {}),
             "refresh_reason": row.refresh_reason,
             "created_at": row.created_at.isoformat() if row.created_at else None,
             "updated_at": row.updated_at.isoformat() if row.updated_at else None,
@@ -366,14 +527,54 @@ def get_latest_baseline(
     When policy_id is None, only tenant-wide baselines (policy_id not set) are considered
     so policy-scoped rows do not mask the global rolling baseline.
     """
-    baselines = list_baselines(tenant_id=tenant_id, policy_id=policy_id, baseline_type=baseline_type)
-    if policy_id is None:
-        baselines = [b for b in baselines if not b.get("policy_id")]
-    if not baselines:
-        return None
+    from uepi_api.database import SessionLocal
+    from sqlalchemy import desc
 
-    # Already sorted by computed_at descending, so return first
-    return baselines[0]
+    if policy_id is not None:
+        baselines = list_baselines(
+            tenant_id=tenant_id, policy_id=policy_id, baseline_type=baseline_type, limit=1
+        )
+        return baselines[0] if baselines else None
+
+    # Tenant-wide only: filter policy_id IS NULL in SQL (avoid loading all policy baselines)
+    db: Session = SessionLocal()
+    try:
+        query = db.query(Baseline).filter(
+            Baseline.tenant_id == tenant_id,
+            Baseline.policy_id.is_(None),
+        )
+        if baseline_type:
+            query = query.filter(Baseline.baseline_type == baseline_type)
+        baseline = query.order_by(desc(Baseline.computed_at)).first()
+        if not baseline:
+            return None
+        full_metrics = baseline.baseline_metrics_json if baseline.baseline_metrics_json else {}
+        return {
+            "id": str(baseline.id),
+            "baseline_id": baseline.baseline_id,
+            "tenant_id": str(baseline.tenant_id),
+            "version": baseline.version,
+            "baseline_type": baseline.baseline_type,
+            "window_start_date": baseline.window_start_date.isoformat() if baseline.window_start_date else None,
+            "window_end_date": baseline.window_end_date.isoformat() if baseline.window_end_date else None,
+            "data_period_ids": baseline.data_period_ids_json if baseline.data_period_ids_json else [],
+            "baseline_metrics": full_metrics,
+            "computed_at": baseline.computed_at.isoformat() if baseline.computed_at else None,
+            "computed_by": baseline.computed_by,
+            "parent_baseline_id": str(baseline.parent_baseline_id) if baseline.parent_baseline_id else None,
+            "policy_id": None,
+            "shift_detected": baseline.shift_detected,
+            "shift_summary": baseline.shift_summary_json if baseline.shift_summary_json else {},
+            "refresh_reason": baseline.refresh_reason,
+            "created_at": baseline.created_at.isoformat() if baseline.created_at else None,
+            "updated_at": baseline.updated_at.isoformat() if baseline.updated_at else None,
+            "metadata": {},
+        }
+    except Exception as e:
+        print(f"ERROR get_latest_baseline: {e}")
+        return None
+    finally:
+        db.close()
 
 
 def delete_policy_level_baselines(tenant_id: UUID) -> int:
@@ -446,8 +647,9 @@ def update_baseline(
         db.commit()
         db.refresh(baseline)
         
-        # Return as dict
+        # Return as dict (shape matches create/list for BaselineResponse)
         return {
+            "id": str(baseline.id),
             "baseline_id": baseline.baseline_id,
             "tenant_id": str(baseline.tenant_id),
             "version": baseline.version,
@@ -457,12 +659,12 @@ def update_baseline(
             "data_period_ids": baseline.data_period_ids_json if baseline.data_period_ids_json else [],
             "baseline_metrics": baseline.baseline_metrics_json if baseline.baseline_metrics_json else {},
             "computed_at": baseline.computed_at.isoformat() if baseline.computed_at else None,
-            "computed_by": baseline.computed_by,
+            "computed_by": baseline.computed_by or "system",
             "parent_baseline_id": str(baseline.parent_baseline_id) if baseline.parent_baseline_id else None,
             "policy_id": str(baseline.policy_id) if baseline.policy_id else None,
-            "shift_detected": baseline.shift_detected,
+            "shift_detected": bool(baseline.shift_detected),
             "shift_summary": baseline.shift_summary_json if baseline.shift_summary_json else {},
-            "refresh_reason": baseline.refresh_reason,
+            "refresh_reason": baseline.refresh_reason or "NEW_DATA",
             "created_at": baseline.created_at.isoformat() if baseline.created_at else None,
             "updated_at": baseline.updated_at.isoformat() if baseline.updated_at else None,
             "metadata": {},

@@ -1,0 +1,250 @@
+{
+  "policy_id": "f2b8e7f3-1627-5dbe-8d7e-757ce21aa55b",
+  "name": "Outpatient Therapy Coverage and Payment",
+  "policy_type": "COVERAGE",
+  "status": "ACTIVE",
+  "description": "Outpatient physical therapy coverage and payment rules aligned to Palmetto JM LCD L34428 (Outpatient Physical Therapy). Pays only medically necessary units under the configured coverage frequency rule.",
+  "owner_role": null,
+  "metadata": {
+    "scope": {
+      "lob": [
+        "COMMERCIAL",
+        "MA",
+        "MEDICAID"
+      ],
+      "plans": null,
+      "states": [
+        "NC"
+      ],
+      "markets": [
+        "NC"
+      ],
+      "network": [
+        "IN"
+      ],
+      "regions": null,
+      "applies_to_all": false,
+      "procedure_codes": [
+        "97110",
+        "97140"
+      ],
+      "service_categories": [
+        "THERAPY",
+        "OUTPATIENT"
+      ]
+    },
+    "domain": "Coverage",
+    "policy_id": "f2b8e7f3-1627-5dbe-8d7e-757ce21aa55b",
+    "subdomain": "Outpatient therapy",
+    "apply_when": [],
+    "guardrails": [
+      {
+        "action": "alert",
+        "description": "Alert if >40% of therapy units are denied as not medically necessary",
+        "metric_name": "therapy_units_denied_pct",
+        "threshold_type": "max",
+        "threshold_value": 40.0
+      },
+      {
+        "action": "alert",
+        "description": "Alert if therapy access complaints exceed threshold",
+        "metric_name": "member_access_complaints",
+        "threshold_type": "max",
+        "threshold_value": 25.0
+      }
+    ],
+    "assumptions": [
+      {
+        "value": "medically_necessary_units_cap",
+        "source": "Coverage frequency known-answer fixture",
+        "confidence": 0.8,
+        "description": "Units billed above medically necessary threshold are non-payable",
+        "assumption_type": "UTILIZATION"
+      },
+      {
+        "value": "price_effect_only",
+        "source": "coverage-therapy-v1",
+        "confidence": 0.85,
+        "description": "Payment impact is price/unit effect with volume of necessary units held",
+        "assumption_type": "COST"
+      }
+    ],
+    "enforcement": {
+      "mechanism": "HARD",
+      "touchpoint": [
+        "CLAIMS_ADJUDICATION",
+        "COVERAGE_REVIEW"
+      ],
+      "override_allowed": true
+    },
+    "jurisdiction": "NC",
+    "display_label": "Representative Payer Policies",
+    "policy_levers": [
+      {
+        "targets": {
+          "codes": [
+            "97110",
+            "97140"
+          ],
+          "code_type": "CPT"
+        },
+        "lever_type": "COVERAGE_CRITERIA",
+        "parameters": {
+          "lcd_id": "L34428",
+          "pay_medically_necessary_units_only": true
+        }
+      }
+    ],
+    "standards_basis": [
+      "Palmetto GBA Jurisdiction M LCD L34428",
+      "Medicare outpatient therapy coverage principles"
+    ],
+    "effective_period": {
+      "end_date": null,
+      "start_date": "2024-01-01T00:00:00"
+    },
+    "global_exceptions": [],
+    "analytical_strategy": {
+      "engine_id": null,
+      "mechanism": "COVERAGE_DETERMINATION"
+    },
+    "enterprise_classification": {
+      "mechanism": "COVERAGE_DETERMINATION",
+      "catalog_class": "DEMO_SYNTHETIC",
+      "sub_mechanism": null,
+      "dec4_expansion": true,
+      "validation_target": "FULLY_VALIDATED_DEMO",
+      "representative_payer": true,
+      "not_blue_cross_nc_proprietary": true
+    }
+  },
+  "assumptions_db": [
+    {
+      "assumption_type": "UTILIZATION",
+      "description": "Units billed above medically necessary threshold are non-payable",
+      "value": "medically_necessary_units_cap",
+      "source": "Coverage frequency known-answer fixture",
+      "confidence": 0.8
+    },
+    {
+      "assumption_type": "COST",
+      "description": "Payment impact is price/unit effect with volume of necessary units held",
+      "value": "price_effect_only",
+      "source": "coverage-therapy-v1",
+      "confidence": 0.85
+    }
+  ],
+  "guardrails_db": [
+    {
+      "metric_name": "therapy_units_denied_pct",
+      "threshold_type": "max",
+      "threshold_value": 40.0,
+      "action": "alert",
+      "description": "Alert if >40% of therapy units are denied as not medically necessary"
+    },
+    {
+      "metric_name": "member_access_complaints",
+      "threshold_type": "max",
+      "threshold_value": 25.0,
+      "action": "alert",
+      "description": "Alert if therapy access complaints exceed threshold"
+    }
+  ],
+  "versions": [
+    {
+      "version_number": 1,
+      "effective_start_date": "2024-01-01T00:00:00",
+      "effective_end_date": null,
+      "change_type": "INITIAL",
+      "enforcement_strength": "STRONG",
+      "justification": "Dec 4 expansion synthetic demo version",
+      "version_metadata": {
+        "scope": {
+          "lob": [
+            "COMMERCIAL",
+            "MA",
+            "MEDICAID"
+          ],
+          "plans": null,
+          "states": [
+            "NC"
+          ],
+          "markets": [
+            "NC"
+          ],
+          "network": [
+            "IN"
+          ],
+          "regions": null,
+          "applies_to_all": false,
+          "procedure_codes": [
+            "97110",
+            "97140"
+          ],
+          "service_categories": [
+            "THERAPY",
+            "OUTPATIENT"
+          ]
+        },
+        "state": "ACTIVE",
+        "mechanism": "COVERAGE_DETERMINATION",
+        "enforcement": {
+          "mechanism": "HARD",
+          "touchpoint": [
+            "CLAIMS_ADJUDICATION",
+            "COVERAGE_REVIEW"
+          ],
+          "override_allowed": true
+        },
+        "catalog_class": "DEMO_SYNTHETIC",
+        "policy_levers": [
+          {
+            "targets": {
+              "codes": [
+                "97110",
+                "97140"
+              ],
+              "code_type": "CPT"
+            },
+            "lever_type": "COVERAGE_CRITERIA",
+            "parameters": {
+              "lcd_id": "L34428",
+              "pay_medically_necessary_units_only": true
+            }
+          }
+        ]
+      },
+      "codes": [
+        {
+          "code_type": "CPT",
+          "code": "97110",
+          "code_group": "THERAPY"
+        },
+        {
+          "code_type": "CPT",
+          "code": "97140",
+          "code_group": "THERAPY"
+        }
+      ]
+    }
+  ],
+  "medicare_source_links": [
+    {
+      "link_role": "REFERENCES_LCD",
+      "family_id": "mac_lcd_nc",
+      "source_document_id": "L34428",
+      "title": "Outpatient Physical Therapy",
+      "authority": "Palmetto GBA",
+      "source_url": "https://www.cms.gov/medicare-coverage-database/view/lcd.aspx?lcdId=34428"
+    },
+    {
+      "link_role": "REFERENCES_LCD",
+      "family_id": "mac_lcd_nc",
+      "source_document_id": "L34428",
+      "title": "Outpatient Physical Therapy",
+      "authority": "Palmetto GBA",
+      "source_url": "https://www.cms.gov/medicare-coverage-database/view/lcd.aspx?lcdid=34428&ver=93"
+    }
+  ],
+  "generated_at": "2026-11-03T14:38:48.151128+00:00"
+}

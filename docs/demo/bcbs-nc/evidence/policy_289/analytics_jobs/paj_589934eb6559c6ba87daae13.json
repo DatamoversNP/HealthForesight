@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_589934eb6559c6ba87daae13",
+  "policy_id": "54bbdff6-bb39-4027-bab7-4ae9302e1f55",
+  "name": "Spinal Cord Stimulator Trial and Implant Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "3f32f52c8ab98439",
+  "started_at": "2026-11-04T13:18:18.242661+00:00",
+  "finished_at": "2026-11-04T13:18:18.242662+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

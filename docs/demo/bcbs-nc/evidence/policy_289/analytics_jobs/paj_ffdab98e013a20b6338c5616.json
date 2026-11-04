@@ -1,0 +1,18 @@
+{
+  "job_id": "paj_ffdab98e013a20b6338c5616",
+  "policy_id": "a45b26ab-305a-485a-8e29-17735584aaff",
+  "name": "Bundled Payment for Joint Replacement",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "bd6f16e5079110f4",
+  "started_at": "2026-11-04T13:18:18.227417+00:00",
+  "finished_at": "2026-11-04T13:18:18.227419+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "scope.states"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_64b5a59e3963c9ea28471d0d",
+  "policy_id": "12165f88-21a6-4363-9b65-4ba785203c7c",
+  "name": "Tiered Network Specialist Steerage",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "fa2e983a60e23dae",
+  "started_at": "2026-11-04T13:18:18.243715+00:00",
+  "finished_at": "2026-11-04T13:18:18.243717+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

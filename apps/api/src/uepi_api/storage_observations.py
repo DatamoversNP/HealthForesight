@@ -312,6 +312,22 @@ def _get_observation(tenant_id: UUID, observation_id: str) -> Optional[Dict[str,
 # Default limit for list to keep responses fast (pagination can request more)
 LIST_OBSERVATIONS_DEFAULT_LIMIT = 200
 
+# Keys kept when summary=True (portfolio / dashboard list). Same response shape; heavy nests omitted.
+_OBS_SUMMARY_METRIC_KEYS = (
+    "utilization_per_1k",
+    "util_rate_total_per_1000_mm",
+    "util_rate_target_per_1000_mm",
+    "cost_per_member",
+    "cost_pmpm",
+    "allowed_pmpm",
+    "paid_pmpm",
+    "observed_percent_change",
+    "utilization_change_pct",
+    "member_months",
+    "unique_members",
+    "total_claims",
+)
+
 
 def list_observations(
     tenant_id: UUID,
@@ -319,9 +335,83 @@ def list_observations(
     data_period_id: Optional[str] = None,
     observation_type: Optional[str] = None,
     limit: Optional[int] = None,
+    latest_only: bool = False,
+    summary: bool = False,
 ) -> List[Dict[str, Any]]:
-    """List observations for a tenant - from database"""
-    return _list_observations(tenant_id, policy_id, data_period_id, observation_type, limit)
+    """List observations for a tenant - from database.
+
+    latest_only: DISTINCT ON policy_id (Postgres) — one row per policy by period_end/computed_at.
+    summary: omit behavioral_explanation / observed_measures; slim metrics (same keys present).
+    """
+    return _list_observations(
+        tenant_id,
+        policy_id,
+        data_period_id,
+        observation_type,
+        limit,
+        latest_only=latest_only,
+        summary=summary,
+    )
+
+
+def _slim_obs_metrics(metrics: Dict[str, Any]) -> Dict[str, Any]:
+    out = {}
+    for k in _OBS_SUMMARY_METRIC_KEYS:
+        if k in metrics and metrics[k] is not None:
+            out[k] = metrics[k]
+    return out
+
+
+def _observation_to_dict(observation: Observation, summary: bool = False) -> Dict[str, Any]:
+    from uepi_api.observation_transform import transform_observation_for_frontend
+
+    _metrics = observation.metrics_json or {}
+    if summary:
+        metrics = _slim_obs_metrics({k: v for k, v in _metrics.items() if k != "observed_measures"})
+        observed_measures: Dict[str, Any] = {}
+        behavioral: Dict[str, Any] = {}
+        comparisons = observation.comparisons_json if observation.comparisons_json else {}
+        # Keep vs_baseline / vs_predicted; drop nested bulk if present under other keys
+        if isinstance(comparisons, dict):
+            comparisons = {
+                k: comparisons[k]
+                for k in ("vs_baseline", "vs_predicted")
+                if k in comparisons
+            }
+    else:
+        metrics = {k: v for k, v in _metrics.items() if k != "observed_measures"}
+        observed_measures = _metrics.get("observed_measures", {}) or {}
+        comparisons = observation.comparisons_json if observation.comparisons_json else {}
+        behavioral = observation.behavioral_explanation_json if observation.behavioral_explanation_json else {}
+
+    obs_dict = {
+        "observation_id": observation.observation_id,
+        "tenant_id": str(observation.tenant_id),
+        "policy_id": str(observation.policy_id) if observation.policy_id else None,
+        "policy_version_id": str(observation.policy_version_id) if observation.policy_version_id else None,
+        "data_period_id": str(observation.data_period_id) if observation.data_period_id else None,
+        "data_period_ids": observation.data_period_ids_json if observation.data_period_ids_json else [],
+        "observation_type": observation.observation_type,
+        "observation_period_start": observation.observation_period_start.isoformat() if observation.observation_period_start else None,
+        "observation_period_end": observation.observation_period_end.isoformat() if observation.observation_period_end else None,
+        "baseline_version_id": str(observation.baseline_version_id) if observation.baseline_version_id else None,
+        "prediction_id": str(observation.prediction_id) if observation.prediction_id else None,
+        "analysis_id": str(observation.analysis_id) if observation.analysis_id else None,
+        "computed_at": observation.computed_at.isoformat() if observation.computed_at else None,
+        "metrics": metrics,
+        "observed_measures": observed_measures,
+        "comparisons": comparisons,
+        "behavioral_explanation": behavioral,
+        "analytics_run_id": str(observation.analytics_run_id) if getattr(observation, "analytics_run_id", None) else None,
+        "verdict_status": getattr(observation, "verdict_status", None),
+        "verdict_reason": getattr(observation, "verdict_reason", None),
+        "recommendation": getattr(observation, "recommendation", None),
+        "verdict_rule_version": getattr(observation, "verdict_rule_version", None),
+        "created_at": observation.created_at.isoformat() if observation.created_at else None,
+        "updated_at": observation.updated_at.isoformat() if observation.updated_at else None,
+        "metadata": {},
+    }
+    return transform_observation_for_frontend(obs_dict)
 
 
 def _list_observations(
@@ -330,6 +420,8 @@ def _list_observations(
     data_period_id: Optional[str] = None,
     observation_type: Optional[str] = None,
     limit: Optional[int] = None,
+    latest_only: bool = False,
+    summary: bool = False,
 ) -> List[Dict[str, Any]]:
     """List observations from database (limited for performance)."""
     from uepi_api.database import SessionLocal
@@ -347,46 +439,21 @@ def _list_observations(
             query = query.filter(Observation.observation_type == observation_type)
 
         limit = min(limit or LIST_OBSERVATIONS_DEFAULT_LIMIT, 500)
-        observations = query.order_by(desc(Observation.computed_at)).limit(limit).all()
-        
-        # Convert to dict format (same as file-based)
-        from uepi_api.observation_transform import transform_observation_for_frontend
-        
-        result = []
-        for observation in observations:
-            _metrics = observation.metrics_json or {}
-            obs_dict = {
-                "observation_id": observation.observation_id,
-                "tenant_id": str(observation.tenant_id),
-                "policy_id": str(observation.policy_id) if observation.policy_id else None,
-                "policy_version_id": str(observation.policy_version_id) if observation.policy_version_id else None,
-                "data_period_id": str(observation.data_period_id) if observation.data_period_id else None,
-                "data_period_ids": observation.data_period_ids_json if observation.data_period_ids_json else [],
-                "observation_type": observation.observation_type,
-                "observation_period_start": observation.observation_period_start.isoformat() if observation.observation_period_start else None,
-                "observation_period_end": observation.observation_period_end.isoformat() if observation.observation_period_end else None,
-                "baseline_version_id": str(observation.baseline_version_id) if observation.baseline_version_id else None,
-                "prediction_id": str(observation.prediction_id) if observation.prediction_id else None,
-                "analysis_id": str(observation.analysis_id) if observation.analysis_id else None,
-                "computed_at": observation.computed_at.isoformat() if observation.computed_at else None,
-                "metrics": {k: v for k, v in _metrics.items() if k != "observed_measures"},
-                "observed_measures": _metrics.get("observed_measures", {}),
-                "comparisons": observation.comparisons_json if observation.comparisons_json else {},
-                "behavioral_explanation": observation.behavioral_explanation_json if observation.behavioral_explanation_json else {},
-                "analytics_run_id": str(observation.analytics_run_id) if getattr(observation, "analytics_run_id", None) else None,
-                "verdict_status": getattr(observation, "verdict_status", None),
-                "verdict_reason": getattr(observation, "verdict_reason", None),
-                "recommendation": getattr(observation, "recommendation", None),
-                "verdict_rule_version": getattr(observation, "verdict_rule_version", None),
-                "created_at": observation.created_at.isoformat() if observation.created_at else None,
-                "updated_at": observation.updated_at.isoformat() if observation.updated_at else None,
-                "metadata": {},
-            }
-            # Transform to match frontend expectations
-            result.append(transform_observation_for_frontend(obs_dict))
-        
-        return result
-        
+
+        if latest_only and not policy_id:
+            # Postgres DISTINCT ON: one row per policy (latest period_end, then computed_at)
+            query = query.filter(Observation.policy_id.isnot(None))
+            query = query.distinct(Observation.policy_id).order_by(
+                Observation.policy_id,
+                desc(Observation.observation_period_end),
+                desc(Observation.computed_at),
+            )
+            observations = query.limit(limit).all()
+        else:
+            observations = query.order_by(desc(Observation.computed_at)).limit(limit).all()
+
+        return [_observation_to_dict(o, summary=summary) for o in observations]
+
     except Exception as e:
         print(f"ERROR list_observations (DB): {e}")
         return []

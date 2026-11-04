@@ -1,0 +1,10 @@
+{
+  "document_id": "DRG_INPATIENT_PAYMENT_POLICY_CODESET",
+  "policy_id": "726212a1-47e2-4e33-94c0-13f855c6aa7c",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abDRG Inpatient Payment Policy\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "DRG/MS-DRG grouper methodology \u2014 not outpatient CPT schedule",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

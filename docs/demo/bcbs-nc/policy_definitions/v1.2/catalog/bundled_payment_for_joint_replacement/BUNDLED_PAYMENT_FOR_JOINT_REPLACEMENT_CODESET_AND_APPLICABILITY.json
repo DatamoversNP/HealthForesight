@@ -1,0 +1,25 @@
+{
+  "document_id": "BUNDLED_PAYMENT_FOR_JOINT_REPLACEMENT_CODESET",
+  "policy_id": "a45b26ab-305a-485a-8e29-17735584aaff",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abBundled Payment for Joint Replacement\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "27130",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "27447",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "THA/TKA episode anchors \u2014 episode price UNRESOLVED (no invented rate)",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

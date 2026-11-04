@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_e9f5e7625be4f671b751c4ea",
+  "policy_id": "e27314e0-d0b8-4a36-af6e-ada8a1ebb04c",
+  "name": "Psychiatric Inpatient Prior Authorization",
+  "evidence_pathway": "EMPIRICAL_COHORT",
+  "configuration_digest": "f84bcd9b5994fd81",
+  "started_at": "2026-11-04T13:18:18.241087+00:00",
+  "finished_at": "2026-11-04T13:18:18.241089+00:00",
+  "status": "EMPIRICAL_ELIGIBLE_QUEUED",
+  "duplicate_prevented": false,
+  "result": {
+    "cohort_count": 6515,
+    "message": "Preflight PASS \u2014 enqueue Celery/worker analytical services; not executed via bulk HTTP",
+    "next": "uepi_worker.tasks.policy_analytics_lifecycle_job"
+  },
+  "error": null
+}

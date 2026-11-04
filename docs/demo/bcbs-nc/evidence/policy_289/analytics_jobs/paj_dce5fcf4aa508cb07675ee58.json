@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_dce5fcf4aa508cb07675ee58",
+  "policy_id": "c5866ab7-f9af-4d7d-aac4-5735c1b21cf3",
+  "name": "NICU Level-of-Care Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "e40b1d017c993b5a",
+  "started_at": "2026-11-04T13:18:18.237349+00:00",
+  "finished_at": "2026-11-04T13:18:18.237351+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

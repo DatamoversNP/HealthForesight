@@ -1,0 +1,25 @@
+{
+  "document_id": "CARDIAC_REHABILITATION_SESSION_LIMIT_CODESET",
+  "policy_id": "70fc68a8-a52f-4cf8-b650-802d82031728",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abCardiac Rehabilitation Session Limit\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "93797",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "93798",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

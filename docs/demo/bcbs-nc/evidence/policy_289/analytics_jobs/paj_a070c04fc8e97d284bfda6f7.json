@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_a070c04fc8e97d284bfda6f7",
+  "policy_id": "71e9576a-d81a-4f1c-9d0c-3dea29a1de28",
+  "name": "Diagnostic Cardiac Catheterization Appropriateness",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "83750a2271a1acfe",
+  "started_at": "2026-11-04T13:18:18.230263+00:00",
+  "finished_at": "2026-11-04T13:18:18.230265+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

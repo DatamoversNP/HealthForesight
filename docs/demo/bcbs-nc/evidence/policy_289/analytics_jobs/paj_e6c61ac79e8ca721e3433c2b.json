@@ -1,0 +1,18 @@
+{
+  "job_id": "paj_e6c61ac79e8ca721e3433c2b",
+  "policy_id": "ce65ce76-ea5b-4a7d-8260-84c11ae54bb2",
+  "name": "Ambulatory Surgery Center Preference",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "cb2babae9f0c62ad",
+  "started_at": "2026-11-04T13:18:18.225890+00:00",
+  "finished_at": "2026-11-04T13:18:18.225892+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "scope.states"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

@@ -1,0 +1,18 @@
+{
+  "job_id": "paj_6c2c96c685fce0208bf964fd",
+  "policy_id": "2c003e47-6137-4402-bbaa-67589ef2654b",
+  "name": "Speech Therapy Visit Limit",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "b16d1758d6597cd3",
+  "started_at": "2026-11-04T13:18:18.242594+00:00",
+  "finished_at": "2026-11-04T13:18:18.242595+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "scope.states"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

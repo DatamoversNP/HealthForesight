@@ -1,0 +1,25 @@
+{
+  "document_id": "INSULIN_PREFERRED_PRODUCT_AND_BIOSIMILAR_STEP_CODESET",
+  "policy_id": "a89e86f3-066c-42c1-b83c-7d3f9ba952da",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abInsulin Preferred Product and Biosimilar Step\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "HCPCS",
+      "code": "J1815",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "J1817",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Insulin injection HCPCS \u2014 preferred NDC list UNRESOLVED",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_a92249d08bb30931f12ee26b",
+  "policy_id": "52e12f77-ddf0-4252-9ec9-04eccbbb9732",
+  "name": "Preferred Dialysis Network Policy",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "8602fab3e66fa3c5",
+  "started_at": "2026-11-04T13:18:18.240280+00:00",
+  "finished_at": "2026-11-04T13:18:18.240281+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

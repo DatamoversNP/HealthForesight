@@ -1,0 +1,10 @@
+{
+  "document_id": "CKD_DISEASE_MANAGEMENT_PROGRAM_CODESET",
+  "policy_id": "814e7fbd-2ae4-4314-aa1b-a1ad104e5f7f",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abCKD Disease Management Program\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Program/composite policy \u2014 constituent mechanisms configured separately",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

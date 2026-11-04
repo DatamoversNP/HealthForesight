@@ -1,19 +1,18 @@
 """Dashboard API endpoints - Executive dashboard data aggregation - Database-driven, Enterprise-grade"""
-from typing import Annotated, Optional
-from uuid import UUID
+from typing import Annotated
 from datetime import datetime, timedelta, date
 
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
-from sqlalchemy import func, and_, distinct
+from sqlalchemy import func, and_, distinct, desc
 
 from uepi_api.auth import CurrentUser, get_demo_current_user
-from uepi_api.database import get_db
-from uepi_api.storage_policies import list_policies
-from uepi_api.storage_analyses import list_analyses
+from uepi_api.database import get_db, set_local_statement_timeout
+from uepi_api.models.canonical_data import ClaimsLineDB
+from uepi_api.models.policy import Policy
+from uepi_api.models.analysis import Analysis
+from uepi_api.models.observation import Observation
 from uepi_api.storage_observations import list_observations
-from uepi_api.repositories.canonical_data import CanonicalDataRepository
-from uepi_api.models.canonical_data import ClaimsLineDB, EnrollmentRecordDB
 
 router = APIRouter()
 
@@ -23,85 +22,172 @@ async def get_dashboard_summary(
     current_user: Annotated[CurrentUser, Depends(get_demo_current_user)],
     db: Session = Depends(get_db),
 ):
-    """Get executive dashboard summary with key metrics - Database-driven, Enterprise-grade"""
+    """Get executive dashboard summary with key metrics - Database-driven, Enterprise-grade.
+
+    Optimized: uses SQL counts + latest-per-policy observation summaries instead of
+    hydrating full policy/analysis/observation lists (same response shape).
+    """
     try:
-        # Load all relevant data with error handling
-        print(f"DEBUG get_dashboard_summary: Loading data for tenant {current_user.tenant_id}")
-        
-        # ========== DATABASE-DRIVEN METRICS ==========
-        # Get real member counts, claim volumes, and cost data from database
-        repo = CanonicalDataRepository(db)
+        tenant_id = current_user.tenant_id
+        print(f"DEBUG get_dashboard_summary: Loading data for tenant {tenant_id}")
+
         member_count = 0
         total_claims_count = 0
         total_paid_amount = 0.0
         total_allowed_amount = 0.0
         claims_date_range = {"start": None, "end": None}
-        
+
+        # Prefer general baseline snapshot for portfolio metrics (avoids full claims scans).
         try:
-            # Get unique member count from enrollment or claims
-            member_count = db.query(func.count(distinct(ClaimsLineDB.member_id))).filter(
-                ClaimsLineDB.tenant_id == current_user.tenant_id
-            ).scalar() or 0
-            
-            # Get claims statistics from last 12 months
-            twelve_months_ago = date.today() - timedelta(days=365)
-            claims_stats = db.query(
-                func.count(ClaimsLineDB.claim_line_id).label('total_claims'),
-                func.sum(ClaimsLineDB.paid_amount).label('total_paid'),
-                func.sum(ClaimsLineDB.allowed_amount).label('total_allowed'),
-                func.min(ClaimsLineDB.service_date).label('earliest_date'),
-                func.max(ClaimsLineDB.service_date).label('latest_date')
-            ).filter(
-                and_(
-                    ClaimsLineDB.tenant_id == current_user.tenant_id,
-                    ClaimsLineDB.service_date >= twelve_months_ago
+            from uepi_api.storage_baselines import get_latest_baseline
+
+            baseline = get_latest_baseline(tenant_id, policy_id=None)
+            if baseline:
+                bm = baseline.get("baseline_metrics") or baseline.get("metrics") or {}
+                member_count = int(bm.get("unique_members") or bm.get("member_count") or 0)
+                total_claims_count = int(bm.get("total_claims") or bm.get("claim_count") or 0)
+                total_paid_amount = float(bm.get("total_paid") or bm.get("paid_amount_total") or 0)
+                total_allowed_amount = float(bm.get("total_allowed") or bm.get("allowed_amount_total") or 0)
+                if baseline.get("window_start_date"):
+                    claims_date_range["start"] = str(baseline["window_start_date"])[:10]
+                if baseline.get("window_end_date"):
+                    claims_date_range["end"] = str(baseline["window_end_date"])[:10]
+        except Exception as e:
+            print(f"WARNING get_dashboard_summary: baseline portfolio metrics unavailable: {e}")
+
+        # Fallback: bounded claims aggregate (short timeout) only if baseline had no usable counts.
+        if total_claims_count <= 0 or member_count <= 0:
+            try:
+                set_local_statement_timeout(db, 8_000)
+                twelve_months_ago = date.today() - timedelta(days=365)
+                claims_stats = db.query(
+                    func.count(ClaimsLineDB.claim_line_id).label("total_claims"),
+                    func.sum(ClaimsLineDB.paid_amount).label("total_paid"),
+                    func.sum(ClaimsLineDB.allowed_amount).label("total_allowed"),
+                    func.min(ClaimsLineDB.service_date).label("earliest_date"),
+                    func.max(ClaimsLineDB.service_date).label("latest_date"),
+                ).filter(
+                    and_(
+                        ClaimsLineDB.tenant_id == tenant_id,
+                        ClaimsLineDB.service_date >= twelve_months_ago,
+                    )
+                ).first()
+
+                if claims_stats:
+                    if total_claims_count <= 0:
+                        total_claims_count = claims_stats.total_claims or 0
+                    if total_paid_amount <= 0:
+                        total_paid_amount = float(claims_stats.total_paid or 0)
+                    if total_allowed_amount <= 0:
+                        total_allowed_amount = float(claims_stats.total_allowed or 0)
+                    if not claims_date_range["start"] and claims_stats.earliest_date:
+                        claims_date_range["start"] = claims_stats.earliest_date.isoformat()
+                    if not claims_date_range["end"] and claims_stats.latest_date:
+                        claims_date_range["end"] = claims_stats.latest_date.isoformat()
+                # Skip count(distinct member_id) — too expensive on large claim tables.
+            except Exception as e:
+                print(f"WARNING get_dashboard_summary: Could not load database metrics: {e}")
+                try:
+                    db.rollback()
+                except Exception:
+                    pass
+
+        print(
+            f"DEBUG get_dashboard_summary: Database metrics - Members: {member_count}, "
+            f"Claims: {total_claims_count}, Paid: ${total_paid_amount:,.2f}"
+        )
+
+        # ---- Policy counts (no full metadata hydration) ----
+        total_policies = 0
+        active_policies_count = 0
+        policy_name_by_id: dict[str, str] = {}
+        try:
+            total_policies = (
+                db.query(func.count(Policy.id)).filter(Policy.tenant_id == tenant_id).scalar() or 0
+            )
+            active_policies_count = (
+                db.query(func.count(Policy.id))
+                .filter(Policy.tenant_id == tenant_id, func.upper(Policy.status) == "ACTIVE")
+                .scalar()
+                or 0
+            )
+            # Light name map for top policies (cap rows)
+            for pid, pname in (
+                db.query(Policy.id, Policy.name)
+                .filter(Policy.tenant_id == tenant_id)
+                .limit(500)
+                .all()
+            ):
+                policy_name_by_id[str(pid)] = pname or "Unknown"
+        except Exception as e:
+            print(f"ERROR get_dashboard_summary: Failed to count policies: {e}")
+
+        # ---- Analysis counts + recent activity (limited) ----
+        recent_analyses_count = 0
+        completed_analyses_count = 0
+        recent_activity = []
+        try:
+            thirty_days_ago = datetime.utcnow() - timedelta(days=30)
+            recent_analyses_count = (
+                db.query(func.count(Analysis.id))
+                .filter(
+                    Analysis.tenant_id == tenant_id,
+                    Analysis.created_at >= thirty_days_ago,
                 )
-            ).first()
-            
-            if claims_stats:
-                total_claims_count = claims_stats.total_claims or 0
-                total_paid_amount = float(claims_stats.total_paid or 0)
-                total_allowed_amount = float(claims_stats.total_allowed or 0)
-                if claims_stats.earliest_date:
-                    claims_date_range["start"] = claims_stats.earliest_date.isoformat()
-                if claims_stats.latest_date:
-                    claims_date_range["end"] = claims_stats.latest_date.isoformat()
-            
-            print(f"DEBUG get_dashboard_summary: Database metrics - Members: {member_count}, Claims: {total_claims_count}, Paid: ${total_paid_amount:,.2f}")
-            if total_paid_amount == 0 and member_count == 0:
-                print("DEBUG get_dashboard_summary: Actuals will be 0 - no claims/members in DB for cost trend.")
+                .scalar()
+                or 0
+            )
+            completed_analyses_count = (
+                db.query(func.count(Analysis.id))
+                .filter(Analysis.tenant_id == tenant_id, Analysis.status == "COMPLETED")
+                .scalar()
+                or 0
+            )
+            recent_rows = (
+                db.query(Analysis.id, Analysis.analysis_type, Analysis.status, Analysis.created_at)
+                .filter(Analysis.tenant_id == tenant_id, Analysis.created_at >= thirty_days_ago)
+                .order_by(desc(Analysis.created_at))
+                .limit(5)
+                .all()
+            )
+            for row in recent_rows:
+                recent_activity.append(
+                    {
+                        "id": str(row.id),
+                        "type": row.analysis_type,
+                        "status": row.status,
+                        "created_at": row.created_at.isoformat() if row.created_at else None,
+                    }
+                )
         except Exception as e:
-            print(f"WARNING get_dashboard_summary: Could not load database metrics: {e}")
-            import traceback
-            traceback.print_exc()
-        
-        # ========== POLICY AND ANALYSIS DATA ==========
+            print(f"ERROR get_dashboard_summary: Failed to count analyses: {e}")
+
+        # ---- Latest observations (slim) for impact metrics ----
+        observations = []
+        total_observations = 0
         try:
-            policies = list_policies(current_user.tenant_id)
-            print(f"DEBUG get_dashboard_summary: Loaded {len(policies)} policies")
-        except Exception as e:
-            print(f"ERROR get_dashboard_summary: Failed to load policies: {e}")
-            policies = []
-        
-        try:
-            analyses = list_analyses(current_user.tenant_id)
-            print(f"DEBUG get_dashboard_summary: Loaded {len(analyses)} analyses")
-        except Exception as e:
-            print(f"ERROR get_dashboard_summary: Failed to load analyses: {e}")
-            analyses = []
-        
-        try:
-            observations = list_observations(current_user.tenant_id)
-            print(f"DEBUG get_dashboard_summary: Loaded {len(observations)} observations")
+            total_observations = (
+                db.query(func.count(Observation.id))
+                .filter(Observation.tenant_id == tenant_id)
+                .scalar()
+                or 0
+            )
+            observations = list_observations(
+                tenant_id=tenant_id,
+                latest_only=True,
+                summary=True,
+                limit=200,
+            )
         except Exception as e:
             print(f"ERROR get_dashboard_summary: Failed to load observations: {e}")
             observations = []
-        
-        # ========== GENERAL (PRE-POLICY) BASELINE ==========
+
+        # ---- General (pre-policy) baseline ----
         general_baseline = None
         try:
             from uepi_api.storage_baselines import get_latest_baseline
-            baseline = get_latest_baseline(current_user.tenant_id, policy_id=None)
+
+            baseline = get_latest_baseline(tenant_id, policy_id=None)
             if baseline:
                 bm = baseline.get("baseline_metrics") or baseline.get("metrics") or {}
                 util = (
@@ -127,213 +213,173 @@ async def get_dashboard_summary(
                     }
         except Exception as e:
             print(f"WARNING get_dashboard_summary: Could not load general baseline: {e}")
-        
-        # Calculate key metrics (normalize status for comparison)
-        def _norm(s):
-            return (s or "").strip().upper()
-        active_policies = [p for p in policies if _norm(p.get("status")) == "ACTIVE"]
-        total_policies = len(policies)
-        
-        # Recent analyses (last 30 days)
-        thirty_days_ago = datetime.utcnow() - timedelta(days=30)
-        recent_analyses = [
-            a for a in analyses
-            if a.get("created_at") and datetime.fromisoformat(a.get("created_at").replace("Z", "+00:00")) > thirty_days_ago
-        ]
-        
-        # Completed analyses
-        completed_analyses = [a for a in analyses if a.get("status") == "COMPLETED"]
-        
-        # ========== ENTERPRISE-GRADE BUSINESS METRICS ==========
-        # Calculate cost impact from observations (database-driven)
+
         total_cost_impact = 0.0
-        total_cost_savings = 0.0  # Negative cost impact = savings
+        total_cost_savings = 0.0
         total_utilization_change = 0.0
-        total_utilization_reduction = 0.0  # Only negative changes (reductions)
+        total_utilization_reduction = 0.0
         policy_performance = []
         annualized_savings = 0.0
         roi_estimate = 0.0
-        
+
         for obs in observations:
-            metrics = obs.get("metrics", {})
-            comparisons = obs.get("comparisons", {})
-            
-            # Cost impact (from database observations)
-            vs_baseline = comparisons.get("vs_baseline", {})
+            metrics = obs.get("metrics", {}) or {}
+            comparisons = obs.get("comparisons", {}) or {}
+            vs_baseline = comparisons.get("vs_baseline", {}) if isinstance(comparisons, dict) else {}
+            cost_change = 0.0
             if vs_baseline:
-                # Use cost_change_pmpm for accurate PMPM calculations
-                cost_change_pmpm = vs_baseline.get("cost_change_pmpm", 0) or vs_baseline.get("change_from_baseline", 0)
-                # Calculate total impact: PMPM * member_months
-                member_months = vs_baseline.get("baseline_member_months") or (member_count * 1)  # Default to 1 month
-                cost_change = cost_change_pmpm * member_months
+                cost_change_pmpm = vs_baseline.get("cost_change_pmpm", 0) or vs_baseline.get(
+                    "change_from_baseline", 0
+                )
+                member_months = vs_baseline.get("baseline_member_months") or (member_count * 1)
+                cost_change = float(cost_change_pmpm or 0) * float(member_months or 1)
                 total_cost_impact += cost_change
-                if cost_change < 0:  # Negative = savings
+                if cost_change < 0:
                     total_cost_savings += abs(cost_change)
-            
-            # Utilization change (from database observations)
-            utilization_change = metrics.get("observed_percent_change", 0) or metrics.get("utilization_change_pct", 0)
-            total_utilization_change += utilization_change
-            if utilization_change < 0:  # Negative = reduction
-                total_utilization_reduction += abs(utilization_change)
-            
-            # Policy performance - handle both UUID and string policy IDs
+
+            utilization_change = metrics.get("observed_percent_change", 0) or metrics.get(
+                "utilization_change_pct", 0
+            )
+            total_utilization_change += float(utilization_change or 0)
+            if utilization_change and float(utilization_change) < 0:
+                total_utilization_reduction += abs(float(utilization_change))
+
             policy_id = obs.get("policy_id")
             if policy_id:
-                # Try to find policy by matching id or policy_id (handles both UUID and string IDs)
-                policy = None
                 policy_id_str = str(policy_id)
-                for p in policies:
-                    p_id = str(p.get("id") or p.get("policy_id", ""))
-                    if p_id == policy_id_str:
-                        policy = p
-                        break
-                
-                if policy:
-                    policy_performance.append({
+                policy_performance.append(
+                    {
                         "policy_id": policy_id,
-                        "policy_name": policy.get("name") or policy.get("policy_name", "Unknown"),
+                        "policy_name": policy_name_by_id.get(policy_id_str, "Unknown"),
                         "utilization_change_pct": utilization_change,
                         "cost_impact": cost_change if vs_baseline else 0,
                         "observation_date": obs.get("computed_at"),
-                    })
-        
-        # If no observations, try to use predicted impact data for dashboard
+                    }
+                )
+
         if not observations or not policy_performance:
             try:
                 from uepi_api.storage_policy_predicted_impact import get_predicted_impact
-                for policy in policies[:10]:  # Limit to top 10 for performance
-                    policy_id = policy.get("id") or policy.get("policy_id")
-                    if not policy_id:
-                        continue
+
+                # Sample up to 10 policies for predicted fallback (avoids N× all)
+                sample_policies = (
+                    db.query(Policy.id, Policy.name)
+                    .filter(Policy.tenant_id == tenant_id)
+                    .order_by(desc(Policy.created_at))
+                    .limit(10)
+                    .all()
+                )
+                for pid, pname in sample_policies:
                     try:
-                        predicted_impact = get_predicted_impact(policy_id, current_user.tenant_id)
-                        if predicted_impact:
-                            metrics = predicted_impact.get("metrics", {})
-                            utilization_change = metrics.get("utilization_change_pct", 0)
-                            cost_change_pmpm = metrics.get("cost_change_pmpm", 0)
-                            # Estimate total cost impact (rough calculation)
-                            cost_change = cost_change_pmpm * 10000  # Rough estimate for 10k members
-                            
-                            total_utilization_change += utilization_change
-                            total_cost_impact += cost_change
-                            
-                            policy_performance.append({
-                                "policy_id": str(policy_id),
-                                "policy_name": policy.get("name") or policy.get("policy_name", "Unknown"),
+                        predicted_impact = get_predicted_impact(pid, tenant_id)
+                        if not predicted_impact:
+                            continue
+                        metrics = predicted_impact.get("metrics", {}) or {}
+                        utilization_change = metrics.get("utilization_change_pct", 0)
+                        cost_change_pmpm = metrics.get("cost_change_pmpm", 0)
+                        cost_change = float(cost_change_pmpm or 0) * 10000
+                        total_utilization_change += float(utilization_change or 0)
+                        total_cost_impact += cost_change
+                        policy_performance.append(
+                            {
+                                "policy_id": str(pid),
+                                "policy_name": pname or "Unknown",
                                 "utilization_change_pct": utilization_change,
                                 "cost_impact": cost_change,
                                 "observation_date": predicted_impact.get("predicted_at"),
-                                "is_predicted": True,  # Mark as predicted data
-                            })
-                    except Exception as e:
-                        # Skip if predicted impact not available for this policy
-                        import traceback
-                        print(f"Warning: Could not load predicted impact for policy {policy_id}: {e}")
-                        traceback.print_exc()
+                                "is_predicted": True,
+                            }
+                        )
+                    except Exception:
                         continue
             except Exception as e:
-                # If the import itself fails, just continue without predicted impact
-                import traceback
-                print(f"Warning: Could not import predicted impact storage: {e}")
-                traceback.print_exc()
-                pass
-        
-        # ========== CALCULATE ENTERPRISE METRICS ==========
-        # Average metrics
-        num_data_points = len(observations) if observations else len([p for p in policy_performance if not p.get("is_predicted")])
+                print(f"Warning: Could not load predicted impact fallback: {e}")
+
+        num_data_points = len(observations) if observations else len(
+            [p for p in policy_performance if not p.get("is_predicted")]
+        )
         if not num_data_points:
-            num_data_points = len(policy_performance)  # Use predicted data count
-        avg_utilization_change = total_utilization_change / num_data_points if num_data_points > 0 else 0
+            num_data_points = len(policy_performance)
+        avg_utilization_change = (
+            total_utilization_change / num_data_points if num_data_points > 0 else 0
+        )
         avg_cost_impact = total_cost_impact / num_data_points if num_data_points > 0 else 0
-        
-        # Annualized savings (extrapolate from current savings)
+
         if total_cost_savings > 0 and num_data_points > 0:
-            # Average monthly savings
             avg_monthly_savings = total_cost_savings / num_data_points
             annualized_savings = avg_monthly_savings * 12
-        
-        # ROI Estimate (simplified: savings / estimated implementation cost)
-        # Assume average policy implementation cost of $50k per policy
-        implementation_cost = len(active_policies) * 50000 if active_policies else 1
+
+        implementation_cost = active_policies_count * 50000 if active_policies_count else 1
         if annualized_savings > 0:
-            roi_estimate = ((annualized_savings - implementation_cost) / implementation_cost) * 100 if implementation_cost > 0 else 0
-        
-        # Cost per member metrics
+            roi_estimate = (
+                ((annualized_savings - implementation_cost) / implementation_cost) * 100
+                if implementation_cost > 0
+                else 0
+            )
+
         cost_pmpm_current = (total_paid_amount / (member_count * 12)) if member_count > 0 else 0
         savings_pmpm = (annualized_savings / (member_count * 12)) if member_count > 0 else 0
-        
-        # Member impact (how many members affected by policies)
-        members_impacted = member_count  # All members if policies are global, could be refined
-        
-        # Top performing policies (by utilization reduction)
+        members_impacted = member_count
+
         top_policies = sorted(
             policy_performance,
             key=lambda x: x.get("utilization_change_pct", 0),
         )[:5]
-        
-        # Recent activity
-        recent_activity = []
-        for analysis in recent_analyses[:5]:
-            recent_activity.append({
-                "id": analysis.get("id"),
-                "type": analysis.get("analysis_type"),
-                "status": analysis.get("status"),
-                "created_at": analysis.get("created_at"),
-            })
-        
-        # Risk indicators
+
         risk_indicators = []
         if avg_utilization_change < -10:
-            risk_indicators.append({
-                "type": "HIGH_UTILIZATION_DROP",
-                "severity": "HIGH",
-                "message": f"Average utilization decreased by {abs(avg_utilization_change):.1f}%",
-            })
+            risk_indicators.append(
+                {
+                    "type": "HIGH_UTILIZATION_DROP",
+                    "severity": "HIGH",
+                    "message": f"Average utilization decreased by {abs(avg_utilization_change):.1f}%",
+                }
+            )
         if avg_cost_impact < -1000:
-            risk_indicators.append({
-                "type": "HIGH_COST_IMPACT",
-                "severity": "MEDIUM",
-                "message": f"Significant cost impact detected: ${abs(avg_cost_impact):,.0f}",
-            })
-        
+            risk_indicators.append(
+                {
+                    "type": "HIGH_COST_IMPACT",
+                    "severity": "MEDIUM",
+                    "message": f"Significant cost impact detected: ${abs(avg_cost_impact):,.0f}",
+                }
+            )
+
         return {
             "summary": {
-                "active_policies": len(active_policies),
+                "active_policies": active_policies_count,
                 "total_policies": total_policies,
-                "recent_analyses": len(recent_analyses),
-                "completed_analyses": len(completed_analyses),
-                "total_observations": len(observations),
+                "recent_analyses": recent_analyses_count,
+                "completed_analyses": completed_analyses_count,
+                "total_observations": total_observations,
             },
             "metrics": {
                 "avg_utilization_change_pct": round(avg_utilization_change, 2),
                 "avg_cost_impact": round(avg_cost_impact, 2),
                 "total_cost_impact": round(total_cost_impact, 2),
             },
-            # ========== ENTERPRISE-GRADE BUSINESS METRICS ==========
             "business_metrics": {
-                # Database-driven metrics
                 "member_count": member_count,
                 "total_claims_count": total_claims_count,
                 "total_paid_amount": round(total_paid_amount, 2),
                 "total_allowed_amount": round(total_allowed_amount, 2),
                 "claims_date_range": claims_date_range,
                 "cost_pmpm_current": round(cost_pmpm_current, 2),
-                
-                # Policy impact metrics
                 "total_cost_savings": round(total_cost_savings, 2),
                 "annualized_savings": round(annualized_savings, 2),
                 "savings_pmpm": round(savings_pmpm, 2),
                 "total_utilization_reduction_pct": round(total_utilization_reduction, 2),
                 "members_impacted": members_impacted,
-                
-                # ROI and financial metrics
                 "roi_estimate_pct": round(roi_estimate, 2),
                 "implementation_cost": implementation_cost,
-                "payback_period_months": round(implementation_cost / (annualized_savings / 12), 1) if annualized_savings > 0 else None,
-                
-                # Efficiency metrics
-                "claims_per_member": round(total_claims_count / member_count, 2) if member_count > 0 else 0,
-                "cost_per_claim": round(total_paid_amount / total_claims_count, 2) if total_claims_count > 0 else 0,
+                "payback_period_months": round(implementation_cost / (annualized_savings / 12), 1)
+                if annualized_savings > 0
+                else None,
+                "claims_per_member": round(total_claims_count / member_count, 2)
+                if member_count > 0
+                else 0,
+                "cost_per_claim": round(total_paid_amount / total_claims_count, 2)
+                if total_claims_count > 0
+                else 0,
             },
             "top_policies": top_policies,
             "recent_activity": recent_activity,
@@ -341,12 +387,12 @@ async def get_dashboard_summary(
             "general_baseline": general_baseline,
             "last_updated": datetime.utcnow().isoformat(),
         }
-        
+
     except Exception as e:
         import traceback
+
         error_msg = str(e)
         traceback.print_exc()
-        # Return a minimal dashboard response instead of failing completely
         print(f"Error loading dashboard summary: {error_msg}")
         return {
             "summary": {
@@ -370,151 +416,174 @@ async def get_dashboard_summary(
         }
 
 
+@router.get("/dashboard/objectives-health")
+async def get_objectives_health(
+    current_user: Annotated[CurrentUser, Depends(get_demo_current_user)],
+):
+    """Authoritative Objectives Health snapshot (deterministic for fixed data).
+
+    Replaces client-side multi-API aggregation that caused intermittent results
+    via silent empty fallbacks, N+1 forecast probes, and predicted-as-observed fill.
+
+    Runs sync DB work in a worker thread so a slow/hung Postgres call cannot
+    block the asyncio event loop (and thus /health liveness).
+    """
+    import asyncio
+    from uepi_api.services.objectives_health import load_objectives_health
+
+    tenant_id = current_user.tenant_id
+    return await asyncio.to_thread(load_objectives_health, tenant_id)
+
+
 @router.get("/dashboard/policy-performance")
 async def get_policy_performance(
     current_user: Annotated[CurrentUser, Depends(get_demo_current_user)],
     db: Session = Depends(get_db),
     limit: int = Query(10, ge=1, le=100),
 ):
-    """Get policy performance metrics"""
+    """Get policy performance metrics (slim: latest obs per policy, no full list hydration)."""
     try:
-        policies = list_policies(current_user.tenant_id)
-        observations = list_observations(current_user.tenant_id)
-        
-        # Member count for cost impact (cost_change_pmpm * member_months)
+        tenant_id = current_user.tenant_id
+
+        # Prefer baseline snapshot — never scan claims for distinct members here.
         member_count = 0
         try:
-            member_count = db.query(func.count(distinct(ClaimsLineDB.member_id))).filter(
-                ClaimsLineDB.tenant_id == current_user.tenant_id
-            ).scalar() or 0
+            from uepi_api.storage_baselines import get_latest_baseline
+
+            baseline = get_latest_baseline(tenant_id, policy_id=None)
+            if baseline:
+                bm = baseline.get("baseline_metrics") or baseline.get("metrics") or {}
+                member_count = int(bm.get("unique_members") or bm.get("member_count") or 0)
         except Exception:
             pass
         if not member_count:
-            member_count = 10000  # Fallback for cost scaling
-        
+            member_count = 10000
+
+        policies = (
+            db.query(Policy.id, Policy.name, Policy.status, Policy.policy_metadata_json)
+            .filter(Policy.tenant_id == tenant_id)
+            .order_by(desc(Policy.created_at))
+            .limit(limit)
+            .all()
+        )
+
+        observations = list_observations(
+            tenant_id=tenant_id,
+            latest_only=True,
+            summary=True,
+            limit=min(500, max(limit * 2, 100)),
+        )
+        obs_by_policy: dict[str, dict] = {}
+        for o in observations:
+            pid = str(o.get("policy_id") or "")
+            if pid and pid not in obs_by_policy:
+                obs_by_policy[pid] = o
+
         performance_data = []
-        
-        for policy in policies[:limit]:
-            policy_id = policy.get("id") or policy.get("policy_id")
+        for policy in policies:
+            policy_id = policy.id
             policy_id_str = str(policy_id)
-            # Match observations by policy_id (handles both UUID and string IDs)
-            policy_observations = [
-                o for o in observations 
-                if str(o.get("policy_id", "")) == policy_id_str
-            ]
-            
-            # If we have observations, use them
-            if policy_observations:
-                # Aggregate metrics
-                total_utilization_change = sum(
-                    o.get("metrics", {}).get("observed_percent_change", 0) for o in policy_observations
+            meta = policy.policy_metadata_json or {}
+            eff = meta.get("effective_period") if isinstance(meta, dict) else {}
+            policy_effective_date = eff.get("start_date") if isinstance(eff, dict) else None
+            obs = obs_by_policy.get(policy_id_str)
+
+            if obs:
+                metrics = obs.get("metrics") or {}
+                comparisons = obs.get("comparisons") or {}
+                vb = comparisons.get("vs_baseline", {}) if isinstance(comparisons, dict) else {}
+                avg_utilization_change = float(
+                    metrics.get("observed_percent_change", 0)
+                    or metrics.get("utilization_change_pct", 0)
+                    or 0
                 )
-                avg_utilization_change = total_utilization_change / len(policy_observations)
-                
-                # Cost impact: use cost_change_pmpm * member_months (change_from_baseline is utilization, not $)
-                total_cost_impact = 0.0
-                for o in policy_observations:
-                    comparisons = o.get("comparisons") or {}
-                    vb = comparisons.get("vs_baseline", {}) if isinstance(comparisons, dict) else {}
-                    cost_change_pmpm = vb.get("cost_change_pmpm") or vb.get("cost_change")
-                    if cost_change_pmpm is None and (vb.get("baseline_cost_pmpm") is not None or vb.get("observed_cost_pmpm") is not None):
-                        base = float(vb.get("baseline_cost_pmpm") or 0)
-                        obs = float(vb.get("observed_cost_pmpm") or 0)
-                        cost_change_pmpm = obs - base
-                    member_months = vb.get("baseline_member_months") or (member_count * 1)
-                    total_cost_impact += (float(cost_change_pmpm or 0)) * (float(member_months or member_count))
-                avg_cost_impact = total_cost_impact / len(policy_observations)
-                
-                # When observations have no cost in vs_baseline, fall back to predicted impact so chart shows data
-                if (avg_cost_impact is None or abs(float(avg_cost_impact or 0)) < 1e-6):
+                cost_change_pmpm = vb.get("cost_change_pmpm") or vb.get("cost_change")
+                if cost_change_pmpm is None and (
+                    vb.get("baseline_cost_pmpm") is not None or vb.get("observed_cost_pmpm") is not None
+                ):
+                    base = float(vb.get("baseline_cost_pmpm") or 0)
+                    observed = float(vb.get("observed_cost_pmpm") or 0)
+                    cost_change_pmpm = observed - base
+                member_months = vb.get("baseline_member_months") or member_count
+                avg_cost_impact = float(cost_change_pmpm or 0) * float(member_months or member_count)
+
+                if abs(avg_cost_impact) < 1e-6:
                     try:
                         from uepi_api.storage_policy_predicted_impact import get_predicted_impact
-                        predicted_impact = get_predicted_impact(policy_id, current_user.tenant_id)
+
+                        predicted_impact = get_predicted_impact(policy_id, tenant_id)
                         if predicted_impact:
                             pm = predicted_impact.get("metrics", {}) or {}
                             cost_change_pmpm = pm.get("cost_change_pmpm") or pm.get("cost_change", 0)
-                            avg_cost_impact = (float(cost_change_pmpm or 0)) * member_count
+                            avg_cost_impact = float(cost_change_pmpm or 0) * member_count
                     except Exception:
                         pass
-                
-                # Prediction accuracy
-                prediction_accuracies = []
-                for obs in policy_observations:
-                    comp = obs.get("comparisons", {}) or {}
-                    vs_predicted = comp.get("vs_predicted", {}) if isinstance(comp, dict) else {}
-                    if vs_predicted:
-                        accuracy = vs_predicted.get("prediction_accuracy_pct")
-                        if accuracy is not None:
-                            prediction_accuracies.append(accuracy)
-                
-                avg_prediction_accuracy = (
-                    sum(prediction_accuracies) / len(prediction_accuracies)
-                    if prediction_accuracies else None
+
+                vs_predicted = comparisons.get("vs_predicted", {}) if isinstance(comparisons, dict) else {}
+                avg_prediction_accuracy = vs_predicted.get("prediction_accuracy_pct")
+
+                performance_data.append(
+                    {
+                        "policy_id": policy_id_str,
+                        "policy_name": policy.name or "Unknown",
+                        "status": policy.status,
+                        "observations_count": 1,
+                        "avg_utilization_change_pct": round(avg_utilization_change, 2),
+                        "avg_cost_impact": round(float(avg_cost_impact or 0), 2),
+                        "avg_prediction_accuracy_pct": round(avg_prediction_accuracy, 2)
+                        if avg_prediction_accuracy is not None
+                        else None,
+                        "is_predicted": False,
+                        "latest_observation_period_end": obs.get("observation_period_end"),
+                        "policy_effective_date": policy_effective_date,
+                    }
                 )
-                
-                # Latest observation period end (run date) for "Through [date]" display
-                latest_obs = max(
-                    policy_observations,
-                    key=lambda o: (o.get("observation_period_end") or "", o.get("computed_at") or ""),
-                )
-                eff = policy.get("effective_period") or {}
-                policy_effective_date = eff.get("start_date") if isinstance(eff, dict) else None
-                performance_data.append({
-                    "policy_id": policy_id,
-                    "policy_name": policy.get("name") or policy.get("policy_name", "Unknown"),
-                    "status": policy.get("status"),
-                    "observations_count": len(policy_observations),
-                    "avg_utilization_change_pct": round(avg_utilization_change, 2),
-                    "avg_cost_impact": round(float(avg_cost_impact or 0), 2),
-                    "avg_prediction_accuracy_pct": round(avg_prediction_accuracy, 2) if avg_prediction_accuracy else None,
-                    "is_predicted": False,
-                    "latest_observation_period_end": latest_obs.get("observation_period_end"),
-                    "policy_effective_date": policy_effective_date,
-                })
             else:
-                # No observations - use predicted impact so chart shows data
                 avg_cost_impact = 0.0
                 avg_utilization_change = 0.0
                 try:
                     from uepi_api.storage_policy_predicted_impact import get_predicted_impact
-                    predicted_impact = get_predicted_impact(policy_id, current_user.tenant_id)
+
+                    predicted_impact = get_predicted_impact(policy_id, tenant_id)
                     if predicted_impact:
                         metrics = predicted_impact.get("metrics", {}) or {}
                         avg_utilization_change = float(
-                            metrics.get("utilization_change_pct", 0) or metrics.get("utilization_change", 0)
-                            or metrics.get("utilization_change_per_1k", 0) or 0
+                            metrics.get("utilization_change_pct", 0)
+                            or metrics.get("utilization_change", 0)
+                            or metrics.get("utilization_change_per_1k", 0)
+                            or 0
                         )
                         cost_change_pmpm = metrics.get("cost_change_pmpm") or metrics.get("cost_change", 0)
-                        avg_cost_impact = (float(cost_change_pmpm or 0)) * member_count
+                        avg_cost_impact = float(cost_change_pmpm or 0) * member_count
                 except Exception:
                     pass
-                eff = policy.get("effective_period") or {}
-                policy_effective_date = eff.get("start_date") if isinstance(eff, dict) else None
-                performance_data.append({
-                    "policy_id": policy_id,
-                    "policy_name": policy.get("name") or policy.get("policy_name", "Unknown"),
-                    "status": policy.get("status"),
-                    "observations_count": 0,
-                    "avg_utilization_change_pct": round(avg_utilization_change, 2),
-                    "avg_cost_impact": round(avg_cost_impact, 2),
-                    "avg_prediction_accuracy_pct": None,
-                    "is_predicted": bool(avg_cost_impact != 0 or avg_utilization_change != 0),
-                    "latest_observation_period_end": None,
-                    "policy_effective_date": policy_effective_date,
-                })
-        
-        # Sort by cost impact first (so non-zero shows in chart), then by utilization change
+                performance_data.append(
+                    {
+                        "policy_id": policy_id_str,
+                        "policy_name": policy.name or "Unknown",
+                        "status": policy.status,
+                        "observations_count": 0,
+                        "avg_utilization_change_pct": round(avg_utilization_change, 2),
+                        "avg_cost_impact": round(avg_cost_impact, 2),
+                        "avg_prediction_accuracy_pct": None,
+                        "is_predicted": bool(avg_cost_impact != 0 or avg_utilization_change != 0),
+                        "latest_observation_period_end": None,
+                        "policy_effective_date": policy_effective_date,
+                    }
+                )
+
         performance_data.sort(
-            key=lambda x: (abs(x.get("avg_cost_impact", 0) or 0), abs(x.get("avg_utilization_change_pct", 0) or 0)),
+            key=lambda x: (
+                abs(x.get("avg_cost_impact", 0) or 0),
+                abs(x.get("avg_utilization_change_pct", 0) or 0),
+            ),
             reverse=True,
         )
-        
         return performance_data
-        
+
     except Exception as e:
         import traceback
-        error_msg = str(e)
+
         traceback.print_exc()
-        # Return empty list instead of failing completely
-        print(f"Error loading policy performance: {error_msg}")
+        print(f"Error loading policy performance: {e}")
         return []

@@ -70,7 +70,7 @@ export default function BehaviorDashboard({ policyId }: BehaviorDashboardProps) 
 
   useEffect(() => {
     loadData()
-  }, [])
+  }, [policyId])
 
   const loadData = async () => {
     try {
@@ -80,8 +80,23 @@ export default function BehaviorDashboard({ policyId }: BehaviorDashboardProps) 
         apiClient.getBehaviorProfiles(),
         apiClient.getBehaviorClusters(),
       ])
-      setProfiles(Array.isArray(profilesData) ? profilesData : [])
-      setClusters(Array.isArray(clustersData) ? clustersData : [])
+      // Behavior signals are provider-level; when opened from a policy workspace,
+      // prefer clusters/profiles tagged with this policy_id if present.
+      const rawProfiles = Array.isArray(profilesData) ? profilesData : []
+      const rawClusters = Array.isArray(clustersData) ? clustersData : []
+      if (policyId) {
+        const scopedProfiles = rawProfiles.filter(
+          (p: any) => !p.policy_id || String(p.policy_id) === String(policyId)
+        )
+        const scopedClusters = rawClusters.filter(
+          (c: any) => !c.policy_id || String(c.policy_id) === String(policyId)
+        )
+        setProfiles(scopedProfiles.length ? scopedProfiles : rawProfiles)
+        setClusters(scopedClusters.length ? scopedClusters : rawClusters)
+      } else {
+        setProfiles(rawProfiles)
+        setClusters(rawClusters)
+      }
     } catch (err: any) {
       console.error('Failed to load behavior data:', err)
       setError(err.detail || err.message || 'Failed to load behavior data')

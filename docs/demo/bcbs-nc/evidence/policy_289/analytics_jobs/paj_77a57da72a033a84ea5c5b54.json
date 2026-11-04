@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_77a57da72a033a84ea5c5b54",
+  "policy_id": "dc7778d0-8dad-4d96-909b-ff7df89fe655",
+  "name": "Spinal Decompression Without Fusion Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "897b28929feb2e5e",
+  "started_at": "2026-11-04T13:18:18.242725+00:00",
+  "finished_at": "2026-11-04T13:18:18.242726+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

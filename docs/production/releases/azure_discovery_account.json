@@ -1,0 +1,16 @@
+{
+  "environmentName": "AzureCloud",
+  "homeTenantId": "8c6c7629-ffe0-44fd-8610-7ab93d8b90e4",
+  "id": "94a13dda-e607-413d-a0ef-d9501e71e506",
+  "isDefault": true,
+  "managedByTenants": [],
+  "name": "Azure subscription 1",
+  "state": "Enabled",
+  "tenantDefaultDomain": "nileshlalchandpatil23gmail.onmicrosoft.com",
+  "tenantDisplayName": "Default Directory",
+  "tenantId": "8c6c7629-ffe0-44fd-8610-7ab93d8b90e4",
+  "user": {
+    "name": "nileshlalchandpatil23@gmail.com",
+    "type": "user"
+  }
+}

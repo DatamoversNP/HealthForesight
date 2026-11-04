@@ -167,6 +167,12 @@ async def list_baselines_route(
     policy_id: Optional[UUID] = Query(None, description="Filter by policy_id. Use null for general baselines."),
     baseline_type: Optional[str] = Query(None, description="Filter by baseline_type: 'ROLLING', 'FIXED', 'GENERAL', 'POLICY_SPECIFIC'"),
     general_only: bool = Query(False, description="If true, return only general baselines (policy_id is null)"),
+    summary: bool = Query(False, description="If true, slim baseline_metrics (scalars only) for fast list views"),
+    latest_per_window: bool = Query(
+        True,
+        description="If true (default), one newest baseline per policy-or-general + window dates",
+    ),
+    limit: Optional[int] = Query(None, ge=1, le=5000, description="Optional max rows (default: all)"),
 ):
     """List all baselines for the current tenant
     
@@ -174,15 +180,17 @@ async def list_baselines_route(
     - general_only=true: Returns only general baselines (no policy_id)
     - policy_id=<uuid>: Returns only baselines for that policy
     - baseline_type: Filter by type (ROLLING, FIXED, GENERAL, POLICY_SPECIFIC)
+    - summary=true: Same schema; heavy metric nests omitted (use GET /baselines/{id} for full detail)
+    - latest_per_window=true (default): collapse duplicate refreshes for the same window
     """
-    # If general_only is requested, ensure policy_id is None
-    if general_only:
-        policy_id = None
-    
     baselines = list_baselines(
         tenant_id=current_user.tenant_id,
-        policy_id=policy_id,
+        policy_id=None if general_only else policy_id,
         baseline_type=baseline_type,
+        summary=summary,
+        limit=limit,
+        general_only=general_only,
+        latest_per_window=latest_per_window,
     )
     return [BaselineResponse(**b) for b in baselines]
 

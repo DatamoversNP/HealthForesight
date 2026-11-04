@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_2035222b0ca5632738ce0b87",
+  "policy_id": "1ae4aa5f-7bdd-435a-a8d2-828bf948bca1",
+  "name": "Emergency vs Urgent Care Cost Share Differential",
+  "evidence_pathway": "EMPIRICAL_COHORT",
+  "configuration_digest": "48d141f59aaf6153",
+  "started_at": "2026-11-04T13:18:18.231452+00:00",
+  "finished_at": "2026-11-04T13:18:18.231454+00:00",
+  "status": "EMPIRICAL_ELIGIBLE_QUEUED",
+  "duplicate_prevented": false,
+  "result": {
+    "cohort_count": 189682,
+    "message": "Preflight PASS \u2014 enqueue Celery/worker analytical services; not executed via bulk HTTP",
+    "next": "uepi_worker.tasks.policy_analytics_lifecycle_job"
+  },
+  "error": null
+}

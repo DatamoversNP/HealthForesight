@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_5f0b4a538e1b7f38f0d4f575",
+  "policy_id": "11218053-bdc0-569f-a415-fb61c5dcda37",
+  "name": "Infusion Site-of-Care Optimization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "2e553d9b51c33ace",
+  "started_at": "2026-11-04T13:18:18.234247+00:00",
+  "finished_at": "2026-11-04T13:18:18.234248+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

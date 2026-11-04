@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_5346352a6e723412c480a7af",
+  "policy_id": "5a9b27f6-e186-40ad-8b7e-0bd28e30f3f9",
+  "name": "Complex Case Management Program",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "58ef50d6f12267b0",
+  "started_at": "2026-11-04T13:18:18.228901+00:00",
+  "finished_at": "2026-11-04T13:18:18.228902+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

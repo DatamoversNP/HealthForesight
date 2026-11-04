@@ -1,0 +1,784 @@
+{
+  "batch": 5,
+  "generated_at": "2026-11-04T11:13:19.009552+00:00",
+  "n": 25,
+  "high": 25,
+  "fail": 0,
+  "results": [
+    {
+      "policy_id": "e8241516-9493-49f2-8fab-7208cb6eaa53",
+      "name": "Gender-Affirming Surgery Coverage Criteria",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 5,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:48:18.017702+00:00"
+    },
+    {
+      "policy_id": "6a322ff5-08cb-47cc-8a4e-ac4391286a45",
+      "name": "Gene Therapy One-Time High-Cost Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 5,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:49:48.526142+00:00"
+    },
+    {
+      "policy_id": "143c43fc-f4ba-4c69-80b6-3dd6bd8367cb",
+      "name": "GLP-1 Coverage Criteria for Obesity",
+      "policy_type": "STEP_THERAPY",
+      "status": "ACTIVE",
+      "batch": 5,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:51:19.765833+00:00"
+    },
+    {
+      "policy_id": "17415dd5-1a1a-4e82-959e-a1924cc9c121",
+      "name": "GLP-1 Step Therapy for Type 2 Diabetes",
+      "policy_type": "STEP_THERAPY",
+      "status": "ACTIVE",
+      "batch": 5,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:52:50.653576+00:00"
+    },
+    {
+      "policy_id": "6af40fde-2b70-43c0-90db-eef306f3badc",
+      "name": "Growth Hormone Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 5,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:54:23.523853+00:00"
+    },
+    {
+      "policy_id": "dedb13ab-fc24-447e-a53a-0034287a665b",
+      "name": "Hearing Aid Benefit and Replacement Cycle",
+      "policy_type": "COVERAGE",
+      "status": "ACTIVE",
+      "batch": 5,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:55:56.145663+00:00"
+    },
+    {
+      "policy_id": "f7d9efc7-2a22-4197-aeda-7fb830651990",
+      "name": "Hearing Aid Coverage Criteria",
+      "policy_type": "COVERAGE",
+      "status": "ACTIVE",
+      "batch": 5,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:57:34.635010+00:00"
+    },
+    {
+      "policy_id": "eea5fdd2-b04b-4dfb-9222-087946bcbe6e",
+      "name": "Heart Failure Disease Management Program",
+      "policy_type": "COMPOSITE",
+      "status": "ACTIVE",
+      "batch": 5,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:59:08.357201+00:00"
+    },
+    {
+      "policy_id": "e78ce5cf-a37b-4b8a-b66e-42fb44c15651",
+      "name": "Hepatitis C Direct-Acting Antiviral Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 5,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T06:00:48.931336+00:00"
+    },
+    {
+      "policy_id": "e59f2161-61c9-4656-95c8-5a0aba439cc0",
+      "name": "Hereditary Cancer Gene Panel Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 5,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T06:02:24.819262+00:00"
+    },
+    {
+      "policy_id": "704d748b-7bf5-4dbf-a3cc-d62edd43f434",
+      "name": "High-Risk Obstetrics Case Management Referral",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 5,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T06:04:05.648130+00:00"
+    },
+    {
+      "policy_id": "c8c59559-b4b7-4cdc-9b48-9efed253be2b",
+      "name": "HIV Antiretroviral Formulary Management",
+      "policy_type": "BENEFIT",
+      "status": "ACTIVE",
+      "batch": 5,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T06:05:47.565847+00:00"
+    },
+    {
+      "policy_id": "7e2ac9e6-7493-40c1-8bc3-7c4fe7347fdb",
+      "name": "Home Health Care Preference",
+      "policy_type": "SITE_OF_CARE",
+      "status": "ACTIVE",
+      "batch": 5,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T11:11:48.532947+00:00"
+    },
+    {
+      "policy_id": "961da9ed-a175-4746-bdf0-304e6b5ab071",
+      "name": "Home Health Episode Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 5,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T06:09:43.677416+00:00"
+    },
+    {
+      "policy_id": "b5d48dc5-2d6a-4a32-b3c7-54d4f9e77b77",
+      "name": "Home Infusion Preference",
+      "policy_type": "SITE_OF_CARE",
+      "status": "ACTIVE",
+      "batch": 5,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T06:11:13.985645+00:00"
+    },
+    {
+      "policy_id": "5f41b00f-0449-489a-b743-78ab2a92580b",
+      "name": "Home Oxygen Qualification Criteria",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 5,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T06:12:44.634668+00:00"
+    },
+    {
+      "policy_id": "75d2a776-fdb2-4fe6-b121-5b6d90611238",
+      "name": "Home Sleep Apnea Testing Preference",
+      "policy_type": "SITE_OF_CARE",
+      "status": "ACTIVE",
+      "batch": 5,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T06:15:51.074135+00:00"
+    },
+    {
+      "policy_id": "db5707ec-2db5-4243-a77e-0da91dada128",
+      "name": "Home Sleep Testing Before Facility PSG",
+      "policy_type": "SITE_OF_CARE",
+      "status": "ACTIVE",
+      "batch": 5,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T06:18:30.223916+00:00"
+    },
+    {
+      "policy_id": "9edcde99-8eda-451a-9147-d199b4f1635f",
+      "name": "Hospice Election and Concurrent Care Rules",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 5,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T06:20:26.941162+00:00"
+    },
+    {
+      "policy_id": "fa30b827-51b3-40cd-99f0-f75874910586",
+      "name": "Hospital-Acquired Condition Nonpayment",
+      "policy_type": "PAYMENT_POLICY",
+      "status": "ACTIVE",
+      "batch": 5,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T06:22:01.741509+00:00"
+    },
+    {
+      "policy_id": "4ea16ea6-9434-4c0d-b864-cfc9c06cc20a",
+      "name": "Hyperbaric Oxygen Therapy Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 5,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T06:23:33.062779+00:00"
+    },
+    {
+      "policy_id": "dbab1f6e-ca9a-459d-9091-3fc2a412cf47",
+      "name": "Hysterectomy Route Medical Necessity",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 5,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T11:13:18.958745+00:00"
+    },
+    {
+      "policy_id": "7ddaaeb7-2cc9-4502-b83f-643ba0097bb3",
+      "name": "IBD Biologic Step Therapy",
+      "policy_type": "STEP_THERAPY",
+      "status": "ACTIVE",
+      "batch": 5,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T06:28:46.772281+00:00"
+    },
+    {
+      "policy_id": "21bb31fe-4e0e-452f-989c-d2e35925539b",
+      "name": "Infertility Diagnostic Coverage Criteria",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 5,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T06:30:24.117385+00:00"
+    },
+    {
+      "policy_id": "875b5c39-f8ea-481c-ae79-3c59552362ab",
+      "name": "Infertility Treatment Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 5,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T06:32:00.024806+00:00"
+    }
+  ]
+}

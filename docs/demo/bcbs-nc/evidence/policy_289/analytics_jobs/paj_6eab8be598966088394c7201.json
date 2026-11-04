@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_6eab8be598966088394c7201",
+  "policy_id": "6361b65e-2455-4432-980c-6b0a4ff6157c",
+  "name": "Continuity of Medications During Appeal",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "192c816605c0b0ac",
+  "started_at": "2026-11-04T13:18:18.229188+00:00",
+  "finished_at": "2026-11-04T13:18:18.229189+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

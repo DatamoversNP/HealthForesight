@@ -1,0 +1,10 @@
+{
+  "document_id": "CONTINUITY_OF_MEDICATIONS_DURING_APPEAL_CODESET",
+  "policy_id": "6361b65e-2455-4432-980c-6b0a4ff6157c",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abContinuity of Medications During Appeal\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Administrative / regulatory process policy \u2014 not a procedure code schedule",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

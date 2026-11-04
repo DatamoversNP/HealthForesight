@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_b1a9442f1986d8c93756547f",
+  "policy_id": "258dc9fb-8530-4d18-9b49-5a42f46c3469",
+  "name": "MCG-Style Clinical Criteria for Inpatient Admissions",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "b8a12e8d96171312",
+  "started_at": "2026-11-04T13:18:18.235532+00:00",
+  "finished_at": "2026-11-04T13:18:18.235534+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "codeset_UNRESOLVED",
+      "definition_incomplete"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

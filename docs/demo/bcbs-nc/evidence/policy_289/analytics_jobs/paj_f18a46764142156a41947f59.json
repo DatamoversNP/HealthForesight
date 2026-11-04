@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_f18a46764142156a41947f59",
+  "policy_id": "1cfe61e2-3d69-4a5c-a31d-32d129bc338e",
+  "name": "Eating Disorder Level-of-Care Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "b50b66d4826f3bd9",
+  "started_at": "2026-11-04T13:18:18.230840+00:00",
+  "finished_at": "2026-11-04T13:18:18.230841+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

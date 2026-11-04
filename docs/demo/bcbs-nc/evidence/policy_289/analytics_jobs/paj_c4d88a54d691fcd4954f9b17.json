@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_c4d88a54d691fcd4954f9b17",
+  "policy_id": "8bb505a9-fd83-4954-b890-f1b18182679f",
+  "name": "Inpatient Concurrent Stay Review",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "6784656447be8492",
+  "started_at": "2026-11-04T13:18:18.234428+00:00",
+  "finished_at": "2026-11-04T13:18:18.234430+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

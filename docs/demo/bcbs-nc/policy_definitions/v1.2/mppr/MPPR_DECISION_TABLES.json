@@ -1,0 +1,148 @@
+{
+  "document_id": "HF-RP-PAY-MPPR-001-DECISION-TABLES",
+  "version": "v1.2.1-structural-controls",
+  "policy_id": "d0eeb370-df14-4478-8755-dad6c3a35a47",
+  "mechanism": "MULTIPLE_PROCEDURE_PAYMENT_REDUCTION",
+  "status": "DEFINITION_REVIEW_REQUIRED",
+  "operational_activation": "PROHIBITED",
+  "controls_ref": "../_controls/POLICY_ENGINEERING_CONTROLS_v1.md",
+  "mri_clinical_logic_copied": false,
+  "execution_modes": {
+    "OPERATIVE": {
+      "allowed": false,
+      "reason": "Rules/schedules unsigned; RELEASE_BLOCKERS open"
+    },
+    "SYNTHETIC_SIMULATION": {
+      "allowed": true,
+      "may_emit_operative_terminals": false
+    }
+  },
+  "outcomes": [
+    "NOT_APPLICABLE",
+    "MANUAL_SCOPE_REVIEW",
+    "PENDING_INFORMATION",
+    "CLINICAL_REVIEW_REQUIRED",
+    "ADVERSE_REVIEW_REQUIRED",
+    "APPROVED",
+    "ADVERSE_DETERMINATION_ISSUED",
+    "APPLY_EDIT"
+  ],
+  "outcome_semantics": {
+    "ADVERSE_REVIEW_REQUIRED": "Referral into adverse process \u2014 not a final denial",
+    "ADVERSE_DETERMINATION_ISSUED": "Completed adverse determination with reviewer, notice, appeal, timestamps, audit",
+    "APPLY_EDIT": "Payment/coding/site edit application \u2014 operative only when signed",
+    "STUDY_FINDING_ONLY": "Analytical/coverage study output \u2014 not enforcement"
+  },
+  "evaluation_order": [
+    "DT-ELIGIBILITY",
+    "DT-APPLICABILITY",
+    "DT-MECHANISM"
+  ],
+  "urgency_applicable": false,
+  "urgency_na_reason": "Claim payment reduction mechanism \u2014 no clinical UM urgency pathway; claim-priority clocks UNRESOLVED separately",
+  "invariants": [
+    "First match wins within ordered tables",
+    "Proposed/unsigned rules cannot emit operative terminals",
+    "ADVERSE_DETERMINATION_ISSUED requires full audit packet",
+    "Synthetic simulation must not persist as live determination",
+    "Do not copy MRI lumbar clinical criteria",
+    "Urgency N/A for this mechanism \u2014 documented"
+  ],
+  "tables": [
+    {
+      "table_id": "DT-ELIGIBILITY",
+      "ordered": true,
+      "branches": [
+        {
+          "id": "EL-01",
+          "when": "product_not_on_approved_schedule",
+          "outcome": "NOT_APPLICABLE"
+        },
+        {
+          "id": "EL-02",
+          "when": "eligibility_unresolved",
+          "outcome": "PENDING_INFORMATION"
+        },
+        {
+          "id": "EL-03",
+          "when": "eligibility_ok",
+          "next": "DT-APPLICABILITY"
+        }
+      ]
+    },
+    {
+      "table_id": "DT-APPLICABILITY",
+      "ordered": true,
+      "branches": [
+        {
+          "id": "AP-01",
+          "when": "code_or_site_out_of_band",
+          "outcome": "NOT_APPLICABLE"
+        },
+        {
+          "id": "AP-02",
+          "when": "mapping_ambiguous",
+          "outcome": "MANUAL_SCOPE_REVIEW",
+          "auto_deny": false,
+          "auto_impose": false
+        },
+        {
+          "id": "AP-03",
+          "when": "in_scope",
+          "next": "DT-MECHANISM"
+        }
+      ]
+    },
+    {
+      "table_id": "DT-MECHANISM",
+      "ordered": true,
+      "branches": [
+        {
+          "id": "ME-01",
+          "when": "execution_mode == OPERATIVE && rules_unapproved",
+          "outcome": "MANUAL_SCOPE_REVIEW",
+          "forbids": [
+            "APPROVED",
+            "ADVERSE_DETERMINATION_ISSUED",
+            "APPLY_EDIT"
+          ]
+        },
+        {
+          "id": "ME-02",
+          "when": "execution_mode == SYNTHETIC_SIMULATION",
+          "outcome": "APPLY_EDIT",
+          "class": "SYNTHETIC_FIXTURE",
+          "simulation_annotation": "Dry-run only \u2014 must not persist as member/provider determination",
+          "note": "reimbursement-mppr-v1 known-answer $600 / +$120 what-if"
+        },
+        {
+          "id": "ME-03",
+          "when": "execution_mode == OPERATIVE && signed_rules_met",
+          "outcome": "APPLY_EDIT",
+          "requires": [
+            "signed_schedule",
+            "authorized_actor"
+          ]
+        },
+        {
+          "id": "ME-04",
+          "when": "execution_mode == OPERATIVE && does_not_meet",
+          "outcome": "ADVERSE_REVIEW_REQUIRED",
+          "notes": "Referral only"
+        },
+        {
+          "id": "ME-05",
+          "when": "execution_mode == OPERATIVE && adverse_process_complete",
+          "outcome": "ADVERSE_DETERMINATION_ISSUED",
+          "requires": [
+            "reviewer_id",
+            "notice_ref",
+            "appeal_rights_ref",
+            "decided_at",
+            "audit_packet_id"
+          ]
+        }
+      ]
+    }
+  ]
+}

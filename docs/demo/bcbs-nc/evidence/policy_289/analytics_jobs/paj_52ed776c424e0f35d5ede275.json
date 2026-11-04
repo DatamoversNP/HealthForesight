@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_52ed776c424e0f35d5ede275",
+  "policy_id": "ec25e932-b9e1-411d-a6ff-021a1e35d033",
+  "name": "Behavioral Health Inpatient Concurrent Review",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "a2c65bf1795ddc8c",
+  "started_at": "2026-11-04T13:18:18.226616+00:00",
+  "finished_at": "2026-11-04T13:18:18.226617+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

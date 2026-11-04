@@ -1,0 +1,18 @@
+{
+  "job_id": "paj_cac9b6a3399c432180934348",
+  "policy_id": "b815e37b-98c9-40b4-8e17-b0821566fcaf",
+  "name": "Urgent Care Copay Increase",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "097b85b718c5c605",
+  "started_at": "2026-11-04T13:18:18.244489+00:00",
+  "finished_at": "2026-11-04T13:18:18.244491+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "scope.states"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

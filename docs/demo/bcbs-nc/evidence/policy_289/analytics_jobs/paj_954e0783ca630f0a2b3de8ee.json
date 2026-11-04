@@ -1,0 +1,16 @@
+{
+  "job_id": "paj_954e0783ca630f0a2b3de8ee",
+  "policy_id": "7ccbdad3-8688-4b4b-b21a-07c4877a9956",
+  "name": "Inpatient Concurrent and Continued-Stay Review Program",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "c2c47a3b19982866",
+  "started_at": "2026-11-04T13:18:18.234370+00:00",
+  "finished_at": "2026-11-04T13:18:18.234372+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

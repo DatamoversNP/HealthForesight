@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_ffc1dc0b0ac60362eccd0344",
+  "policy_id": "939c6be2-50b9-4d9a-8f4f-916caa8c2764",
+  "name": "Advanced Imaging Control Bundle",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "818192eb41922270",
+  "started_at": "2026-11-04T13:18:18.225699+00:00",
+  "finished_at": "2026-11-04T13:18:18.225701+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

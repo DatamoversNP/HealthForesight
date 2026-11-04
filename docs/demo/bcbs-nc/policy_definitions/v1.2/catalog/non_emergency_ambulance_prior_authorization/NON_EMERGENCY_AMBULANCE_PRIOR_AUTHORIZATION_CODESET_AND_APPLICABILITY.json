@@ -1,0 +1,32 @@
+{
+  "document_id": "NON_EMERGENCY_AMBULANCE_PRIOR_AUTHORIZATION_CODESET",
+  "policy_id": "37d49884-84d8-4dfe-b18a-9c2cdebc225b",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abNon-Emergency Ambulance Prior Authorization\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "HCPCS",
+      "code": "A0426",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "A0428",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "A0425",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Ground ambulance ALS/BLS non-emergency + mileage",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

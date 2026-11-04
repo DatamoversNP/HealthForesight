@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_3d13c49492b8740218051af5",
+  "policy_id": "04a80815-bf9d-4a6f-b01e-5a9f756f500e",
+  "name": "Timely Filing Limit \u2014 Provider Claims",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "7f913cedc1a653e7",
+  "started_at": "2026-11-04T13:18:18.243781+00:00",
+  "finished_at": "2026-11-04T13:18:18.243783+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

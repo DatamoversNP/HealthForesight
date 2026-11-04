@@ -1,0 +1,182 @@
+{
+  "batch": "batch_2_PRIOR_AUTH_UM_2_4",
+  "count": 2,
+  "mechanism_execution_success": 0,
+  "supported_lifecycle_complete": 2,
+  "baseline_pass": 0,
+  "prediction_pass": 2,
+  "observation_pass": 0,
+  "data_insufficient": 2,
+  "candidate_levers": 2,
+  "failed": 0,
+  "results": [
+    {
+      "policy_id": "42cf5e17-f0aa-4fb6-b28a-d8446330efc6",
+      "name": "Anti-Reflux Procedure Prior Authorization",
+      "archetype": "PRIOR_AUTH_UM",
+      "executed_at": "2026-11-04T11:25:56.986871+00:00",
+      "definition_complete": "PASS",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "package_version": "v1.2.0-representative-batch",
+      "configuration_digest": "e98cc367a187f08a",
+      "lever_runtime_state": "CANDIDATE_PERSISTED",
+      "code_count": 4,
+      "codes_sample": [
+        "43279",
+        "43280",
+        "43281",
+        "43282"
+      ],
+      "plan_mode": "EXECUTE_REPRESENTATIVE",
+      "plan_reason": "Representative execution; lever_state=CANDIDATE_PERSISTED",
+      "SCOPE_VALIDATED": "PASS",
+      "LEVERS_VALIDATED": "PASS",
+      "EXECUTION_INPUTS_READY": "PASS",
+      "BASELINE_STATUS": "DATA_INSUFFICIENT",
+      "PREDICTION_STATUS": "PASS",
+      "OBSERVATION_STATUS": "DATA_INSUFFICIENT",
+      "CAUSAL_FEASIBILITY_STATUS": "PASS",
+      "CAUSAL_ESTIMATE_STATUS": "DATA_INSUFFICIENT",
+      "WHAT_IF_STATUS": "NOT_APPLICABLE",
+      "VERDICT_STATUS": "DATA_INSUFFICIENT",
+      "PERSISTENCE_PASS": "PASS",
+      "UI_PASS": "NOT_RUN",
+      "DEMO_READY": "FAIL",
+      "RELEASE_BLOCKERS": [
+        "LEVERS_ARE_CANDIDATE_REPRESENTATIVE_DESIGN_NOT_OPERATIVE_APPROVED",
+        "OPERATIONAL_ACTIVATION_PROHIBITED"
+      ],
+      "evidence_classification": "REPRESENTATIVE_CANDIDATE",
+      "details": {
+        "baseline": {
+          "http": 400,
+          "elapsed_s": 34.0,
+          "baseline_id": null,
+          "total_claims": null,
+          "error": "{\"detail\":\"Failed to refresh baseline. No data available in database for baseline computation.\",\"status_code\":400}"
+        },
+        "predicted": {
+          "http": 200,
+          "elapsed_s": 14.5,
+          "error": null,
+          "keys": [
+            "policy_id",
+            "predicted_at",
+            "metrics",
+            "substitution_effects",
+            "provider_response",
+            "patient_response",
+            "baseline_reference",
+            "model_versions",
+            "warnings",
+            "limitations",
+            "confidence_intervals",
+            "ramp_up_projections"
+          ]
+        },
+        "observation": {
+          "error": "no IMPACT analysis"
+        },
+        "causal_feasibility": {
+          "http": 200,
+          "feasibility": "CAUSAL_DESIGN_POSSIBLE_DATA_INSUFFICIENT"
+        },
+        "causal_estimate": {
+          "http": 200
+        },
+        "workspace": {
+          "http": 200
+        }
+      },
+      "mechanism_execution_success": false,
+      "supported_lifecycle_complete": true,
+      "partial_prediction_without_cohort": true
+    },
+    {
+      "policy_id": "3ffebc5a-20c6-49fa-803e-8e9d2ac1cd0c",
+      "name": "Applied Behavior Analysis Prior Authorization",
+      "archetype": "PRIOR_AUTH_UM",
+      "executed_at": "2026-11-04T11:27:29.752623+00:00",
+      "definition_complete": "PASS",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "package_version": "v1.2.0-representative-batch",
+      "configuration_digest": "8b7d235bfcd8bcaa",
+      "lever_runtime_state": "CANDIDATE_PERSISTED",
+      "code_count": 8,
+      "codes_sample": [
+        "97151",
+        "97152",
+        "97153",
+        "97154",
+        "97155",
+        "97156",
+        "97157",
+        "97158"
+      ],
+      "plan_mode": "EXECUTE_REPRESENTATIVE",
+      "plan_reason": "Representative execution; lever_state=CANDIDATE_PERSISTED",
+      "SCOPE_VALIDATED": "PASS",
+      "LEVERS_VALIDATED": "PASS",
+      "EXECUTION_INPUTS_READY": "PASS",
+      "BASELINE_STATUS": "DATA_INSUFFICIENT",
+      "PREDICTION_STATUS": "PASS",
+      "OBSERVATION_STATUS": "DATA_INSUFFICIENT",
+      "CAUSAL_FEASIBILITY_STATUS": "PASS",
+      "CAUSAL_ESTIMATE_STATUS": "DATA_INSUFFICIENT",
+      "WHAT_IF_STATUS": "NOT_APPLICABLE",
+      "VERDICT_STATUS": "DATA_INSUFFICIENT",
+      "PERSISTENCE_PASS": "PASS",
+      "UI_PASS": "NOT_RUN",
+      "DEMO_READY": "FAIL",
+      "RELEASE_BLOCKERS": [
+        "LEVERS_ARE_CANDIDATE_REPRESENTATIVE_DESIGN_NOT_OPERATIVE_APPROVED",
+        "OPERATIONAL_ACTIVATION_PROHIBITED"
+      ],
+      "evidence_classification": "REPRESENTATIVE_CANDIDATE",
+      "details": {
+        "baseline": {
+          "http": 400,
+          "elapsed_s": 26.5,
+          "baseline_id": null,
+          "total_claims": null,
+          "error": "{\"detail\":\"Failed to refresh baseline. No data available in database for baseline computation.\",\"status_code\":400}"
+        },
+        "predicted": {
+          "http": 200,
+          "elapsed_s": 12.8,
+          "error": null,
+          "keys": [
+            "policy_id",
+            "predicted_at",
+            "metrics",
+            "substitution_effects",
+            "provider_response",
+            "patient_response",
+            "baseline_reference",
+            "model_versions",
+            "warnings",
+            "limitations",
+            "confidence_intervals",
+            "ramp_up_projections"
+          ]
+        },
+        "observation": {
+          "error": "no IMPACT analysis"
+        },
+        "causal_feasibility": {
+          "http": 200,
+          "feasibility": "CAUSAL_DESIGN_POSSIBLE_DATA_INSUFFICIENT"
+        },
+        "causal_estimate": {
+          "http": 200
+        },
+        "workspace": {
+          "http": 200
+        }
+      },
+      "mechanism_execution_success": false,
+      "supported_lifecycle_complete": true,
+      "partial_prediction_without_cohort": true
+    }
+  ]
+}

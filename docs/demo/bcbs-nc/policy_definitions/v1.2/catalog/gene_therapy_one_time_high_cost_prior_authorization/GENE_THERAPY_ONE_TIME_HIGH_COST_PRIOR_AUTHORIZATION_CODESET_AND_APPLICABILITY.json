@@ -1,0 +1,25 @@
+{
+  "document_id": "GENE_THERAPY_ONE_TIME_HIGH_COST_PRIOR_AUTHORIZATION_CODESET",
+  "policy_id": "6a322ff5-08cb-47cc-8a4e-ac4391286a45",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abGene Therapy One-Time High-Cost Prior Authorization\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "HCPCS",
+      "code": "J3399",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "J3398",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Gene therapy HCPCS anchors (partial)",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

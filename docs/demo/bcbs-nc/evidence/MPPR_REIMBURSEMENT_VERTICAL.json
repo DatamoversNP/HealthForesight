@@ -1,0 +1,118 @@
+{
+  "generated_at": "2026-11-03T10:10:06.489816+00:00",
+  "policy_id": "d0eeb370-df14-4478-8755-dad6c3a35a47",
+  "policy_name": "Multiple Procedure Payment Reduction",
+  "validation_class": "FULLY_VALIDATED_DEMO",
+  "known_answer": {
+    "passed": true,
+    "checks": {
+      "baseline_paid": true,
+      "post_policy_paid": true,
+      "payment_impact": true,
+      "multi_procedure_claims": true,
+      "secondary_lines_reduced": true,
+      "volume_effect_zero": true,
+      "price_equals_impact": true
+    },
+    "expected": {
+      "baseline_paid": 3150.0,
+      "post_policy_paid": 2550.0,
+      "payment_impact": 600.0,
+      "multi_procedure_claims": 2,
+      "secondary_lines_reduced": 3
+    },
+    "actual_totals": {
+      "line_count": 6,
+      "claim_count": 3,
+      "multi_procedure_claims": 2,
+      "secondary_lines_reduced": 3,
+      "volume_units": 6.0,
+      "baseline_allowed": 3150.0,
+      "baseline_paid": 3150.0,
+      "post_policy_paid": 2550.0,
+      "payment_impact": 600.0,
+      "payment_impact_pct": 19.0476,
+      "reconciliation": {
+        "volume_effect": 0.0,
+        "mix_effect": 0.0,
+        "price_effect": 600.0,
+        "residual": 0.0,
+        "identity": "payment_impact = price_effect (volume & mix held at 0)"
+      }
+    },
+    "calculation_version": "reimbursement-mppr-v1"
+  },
+  "baseline_id": "mppr-ka-baseline-reimbursement-mppr-v1",
+  "predicted_impact_id": "a692d6da-5fcd-4671-a357-73493bba5970",
+  "observation_id": "mppr-ka-obs-reimbursement-mppr-v1",
+  "verdict": "ON_TRACK",
+  "what_if": {
+    "scenario_name": "MPPR secondary rate 40% vs 50%",
+    "calculation_version": "reimbursement-mppr-v1",
+    "base_secondary_pct": 0.5,
+    "alt_secondary_pct": 0.4,
+    "base": {
+      "line_count": 6,
+      "claim_count": 3,
+      "multi_procedure_claims": 2,
+      "secondary_lines_reduced": 3,
+      "volume_units": 6.0,
+      "baseline_allowed": 3150.0,
+      "baseline_paid": 3150.0,
+      "post_policy_paid": 2550.0,
+      "payment_impact": 600.0,
+      "payment_impact_pct": 19.0476,
+      "reconciliation": {
+        "volume_effect": 0.0,
+        "mix_effect": 0.0,
+        "price_effect": 600.0,
+        "residual": 0.0,
+        "identity": "payment_impact = price_effect (volume & mix held at 0)"
+      }
+    },
+    "alt": {
+      "line_count": 6,
+      "claim_count": 3,
+      "multi_procedure_claims": 2,
+      "secondary_lines_reduced": 3,
+      "volume_units": 6.0,
+      "baseline_allowed": 3150.0,
+      "baseline_paid": 3150.0,
+      "post_policy_paid": 2430.0,
+      "payment_impact": 720.0,
+      "payment_impact_pct": 22.8571,
+      "reconciliation": {
+        "volume_effect": 0.0,
+        "mix_effect": 0.0,
+        "price_effect": 720.0,
+        "residual": 0.0,
+        "identity": "payment_impact = price_effect (volume & mix held at 0)"
+      }
+    },
+    "delta_payment_impact": 120.0
+  },
+  "totals": {
+    "line_count": 6,
+    "claim_count": 3,
+    "multi_procedure_claims": 2,
+    "secondary_lines_reduced": 3,
+    "volume_units": 6.0,
+    "baseline_allowed": 3150.0,
+    "baseline_paid": 3150.0,
+    "post_policy_paid": 2550.0,
+    "payment_impact": 600.0,
+    "payment_impact_pct": 19.0476,
+    "reconciliation": {
+      "volume_effect": 0.0,
+      "mix_effect": 0.0,
+      "price_effect": 600.0,
+      "residual": 0.0,
+      "identity": "payment_impact = price_effect (volume & mix held at 0)"
+    }
+  },
+  "honesty": {
+    "catalog_class": "DEMO_SYNTHETIC",
+    "not_blue_cross_nc_proprietary": true,
+    "not_mri_utilization_formula": true
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "job_id": "paj_5e56ba9549f7298a21cdd9fb",
+  "policy_id": "2c14270f-aca3-4268-8562-235dce612e9f",
+  "name": "Occupational Therapy Annual Limit",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "916f6b8cef7330cb",
+  "started_at": "2026-11-04T13:18:18.237924+00:00",
+  "finished_at": "2026-11-04T13:18:18.237926+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "scope.states"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

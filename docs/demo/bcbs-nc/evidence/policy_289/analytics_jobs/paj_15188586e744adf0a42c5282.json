@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_15188586e744adf0a42c5282",
+  "policy_id": "54f3eb0f-60ff-4655-999b-ad555bd58344",
+  "name": "Manual Wheelchair Medical Necessity",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "83677b03830bbdf7",
+  "started_at": "2026-11-04T13:18:18.235228+00:00",
+  "finished_at": "2026-11-04T13:18:18.235230+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

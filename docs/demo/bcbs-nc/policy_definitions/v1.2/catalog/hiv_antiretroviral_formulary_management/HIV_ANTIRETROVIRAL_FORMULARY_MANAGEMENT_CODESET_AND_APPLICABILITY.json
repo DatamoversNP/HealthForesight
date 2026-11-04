@@ -1,0 +1,10 @@
+{
+  "document_id": "HIV_ANTIRETROVIRAL_FORMULARY_MANAGEMENT_CODESET",
+  "policy_id": "c8c59559-b4b7-4cdc-9b48-9efed253be2b",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abHIV Antiretroviral Formulary Management\u00bb",
+  "status": "UNRESOLVED",
+  "candidate_codes": [],
+  "notes": "ARV NDC formulary UNRESOLVED \u2014 do not invent",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

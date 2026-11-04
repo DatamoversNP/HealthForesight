@@ -1,0 +1,211 @@
+{
+  "archetype": "ADMINISTRATIVE",
+  "offset": 0,
+  "count": 20,
+  "candidate_schedule": 0,
+  "unresolved": 0,
+  "not_applicable": 20,
+  "persisted_ok": 0,
+  "results": [
+    {
+      "policy_id": "95725be2-26a7-4650-941c-a9cbaf48aadb",
+      "name": "ACA Essential Health Benefits Mapping",
+      "folder": "catalog/aca_essential_health_benefits_mapping",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "853115f4-b3a4-4efe-9cf2-428c674464d5",
+      "name": "Away-From-Home Care / Guest Membership Rules",
+      "folder": "catalog/away_from_home_care_guest_membership_rules",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "a652c0ea-34c0-4376-a8b4-e331a58e5f46",
+      "name": "BlueCard Home Plan Medical Policy Application",
+      "folder": "catalog/bluecard_home_plan_medical_policy_application",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "83a95c87-1821-4391-9311-59d1fc8d7853",
+      "name": "BlueCard Host Plan Local Rules Application",
+      "folder": "catalog/bluecard_host_plan_local_rules_application",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "4895b362-3a5d-4c74-9566-d6ba559a2949",
+      "name": "Concurrent DUR Safety Edits",
+      "folder": "catalog/concurrent_dur_safety_edits",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "6361b65e-2455-4432-980c-6b0a4ff6157c",
+      "name": "Continuity of Medications During Appeal",
+      "folder": "catalog/continuity_of_medications_during_appeal",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "23b6f767-95f2-4d5e-a0c0-aa00c334f363",
+      "name": "Documentation Requirement for High-Cost Services",
+      "folder": "catalog/documentation_requirement_for_high_cost_services",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "71f50c77-7ab7-49f9-a4c2-03fcb73ee3a0",
+      "name": "External Review / IRO Process",
+      "folder": "catalog/external_review_iro_process",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "1efc68c9-ac40-4fa0-bc3c-433f6ef3cf26",
+      "name": "Medicaid EPSDT Coverage Obligation",
+      "folder": "catalog/medicaid_epsdt_coverage_obligation",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "b8bfd79c-1790-4f3d-b019-189c59a81717",
+      "name": "Medical Records Request Standards",
+      "folder": "catalog/medical_records_request_standards",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "a9b7b4dc-9077-4aae-b221-8e74da571ab6",
+      "name": "Member Appeal and Grievance Timelines",
+      "folder": "catalog/member_appeal_and_grievance_timelines",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "f70c2bc6-eff4-426c-8970-69721ca9f21b",
+      "name": "Mental Health Parity Comparative Analysis Policy",
+      "folder": "catalog/mental_health_parity_comparative_analysis_policy",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "6e6a71ff-e0a3-4fe0-b4d7-32a82ed95f8c",
+      "name": "National Account Custom Benefit Administration",
+      "folder": "catalog/national_account_custom_benefit_administration",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "74517c19-82cd-4bca-b6b1-e046403df9f0",
+      "name": "No Surprises Act Emergency Services No-PA Rule",
+      "folder": "catalog/no_surprises_act_emergency_services_no_pa_rule",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "472286dc-090b-4ea9-b4aa-b33877c1a1e6",
+      "name": "North Carolina Mandated Benefit Administration",
+      "folder": "catalog/north_carolina_mandated_benefit_administration",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "b4f4e29e-130f-4310-8626-fa32625b9513",
+      "name": "Peer-to-Peer Review Opportunity Policy",
+      "folder": "catalog/peer_to_peer_review_opportunity_policy",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "21ead512-8fd6-490e-a679-0808693de1fb",
+      "name": "Prior Authorization Submission and Turnaround Standards",
+      "folder": "catalog/prior_authorization_submission_and_turnaround_standards",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "aa9f976a-cceb-49ed-8034-da80d3a3b5ef",
+      "name": "Provider Reconsideration / Dispute Process",
+      "folder": "catalog/provider_reconsideration_dispute_process",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "45e122d3-a3a7-4ed7-9fee-4472534ea14a",
+      "name": "Refill-Too-Soon Edit Policy",
+      "folder": "catalog/refill_too_soon_edit_policy",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "93b4929a-3d62-436e-8d3a-45f5bf55050f",
+      "name": "Retrospective Authorization Window",
+      "folder": "catalog/retrospective_authorization_window",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    }
+  ]
+}

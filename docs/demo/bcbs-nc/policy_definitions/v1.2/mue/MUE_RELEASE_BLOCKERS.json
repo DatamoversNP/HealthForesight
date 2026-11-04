@@ -1,0 +1,49 @@
+{
+  "document_id": "HF-RP-CODE-MUE-001-RELEASE-BLOCKERS",
+  "generated_at": "2026-11-03T15:32:32.189928+00:00",
+  "rule": "Hard release blockers \u2014 not informational warnings. Engineering must not self-clear.",
+  "blocks_operational_activation": true,
+  "blocker_count": 4,
+  "blockers": [
+    {
+      "id": "NCCI_MUE_AUTHORITATIVE_FILE_UNAVAILABLE",
+      "blocks": [
+        "VERIFIED_SOURCE MUE"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "MUE_*"
+    },
+    {
+      "id": "PRODUCT_SCHEDULE_UNRESOLVED",
+      "blocks": [
+        "activation"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "MUE_*"
+    },
+    {
+      "id": "SYNTHETIC_MUST_NOT_BE_LABELED_CMS",
+      "blocks": [
+        "production authority"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "MUE_*"
+    },
+    {
+      "id": "GUARDRAIL_THRESHOLDS_UNAPPROVED",
+      "blocks": [
+        "production monitoring"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "MUE_*"
+    }
+  ]
+}

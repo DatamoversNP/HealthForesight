@@ -44,6 +44,8 @@ def _build_engine():
         echo=getattr(settings.database, "echo", False),
         pool_pre_ping=True,
         pool_recycle=3600,
+        # Fail checkout promptly instead of hanging the caller (and event loop if sync).
+        pool_timeout=10,
         connect_args={
             "connect_timeout": 5,
             "options": f"-c statement_timeout={st_ms}",

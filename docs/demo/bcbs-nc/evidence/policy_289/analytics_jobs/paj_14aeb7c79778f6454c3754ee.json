@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_14aeb7c79778f6454c3754ee",
+  "policy_id": "404878f7-d266-4d5c-adaf-46168de3499c",
+  "name": "Remote Patient Monitoring Coverage Criteria",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "e130fa841d5097ad",
+  "started_at": "2026-11-04T13:18:18.241553+00:00",
+  "finished_at": "2026-11-04T13:18:18.241554+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

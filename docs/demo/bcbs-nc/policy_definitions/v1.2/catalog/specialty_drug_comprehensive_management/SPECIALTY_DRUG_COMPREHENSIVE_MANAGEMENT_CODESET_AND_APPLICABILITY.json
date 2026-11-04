@@ -1,0 +1,10 @@
+{
+  "document_id": "SPECIALTY_DRUG_COMPREHENSIVE_MANAGEMENT_CODESET",
+  "policy_id": "acd4be99-0a25-46b2-af2c-f02e10617779",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abSpecialty Drug Comprehensive Management\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Program/composite policy \u2014 constituent mechanisms configured separately",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

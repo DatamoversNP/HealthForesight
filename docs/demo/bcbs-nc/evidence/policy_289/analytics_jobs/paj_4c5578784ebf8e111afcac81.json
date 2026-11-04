@@ -1,0 +1,20 @@
+{
+  "job_id": "paj_4c5578784ebf8e111afcac81",
+  "policy_id": "140fc121-b6b9-4166-bf5d-e2dfe2ea69db",
+  "name": "Opioid Quantity Limit - Chronic Pain",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "31176e16241be93d",
+  "started_at": "2026-11-04T13:18:18.238773+00:00",
+  "finished_at": "2026-11-04T13:18:18.238775+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "scope.states",
+      "codeset_UNRESOLVED",
+      "definition_incomplete"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

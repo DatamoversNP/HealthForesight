@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_5a630e175d67d17dec45795b",
+  "policy_id": "9b632583-b59b-4a1d-8c63-d9e6eb8282fa",
+  "name": "Vision Hardware vs Medical Eye Disease",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "3f3e04ddf17d6cc8",
+  "started_at": "2026-11-04T13:18:18.244936+00:00",
+  "finished_at": "2026-11-04T13:18:18.244937+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

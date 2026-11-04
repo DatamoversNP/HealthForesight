@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_d1473e78ecbf5b946afd59c5",
+  "policy_id": "1f3c9863-1264-4a01-b3ba-deb7d433302c",
+  "name": "Diabetes Disease Management Program",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "8763c366c58b9ba0",
+  "started_at": "2026-11-04T13:18:18.230196+00:00",
+  "finished_at": "2026-11-04T13:18:18.230198+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

@@ -1,0 +1,32 @@
+{
+  "document_id": "UPPER_ENDOSCOPY_FREQUENCY_CRITERIA_CODESET",
+  "policy_id": "4f39ad90-52ea-4435-bbb0-8df4722c6010",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abUpper Endoscopy Frequency Criteria\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "43235",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "43239",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "43249",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "EGD diagnostic / biopsy / dilation",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

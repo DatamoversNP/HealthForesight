@@ -1,0 +1,59 @@
+{
+  "document_id": "HF-RP-COV-L34425-001-RELEASE-BLOCKERS",
+  "generated_at": "2026-11-03T15:32:32.189928+00:00",
+  "rule": "Hard release blockers \u2014 not informational warnings. Engineering must not self-clear.",
+  "blocks_operational_activation": true,
+  "blocker_count": 5,
+  "blockers": [
+    {
+      "id": "STUDY_NOT_OPERATIVE_ENFORCEMENT",
+      "blocks": [
+        "any live denial/approval from study alone"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "LCD_STUDY_*"
+    },
+    {
+      "id": "MUST_NOT_APPLY_TO_LUMBAR",
+      "blocks": [
+        "lumbar MRI inheritance"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "LCD_STUDY_*"
+    },
+    {
+      "id": "COMMERCIAL_ADOPTION_UNSIGNED",
+      "blocks": [
+        "commercial inheritance of LCD"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "LCD_STUDY_*"
+    },
+    {
+      "id": "PRODUCT_SCHEDULE_UNRESOLVED",
+      "blocks": [
+        "activation"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "LCD_STUDY_*"
+    },
+    {
+      "id": "GUARDRAIL_THRESHOLDS_UNAPPROVED",
+      "blocks": [
+        "production monitoring"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "LCD_STUDY_*"
+    }
+  ]
+}

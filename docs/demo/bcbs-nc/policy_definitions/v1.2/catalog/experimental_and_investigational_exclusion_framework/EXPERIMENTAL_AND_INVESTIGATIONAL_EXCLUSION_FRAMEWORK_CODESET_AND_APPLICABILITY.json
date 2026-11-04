@@ -1,0 +1,10 @@
+{
+  "document_id": "EXPERIMENTAL_AND_INVESTIGATIONAL_EXCLUSION_FRAMEWORK_CODESET",
+  "policy_id": "dde13087-5e41-45d2-9e51-21e6c42ce16c",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abExperimental and Investigational Exclusion Framework\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Framework policy \u2014 applies across investigational determinations",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

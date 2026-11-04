@@ -1,0 +1,784 @@
+{
+  "batch": 2,
+  "generated_at": "2026-11-04T11:05:22.408752+00:00",
+  "n": 25,
+  "high": 25,
+  "fail": 0,
+  "results": [
+    {
+      "policy_id": "f029e87f-4b1e-4934-91e6-6fd238da85c9",
+      "name": "Biosimilar Preferencing Policy",
+      "policy_type": "STEP_THERAPY",
+      "status": "ACTIVE",
+      "batch": 2,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T03:44:37.717314+00:00"
+    },
+    {
+      "policy_id": "0a81b63d-60c2-4065-afa2-747da296b468",
+      "name": "Blood Glucose Test Strip Step Therapy",
+      "policy_type": "STEP_THERAPY",
+      "status": "ACTIVE",
+      "batch": 2,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T03:46:19.225348+00:00"
+    },
+    {
+      "policy_id": "a652c0ea-34c0-4376-a8b4-e331a58e5f46",
+      "name": "BlueCard Home Plan Medical Policy Application",
+      "policy_type": "ADMINISTRATIVE_REQUIREMENT",
+      "status": "ACTIVE",
+      "batch": 2,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T03:47:59.520895+00:00"
+    },
+    {
+      "policy_id": "83a95c87-1821-4391-9311-59d1fc8d7853",
+      "name": "BlueCard Host Plan Local Rules Application",
+      "policy_type": "ADMINISTRATIVE_REQUIREMENT",
+      "status": "ACTIVE",
+      "batch": 2,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T03:49:36.719898+00:00"
+    },
+    {
+      "policy_id": "a86519ff-8aa4-4878-9fdf-da4ef87e6a4b",
+      "name": "Bone Densitometry Frequency Limits",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 2,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T03:51:10.970544+00:00"
+    },
+    {
+      "policy_id": "10b61f7d-ace5-4946-853f-ce9654f484ca",
+      "name": "Bone Growth Stimulator Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 2,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T03:52:45.914305+00:00"
+    },
+    {
+      "policy_id": "7b0cffd8-0171-4276-b458-ed913ab57695",
+      "name": "Breast MRI Medical Necessity Criteria",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 2,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T03:54:21.841527+00:00"
+    },
+    {
+      "policy_id": "cadc0e95-bcd7-43c7-ab5c-7524343b07d0",
+      "name": "Breast Reduction Medical Necessity",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 2,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T03:55:57.476284+00:00"
+    },
+    {
+      "policy_id": "a45b26ab-305a-485a-8e29-17735584aaff",
+      "name": "Bundled Payment for Joint Replacement",
+      "policy_type": "PAYMENT_POLICY",
+      "status": "ACTIVE",
+      "batch": 2,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T03:57:31.299888+00:00"
+    },
+    {
+      "policy_id": "3360b3cc-a24f-48a8-8529-b406ae56883c",
+      "name": "Bunion and Forefoot Elective Surgery Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 2,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T03:59:06.258137+00:00"
+    },
+    {
+      "policy_id": "9458bc86-990a-4a2e-9cec-facbc9e3fe27",
+      "name": "Cancer Clinical Trial Routine Cost Coverage",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 2,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T04:00:41.592852+00:00"
+    },
+    {
+      "policy_id": "787ea442-3c27-4a3d-8a19-6f103be70e2a",
+      "name": "Capsule Endoscopy Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 2,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T04:02:15.278005+00:00"
+    },
+    {
+      "policy_id": "ebc41eb8-b094-4884-989a-e7470a753676",
+      "name": "CAR-T and Cellular Therapy Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 2,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T11:05:22.360666+00:00"
+    },
+    {
+      "policy_id": "3e0b2ec4-217c-4d08-914d-015e9b8961d6",
+      "name": "Cardiac CT Angiography Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 2,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T04:05:53.719071+00:00"
+    },
+    {
+      "policy_id": "1c33a9d1-fe18-451e-94b6-70f191a403f8",
+      "name": "Cardiac Episode Bundle",
+      "policy_type": "PAYMENT_POLICY",
+      "status": "ACTIVE",
+      "batch": 2,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T04:07:25.726029+00:00"
+    },
+    {
+      "policy_id": "064c3a08-e3c4-4627-a701-7e83aaee2a52",
+      "name": "Cardiac Imaging Comprehensive Control",
+      "policy_type": "COMPOSITE",
+      "status": "ACTIVE",
+      "batch": 2,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T04:08:58.514004+00:00"
+    },
+    {
+      "policy_id": "c6c042ae-22ef-409c-bc4b-3b4e31ea5073",
+      "name": "Cardiac Implantable Device Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 2,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T04:10:31.669525+00:00"
+    },
+    {
+      "policy_id": "88347905-9f2c-4f96-9dfc-bf32c21a3358",
+      "name": "Cardiac Rehabilitation Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 2,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T04:12:05.618622+00:00"
+    },
+    {
+      "policy_id": "70fc68a8-a52f-4cf8-b650-802d82031728",
+      "name": "Cardiac Rehabilitation Session Limit",
+      "policy_type": "DURATION_FREQUENCY_LIMIT",
+      "status": "ACTIVE",
+      "batch": 2,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T04:13:38.579648+00:00"
+    },
+    {
+      "policy_id": "8600ecab-f671-4ef3-b8c6-e71846d44554",
+      "name": "Cardiac Stress Testing Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 2,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T04:15:14.110456+00:00"
+    },
+    {
+      "policy_id": "e87b67ff-d969-4f98-a823-86765ca1be33",
+      "name": "Cataract Surgery Second-Eye and Specialty Lens Rules",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 2,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T04:16:47.282035+00:00"
+    },
+    {
+      "policy_id": "7b7666c6-90fb-4a19-b7ea-581400fd405f",
+      "name": "Centers of Excellence Requirement \u2014 Bariatric",
+      "policy_type": "NETWORK_RESTRICTION",
+      "status": "ACTIVE",
+      "batch": 2,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T04:18:19.922773+00:00"
+    },
+    {
+      "policy_id": "8e4ff210-8d77-4b27-9a86-1e6f50986033",
+      "name": "Centers of Excellence Requirement \u2014 Complex Cancer",
+      "policy_type": "NETWORK_RESTRICTION",
+      "status": "ACTIVE",
+      "batch": 2,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T04:19:53.394759+00:00"
+    },
+    {
+      "policy_id": "cc2953d0-4d9c-4e92-8861-0b0683e7c0b5",
+      "name": "Centers of Excellence Requirement \u2014 Transplant",
+      "policy_type": "NETWORK_RESTRICTION",
+      "status": "ACTIVE",
+      "batch": 2,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T04:21:26.647634+00:00"
+    },
+    {
+      "policy_id": "100e5690-fa88-4537-9d92-3d14b1c2c126",
+      "name": "CGM and Diabetes Supply Quantity Limits",
+      "policy_type": "QUANTITY_LIMIT",
+      "status": "ACTIVE",
+      "batch": 2,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T04:22:59.158342+00:00"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_0485b0f8331323e54dc388e5",
+  "policy_id": "7b7666c6-90fb-4a19-b7ea-581400fd405f",
+  "name": "Centers of Excellence Requirement \u2014 Bariatric",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "ff2b7ef8e354b69d",
+  "started_at": "2026-11-04T13:18:18.228296+00:00",
+  "finished_at": "2026-11-04T13:18:18.228298+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_b6cd5adfe6a2bd28b42d8639",
+  "policy_id": "d9f83c02-fd70-41fa-b2c3-c93c103582eb",
+  "name": "Unbundling and Incidental Denial Policy",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "1f2875953ec9db09",
+  "started_at": "2026-11-04T13:18:18.244363+00:00",
+  "finished_at": "2026-11-04T13:18:18.244365+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "codeset_UNRESOLVED",
+      "definition_incomplete"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

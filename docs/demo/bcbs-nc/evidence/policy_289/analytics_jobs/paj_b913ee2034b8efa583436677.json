@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_b913ee2034b8efa583436677",
+  "policy_id": "aa6b351a-e174-4ced-8a5a-e19615f52cc2",
+  "name": "Non-Formulary Exception Review",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "4268cfab4340a220",
+  "started_at": "2026-11-04T13:18:18.237557+00:00",
+  "finished_at": "2026-11-04T13:18:18.237559+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

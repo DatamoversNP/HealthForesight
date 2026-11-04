@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_b0a58a9b487db965febbb161",
+  "policy_id": "50ce59e9-06e4-4391-9845-60f419d834e2",
+  "name": "Transition of Care Post-Discharge Program",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "b17e25767ab112ab",
+  "started_at": "2026-11-04T13:18:18.244029+00:00",
+  "finished_at": "2026-11-04T13:18:18.244030+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

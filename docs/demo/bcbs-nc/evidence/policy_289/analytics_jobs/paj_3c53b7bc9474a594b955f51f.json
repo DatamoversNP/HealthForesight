@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_3c53b7bc9474a594b955f51f",
+  "policy_id": "4fc8ae9e-51d8-47b2-a1f2-fee8697bf01e",
+  "name": "Private Duty Nursing Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "be6647f5ddb36576",
+  "started_at": "2026-11-04T13:18:18.240695+00:00",
+  "finished_at": "2026-11-04T13:18:18.240697+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

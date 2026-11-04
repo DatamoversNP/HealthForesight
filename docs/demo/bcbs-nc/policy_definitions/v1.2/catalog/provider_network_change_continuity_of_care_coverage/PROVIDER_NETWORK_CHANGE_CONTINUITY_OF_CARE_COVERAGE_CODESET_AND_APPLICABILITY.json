@@ -1,0 +1,10 @@
+{
+  "document_id": "PROVIDER_NETWORK_CHANGE_CONTINUITY_OF_CARE_COVERAGE_CODESET",
+  "policy_id": "535dfe9a-ca0a-4ad1-a252-ffe72a9d4df0",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abProvider Network Change Continuity of Care Coverage\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Continuity of care coverage rule",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

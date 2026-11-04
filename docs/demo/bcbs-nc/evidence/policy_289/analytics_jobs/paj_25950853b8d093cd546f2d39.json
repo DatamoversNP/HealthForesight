@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_25950853b8d093cd546f2d39",
+  "policy_id": "23b6f767-95f2-4d5e-a0c0-aa00c334f363",
+  "name": "Documentation Requirement for High-Cost Services",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "af552a78e4ad43dc",
+  "started_at": "2026-11-04T13:18:18.230573+00:00",
+  "finished_at": "2026-11-04T13:18:18.230575+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

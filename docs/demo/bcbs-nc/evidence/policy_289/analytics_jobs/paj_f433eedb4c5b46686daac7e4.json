@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_f433eedb4c5b46686daac7e4",
+  "policy_id": "ec24f241-f302-4a80-b44d-f758508d24db",
+  "name": "TMS Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "f234562afbf838d6",
+  "started_at": "2026-11-04T13:18:18.243840+00:00",
+  "finished_at": "2026-11-04T13:18:18.243841+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

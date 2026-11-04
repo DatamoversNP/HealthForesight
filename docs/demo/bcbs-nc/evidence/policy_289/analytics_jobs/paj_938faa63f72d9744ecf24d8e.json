@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_938faa63f72d9744ecf24d8e",
+  "policy_id": "ebb00492-841d-40f5-9d40-dbcfc50f47f1",
+  "name": "Oncology Infusion Site Steerage",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "638ce3311442ebd1",
+  "started_at": "2026-11-04T13:18:18.238504+00:00",
+  "finished_at": "2026-11-04T13:18:18.238506+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

@@ -31,6 +31,14 @@ class Observation(Base):
         Index("ix_observations_tenant_policy", "tenant_id", "policy_id"),
         Index("ix_observations_period", "observation_period_start", "observation_period_end"),
         Index("ix_observations_type", "observation_type"),
+        # Latest-per-policy list path — also created by migration 011
+        Index(
+            "ix_observations_tenant_policy_period_end",
+            "tenant_id",
+            "policy_id",
+            "observation_period_end",
+            "computed_at",
+        ),
     )
     
     id = Column(PGUUID(as_uuid=True), primary_key=True, default=uuid4)

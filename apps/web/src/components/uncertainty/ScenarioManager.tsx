@@ -83,13 +83,15 @@ export default function ScenarioManager({ policyId }: ScenarioManagerProps) {
 
   useEffect(() => {
     loadScenarios()
-  }, [])
+  }, [policyId])
 
   const loadScenarios = async () => {
     try {
       setLoading(true)
       setError(null)
-      const data = await apiClient.getScenarios()
+      const data = await apiClient.getScenarios(
+        policyId ? { policy_id: policyId } : undefined
+      )
       setScenarios(Array.isArray(data) ? data : [])
     } catch (err: any) {
       console.error('Failed to load scenarios:', err)
@@ -178,6 +180,7 @@ export default function ScenarioManager({ policyId }: ScenarioManagerProps) {
         parameters: formData.parameters,
         sensitivity_parameters: formData.sensitivity_parameters,
         results: {}, // Will be populated by backend
+        ...(policyId ? { policy_id: policyId } : {}),
       }
 
       await apiClient.createScenario(scenarioData)

@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_a4bedca91a64a23a48b73806",
+  "policy_id": "70fc68a8-a52f-4cf8-b650-802d82031728",
+  "name": "Cardiac Rehabilitation Session Limit",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "b3914919d16507d6",
+  "started_at": "2026-11-04T13:18:18.228100+00:00",
+  "finished_at": "2026-11-04T13:18:18.228102+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

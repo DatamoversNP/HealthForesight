@@ -1,7 +1,7 @@
 /**
  * Analysis Workspace Page - Enhanced with Cohort Builder
  */
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import {
   Box,
   Button,
@@ -31,6 +31,8 @@ import {
   FormControl,
   InputLabel,
 } from '@mui/material'
+import ListFilterBar from '../components/common/ListFilterBar'
+import PolicyAutocomplete from '../components/common/PolicyAutocomplete'
 import {
   Add as AddIcon,
   Refresh as RefreshIcon,
@@ -93,15 +95,49 @@ export default function AnalysisWorkspacePage() {
     run_substitution: false,
     run_provider_segmentation: false,
   })
+  const [listSearch, setListSearch] = useState('')
+  const [listStatus, setListStatus] = useState('')
+  const [listType, setListType] = useState('')
+  const [listPolicyId, setListPolicyId] = useState('')
 
   useEffect(() => {
     loadAnalyses()
     loadPolicies()
   }, [])
 
+  const policyNameById = useMemo(() => {
+    const m: Record<string, string> = {}
+    for (const p of policies) {
+      if (p?.id) m[String(p.id)] = p.name || String(p.id)
+    }
+    return m
+  }, [policies])
+
+  const filteredAnalyses = useMemo(() => {
+    const q = listSearch.trim().toLowerCase()
+    return analyses.filter((a) => {
+      if (listStatus && a.status !== listStatus) return false
+      if (listType && a.analysis_type !== listType) return false
+      if (listPolicyId && String(a.policy_id) !== listPolicyId) return false
+      if (!q) return true
+      const pname = policyNameById[String(a.policy_id)] || ''
+      const hay = `${pname} ${a.policy_id} ${a.analysis_type} ${a.status}`.toLowerCase()
+      return hay.includes(q)
+    })
+  }, [analyses, listSearch, listStatus, listType, listPolicyId, policyNameById])
+
+  const analysisStatusOptions = useMemo(
+    () => Array.from(new Set(analyses.map((a) => a.status).filter(Boolean))).sort(),
+    [analyses]
+  )
+  const analysisTypeOptions = useMemo(
+    () => Array.from(new Set(analyses.map((a) => a.analysis_type).filter(Boolean))).sort(),
+    [analyses]
+  )
+
   const loadPolicies = async () => {
     try {
-      const data = await apiClient.getPolicies()
+      const data = await apiClient.getPolicies({ limit: 1000 })
       const policiesList = Array.isArray(data) ? data : (data.items || [])
       setPolicies(policiesList)
     } catch (err: any) {
@@ -382,59 +418,121 @@ export default function AnalysisWorkspacePage() {
               </Button>
             </Paper>
           ) : (
-            <TableContainer component={Paper}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Policy ID</TableCell>
-                    <TableCell>Type</TableCell>
-                    <TableCell>Status</TableCell>
-                    <TableCell>Created</TableCell>
-                    <TableCell align="right">Actions</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {analyses.map((analysis) => (
-                    <TableRow
-                      key={analysis.id}
-                      hover
-                      onClick={() => {
-                        setSelectedAnalysis(analysis)
-                        setTabValue(1)
-                      }}
-                      sx={{ cursor: 'pointer' }}
-                    >
-                      <TableCell>{analysis.policy_id}</TableCell>
-                      <TableCell>
-                        <Chip label={analysis.analysis_type} size="small" />
-                      </TableCell>
-                      <TableCell>
-                        <Chip
-                          label={analysis.status}
-                          color={analysis.status === 'COMPLETED' ? 'success' : 'default'}
-                          size="small"
-                        />
-                      </TableCell>
-                      <TableCell>
-                        {format(new Date(analysis.created_at), 'MMM d, yyyy')}
-                      </TableCell>
-                      <TableCell align="right">
-                        <Button
-                          size="small"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            setSelectedAnalysis(analysis)
-                            setTabValue(1)
-                          }}
-                        >
-                          View
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+            <>
+              <Paper sx={{ overflow: 'hidden' }}>
+                <ListFilterBar
+                  search={listSearch}
+                  onSearchChange={setListSearch}
+                  searchLabel="Search analyses"
+                  searchPlaceholder="Policy, type, status…"
+                  shown={filteredAnalyses.length}
+                  total={analyses.length}
+                  onClear={() => {
+                    setListSearch('')
+                    setListStatus('')
+                    setListType('')
+                    setListPolicyId('')
+                  }}
+                  clearDisabled={!listSearch && !listStatus && !listType && !listPolicyId}
+                >
+                  <Box sx={{ minWidth: 200, flex: '1 1 180px', bgcolor: 'background.paper', borderRadius: 1 }}>
+                    <PolicyAutocomplete
+                      policies={policies}
+                      value={listPolicyId}
+                      label="Policy"
+                      onChange={setListPolicyId}
+                    />
+                  </Box>
+                  <FormControl size="small" sx={{ minWidth: 130, bgcolor: 'background.paper' }}>
+                    <InputLabel>Type</InputLabel>
+                    <Select label="Type" value={listType} onChange={(e) => setListType(e.target.value)}>
+                      <MenuItem value="">All</MenuItem>
+                      {analysisTypeOptions.map((t) => (
+                        <MenuItem key={t} value={t}>
+                          {t}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  <FormControl size="small" sx={{ minWidth: 130, bgcolor: 'background.paper' }}>
+                    <InputLabel>Status</InputLabel>
+                    <Select label="Status" value={listStatus} onChange={(e) => setListStatus(e.target.value)}>
+                      <MenuItem value="">All</MenuItem>
+                      {analysisStatusOptions.map((s) => (
+                        <MenuItem key={s} value={s}>
+                          {s}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </ListFilterBar>
+                <TableContainer sx={{ maxHeight: '60vh' }}>
+                  <Table stickyHeader size="small">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Policy</TableCell>
+                        <TableCell>Type</TableCell>
+                        <TableCell>Status</TableCell>
+                        <TableCell>Created</TableCell>
+                        <TableCell align="right">Actions</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {filteredAnalyses.length === 0 ? (
+                        <TableRow>
+                          <TableCell colSpan={5} align="center">
+                            <Typography color="text.secondary" sx={{ py: 2 }}>
+                              No analyses match these filters.
+                            </Typography>
+                          </TableCell>
+                        </TableRow>
+                      ) : (
+                        filteredAnalyses.map((analysis) => (
+                          <TableRow
+                            key={analysis.id}
+                            hover
+                            onClick={() => {
+                              setSelectedAnalysis(analysis)
+                              setTabValue(1)
+                            }}
+                            sx={{ cursor: 'pointer' }}
+                          >
+                            <TableCell>
+                              {policyNameById[String(analysis.policy_id)] || analysis.policy_id}
+                            </TableCell>
+                            <TableCell>
+                              <Chip label={analysis.analysis_type} size="small" />
+                            </TableCell>
+                            <TableCell>
+                              <Chip
+                                label={analysis.status}
+                                color={analysis.status === 'COMPLETED' ? 'success' : 'default'}
+                                size="small"
+                              />
+                            </TableCell>
+                            <TableCell>
+                              {format(new Date(analysis.created_at), 'MMM d, yyyy')}
+                            </TableCell>
+                            <TableCell align="right">
+                              <Button
+                                size="small"
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  setSelectedAnalysis(analysis)
+                                  setTabValue(1)
+                                }}
+                              >
+                                View
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      )}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Paper>
+            </>
           )}
         </>
       )}
@@ -590,20 +688,13 @@ export default function AnalysisWorkspacePage() {
         <DialogTitle>Create Impact Analysis</DialogTitle>
         <DialogContent>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: 1 }}>
-            <FormControl fullWidth required>
-              <InputLabel>Policy</InputLabel>
-              <Select
-                value={formData.policy_id}
-                label="Policy"
-                onChange={(e) => setFormData({ ...formData, policy_id: e.target.value })}
-              >
-                {policies.map((policy) => (
-                  <MenuItem key={policy.id} value={policy.id}>
-                    {policy.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+            <PolicyAutocomplete
+              policies={policies}
+              value={formData.policy_id}
+              label="Policy"
+              allowAll={false}
+              onChange={(id) => setFormData({ ...formData, policy_id: id })}
+            />
             <TextField
               label="Pre Window (months)"
               type="number"

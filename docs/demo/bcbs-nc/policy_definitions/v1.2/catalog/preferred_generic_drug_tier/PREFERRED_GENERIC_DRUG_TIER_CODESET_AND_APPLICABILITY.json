@@ -1,0 +1,10 @@
+{
+  "document_id": "PREFERRED_GENERIC_DRUG_TIER_CODESET",
+  "policy_id": "d1bffe1f-683f-4086-a873-7d1bcf4fa059",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abPreferred Generic Drug Tier\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Formulary tier design \u2014 NDC/GCN not CPT",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

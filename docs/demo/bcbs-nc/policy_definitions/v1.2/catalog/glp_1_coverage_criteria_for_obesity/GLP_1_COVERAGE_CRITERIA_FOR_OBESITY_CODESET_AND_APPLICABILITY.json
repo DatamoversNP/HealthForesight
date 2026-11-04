@@ -1,0 +1,18 @@
+{
+  "document_id": "GLP_1_COVERAGE_CRITERIA_FOR_OBESITY_CODESET",
+  "policy_id": "143c43fc-f4ba-4c69-80b6-3dd6bd8367cb",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abGLP-1 Coverage Criteria for Obesity\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "HCPCS",
+      "code": "J3490",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "GLP-1 obesity products \u2014 specific NDCs UNRESOLVED; class PA only",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

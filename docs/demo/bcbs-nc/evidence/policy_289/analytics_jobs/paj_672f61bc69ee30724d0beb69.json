@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_672f61bc69ee30724d0beb69",
+  "policy_id": "e101da7e-8c98-4b56-a931-70443af24316",
+  "name": "Medical-Dental Crossover Trauma Policy",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "0079afec6d02edbe",
+  "started_at": "2026-11-04T13:18:18.235933+00:00",
+  "finished_at": "2026-11-04T13:18:18.235935+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

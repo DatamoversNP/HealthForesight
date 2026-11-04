@@ -47,6 +47,7 @@ class ForecastCreate(BaseModel):
     uncertainty_range: Optional[Dict[str, Any]] = None
     confidence_interval: Optional[Dict[str, Any]] = None
     distribution_data: Optional[Dict[str, Any]] = None
+    policy_id: Optional[str] = None
 
 
 class SensitivityParameterCreate(BaseModel):
@@ -62,6 +63,7 @@ class ScenarioCreate(BaseModel):
     parameters: Dict[str, float] = {}
     sensitivity_parameters: List[SensitivityParameterCreate] = []
     results: Optional[Dict[str, Any]] = None  # Metric -> forecast data
+    policy_id: Optional[str] = None
 
 
 class ScenarioUpdate(BaseModel):
@@ -102,6 +104,10 @@ async def create_forecast_endpoint(
     try:
         forecast_dict = forecast_data.model_dump(exclude_none=True)
         forecast_dict["created_at"] = datetime.utcnow().isoformat()
+        if forecast_dict.get("policy_id"):
+            forecast_dict["policy_id"] = str(
+                convert_policy_id_to_uuid(str(forecast_dict["policy_id"]), current_user.tenant_id)
+            )
         
         forecast = create_forecast(
             tenant_id=current_user.tenant_id,
@@ -116,12 +122,17 @@ async def create_forecast_endpoint(
 async def list_forecasts_endpoint(
     current_user: Annotated[CurrentUser, Depends(get_demo_current_user)],
     metric_name: Optional[str] = Query(None),
+    policy_id: Optional[str] = Query(None),
 ):
-    """List all forecasts for the current tenant"""
+    """List all forecasts for the current tenant (optionally scoped to a policy)"""
     try:
+        policy_uuid = (
+            convert_policy_id_to_uuid(policy_id, current_user.tenant_id) if policy_id else None
+        )
         forecasts = list_forecasts(
             tenant_id=current_user.tenant_id,
             metric_name=metric_name,
+            policy_id=policy_uuid,
         )
         return [f.model_dump(mode='json', exclude_none=True) for f in forecasts]
     except Exception as e:
@@ -159,6 +170,10 @@ async def create_scenario_endpoint(
     try:
         scenario_dict = scenario_data.model_dump(exclude_none=True)
         scenario_dict["created_at"] = datetime.utcnow().isoformat()
+        if scenario_dict.get("policy_id"):
+            scenario_dict["policy_id"] = str(
+                convert_policy_id_to_uuid(str(scenario_dict["policy_id"]), current_user.tenant_id)
+            )
         
         scenario = create_scenario(
             tenant_id=current_user.tenant_id,
@@ -173,12 +188,17 @@ async def create_scenario_endpoint(
 async def list_scenarios_endpoint(
     current_user: Annotated[CurrentUser, Depends(get_demo_current_user)],
     scenario_name: Optional[str] = Query(None),
+    policy_id: Optional[str] = Query(None),
 ):
-    """List all scenarios for the current tenant"""
+    """List all scenarios for the current tenant (optionally scoped to a policy)"""
     try:
+        policy_uuid = (
+            convert_policy_id_to_uuid(policy_id, current_user.tenant_id) if policy_id else None
+        )
         scenarios = list_scenarios(
             tenant_id=current_user.tenant_id,
             scenario_name=scenario_name,
+            policy_id=policy_uuid,
         )
         return [s.model_dump(mode='json', exclude_none=True) for s in scenarios]
     except Exception as e:

@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_431c226382c98281d8423a86",
+  "policy_id": "6634c873-73b0-4a60-8a96-a01d690f1898",
+  "name": "Maximum Wait Time for Specialist Appointments",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "b98d3e76a6352631",
+  "started_at": "2026-11-04T13:18:18.235417+00:00",
+  "finished_at": "2026-11-04T13:18:18.235418+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

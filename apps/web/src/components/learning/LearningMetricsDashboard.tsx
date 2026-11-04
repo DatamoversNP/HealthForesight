@@ -71,8 +71,16 @@ export const LearningMetricsDashboard: React.FC<LearningMetricsDashboardProps> =
         console.warn('Failed to load elasticity models:', e)
       }
     } catch (err: any) {
-      setError(err.message || 'Failed to load learning metrics')
-      console.error('Error loading learning metrics:', err)
+      const timedOut =
+        err?.code === 'ECONNABORTED' ||
+        err?.message?.includes('timeout') ||
+        err?.status === 0
+      setError(
+        timedOut
+          ? 'Learning metrics timed out — skip this panel for the demo walkthrough.'
+          : err.message || 'Failed to load learning metrics'
+      )
+      if (!timedOut) console.error('Error loading learning metrics:', err)
     } finally {
       setLoading(false)
     }

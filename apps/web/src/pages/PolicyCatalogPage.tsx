@@ -1,7 +1,7 @@
 /**
  * Policy Catalog Page
  */
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Box,
@@ -29,6 +29,7 @@ import {
   InputLabel,
   Tabs,
   Tab,
+  Autocomplete,
 } from '@mui/material'
 import {
   Add as AddIcon,
@@ -55,6 +56,13 @@ import { TraceabilityDisplay } from '../components/common/TraceabilityDisplay'
 import { LearningMetricsDashboard } from '../components/learning/LearningMetricsDashboard'
 import PolicyScopeDisplay from '../components/policy/PolicyScopeDisplay'
 import TourButton from '../components/tour/TourButton'
+import ListFilterBar from '../components/common/ListFilterBar'
+import {
+  CATALOG_POLICY_TYPES,
+  formatPolicyTypeLabel,
+  policyTypesMatch,
+  uniquePolicyTypeOptions,
+} from '../lib/policyType'
 
 interface Policy {
   id: string
@@ -68,13 +76,7 @@ interface Policy {
   scope?: any
 }
 
-const POLICY_TYPES = [
-  'PRIOR_AUTH',
-  'SITE_OF_CARE',
-  'COVERAGE',
-  'STEP_THERAPY',
-  'BENEFIT',
-]
+const POLICY_TYPES = [...CATALOG_POLICY_TYPES]
 
 export default function PolicyCatalogPage() {
   const navigate = useNavigate()
@@ -100,55 +102,86 @@ export default function PolicyCatalogPage() {
   const [dialogTab, setDialogTab] = useState(0)
   const [refreshStatuses, setRefreshStatuses] = useState<Record<string, any>>({})
   const [selectedPolicy, setSelectedPolicy] = useState<Policy | null>(null)
+  const [searchTerm, setSearchTerm] = useState('')
+  const [filterType, setFilterType] = useState<string>('')
+  const [filterStatus, setFilterStatus] = useState<string>('')
+  const [filterOwner, setFilterOwner] = useState<string>('')
+  const [jumpPolicy, setJumpPolicy] = useState<Policy | null>(null)
+  const [highlightPolicyId, setHighlightPolicyId] = useState<string | null>(null)
+  const rowRefs = useRef<Record<string, HTMLTableRowElement | null>>({})
 
   useEffect(() => {
     loadPolicies()
   }, [])
 
-  // Load refresh statuses for all policies
-  useEffect(() => {
-    const loadRefreshStatuses = async () => {
-      if (!policies.length) return
+  const policyTypeOptions = useMemo(
+    () => uniquePolicyTypeOptions(policies.map((p) => p.policy_type), POLICY_TYPES),
+    [policies]
+  )
 
-      for (const policy of policies) {
-        try {
-          // Try to get predicted impact to check refresh status
-          const impact = await apiClient.getPolicyPredictedImpact(policy.id).catch(() => null)
-          if (impact?.computed_at) {
-            try {
-              const refreshStatus = await apiClient.getRefreshStatus({
-                entityType: 'prediction',
-                entityId: policy.id,
-                lastRefreshTimestamp: impact.computed_at,
-              })
-              setRefreshStatuses((prev) => ({
-                ...prev,
-                [policy.id]: refreshStatus,
-              }))
-            } catch (err) {
-              // Silently fail - refresh status is optional
-            }
-          }
-        } catch (err) {
-          // Silently fail - not all policies may have predicted impact
-        }
-      }
-    }
-
-    loadRefreshStatuses()
+  const statusOptions = useMemo(() => {
+    const set = new Set(policies.map((p) => (p.status || 'ACTIVE').trim().toUpperCase()).filter(Boolean))
+    return Array.from(set).sort()
   }, [policies])
+
+  const ownerOptions = useMemo(() => {
+    const set = new Set(
+      policies.map((p) => (p.owner_role || '').trim()).filter(Boolean)
+    )
+    return Array.from(set).sort((a, b) => a.localeCompare(b))
+  }, [policies])
+
+  const filteredPolicies = useMemo(() => {
+    const q = searchTerm.trim().toLowerCase()
+    return policies
+      .filter((p) => {
+        if (filterType && !policyTypesMatch(p.policy_type, filterType)) return false
+        if (filterStatus && (p.status || 'ACTIVE').trim().toUpperCase() !== filterStatus) return false
+        if (filterOwner && (p.owner_role || '').trim() !== filterOwner) return false
+        if (!q) return true
+        const hay = `${p.name || ''} ${p.description || ''} ${p.policy_type || ''} ${p.owner_role || ''}`.toLowerCase()
+        return hay.includes(q)
+      })
+      .sort((a, b) => String(a.name || '').localeCompare(String(b.name || '')))
+  }, [policies, searchTerm, filterType, filterStatus, filterOwner])
+
+  const clearFilters = () => {
+    setSearchTerm('')
+    setFilterType('')
+    setFilterStatus('')
+    setFilterOwner('')
+    setJumpPolicy(null)
+    setHighlightPolicyId(null)
+  }
+
+  const jumpToPolicy = (policy: Policy | null) => {
+    setJumpPolicy(policy)
+    if (!policy) {
+      setHighlightPolicyId(null)
+      return
+    }
+    // Align filters so the selected policy is visible
+    setSearchTerm('')
+    setFilterType(policy.policy_type || '')
+    setFilterStatus((policy.status || 'ACTIVE').toUpperCase())
+    setFilterOwner(policy.owner_role?.trim() || '')
+    setHighlightPolicyId(policy.id)
+    // Scroll after paint
+    requestAnimationFrame(() => {
+      const el = rowRefs.current[policy.id]
+      el?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    })
+  }
+
+  // Do NOT prefetch predicted-impact / refresh-status for every catalog row.
+  // That N× round-trip saturates Azure and times out the rest of the demo UI.
+  // Refresh status is loaded lazily when the user opens predicted impact for a policy.
 
   const loadPolicies = async () => {
     try {
       setLoading(true)
       setError(null)
-      const data = await apiClient.getPolicies()
-      console.log('DEBUG loadPolicies: Received data:', { 
-        type: typeof data, 
-        isArray: Array.isArray(data),
-        length: Array.isArray(data) ? data.length : (data?.items?.length || 'N/A'),
-        data: data 
-      })
+      const data = await apiClient.getPolicies({ limit: 1000 })
       // Hide retired seed/junk policies from the default catalog (demo-safe).
       const raw = Array.isArray(data) ? data : (data && Array.isArray(data.items) ? data.items : [])
       const visible = raw.filter((p: Policy) => (p.status || 'ACTIVE') !== 'RETIRED')
@@ -257,31 +290,19 @@ export default function PolicyCatalogPage() {
     setPredictedImpactDialogOpen(true)
     setDialogTab(0) // Reset to first tab
     setLoadingPredictedImpact(true)
+    setGeneratingPredictedImpact(false)
     setPredictedImpactError(null)
     setPredictedImpact(null)
     
     try {
       // First check if predicted impact is already in policy data
       let impact = policy?.predicted_impact || policy?.predictedImpact || null
-      
-      // If not in policy data, fetch it
-      if (!impact) {
-        try {
-          impact = await apiClient.getPolicyPredictedImpact(policyId)
-        } catch (fetchErr: any) {
-          // If 404, that's expected - predicted impact doesn't exist yet
-          if (fetchErr.status === 404 || fetchErr.response?.status === 404) {
-            setPredictedImpactError('Predicted impact not available for this policy. Click "Generate" to create it.')
-            setPredictedImpact(null)
-            return
-          }
-          throw fetchErr // Re-throw other errors
-        }
+      if (!apiClient.hasUsablePredictedImpact(impact)) {
+        impact = await apiClient.getPolicyPredictedImpact(policyId)
       }
       
-      // Validate impact has required structure
-      if (!impact || !impact.metrics) {
-        setPredictedImpactError('Predicted impact data is incomplete. Please regenerate.')
+      if (!apiClient.hasUsablePredictedImpact(impact)) {
+        setPredictedImpactError('Predicted impact not available for this policy. Click "Generate" to create it.')
         setPredictedImpact(null)
         return
       }
@@ -292,31 +313,31 @@ export default function PolicyCatalogPage() {
       }
       setPredictedImpact(impact)
 
-      // Check refresh status
+      // Check refresh status (non-blocking for display)
       if (impact?.computed_at) {
-        try {
-          const refreshStatus = await apiClient.getRefreshStatus({
+        apiClient
+          .getRefreshStatus({
             entityType: 'prediction',
             entityId: policyId,
             lastRefreshTimestamp: impact.computed_at,
           })
-          setRefreshStatuses((prev) => ({
-            ...prev,
-            [policyId]: refreshStatus,
-          }))
-        } catch (err) {
-          console.warn('Failed to check refresh status:', err)
-        }
+          .then((refreshStatus) => {
+            setRefreshStatuses((prev) => ({
+              ...prev,
+              [policyId]: refreshStatus,
+            }))
+          })
+          .catch(() => {})
       }
     } catch (err: any) {
-      console.error('Error loading predicted impact:', err)
       if (err.status === 404 || err.response?.status === 404) {
         setPredictedImpactError('Predicted impact not available for this policy. Click "Generate" to create it.')
-        setPredictedImpact(null) // Clear any partial data
+      } else if (err.code === 'ECONNABORTED' || err.status === 0) {
+        setPredictedImpactError('Timed out loading predicted impact. Retry in a moment — data is stored; the API was busy.')
       } else {
         setPredictedImpactError(err.detail || err.message || 'Failed to load predicted impact')
-        setPredictedImpact(null) // Clear any partial data
       }
+      setPredictedImpact(null)
     } finally {
       setLoadingPredictedImpact(false)
     }
@@ -333,7 +354,7 @@ export default function PolicyCatalogPage() {
 
   const handleGeneratePredictedImpact = async (policyId: string, showDialog: boolean = true) => {
     setSelectedPolicyId(policyId)
-    setPredictedImpactDialogOpen(true)
+    if (showDialog) setPredictedImpactDialogOpen(true)
     setGeneratingPredictedImpact(true)
     setLoadingPredictedImpact(true)
     setPredictedImpactError(null)
@@ -341,27 +362,31 @@ export default function PolicyCatalogPage() {
     setError(null)
     
     try {
-      // First try to get existing predicted impact
+      // Prefer existing stored prediction (do not treat empty/timeout as success)
       try {
         const existingImpact = await apiClient.getPolicyPredictedImpact(policyId)
-        setPredictedImpact(existingImpact)
-        setPredictedImpactError(null)
+        if (apiClient.hasUsablePredictedImpact(existingImpact)) {
+          setPredictedImpact(existingImpact)
+          setPredictedImpactError(null)
+          return
+        }
       } catch (getErr: any) {
-        // If 404, generate new predicted impact
-        if (getErr.status === 404) {
-          const impact = await apiClient.generatePolicyPredictedImpact(policyId)
-          setPredictedImpact(impact)
-          setPredictedImpactError(null)
-          // Reload policies to refresh the list
-          await loadPolicies()
-        } else {
-          // Other error, try to generate anyway
-          const impact = await apiClient.generatePolicyPredictedImpact(policyId)
-          setPredictedImpact(impact)
-          setPredictedImpactError(null)
-          await loadPolicies()
+        // Timeout → show retry; don't auto-generate (slow + can thrash Azure)
+        if (getErr?.code === 'ECONNABORTED' || getErr?.status === 0) {
+          setPredictedImpactError('Timed out loading predicted impact. Retry — generation is not required if it already exists.')
+          return
         }
       }
+      const impact = await apiClient.generatePolicyPredictedImpact(policyId)
+      if (!apiClient.hasUsablePredictedImpact(impact)) {
+        setPredictedImpactError('Generation finished but no usable metrics were returned.')
+        setPredictedImpact(null)
+        return
+      }
+      setPredictedImpact(impact)
+      setPredictedImpactError(null)
+      ;(apiClient as any)._policiesCache = null
+      await loadPolicies()
     } catch (err: any) {
       console.error('Error generating/loading predicted impact:', err)
       console.error('Error details:', JSON.stringify(err, null, 2))
@@ -520,7 +545,7 @@ export default function PolicyCatalogPage() {
         </Button>
       </Alert>
       
-      <Box className="policy-search-filters" sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', mb: 3, gap: 2, flexWrap: 'wrap' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', mb: 2, gap: 2, flexWrap: 'wrap' }}>
         <Button
           variant="outlined"
           startIcon={<BuildIcon />}
@@ -627,41 +652,156 @@ export default function PolicyCatalogPage() {
           </Box>
         </Paper>
       ) : (
-        <TableContainer component={Paper} className="policy-list">
-          <Table>
+        <Paper className="policy-list policy-search-filters" variant="outlined" sx={{ overflow: 'hidden' }}>
+          <ListFilterBar
+            search={searchTerm}
+            onSearchChange={setSearchTerm}
+            searchLabel="Search policies"
+            searchPlaceholder="Name, description, type…"
+            shown={filteredPolicies.length}
+            total={policies.length}
+            onClear={clearFilters}
+            clearDisabled={!searchTerm && !filterType && !filterStatus && !filterOwner && !jumpPolicy}
+          >
+            <Box sx={{ minWidth: 200, flex: '1 1 180px', bgcolor: 'background.paper', borderRadius: 1 }}>
+              <Autocomplete
+                size="small"
+                options={[...policies].sort((a, b) => String(a.name).localeCompare(String(b.name)))}
+                getOptionLabel={(p) => p.name || p.id}
+                value={jumpPolicy}
+                onChange={(_e, value) => jumpToPolicy(value)}
+                isOptionEqualToValue={(a, b) => a.id === b.id}
+                renderInput={(params) => (
+                  <TextField {...params} label="Jump to policy" placeholder="Pick a policy…" />
+                )}
+              />
+            </Box>
+            <FormControl size="small" sx={{ minWidth: 140, bgcolor: 'background.paper' }}>
+              <InputLabel>Type</InputLabel>
+              <Select
+                label="Type"
+                value={filterType}
+                onChange={(e) => setFilterType(e.target.value)}
+              >
+                <MenuItem value="">All types</MenuItem>
+                {policyTypeOptions.map((t) => (
+                  <MenuItem key={t} value={t}>
+                    {formatPolicyTypeLabel(t)}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl size="small" sx={{ minWidth: 130, bgcolor: 'background.paper' }}>
+              <InputLabel>Status</InputLabel>
+              <Select
+                label="Status"
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value)}
+              >
+                <MenuItem value="">All statuses</MenuItem>
+                {statusOptions.map((s) => (
+                  <MenuItem key={s} value={s}>
+                    {s}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl size="small" sx={{ minWidth: 140, bgcolor: 'background.paper' }} disabled={ownerOptions.length === 0}>
+              <InputLabel>Owner</InputLabel>
+              <Select
+                label="Owner"
+                value={filterOwner}
+                onChange={(e) => setFilterOwner(e.target.value)}
+              >
+                <MenuItem value="">All owners</MenuItem>
+                {ownerOptions.map((o) => (
+                  <MenuItem key={o} value={o}>
+                    {o}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </ListFilterBar>
+          {filteredPolicies.length === 0 ? (
+            <Box sx={{ p: 4, textAlign: 'center' }}>
+              <Typography variant="h6" color="text.secondary" gutterBottom>
+                No policies match these filters
+              </Typography>
+              <Button variant="outlined" onClick={clearFilters} sx={{ mt: 1 }}>
+                Clear filters
+              </Button>
+            </Box>
+          ) : (
+          <TableContainer sx={{ maxHeight: '70vh', overflowX: 'auto' }}>
+          <Table
+            stickyHeader
+            size="small"
+            sx={{
+              width: '100%',
+              tableLayout: 'fixed',
+              minWidth: 0,
+              '& .MuiTableCell-root': { py: 0.75, px: 1 },
+            }}
+          >
             <TableHead>
               <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>Type</TableCell>
-                <TableCell>Scope</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Description</TableCell>
-                <TableCell>Owner Role</TableCell>
-                <TableCell>Updated</TableCell>
-                <TableCell align="right">Actions</TableCell>
+                <TableCell sx={{ width: '22%' }}>Name</TableCell>
+                <TableCell sx={{ width: '14%' }}>Type</TableCell>
+                <TableCell sx={{ width: '16%' }}>Scope</TableCell>
+                <TableCell sx={{ width: '10%' }}>Status</TableCell>
+                <TableCell sx={{ width: '18%' }}>Description</TableCell>
+                <TableCell sx={{ width: '8%' }}>Updated</TableCell>
+                <TableCell
+                  align="right"
+                  sx={{
+                    width: 168,
+                    position: 'sticky',
+                    right: 0,
+                    bgcolor: 'background.paper',
+                    zIndex: 3,
+                    boxShadow: '-6px 0 8px -6px rgba(0,0,0,0.18)',
+                  }}
+                >
+                  Actions
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {policies.map((policy) => (
-                <TableRow key={policy.id} hover>
+              {filteredPolicies.map((policy) => (
+                <TableRow
+                  key={policy.id}
+                  hover
+                  selected={highlightPolicyId === policy.id}
+                  ref={(el) => {
+                    rowRefs.current[policy.id] = el
+                  }}
+                  sx={
+                    highlightPolicyId === policy.id
+                      ? { backgroundColor: 'action.selected' }
+                      : undefined
+                  }
+                >
                   <TableCell>
-                    <Typography variant="body2" fontWeight="medium">
+                    <Typography variant="body2" fontWeight="medium" noWrap title={policy.name}>
                       {policy.name}
                     </Typography>
                   </TableCell>
                   <TableCell>
                     <Chip
-                      label={policy.policy_type.replace(/_/g, ' ')}
+                      label={formatPolicyTypeLabel(policy.policy_type)}
                       color={getPolicyTypeColor(policy.policy_type)}
                       size="small"
+                      sx={{ maxWidth: '100%', '& .MuiChip-label': { overflow: 'hidden', textOverflow: 'ellipsis' } }}
                     />
                   </TableCell>
-                  <TableCell>
-                    <PolicyScopeDisplay
-                      scope={policy.scope || policy.logic?.scope || policy.metadata?.scope}
-                      compact
-                      showLabel={false}
-                    />
+                  <TableCell sx={{ overflow: 'hidden' }}>
+                    <Box sx={{ maxWidth: '100%', overflow: 'hidden', '& *': { maxWidth: '100%' } }}>
+                      <PolicyScopeDisplay
+                        scope={policy.scope || policy.logic?.scope || policy.metadata?.scope}
+                        compact
+                        showLabel={false}
+                      />
+                    </Box>
                   </TableCell>
                   <TableCell>
                     <Chip
@@ -672,28 +812,47 @@ export default function PolicyCatalogPage() {
                     />
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2" color="text.secondary" noWrap sx={{ maxWidth: 300 }}>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      noWrap
+                      title={policy.description || undefined}
+                    >
                       {policy.description || '-'}
                     </Typography>
                   </TableCell>
-                  <TableCell>{policy.owner_role || '-'}</TableCell>
                   <TableCell>
-                    {policy.updated_at ? (() => {
-                      try {
-                        const date = new Date(policy.updated_at);
-                        return isNaN(date.getTime()) ? 'N/A' : format(date, 'MMM d, yyyy');
-                      } catch {
-                        return 'N/A';
-                      }
-                    })() : 'N/A'}
+                    <Typography variant="body2" noWrap>
+                      {policy.updated_at ? (() => {
+                        try {
+                          const date = new Date(policy.updated_at);
+                          return isNaN(date.getTime()) ? 'N/A' : format(date, 'MMM d, yyyy');
+                        } catch {
+                          return 'N/A';
+                        }
+                      })() : 'N/A'}
+                    </Typography>
                   </TableCell>
-                  <TableCell align="right">
+                  <TableCell
+                    align="right"
+                    sx={{
+                      position: 'sticky',
+                      right: 0,
+                      bgcolor: highlightPolicyId === policy.id ? 'action.selected' : 'background.paper',
+                      zIndex: 1,
+                      whiteSpace: 'nowrap',
+                      boxShadow: '-6px 0 8px -6px rgba(0,0,0,0.12)',
+                      '.MuiTableRow-root:hover &': {
+                        bgcolor: highlightPolicyId === policy.id ? 'action.selected' : 'action.hover',
+                      },
+                    }}
+                  >
                     <IconButton
                       size="small"
-                      onClick={() => handleGeneratePredictedImpact(policy.id)}
-                      title="Generate/View Predicted Impact (Stage 3.5)"
+                      onClick={() => handleViewPredictedImpact(policy.id)}
+                      title="View Predicted Impact (Stage 3.5)"
                       color="info"
-                      disabled={generatingPredictedImpact && selectedPolicyId === policy.id}
+                      disabled={loadingPredictedImpact && selectedPolicyId === policy.id}
                     >
                       <PsychologyIcon fontSize="small" />
                     </IconButton>
@@ -746,6 +905,8 @@ export default function PolicyCatalogPage() {
             </TableBody>
           </Table>
         </TableContainer>
+          )}
+        </Paper>
       )}
 
       <Dialog open={dialogOpen} onClose={handleCloseDialog} maxWidth="md" fullWidth>

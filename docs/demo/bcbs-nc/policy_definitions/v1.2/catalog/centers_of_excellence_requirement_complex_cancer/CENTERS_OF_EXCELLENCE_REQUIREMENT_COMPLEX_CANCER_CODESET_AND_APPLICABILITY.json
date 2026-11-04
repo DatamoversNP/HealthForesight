@@ -1,0 +1,10 @@
+{
+  "document_id": "CENTERS_OF_EXCELLENCE_REQUIREMENT_COMPLEX_CANCER_CODESET",
+  "policy_id": "8e4ff210-8d77-4b27-9a86-1e6f50986033",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abCenters of Excellence Requirement \u2014 Complex Cancer\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Network / access / COE / referral rule \u2014 taxonomy/network IDs not CPT schedule",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

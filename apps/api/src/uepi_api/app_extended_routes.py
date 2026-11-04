@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 
 
 def path_skips_extended_loading(path: str) -> bool:
-    if path in ("/health", "/metrics", "/api/v1/ping"):
+    if path in ("/health", "/live", "/ready", "/metrics", "/api/v1/ping", "/api/v1/live", "/api/v1/ready"):
         return True
     if path.startswith("/api/v1/health"):
         return True
@@ -179,6 +179,12 @@ def register_extended_routes(app: FastAPI) -> None:
         from uepi_api.routers import data_generation
 
         app.include_router(data_generation.router, prefix="/api/v1", tags=["Data Generation"])
+
+        from uepi_api.routers import enterprise_intelligence
+
+        app.include_router(
+            enterprise_intelligence.router, prefix="/api/v1", tags=["Enterprise Intelligence"]
+        )
 
         app.state.extended_routes_loaded = True
         print("uepi_api: extended routers registered", flush=True)

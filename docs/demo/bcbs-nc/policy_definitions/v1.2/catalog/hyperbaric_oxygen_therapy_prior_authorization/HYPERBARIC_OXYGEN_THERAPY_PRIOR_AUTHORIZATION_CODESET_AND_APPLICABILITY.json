@@ -1,0 +1,25 @@
+{
+  "document_id": "HYPERBARIC_OXYGEN_THERAPY_PRIOR_AUTHORIZATION_CODESET",
+  "policy_id": "4ea16ea6-9434-4c0d-b864-cfc9c06cc20a",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abHyperbaric Oxygen Therapy Prior Authorization\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT/HCPCS",
+      "code": "99183",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT/HCPCS",
+      "code": "G0277",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "HBOT physician attendance / facility",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

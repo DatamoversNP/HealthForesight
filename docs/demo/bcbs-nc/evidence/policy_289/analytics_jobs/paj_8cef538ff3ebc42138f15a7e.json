@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_8cef538ff3ebc42138f15a7e",
+  "policy_id": "0a81b63d-60c2-4065-afa2-747da296b468",
+  "name": "Blood Glucose Test Strip Step Therapy",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "15ca45fb5d315e95",
+  "started_at": "2026-11-04T13:18:18.226860+00:00",
+  "finished_at": "2026-11-04T13:18:18.226861+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

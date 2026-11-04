@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_2eaa9a5749e1bab0d61463c3",
+  "policy_id": "7d2d7cff-ec16-4757-99cc-e855abe5de3c",
+  "name": "Oncology Genomic Profiling Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "f4ebb5d4b8200041",
+  "started_at": "2026-11-04T13:18:18.238328+00:00",
+  "finished_at": "2026-11-04T13:18:18.238331+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

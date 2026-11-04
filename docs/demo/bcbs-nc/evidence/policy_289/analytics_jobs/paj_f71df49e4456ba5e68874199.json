@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_f71df49e4456ba5e68874199",
+  "policy_id": "c82dbb4c-7fc0-477b-b69d-dbae6e85a5b8",
+  "name": "Medication Therapy Management Program",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "70baccd63de0f0e3",
+  "started_at": "2026-11-04T13:18:18.236141+00:00",
+  "finished_at": "2026-11-04T13:18:18.236142+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

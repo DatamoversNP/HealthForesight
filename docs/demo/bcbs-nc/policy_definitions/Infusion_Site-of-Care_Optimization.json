@@ -1,0 +1,240 @@
+{
+  "policy_id": "11218053-bdc0-569f-a415-fb61c5dcda37",
+  "name": "Infusion Site-of-Care Optimization",
+  "policy_type": "SITE_OF_CARE",
+  "status": "ACTIVE",
+  "description": "Steers eligible specialty infusion episodes from hospital outpatient (HOPD) to lower-cost ASC/office sites when clinically appropriate.",
+  "owner_role": null,
+  "metadata": {
+    "scope": {
+      "lob": [
+        "COMMERCIAL",
+        "MA",
+        "MEDICAID"
+      ],
+      "plans": null,
+      "states": [
+        "NC"
+      ],
+      "markets": [
+        "NC"
+      ],
+      "network": [
+        "IN"
+      ],
+      "regions": null,
+      "allowed_sites": [
+        "ASC_OR_OFFICE",
+        "HOPD"
+      ],
+      "applies_to_all": false,
+      "procedure_codes": [],
+      "service_categories": [
+        "INFUSION",
+        "SPECIALTY_DRUG"
+      ]
+    },
+    "domain": "Payment",
+    "policy_id": "11218053-bdc0-569f-a415-fb61c5dcda37",
+    "subdomain": "Site of care",
+    "apply_when": [],
+    "guardrails": [
+      {
+        "action": "alert",
+        "description": "Monitor successful infusion site-of-care redirections",
+        "metric_name": "site_of_care_redirect_rate",
+        "threshold_type": "min",
+        "threshold_value": 0.5
+      },
+      {
+        "action": "alert",
+        "description": "Alert if HOPD share of infusion episodes remains above 40%",
+        "metric_name": "hopd_infusion_share",
+        "threshold_type": "max",
+        "threshold_value": 0.4
+      }
+    ],
+    "assumptions": [
+      {
+        "value": "1800_per_steered_episode_fixture",
+        "source": "Infusion SOC known-answer fixture",
+        "confidence": 0.8,
+        "description": "HOPD to office steerage saves hospital\u2212office differential per episode",
+        "assumption_type": "COST"
+      },
+      {
+        "value": null,
+        "source": "Site-of-care quality assumption",
+        "confidence": 0.7,
+        "description": "Quality outcomes maintained at preferred sites for eligible members",
+        "assumption_type": "QUALITY"
+      },
+      {
+        "value": "2/3",
+        "source": "reimbursement-infusion-soc-v1",
+        "confidence": 0.75,
+        "description": "Not all HOPD episodes are steerable; fixture steers 2 of 3 HOPD lines",
+        "assumption_type": "BEHAVIOR"
+      }
+    ],
+    "enforcement": {
+      "mechanism": "SOFT",
+      "touchpoint": [
+        "PRIOR_AUTH",
+        "SITE_OF_CARE_REVIEW"
+      ],
+      "override_allowed": true
+    },
+    "jurisdiction": "NC",
+    "display_label": "Representative Payer Policies",
+    "policy_levers": [
+      {
+        "targets": {
+          "code_groups": [
+            "INFUSION_SPECIALTY"
+          ]
+        },
+        "lever_type": "SITE_OF_CARE",
+        "parameters": {
+          "preferred_sites": [
+            "ASC_OR_OFFICE"
+          ],
+          "hospital_allowed_when": "clinical_exception",
+          "office_allowed_amount": 3200.0
+        }
+      }
+    ],
+    "standards_basis": [
+      "Payer site-of-care optimization common practice",
+      "Hospital outpatient vs freestanding/office differential payment"
+    ],
+    "effective_period": {
+      "end_date": null,
+      "start_date": "2024-01-01T00:00:00"
+    },
+    "global_exceptions": [],
+    "analytical_strategy": {
+      "engine_id": null,
+      "mechanism": "SITE_OF_SERVICE_PAYMENT_DIFFERENTIAL"
+    },
+    "enterprise_classification": {
+      "mechanism": "SITE_OF_SERVICE_PAYMENT_DIFFERENTIAL",
+      "catalog_class": "DEMO_SYNTHETIC",
+      "sub_mechanism": null,
+      "dec4_expansion": true,
+      "validation_target": "FULLY_VALIDATED_DEMO",
+      "representative_payer": true,
+      "not_blue_cross_nc_proprietary": true
+    }
+  },
+  "assumptions_db": [
+    {
+      "assumption_type": "COST",
+      "description": "HOPD to office steerage saves hospital\u2212office differential per episode",
+      "value": "1800_per_steered_episode_fixture",
+      "source": "Infusion SOC known-answer fixture",
+      "confidence": 0.8
+    },
+    {
+      "assumption_type": "QUALITY",
+      "description": "Quality outcomes maintained at preferred sites for eligible members",
+      "value": null,
+      "source": "Site-of-care quality assumption",
+      "confidence": 0.7
+    },
+    {
+      "assumption_type": "BEHAVIOR",
+      "description": "Not all HOPD episodes are steerable; fixture steers 2 of 3 HOPD lines",
+      "value": "2/3",
+      "source": "reimbursement-infusion-soc-v1",
+      "confidence": 0.75
+    }
+  ],
+  "guardrails_db": [
+    {
+      "metric_name": "site_of_care_redirect_rate",
+      "threshold_type": "min",
+      "threshold_value": 0.5,
+      "action": "alert",
+      "description": "Monitor successful infusion site-of-care redirections"
+    },
+    {
+      "metric_name": "hopd_infusion_share",
+      "threshold_type": "max",
+      "threshold_value": 0.4,
+      "action": "alert",
+      "description": "Alert if HOPD share of infusion episodes remains above 40%"
+    }
+  ],
+  "versions": [
+    {
+      "version_number": 1,
+      "effective_start_date": "2024-01-01T00:00:00",
+      "effective_end_date": null,
+      "change_type": "INITIAL",
+      "enforcement_strength": "MODERATE",
+      "justification": "Dec 4 expansion synthetic demo version",
+      "version_metadata": {
+        "scope": {
+          "lob": [
+            "COMMERCIAL",
+            "MA",
+            "MEDICAID"
+          ],
+          "plans": null,
+          "states": [
+            "NC"
+          ],
+          "markets": [
+            "NC"
+          ],
+          "network": [
+            "IN"
+          ],
+          "regions": null,
+          "allowed_sites": [
+            "ASC_OR_OFFICE",
+            "HOPD"
+          ],
+          "applies_to_all": false,
+          "procedure_codes": [],
+          "service_categories": [
+            "INFUSION",
+            "SPECIALTY_DRUG"
+          ]
+        },
+        "state": "ACTIVE",
+        "mechanism": "SITE_OF_SERVICE_PAYMENT_DIFFERENTIAL",
+        "enforcement": {
+          "mechanism": "SOFT",
+          "touchpoint": [
+            "PRIOR_AUTH",
+            "SITE_OF_CARE_REVIEW"
+          ],
+          "override_allowed": true
+        },
+        "catalog_class": "DEMO_SYNTHETIC",
+        "policy_levers": [
+          {
+            "targets": {
+              "code_groups": [
+                "INFUSION_SPECIALTY"
+              ]
+            },
+            "lever_type": "SITE_OF_CARE",
+            "parameters": {
+              "preferred_sites": [
+                "ASC_OR_OFFICE"
+              ],
+              "hospital_allowed_when": "clinical_exception",
+              "office_allowed_amount": 3200.0
+            }
+          }
+        ]
+      },
+      "codes": []
+    }
+  ],
+  "medicare_source_links": [],
+  "generated_at": "2026-11-03T14:38:49.620116+00:00"
+}

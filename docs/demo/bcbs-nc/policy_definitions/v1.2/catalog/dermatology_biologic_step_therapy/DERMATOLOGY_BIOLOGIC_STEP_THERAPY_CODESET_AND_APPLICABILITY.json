@@ -1,0 +1,25 @@
+{
+  "document_id": "DERMATOLOGY_BIOLOGIC_STEP_THERAPY_CODESET",
+  "policy_id": "6dbbdca8-60c0-4867-92a2-808b003477e8",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abDermatology Biologic Step Therapy\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "HCPCS",
+      "code": "J3357",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "J0717",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Derm biologic J-code anchors (partial)",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

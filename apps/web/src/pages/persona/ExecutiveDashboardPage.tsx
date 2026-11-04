@@ -685,6 +685,8 @@ export default function ExecutiveDashboardPage() {
                       />
                     </ListItemIcon>
                     <ListItemText
+                      primaryTypographyProps={{ component: 'div' }}
+                      secondaryTypographyProps={{ component: 'div' }}
                       primary={
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                           <Typography variant="subtitle2" component="span" fontWeight={600}>
@@ -698,21 +700,19 @@ export default function ExecutiveDashboardPage() {
                         </Box>
                       }
                       secondary={
-                        <Box component="span" sx={{ mt: 0.5, display: 'block' }}>
-                          <Typography variant="body2" component="span" color="text.secondary" sx={{ display: 'block', mb: 0.5 }}>
+                        <Box sx={{ mt: 0.5 }}>
+                          <Typography variant="body2" color="text.secondary" sx={{ display: 'block', mb: 0.5 }}>
                             {risk.description || risk.message}
                           </Typography>
                           {risk.driver && (
-                            <Box component="span" sx={{ display: 'inline-block', mr: 0.5 }}>
-                              <Chip
-                                label={`Driver: ${risk.driver}`}
-                                size="small"
-                                sx={{ mt: 0.5 }}
-                              />
-                            </Box>
+                            <Chip
+                              label={`Driver: ${risk.driver}`}
+                              size="small"
+                              sx={{ mt: 0.5, mr: 0.5 }}
+                            />
                           )}
                           {risk.mitigation && (
-                            <Typography variant="caption" component="span" color="text.secondary" sx={{ display: 'block', mt: 0.5 }}>
+                            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5 }}>
                               <strong>Mitigation:</strong> {risk.mitigation}
                             </Typography>
                           )}
@@ -793,23 +793,23 @@ export default function ExecutiveDashboardPage() {
                     <Box key={idx}>
                       <ListItem>
                         <ListItemText
+                          primaryTypographyProps={{ component: 'div' }}
+                          secondaryTypographyProps={{ component: 'div' }}
                           primary={
                             <Typography variant="subtitle2" noWrap>
                               {policy.policy_name || 'Policy'}
                             </Typography>
                           }
                           secondary={
-                            <Box component="span" sx={{ display: 'block' }}>
-                              <Typography variant="caption" component="span" color="text.secondary" sx={{ display: 'block' }}>
+                            <Box>
+                              <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
                                 Cost: ${Math.abs(policy.avg_cost_impact || 0).toLocaleString()}
                               </Typography>
-                              <Typography variant="caption" component="span" color="text.secondary" sx={{ display: 'block' }}>
+                              <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
                                 Utilization: {Math.abs(policy.avg_utilization_change_pct || 0).toFixed(1)}%
                               </Typography>
                               {policy.is_predicted && (
-                                <Box component="span" sx={{ mt: 0.5, display: 'inline-block' }}>
-                                  <Chip label="Predicted" size="small" />
-                                </Box>
+                                <Chip label="Predicted" size="small" sx={{ mt: 0.5 }} />
                               )}
                             </Box>
                           }

@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_25495d3cd6c94bc4205648ab",
+  "policy_id": "280f62d7-7b49-40a0-9a47-862a4cf636e9",
+  "name": "Asthma and COPD Biologic Step Therapy",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "700d5749d8454c12",
+  "started_at": "2026-11-04T13:18:18.226236+00:00",
+  "finished_at": "2026-11-04T13:18:18.226238+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

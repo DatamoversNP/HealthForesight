@@ -1,0 +1,221 @@
+{
+  "archetype": "PAYMENT_REIMBURSEMENT",
+  "offset": 0,
+  "count": 21,
+  "candidate_schedule": 11,
+  "unresolved": 1,
+  "not_applicable": 9,
+  "persisted_ok": 0,
+  "results": [
+    {
+      "policy_id": "c09ab8fc-f4df-46f1-9cb7-e5e86cf1617d",
+      "name": "ACA Preventive Services Zero Cost Share",
+      "folder": "catalog/aca_preventive_services_zero_cost_share",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 6,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "1b8a6ad3-3753-4fba-90eb-f0d1b6ac7f00",
+      "name": "Advanced Imaging Member Cost Share Design",
+      "folder": "catalog/advanced_imaging_member_cost_share_design",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 3,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "b889bcf0-0c68-4950-bd24-4ac656ebe0ae",
+      "name": "Assistant Surgeon Payment Rules",
+      "folder": "catalog/assistant_surgeon_payment_rules",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 4,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "a45b26ab-305a-485a-8e29-17735584aaff",
+      "name": "Bundled Payment for Joint Replacement",
+      "folder": "catalog/bundled_payment_for_joint_replacement",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 2,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "1c33a9d1-fe18-451e-94b6-70f191a403f8",
+      "name": "Cardiac Episode Bundle",
+      "folder": "catalog/cardiac_episode_bundle",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 3,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "9d6b587a-584d-44ea-b156-672c2afb7bdb",
+      "name": "Coordination of Benefits Administration",
+      "folder": "catalog/coordination_of_benefits_administration",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "726212a1-47e2-4e33-94c0-13f855c6aa7c",
+      "name": "DRG Inpatient Payment Policy",
+      "folder": "catalog/drg_inpatient_payment_policy",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "1ae4aa5f-7bdd-435a-a8d2-828bf948bca1",
+      "name": "Emergency vs Urgent Care Cost Share Differential",
+      "folder": "catalog/emergency_vs_urgent_care_cost_share_differential",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 5,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "db345e39-73ba-4bde-9b04-0fdac8c4a7be",
+      "name": "Facility Fee Schedule and Bundled Payment Adjustments",
+      "folder": "catalog/facility_fee_schedule_and_bundled_payment_adjustments",
+      "codeset_status": "UNRESOLVED",
+      "code_count": 0,
+      "definition_status": "DEFINITION_INCOMPLETE_UNRESOLVED_CODESET",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "fa30b827-51b3-40cd-99f0-f75874910586",
+      "name": "Hospital-Acquired Condition Nonpayment",
+      "folder": "catalog/hospital_acquired_condition_nonpayment",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "1cd9d934-4d3d-4d7d-b49e-97edf3b5c448",
+      "name": "Maternity Episode Bundle",
+      "folder": "catalog/maternity_episode_bundle",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 2,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "d1bffe1f-683f-4086-a873-7d1bcf4fa059",
+      "name": "Preferred Generic Drug Tier",
+      "folder": "catalog/preferred_generic_drug_tier",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "b0d2714b-8bf5-40d4-a44e-8a9912ba6740",
+      "name": "Primary Care Shared Savings Quality Incentive Program",
+      "folder": "catalog/primary_care_shared_savings_quality_incentive_program",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "0a6f2596-15d2-47e1-a979-06e46a061fb3",
+      "name": "Related Readmission Payment Adjustment",
+      "folder": "catalog/related_readmission_payment_adjustment",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "6c9cac8c-65f6-4214-8d9d-50dcf5f98bda",
+      "name": "Telehealth Cost Sharing Parity",
+      "folder": "catalog/telehealth_cost_sharing_parity",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 5,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "27f6a2d1-7d74-420b-8102-0b1bfe37a309",
+      "name": "Telehealth Cost Sharing Parity Policy",
+      "folder": "catalog/telehealth_cost_sharing_parity_policy",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 5,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "4951238b-b979-4718-bfc7-4e57f2cd7b8e",
+      "name": "Third-Party Liability and Subrogation",
+      "folder": "catalog/third_party_liability_and_subrogation",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "04a80815-bf9d-4a6f-b01e-5a9f756f500e",
+      "name": "Timely Filing Limit \u2014 Provider Claims",
+      "folder": "catalog/timely_filing_limit_provider_claims",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "68a488b3-1e25-4e3f-aeea-9a45d3c53602",
+      "name": "Total Joint Replacement Episode Bundled Payment",
+      "folder": "catalog/total_joint_replacement_episode_bundled_payment",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 2,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "b815e37b-98c9-40b4-8e17-b0821566fcaf",
+      "name": "Urgent Care Copay Increase",
+      "folder": "catalog/urgent_care_copay_increase",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 2,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "ab3aa18a-45db-4a8d-a9fb-6e3f134b464b",
+      "name": "Value-Based Insurance Design Waivers",
+      "folder": "catalog/value_based_insurance_design_waivers",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    }
+  ]
+}

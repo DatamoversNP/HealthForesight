@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_fcd72f380578015a0941ae8c",
+  "policy_id": "95725be2-26a7-4650-941c-a9cbaf48aadb",
+  "name": "ACA Essential Health Benefits Mapping",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "49202bc8bea75534",
+  "started_at": "2026-11-04T13:18:18.225142+00:00",
+  "finished_at": "2026-11-04T13:18:18.225146+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

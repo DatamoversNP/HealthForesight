@@ -1,0 +1,18 @@
+{
+  "job_id": "paj_2341319c18bef887f73af94c",
+  "policy_id": "d1e25694-719d-428b-b5b5-329abb6147c0",
+  "name": "Biologic Step Therapy for Rheumatoid Arthritis",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "4d9e902ff9b4eb88",
+  "started_at": "2026-11-04T13:18:18.226739+00:00",
+  "finished_at": "2026-11-04T13:18:18.226740+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "scope.states"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

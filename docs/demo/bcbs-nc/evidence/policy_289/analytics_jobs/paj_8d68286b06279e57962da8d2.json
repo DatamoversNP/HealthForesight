@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_8d68286b06279e57962da8d2",
+  "policy_id": "8ba97008-9418-4579-94b3-360aae322d17",
+  "name": "Fertility Preservation with Oncology Coverage",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "5c6fe21f40dccdfb",
+  "started_at": "2026-11-04T13:18:18.232389+00:00",
+  "finished_at": "2026-11-04T13:18:18.232391+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

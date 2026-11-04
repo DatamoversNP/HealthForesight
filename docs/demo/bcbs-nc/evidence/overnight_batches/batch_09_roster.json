@@ -1,0 +1,206 @@
+{
+  "batch": 9,
+  "offset": 200,
+  "policies": [
+    {
+      "policy_id": "97c8760c-9fac-4fdf-872c-5fbe449d7ddc",
+      "name": "Pharmacogenomic Testing Coverage Criteria",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "3137bb4b-516d-44eb-b023-d5b891de1bd4",
+      "name": "Pharmacy Prior Authorization Program",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "9fb617a1-2718-47dd-995d-b4fe2a77ca3a",
+      "name": "Physical Therapy Visit Limit",
+      "policy_type": "DURATION_FREQUENCY_LIMIT",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "a48ca309-5f0d-4cf1-bda0-ccdbeccb0bfe",
+      "name": "Power Mobility Device Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "52e12f77-ddf0-4252-9ec9-04eccbbb9732",
+      "name": "Preferred Dialysis Network Policy",
+      "policy_type": "NETWORK_RESTRICTION",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "d1bffe1f-683f-4086-a873-7d1bcf4fa059",
+      "name": "Preferred Generic Drug Tier",
+      "policy_type": "COST_SHARING",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "c262b624-22ab-489d-81f2-f51fc0ac2d89",
+      "name": "Preferred Generic Drug Tier Design",
+      "policy_type": "BENEFIT",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "3daf6f28-4e94-4996-a26c-e92237d15aaf",
+      "name": "Preferred Laboratory Network Steerage",
+      "policy_type": "NETWORK_RESTRICTION",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "8fcee93e-ba2f-4aee-86c5-d0861232a0a4",
+      "name": "Preferred Pharmacy Network Policy",
+      "policy_type": "NETWORK_RESTRICTION",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "b0d2714b-8bf5-40d4-a44e-8a9912ba6740",
+      "name": "Primary Care Shared Savings Quality Incentive Program",
+      "policy_type": "VALUE_BASED_PAYMENT",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "21ead512-8fd6-490e-a679-0808693de1fb",
+      "name": "Prior Authorization Submission and Turnaround Standards",
+      "policy_type": "ADMINISTRATIVE_REQUIREMENT",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "4fc8ae9e-51d8-47b2-a1f2-fee8697bf01e",
+      "name": "Private Duty Nursing Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "60615c97-11f9-458c-880e-cb76ae3bd65a",
+      "name": "Prostate Procedure Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "a365b33c-f62a-44c3-acd7-5eb7a2a4c8b8",
+      "name": "Prosthetic Limb Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "3d1d4a09-c7ce-4935-ad95-b477831a1002",
+      "name": "Proton Beam Therapy Coverage Criteria",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "535dfe9a-ca0a-4ad1-a252-ffe72a9d4df0",
+      "name": "Provider Network Change Continuity of Care Coverage",
+      "policy_type": "CONTINUITY_OF_CARE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "aa9f976a-cceb-49ed-8034-da80d3a3b5ef",
+      "name": "Provider Reconsideration / Dispute Process",
+      "policy_type": "ADMINISTRATIVE_REQUIREMENT",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "6190a653-b9d5-4aec-ba49-58927eb13bb8",
+      "name": "Provider Specialty Eligibility for High-Cost Codes",
+      "policy_type": "PROVIDER_ELIGIBILITY",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "e27314e0-d0b8-4a36-af6e-ada8a1ebb04c",
+      "name": "Psychiatric Inpatient Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "c2b71847-7db9-4b1f-a328-48529f1b4c73",
+      "name": "Psychiatric Residential Treatment Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "f0ebff27-e3b9-4998-8d35-9cfe3c81d608",
+      "name": "Pulmonary Rehabilitation Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "5b976f98-6922-42a8-8175-5047c160ca9e",
+      "name": "Pulmonary Rehabilitation Session Limit",
+      "policy_type": "DURATION_FREQUENCY_LIMIT",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "778736a4-8a5a-44be-8c55-517797ff0ea5",
+      "name": "Radiation Therapy Modality Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "5f4e30e8-ee6f-4d6a-b88d-24b03e58ed48",
+      "name": "Readmission Relatedness Review",
+      "policy_type": "CLINICAL_CRITERIA",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "45e122d3-a3a7-4ed7-9fee-4472534ea14a",
+      "name": "Refill-Too-Soon Edit Policy",
+      "policy_type": "ADMINISTRATIVE_REQUIREMENT",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    }
+  ]
+}

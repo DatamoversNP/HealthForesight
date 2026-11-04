@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_80d6fe15ee1b3de1f2b51877",
+  "policy_id": "b5895596-41cb-4f48-9f82-72d5ac388ea2",
+  "name": "Transplant Evaluation and Listing Authorization",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "26aa9532282e1605",
+  "started_at": "2026-11-04T13:18:18.244094+00:00",
+  "finished_at": "2026-11-04T13:18:18.244096+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "codeset_UNRESOLVED",
+      "definition_incomplete"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

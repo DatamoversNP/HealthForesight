@@ -1,0 +1,244 @@
+{
+  "policy_id": "d7441dd9-3bfe-405e-ae6c-0377204bbb7e",
+  "name": "Freestanding Imaging Steerage",
+  "policy_type": "SITE_OF_CARE",
+  "status": "ACTIVE",
+  "description": "Steers advanced imaging to freestanding centers vs hospital outpatient when equivalent. Illustrative industry-standard program definition aligned with typical Blues / North Carolina payer UM structures. Not a verbatim Blue Cross NC medical policy, clinical guideline, or formulary row.",
+  "owner_role": "UM_LEADER",
+  "metadata": {
+    "scope": {
+      "lob": [
+        "COMMERCIAL",
+        "MA"
+      ],
+      "plans": null,
+      "states": [
+        "NC"
+      ],
+      "markets": [
+        "NC"
+      ],
+      "network": [
+        "IN"
+      ],
+      "regions": null,
+      "exclude_er": null,
+      "allowed_sites": null,
+      "network_tiers": null,
+      "product_types": null,
+      "applies_to_all": false,
+      "gender_filters": null,
+      "member_age_max": null,
+      "member_age_min": null,
+      "procedure_codes": [
+        "99213",
+        "99214",
+        "72148",
+        "72149"
+      ],
+      "exclude_pregnant": null,
+      "service_categories": [
+        "PRIMARY_CARE",
+        "ADVANCED_IMAGING"
+      ],
+      "exclude_hospital_op": null,
+      "provider_specialties": null,
+      "exclude_provider_types": null,
+      "include_provider_types": null,
+      "exclude_centers_of_excellence": null
+    },
+    "domain": "Site of care",
+    "ui_hints": {
+      "elasticity_model": false,
+      "show_accumulator": false,
+      "require_warning_ack": false,
+      "show_compound_policy": false,
+      "show_site_comparison": false,
+      "show_financial_impact": false,
+      "show_substitution_warning": false
+    },
+    "subdomain": "Channel management",
+    "apply_when": [],
+    "guardrails": [
+      {
+        "action": "alert",
+        "description": "Alert if hospital outpatient share of eligible imaging remains above 50%",
+        "metric_name": "hospital_imaging_share",
+        "threshold_type": "max",
+        "threshold_value": 0.5
+      },
+      {
+        "action": "alert",
+        "description": "Alert if SOS payer savings fall below 5% of baseline paid",
+        "metric_name": "sos_payment_impact_pct",
+        "threshold_type": "min",
+        "threshold_value": 5.0
+      }
+    ],
+    "assumptions": [
+      {
+        "value": "hospital_pct_0.80_base",
+        "source": "reimbursement-sos-v1 known-answer",
+        "confidence": 0.85,
+        "description": "Hospital outpatient imaging paid at reduced % of allowed vs freestanding",
+        "assumption_type": "COST"
+      },
+      {
+        "value": "0",
+        "source": "Analytical strategy registry",
+        "confidence": 0.95,
+        "description": "Volume held constant \u2014 site differential is price/mix, not UM elasticity",
+        "assumption_type": "UTILIZATION"
+      },
+      {
+        "value": null,
+        "source": "Site-of-care quality assumption",
+        "confidence": 0.7,
+        "description": "Quality outcomes maintained at freestanding sites for eligible imaging",
+        "assumption_type": "QUALITY"
+      }
+    ],
+    "enforcement": {
+      "mechanism": "SOFT",
+      "touchpoint": [
+        "PRIOR_AUTH",
+        "SITE_OF_CARE_REVIEW"
+      ],
+      "override_allowed": true
+    },
+    "jurisdiction": "NC",
+    "policy_levers": [
+      {
+        "targets": {
+          "codes": [
+            "72148",
+            "72149"
+          ],
+          "code_type": "CPT",
+          "code_groups": []
+        },
+        "lever_type": "SITE_OF_CARE",
+        "parameters": {
+          "redirect_to": "FREESTANDING",
+          "allowed_sites": [
+            "FREESTANDING",
+            "OFFICE"
+          ],
+          "disallowed_sites": [
+            "HOSPITAL_OP"
+          ],
+          "deny_if_disallowed": false
+        }
+      }
+    ],
+    "standards_basis": [
+      "U.S. payer UM common practice",
+      "Blues-style medical/pharmacy program structure",
+      "CMS/ACA/MHPAEA concepts where noted by LOB"
+    ],
+    "effective_period": {
+      "end_date": null,
+      "start_date": "2026-01-01T00:00:00"
+    },
+    "global_exceptions": [],
+    "analytical_strategy": {
+      "engine_id": "reimbursement_sos_v1",
+      "mechanism": "SITE_OF_SERVICE_PAYMENT_DIFFERENTIAL",
+      "registry_version": "analytical-strategy-registry-v1",
+      "calculation_version": "reimbursement-sos-v1"
+    },
+    "analytics_expectations": null,
+    "enterprise_classification": {
+      "mechanism": "SITE_OF_SERVICE_PAYMENT_DIFFERENTIAL",
+      "stamped_at": "2026-11-03T09:07:04.414608Z",
+      "stamped_by": "stamp_catalog_classification.py",
+      "catalog_class": "DEMO_SYNTHETIC",
+      "display_label": "Representative Payer Policies",
+      "code_sets_status": "MISSING",
+      "provenance_status": "MISSING_AUTHORITATIVE_SOURCE",
+      "calculation_version": "reimbursement-sos-v1",
+      "data_classification": "illustrative_catalog",
+      "lifecycle_validation": "FULLY_VALIDATED_DEMO",
+      "catalog_accuracy_contract": {
+        "why": "Proprietary BCBS NC policy text is not publicly reproducible at 100% fidelity; mislabeling would reduce credibility",
+        "claim": "Industry-standard / Blues-aligned illustrative program catalog for NC-oriented demos",
+        "not_claiming": "Verbatim Blue Cross NC medical policies, CUMG text, or formulary NDC lists"
+      },
+      "not_verbatim_bcbsnc_policy": true,
+      "illustrative_standards_aligned": true,
+      "authoritative_source_reconciled": false
+    },
+    "expected_behavioral_response": null
+  },
+  "assumptions_db": [
+    {
+      "assumption_type": "COST",
+      "description": "Hospital outpatient imaging paid at reduced % of allowed vs freestanding",
+      "value": "hospital_pct_0.80_base",
+      "source": "reimbursement-sos-v1 known-answer",
+      "confidence": 0.85
+    },
+    {
+      "assumption_type": "UTILIZATION",
+      "description": "Volume held constant \u2014 site differential is price/mix, not UM elasticity",
+      "value": "0",
+      "source": "Analytical strategy registry",
+      "confidence": 0.95
+    },
+    {
+      "assumption_type": "QUALITY",
+      "description": "Quality outcomes maintained at freestanding sites for eligible imaging",
+      "value": null,
+      "source": "Site-of-care quality assumption",
+      "confidence": 0.7
+    }
+  ],
+  "guardrails_db": [
+    {
+      "metric_name": "hospital_imaging_share",
+      "threshold_type": "max",
+      "threshold_value": 0.5,
+      "action": "alert",
+      "description": "Alert if hospital outpatient share of eligible imaging remains above 50%"
+    },
+    {
+      "metric_name": "sos_payment_impact_pct",
+      "threshold_type": "min",
+      "threshold_value": 5.0,
+      "action": "alert",
+      "description": "Alert if SOS payer savings fall below 5% of baseline paid"
+    }
+  ],
+  "versions": [
+    {
+      "version_number": 1,
+      "effective_start_date": "2024-01-01T00:00:00",
+      "effective_end_date": null,
+      "change_type": "INITIAL",
+      "enforcement_strength": "MODERATE",
+      "justification": "Completed assumptions/guardrails/codes for Dec 4 reimbursement policy",
+      "version_metadata": {
+        "state": "ACTIVE"
+      },
+      "codes": [
+        {
+          "code_type": "CPT",
+          "code": "72148",
+          "code_group": "MRI"
+        },
+        {
+          "code_type": "CPT",
+          "code": "72149",
+          "code_group": "MRI"
+        },
+        {
+          "code_type": "CPT",
+          "code": "70553",
+          "code_group": "MRI"
+        }
+      ]
+    }
+  ],
+  "medicare_source_links": [],
+  "generated_at": "2026-11-03T14:38:42.802569+00:00"
+}

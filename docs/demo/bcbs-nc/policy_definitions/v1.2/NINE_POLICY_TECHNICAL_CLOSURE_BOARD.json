@@ -1,0 +1,132 @@
+{
+  "document_id": "HF-NINE-POLICY-TECHNICAL-CLOSURE-BOARD",
+  "generated_at": "2026-11-03T15:32:32.189928+00:00",
+  "rule": "MRI provisional closure does not imply the other eight have passed. Each policy has independent gates.",
+  "dimensions": {
+    "structural_technical_completeness": "per-policy validation report",
+    "analytical_validation": "FULLY_VALIDATED_DEMO independent where supported",
+    "operational_authorization": "RELEASE_BLOCKERS must be cleared + owner sign-off"
+  },
+  "constraints": {
+    "catalog_expansion": "FORBIDDEN_IN_THIS_WORKSTREAM",
+    "dec4_demo_fixtures": "DO_NOT_MODIFY",
+    "copy_mri_clinical_logic": "FORBIDDEN"
+  },
+  "policies": [
+    {
+      "folder": "mri",
+      "document_id": "HF-RP-UM-MRI-001",
+      "mechanism": "OUTPATIENT_MRI_PRIOR_AUTH_PROPOSED_LUMBAR",
+      "structural_technical_closure": "PROVISIONAL_PASS_SUBJECT_TO_INDEPENDENT_VERIFICATION",
+      "requirement_fails": [],
+      "release_blocker_count": 8,
+      "operational_activation": "PROHIBITED",
+      "clinical_product_approval": "WITHHELD",
+      "mri_clinical_logic_copied": false,
+      "frozen_reference_implementation": true
+    },
+    {
+      "folder": "mppr",
+      "document_id": "HF-RP-PAY-MPPR-001",
+      "mechanism": "MULTIPLE_PROCEDURE_PAYMENT_REDUCTION",
+      "structural_technical_closure": "CONTROLS_IN_PLACE_AWAITING_INDEPENDENT_VERIFICATION",
+      "requirement_fails": [],
+      "release_blocker_count": 5,
+      "operational_activation": "PROHIBITED",
+      "clinical_product_approval": "WITHHELD",
+      "mri_clinical_logic_copied": false
+    },
+    {
+      "folder": "sos",
+      "document_id": "HF-RP-SOC-IMG-001",
+      "mechanism": "FREESTANDING_IMAGING_STEERAGE",
+      "structural_technical_closure": "CONTROLS_IN_PLACE_AWAITING_INDEPENDENT_VERIFICATION",
+      "requirement_fails": [],
+      "release_blocker_count": 5,
+      "operational_activation": "PROHIBITED",
+      "clinical_product_approval": "WITHHELD",
+      "mri_clinical_logic_copied": false
+    },
+    {
+      "folder": "ptp",
+      "document_id": "HF-RP-CODE-PTP-001",
+      "mechanism": "NCCI_PTP_BUNDLING",
+      "structural_technical_closure": "CONTROLS_IN_PLACE_AWAITING_INDEPENDENT_VERIFICATION",
+      "requirement_fails": [],
+      "release_blocker_count": 4,
+      "operational_activation": "PROHIBITED",
+      "clinical_product_approval": "WITHHELD",
+      "mri_clinical_logic_copied": false
+    },
+    {
+      "folder": "mue",
+      "document_id": "HF-RP-CODE-MUE-001",
+      "mechanism": "NCCI_MUE_UNIT_CAP",
+      "structural_technical_closure": "CONTROLS_IN_PLACE_AWAITING_INDEPENDENT_VERIFICATION",
+      "requirement_fails": [],
+      "release_blocker_count": 4,
+      "operational_activation": "PROHIBITED",
+      "clinical_product_approval": "WITHHELD",
+      "mri_clinical_logic_copied": false
+    },
+    {
+      "folder": "therapy",
+      "document_id": "HF-RP-COV-THER-001",
+      "mechanism": "OUTPATIENT_THERAPY_COVERAGE",
+      "structural_technical_closure": "CONTROLS_IN_PLACE_AWAITING_INDEPENDENT_VERIFICATION",
+      "requirement_fails": [],
+      "release_blocker_count": 5,
+      "operational_activation": "PROHIBITED",
+      "clinical_product_approval": "WITHHELD",
+      "mri_clinical_logic_copied": false
+    },
+    {
+      "folder": "infusion",
+      "document_id": "HF-RP-SOC-INF-001",
+      "mechanism": "INFUSION_SITE_OF_CARE",
+      "structural_technical_closure": "NOT_CLOSED",
+      "requirement_fails": [
+        "R1_CODESET_SCHEMA"
+      ],
+      "release_blocker_count": 5,
+      "operational_activation": "PROHIBITED",
+      "clinical_product_approval": "WITHHELD",
+      "mri_clinical_logic_copied": false
+    },
+    {
+      "folder": "ncd_study",
+      "document_id": "HF-RP-COV-NCD2202-001",
+      "mechanism": "NCD_220_2_COVERAGE_STUDY",
+      "structural_technical_closure": "CONTROLS_IN_PLACE_AWAITING_INDEPENDENT_VERIFICATION",
+      "requirement_fails": [],
+      "release_blocker_count": 4,
+      "operational_activation": "PROHIBITED",
+      "clinical_product_approval": "WITHHELD",
+      "mri_clinical_logic_copied": false
+    },
+    {
+      "folder": "lcd_study",
+      "document_id": "HF-RP-COV-L34425-001",
+      "mechanism": "LCD_L34425_ORBIT_FACE_NECK_STUDY",
+      "structural_technical_closure": "CONTROLS_IN_PLACE_AWAITING_INDEPENDENT_VERIFICATION",
+      "requirement_fails": [],
+      "release_blocker_count": 5,
+      "operational_activation": "PROHIBITED",
+      "clinical_product_approval": "WITHHELD",
+      "mri_clinical_logic_copied": false
+    }
+  ],
+  "counts": {
+    "provisional_structural_pass": 1,
+    "controls_in_place_awaiting_verification": 7,
+    "not_closed": 1,
+    "operationally_authorized": 0
+  },
+  "demo_readiness": {
+    "primary_route": "HIGH",
+    "optional_six": "HIGH",
+    "operational_activation": "PROHIBITED",
+    "evidence": "docs/demo/bcbs-nc/evidence/DEC4_SIX_OPTIONAL_HIGH_CONFIDENCE.json",
+    "updated_at": "2026-11-03T16:16:36.031272+00:00"
+  }
+}

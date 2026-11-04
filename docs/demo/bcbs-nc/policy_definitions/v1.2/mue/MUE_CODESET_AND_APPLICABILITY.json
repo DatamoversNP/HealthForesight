@@ -1,0 +1,56 @@
+{
+  "document_id": "HF-RP-CODE-MUE-001-CODESET",
+  "policy_id": "e11b049d-fcce-55cc-bcd7-71329038383b",
+  "version": "v1.2.1-structural-controls",
+  "schema": "../_controls/POLICY_CODESET_RECORD.schema.json",
+  "status": "DEFINITION_REVIEW_REQUIRED",
+  "operational_activation": "PROHIBITED",
+  "mechanism": "NCCI_MUE_UNIT_CAP",
+  "intended_scope": "UNIT_CAP_97110",
+  "controls_ref": "../_controls/POLICY_ENGINEERING_CONTROLS_v1.md",
+  "mri_clinical_logic_copied": false,
+  "notes": [
+    "CANDIDATE_INCLUDE is not APPROVED_INCLUDE",
+    "Do not alter frozen Dec 4 demo fixtures",
+    "Mechanism-specific \u2014 not MRI lumbar PA criteria"
+  ],
+  "codes": [
+    {
+      "code_system": "CPT",
+      "code": "97110",
+      "description": "Therapeutic procedure, exercises",
+      "anatomical_region": "UNIT_CAP_97110",
+      "contrast_variant": "NOT_APPLICABLE",
+      "setting": "OUTPATIENT",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "effective_from": null,
+      "effective_to": null,
+      "evidence_class": "SYNTHETIC_FIXTURE",
+      "source_evidence_note": "SYNTHETIC MUE=4 for 97110 \u2014 not confidential CMS value",
+      "evidence": {
+        "evidence_id": "EV-SYN-MUE",
+        "source_system": "demo_fixture",
+        "source_document_id": "NCCI-MUE-97110-DEMO",
+        "source_version": null,
+        "source_url": null,
+        "retrieved_at": null,
+        "content_checksum_sha256": null,
+        "applicability_period_start": null,
+        "applicability_period_end": null,
+        "notes": "Synthetic unit=4"
+      },
+      "medicare_applicability": {
+        "ncd_220_2": "REFERENCE_ONLY_FFS",
+        "lcd_l34425": "NOT_APPLICABLE",
+        "article_a56729": "NOT_APPLICABLE"
+      },
+      "scope_role": "unit_cap_demo_4"
+    }
+  ],
+  "fixtures_note": "SYNTHETIC MUE=4 for 97110",
+  "ambiguous_mapping_policy": {
+    "auto_deny": false,
+    "auto_impose_pa": false,
+    "route": "MANUAL_SCOPE_REVIEW"
+  }
+}

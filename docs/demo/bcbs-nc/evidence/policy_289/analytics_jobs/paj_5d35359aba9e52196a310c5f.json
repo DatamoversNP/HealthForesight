@@ -1,0 +1,18 @@
+{
+  "job_id": "paj_5d35359aba9e52196a310c5f",
+  "policy_id": "7e9ec991-76a0-4da9-86f0-f0a940b063e7",
+  "name": "Infusion Site-of-Care Optimization",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "e371270d67e9d59e",
+  "started_at": "2026-11-04T13:18:18.234314+00:00",
+  "finished_at": "2026-11-04T13:18:18.234315+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "scope.states"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

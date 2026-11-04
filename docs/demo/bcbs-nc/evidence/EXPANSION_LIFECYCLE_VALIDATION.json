@@ -1,0 +1,471 @@
+{
+  "generated_at": "2026-11-03T15:44:11.722059Z",
+  "tenant_id": "00000000-0000-0000-0000-000000000001",
+  "seeded": [
+    {
+      "source_document_id": "NCCI-PTP-PAIR-70553-70551",
+      "status": "updated"
+    },
+    {
+      "source_document_id": "NCCI-MUE-97110-DEMO",
+      "status": "updated"
+    },
+    {
+      "policy_id": "58b839b5-b6e0-59e0-9406-d817877c3ce8",
+      "status": "completed",
+      "name": "NCCI Procedure-to-Procedure Bundling"
+    },
+    {
+      "policy_id": "58b839b5-b6e0-59e0-9406-d817877c3ce8",
+      "completeness": {
+        "assumptions": 3,
+        "guardrails": 3,
+        "codes": 2,
+        "has_scope": true,
+        "has_enforcement": true,
+        "has_levers": true
+      }
+    },
+    {
+      "policy_id": "e11b049d-fcce-55cc-bcd7-71329038383b",
+      "status": "completed",
+      "name": "NCCI Medically Unlikely Units"
+    },
+    {
+      "policy_id": "e11b049d-fcce-55cc-bcd7-71329038383b",
+      "completeness": {
+        "assumptions": 2,
+        "guardrails": 2,
+        "codes": 1,
+        "has_scope": true,
+        "has_enforcement": true,
+        "has_levers": true
+      }
+    },
+    {
+      "policy_id": "f2b8e7f3-1627-5dbe-8d7e-757ce21aa55b",
+      "status": "completed",
+      "name": "Outpatient Therapy Coverage and Payment"
+    },
+    {
+      "policy_id": "f2b8e7f3-1627-5dbe-8d7e-757ce21aa55b",
+      "completeness": {
+        "assumptions": 2,
+        "guardrails": 2,
+        "codes": 2,
+        "has_scope": true,
+        "has_enforcement": true,
+        "has_levers": true
+      }
+    },
+    {
+      "policy_id": "11218053-bdc0-569f-a415-fb61c5dcda37",
+      "status": "completed",
+      "name": "Infusion Site-of-Care Optimization"
+    },
+    {
+      "policy_id": "11218053-bdc0-569f-a415-fb61c5dcda37",
+      "completeness": {
+        "assumptions": 3,
+        "guardrails": 2,
+        "codes": 0,
+        "has_scope": true,
+        "has_enforcement": true,
+        "has_levers": true
+      }
+    },
+    {
+      "policy_id": "4f8c34e3-015b-509d-90ba-521261464258",
+      "status": "completed",
+      "name": "NCD 220.2 MRI Coverage Change Study"
+    },
+    {
+      "policy_id": "4f8c34e3-015b-509d-90ba-521261464258",
+      "completeness": {
+        "assumptions": 1,
+        "guardrails": 1,
+        "codes": 6,
+        "has_scope": true,
+        "has_enforcement": true,
+        "has_levers": true
+      }
+    },
+    {
+      "policy_id": "649b4ac8-ca82-5b84-aa87-84834490731a",
+      "status": "completed",
+      "name": "LCD L34425 NC MRI Coverage Criteria"
+    },
+    {
+      "policy_id": "649b4ac8-ca82-5b84-aa87-84834490731a",
+      "completeness": {
+        "assumptions": 1,
+        "guardrails": 1,
+        "codes": 3,
+        "has_scope": true,
+        "has_enforcement": true,
+        "has_levers": true
+      }
+    }
+  ],
+  "known_answers_all_passed": true,
+  "verticals": [
+    {
+      "key": "ptp",
+      "policy_id": "58b839b5-b6e0-59e0-9406-d817877c3ce8",
+      "policy_name": "NCCI Procedure-to-Procedure Bundling (Demo)",
+      "catalog_class": "DEMO_SYNTHETIC",
+      "known_answer_passed": true,
+      "known_answer": {
+        "passed": true,
+        "checks": {
+          "baseline_paid": true,
+          "post_policy_paid": true,
+          "payment_impact": true,
+          "ptp_pairs_hit": true,
+          "modifier_bypass": true
+        },
+        "actual_totals": {
+          "baseline_paid": 4400.0,
+          "post_policy_paid": 3600.0,
+          "payment_impact": 800.0,
+          "payer_savings": 800.0,
+          "provider_payment_change": -800.0,
+          "ptp_pairs_hit": 3,
+          "ptp_pairs_bypassed_with_modifier": 1,
+          "volume_effect": 0.0,
+          "mix_effect": 0.0,
+          "price_effect": 800.0
+        },
+        "calculation_version": "reimbursement-ncci-ptp-v1"
+      },
+      "mechanical_totals": {
+        "baseline_paid": 4400.0,
+        "post_policy_paid": 3600.0,
+        "payment_impact": 800.0,
+        "payer_savings": 800.0,
+        "provider_payment_change": -800.0,
+        "ptp_pairs_hit": 3,
+        "ptp_pairs_bypassed_with_modifier": 1,
+        "volume_effect": 0.0,
+        "mix_effect": 0.0,
+        "price_effect": 800.0
+      },
+      "calculation_version": "reimbursement-ncci-ptp-v1",
+      "whatif": {
+        "analysis_id": "3c69c659-b741-426c-8bc9-732f6953a915",
+        "whatif_status": "completed",
+        "whatif": {
+          "scenario_id": "ptp-whatif-reimbursement-ncci-ptp-v1",
+          "mechanism": "NCCI_PTP_FIXTURE",
+          "engine_id": "reimbursement_ncci_ptp_v1",
+          "calculation_version": "reimbursement-ncci-ptp-v1",
+          "registry_version": "analytical-strategy-registry-v1",
+          "catalog_class": "DEMO_SYNTHETIC",
+          "not_utilization_elasticity": true,
+          "sign_convention": {
+            "payment_impact": "Payer savings = baseline_paid \u2212 post_policy_paid. Positive means the payer pays less (provider receives less).",
+            "provider_payment_change": "Negative of payment_impact (provider perspective).",
+            "delta_payment_impact": "Incremental payer savings vs base scenario. Positive = additional payer savings (not increased provider payment).",
+            "volume_effect": "Change attributable to units/volume; 0 when volume held constant.",
+            "price_effect": "Change attributable to unit price / payment rules.",
+            "mix_effect": "Change attributable to service/site mix shifts."
+          },
+          "baseline_metrics": {
+            "total_paid_baseline_window": 4400.0,
+            "post_policy_paid": 3600.0,
+            "payment_impact": 800.0,
+            "payer_savings": 800.0,
+            "provider_payment_change": -800.0,
+            "modifier_indicator": "1",
+            "ptp_pairs_hit": 3,
+            "ptp_pairs_bypassed_with_modifier": 1
+          },
+          "projected_metrics": {
+            "post_policy_paid": 3200.0,
+            "payment_impact": 1200.0,
+            "payer_savings": 1200.0,
+            "provider_payment_change": -1200.0,
+            "modifier_indicator": "0",
+            "ptp_pairs_hit": 3,
+            "ptp_pairs_bypassed_with_modifier": 0
+          },
+          "impact_metrics": {
+            "delta_payment_impact": 400.0,
+            "delta_payer_savings": 400.0,
+            "delta_provider_payment_change": -400.0,
+            "price_effect_delta": 400.0,
+            "volume_effect": 0.0,
+            "mix_effect": 0.0
+          },
+          "confidence_score": 1.0,
+          "limitations": [
+            "Synthetic PTP fixture with modifier-indicator semantics.",
+            "Not reconciled against a full quarterly CMS PTP file (ACCESS_BLOCKED on this host).",
+            "Empirical claims_lines lack modifier column \u2014 DESIGN_POSSIBLE_DATA_INSUFFICIENT for production claims."
+          ]
+        },
+        "message": null
+      },
+      "medicare_links": [
+        [
+          "ncci_ptp",
+          "NCCI-PTP-PAIR-70553-70551",
+          "USES_CODING_EDIT"
+        ]
+      ],
+      "validation_class": "FULLY_VALIDATED_DEMO",
+      "disclosed_limitations": [
+        "Synthetic known-answer fixture \u2014 not empirical payer claims.",
+        "Independent of frozen MRI/MPPR/SOS Dec 4 path.",
+        "NCCI quarterly files ACCESS_BLOCKED on this host; demo pairs are DEMO_SYNTHETIC."
+      ]
+    },
+    {
+      "key": "mue",
+      "policy_id": "e11b049d-fcce-55cc-bcd7-71329038383b",
+      "policy_name": "NCCI Medically Unlikely Units (Demo)",
+      "catalog_class": "DEMO_SYNTHETIC",
+      "known_answer_passed": true,
+      "known_answer": {
+        "passed": true,
+        "checks": {
+          "baseline_paid": true,
+          "post_policy_paid": true,
+          "payment_impact": true,
+          "lines_capped": true
+        },
+        "actual_totals": {
+          "baseline_paid": 650.0,
+          "post_policy_paid": 550.0,
+          "payment_impact": 100.0,
+          "payer_savings": 100.0,
+          "provider_payment_change": -100.0,
+          "lines_capped": 1,
+          "mue_value": 4,
+          "volume_effect": 0.0,
+          "price_effect": 100.0
+        },
+        "calculation_version": "reimbursement-ncci-mue-v1"
+      },
+      "mechanical_totals": {
+        "baseline_paid": 650.0,
+        "post_policy_paid": 550.0,
+        "payment_impact": 100.0,
+        "payer_savings": 100.0,
+        "provider_payment_change": -100.0,
+        "lines_capped": 1,
+        "mue_value": 4,
+        "volume_effect": 0.0,
+        "price_effect": 100.0
+      },
+      "calculation_version": "reimbursement-ncci-mue-v1",
+      "whatif": {
+        "analysis_id": "b09cfc91-b1bb-42a0-a9e4-f138d692bb28",
+        "whatif_status": "completed",
+        "whatif": {
+          "scenario_id": "mue-whatif-reimbursement-ncci-mue-v1",
+          "mechanism": "FEE_SCHEDULE_UNIT_PRICE",
+          "sub_mechanism": "NCCI_MUE",
+          "engine_id": "reimbursement_ncci_mue_v1",
+          "calculation_version": "reimbursement-ncci-mue-v1",
+          "registry_version": "analytical-strategy-registry-v1",
+          "catalog_class": "DEMO_SYNTHETIC",
+          "policy_name": "NCCI Medically Unlikely Units",
+          "not_utilization_elasticity": true,
+          "sign_convention": {
+            "payment_impact": "Payer savings = baseline_paid \u2212 post_policy_paid. Positive means the payer pays less (provider receives less).",
+            "provider_payment_change": "Negative of payment_impact (provider perspective).",
+            "delta_payment_impact": "Incremental payer savings vs base scenario. Positive = additional payer savings (not increased provider payment).",
+            "volume_effect": "Change attributable to units/volume; 0 when volume held constant.",
+            "price_effect": "Change attributable to unit price / payment rules.",
+            "mix_effect": "Change attributable to service/site mix shifts."
+          },
+          "baseline_metrics": {
+            "total_paid_baseline_window": 650.0,
+            "post_policy_paid": 550.0,
+            "payment_impact": 100.0,
+            "payer_savings": 100.0,
+            "provider_payment_change": -100.0,
+            "mue_value": 4,
+            "lines_capped": 1
+          },
+          "projected_metrics": {
+            "post_policy_paid": 450.0,
+            "payment_impact": 200.0,
+            "payer_savings": 200.0,
+            "provider_payment_change": -200.0,
+            "mue_value": 3,
+            "lines_capped": 2
+          },
+          "impact_metrics": {
+            "delta_payment_impact": 100.0,
+            "delta_payer_savings": 100.0,
+            "delta_provider_payment_change": -100.0,
+            "price_effect_delta": 100.0,
+            "volume_effect": 0.0,
+            "mix_effect": 0.0
+          },
+          "confidence_score": 1.0,
+          "limitations": [
+            "SYNTHETIC MUE value \u2014 not an unpublished CMS confidential figure claimed as authoritative."
+          ]
+        },
+        "message": null
+      },
+      "medicare_links": [
+        [
+          "ncci_mue",
+          "NCCI-MUE-97110-DEMO",
+          "USES_CODING_EDIT"
+        ]
+      ],
+      "validation_class": "FULLY_VALIDATED_DEMO",
+      "disclosed_limitations": [
+        "Synthetic known-answer fixture \u2014 not empirical payer claims.",
+        "Independent of frozen MRI/MPPR/SOS Dec 4 path.",
+        "NCCI quarterly files ACCESS_BLOCKED on this host; demo pairs are DEMO_SYNTHETIC."
+      ]
+    },
+    {
+      "key": "therapy",
+      "policy_id": "f2b8e7f3-1627-5dbe-8d7e-757ce21aa55b",
+      "policy_name": "Outpatient Therapy Coverage and Payment (Demo)",
+      "catalog_class": "DEMO_SYNTHETIC",
+      "known_answer_passed": true,
+      "known_answer": {
+        "passed": true,
+        "checks": {
+          "baseline_paid": true,
+          "post_policy_paid": true,
+          "payment_impact": true
+        },
+        "actual_totals": {
+          "baseline_paid": 420.0,
+          "post_policy_paid": 340.0,
+          "payment_impact": 80.0,
+          "payer_savings": 80.0,
+          "provider_payment_change": -80.0
+        }
+      },
+      "mechanical_totals": {
+        "baseline_paid": 420.0,
+        "post_policy_paid": 340.0,
+        "payment_impact": 80.0,
+        "payer_savings": 80.0,
+        "provider_payment_change": -80.0
+      },
+      "calculation_version": "coverage-therapy-v1",
+      "whatif": null,
+      "medicare_links": [
+        [
+          "mac_lcd_nc",
+          "L34428",
+          "REFERENCES_LCD"
+        ]
+      ],
+      "validation_class": "FULLY_VALIDATED_DEMO",
+      "disclosed_limitations": [
+        "Synthetic known-answer fixture \u2014 not empirical payer claims.",
+        "Independent of frozen MRI/MPPR/SOS Dec 4 path.",
+        "NCCI quarterly files ACCESS_BLOCKED on this host; demo pairs are DEMO_SYNTHETIC.",
+        "Coverage what-if engine not yet reimbursement-dispatched; mechanical + LCD L34428 link only."
+      ],
+      "lcd_link": "L34428"
+    },
+    {
+      "key": "infusion",
+      "policy_id": "11218053-bdc0-569f-a415-fb61c5dcda37",
+      "policy_name": "Infusion Site-of-Care Optimization (Demo)",
+      "catalog_class": "DEMO_SYNTHETIC",
+      "known_answer_passed": true,
+      "known_answer": {
+        "passed": true,
+        "checks": {
+          "baseline_paid": true,
+          "post_policy_paid": true,
+          "payment_impact": true,
+          "episodes_steered": true
+        },
+        "actual_totals": {
+          "baseline_paid": 18200.0,
+          "post_policy_paid": 14600.0,
+          "payment_impact": 3600.0,
+          "payer_savings": 3600.0,
+          "provider_payment_change": -3600.0,
+          "episodes_steered": 2
+        }
+      },
+      "mechanical_totals": {
+        "baseline_paid": 18200.0,
+        "post_policy_paid": 14600.0,
+        "payment_impact": 3600.0,
+        "payer_savings": 3600.0,
+        "provider_payment_change": -3600.0,
+        "episodes_steered": 2
+      },
+      "calculation_version": "reimbursement-infusion-soc-v1",
+      "whatif": {
+        "analysis_id": "49f2a086-6909-4d2b-951f-c79d81ae863d",
+        "whatif_status": "completed",
+        "whatif": {
+          "scenario_id": "infusion-soc-whatif-reimbursement-infusion-soc-v1",
+          "mechanism": "SITE_OF_SERVICE_PAYMENT_DIFFERENTIAL",
+          "sub_mechanism": "INFUSION_SITE_OF_CARE",
+          "engine_id": "reimbursement_infusion_soc_v1",
+          "calculation_version": "reimbursement-infusion-soc-v1",
+          "registry_version": "analytical-strategy-registry-v1",
+          "catalog_class": "DEMO_SYNTHETIC",
+          "policy_name": "Infusion Site-of-Care Optimization",
+          "not_utilization_elasticity": true,
+          "sign_convention": {
+            "payment_impact": "Payer savings = baseline_paid \u2212 post_policy_paid. Positive means the payer pays less (provider receives less).",
+            "provider_payment_change": "Negative of payment_impact (provider perspective).",
+            "delta_payment_impact": "Incremental payer savings vs base scenario. Positive = additional payer savings (not increased provider payment).",
+            "volume_effect": "Change attributable to units/volume; 0 when volume held constant.",
+            "price_effect": "Change attributable to unit price / payment rules.",
+            "mix_effect": "Change attributable to service/site mix shifts."
+          },
+          "baseline_metrics": {
+            "total_paid_baseline_window": 18200.0,
+            "post_policy_paid": 14600.0,
+            "payment_impact": 3600.0,
+            "payer_savings": 3600.0,
+            "provider_payment_change": -3600.0,
+            "steer_hopd_count": 2,
+            "episodes_steered": 2
+          },
+          "projected_metrics": {
+            "post_policy_paid": 12800.0,
+            "payment_impact": 5400.0,
+            "payer_savings": 5400.0,
+            "provider_payment_change": -5400.0,
+            "steer_hopd_count": 3,
+            "episodes_steered": 3
+          },
+          "impact_metrics": {
+            "delta_payment_impact": 1800.0,
+            "delta_payer_savings": 1800.0,
+            "delta_provider_payment_change": -1800.0,
+            "price_effect_delta": 1800.0,
+            "volume_effect": 0.0,
+            "mix_effect": 0.0
+          },
+          "confidence_score": 1.0,
+          "limitations": [
+            "Deterministic infusion SOC fixture \u2014 not empirical drug-site claims."
+          ]
+        },
+        "message": null
+      },
+      "medicare_links": [],
+      "validation_class": "FULLY_VALIDATED_DEMO",
+      "disclosed_limitations": [
+        "Synthetic known-answer fixture \u2014 not empirical payer claims.",
+        "Independent of frozen MRI/MPPR/SOS Dec 4 path.",
+        "NCCI quarterly files ACCESS_BLOCKED on this host; demo pairs are DEMO_SYNTHETIC."
+      ]
+    }
+  ],
+  "frozen_three_untouched": true,
+  "creates_extra_catalog_seed_rows": false
+}

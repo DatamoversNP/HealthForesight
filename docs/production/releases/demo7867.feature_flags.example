@@ -1,0 +1,5 @@
+# Copy keys into local .env.demo7867 — keep ALL false for Dec4 freeze.
+ENABLE_ANALYTICAL_OUTBOX=false
+ENABLE_ENTERPRISE_SCHEDULER=false
+ENABLE_SERVICE_BUS_DISPATCH=false
+ENABLE_DATABRICKS_ANALYTICS=false

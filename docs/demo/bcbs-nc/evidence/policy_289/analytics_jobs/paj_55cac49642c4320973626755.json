@@ -1,0 +1,16 @@
+{
+  "job_id": "paj_55cac49642c4320973626755",
+  "policy_id": "b0d2714b-8bf5-40d4-a44e-8a9912ba6740",
+  "name": "Primary Care Shared Savings Quality Incentive Program",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "7973fbb31f67333c",
+  "started_at": "2026-11-04T13:18:18.240575+00:00",
+  "finished_at": "2026-11-04T13:18:18.240577+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

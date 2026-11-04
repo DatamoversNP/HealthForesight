@@ -1,0 +1,10 @@
+{
+  "document_id": "ELECTIVE_SURGERY_COMPREHENSIVE_MANAGEMENT_CODESET",
+  "policy_id": "999cd635-0646-4880-9ab2-a9e2e5c0d2ff",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abElective Surgery Comprehensive Management\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Program/composite policy \u2014 constituent mechanisms configured separately",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

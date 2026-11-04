@@ -1,0 +1,10 @@
+{
+  "document_id": "HOSPICE_ELECTION_AND_CONCURRENT_CARE_RULES_CODESET",
+  "policy_id": "9edcde99-8eda-451a-9147-d199b4f1635f",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abHospice Election and Concurrent Care Rules\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Benefit election / concurrent care \u2014 not CPT-driven",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

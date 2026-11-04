@@ -1,0 +1,182 @@
+{
+  "document_id": "HF-RP-SKILLED_NURSING_FACILITY_AUTHORIZATION-PACKAGE",
+  "policy_id": "68e1befc-5e66-4d1b-85f1-7806ddcddd81",
+  "policy_name": "Skilled Nursing Facility Authorization",
+  "archetype": "PRIOR_AUTH_UM",
+  "package_version": "v1.2.0-representative-batch",
+  "classification": "REPRESENTATIVE_PAYER_POLICY",
+  "not_claiming": "Authoritative Blue Cross NC operative proprietary policy text",
+  "generated_at": "2026-11-04T08:29:09Z",
+  "identity": {
+    "objective": "Representative Payer configuration for catalog policy \u00abSkilled Nursing Facility Authorization\u00bb",
+    "mechanism": "PRIOR_AUTH_UM",
+    "family": "PRIOR_AUTH",
+    "owner_role": "DEFINITION_REVIEW"
+  },
+  "scope": {
+    "lob": [
+      "COMMERCIAL",
+      "MA",
+      "MEDICAID"
+    ],
+    "geography": {
+      "states": [
+        "NC"
+      ],
+      "markets": [
+        "NC"
+      ],
+      "market_claim_note": "Claim markets are for cohort matching in synthetic claims; states define Representative NC jurisdiction. NC geography \u2260 complete configuration."
+    },
+    "setting": [
+      "OUTPATIENT"
+    ],
+    "effective": {
+      "start": "2026-01-01T00:00:00",
+      "end": null
+    }
+  },
+  "applicability": {
+    "inclusions": [
+      "Mechanism-defined population / benefit applicability (see rules)"
+    ],
+    "exclusions": [
+      "Emergency services where PA is prohibited by No Surprises / emergency rules",
+      "Services outside candidate schedule",
+      "Proprietary BCBS NC criteria not present in this Representative package"
+    ]
+  },
+  "codeset": {
+    "status": "NOT_APPLICABLE",
+    "not_applicable_reason": "SNF authorization uses RUG/PDPM / revenue \u2014 not CPT PA",
+    "code_system": "CPT",
+    "notes": "SNF authorization uses RUG/PDPM / revenue \u2014 not CPT PA",
+    "codes": []
+  },
+  "levers": [
+    {
+      "lever_type": "PRIOR_AUTH",
+      "parameters": {
+        "codes": [],
+        "applicability": "NON_CODE",
+        "not_applicable_reason": "SNF authorization uses RUG/PDPM / revenue \u2014 not CPT PA"
+      },
+      "evidence_class": "NOT_APPLICABLE"
+    }
+  ],
+  "rules": [
+    {
+      "id": "R1_APPLICABILITY",
+      "text": "Rules pending resolved schedule or non-code applicability design",
+      "evidence_class": "UNRESOLVED"
+    },
+    {
+      "id": "R2_NO_AUTO_DENY",
+      "text": "Do not auto-deny without clinical review pathway when PA applies",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "exceptions": [
+    {
+      "id": "E1_EMERGENCY",
+      "text": "Emergency / urgent exceptions per applicable federal/state emergency access rules",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "precedence": [
+    "Emergency exception > elective PA requirement",
+    "Product benefit exclusions > utilization management",
+    "Effective-dated schedule version > prior schedule"
+  ],
+  "assumptions": [
+    {
+      "id": "A1",
+      "text": "Synthetic claims substrate used for demo analytics unless labeled empirical",
+      "evidence_class": "SYNTHETIC_FIXTURE"
+    },
+    {
+      "id": "A2",
+      "text": "Candidate codes are industry-aligned Representative design, not verified payer operative schedule",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "guardrails": [
+    {
+      "id": "G_ACCESS",
+      "family": "access",
+      "text": "Monitor inappropriate access barriers"
+    },
+    {
+      "id": "G_FIN",
+      "family": "financial",
+      "text": "Do not present representative parameters as contracted rates"
+    },
+    {
+      "id": "G_CLIN",
+      "family": "clinical",
+      "text": "Clinical thresholds remain unsigned until product approval"
+    }
+  ],
+  "sources": [
+    {
+      "id": "S_CPT_PUBLIC",
+      "citation": "Public CPT/HCPCS nomenclature for code identity",
+      "applicability": "code_identity_only",
+      "evidence_class": "UNRESOLVED",
+      "does_not_establish": "Payer-specific coverage criteria or contracted rates"
+    }
+  ],
+  "analytics": {
+    "strategy": "PRIOR_AUTH_UM",
+    "supported_stages": [
+      "definition",
+      "applicability",
+      "insufficiency_disclosure"
+    ],
+    "insufficiency_stages": [
+      "baseline_numerical",
+      "predicted_impact_numerical",
+      "causal_estimate"
+    ]
+  },
+  "governance": {
+    "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+    "operational_activation": "PROHIBITED"
+  },
+  "acceptance_tests": [
+    {
+      "id": "T_SCOPE_PRESENT",
+      "given": "package loaded",
+      "expect": "states and markets non-empty"
+    },
+    {
+      "id": "T_LEVER_IN_SCOPE",
+      "given": "candidate codes present",
+      "expect": "every lever code listed in codeset.codes"
+    },
+    {
+      "id": "T_NO_BCBS_CLAIM",
+      "given": "classification",
+      "expect": "REPRESENTATIVE_PAYER_POLICY and not_claiming set"
+    }
+  ],
+  "release_blockers": [
+    {
+      "id": "CLINICAL_PRODUCT_UNSIGNED",
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "text": "Clinical/product schedule not signed for operative use"
+    },
+    {
+      "id": "NOT_PROPRIETARY_BCBS_NC",
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "text": "Package is Representative Payer design \u2014 not proprietary BCBS NC operative policy"
+    }
+  ],
+  "_validation": {
+    "schema_sections_ok": true,
+    "missing": [],
+    "accuracy_failures": []
+  }
+}

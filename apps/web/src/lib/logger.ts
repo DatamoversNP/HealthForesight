@@ -1,6 +1,10 @@
 /**
- * Comprehensive frontend logging utility
+ * Frontend logging utility.
+ * - Never logs secrets (password, tokens, Authorization).
+ * - In production builds, API success logs are quiet (method/url/status/duration only).
+ * - Avoids dumping large response bodies into console / localStorage.
  */
+
 interface LogEntry {
   timestamp: string
   level: 'debug' | 'info' | 'warn' | 'error'
@@ -16,33 +20,79 @@ interface LogEntry {
   url?: string
 }
 
+const SENSITIVE_KEY_RE =
+  /^(password|passwd|pwd|secret|token|access_token|refresh_token|id_token|authorization|api[_-]?key|client_secret|jwt)$/i
+
+const isProdBuild = Boolean(import.meta.env?.PROD)
+
+function redactValue(key: string, value: unknown): unknown {
+  if (SENSITIVE_KEY_RE.test(key)) return '[REDACTED]'
+  return value
+}
+
+/** Deep-redact sensitive keys; truncate huge strings/arrays for logging. */
+export function sanitizeForLog(input: unknown, depth = 0): unknown {
+  if (input == null) return input
+  if (depth > 4) return '[max-depth]'
+
+  if (typeof input === 'string') {
+    // Axios may pass already-stringified JSON bodies
+    const trimmed = input.trim()
+    if (
+      (trimmed.startsWith('{') && trimmed.endsWith('}')) ||
+      (trimmed.startsWith('[') && trimmed.endsWith(']'))
+    ) {
+      try {
+        return JSON.stringify(sanitizeForLog(JSON.parse(trimmed), depth + 1))
+      } catch {
+        return input.length > 300 ? `${input.slice(0, 300)}…[truncated]` : input
+      }
+    }
+    return input.length > 300 ? `${input.slice(0, 300)}…[truncated]` : input
+  }
+
+  if (typeof input !== 'object') return input
+
+  if (Array.isArray(input)) {
+    if (input.length > 20) {
+      return {
+        _type: 'array',
+        length: input.length,
+        sample: input.slice(0, 3).map((v) => sanitizeForLog(v, depth + 1)),
+      }
+    }
+    return input.map((v) => sanitizeForLog(v, depth + 1))
+  }
+
+  const out: Record<string, unknown> = {}
+  for (const [k, v] of Object.entries(input as Record<string, unknown>)) {
+    out[k] = redactValue(k, sanitizeForLog(v, depth + 1))
+  }
+  return out
+}
+
 class Logger {
   private logs: LogEntry[] = []
-  private maxLogs = 100  // Reduced from 1000 to prevent localStorage quota issues
+  private maxLogs = 100
   private enableConsole = true
   private enableStorage = true
   private enableRemote = false
-  private storageQuotaExceeded = false  // Track if we've hit quota limit
+  private storageQuotaExceeded = false
+  /** In production, skip debug + routine successful API body dumps. */
+  private quietSuccessInProd = isProdBuild
 
   constructor() {
-    // Load existing logs from localStorage
     this.loadLogs()
-    
-    // Save logs periodically
     setInterval(() => this.saveLogs(), 5000)
-    
-    // Save logs before page unload
     window.addEventListener('beforeunload', () => this.saveLogs())
   }
 
   private loadLogs(): void {
     if (!this.enableStorage) return
-    
     try {
       const stored = localStorage.getItem('uepi_logs')
       if (stored) {
         this.logs = JSON.parse(stored)
-        // Keep only recent logs
         if (this.logs.length > this.maxLogs) {
           this.logs = this.logs.slice(-this.maxLogs)
         }
@@ -54,36 +104,31 @@ class Logger {
 
   private saveLogs(): void {
     if (!this.enableStorage || this.storageQuotaExceeded) return
-    
     try {
-      // Keep only recent logs (aggressive trimming to prevent quota issues)
       if (this.logs.length > this.maxLogs) {
-        // Keep only the most recent logs
         this.logs = this.logs.slice(-this.maxLogs)
       }
-      
-      // Truncate large data objects to prevent quota issues
-      const logsToSave = this.logs.map(log => {
+
+      const logsToSave = this.logs.map((log) => {
         const logCopy = { ...log }
-        // Truncate large data objects
         if (logCopy.data && typeof logCopy.data === 'object') {
           const dataStr = JSON.stringify(logCopy.data)
           if (dataStr.length > 1000) {
-            logCopy.data = { ...logCopy.data, _truncated: true, _originalSize: dataStr.length }
-            // Remove large nested objects
-            if (logCopy.data.requestData) logCopy.data.requestData = '[truncated]'
-            if (logCopy.data.responseData) logCopy.data.responseData = '[truncated]'
+            logCopy.data = {
+              ...logCopy.data,
+              _truncated: true,
+              _originalSize: dataStr.length,
+              requestData: logCopy.data.requestData ? '[truncated]' : undefined,
+              responseData: logCopy.data.responseData ? '[truncated]' : undefined,
+            }
           }
         }
         return logCopy
       })
-      
+
       const logsJson = JSON.stringify(logsToSave)
-      
-      // Check size before saving (localStorage limit is ~5-10MB)
-      if (logsJson.length > 2 * 1024 * 1024) {  // 2MB threshold
-        // Too large, keep only errors and recent logs
-        const errorLogs = this.logs.filter(log => log.level === 'error').slice(-20)
+      if (logsJson.length > 2 * 1024 * 1024) {
+        const errorLogs = this.logs.filter((log) => log.level === 'error').slice(-20)
         const recentLogs = this.logs.slice(-50)
         const combined = [...new Set([...errorLogs, ...recentLogs])].slice(-50)
         localStorage.setItem('uepi_logs', JSON.stringify(combined))
@@ -91,11 +136,9 @@ class Logger {
         localStorage.setItem('uepi_logs', logsJson)
       }
     } catch (e: any) {
-      // If quota exceeded, disable storage and keep only in-memory logs
       if (e.name === 'QuotaExceededError' || e.message?.includes('quota')) {
         this.storageQuotaExceeded = true
         this.enableStorage = false
-        // Clear old logs and keep only recent ones in memory
         this.logs = this.logs.slice(-50)
         console.warn('localStorage quota exceeded. Logging will continue in memory only.')
       } else {
@@ -104,24 +147,36 @@ class Logger {
     }
   }
 
-  private addLog(level: LogEntry['level'], category: string, message: string, data?: any, error?: Error): void {
-    // Truncate large data objects to prevent memory issues
-    let truncatedData = data
-    if (data && typeof data === 'object') {
-      const dataStr = JSON.stringify(data)
-      if (dataStr.length > 500) {
-        // Keep only essential fields for large objects
-        truncatedData = {
-          ...data,
-          _truncated: true,
-          _originalSize: dataStr.length
+  private addLog(
+    level: LogEntry['level'],
+    category: string,
+    message: string,
+    data?: any,
+    error?: Error
+  ): void {
+    if (this.quietSuccessInProd && level === 'debug') {
+      return
+    }
+
+    const safeData = data !== undefined ? sanitizeForLog(data) : undefined
+    let truncatedData = safeData
+    if (safeData && typeof safeData === 'object') {
+      try {
+        const dataStr = JSON.stringify(safeData)
+        if (dataStr.length > 500) {
+          truncatedData = {
+            ...(safeData as object),
+            _truncated: true,
+            _originalSize: dataStr.length,
+          } as any
+          if ((truncatedData as any).requestData) (truncatedData as any).requestData = '[truncated]'
+          if ((truncatedData as any).responseData) (truncatedData as any).responseData = '[truncated]'
         }
-        // Remove large nested objects
-        if (truncatedData.requestData) truncatedData.requestData = '[truncated]'
-        if (truncatedData.responseData) truncatedData.responseData = '[truncated]'
+      } catch {
+        truncatedData = { _unserializable: true }
       }
     }
-    
+
     const entry: LogEntry = {
       timestamp: new Date().toISOString(),
       level,
@@ -142,20 +197,18 @@ class Logger {
 
     this.logs.push(entry)
 
-    // Console logging
     if (this.enableConsole) {
       const consoleMethod = console[level] || console.log
       const prefix = `[${category}]`
       if (error) {
-        consoleMethod(prefix, message, data, error)
-      } else if (data) {
-        consoleMethod(prefix, message, data)
+        consoleMethod(prefix, message, truncatedData, error)
+      } else if (truncatedData !== undefined) {
+        consoleMethod(prefix, message, truncatedData)
       } else {
         consoleMethod(prefix, message)
       }
     }
 
-    // Remote logging (if enabled)
     if (this.enableRemote && level === 'error') {
       this.sendToRemote(entry)
     }
@@ -163,17 +216,14 @@ class Logger {
 
   private async sendToRemote(entry: LogEntry): Promise<void> {
     try {
-      // Send to API endpoint if available
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1'
       await fetch(`${apiUrl}/logs`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(entry),
-      }).catch(() => {
-        // Silently fail - don't log logging errors
-      })
-    } catch (e) {
-      // Silently fail
+      }).catch(() => {})
+    } catch {
+      // ignore
     }
   }
 
@@ -193,49 +243,72 @@ class Logger {
     this.addLog('error', category, message, data, error)
   }
 
-  // API call logging
-  logApiCall(method: string, url: string, status: number, duration: number, requestData?: any, responseData?: any, error?: Error): void {
-    this.info('API', `${method} ${url} -> ${status} (${duration}ms)`, {
+  /**
+   * API call logging. Never includes raw secrets.
+   * Production: successful calls log status/duration only (no bodies).
+   * Dev / errors: include redacted request/response summaries.
+   */
+  logApiCall(
+    method: string,
+    url: string,
+    status: number,
+    duration: number,
+    requestData?: any,
+    responseData?: any,
+    error?: Error
+  ): void {
+    const ok = status >= 200 && status < 400
+    const payload: Record<string, unknown> = {
       method,
       url,
       status,
       duration,
-      requestData,
-      responseData,
-      error: error ? { name: error.name, message: error.message } : undefined,
-    })
+    }
+
+    const includeBodies = Boolean(error) || !ok || !this.quietSuccessInProd
+    if (includeBodies) {
+      payload.requestData = sanitizeForLog(requestData)
+      // Never attach full response arrays/objects in prod success path; here only when includeBodies
+      payload.responseData = sanitizeForLog(
+        Array.isArray(responseData)
+          ? { _type: 'array', length: responseData.length }
+          : responseData && typeof responseData === 'object'
+            ? { keys: Object.keys(responseData).slice(0, 20) }
+            : responseData
+      )
+    }
+
+    if (error) {
+      payload.error = { name: error.name, message: error.message }
+      this.warn('API', `${method} ${url} -> ${status} (${duration}ms)`, payload)
+      return
+    }
+
+    if (this.quietSuccessInProd && ok) {
+      // Minimal one-liner; no bodies
+      this.info('API', `${method} ${url} -> ${status} (${duration}ms)`, payload)
+      return
+    }
+
+    this.info('API', `${method} ${url} -> ${status} (${duration}ms)`, payload)
   }
 
-  // User action logging
   logAction(action: string, details?: any): void {
-    this.info('ACTION', action, details)
+    this.info('ACTION', action, sanitizeForLog(details))
   }
 
-  // Get all logs
   getLogs(level?: LogEntry['level'], category?: string, limit?: number): LogEntry[] {
     let filtered = this.logs
-
-    if (level) {
-      filtered = filtered.filter(log => log.level === level)
-    }
-
-    if (category) {
-      filtered = filtered.filter(log => log.category === category)
-    }
-
-    if (limit) {
-      filtered = filtered.slice(-limit)
-    }
-
+    if (level) filtered = filtered.filter((log) => log.level === level)
+    if (category) filtered = filtered.filter((log) => log.category === category)
+    if (limit) filtered = filtered.slice(-limit)
     return filtered
   }
 
-  // Export logs
   exportLogs(): string {
     return JSON.stringify(this.logs, null, 2)
   }
 
-  // Clear logs
   clearLogs(): void {
     this.logs = []
     if (this.enableStorage) {
@@ -244,9 +317,5 @@ class Logger {
   }
 }
 
-// Create singleton instance
 export const logger = new Logger()
-
-// Export for use in components
 export default logger
-

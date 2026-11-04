@@ -1,0 +1,21 @@
+{
+  "archetype": "TELEHEALTH",
+  "offset": 0,
+  "count": 1,
+  "candidate_schedule": 1,
+  "unresolved": 0,
+  "not_applicable": 0,
+  "persisted_ok": 0,
+  "results": [
+    {
+      "policy_id": "51886386-a86a-4eb3-ae8e-b7f807464c96",
+      "name": "Virtual Visit Eligibility and Reimbursement Rules",
+      "folder": "catalog/virtual_visit_eligibility_and_reimbursement_rules",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 5,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    }
+  ]
+}

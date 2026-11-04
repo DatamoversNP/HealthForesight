@@ -1,0 +1,20 @@
+{
+  "document_id": "MANDATORY_MAIL_ORDER_MAINTENANCE_MEDICATIONS_RELEASE_BLOCKERS",
+  "package_version": "v1.2.0-representative-batch",
+  "blocks_operational_activation": true,
+  "blocker_count": 2,
+  "blockers": [
+    {
+      "id": "CLINICAL_PRODUCT_UNSIGNED",
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "text": "Clinical/product schedule not signed for operative use"
+    },
+    {
+      "id": "NOT_PROPRIETARY_BCBS_NC",
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "text": "Package is Representative Payer design \u2014 not proprietary BCBS NC operative policy"
+    }
+  ]
+}

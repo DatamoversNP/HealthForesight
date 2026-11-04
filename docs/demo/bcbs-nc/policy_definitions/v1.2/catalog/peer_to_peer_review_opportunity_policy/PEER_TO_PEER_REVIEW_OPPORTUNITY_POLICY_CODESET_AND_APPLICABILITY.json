@@ -1,0 +1,10 @@
+{
+  "document_id": "PEER_TO_PEER_REVIEW_OPPORTUNITY_POLICY_CODESET",
+  "policy_id": "b4f4e29e-130f-4310-8626-fa32625b9513",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abPeer-to-Peer Review Opportunity Policy\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Administrative / regulatory process policy \u2014 not a procedure code schedule",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

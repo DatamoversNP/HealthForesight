@@ -1,0 +1,280 @@
+{
+  "document_id": "HF-RP-UM-MRI-001-TECHNICAL-CLOSURE-VALIDATION",
+  "generated_at": "2026-11-03T15:28:18.027408+00:00",
+  "package_version": "v1.2.1-technical-closure",
+  "baseline_retained": "HF-RP-UM-MRI-001 v1.1 controlled reference",
+  "proposed_structured_definition": "v1.2 / v1.2.1",
+  "self_approval": false,
+  "activation": false,
+  "frozen_fixtures_modified": false,
+  "statuses": {
+    "DEFINITION_REVIEW_REQUIRED": true,
+    "FULLY_VALIDATED_DEMO": "independent_where_supported",
+    "OPERATIONAL_ACTIVATION_PROHIBITED": true
+  },
+  "verdict": {
+    "structural_technical_closure": "PASS",
+    "clinically_complete_policy": "NOT_APPROVED",
+    "production_enforceability": "NOT_APPROVED",
+    "summary": "Software specification structurally closed for listed engineering requirements; operative clinical rules and product/legal values remain intentionally unapproved.",
+    "provisional": true
+  },
+  "requirements": [
+    {
+      "id": "R1_CODESET_SCHEMA",
+      "result": "PASS"
+    },
+    {
+      "id": "R2_VERIFIED_SOURCE_EVIDENCE",
+      "result": "PASS"
+    },
+    {
+      "id": "R3_NON_OPERATIVE_PROPOSED_CRITERIA",
+      "result": "PASS"
+    },
+    {
+      "id": "R4_URGENCY_BEFORE_ROUTINE",
+      "result": "PASS"
+    },
+    {
+      "id": "R5_ADVERSE_SPLIT",
+      "result": "PASS"
+    },
+    {
+      "id": "R6_SCOPE_MIGRATION_RECORDED",
+      "result": "PASS"
+    },
+    {
+      "id": "R7_DETERMINISTIC_TEST_COVERAGE",
+      "result": "PASS"
+    },
+    {
+      "id": "R8_STATUS_TRIAD_PRESERVED",
+      "result": "PASS"
+    }
+  ],
+  "failed_requirements": [],
+  "unresolved_dependencies": [
+    {
+      "id": "CLINICAL_SCHEDULE_UNSIGNED",
+      "artifact": "MRI_CLINICAL_CRITERIA_SCHEDULE.md",
+      "blocks": [
+        "operative APPROVED",
+        "ADVERSE_DETERMINATION_ISSUED"
+      ]
+    },
+    {
+      "id": "PRODUCT_SCHEDULE_UNRESOLVED",
+      "artifact": "MRI_OPERATIONAL_REQUIREMENTS_MATRIX.md",
+      "blocks": [
+        "activation"
+      ]
+    },
+    {
+      "id": "LEGAL_CLOCKS_UNRESOLVED",
+      "artifact": "MRI_OPERATIONAL_REQUIREMENTS_MATRIX.md",
+      "blocks": [
+        "activation"
+      ]
+    },
+    {
+      "id": "SCOPE_MIGRATION_UNSIGNED",
+      "artifact": "MRI_SCOPE_MIGRATION_DECISION_v1.2.md",
+      "blocks": [
+        "lumbar-only operative rename"
+      ]
+    },
+    {
+      "id": "LIVE_CONFIG_MARKET_DEFECT",
+      "artifact": "Outpatient_MRI_Prior_Authorization.json",
+      "blocks": [
+        "NC-only gate"
+      ]
+    },
+    {
+      "id": "GUARDRAIL_THRESHOLDS_UNAPPROVED",
+      "artifact": "MRI_OPERATIONAL_REQUIREMENTS_MATRIX.md",
+      "blocks": [
+        "production monitoring gates"
+      ]
+    },
+    {
+      "id": "CONSERVATIVE_CARE_UNRESOLVED",
+      "artifact": "MRI_CLINICAL_CRITERIA_SCHEDULE.md",
+      "blocks": [
+        "LUMBAR-01 operative gate"
+      ]
+    },
+    {
+      "id": "CONTRAST_RULES_UNRESOLVED",
+      "artifact": "MRI_CLINICAL_CRITERIA_SCHEDULE.md",
+      "blocks": [
+        "LUMBAR-02/03 modality"
+      ]
+    }
+  ],
+  "affected_artifacts": [
+    "docs/demo/bcbs-nc/policy_definitions/v1.2/mri/MRI_CODESET_AND_APPLICABILITY.json",
+    "docs/demo/bcbs-nc/policy_definitions/v1.2/mri/MRI_CODESET_RECORD.schema.json",
+    "docs/demo/bcbs-nc/policy_definitions/v1.2/mri/MRI_DECISION_TABLES.json",
+    "docs/demo/bcbs-nc/policy_definitions/v1.2/mri/MRI_CLINICAL_CRITERIA_SCHEDULE.md",
+    "docs/demo/bcbs-nc/policy_definitions/v1.2/mri/MRI_OPERATIONAL_REQUIREMENTS_MATRIX.md",
+    "docs/demo/bcbs-nc/policy_definitions/v1.2/mri/MRI_POLICY_DEFINITION_v1.2.md",
+    "docs/demo/bcbs-nc/policy_definitions/v1.2/mri/MRI_POLICY_ACCEPTANCE_TESTS.json",
+    "docs/demo/bcbs-nc/policy_definitions/v1.2/mri/MRI_SCOPE_MIGRATION_DECISION_v1.2.md",
+    "docs/demo/bcbs-nc/policy_definitions/v1.2/mri/MRI_SOURCE_EVIDENCE_REGISTER.md",
+    "docs/demo/bcbs-nc/policy_definitions/Outpatient_MRI_Prior_Authorization.json",
+    "frozen synthetic MRI demo fixtures (must NOT inherit lumbar-only)"
+  ],
+  "passed_checks_count": 27,
+  "failed_checks_count": 0,
+  "codes_validated": [
+    "72148",
+    "72149",
+    "72158",
+    "99213",
+    "99214",
+    "70540",
+    "70542",
+    "70543"
+  ],
+  "acceptance_test_ids": [
+    "AT-MKT-01",
+    "AT-CODE-01",
+    "AT-CODE-02",
+    "AT-CODE-03",
+    "AT-CODE-04",
+    "AT-CODE-05",
+    "AT-EVD-VER-01",
+    "AT-LCD-01",
+    "AT-NCD-01",
+    "AT-URG-01",
+    "AT-URG-02",
+    "AT-URG-03",
+    "AT-EVID-01",
+    "AT-CLIN-01",
+    "AT-CLIN-02",
+    "AT-CLIN-03",
+    "AT-ADV-01",
+    "AT-ADV-02",
+    "AT-ADV-03",
+    "AT-EXC-01",
+    "AT-APL-01",
+    "AT-SYN-01",
+    "AT-SYN-02",
+    "AT-MIG-01",
+    "AT-VER-01",
+    "AT-ANL-01",
+    "AT-REL-01",
+    "AT-DET-01"
+  ],
+  "release_blockers": [
+    {
+      "id": "CLINICAL_SCHEDULE_UNSIGNED",
+      "artifact": "MRI_CLINICAL_CRITERIA_SCHEDULE.md",
+      "blocks": [
+        "operative APPROVED",
+        "ADVERSE_DETERMINATION_ISSUED"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "blocks_clinical_product_approval": true,
+      "informational_only": false
+    },
+    {
+      "id": "PRODUCT_SCHEDULE_UNRESOLVED",
+      "artifact": "MRI_OPERATIONAL_REQUIREMENTS_MATRIX.md",
+      "blocks": [
+        "activation"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "blocks_clinical_product_approval": true,
+      "informational_only": false
+    },
+    {
+      "id": "LEGAL_CLOCKS_UNRESOLVED",
+      "artifact": "MRI_OPERATIONAL_REQUIREMENTS_MATRIX.md",
+      "blocks": [
+        "activation"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "blocks_clinical_product_approval": true,
+      "informational_only": false
+    },
+    {
+      "id": "SCOPE_MIGRATION_UNSIGNED",
+      "artifact": "MRI_SCOPE_MIGRATION_DECISION_v1.2.md",
+      "blocks": [
+        "lumbar-only operative rename"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "blocks_clinical_product_approval": true,
+      "informational_only": false
+    },
+    {
+      "id": "LIVE_CONFIG_MARKET_DEFECT",
+      "artifact": "Outpatient_MRI_Prior_Authorization.json",
+      "blocks": [
+        "NC-only gate"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "blocks_clinical_product_approval": true,
+      "informational_only": false
+    },
+    {
+      "id": "GUARDRAIL_THRESHOLDS_UNAPPROVED",
+      "artifact": "MRI_OPERATIONAL_REQUIREMENTS_MATRIX.md",
+      "blocks": [
+        "production monitoring gates"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "blocks_clinical_product_approval": true,
+      "informational_only": false
+    },
+    {
+      "id": "CONSERVATIVE_CARE_UNRESOLVED",
+      "artifact": "MRI_CLINICAL_CRITERIA_SCHEDULE.md",
+      "blocks": [
+        "LUMBAR-01 operative gate"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "blocks_clinical_product_approval": true,
+      "informational_only": false
+    },
+    {
+      "id": "CONTRAST_RULES_UNRESOLVED",
+      "artifact": "MRI_CLINICAL_CRITERIA_SCHEDULE.md",
+      "blocks": [
+        "LUMBAR-02/03 modality"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "blocks_operational_activation": true,
+      "blocks_clinical_product_approval": true,
+      "informational_only": false
+    }
+  ],
+  "release_gate": {
+    "rule": "Any RELEASE_BLOCKER prevents OPERATIONAL_ACTIVATION and clinical/product approval",
+    "blocker_count": 8,
+    "operational_activation": "PROHIBITED_WHILE_BLOCKERS_OPEN"
+  },
+  "provisional_acceptance": {
+    "status": "PROVISIONALLY_ACCEPTED_SUBJECT_TO_INDEPENDENT_VERIFICATION",
+    "accepted_at": "2026-11-03T15:32:32.189928+00:00",
+    "frozen_as_reference_implementation": true,
+    "independent_verification_required": [
+      "MRI_V1_2_TECHNICAL_CLOSURE_VALIDATION_REPORT.json",
+      "MRI_CODESET_RECORD.schema.json",
+      "MRI_DECISION_TABLES.json",
+      "MRI_POLICY_ACCEPTANCE_TESTS.json",
+      "MRI_SCOPE_MIGRATION_DECISION_v1.2.md",
+      "acceptance-test execution evidence (not Cursor self-report alone)"
+    ]
+  }
+}

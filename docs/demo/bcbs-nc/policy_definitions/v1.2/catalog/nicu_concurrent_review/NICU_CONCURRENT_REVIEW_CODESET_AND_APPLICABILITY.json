@@ -1,0 +1,10 @@
+{
+  "document_id": "NICU_CONCURRENT_REVIEW_CODESET",
+  "policy_id": "7101e2ed-96fe-4339-9d54-7e96f317f0dc",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abNICU Concurrent Review\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "NICU concurrent review",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

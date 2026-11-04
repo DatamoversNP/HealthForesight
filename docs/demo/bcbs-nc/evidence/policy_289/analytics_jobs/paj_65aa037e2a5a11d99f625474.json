@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_65aa037e2a5a11d99f625474",
+  "policy_id": "1ab14e7c-fb26-40f4-b188-fb8d5b06f8f2",
+  "name": "Outpatient CT / CTA Prior Authorization",
+  "evidence_pathway": "EMPIRICAL_COHORT",
+  "configuration_digest": "dd503233afd33920",
+  "started_at": "2026-11-04T13:18:18.239220+00:00",
+  "finished_at": "2026-11-04T13:18:18.239222+00:00",
+  "status": "EMPIRICAL_ELIGIBLE_QUEUED",
+  "duplicate_prevented": false,
+  "result": {
+    "cohort_count": 81479,
+    "message": "Preflight PASS \u2014 enqueue Celery/worker analytical services; not executed via bulk HTTP",
+    "next": "uepi_worker.tasks.policy_analytics_lifecycle_job"
+  },
+  "error": null
+}

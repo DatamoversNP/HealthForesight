@@ -1,0 +1,10 @@
+{
+  "document_id": "SPECIALIST_PROVIDER_ELIGIBILITY_FOR_SPECIALTY_SERVICES_CODESET",
+  "policy_id": "3476e04f-6f18-40b7-a7a6-28fad5c84048",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abSpecialist Provider Eligibility for Specialty Services\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Network / access / COE / referral rule \u2014 taxonomy/network IDs not CPT schedule",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

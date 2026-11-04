@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_d44875980ba4677e3ac04347",
+  "policy_id": "c1dd30a3-de81-4743-8433-c9c5b40a9d92",
+  "name": "Direct-to-Consumer Lab Noncoverage",
+  "evidence_pathway": "EMPIRICAL_COHORT",
+  "configuration_digest": "78b6b54bb11f9706",
+  "started_at": "2026-11-04T13:18:18.230454+00:00",
+  "finished_at": "2026-11-04T13:18:18.230456+00:00",
+  "status": "EMPIRICAL_ELIGIBLE_QUEUED",
+  "duplicate_prevented": false,
+  "result": {
+    "cohort_count": 126453,
+    "message": "Preflight PASS \u2014 enqueue Celery/worker analytical services; not executed via bulk HTTP",
+    "next": "uepi_worker.tasks.policy_analytics_lifecycle_job"
+  },
+  "error": null
+}

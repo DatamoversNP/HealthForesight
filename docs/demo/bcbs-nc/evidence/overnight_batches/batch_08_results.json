@@ -1,0 +1,784 @@
+{
+  "batch": 8,
+  "generated_at": "2026-11-04T11:18:20.514811+00:00",
+  "n": 25,
+  "high": 25,
+  "fail": 0,
+  "results": [
+    {
+      "policy_id": "c5c9e942-0649-46b5-82e0-20e660ead31d",
+      "name": "Oncology Evidence-Based Clinical Pathway",
+      "policy_type": "CLINICAL_PATHWAY",
+      "status": "ACTIVE",
+      "batch": 8,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T07:52:03.656079+00:00"
+    },
+    {
+      "policy_id": "7d2d7cff-ec16-4757-99cc-e855abe5de3c",
+      "name": "Oncology Genomic Profiling Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 8,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T07:53:36.464640+00:00"
+    },
+    {
+      "policy_id": "fc8541ac-c246-40f2-afdc-9e1d8b50180c",
+      "name": "Oncology Immunotherapy Step Therapy",
+      "policy_type": "STEP_THERAPY",
+      "status": "ACTIVE",
+      "batch": 8,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T07:55:12.270844+00:00"
+    },
+    {
+      "policy_id": "ebb00492-841d-40f5-9d40-dbcfc50f47f1",
+      "name": "Oncology Infusion Site Steerage",
+      "policy_type": "SITE_OF_CARE",
+      "status": "ACTIVE",
+      "batch": 8,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T07:57:11.452435+00:00"
+    },
+    {
+      "policy_id": "99dca188-8edd-4293-839f-29508666780d",
+      "name": "Oncology Oral Specialty Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 8,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T07:59:12.737937+00:00"
+    },
+    {
+      "policy_id": "81486a70-41fe-4252-8c2b-50298886e9f8",
+      "name": "Oncology-Related Dental Clearance Coverage",
+      "policy_type": "COVERAGE",
+      "status": "ACTIVE",
+      "batch": 8,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T08:01:09.749107+00:00"
+    },
+    {
+      "policy_id": "177be323-166d-4c45-8d34-f124245e651e",
+      "name": "Opioid Analgesic Utilization Management",
+      "policy_type": "COMPOSITE",
+      "status": "ACTIVE",
+      "batch": 8,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T08:03:09.829951+00:00"
+    },
+    {
+      "policy_id": "140fc121-b6b9-4166-bf5d-e2dfe2ea69db",
+      "name": "Opioid Quantity Limit - Chronic Pain",
+      "policy_type": "QUANTITY_LIMIT",
+      "status": "ACTIVE",
+      "batch": 8,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T08:05:08.216825+00:00"
+    },
+    {
+      "policy_id": "7a41ebf4-ce99-45da-9039-49a7bb262bc9",
+      "name": "Opioid Quantity Limit \u2014 Acute Pain",
+      "policy_type": "QUANTITY_LIMIT",
+      "status": "ACTIVE",
+      "batch": 8,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T08:07:06.098478+00:00"
+    },
+    {
+      "policy_id": "e885e4fb-d001-4bc5-aa0d-91067b3e550b",
+      "name": "Opioid Quantity Limit \u2014 Chronic Pain",
+      "policy_type": "QUANTITY_LIMIT",
+      "status": "ACTIVE",
+      "batch": 8,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T08:09:07.534072+00:00"
+    },
+    {
+      "policy_id": "e1202a7b-e876-4783-acb0-024eeec84f40",
+      "name": "Orthobiologics and PRP Noncoverage",
+      "policy_type": "COVERAGE",
+      "status": "ACTIVE",
+      "batch": 8,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T08:11:06.985591+00:00"
+    },
+    {
+      "policy_id": "828e0c91-a8ad-454b-b667-01fb13470117",
+      "name": "Out-of-Network Elective Services Restriction",
+      "policy_type": "NETWORK_RESTRICTION",
+      "status": "ACTIVE",
+      "batch": 8,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T08:13:04.624143+00:00"
+    },
+    {
+      "policy_id": "1170dd01-14a9-44fe-a708-32f7ad20e7d4",
+      "name": "Out-of-Network Inpatient Authorization",
+      "policy_type": "CLINICAL_CRITERIA",
+      "status": "ACTIVE",
+      "batch": 8,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T08:15:01.765370+00:00"
+    },
+    {
+      "policy_id": "d8167a61-8d8a-4b7b-b1d8-889bfe5fedfd",
+      "name": "Outpatient Advanced Imaging Medical Necessity Criteria",
+      "policy_type": "MEDICAL_NECESSITY",
+      "status": "ACTIVE",
+      "batch": 8,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T08:17:06.576027+00:00"
+    },
+    {
+      "policy_id": "1ab14e7c-fb26-40f4-b188-fb8d5b06f8f2",
+      "name": "Outpatient CT / CTA Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 8,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T08:19:08.380410+00:00"
+    },
+    {
+      "policy_id": "d438833e-42b4-4563-b6a0-2479e770d10b",
+      "name": "Panniculectomy Medical Necessity",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 8,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T08:20:58.685619+00:00"
+    },
+    {
+      "policy_id": "3be7daf8-c492-46d4-9980-e9c860b8cca7",
+      "name": "PAP Therapy Initiation and Compliance",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 8,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T08:22:40.703621+00:00"
+    },
+    {
+      "policy_id": "bca68d08-a955-46c8-aac7-5b8d1e438a0a",
+      "name": "Parenteral Nutrition Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 8,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T08:24:20.840863+00:00"
+    },
+    {
+      "policy_id": "1a49ed4c-f5f7-473b-9f39-b3caaefdc99c",
+      "name": "Partial Hospitalization and IOP Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 8,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T08:25:52.943999+00:00"
+    },
+    {
+      "policy_id": "3068317f-4d26-407e-ac29-1e2ae3a7778e",
+      "name": "PCI Elective Appropriateness Review",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 8,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T08:27:25.946596+00:00"
+    },
+    {
+      "policy_id": "0a19b3f5-f5b5-4ceb-8ea5-39eab4d937eb",
+      "name": "PCP Referral Requirement for Specialist Visits",
+      "policy_type": "REFERRAL_REQUIREMENT",
+      "status": "ACTIVE",
+      "batch": 8,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T08:28:57.645919+00:00"
+    },
+    {
+      "policy_id": "3b1ec8e6-2943-47b6-a160-8b3c25c5ad19",
+      "name": "PCSK9 Inhibitor Step Therapy",
+      "policy_type": "STEP_THERAPY",
+      "status": "ACTIVE",
+      "batch": 8,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T08:30:48.896646+00:00"
+    },
+    {
+      "policy_id": "b4f4e29e-130f-4310-8626-fa32625b9513",
+      "name": "Peer-to-Peer Review Opportunity Policy",
+      "policy_type": "ADMINISTRATIVE_REQUIREMENT",
+      "status": "ACTIVE",
+      "batch": 8,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T08:32:31.033059+00:00"
+    },
+    {
+      "policy_id": "784ff05a-aa29-47d3-a14a-3bfcdb6019d0",
+      "name": "Peripheral Vascular Intervention Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 8,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T08:34:06.036967+00:00"
+    },
+    {
+      "policy_id": "6aeff184-cd74-4d4d-8f4d-8853661d3607",
+      "name": "PET / PET-CT Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 8,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T08:35:36.449368+00:00"
+    }
+  ]
+}

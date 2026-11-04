@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_761e86fd4c8a101ae49e6464",
+  "policy_id": "649b4ac8-ca82-5b84-aa87-84834490731a",
+  "name": "LCD L34425 NC MRI Coverage Criteria",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "1867bd50f97114fd",
+  "started_at": "2026-11-04T13:18:18.234969+00:00",
+  "finished_at": "2026-11-04T13:18:18.234971+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

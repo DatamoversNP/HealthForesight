@@ -71,13 +71,15 @@ export default function ForecastManager({ policyId }: ForecastManagerProps) {
 
   useEffect(() => {
     loadForecasts()
-  }, [])
+  }, [policyId])
 
   const loadForecasts = async () => {
     try {
       setLoading(true)
       setError(null)
-      const data = await apiClient.getForecasts()
+      const data = await apiClient.getForecasts(
+        policyId ? { policy_id: policyId } : undefined
+      )
       setForecasts(Array.isArray(data) ? data : [])
     } catch (err: any) {
       console.error('Failed to load forecasts:', err)
@@ -128,6 +130,7 @@ export default function ForecastManager({ policyId }: ForecastManagerProps) {
           p50: Number(formData.p50),
           p90: Number(formData.p90),
         },
+        ...(policyId ? { policy_id: policyId } : {}),
       }
 
       if (formData.lower_bound && formData.upper_bound && formData.confidence_level) {

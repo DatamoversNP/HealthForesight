@@ -1,0 +1,32 @@
+{
+  "document_id": "MS_DISEASE_MODIFYING_THERAPY_PRIOR_AUTHORIZATION_CODESET",
+  "policy_id": "d85a0b27-9972-4591-ae52-62e0ac732ab8",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abMS Disease-Modifying Therapy Prior Authorization\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "HCPCS",
+      "code": "J2323",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "J2350",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "J1595",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "MS DMT injection anchors",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

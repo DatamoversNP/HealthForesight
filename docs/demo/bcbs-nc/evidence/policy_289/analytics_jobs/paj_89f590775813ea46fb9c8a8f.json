@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_89f590775813ea46fb9c8a8f",
+  "policy_id": "d3b25dd6-57d6-49e9-8e1f-5f45438caa06",
+  "name": "Benzodiazepine Quantity Limits",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "8022f3f0fe6f6bd3",
+  "started_at": "2026-11-04T13:18:18.226678+00:00",
+  "finished_at": "2026-11-04T13:18:18.226679+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "codeset_UNRESOLVED",
+      "definition_incomplete"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_a6bc62ed89281df89b1cf545",
+  "policy_id": "e1a31ad3-9b3f-49ae-a03f-61138b0b9948",
+  "name": "Specialty Tier Coinsurance Design",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "f652d1b8788a9a7b",
+  "started_at": "2026-11-04T13:18:18.242463+00:00",
+  "finished_at": "2026-11-04T13:18:18.242464+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

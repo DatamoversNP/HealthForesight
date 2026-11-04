@@ -1,0 +1,211 @@
+{
+  "document_id": "HF-RP-COV-NCD2202-001-CODESET",
+  "policy_id": "4f8c34e3-015b-509d-90ba-521261464258",
+  "version": "v1.2.1-structural-controls",
+  "schema": "../_controls/POLICY_CODESET_RECORD.schema.json",
+  "status": "DEFINITION_REVIEW_REQUIRED",
+  "operational_activation": "PROHIBITED",
+  "mechanism": "NCD_220_2_COVERAGE_STUDY",
+  "intended_scope": "MRI_NATIONAL",
+  "controls_ref": "../_controls/POLICY_ENGINEERING_CONTROLS_v1.md",
+  "mri_clinical_logic_copied": false,
+  "notes": [
+    "CANDIDATE_INCLUDE is not APPROVED_INCLUDE",
+    "Do not alter frozen Dec 4 demo fixtures",
+    "Mechanism-specific \u2014 not MRI lumbar PA criteria"
+  ],
+  "codes": [
+    {
+      "code_system": "CPT",
+      "code": "70551",
+      "description": "MRI brain without contrast",
+      "anatomical_region": "MRI_NATIONAL",
+      "contrast_variant": "WITHOUT",
+      "setting": "OUTPATIENT",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "effective_from": null,
+      "effective_to": null,
+      "evidence_class": "REPRESENTATIVE_DESIGN",
+      "source_evidence_note": "NCD 220.2 study candidate \u2014 commercial PA inheritance forbidden unless explicit adoption",
+      "evidence": {
+        "evidence_id": null,
+        "source_system": null,
+        "source_document_id": null,
+        "source_version": null,
+        "source_url": null,
+        "retrieved_at": null,
+        "content_checksum_sha256": null,
+        "applicability_period_start": null,
+        "applicability_period_end": null,
+        "notes": "Not a CMS verification claim"
+      },
+      "medicare_applicability": {
+        "ncd_220_2": "APPLICABLE_FFS",
+        "lcd_l34425": "NOT_APPLICABLE",
+        "article_a56729": "NOT_APPLICABLE"
+      },
+      "scope_role": null
+    },
+    {
+      "code_system": "CPT",
+      "code": "70552",
+      "description": "MRI brain with contrast",
+      "anatomical_region": "MRI_NATIONAL",
+      "contrast_variant": "WITH",
+      "setting": "OUTPATIENT",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "effective_from": null,
+      "effective_to": null,
+      "evidence_class": "REPRESENTATIVE_DESIGN",
+      "source_evidence_note": "NCD 220.2 study candidate \u2014 commercial PA inheritance forbidden unless explicit adoption",
+      "evidence": {
+        "evidence_id": null,
+        "source_system": null,
+        "source_document_id": null,
+        "source_version": null,
+        "source_url": null,
+        "retrieved_at": null,
+        "content_checksum_sha256": null,
+        "applicability_period_start": null,
+        "applicability_period_end": null,
+        "notes": "Not a CMS verification claim"
+      },
+      "medicare_applicability": {
+        "ncd_220_2": "APPLICABLE_FFS",
+        "lcd_l34425": "NOT_APPLICABLE",
+        "article_a56729": "NOT_APPLICABLE"
+      },
+      "scope_role": null
+    },
+    {
+      "code_system": "CPT",
+      "code": "70553",
+      "description": "MRI brain without then with contrast",
+      "anatomical_region": "MRI_NATIONAL",
+      "contrast_variant": "WITHOUT_THEN_WITH",
+      "setting": "OUTPATIENT",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "effective_from": null,
+      "effective_to": null,
+      "evidence_class": "REPRESENTATIVE_DESIGN",
+      "source_evidence_note": "NCD 220.2 study candidate \u2014 commercial PA inheritance forbidden unless explicit adoption",
+      "evidence": {
+        "evidence_id": null,
+        "source_system": null,
+        "source_document_id": null,
+        "source_version": null,
+        "source_url": null,
+        "retrieved_at": null,
+        "content_checksum_sha256": null,
+        "applicability_period_start": null,
+        "applicability_period_end": null,
+        "notes": "Not a CMS verification claim"
+      },
+      "medicare_applicability": {
+        "ncd_220_2": "APPLICABLE_FFS",
+        "lcd_l34425": "NOT_APPLICABLE",
+        "article_a56729": "NOT_APPLICABLE"
+      },
+      "scope_role": null
+    },
+    {
+      "code_system": "CPT",
+      "code": "72148",
+      "description": "MRI lumbar spine without contrast",
+      "anatomical_region": "MRI_NATIONAL",
+      "contrast_variant": "WITHOUT",
+      "setting": "OUTPATIENT",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "effective_from": null,
+      "effective_to": null,
+      "evidence_class": "REPRESENTATIVE_DESIGN",
+      "source_evidence_note": "NCD 220.2 study candidate \u2014 commercial PA inheritance forbidden unless explicit adoption",
+      "evidence": {
+        "evidence_id": null,
+        "source_system": null,
+        "source_document_id": null,
+        "source_version": null,
+        "source_url": null,
+        "retrieved_at": null,
+        "content_checksum_sha256": null,
+        "applicability_period_start": null,
+        "applicability_period_end": null,
+        "notes": "Not a CMS verification claim"
+      },
+      "medicare_applicability": {
+        "ncd_220_2": "APPLICABLE_FFS",
+        "lcd_l34425": "NOT_APPLICABLE",
+        "article_a56729": "NOT_APPLICABLE"
+      },
+      "scope_role": null
+    },
+    {
+      "code_system": "CPT",
+      "code": "72149",
+      "description": "MRI lumbar spine with contrast",
+      "anatomical_region": "MRI_NATIONAL",
+      "contrast_variant": "WITH",
+      "setting": "OUTPATIENT",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "effective_from": null,
+      "effective_to": null,
+      "evidence_class": "REPRESENTATIVE_DESIGN",
+      "source_evidence_note": "NCD 220.2 study candidate \u2014 commercial PA inheritance forbidden unless explicit adoption",
+      "evidence": {
+        "evidence_id": null,
+        "source_system": null,
+        "source_document_id": null,
+        "source_version": null,
+        "source_url": null,
+        "retrieved_at": null,
+        "content_checksum_sha256": null,
+        "applicability_period_start": null,
+        "applicability_period_end": null,
+        "notes": "Not a CMS verification claim"
+      },
+      "medicare_applicability": {
+        "ncd_220_2": "APPLICABLE_FFS",
+        "lcd_l34425": "NOT_APPLICABLE",
+        "article_a56729": "NOT_APPLICABLE"
+      },
+      "scope_role": null
+    },
+    {
+      "code_system": "CPT",
+      "code": "72158",
+      "description": "MRI lumbar spine without then with contrast",
+      "anatomical_region": "MRI_NATIONAL",
+      "contrast_variant": "WITHOUT_THEN_WITH",
+      "setting": "OUTPATIENT",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "effective_from": null,
+      "effective_to": null,
+      "evidence_class": "REPRESENTATIVE_DESIGN",
+      "source_evidence_note": "NCD 220.2 study candidate \u2014 commercial PA inheritance forbidden unless explicit adoption",
+      "evidence": {
+        "evidence_id": null,
+        "source_system": null,
+        "source_document_id": null,
+        "source_version": null,
+        "source_url": null,
+        "retrieved_at": null,
+        "content_checksum_sha256": null,
+        "applicability_period_start": null,
+        "applicability_period_end": null,
+        "notes": "Not a CMS verification claim"
+      },
+      "medicare_applicability": {
+        "ncd_220_2": "APPLICABLE_FFS",
+        "lcd_l34425": "NOT_APPLICABLE",
+        "article_a56729": "NOT_APPLICABLE"
+      },
+      "scope_role": null
+    }
+  ],
+  "fixtures_note": "PROVENANCE_VALIDATED \u2014 financial KA N/A",
+  "ambiguous_mapping_policy": {
+    "auto_deny": false,
+    "auto_impose_pa": false,
+    "route": "MANUAL_SCOPE_REVIEW"
+  }
+}

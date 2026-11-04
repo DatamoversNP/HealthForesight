@@ -1,0 +1,18 @@
+{
+  "job_id": "paj_4a49c95a9e446f610121fdd4",
+  "policy_id": "6c9cac8c-65f6-4214-8d9d-50dcf5f98bda",
+  "name": "Telehealth Cost Sharing Parity",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "9e09ab3e5502ebc5",
+  "started_at": "2026-11-04T13:18:18.243304+00:00",
+  "finished_at": "2026-11-04T13:18:18.243305+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "scope.states"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

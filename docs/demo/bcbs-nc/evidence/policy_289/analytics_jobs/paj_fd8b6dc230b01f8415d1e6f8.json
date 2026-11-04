@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_fd8b6dc230b01f8415d1e6f8",
+  "policy_id": "8b5d081a-74e3-4faf-bed7-7511ee5db984",
+  "name": "Facility Polysomnography Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "f7a314aae1d81abd",
+  "started_at": "2026-11-04T13:18:18.232304+00:00",
+  "finished_at": "2026-11-04T13:18:18.232305+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

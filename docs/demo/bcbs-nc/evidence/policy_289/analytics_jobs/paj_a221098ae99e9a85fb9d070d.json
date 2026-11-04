@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_a221098ae99e9a85fb9d070d",
+  "policy_id": "81486a70-41fe-4252-8c2b-50298886e9f8",
+  "name": "Oncology-Related Dental Clearance Coverage",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "6be93937f589abc3",
+  "started_at": "2026-11-04T13:18:18.238649+00:00",
+  "finished_at": "2026-11-04T13:18:18.238651+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

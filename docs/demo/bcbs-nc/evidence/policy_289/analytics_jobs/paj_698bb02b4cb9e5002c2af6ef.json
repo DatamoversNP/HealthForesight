@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_698bb02b4cb9e5002c2af6ef",
+  "policy_id": "e59f2161-61c9-4656-95c8-5a0aba439cc0",
+  "name": "Hereditary Cancer Gene Panel Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "6b9ec11ddd98b14d",
+  "started_at": "2026-11-04T13:18:18.233194+00:00",
+  "finished_at": "2026-11-04T13:18:18.233195+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

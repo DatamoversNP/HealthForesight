@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_13bab4c1186760578e1fb160",
+  "policy_id": "e78ce5cf-a37b-4b8a-b66e-42fb44c15651",
+  "name": "Hepatitis C Direct-Acting Antiviral Prior Authorization",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "c2bfaad100163d2f",
+  "started_at": "2026-11-04T13:18:18.233122+00:00",
+  "finished_at": "2026-11-04T13:18:18.233124+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "codeset_UNRESOLVED",
+      "definition_incomplete"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

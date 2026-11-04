@@ -1,0 +1,784 @@
+{
+  "batch": 4,
+  "generated_at": "2026-11-04T11:10:14.151946+00:00",
+  "n": 25,
+  "high": 25,
+  "fail": 0,
+  "results": [
+    {
+      "policy_id": "6b36eacc-0ea0-4089-bbf5-2ee51fced2a3",
+      "name": "Discharge Planning Requirements",
+      "policy_type": "CLINICAL_CRITERIA",
+      "status": "ACTIVE",
+      "batch": 4,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:06:15.828794+00:00"
+    },
+    {
+      "policy_id": "23b6f767-95f2-4d5e-a0c0-aa00c334f363",
+      "name": "Documentation Requirement for High-Cost Services",
+      "policy_type": "ADMINISTRATIVE_REQUIREMENT",
+      "status": "ACTIVE",
+      "batch": 4,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:07:49.558147+00:00"
+    },
+    {
+      "policy_id": "726212a1-47e2-4e33-94c0-13f855c6aa7c",
+      "name": "DRG Inpatient Payment Policy",
+      "policy_type": "PAYMENT_POLICY",
+      "status": "ACTIVE",
+      "batch": 4,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:09:19.432574+00:00"
+    },
+    {
+      "policy_id": "51a72ae3-e33e-46cd-8884-8363028203c9",
+      "name": "Drug Testing Frequency Limits for Chronic Pain",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 4,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:10:50.924766+00:00"
+    },
+    {
+      "policy_id": "2b1a9c48-8352-4fd5-be6f-d12c7647de7d",
+      "name": "Durable Medical Equipment Quantity Limits",
+      "policy_type": "QUANTITY_LIMIT",
+      "status": "ACTIVE",
+      "batch": 4,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:12:22.055135+00:00"
+    },
+    {
+      "policy_id": "1cfe61e2-3d69-4a5c-a31d-32d129bc338e",
+      "name": "Eating Disorder Level-of-Care Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 4,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:13:53.782736+00:00"
+    },
+    {
+      "policy_id": "5ad603c9-ff09-4908-a45b-5cfce47314c2",
+      "name": "ECT Authorization Criteria",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 4,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:15:26.785260+00:00"
+    },
+    {
+      "policy_id": "8fba9095-7a93-4b20-8cd8-f13731e6df1e",
+      "name": "Elective Delivery Before 39 Weeks Restriction",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 4,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:16:59.520349+00:00"
+    },
+    {
+      "policy_id": "fae6bd6d-9a3f-4873-942c-9cd2bfb2b68f",
+      "name": "Elective Joint Arthroplasty Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 4,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:18:30.361555+00:00"
+    },
+    {
+      "policy_id": "999cd635-0646-4880-9ab2-a9e2e5c0d2ff",
+      "name": "Elective Surgery Comprehensive Management",
+      "policy_type": "COMPOSITE",
+      "status": "ACTIVE",
+      "batch": 4,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:20:01.870753+00:00"
+    },
+    {
+      "policy_id": "f3bd54e4-caff-4aca-bc11-3551d07a9285",
+      "name": "Emergency Department Frequent Utilizer Program",
+      "policy_type": "COMPOSITE",
+      "status": "ACTIVE",
+      "batch": 4,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:21:31.962746+00:00"
+    },
+    {
+      "policy_id": "1ae4aa5f-7bdd-435a-a8d2-828bf948bca1",
+      "name": "Emergency vs Urgent Care Cost Share Differential",
+      "policy_type": "COST_SHARING",
+      "status": "ACTIVE",
+      "batch": 4,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:23:05.164585+00:00"
+    },
+    {
+      "policy_id": "f0fb116f-2ef1-48d3-bbe1-3d4c7b5cf7d8",
+      "name": "Emerging Treatment Experimental Investigational Exclusion",
+      "policy_type": "EXPERIMENTAL_INVESTIGATIONAL",
+      "status": "ACTIVE",
+      "batch": 4,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:24:37.157581+00:00"
+    },
+    {
+      "policy_id": "b96f11a3-f652-422a-a7f8-b936092dc9b4",
+      "name": "Enteral Nutrition Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 4,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T11:08:39.965010+00:00"
+    },
+    {
+      "policy_id": "cdcb58e2-d0fc-471f-ae21-7dcc2c960205",
+      "name": "Epidural Steroid Injection Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 4,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:29:45.437747+00:00"
+    },
+    {
+      "policy_id": "d36d2783-37b6-4b30-9787-fea2dfcccb14",
+      "name": "Esketamine Treatment Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 4,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:31:19.106594+00:00"
+    },
+    {
+      "policy_id": "dde13087-5e41-45d2-9e51-21e6c42ce16c",
+      "name": "Experimental and Investigational Exclusion Framework",
+      "policy_type": "COVERAGE",
+      "status": "ACTIVE",
+      "batch": 4,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:32:52.441393+00:00"
+    },
+    {
+      "policy_id": "4ac3f722-8cf9-40d6-b023-efc0b950633c",
+      "name": "Experimental and Investigational Services Policy",
+      "policy_type": "COVERAGE",
+      "status": "ACTIVE",
+      "batch": 4,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:34:25.788023+00:00"
+    },
+    {
+      "policy_id": "90592b6e-95a3-4f83-aee5-ed17ddfa1d1b",
+      "name": "Experimental Treatment Coverage Exclusion",
+      "policy_type": "COVERAGE",
+      "status": "ACTIVE",
+      "batch": 4,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:36:14.759052+00:00"
+    },
+    {
+      "policy_id": "71f50c77-7ab7-49f9-a4c2-03fcb73ee3a0",
+      "name": "External Review / IRO Process",
+      "policy_type": "ADMINISTRATIVE_REQUIREMENT",
+      "status": "ACTIVE",
+      "batch": 4,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:37:50.029535+00:00"
+    },
+    {
+      "policy_id": "daa272c9-7348-4600-8690-03ddf992fc8e",
+      "name": "Eyelid Surgery Medical Necessity",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 4,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:39:23.158353+00:00"
+    },
+    {
+      "policy_id": "d02a7792-16e3-4c8e-bd35-4917514de11e",
+      "name": "Facet Joint Intervention Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 4,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:40:54.088161+00:00"
+    },
+    {
+      "policy_id": "db345e39-73ba-4bde-9b04-0fdac8c4a7be",
+      "name": "Facility Fee Schedule and Bundled Payment Adjustments",
+      "policy_type": "REIMBURSEMENT_METHODOLOGY",
+      "status": "ACTIVE",
+      "batch": 4,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:42:27.939811+00:00"
+    },
+    {
+      "policy_id": "8b5d081a-74e3-4faf-bed7-7511ee5db984",
+      "name": "Facility Polysomnography Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 4,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T05:44:00.938944+00:00"
+    },
+    {
+      "policy_id": "8ba97008-9418-4579-94b3-360aae322d17",
+      "name": "Fertility Preservation with Oncology Coverage",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 4,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T11:10:14.094703+00:00"
+    }
+  ]
+}

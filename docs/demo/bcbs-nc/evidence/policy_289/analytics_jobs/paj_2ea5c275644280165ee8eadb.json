@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_2ea5c275644280165ee8eadb",
+  "policy_id": "a365b33c-f62a-44c3-acd7-5eb7a2a4c8b8",
+  "name": "Prosthetic Limb Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "8b5adcb3592b2bec",
+  "started_at": "2026-11-04T13:18:18.240811+00:00",
+  "finished_at": "2026-11-04T13:18:18.240812+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

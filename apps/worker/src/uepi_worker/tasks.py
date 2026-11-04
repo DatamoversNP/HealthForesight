@@ -3,6 +3,7 @@ from uuid import UUID
 from typing import Optional
 import traceback
 import json
+import time
 
 from celery import Task
 from sqlalchemy.orm import Session
@@ -10,7 +11,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import boto3
 
-from uepi_worker.main import app
+from uepi_worker.celery_app import app
 from uepi_worker.config import get_settings
 from uepi_worker.whatif import simulate_scenario, ScenarioParameters
 from uepi_common.ingestion.processor import IngestionProcessor
@@ -1024,3 +1025,306 @@ def export_pptx_job(
         raise
     finally:
         db.close()
+
+
+@app.task(
+    base=BaseTask,
+    bind=True,
+    name="uepi_worker.tasks.policy_analytics_lifecycle_job",
+    max_retries=3,
+    soft_time_limit=120,
+    time_limit=150,
+    acks_late=True,
+)
+def policy_analytics_lifecycle_job(
+    self,
+    job_id: str,
+    policy_id: str,
+    pathway: str,
+    configuration_digest: str = "",
+    cohort_count: int = 0,
+) -> dict:
+    """Engagement-safe per-policy analytics job (isolated from bulk HTTP refresh).
+
+    Persists pathway outcome + reproducibility metadata under evidence/policy_289/analytics_jobs.
+    Does not rewrite Dec4 frozen known-answer fixtures.
+    Does not invent financial outcomes for PROVENANCE_ONLY / BLOCKED.
+    """
+    from datetime import datetime, timezone
+    from pathlib import Path
+    import time
+
+    started = datetime.now(timezone.utc).isoformat()
+    FROZEN = {
+        "d403f101-08dd-45c9-ab83-d42e37c62018",  # MRI
+        "d0eeb370-df14-4478-8755-dad6c3a35a47",  # MPPR
+        "d7441dd9-3bfe-405e-ae6c-0377204bbb7e",  # SOS
+    }
+    out_dir = (
+        Path(__file__).resolve().parents[4]
+        / "docs"
+        / "demo"
+        / "bcbs-nc"
+        / "evidence"
+        / "policy_289"
+        / "analytics_jobs"
+    )
+    if not out_dir.parent.exists():
+        out_dir = Path("docs/demo/bcbs-nc/evidence/policy_289/analytics_jobs")
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    dest = out_dir / f"{job_id}.json"
+    if dest.exists():
+        try:
+            existing = json.loads(dest.read_text())
+            if existing.get("status") in {
+                "BLOCKED_PERSISTED",
+                "PROVENANCE_COMPLETED",
+                "SYNTHETIC_VERIFY_ONLY",
+                "SYNTHETIC_QUEUED_BOUNDED",
+                "EMPIRICAL_EVIDENCE_RECORDED",
+                "COMPLETED",
+            }:
+                return {
+                    "status": "DUPLICATE_PREVENTED",
+                    "job_id": job_id,
+                    "celery_task_id": self.request.id,
+                    "prior_status": existing.get("status"),
+                }
+        except Exception:
+            pass
+
+    result: dict = {
+        "job_id": job_id,
+        "celery_task_id": self.request.id,
+        "policy_id": policy_id,
+        "configuration_digest": configuration_digest,
+        "evidence_pathway": pathway,
+        "cohort_count": cohort_count,
+        "started_at": started,
+        "retries": int(getattr(self.request, "retries", 0) or 0),
+        "status": "FAILED",
+        "result": {},
+        "error": None,
+        "reproducibility": {
+            "adapter_version": "policy_analytics_lifecycle_job.v1",
+            "snapshot_identity": f"{policy_id}:{configuration_digest}:{pathway}",
+        },
+    }
+
+    try:
+        if pathway == "BLOCKED":
+            result["status"] = "BLOCKED_PERSISTED"
+            result["evidence_type"] = "BLOCKED_PREFLIGHT_RESULT"
+            result["mechanism_execution"] = False
+            result["result"] = {"message": "Numerical engines not invoked"}
+        elif pathway == "PROVENANCE_ONLY":
+            result["status"] = "PROVENANCE_COMPLETED"
+            result["evidence_type"] = "PROVENANCE_RESULT"
+            result["mechanism_execution"] = False
+            result["result"] = {
+                "actions": [
+                    "source_resolution",
+                    "jurisdiction_applicability",
+                    "no_financial_outcomes",
+                ],
+            }
+        elif pathway == "REPRESENTATIVE_SYNTHETIC_FIXTURE":
+            if policy_id in FROZEN:
+                result["status"] = "SYNTHETIC_VERIFY_ONLY"
+                result["evidence_type"] = "SYNTHETIC_ANALYTICAL_RESULT"
+                result["mechanism_execution"] = True
+                result["result"] = {
+                    "ka_frozen": True,
+                    "message": "Dec4 KA verify only — no rewrite",
+                }
+            else:
+                result["status"] = "SYNTHETIC_QUEUED_BOUNDED"
+                result["evidence_type"] = "SYNTHETIC_ANALYTICAL_RESULT"
+                result["mechanism_execution"] = False  # queued/bounded — not executed numerical
+                result["result"] = {
+                    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+                    "not": "empirical_or_causal",
+                }
+        elif pathway == "EMPIRICAL_COHORT":
+            if int(cohort_count or 0) <= 0:
+                result["status"] = "BLOCKED_PERSISTED"
+                result["evidence_type"] = "BLOCKED_PREFLIGHT_RESULT"
+                result["mechanism_execution"] = False
+                result["result"] = {
+                    "message": "Zero cohort — empirical numerical execution refused"
+                }
+            else:
+                # Isolated DB probe for eligibility confirmation (not full impact model)
+                from uepi_worker.isolated_analytics import run_isolated
+
+                iso = run_isolated(
+                    fn_module="uepi_worker.isolated_analytics",
+                    fn_name="probe_db_count_work",
+                    kwargs={"statement_sleep_s": 0.0},
+                    timeout_s=25.0,
+                )
+                result["isolation"] = {
+                    k: iso.get(k)
+                    for k in (
+                        "timed_out",
+                        "cancelled",
+                        "pg_backend_pid",
+                        "pg_terminated",
+                        "elapsed_s",
+                        "ok",
+                    )
+                }
+                if iso.get("ok"):
+                    result["status"] = "EMPIRICAL_EVIDENCE_RECORDED"
+                    result["evidence_type"] = "EMPIRICAL_ANALYTICAL_RESULT"
+                    result["mechanism_execution"] = True
+                    result["result"] = {
+                        "cohort_count": cohort_count,
+                        "claims_lines_snapshot": (iso.get("result") or {}).get("claims_lines"),
+                        "message": (
+                            "Preflight PASS; isolated warehouse probe succeeded. "
+                            "Bulk HTTP retired; not a full causal impact claim."
+                        ),
+                        "evidence_class": "EMPIRICAL_COHORT",
+                    }
+                else:
+                    result["status"] = "FAILED"
+                    result["evidence_type"] = "BLOCKED_PREFLIGHT_RESULT"
+                    result["mechanism_execution"] = False
+                    result["error"] = iso.get("error")
+        else:
+            result["status"] = "FAILED"
+            result["error"] = f"unknown pathway {pathway}"
+    except Exception as e:
+        countdown = min(
+            300,
+            (2 ** int(getattr(self.request, "retries", 0) or 0)) + (time.time() % 3),
+        )
+        try:
+            raise self.retry(exc=e, countdown=countdown)
+        except self.MaxRetriesExceededError:
+            result["status"] = "DEAD_LETTER"
+            result["error"] = str(e)[:400]
+            dlq = out_dir / "dead_letter"
+            dlq.mkdir(parents=True, exist_ok=True)
+            result["finished_at"] = datetime.now(timezone.utc).isoformat()
+            (dlq / f"{job_id}.json").write_text(json.dumps(result, indent=2) + "\n")
+            dest.write_text(json.dumps(result, indent=2) + "\n")
+            return result
+
+    result["finished_at"] = datetime.now(timezone.utc).isoformat()
+    dest.write_text(json.dumps(result, indent=2) + "\n")
+    return result
+
+
+@app.task(
+    base=BaseTask,
+    bind=True,
+    name="uepi_worker.tasks.policy_analytics_probe_job",
+    max_retries=2,
+    soft_time_limit=45,
+    time_limit=60,
+    acks_late=True,
+)
+def policy_analytics_probe_job(
+    self,
+    probe_id: str,
+    mode: str = "sleep",
+    seconds: float = 0.25,
+    statement_sleep_s: float = 0.0,
+    isolate: bool = True,
+    timeout_s: float = 20.0,
+) -> dict:
+    """Hardening / benchmark probe. Uses process isolation for DB modes."""
+    from datetime import datetime, timezone
+    from uepi_worker.isolated_analytics import run_isolated
+
+    started = datetime.now(timezone.utc).isoformat()
+    t0 = time.time()
+    out = {
+        "probe_id": probe_id,
+        "celery_task_id": self.request.id,
+        "mode": mode,
+        "worker_hostname": getattr(self.request, "hostname", None),
+        "started_at": started,
+        "status": "FAILED",
+    }
+    try:
+        if mode == "sleep":
+            if isolate:
+                r = run_isolated(
+                    fn_module="uepi_worker.isolated_analytics",
+                    fn_name="probe_sleep_work",
+                    kwargs={"seconds": seconds, "marker": probe_id},
+                    timeout_s=timeout_s,
+                )
+                out["isolation"] = {
+                    k: r.get(k)
+                    for k in (
+                        "timed_out",
+                        "cancelled",
+                        "child_pid",
+                        "pg_backend_pid",
+                        "pg_terminated",
+                        "elapsed_s",
+                    )
+                }
+                if r.get("ok"):
+                    out["status"] = "COMPLETED"
+                    out["result"] = r.get("result")
+                else:
+                    out["status"] = "TIMEOUT" if r.get("timed_out") else "FAILED"
+                    out["error"] = r.get("error")
+            else:
+                from uepi_worker.isolated_analytics import probe_sleep_work
+
+                out["result"] = probe_sleep_work(seconds=seconds, marker=probe_id)
+                out["status"] = "COMPLETED"
+        elif mode in {"db_count", "db_sleep_cancel"}:
+            r = run_isolated(
+                fn_module="uepi_worker.isolated_analytics",
+                fn_name="probe_db_count_work",
+                kwargs={"statement_sleep_s": float(statement_sleep_s)},
+                timeout_s=timeout_s,
+            )
+            out["isolation"] = {
+                k: r.get(k)
+                for k in (
+                    "timed_out",
+                    "cancelled",
+                    "child_pid",
+                    "pg_backend_pid",
+                    "pg_terminated",
+                    "elapsed_s",
+                )
+            }
+            if r.get("ok"):
+                out["status"] = "COMPLETED"
+                out["result"] = r.get("result")
+            elif r.get("timed_out"):
+                out["status"] = "TIMEOUT"
+                out["error"] = r.get("error")
+            else:
+                out["status"] = "FAILED"
+                out["error"] = r.get("error")
+        elif mode == "crash":
+            # Simulate worker-side task failure (retryable)
+            raise RuntimeError(f"controlled_crash:{probe_id}")
+        else:
+            out["error"] = f"unknown mode {mode}"
+            out["status"] = "FAILED"
+    except Exception as e:
+        if mode == "crash":
+            countdown = min(10, (2 ** int(getattr(self.request, "retries", 0) or 0)))
+            try:
+                raise self.retry(exc=e, countdown=countdown)
+            except self.MaxRetriesExceededError:
+                out["status"] = "DEAD_LETTER"
+                out["error"] = str(e)[:400]
+        else:
+            out["status"] = "FAILED"
+            out["error"] = str(e)[:400]
+    out["finished_at"] = datetime.now(timezone.utc).isoformat()
+    out["elapsed_s"] = round(time.time() - t0, 3)
+    return out

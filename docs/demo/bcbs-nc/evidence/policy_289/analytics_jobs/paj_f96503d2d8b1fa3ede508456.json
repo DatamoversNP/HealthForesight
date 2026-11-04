@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_f96503d2d8b1fa3ede508456",
+  "policy_id": "647c52c7-3619-42d3-899b-387936096ee2",
+  "name": "Inpatient vs Observation Status Determination",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "84c2791217d5dd8b",
+  "started_at": "2026-11-04T13:18:18.234542+00:00",
+  "finished_at": "2026-11-04T13:18:18.234543+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

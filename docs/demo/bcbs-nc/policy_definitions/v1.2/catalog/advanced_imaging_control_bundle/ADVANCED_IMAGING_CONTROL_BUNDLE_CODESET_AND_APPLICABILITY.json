@@ -1,0 +1,10 @@
+{
+  "document_id": "ADVANCED_IMAGING_CONTROL_BUNDLE_CODESET",
+  "policy_id": "939c6be2-50b9-4d9a-8f4f-916caa8c2764",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abAdvanced Imaging Control Bundle\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Program/composite policy \u2014 constituent mechanisms configured separately",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

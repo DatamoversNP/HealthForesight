@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_8987adaab6c88c9444251497",
+  "policy_id": "8fcee93e-ba2f-4aee-86c5-d0861232a0a4",
+  "name": "Preferred Pharmacy Network Policy",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "0387c8b5e0c50c4d",
+  "started_at": "2026-11-04T13:18:18.240520+00:00",
+  "finished_at": "2026-11-04T13:18:18.240521+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

@@ -1,0 +1,25 @@
+{
+  "document_id": "PANNICULECTOMY_MEDICAL_NECESSITY_CODESET",
+  "policy_id": "d438833e-42b4-4563-b6a0-2479e770d10b",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abPanniculectomy Medical Necessity\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "15830",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "15847",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Excision excessive skin abdomen / panniculectomy",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

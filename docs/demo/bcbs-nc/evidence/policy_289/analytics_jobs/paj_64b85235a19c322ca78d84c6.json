@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_64b85235a19c322ca78d84c6",
+  "policy_id": "3be7daf8-c492-46d4-9980-e9c860b8cca7",
+  "name": "PAP Therapy Initiation and Compliance",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "20a78bd67dedecfb",
+  "started_at": "2026-11-04T13:18:18.239487+00:00",
+  "finished_at": "2026-11-04T13:18:18.239489+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

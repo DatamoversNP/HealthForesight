@@ -1,0 +1,18 @@
+{
+  "document_id": "ORTHOBIOLOGICS_AND_PRP_NONCOVERAGE_CODESET",
+  "policy_id": "e1202a7b-e876-4783-acb0-024eeec84f40",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abOrthobiologics and PRP Noncoverage\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "0232T",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "PRP noncoverage anchor",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

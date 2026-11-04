@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_c2071867a15ddcb67fce6c2c",
+  "policy_id": "a652c0ea-34c0-4376-a8b4-e331a58e5f46",
+  "name": "BlueCard Home Plan Medical Policy Application",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "fabd32ad4c988e56",
+  "started_at": "2026-11-04T13:18:18.227051+00:00",
+  "finished_at": "2026-11-04T13:18:18.227053+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

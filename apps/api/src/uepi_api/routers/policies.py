@@ -353,7 +353,8 @@ async def list_policies(
     current_user: Annotated[CurrentUser, Depends(verify_token)],
     db: Session = Depends(get_db),
     skip: int = Query(0, ge=0),
-    limit: int = Query(100, ge=1, le=1000),
+    # Catalog demos exceed 100 policies; default high enough for Observation Analysis dropdowns
+    limit: int = Query(500, ge=1, le=1000),
     policy_type: str | None = Query(None),
 ):
     """List policies for current tenant - database-only"""
@@ -450,6 +451,46 @@ async def list_policies(
                         "analytics_expectations": metadata.get("analytics_expectations"),
                         "ui_hints": metadata.get("ui_hints"),
                     })
+
+            # Catalog list must stay resilient: coerce/drop invalid nested metadata
+            # rather than skipping the whole policy (or dumping huge tracebacks).
+            allowed_touchpoints = {
+                "CLAIM_EDIT",
+                "PA_WORKFLOW",
+                "BENEFIT_ACCUMULATOR",
+                "PRECERT",
+                "AUTHORIZATION",
+                "CARE_MANAGEMENT",
+            }
+            enf = policy_dict.get("enforcement")
+            if isinstance(enf, dict):
+                raw_tp = enf.get("touchpoint") or []
+                if isinstance(raw_tp, list):
+                    mapped = []
+                    for t in raw_tp:
+                        s = str(t or "").upper()
+                        if s in allowed_touchpoints:
+                            mapped.append(s)
+                        elif s in {"CLAIMS", "CLAIM", "CLAIMS_EDIT", "CLAIMS_ADJUDICATION"}:
+                            mapped.append("CLAIM_EDIT")
+                        elif s in {"PRIOR_AUTH", "COVERAGE_REVIEW", "SITE_OF_CARE_REVIEW", "PRE_AUTH"}:
+                            mapped.append("PA_WORKFLOW")
+                        elif s:
+                            mapped.append("PA_WORKFLOW")
+                    enf["touchpoint"] = mapped or ["PA_WORKFLOW"]
+                    policy_dict["enforcement"] = enf
+
+            levers = policy_dict.get("policy_levers")
+            if isinstance(levers, list):
+                cleaned = []
+                for lever in levers:
+                    if not isinstance(lever, dict):
+                        continue
+                    lt = lever.get("lever_type")
+                    # Keep unknown lever types as strings; PolicyResponse may still reject —
+                    # fall back below strips levers if needed.
+                    cleaned.append(lever)
+                policy_dict["policy_levers"] = cleaned
             
             try:
                 # Convert dates to strings if they're datetime objects
@@ -461,13 +502,26 @@ async def list_policies(
                 response_obj = PolicyResponse(**policy_dict)
                 result.append(response_obj)
             except Exception as validation_error:
-                print(f"WARNING: Failed to create PolicyResponse for policy {policy.id}: {validation_error}")
-                print(f"  policy_dict keys: {list(policy_dict.keys())}")
-                print(f"  policy_dict: {policy_dict}")
-                import traceback
-                traceback.print_exc()
-                # Skip this policy but continue with others
-                continue
+                # Retry as a slim catalog row so one bad nested field cannot hide the policy
+                try:
+                    slim = {
+                        "id": policy_dict["id"],
+                        "tenant_id": policy_dict.get("tenant_id"),
+                        "name": policy_dict.get("name"),
+                        "policy_type": policy_dict.get("policy_type") or "UNKNOWN",
+                        "owner_role": policy_dict.get("owner_role"),
+                        "description": policy_dict.get("description"),
+                        "status": policy_dict.get("status"),
+                        "created_at": policy_dict.get("created_at"),
+                        "updated_at": policy_dict.get("updated_at"),
+                    }
+                    result.append(PolicyResponse(**slim))
+                except Exception:
+                    print(
+                        f"WARNING: Failed to create PolicyResponse for policy {policy.id}: "
+                        f"{validation_error}"
+                    )
+                    continue
         
         return result
     except Exception as e:
@@ -492,33 +546,81 @@ class PolicyWithClaimCount(BaseModel):
     description: Optional[str] = None
 
 
-# Cap to avoid N heavy count queries (each counts over claims_lines; ~1–2s per policy)
-POLICIES_WITH_CLAIM_COUNTS_MAX = 20
+# Cap claim-count tip queries; must stay interactive (never pin API workers for minutes).
+POLICIES_WITH_CLAIM_COUNTS_MAX = 12
+_CLAIM_COUNTS_PER_QUERY_MS = 4_000
+_CLAIM_COUNTS_WALL_MS = 12_000
+
+
+@router.get("/policies/predicted-impacts")
+def list_predicted_impacts_summary(
+    current_user: Annotated[CurrentUser, Depends(verify_token)],
+    limit: int = Query(500, ge=1, le=1000),
+):
+    """Latest predicted impact per policy (slim). Avoids N+1 on the overview page."""
+    from uepi_api.storage_policy_predicted_impact import list_latest_predicted_impacts
+
+    tenant_id = (
+        current_user.tenant_id
+        if isinstance(current_user.tenant_id, UUID)
+        else UUID(str(current_user.tenant_id))
+    )
+    return list_latest_predicted_impacts(tenant_id, limit=limit)
 
 
 @router.get("/policies/with-claim-counts", response_model=list[PolicyWithClaimCount])
 async def list_policies_with_claim_counts(
     current_user: Annotated[CurrentUser, Depends(verify_token)],
     db: Session = Depends(get_db),
-    limit: int = Query(20, ge=1, le=20),
+    limit: int = Query(12, ge=1, le=12),
+    include_counts: bool = Query(
+        True,
+        description="If false, return policy stubs with claim_count=0 (instant).",
+    ),
 ):
-    """List policies with claim counts (scope+levers). Capped for performance (each policy = 1 count query). Sorted by claim_count descending."""
+    """List policies with claim counts (scope+levers).
+
+    Fast-fail: short per-query timeout + wall clock so this never saturates workers
+    (which cascaded into login / What-If / analyses timeouts).
+    """
+    import time
     from datetime import date, timedelta
     from uepi_api.repositories.canonical_data import CanonicalDataRepository
     from uepi_api.services.policy_scoped_data_generation import build_policy_claims_filters
 
     tenant_id_uuid = current_user.tenant_id if isinstance(current_user.tenant_id, UUID) else UUID(str(current_user.tenant_id))
+    cap = min(limit, POLICIES_WITH_CLAIM_COUNTS_MAX)
+    policies = (
+        db.query(Policy)
+        .filter(Policy.tenant_id == tenant_id_uuid)
+        .order_by(Policy.created_at.desc())
+        .limit(cap)
+        .all()
+    )
+
+    def _stub(policy, count: int = 0) -> PolicyWithClaimCount:
+        return PolicyWithClaimCount(
+            id=str(policy.id),
+            name=policy.name or "",
+            policy_type=str(policy.policy_type) if policy.policy_type else "UNKNOWN",
+            claim_count=count,
+            description=policy.description,
+        )
+
+    if not include_counts:
+        return [_stub(p) for p in policies]
+
     repo = CanonicalDataRepository(db)
-    set_local_statement_timeout(db, 180_000)
     end_date = date.today()
     start_date = end_date - timedelta(days=365)
-
-    cap = min(limit, POLICIES_WITH_CLAIM_COUNTS_MAX)
-    query = db.query(Policy).filter(Policy.tenant_id == tenant_id_uuid)
-    policies = query.order_by(Policy.created_at.desc()).limit(cap).all()
-
+    started = time.monotonic()
     out = []
+
     for policy in policies:
+        if (time.monotonic() - started) * 1000 >= _CLAIM_COUNTS_WALL_MS:
+            out.append(_stub(policy))
+            continue
+
         meta = getattr(policy, "policy_metadata_json", None) or {}
         policy_dict = {
             "scope": meta.get("scope") or {},
@@ -530,30 +632,35 @@ async def list_policies_with_claim_counts(
             pf = build_policy_claims_filters(policy_dict)
         except Exception:
             pf = {}
+
+        cpt = pf.get("cpt_codes") or []
+        svc = pf.get("service_categories") or []
+        # Broad filters scan huge claim volumes — skip rather than hang.
+        if not cpt and not svc:
+            out.append(_stub(policy))
+            continue
+
         try:
+            set_local_statement_timeout(db, _CLAIM_COUNTS_PER_QUERY_MS)
             count = repo.count_claims_for_filters(
                 tenant_id=tenant_id_uuid,
                 start_date=start_date,
                 end_date=end_date,
                 lob=pf.get("lob"),
                 market=pf.get("markets") or pf.get("market"),
-                cpt_codes=pf.get("cpt_codes"),
-                hcpcs_codes=pf.get("cpt_codes"),
-                service_categories=pf.get("service_categories"),
+                cpt_codes=cpt or None,
+                hcpcs_codes=cpt or None,
+                service_categories=svc or None,
             )
         except Exception as e:
-            import logging
-            logging.getLogger(__name__).warning("count_claims_for_filters failed for policy %s: %s", policy.id, e)
+            logger.warning("count_claims_for_filters failed for policy %s: %s", policy.id, e)
+            try:
+                db.rollback()
+            except Exception:
+                pass
             count = 0
-        out.append(
-            PolicyWithClaimCount(
-                id=str(policy.id),
-                name=policy.name or "",
-                policy_type=str(policy.policy_type) if policy.policy_type else "UNKNOWN",
-                claim_count=count,
-                description=policy.description,
-            )
-        )
+        out.append(_stub(policy, count))
+
     out.sort(key=lambda x: x.claim_count, reverse=True)
     return out
 
@@ -752,6 +859,36 @@ async def get_policy_claim_counts_breakdown(
     }
 
 
+def _sanitize_policy_response_dict(policy_dict: dict) -> dict:
+    """Coerce nested metadata so PolicyResponse validation cannot hide catalog rows."""
+    allowed_touchpoints = {
+        "CLAIM_EDIT",
+        "PA_WORKFLOW",
+        "BENEFIT_ACCUMULATOR",
+        "PRECERT",
+        "AUTHORIZATION",
+        "CARE_MANAGEMENT",
+    }
+    enf = policy_dict.get("enforcement")
+    if isinstance(enf, dict):
+        raw_tp = enf.get("touchpoint") or []
+        if isinstance(raw_tp, list):
+            mapped = []
+            for t in raw_tp:
+                s = str(t or "").upper()
+                if s in allowed_touchpoints:
+                    mapped.append(s)
+                elif s in {"CLAIMS", "CLAIM", "CLAIMS_EDIT", "CLAIMS_ADJUDICATION"}:
+                    mapped.append("CLAIM_EDIT")
+                elif s in {"PRIOR_AUTH", "COVERAGE_REVIEW", "SITE_OF_CARE_REVIEW", "PRE_AUTH"}:
+                    mapped.append("PA_WORKFLOW")
+                elif s:
+                    mapped.append("PA_WORKFLOW")
+            enf = {**enf, "touchpoint": mapped or ["PA_WORKFLOW"]}
+            policy_dict["enforcement"] = enf
+    return policy_dict
+
+
 @router.get("/policies/{policy_id}", response_model=PolicyResponse)
 async def get_policy(
     policy_id: UUID,
@@ -793,8 +930,24 @@ async def get_policy(
                     "analytics_expectations": metadata.get("analytics_expectations"),
                     "ui_hints": metadata.get("ui_hints"),
                 })
-        
-        return PolicyResponse(**policy_dict)
+
+        policy_dict = _sanitize_policy_response_dict(policy_dict)
+        try:
+            return PolicyResponse(**policy_dict)
+        except Exception:
+            # Last resort: return slim row so workspace deep-links still resolve
+            slim = {
+                "id": policy_dict["id"],
+                "tenant_id": policy_dict.get("tenant_id"),
+                "name": policy_dict.get("name"),
+                "policy_type": policy_dict.get("policy_type") or "UNKNOWN",
+                "owner_role": policy_dict.get("owner_role"),
+                "description": policy_dict.get("description"),
+                "status": policy_dict.get("status"),
+                "created_at": policy_dict.get("created_at"),
+                "updated_at": policy_dict.get("updated_at"),
+            }
+            return PolicyResponse(**slim)
     except HTTPException:
         raise
     except Exception as e:

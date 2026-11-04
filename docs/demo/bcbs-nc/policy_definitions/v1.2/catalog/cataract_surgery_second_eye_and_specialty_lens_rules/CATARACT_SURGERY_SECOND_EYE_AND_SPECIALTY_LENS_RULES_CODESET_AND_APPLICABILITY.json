@@ -1,0 +1,32 @@
+{
+  "document_id": "CATARACT_SURGERY_SECOND_EYE_AND_SPECIALTY_LENS_RULES_CODESET",
+  "policy_id": "e87b67ff-d969-4f98-a823-86765ca1be33",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abCataract Surgery Second-Eye and Specialty Lens Rules\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "66984",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "66982",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "66991",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Cataract extraction with IOL; complex / femto-adjacent codes as design",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

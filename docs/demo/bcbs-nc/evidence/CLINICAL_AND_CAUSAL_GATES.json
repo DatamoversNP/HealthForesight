@@ -1,0 +1,34 @@
+{
+  "generated_at": "2026-11-03T12:25:00Z",
+  "dec4_primary_path": ["MRI", "MPPR", "SOS", "Medicare Rules Explorer", "Objective Health"],
+  "readiness": "DEMO_READY_WITH_DISCLOSED_LIMITATIONS",
+  "mri_clinical_applicability": {
+    "primary_authorities": ["NCD220.2"],
+    "partial_related": ["L34425", "A56729"],
+    "do_not_claim_L34425_as_general_mri_pa_lcd": true,
+    "rule_set_version": "medicare-applicable-rules-v3",
+    "rule_set_primary": ["NCD220.2"]
+  },
+  "causal_feasibility_v2": {
+    "mri": {"status": "CAUSAL_ESTIMATE_SUPPORTED", "estimation_eligible": true, "permanent_exclusion": false},
+    "mppr": {"status": "CAUSAL_DESIGN_POSSIBLE_DATA_INSUFFICIENT", "estimation_eligible": true, "permanent_exclusion": false},
+    "ptp": {"status": "CAUSAL_DESIGN_POSSIBLE_DATA_INSUFFICIENT", "estimation_eligible": true, "permanent_exclusion": false}
+  },
+  "ptp_modifier_semantics": {
+    "passed": true,
+    "baseline_paid": 4400.0,
+    "post_policy_paid": 3600.0,
+    "payment_impact": 800.0,
+    "pairs_hit": 3,
+    "modifier_bypass": 1
+  },
+  "therapy_lcd": {"linked": ["L34428"], "authority": "Palmetto JM Outpatient Physical Therapy"},
+  "frozen_regression": {
+    "mppr_payment_impact": 600.0,
+    "mppr_delta": 120.0,
+    "sos_payment_impact": 520.0,
+    "sos_delta": 260.0,
+    "oh_summary": {"total": 289, "on_track": 186, "at_risk": 79, "no_data": 24}
+  },
+  "expansion_not_fully_validated": 6
+}

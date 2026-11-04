@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_667fe7c415ae7f021e5ca757",
+  "policy_id": "21bb31fe-4e0e-452f-989c-d2e35925539b",
+  "name": "Infertility Diagnostic Coverage Criteria",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "0ccc79d6fa141f31",
+  "started_at": "2026-11-04T13:18:18.234121+00:00",
+  "finished_at": "2026-11-04T13:18:18.234122+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

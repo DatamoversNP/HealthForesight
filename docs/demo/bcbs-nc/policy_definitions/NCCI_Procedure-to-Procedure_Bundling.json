@@ -1,0 +1,286 @@
+{
+  "policy_id": "58b839b5-b6e0-59e0-9406-d817877c3ce8",
+  "name": "NCCI Procedure-to-Procedure Bundling",
+  "policy_type": "CODING_AND_BILLING",
+  "status": "ACTIVE",
+  "description": "Applies NCCI procedure-to-procedure bundling edits with modifier-indicator semantics (indicator 1 allows clinically appropriate modifiers such as 59/X{E,P,S,U}). Representative Payer coding-integrity policy for NC markets.",
+  "owner_role": null,
+  "metadata": {
+    "scope": {
+      "lob": [
+        "COMMERCIAL",
+        "MA",
+        "MEDICAID"
+      ],
+      "plans": null,
+      "states": [
+        "NC"
+      ],
+      "markets": [
+        "NC"
+      ],
+      "network": [
+        "IN"
+      ],
+      "regions": null,
+      "applies_to_all": false,
+      "procedure_codes": [
+        "70553",
+        "70551"
+      ],
+      "service_categories": [
+        "ADVANCED_IMAGING"
+      ]
+    },
+    "domain": "Payment",
+    "policy_id": "58b839b5-b6e0-59e0-9406-d817877c3ce8",
+    "subdomain": "Coding integrity",
+    "apply_when": [],
+    "guardrails": [
+      {
+        "action": "alert",
+        "description": "Alert if PTP pair hit rate exceeds 35% of eligible imaging claims",
+        "metric_name": "ptp_pair_hit_rate",
+        "threshold_type": "max",
+        "threshold_value": 0.35
+      },
+      {
+        "action": "alert",
+        "description": "Alert if modifier-59/X{E,P,S,U} bypass exceeds 50% of PTP hits",
+        "metric_name": "modifier_bypass_rate",
+        "threshold_type": "max",
+        "threshold_value": 0.5
+      },
+      {
+        "action": "alert",
+        "description": "Alert if payer savings exceed 25% of baseline paid on PTP-eligible claims",
+        "metric_name": "payment_impact_pct",
+        "threshold_type": "max",
+        "threshold_value": 25.0
+      }
+    ],
+    "assumptions": [
+      {
+        "value": "price_effect_only",
+        "source": "NCCI PTP mechanical known-answer fixture",
+        "confidence": 0.9,
+        "description": "Column-two denial under PTP reduces paid amount when no appropriate modifier is present",
+        "assumption_type": "COST"
+      },
+      {
+        "value": "0",
+        "source": "Analytical strategy registry",
+        "confidence": 0.95,
+        "description": "Volume held constant \u2014 PTP is a payment edit, not utilization management",
+        "assumption_type": "UTILIZATION"
+      },
+      {
+        "value": "modifier_bypass_eligible",
+        "source": "NCCI modifier-indicator guidance",
+        "confidence": 0.7,
+        "description": "Some claims will bypass via clinically appropriate modifiers under indicator 1",
+        "assumption_type": "BEHAVIOR"
+      }
+    ],
+    "enforcement": {
+      "mechanism": "HARD",
+      "touchpoint": [
+        "CLAIMS_EDIT"
+      ],
+      "override_allowed": true,
+      "override_requires": "clinically_appropriate_modifier"
+    },
+    "jurisdiction": "NC",
+    "display_label": "Representative Payer Policies",
+    "policy_levers": [
+      {
+        "targets": {
+          "codes": [
+            "70553",
+            "70551"
+          ],
+          "code_type": "CPT"
+        },
+        "lever_type": "CODING_EDIT",
+        "parameters": {
+          "edit_type": "NCCI_PTP",
+          "column_one": "70553",
+          "column_two": "70551",
+          "modifier_indicator": "1",
+          "appropriate_modifiers": [
+            "59",
+            "XE",
+            "XP",
+            "XS",
+            "XU"
+          ]
+        }
+      }
+    ],
+    "standards_basis": [
+      "CMS National Correct Coding Initiative (NCCI) PTP edit framework",
+      "Modifier indicator 0/1/9 semantics"
+    ],
+    "effective_period": {
+      "end_date": null,
+      "start_date": "2024-01-01T00:00:00"
+    },
+    "global_exceptions": [],
+    "analytical_strategy": {
+      "engine_id": "reimbursement_ncci_ptp_v1",
+      "mechanism": "NCCI_PTP_FIXTURE"
+    },
+    "enterprise_classification": {
+      "mechanism": "CODING_EDIT_MODIFIER",
+      "catalog_class": "DEMO_SYNTHETIC",
+      "sub_mechanism": "NCCI_PTP",
+      "dec4_expansion": true,
+      "validation_target": "FULLY_VALIDATED_DEMO",
+      "representative_payer": true,
+      "not_blue_cross_nc_proprietary": true
+    }
+  },
+  "assumptions_db": [
+    {
+      "assumption_type": "COST",
+      "description": "Column-two denial under PTP reduces paid amount when no appropriate modifier is present",
+      "value": "price_effect_only",
+      "source": "NCCI PTP mechanical known-answer fixture",
+      "confidence": 0.9
+    },
+    {
+      "assumption_type": "UTILIZATION",
+      "description": "Volume held constant \u2014 PTP is a payment edit, not utilization management",
+      "value": "0",
+      "source": "Analytical strategy registry",
+      "confidence": 0.95
+    },
+    {
+      "assumption_type": "BEHAVIOR",
+      "description": "Some claims will bypass via clinically appropriate modifiers under indicator 1",
+      "value": "modifier_bypass_eligible",
+      "source": "NCCI modifier-indicator guidance",
+      "confidence": 0.7
+    }
+  ],
+  "guardrails_db": [
+    {
+      "metric_name": "ptp_pair_hit_rate",
+      "threshold_type": "max",
+      "threshold_value": 0.35,
+      "action": "alert",
+      "description": "Alert if PTP pair hit rate exceeds 35% of eligible imaging claims"
+    },
+    {
+      "metric_name": "modifier_bypass_rate",
+      "threshold_type": "max",
+      "threshold_value": 0.5,
+      "action": "alert",
+      "description": "Alert if modifier-59/X{E,P,S,U} bypass exceeds 50% of PTP hits"
+    },
+    {
+      "metric_name": "payment_impact_pct",
+      "threshold_type": "max",
+      "threshold_value": 25.0,
+      "action": "alert",
+      "description": "Alert if payer savings exceed 25% of baseline paid on PTP-eligible claims"
+    }
+  ],
+  "versions": [
+    {
+      "version_number": 1,
+      "effective_start_date": "2024-01-01T00:00:00",
+      "effective_end_date": null,
+      "change_type": "INITIAL",
+      "enforcement_strength": "STRONG",
+      "justification": "Dec 4 expansion synthetic demo version",
+      "version_metadata": {
+        "scope": {
+          "lob": [
+            "COMMERCIAL",
+            "MA",
+            "MEDICAID"
+          ],
+          "plans": null,
+          "states": [
+            "NC"
+          ],
+          "markets": [
+            "NC"
+          ],
+          "network": [
+            "IN"
+          ],
+          "regions": null,
+          "applies_to_all": false,
+          "procedure_codes": [
+            "70553",
+            "70551"
+          ],
+          "service_categories": [
+            "ADVANCED_IMAGING"
+          ]
+        },
+        "state": "ACTIVE",
+        "mechanism": "CODING_EDIT_MODIFIER",
+        "enforcement": {
+          "mechanism": "HARD",
+          "touchpoint": [
+            "CLAIMS_EDIT"
+          ],
+          "override_allowed": true,
+          "override_requires": "clinically_appropriate_modifier"
+        },
+        "catalog_class": "DEMO_SYNTHETIC",
+        "policy_levers": [
+          {
+            "targets": {
+              "codes": [
+                "70553",
+                "70551"
+              ],
+              "code_type": "CPT"
+            },
+            "lever_type": "CODING_EDIT",
+            "parameters": {
+              "edit_type": "NCCI_PTP",
+              "column_one": "70553",
+              "column_two": "70551",
+              "modifier_indicator": "1",
+              "appropriate_modifiers": [
+                "59",
+                "XE",
+                "XP",
+                "XS",
+                "XU"
+              ]
+            }
+          }
+        ]
+      },
+      "codes": [
+        {
+          "code_type": "CPT",
+          "code": "70553",
+          "code_group": "MRI_BRAIN"
+        },
+        {
+          "code_type": "CPT",
+          "code": "70551",
+          "code_group": "MRI_BRAIN"
+        }
+      ]
+    }
+  ],
+  "medicare_source_links": [
+    {
+      "link_role": "USES_CODING_EDIT",
+      "family_id": "ncci_ptp",
+      "source_document_id": "NCCI-PTP-PAIR-70553-70551",
+      "title": "Demo PTP pair 70553/70551 (synthetic edit illustration)",
+      "authority": "CMS NCCI",
+      "source_url": "https://www.cms.gov/medicare/coding-billing/national-correct-coding-initiative-ncci-edits"
+    }
+  ],
+  "generated_at": "2026-11-03T14:38:44.489996+00:00"
+}

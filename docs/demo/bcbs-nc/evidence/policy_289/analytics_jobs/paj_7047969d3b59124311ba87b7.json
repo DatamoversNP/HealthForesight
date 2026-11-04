@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_7047969d3b59124311ba87b7",
+  "policy_id": "e11b049d-fcce-55cc-bcd7-71329038383b",
+  "name": "NCCI Medically Unlikely Units",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "99156a5435338933",
+  "started_at": "2026-11-04T13:18:18.236914+00:00",
+  "finished_at": "2026-11-04T13:18:18.236915+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

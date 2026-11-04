@@ -1,0 +1,10 @@
+{
+  "document_id": "HOSPITAL_ACQUIRED_CONDITION_NONPAYMENT_CODESET",
+  "policy_id": "fa30b827-51b3-40cd-99f0-f75874910586",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abHospital-Acquired Condition Nonpayment\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "HAC/POA inpatient payment adjustment \u2014 ICD/POA driven",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

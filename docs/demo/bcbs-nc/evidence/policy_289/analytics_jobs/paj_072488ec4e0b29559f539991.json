@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_072488ec4e0b29559f539991",
+  "policy_id": "cc2953d0-4d9c-4e92-8861-0b0683e7c0b5",
+  "name": "Centers of Excellence Requirement \u2014 Transplant",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "4071276c87f1ab68",
+  "started_at": "2026-11-04T13:18:18.228423+00:00",
+  "finished_at": "2026-11-04T13:18:18.228425+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

@@ -1,0 +1,25 @@
+{
+  "document_id": "TOTAL_JOINT_REPLACEMENT_EPISODE_BUNDLED_PAYMENT_CODESET",
+  "policy_id": "68a488b3-1e25-4e3f-aeea-9a45d3c53602",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abTotal Joint Replacement Episode Bundled Payment\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "27130",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "27447",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Episode anchors; bundled price UNRESOLVED",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

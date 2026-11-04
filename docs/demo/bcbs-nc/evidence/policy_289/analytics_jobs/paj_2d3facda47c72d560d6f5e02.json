@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_2d3facda47c72d560d6f5e02",
+  "policy_id": "535dfe9a-ca0a-4ad1-a252-ffe72a9d4df0",
+  "name": "Provider Network Change Continuity of Care Coverage",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "c94ac0a219ba8534",
+  "started_at": "2026-11-04T13:18:18.240918+00:00",
+  "finished_at": "2026-11-04T13:18:18.240919+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

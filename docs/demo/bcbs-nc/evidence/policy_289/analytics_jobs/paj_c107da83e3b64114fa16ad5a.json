@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_c107da83e3b64114fa16ad5a",
+  "policy_id": "acd4be99-0a25-46b2-af2c-f02e10617779",
+  "name": "Specialty Drug Comprehensive Management",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "48aa435d1bfdaa5b",
+  "started_at": "2026-11-04T13:18:18.242089+00:00",
+  "finished_at": "2026-11-04T13:18:18.242090+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

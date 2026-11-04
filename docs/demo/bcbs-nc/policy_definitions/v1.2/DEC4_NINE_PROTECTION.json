@@ -1,0 +1,66 @@
+{
+  "document_id": "DEC4_NINE_PROTECTION",
+  "rule": "Frozen December 4 primary + synthetic nine. Do not overwrite folders, KA fixtures, or reseeds.",
+  "frozen_at": "2026-11-04",
+  "operational_activation": "PROHIBITED",
+  "policies": [
+    {
+      "key": "mri",
+      "policy_id": "d403f101-08dd-45c9-ab83-d42e37c62018",
+      "folder": "mri",
+      "ka_frozen": true,
+      "claim_markets": ["NYC", "DFW"],
+      "states": ["NC"]
+    },
+    {
+      "key": "mppr",
+      "policy_id": "d0eeb370-df14-4478-8755-dad6c3a35a47",
+      "folder": "mppr",
+      "ka_frozen": true
+    },
+    {
+      "key": "sos",
+      "policy_id": "d7441dd9-3bfe-405e-ae6c-0377204bbb7e",
+      "folder": "sos",
+      "ka_frozen": true
+    },
+    {
+      "key": "ptp",
+      "policy_id": "58b839b5-b6e0-59e0-9406-d817877c3ce8",
+      "folder": "ptp",
+      "ka_frozen": true
+    },
+    {
+      "key": "mue",
+      "policy_id": "e11b049d-fcce-55cc-bcd7-71329038383b",
+      "folder": "mue",
+      "ka_frozen": true
+    },
+    {
+      "key": "therapy",
+      "policy_id": "f2b8e7f3-1627-5dbe-8d7e-757ce21aa55b",
+      "folder": "therapy",
+      "ka_frozen": true
+    },
+    {
+      "key": "infusion",
+      "policy_id": "11218053-bdc0-569f-a415-fb61c5dcda37",
+      "folder": "infusion",
+      "ka_frozen": true
+    },
+    {
+      "key": "ncd",
+      "policy_id": "4f8c34e3-015b-509d-90ba-521261464258",
+      "folder": "ncd_study",
+      "ka_frozen": true,
+      "evidence_class": "PROVENANCE_ONLY"
+    },
+    {
+      "key": "lcd",
+      "policy_id": "649b4ac8-ca82-5b84-aa87-84834490731a",
+      "folder": "lcd_study",
+      "ka_frozen": true,
+      "evidence_class": "PROVENANCE_ONLY"
+    }
+  ]
+}

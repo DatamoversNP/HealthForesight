@@ -1,0 +1,121 @@
+{
+  "archetype": "BENEFIT_ELIGIBILITY",
+  "offset": 0,
+  "count": 11,
+  "candidate_schedule": 6,
+  "unresolved": 0,
+  "not_applicable": 5,
+  "persisted_ok": 0,
+  "results": [
+    {
+      "policy_id": "6bdaa2ef-30ab-4818-a67e-a60217cd0537",
+      "name": "90-Day Retail Maintenance Program",
+      "folder": "catalog/90_day_retail_maintenance_program",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "81d9a78e-cf2d-4667-8032-98a8c7c984d6",
+      "name": "Acupuncture Visit Limit",
+      "folder": "catalog/acupuncture_visit_limit",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 4,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "38525bee-e8b4-483c-85e1-5abdc2747be9",
+      "name": "Annual Maximum Benefit for Durable Medical Equipment",
+      "folder": "catalog/annual_maximum_benefit_for_durable_medical_equipment",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "70fc68a8-a52f-4cf8-b650-802d82031728",
+      "name": "Cardiac Rehabilitation Session Limit",
+      "folder": "catalog/cardiac_rehabilitation_session_limit",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 2,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "9047ba6a-a6bf-4b98-a4dd-0c0d611d8cf9",
+      "name": "Chiropractic Visit Limit",
+      "folder": "catalog/chiropractic_visit_limit",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 3,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "36228118-affa-48f1-abad-c3fb6091d870",
+      "name": "Mandatory Mail-Order Maintenance Medications",
+      "folder": "catalog/mandatory_mail_order_maintenance_medications",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "2c14270f-aca3-4268-8562-235dce612e9f",
+      "name": "Occupational Therapy Annual Limit",
+      "folder": "catalog/occupational_therapy_annual_limit",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 6,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "9fb617a1-2718-47dd-995d-b4fe2a77ca3a",
+      "name": "Physical Therapy Visit Limit",
+      "folder": "catalog/physical_therapy_visit_limit",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 6,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "c262b624-22ab-489d-81f2-f51fc0ac2d89",
+      "name": "Preferred Generic Drug Tier Design",
+      "folder": "catalog/preferred_generic_drug_tier_design",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "5b976f98-6922-42a8-8175-5047c160ca9e",
+      "name": "Pulmonary Rehabilitation Session Limit",
+      "folder": "catalog/pulmonary_rehabilitation_session_limit",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 3,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "e1a31ad3-9b3f-49ae-a03f-61138b0b9948",
+      "name": "Specialty Tier Coinsurance Design",
+      "folder": "catalog/specialty_tier_coinsurance_design",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    }
+  ]
+}

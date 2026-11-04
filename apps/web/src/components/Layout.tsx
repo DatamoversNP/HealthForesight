@@ -75,6 +75,7 @@ const menuGroups: { text: string; icon: React.ReactNode; path: string }[][] = [
   ],
   [
     { text: 'Objectives Health', icon: <FlagIcon />, path: '/objectives-health' },
+    { text: 'Medicare Rules', icon: <FlagIcon />, path: '/medicare-rules' },
     { text: 'Baseline Analysis', icon: <TrendingIcon />, path: '/baseline-analysis' },
     { text: 'Observation Analysis', icon: <CompareIcon />, path: '/observation-analysis' },
     { text: 'Observation Run History', icon: <HistoryIcon />, path: '/observation-run-history' },

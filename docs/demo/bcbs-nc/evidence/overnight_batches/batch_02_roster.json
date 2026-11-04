@@ -1,0 +1,206 @@
+{
+  "batch": 2,
+  "offset": 25,
+  "policies": [
+    {
+      "policy_id": "f029e87f-4b1e-4934-91e6-6fd238da85c9",
+      "name": "Biosimilar Preferencing Policy",
+      "policy_type": "STEP_THERAPY",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "0a81b63d-60c2-4065-afa2-747da296b468",
+      "name": "Blood Glucose Test Strip Step Therapy",
+      "policy_type": "STEP_THERAPY",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "a652c0ea-34c0-4376-a8b4-e331a58e5f46",
+      "name": "BlueCard Home Plan Medical Policy Application",
+      "policy_type": "ADMINISTRATIVE_REQUIREMENT",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "83a95c87-1821-4391-9311-59d1fc8d7853",
+      "name": "BlueCard Host Plan Local Rules Application",
+      "policy_type": "ADMINISTRATIVE_REQUIREMENT",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "a86519ff-8aa4-4878-9fdf-da4ef87e6a4b",
+      "name": "Bone Densitometry Frequency Limits",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "10b61f7d-ace5-4946-853f-ce9654f484ca",
+      "name": "Bone Growth Stimulator Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "7b0cffd8-0171-4276-b458-ed913ab57695",
+      "name": "Breast MRI Medical Necessity Criteria",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "cadc0e95-bcd7-43c7-ab5c-7524343b07d0",
+      "name": "Breast Reduction Medical Necessity",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "a45b26ab-305a-485a-8e29-17735584aaff",
+      "name": "Bundled Payment for Joint Replacement",
+      "policy_type": "PAYMENT_POLICY",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "3360b3cc-a24f-48a8-8529-b406ae56883c",
+      "name": "Bunion and Forefoot Elective Surgery Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "9458bc86-990a-4a2e-9cec-facbc9e3fe27",
+      "name": "Cancer Clinical Trial Routine Cost Coverage",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "787ea442-3c27-4a3d-8a19-6f103be70e2a",
+      "name": "Capsule Endoscopy Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "ebc41eb8-b094-4884-989a-e7470a753676",
+      "name": "CAR-T and Cellular Therapy Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "3e0b2ec4-217c-4d08-914d-015e9b8961d6",
+      "name": "Cardiac CT Angiography Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "1c33a9d1-fe18-451e-94b6-70f191a403f8",
+      "name": "Cardiac Episode Bundle",
+      "policy_type": "PAYMENT_POLICY",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "064c3a08-e3c4-4627-a701-7e83aaee2a52",
+      "name": "Cardiac Imaging Comprehensive Control",
+      "policy_type": "COMPOSITE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "c6c042ae-22ef-409c-bc4b-3b4e31ea5073",
+      "name": "Cardiac Implantable Device Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "88347905-9f2c-4f96-9dfc-bf32c21a3358",
+      "name": "Cardiac Rehabilitation Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "70fc68a8-a52f-4cf8-b650-802d82031728",
+      "name": "Cardiac Rehabilitation Session Limit",
+      "policy_type": "DURATION_FREQUENCY_LIMIT",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "8600ecab-f671-4ef3-b8c6-e71846d44554",
+      "name": "Cardiac Stress Testing Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "e87b67ff-d969-4f98-a823-86765ca1be33",
+      "name": "Cataract Surgery Second-Eye and Specialty Lens Rules",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "7b7666c6-90fb-4a19-b7ea-581400fd405f",
+      "name": "Centers of Excellence Requirement \u2014 Bariatric",
+      "policy_type": "NETWORK_RESTRICTION",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "8e4ff210-8d77-4b27-9a86-1e6f50986033",
+      "name": "Centers of Excellence Requirement \u2014 Complex Cancer",
+      "policy_type": "NETWORK_RESTRICTION",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "cc2953d0-4d9c-4e92-8861-0b0683e7c0b5",
+      "name": "Centers of Excellence Requirement \u2014 Transplant",
+      "policy_type": "NETWORK_RESTRICTION",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "100e5690-fa88-4537-9d92-3d14b1c2c126",
+      "name": "CGM and Diabetes Supply Quantity Limits",
+      "policy_type": "QUANTITY_LIMIT",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    }
+  ]
+}

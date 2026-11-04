@@ -2,8 +2,16 @@
 .env
 .env.local
 .env.*.local
+.env.demo7867
 scripts/azure/production.azure.env
 *.bak
+
+# === Demo media (too large for git; keep locally / object storage) ===
+docs/demo/bcbs-nc/recordings/
+docs/demo/bcbs-nc/local_demo/**/*.mp4
+docs/demo/bcbs-nc/local_demo/**/*.webm
+docs/demo/bcbs-nc/**/raw*/
+*.webm
 
 # === Data (too large for GitHub push – use DB/local; share via other means) ===
 /data/

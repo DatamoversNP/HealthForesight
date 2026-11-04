@@ -1,0 +1,206 @@
+{
+  "batch": 10,
+  "offset": 225,
+  "policies": [
+    {
+      "policy_id": "0a6f2596-15d2-47e1-a979-06e46a061fb3",
+      "name": "Related Readmission Payment Adjustment",
+      "policy_type": "PAYMENT_POLICY",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "404878f7-d266-4d5c-adaf-46168de3499c",
+      "name": "Remote Patient Monitoring Coverage Criteria",
+      "policy_type": "COVERAGE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "cf421497-513a-4038-adcf-d5d6b176b940",
+      "name": "Retransplant Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "93b4929a-3d62-436e-8d3a-45f5bf55050f",
+      "name": "Retrospective Authorization Window",
+      "policy_type": "ADMINISTRATIVE_REQUIREMENT",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "a0e0b722-562e-495a-a4e4-bc1ec2fea5de",
+      "name": "Rheumatology Biologic Step Therapy for RA",
+      "policy_type": "STEP_THERAPY",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "afd40d1a-198a-4be8-b21e-758ce5a2fcbf",
+      "name": "Sinus Surgery Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "68e1befc-5e66-4d1b-85f1-7806ddcddd81",
+      "name": "Skilled Nursing Facility Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "12dc4c83-bc61-48d7-ada2-3648b16c7c6c",
+      "name": "Sleep Surgery Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "f54e4310-7f4b-4d6e-a6ab-c7b748722c8d",
+      "name": "SNF and Home Health Authorization Coverage Rules",
+      "policy_type": "POST_ACUTE_CARE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "3476e04f-6f18-40b7-a7a6-28fad5c84048",
+      "name": "Specialist Provider Eligibility for Specialty Services",
+      "policy_type": "PROVIDER_ELIGIBILITY",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "acd4be99-0a25-46b2-af2c-f02e10617779",
+      "name": "Specialty Drug Comprehensive Management",
+      "policy_type": "COMPOSITE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "914684fd-7480-4902-89fa-e7ae006f192e",
+      "name": "Specialty Drug Days\u2019 Supply Limits",
+      "policy_type": "QUANTITY_LIMIT",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "1e608a41-9560-4ce5-b677-f3a0085940e9",
+      "name": "Specialty Drug Site-of-Administration Management",
+      "policy_type": "SPECIALTY_PHARMACY",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "e5bd7da6-9f1b-4add-8a44-175a1cb6846f",
+      "name": "Specialty Infusion Site-of-Care Optimization",
+      "policy_type": "SITE_OF_CARE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "6ba9c279-7867-429f-8e75-b20794f985d7",
+      "name": "Specialty Pharmacy Coinsurance Design",
+      "policy_type": "COST_SHARING",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "b3c3e480-68ea-4028-87d6-d1e40fa09068",
+      "name": "Specialty Pharmacy Exclusive Network",
+      "policy_type": "NETWORK_RESTRICTION",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "e1a31ad3-9b3f-49ae-a03f-61138b0b9948",
+      "name": "Specialty Tier Coinsurance Design",
+      "policy_type": "BENEFIT",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "1a1051af-9dcd-417e-a86d-129fce8db02c",
+      "name": "Speech Generating Device Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "2c003e47-6137-4402-bbaa-67589ef2654b",
+      "name": "Speech Therapy Visit Limit",
+      "policy_type": "DURATION_FREQUENCY_LIMIT",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "54bbdff6-bb39-4027-bab7-4ae9302e1f55",
+      "name": "Spinal Cord Stimulator Trial and Implant Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "dc7778d0-8dad-4d96-909b-ff7df89fe655",
+      "name": "Spinal Decompression Without Fusion Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "3ace1bd3-fe30-4a46-9513-7f4e8ddf8005",
+      "name": "Spine Fusion Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "ef853bdb-40fb-4e68-8013-a4f8bf8d9b2c",
+      "name": "Spine Surgery Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "4133e1bc-eee9-43d6-83fb-5cd98547620a",
+      "name": "Split-Fill Specialty Program",
+      "policy_type": "QUANTITY_LIMIT",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "06df64a5-f08f-4589-98d3-a7c5af894a4c",
+      "name": "Store-and-Forward Teledermatology Coverage",
+      "policy_type": "COVERAGE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    }
+  ]
+}

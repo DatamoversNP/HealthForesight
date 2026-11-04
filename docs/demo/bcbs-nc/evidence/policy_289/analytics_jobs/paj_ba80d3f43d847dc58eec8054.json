@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_ba80d3f43d847dc58eec8054",
+  "policy_id": "9d6b587a-584d-44ea-b156-672c2afb7bdb",
+  "name": "Coordination of Benefits Administration",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "9438801cb07f42f7",
+  "started_at": "2026-11-04T13:18:18.229415+00:00",
+  "finished_at": "2026-11-04T13:18:18.229418+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

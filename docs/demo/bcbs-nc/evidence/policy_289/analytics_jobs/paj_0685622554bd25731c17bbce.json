@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_0685622554bd25731c17bbce",
+  "policy_id": "6dbbdca8-60c0-4867-92a2-808b003477e8",
+  "name": "Dermatology Biologic Step Therapy",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "16f92c45b9315dd3",
+  "started_at": "2026-11-04T13:18:18.230125+00:00",
+  "finished_at": "2026-11-04T13:18:18.230127+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

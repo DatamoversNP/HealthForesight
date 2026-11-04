@@ -1,0 +1,16 @@
+{
+  "job_id": "paj_8e757e0e18c8c1770fc98a94",
+  "policy_id": "f0fb116f-2ef1-48d3-bbe1-3d4c7b5cf7d8",
+  "name": "Emerging Treatment Experimental Investigational Exclusion",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "f003276a224009ea",
+  "started_at": "2026-11-04T13:18:18.231519+00:00",
+  "finished_at": "2026-11-04T13:18:18.231521+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

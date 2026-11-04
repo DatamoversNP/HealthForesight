@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_27dd5025dd157f200ff7db8b",
+  "policy_id": "4ea16ea6-9434-4c0d-b864-cfc9c06cc20a",
+  "name": "Hyperbaric Oxygen Therapy Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "03b2f5ab566946e3",
+  "started_at": "2026-11-04T13:18:18.233925+00:00",
+  "finished_at": "2026-11-04T13:18:18.233927+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

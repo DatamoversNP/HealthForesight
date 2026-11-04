@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_57fae29e1cd496a92d43b61e",
+  "policy_id": "3ace1bd3-fe30-4a46-9513-7f4e8ddf8005",
+  "name": "Spine Fusion Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "46ce1f00c9fafb36",
+  "started_at": "2026-11-04T13:18:18.242788+00:00",
+  "finished_at": "2026-11-04T13:18:18.242789+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

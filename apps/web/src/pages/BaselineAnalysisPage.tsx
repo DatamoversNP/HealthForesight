@@ -2,7 +2,7 @@
  * Baseline Analysis Page - Stage 3: Baseline Utilization + Baseline Behavior Profiling
  * Enhanced with name field, comparison functionality, and rich visualizations
  */
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import {
   Box,
   Button,
@@ -37,6 +37,8 @@ import {
   Pagination,
   Stack,
 } from '@mui/material'
+import ListFilterBar from '../components/common/ListFilterBar'
+import PolicyAutocomplete from '../components/common/PolicyAutocomplete'
 import {
   PlayArrow as RunIcon,
   Refresh as RefreshIcon,
@@ -196,6 +198,8 @@ export default function BaselineAnalysisPage() {
   const [policies, setPolicies] = useState<any[]>([])
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState<string>('ALL')
+  const [typeFilter, setTypeFilter] = useState<string>('ALL')
+  const [scopeFilter, setScopeFilter] = useState<string>('ALL')
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage] = useState(20)
   /** Unified selection: when user selects a stored baseline from the combined list */
@@ -221,7 +225,7 @@ export default function BaselineAnalysisPage() {
 
   const loadPolicies = async () => {
     try {
-      const data = await apiClient.getPolicies()
+      const data = await apiClient.getPolicies({ limit: 1000 })
       const policiesList = Array.isArray(data) ? data : (data.items || [])
       setPolicies(policiesList)
     } catch (err: any) {
@@ -231,12 +235,27 @@ export default function BaselineAnalysisPage() {
 
   const loadBaselines = async () => {
     try {
-      const data = await apiClient.listBaselines()
+      // Summary list keeps page load fast; full metrics fetched on row select.
+      const data = await apiClient.listBaselines(undefined, undefined, { summary: true })
       const list = Array.isArray(data) ? data : (data?.items ?? data?.data ?? data?.baselines ?? [])
       setBaselines(Array.isArray(list) ? list : [])
     } catch (err: any) {
       console.error('Error loading baselines:', err)
       setBaselines([])
+    }
+  }
+
+  const selectStoredBaseline = async (baseline: any) => {
+    setSelectedAnalysis(null)
+    setSelectedStoredBaseline(baseline)
+    const id = baseline?.baseline_id || baseline?.id
+    if (!id) return
+    try {
+      const full = await apiClient.getBaseline(String(id))
+      if (full) setSelectedStoredBaseline(full)
+    } catch (err) {
+      console.error('Error loading full baseline detail:', err)
+      // Keep summary row so UI still works
     }
   }
 
@@ -605,35 +624,79 @@ export default function BaselineAnalysisPage() {
     currentPage * itemsPerPage
   )
 
-  /** Unified list: full analyses first (by created_at desc), then stored baselines (by computed_at desc) */
+  /** Unified list: full analyses + stored baselines (newest first). Stored: one per general/policy+window. */
   const formatDateForSort = (d: string) => (d ? new Date(d).getTime() : 0)
-  const allBaselineRows: { id: string; type: 'Full analysis' | 'Stored'; scope: string; label: string; date: string; source: 'analysis' | 'stored'; analysis?: BaselineAnalysis; baseline?: any }[] = [
-    ...analyses.map((a) => ({
-      id: `analysis-${a.id}`,
-      type: 'Full analysis' as const,
-      scope: '—',
-      label: a.name || format(new Date(a.created_at), 'MMM d, yyyy'),
-      date: a.created_at,
-      source: 'analysis' as const,
-      analysis: a,
-    })),
-    ...baselines.map((b: any) => ({
-      id: `stored-${b.baseline_id || b.id}`,
-      type: 'Stored' as const,
-      scope: b.policy_id ? 'Policy' : 'General',
-      label: b.window_start_date && b.window_end_date
-        ? `${format(new Date(b.window_start_date), 'MMM d')} – ${format(new Date(b.window_end_date), 'MMM d')}`
-        : (b.baseline_id || b.id || 'Baseline').toString().slice(0, 12),
-      date: b.computed_at || b.created_at || '',
-      source: 'stored' as const,
-      baseline: b,
-    })),
-  ].sort((a, b) => formatDateForSort(b.date) - formatDateForSort(a.date))
+  const allBaselineRows = useMemo(() => {
+    // Defense in depth: collapse duplicate general/policy refreshes for the same calendar window
+    const seenStoredWindows = new Set<string>()
+    const uniqueStored = [...baselines]
+      .sort(
+        (a: any, b: any) =>
+          formatDateForSort(b.computed_at || b.created_at || '') -
+          formatDateForSort(a.computed_at || a.created_at || '')
+      )
+      .filter((b: any) => {
+        const start = String(b.window_start_date || '').slice(0, 10)
+        const end = String(b.window_end_date || '').slice(0, 10)
+        const key = `${b.policy_id || 'general'}|${start}|${end}`
+        if (seenStoredWindows.has(key)) return false
+        seenStoredWindows.add(key)
+        return true
+      })
+
+    const rows: {
+      id: string
+      type: 'Full analysis' | 'Stored'
+      scope: string
+      label: string
+      date: string
+      source: 'analysis' | 'stored'
+      analysis?: BaselineAnalysis
+      baseline?: any
+      status?: string
+    }[] = [
+      ...analyses.map((a) => ({
+        id: `analysis-${a.id}`,
+        type: 'Full analysis' as const,
+        scope: '—',
+        label: a.name || format(new Date(a.created_at), 'MMM d, yyyy'),
+        date: a.created_at,
+        source: 'analysis' as const,
+        analysis: a,
+        status: a.status,
+      })),
+      ...uniqueStored.map((b: any) => ({
+        id: `stored-${b.baseline_id || b.id}`,
+        type: 'Stored' as const,
+        scope: b.policy_id ? 'Policy' : 'General',
+        label: b.window_start_date && b.window_end_date
+          ? `${format(new Date(b.window_start_date), 'MMM d, yyyy')} – ${format(new Date(b.window_end_date), 'MMM d, yyyy')}`
+          : (b.baseline_id || b.id || 'Baseline').toString().slice(0, 12),
+        date: b.computed_at || b.created_at || '',
+        source: 'stored' as const,
+        baseline: b,
+        status: 'STORED',
+      })),
+    ].sort((a, b) => formatDateForSort(b.date) - formatDateForSort(a.date))
+
+    const q = searchTerm.trim().toLowerCase()
+    return rows.filter((row) => {
+      if (typeFilter !== 'ALL' && row.type !== typeFilter) return false
+      if (scopeFilter !== 'ALL' && row.scope !== scopeFilter) return false
+      if (statusFilter !== 'ALL') {
+        if (row.source === 'analysis' && row.status !== statusFilter) return false
+        if (row.source === 'stored' && statusFilter !== 'STORED') return false
+      }
+      if (!q) return true
+      const hay = `${row.label} ${row.type} ${row.scope} ${row.status || ''}`.toLowerCase()
+      return hay.includes(q)
+    })
+  }, [analyses, baselines, searchTerm, typeFilter, scopeFilter, statusFilter])
 
   // Reset to page 1 when search or filter changes
   useEffect(() => {
     setCurrentPage(1)
-  }, [searchTerm, statusFilter])
+  }, [searchTerm, statusFilter, typeFilter, scopeFilter])
 
   // Comparison helper functions
   const getComparisonData = () => {
@@ -838,15 +901,63 @@ export default function BaselineAnalysisPage() {
       )}
 
       {/* Unified: All baselines (from Run Baseline Analysis, script, Refresh, Generate all) */}
-      <Paper sx={{ mb: 3, p: 2 }}>
-        <Typography variant="h6" sx={{ mb: 0.5 }}>
-          All baselines
-        </Typography>
-        <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 2 }}>
-          Full analysis = Run Baseline Analysis or Generate all baselines (time series, benchmarks, archetypes, segments, confounders). Stored = script or Refresh General Baseline (metrics + same 5 tabs on click).
-        </Typography>
-        {allBaselineRows.length === 0 && !loading ? (
-          <Typography color="text.secondary" sx={{ py: 2 }}>No baselines yet. Use &quot;Run Baseline Analysis&quot;, &quot;Refresh General Baseline&quot;, or &quot;Generate all baselines&quot; above.</Typography>
+      <Paper sx={{ mb: 3, overflow: 'hidden' }}>
+        <Box sx={{ px: 2, pt: 2, pb: 1 }}>
+          <Typography variant="h6" sx={{ mb: 0.5 }}>
+            All baselines
+          </Typography>
+          <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
+            Full analysis = Run Baseline Analysis or Generate all baselines (time series, benchmarks, archetypes, segments, confounders). Stored = script or Refresh General Baseline (metrics + same 5 tabs on click).
+          </Typography>
+        </Box>
+        <ListFilterBar
+          search={searchTerm}
+          onSearchChange={setSearchTerm}
+          searchLabel="Search baselines"
+          searchPlaceholder="Name, window, type…"
+          shown={allBaselineRows.length}
+          total={analyses.length + baselines.length}
+          onClear={() => {
+            setSearchTerm('')
+            setStatusFilter('ALL')
+            setTypeFilter('ALL')
+            setScopeFilter('ALL')
+          }}
+          clearDisabled={
+            !searchTerm && statusFilter === 'ALL' && typeFilter === 'ALL' && scopeFilter === 'ALL'
+          }
+        >
+          <FormControl size="small" sx={{ minWidth: 140, bgcolor: 'background.paper' }}>
+            <InputLabel>Type</InputLabel>
+            <Select label="Type" value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)}>
+              <MenuItem value="ALL">All types</MenuItem>
+              <MenuItem value="Full analysis">Full analysis</MenuItem>
+              <MenuItem value="Stored">Stored</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl size="small" sx={{ minWidth: 120, bgcolor: 'background.paper' }}>
+            <InputLabel>Scope</InputLabel>
+            <Select label="Scope" value={scopeFilter} onChange={(e) => setScopeFilter(e.target.value)}>
+              <MenuItem value="ALL">All scopes</MenuItem>
+              <MenuItem value="General">General</MenuItem>
+              <MenuItem value="Policy">Policy</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl size="small" sx={{ minWidth: 130, bgcolor: 'background.paper' }}>
+            <InputLabel>Status</InputLabel>
+            <Select label="Status" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+              <MenuItem value="ALL">All</MenuItem>
+              <MenuItem value="COMPLETED">COMPLETED</MenuItem>
+              <MenuItem value="RUNNING">RUNNING</MenuItem>
+              <MenuItem value="FAILED">FAILED</MenuItem>
+              <MenuItem value="STORED">STORED</MenuItem>
+            </Select>
+          </FormControl>
+        </ListFilterBar>
+        {analyses.length + baselines.length === 0 && !loading ? (
+          <Typography color="text.secondary" sx={{ p: 2 }}>No baselines yet. Use &quot;Run Baseline Analysis&quot;, &quot;Refresh General Baseline&quot;, or &quot;Generate all baselines&quot; above.</Typography>
+        ) : allBaselineRows.length === 0 ? (
+          <Typography color="text.secondary" sx={{ p: 2 }}>No baselines match these filters.</Typography>
         ) : (
           <TableContainer sx={{ maxHeight: 420 }}>
             <Table size="small" stickyHeader>
@@ -874,8 +985,7 @@ export default function BaselineAnalysisPage() {
                           setSelectedAnalysis(row.analysis)
                           if (row.analysis.status === 'COMPLETED' && !row.analysis.result) loadAnalysisResults(row.analysis.id)
                         } else if (!isAnalysis && row.baseline) {
-                          setSelectedAnalysis(null)
-                          setSelectedStoredBaseline(row.baseline)
+                          void selectStoredBaseline(row.baseline)
                         }
                       }}
                       sx={{ cursor: 'pointer' }}
@@ -1005,24 +1115,18 @@ export default function BaselineAnalysisPage() {
             </FormControl>
             
             {formData.baseline_type === 'POLICY_SPECIFIC' && (
-              <FormControl fullWidth required>
-                <InputLabel>Policy *</InputLabel>
-                <Select
+              <Box>
+                <PolicyAutocomplete
+                  policies={policies}
                   value={formData.policy_id}
-                  onChange={(e) => setFormData({ ...formData, policy_id: e.target.value })}
                   label="Policy *"
-                  error={!formData.policy_id}
-                >
-                  {policies.map((policy) => (
-                    <MenuItem key={policy.id} value={policy.id}>
-                      {policy.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-                <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5 }}>
+                  allowAll={false}
+                  onChange={(id) => setFormData({ ...formData, policy_id: id })}
+                />
+                <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block' }}>
                   Select a policy to compute baseline metrics for its specific scope
                 </Typography>
-              </FormControl>
+              </Box>
             )}
             
             <FormControl fullWidth>
@@ -2216,6 +2320,18 @@ function StoredBaselinesView({
   formatDate: (d: string) => string
 }) {
   const [selectedBaseline, setSelectedBaseline] = useState<any | null>(null)
+
+  const selectBaselineRow = async (b: any) => {
+    setSelectedBaseline(b)
+    const id = b?.baseline_id || b?.id
+    if (!id) return
+    try {
+      const full = await apiClient.getBaseline(String(id))
+      if (full) setSelectedBaseline(full)
+    } catch (err) {
+      console.error('Error loading full baseline detail:', err)
+    }
+  }
   const [detailTab, setDetailTab] = useState(0)
   const formatMetric = (value: number, _unit: string) => {
     if (_unit === 'percentage' || (typeof value === 'number' && value <= 1 && value > 0)) return `${(value * 100).toFixed(1)}%`
@@ -2270,7 +2386,7 @@ function StoredBaselinesView({
                     <TableRow
                       key={b.baseline_id || b.id}
                       selected={!!isSelected}
-                      onClick={() => setSelectedBaseline(b)}
+                      onClick={() => { void selectBaselineRow(b) }}
                       sx={{ cursor: 'pointer' }}
                     >
                       <TableCell>

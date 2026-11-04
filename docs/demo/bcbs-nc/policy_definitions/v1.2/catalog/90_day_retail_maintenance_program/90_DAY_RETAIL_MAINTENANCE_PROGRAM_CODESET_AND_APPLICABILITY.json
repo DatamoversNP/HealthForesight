@@ -1,0 +1,10 @@
+{
+  "document_id": "90_DAY_RETAIL_MAINTENANCE_PROGRAM_CODESET",
+  "policy_id": "6bdaa2ef-30ab-4818-a67e-a60217cd0537",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00ab90-Day Retail Maintenance Program\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Retail pharmacy days-supply program",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

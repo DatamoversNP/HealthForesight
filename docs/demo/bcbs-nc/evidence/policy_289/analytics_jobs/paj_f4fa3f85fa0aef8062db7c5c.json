@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_f4fa3f85fa0aef8062db7c5c",
+  "policy_id": "e1202a7b-e876-4783-acb0-024eeec84f40",
+  "name": "Orthobiologics and PRP Noncoverage",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "71fbe3329d2be134",
+  "started_at": "2026-11-04T13:18:18.238959+00:00",
+  "finished_at": "2026-11-04T13:18:18.238960+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

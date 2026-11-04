@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_97fed79233549a26812e8699",
+  "policy_id": "828e0c91-a8ad-454b-b667-01fb13470117",
+  "name": "Out-of-Network Elective Services Restriction",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "c4d585d6d5cc09e9",
+  "started_at": "2026-11-04T13:18:18.239017+00:00",
+  "finished_at": "2026-11-04T13:18:18.239019+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

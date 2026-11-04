@@ -1,0 +1,108 @@
+{
+  "document_id": "HF-RP-COV-L34425-001-ACCEPTANCE-TESTS",
+  "version": "v1.2.1-structural-controls",
+  "policy_id": "649b4ac8-ca82-5b84-aa87-84834490731a",
+  "status": "DEFINITION_REVIEW_REQUIRED",
+  "operational_activation": "PROHIBITED",
+  "controls_ref": "../_controls/POLICY_ENGINEERING_CONTROLS_v1.md",
+  "coverage_classes": [
+    "positive",
+    "negative",
+    "boundary",
+    "missing_data"
+  ],
+  "execution_status": "SPECIFIED_NOT_INDEPENDENTLY_EXECUTED",
+  "tests": [
+    {
+      "id": "AT-REL-01",
+      "category": "release",
+      "coverage": "positive",
+      "given": "DEFINITION_REVIEW_REQUIRED",
+      "expect": "OPERATIONAL_ACTIVATION_PROHIBITED"
+    },
+    {
+      "id": "AT-REL-02",
+      "category": "release",
+      "coverage": "negative",
+      "given": "any RELEASE_BLOCKER open",
+      "expect": "activation FAIL_GATE"
+    },
+    {
+      "id": "AT-SCH-01",
+      "category": "codeset_schema",
+      "coverage": "positive",
+      "given": "all codes validate POLICY_CODESET_RECORD.schema.json",
+      "expect": "PASS or empty-codeset blocker explicit"
+    },
+    {
+      "id": "AT-CLIN-01",
+      "category": "non_operative",
+      "coverage": "negative",
+      "given": "unsigned rules + operative mode",
+      "expect": "no APPROVED/ADVERSE_DETERMINATION_ISSUED/APPLY_EDIT"
+    },
+    {
+      "id": "AT-ADV-01",
+      "category": "adverse",
+      "coverage": "positive",
+      "given": "does_not_meet after signed rules",
+      "expect": "ADVERSE_REVIEW_REQUIRED"
+    },
+    {
+      "id": "AT-ADV-02",
+      "category": "adverse",
+      "coverage": "missing_data",
+      "given": "ADVERSE_DETERMINATION_ISSUED without audit_packet_id",
+      "expect": "FAIL"
+    },
+    {
+      "id": "AT-SYN-01",
+      "category": "fixtures",
+      "coverage": "boundary",
+      "given": "PROVENANCE_VALIDATED \u2014 PARTIAL clinical match",
+      "expect": "isolated SYNTHETIC_SIMULATION; Dec4 fixtures unchanged"
+    },
+    {
+      "id": "AT-DET-01",
+      "category": "determinism",
+      "coverage": "positive",
+      "given": "identical inputs twice",
+      "expect": "identical first-match outcomes"
+    },
+    {
+      "id": "AT-MRI-01",
+      "category": "isolation",
+      "coverage": "negative",
+      "given": "MRI lumbar clinical rows",
+      "expect": "must not appear as authority in this package"
+    },
+    {
+      "id": "AT-URG-01",
+      "category": "urgency",
+      "coverage": "positive",
+      "given": "emergency indicators",
+      "expect": "bypass routine PENDING_INFORMATION"
+    },
+    {
+      "id": "AT-URG-02",
+      "category": "urgency",
+      "coverage": "boundary",
+      "given": "emergency + missing docs",
+      "expect": "not PENDING_INFORMATION"
+    },
+    {
+      "id": "AT-STDY-01",
+      "category": "study",
+      "coverage": "negative",
+      "given": "study finding alone",
+      "expect": "no live APPROVED/ADVERSE_ISSUED"
+    },
+    {
+      "id": "AT-LCD-01",
+      "category": "scope",
+      "coverage": "negative",
+      "given": "lumbar CPT 72148 under LCD study",
+      "expect": "NOT_APPLICABLE \u2014 never lumbar authority"
+    }
+  ]
+}

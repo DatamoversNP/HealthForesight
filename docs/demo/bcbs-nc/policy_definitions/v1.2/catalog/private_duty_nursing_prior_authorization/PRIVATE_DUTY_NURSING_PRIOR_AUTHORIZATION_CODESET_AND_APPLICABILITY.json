@@ -1,0 +1,32 @@
+{
+  "document_id": "PRIVATE_DUTY_NURSING_PRIOR_AUTHORIZATION_CODESET",
+  "policy_id": "4fc8ae9e-51d8-47b2-a1f2-fee8697bf01e",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abPrivate Duty Nursing Prior Authorization\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "HCPCS",
+      "code": "T1000",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "T1002",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "T1003",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Private duty / RN/LPN nursing hours",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

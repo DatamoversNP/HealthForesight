@@ -1,0 +1,18 @@
+{
+  "job_id": "paj_67edcb42209b92b032b34fb9",
+  "policy_id": "3e0b2ec4-217c-4d08-914d-015e9b8961d6",
+  "name": "Cardiac CT Angiography Prior Authorization",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "207484dfeda543f7",
+  "started_at": "2026-11-04T13:18:18.227754+00:00",
+  "finished_at": "2026-11-04T13:18:18.227755+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "scope.states"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

@@ -1,0 +1,10 @@
+{
+  "document_id": "MEDICAL_ONCOLOGY_REGIMEN_PRIOR_AUTHORIZATION_CODESET",
+  "policy_id": "cc1327fa-c66b-46dd-9271-03fb65a5bc73",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abMedical Oncology Regimen Prior Authorization\u00bb",
+  "status": "UNRESOLVED",
+  "candidate_codes": [],
+  "notes": "Regimen PA is HCPCS J-code / NDC product specific \u2014 schedule UNRESOLVED",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

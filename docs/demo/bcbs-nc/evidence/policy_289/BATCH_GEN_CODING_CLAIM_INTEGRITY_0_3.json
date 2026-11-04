@@ -1,0 +1,41 @@
+{
+  "archetype": "CODING_CLAIM_INTEGRITY",
+  "offset": 0,
+  "count": 3,
+  "candidate_schedule": 1,
+  "unresolved": 2,
+  "not_applicable": 0,
+  "persisted_ok": 0,
+  "results": [
+    {
+      "policy_id": "ef5789ab-9dd5-4950-b64d-3e70a98f4503",
+      "name": "Modifier and Code-Bundling Claim Edit Policy",
+      "folder": "catalog/modifier_and_code_bundling_claim_edit_policy",
+      "codeset_status": "CANDIDATE_SCHEDULE",
+      "code_count": 7,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "dacd8143-d53b-4ef8-ad40-65be55bd55d3",
+      "name": "NCCI and MUE Claims Edit Policy",
+      "folder": "catalog/ncci_and_mue_claims_edit_policy",
+      "codeset_status": "UNRESOLVED",
+      "code_count": 0,
+      "definition_status": "DEFINITION_INCOMPLETE_UNRESOLVED_CODESET",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "d9f83c02-fd70-41fa-b2c3-c93c103582eb",
+      "name": "Unbundling and Incidental Denial Policy",
+      "folder": "catalog/unbundling_and_incidental_denial_policy",
+      "codeset_status": "UNRESOLVED",
+      "code_count": 0,
+      "definition_status": "DEFINITION_INCOMPLETE_UNRESOLVED_CODESET",
+      "accuracy_failures": [],
+      "persist": null
+    }
+  ]
+}

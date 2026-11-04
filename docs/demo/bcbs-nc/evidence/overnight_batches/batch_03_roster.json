@@ -1,0 +1,206 @@
+{
+  "batch": 3,
+  "offset": 50,
+  "policies": [
+    {
+      "policy_id": "9047ba6a-a6bf-4b98-a4dd-0c0d611d8cf9",
+      "name": "Chiropractic Visit Limit",
+      "policy_type": "DURATION_FREQUENCY_LIMIT",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "814e7fbd-2ae4-4314-aa1b-a1ad104e5f7f",
+      "name": "CKD Disease Management Program",
+      "policy_type": "COMPOSITE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "9f06d32c-82f0-4dd9-a3ff-b0e11d3ecc4d",
+      "name": "Cochlear Implant Prior Authorization",
+      "policy_type": "COVERAGE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "54557fec-f2ee-431e-8deb-59215fee527b",
+      "name": "Colonoscopy Screening and Surveillance Intervals",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "8de16b8c-7bbb-49ca-850a-73b8e8f81908",
+      "name": "Commercial Preferred Drug Formulary Design",
+      "policy_type": "DRUG_FORMULARY",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "5a9b27f6-e186-40ad-8b7e-0bd28e30f3f9",
+      "name": "Complex Case Management Program",
+      "policy_type": "COMPOSITE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "91516741-edb2-4598-ad04-f2dee7c46ef8",
+      "name": "Complex Hernia Repair Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "4895b362-3a5d-4c74-9566-d6ba559a2949",
+      "name": "Concurrent DUR Safety Edits",
+      "policy_type": "ADMINISTRATIVE_REQUIREMENT",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "444130ea-9eb9-497a-9c9a-c9f7779f657d",
+      "name": "Continuity of Care After Provider Termination",
+      "policy_type": "NETWORK_RESTRICTION",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "6361b65e-2455-4432-980c-6b0a4ff6157c",
+      "name": "Continuity of Medications During Appeal",
+      "policy_type": "ADMINISTRATIVE_REQUIREMENT",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "90449142-fbf5-47fb-a302-e46ba9b173f4",
+      "name": "Convenience Care Exclusion",
+      "policy_type": "COVERAGE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "9d6b587a-584d-44ea-b156-672c2afb7bdb",
+      "name": "Coordination of Benefits Administration",
+      "policy_type": "PAYMENT_POLICY",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "93c9c915-78e1-4b3a-8fff-20e30faa3bc1",
+      "name": "COPD Disease Management Program",
+      "policy_type": "COMPOSITE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "6aa74e48-4e34-4ba6-b3c1-11112b16b5ef",
+      "name": "Coronary Calcium Scoring Coverage Criteria",
+      "policy_type": "COVERAGE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "f6c26ac2-a949-45d9-a4da-b65bb783a60f",
+      "name": "Cosmetic Services Exclusion",
+      "policy_type": "COVERAGE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "b8f0b7a6-940e-41f7-b272-d751a82a290d",
+      "name": "Cosmetic Surgery Exclusion Policy",
+      "policy_type": "COVERAGE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "21383568-c83c-46e4-896b-b277bf779789",
+      "name": "CPAP Supply Replacement Schedules",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "510b1e80-0c2f-4477-83e9-d2747e0c7200",
+      "name": "Custodial Care Exclusion",
+      "policy_type": "COVERAGE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "00b7fd76-dfe9-4cf1-8fa7-36b8750f0b01",
+      "name": "Custom Orthotic and Brace Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "6dbbdca8-60c0-4867-92a2-808b003477e8",
+      "name": "Dermatology Biologic Step Therapy",
+      "policy_type": "STEP_THERAPY",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "1f3c9863-1264-4a01-b3ba-deb7d433302c",
+      "name": "Diabetes Disease Management Program",
+      "policy_type": "COMPOSITE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "71e9576a-d81a-4f1c-9d0c-3dea29a1de28",
+      "name": "Diagnostic Cardiac Catheterization Appropriateness",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "e3193305-ea18-498f-a610-8f0eae608adc",
+      "name": "Dialysis Home Modality Preference",
+      "policy_type": "SITE_OF_CARE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "a196ff6f-047b-4809-b83d-5df4194e4820",
+      "name": "Digital Therapeutics Coverage Criteria",
+      "policy_type": "COVERAGE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "c1dd30a3-de81-4743-8433-c9c5b40a9d92",
+      "name": "Direct-to-Consumer Lab Noncoverage",
+      "policy_type": "COVERAGE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    }
+  ]
+}

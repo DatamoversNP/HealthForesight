@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_3e6bb573a195d835b478ffff",
+  "policy_id": "45e122d3-a3a7-4ed7-9fee-4472534ea14a",
+  "name": "Refill-Too-Soon Edit Policy",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "40859fab59980de1",
+  "started_at": "2026-11-04T13:18:18.241441+00:00",
+  "finished_at": "2026-11-04T13:18:18.241442+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

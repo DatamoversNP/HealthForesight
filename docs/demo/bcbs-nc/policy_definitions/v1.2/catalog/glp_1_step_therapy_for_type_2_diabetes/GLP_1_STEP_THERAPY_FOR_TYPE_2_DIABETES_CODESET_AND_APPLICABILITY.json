@@ -1,0 +1,18 @@
+{
+  "document_id": "GLP_1_STEP_THERAPY_FOR_TYPE_2_DIABETES_CODESET",
+  "policy_id": "17415dd5-1a1a-4e82-959e-a1924cc9c121",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abGLP-1 Step Therapy for Type 2 Diabetes\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "HCPCS",
+      "code": "J3490",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "GLP-1 diabetes \u2014 NDCs UNRESOLVED",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

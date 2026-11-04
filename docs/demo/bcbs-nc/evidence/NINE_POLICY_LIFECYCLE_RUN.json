@@ -1,0 +1,337 @@
+{
+  "generated_at": "2026-11-03T15:20:04.966963Z",
+  "claims_lines": 3505919,
+  "no_data_seed": true,
+  "policies": [
+    {
+      "key": "mri",
+      "policy_id": "d403f101-08dd-45c9-ab83-d42e37c62018",
+      "name": "Outpatient MRI Prior Authorization",
+      "family": "UM",
+      "substrate": "claims_backed",
+      "definition_status": "DEFINITION_REVIEW_REQUIRED",
+      "existing_analyses": [
+        {
+          "type": "BASELINE",
+          "status": "COMPLETED",
+          "n": 4
+        },
+        {
+          "type": "ELASTICITY",
+          "status": "COMPLETED",
+          "n": 1
+        },
+        {
+          "type": "SIMULATE",
+          "status": "COMPLETED",
+          "n": 3
+        },
+        {
+          "type": "SIMULATE",
+          "status": "FAILED",
+          "n": 2
+        }
+      ],
+      "observation_count": 28,
+      "mechanical": {
+        "passed": true,
+        "note": "Frozen FULLY_VALIDATED_DEMO synthetic UM lifecycle; claims-backed analyses already present"
+      },
+      "whatif": null,
+      "lifecycle_actions": [
+        "RETAIN_EXISTING_COMPLETED_BASELINE_IMPACT_OBSERVATION"
+      ],
+      "claims_baseline": "EXISTING_COMPLETED_BASELINES=4"
+    },
+    {
+      "key": "mppr",
+      "policy_id": "d0eeb370-df14-4478-8755-dad6c3a35a47",
+      "name": "Multiple Procedure Payment Reduction",
+      "family": "REIMBURSEMENT",
+      "substrate": "fixture",
+      "definition_status": "DEFINITION_REVIEW_REQUIRED",
+      "existing_analyses": [
+        {
+          "type": "BASELINE",
+          "status": "COMPLETED",
+          "n": 1
+        },
+        {
+          "type": "SIMULATE",
+          "status": "COMPLETED",
+          "n": 1
+        },
+        {
+          "type": "SIMULATE",
+          "status": "FAILED",
+          "n": 1
+        },
+        {
+          "type": "WHATIF_SCENARIO",
+          "status": "PENDING",
+          "n": 1
+        }
+      ],
+      "observation_count": 12,
+      "mechanical": {
+        "passed": true,
+        "totals": {
+          "line_count": 6,
+          "claim_count": 3,
+          "multi_procedure_claims": 2,
+          "secondary_lines_reduced": 3,
+          "volume_units": 6.0,
+          "baseline_allowed": 3150.0,
+          "baseline_paid": 3150.0,
+          "post_policy_paid": 2550.0,
+          "payment_impact": 600.0,
+          "payer_savings": 600.0,
+          "provider_payment_change": -600.0,
+          "payment_impact_pct": 19.0476,
+          "reconciliation": {
+            "volume_effect": 0.0,
+            "mix_effect": 0.0,
+            "price_effect": 600.0,
+            "residual": 0.0,
+            "identity": "payment_impact = price_effect (volume & mix held at 0)"
+          }
+        },
+        "calc": "reimbursement-mppr-v1"
+      },
+      "whatif": {
+        "status": "completed",
+        "delta": 120.0
+      },
+      "lifecycle_actions": [
+        "PERSISTED_WHATIF_ANALYSIS:04a4bc17-5a72-4d1e-9519-ecf65b60dd37"
+      ],
+      "claims_baseline": "NOT_RE-RUN \u2014 fixture substrate; coding policies lack modifier columns for empirical PTP"
+    },
+    {
+      "key": "sos",
+      "policy_id": "d7441dd9-3bfe-405e-ae6c-0377204bbb7e",
+      "name": "Freestanding Imaging Steerage",
+      "family": "REIMBURSEMENT",
+      "substrate": "fixture",
+      "definition_status": "DEFINITION_REVIEW_REQUIRED",
+      "existing_analyses": [
+        {
+          "type": "BASELINE",
+          "status": "COMPLETED",
+          "n": 1
+        }
+      ],
+      "observation_count": 10,
+      "mechanical": {
+        "passed": true,
+        "totals": {
+          "line_count": 5,
+          "hospital_lines": 3,
+          "freestanding_lines": 2,
+          "volume_units": 5.0,
+          "baseline_allowed": 4000.0,
+          "baseline_paid": 4000.0,
+          "post_policy_paid": 3480.0,
+          "payment_impact": 520.0,
+          "payer_savings": 520.0,
+          "provider_payment_change": -520.0,
+          "payment_impact_pct": 13.0,
+          "reconciliation": {
+            "volume_effect": 0.0,
+            "mix_effect": 0.0,
+            "price_effect": 520.0,
+            "residual": 0.0,
+            "identity": "payment_impact = price_effect (volume & mix held at 0)"
+          }
+        },
+        "calc": "reimbursement-sos-v1"
+      },
+      "whatif": {
+        "status": "completed",
+        "delta": 260.0
+      },
+      "lifecycle_actions": [
+        "PERSISTED_WHATIF_ANALYSIS:32506e08-bac7-458b-a6f0-1291ad9599c6"
+      ],
+      "claims_baseline": "NOT_RE-RUN \u2014 fixture substrate; coding policies lack modifier columns for empirical PTP"
+    },
+    {
+      "key": "ptp",
+      "policy_id": "58b839b5-b6e0-59e0-9406-d817877c3ce8",
+      "name": "NCCI Procedure-to-Procedure Bundling",
+      "family": "REIMBURSEMENT",
+      "substrate": "fixture_synthetic_ncci",
+      "definition_status": "DEFINITION_REVIEW_REQUIRED",
+      "existing_analyses": [
+        {
+          "type": "SIMULATE",
+          "status": "COMPLETED",
+          "n": 1
+        }
+      ],
+      "observation_count": 0,
+      "mechanical": {
+        "passed": true,
+        "totals": {
+          "baseline_paid": 4400.0,
+          "post_policy_paid": 3600.0,
+          "payment_impact": 800.0,
+          "payer_savings": 800.0,
+          "provider_payment_change": -800.0,
+          "ptp_pairs_hit": 3,
+          "ptp_pairs_bypassed_with_modifier": 1,
+          "volume_effect": 0.0,
+          "mix_effect": 0.0,
+          "price_effect": 800.0
+        }
+      },
+      "whatif": {
+        "status": "completed",
+        "delta": 400.0
+      },
+      "lifecycle_actions": [
+        "PERSISTED_WHATIF_ANALYSIS:d45ef563-34a7-4692-99df-bb141094ff6a"
+      ],
+      "claims_baseline": "NOT_RE-RUN \u2014 fixture substrate; coding policies lack modifier columns for empirical PTP"
+    },
+    {
+      "key": "mue",
+      "policy_id": "e11b049d-fcce-55cc-bcd7-71329038383b",
+      "name": "NCCI Medically Unlikely Units",
+      "family": "REIMBURSEMENT",
+      "substrate": "fixture_synthetic_ncci",
+      "definition_status": "DEFINITION_REVIEW_REQUIRED",
+      "existing_analyses": [
+        {
+          "type": "SIMULATE",
+          "status": "COMPLETED",
+          "n": 1
+        }
+      ],
+      "observation_count": 0,
+      "mechanical": {
+        "passed": true,
+        "totals": {
+          "baseline_paid": 650.0,
+          "post_policy_paid": 550.0,
+          "payment_impact": 100.0,
+          "payer_savings": 100.0,
+          "provider_payment_change": -100.0,
+          "lines_capped": 1,
+          "mue_value": 4,
+          "volume_effect": 0.0,
+          "price_effect": 100.0
+        }
+      },
+      "whatif": {
+        "status": "completed",
+        "delta": 100.0
+      },
+      "lifecycle_actions": [
+        "PERSISTED_WHATIF_ANALYSIS:873b54dc-90d4-4b4f-a275-ce1bb7e38e51"
+      ],
+      "claims_baseline": "NOT_RE-RUN \u2014 fixture substrate; coding policies lack modifier columns for empirical PTP"
+    },
+    {
+      "key": "therapy",
+      "policy_id": "f2b8e7f3-1627-5dbe-8d7e-757ce21aa55b",
+      "name": "Outpatient Therapy Coverage and Payment",
+      "family": "COVERAGE",
+      "substrate": "fixture",
+      "definition_status": "DEFINITION_REVIEW_REQUIRED",
+      "existing_analyses": [],
+      "observation_count": 0,
+      "mechanical": {
+        "passed": true,
+        "totals": {
+          "baseline_paid": 420.0,
+          "post_policy_paid": 340.0,
+          "payment_impact": 80.0,
+          "payer_savings": 80.0,
+          "provider_payment_change": -80.0
+        }
+      },
+      "whatif": {
+        "status": "not_reimbursement_dispatch",
+        "note": "coverage what-if not enabled; mechanical only"
+      },
+      "lifecycle_actions": [
+        "NO_WHATIF_PERSIST_BY_DESIGN"
+      ],
+      "claims_baseline": "NOT_RE-RUN \u2014 fixture substrate; coding policies lack modifier columns for empirical PTP"
+    },
+    {
+      "key": "infusion",
+      "policy_id": "11218053-bdc0-569f-a415-fb61c5dcda37",
+      "name": "Infusion Site-of-Care Optimization",
+      "family": "REIMBURSEMENT",
+      "substrate": "fixture",
+      "definition_status": "DEFINITION_REVIEW_REQUIRED",
+      "existing_analyses": [
+        {
+          "type": "SIMULATE",
+          "status": "COMPLETED",
+          "n": 1
+        }
+      ],
+      "observation_count": 0,
+      "mechanical": {
+        "passed": true,
+        "totals": {
+          "baseline_paid": 18200.0,
+          "post_policy_paid": 14600.0,
+          "payment_impact": 3600.0,
+          "payer_savings": 3600.0,
+          "provider_payment_change": -3600.0,
+          "episodes_steered": 2
+        }
+      },
+      "whatif": {
+        "status": "completed",
+        "delta": 1800.0
+      },
+      "lifecycle_actions": [
+        "PERSISTED_WHATIF_ANALYSIS:711633fe-de77-45d6-b016-bb898c21f478"
+      ],
+      "claims_baseline": "NOT_RE-RUN \u2014 fixture substrate; coding policies lack modifier columns for empirical PTP"
+    },
+    {
+      "key": "ncd_study",
+      "policy_id": "4f8c34e3-015b-509d-90ba-521261464258",
+      "name": "NCD 220.2 MRI Coverage Change Study",
+      "family": "PROVENANCE",
+      "substrate": "n/a_financial",
+      "definition_status": "DEFINITION_REVIEW_REQUIRED",
+      "existing_analyses": [],
+      "observation_count": 0,
+      "mechanical": {
+        "passed": true,
+        "note": "Provenance study \u2014 financial lifecycle N/A"
+      },
+      "whatif": null,
+      "lifecycle_actions": [
+        "NO_WHATIF_PERSIST_BY_DESIGN"
+      ],
+      "claims_baseline": "N/A"
+    },
+    {
+      "key": "lcd_study",
+      "policy_id": "649b4ac8-ca82-5b84-aa87-84834490731a",
+      "name": "LCD L34425 NC MRI Coverage Criteria",
+      "family": "PROVENANCE",
+      "substrate": "n/a_financial",
+      "definition_status": "DEFINITION_REVIEW_REQUIRED",
+      "existing_analyses": [],
+      "observation_count": 0,
+      "mechanical": {
+        "passed": true,
+        "note": "Provenance study \u2014 financial lifecycle N/A"
+      },
+      "whatif": null,
+      "lifecycle_actions": [
+        "NO_WHATIF_PERSIST_BY_DESIGN"
+      ],
+      "claims_baseline": "N/A"
+    }
+  ]
+}

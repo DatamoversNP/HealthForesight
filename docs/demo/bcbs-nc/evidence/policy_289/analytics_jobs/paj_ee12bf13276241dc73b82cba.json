@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_ee12bf13276241dc73b82cba",
+  "policy_id": "b0b19eb0-1ec0-45b6-87c0-06d0f7cef655",
+  "name": "Telehealth Vendor Network Rules",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "5431d33a49b2af46",
+  "started_at": "2026-11-04T13:18:18.243520+00:00",
+  "finished_at": "2026-11-04T13:18:18.243521+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

@@ -1,0 +1,25 @@
+{
+  "document_id": "HOME_INFUSION_PREFERENCE_CODESET",
+  "policy_id": "b5d48dc5-2d6a-4a32-b3c7-54d4f9e77b77",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abHome Infusion Preference\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "96413",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "96365",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Infusion admin \u2014 prefer home when clinically appropriate",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

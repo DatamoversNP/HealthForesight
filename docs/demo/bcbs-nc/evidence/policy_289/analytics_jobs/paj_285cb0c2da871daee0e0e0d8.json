@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_285cb0c2da871daee0e0e0d8",
+  "policy_id": "46fff8f9-314b-4787-a7de-f98d2960264f",
+  "name": "Low-Dose CT Lung Cancer Screening Criteria",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "d921a0e39a85adcf",
+  "started_at": "2026-11-04T13:18:18.235100+00:00",
+  "finished_at": "2026-11-04T13:18:18.235102+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

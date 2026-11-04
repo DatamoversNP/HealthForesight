@@ -1,0 +1,32 @@
+{
+  "document_id": "BONE_DENSITOMETRY_FREQUENCY_LIMITS_CODESET",
+  "policy_id": "a86519ff-8aa4-4878-9fdf-da4ef87e6a4b",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abBone Densitometry Frequency Limits\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "77080",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "77081",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "77085",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "DXA axial/peripheral/VFA",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

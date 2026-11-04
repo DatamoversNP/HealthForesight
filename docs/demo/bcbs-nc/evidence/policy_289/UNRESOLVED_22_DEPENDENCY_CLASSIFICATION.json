@@ -1,0 +1,216 @@
+{
+  "document_id": "UNRESOLVED_22_DEPENDENCY_CLASSIFICATION",
+  "count": 22,
+  "by_dependency": {
+    "NDC_DRUG_PRODUCT": 11,
+    "PLACEHOLDER_UM_RULES": 3,
+    "LICENSED_MCG_CRITERIA": 2,
+    "MUE_SOURCE_AND_SEMANTICS": 2,
+    "TRANSPLANT_ORGAN_SCHEDULE": 2,
+    "REIMBURSEMENT_RATES": 1,
+    "LICENSED_CLINICAL_PATHWAY": 1
+  },
+  "rule": "Do not fabricate confidential MUE values, licensed MCG, negotiated rates, or operative clinical criteria",
+  "policies": [
+    {
+      "policy_id": "c922a9bd-0292-4df1-9bdd-f4bda3709fbf",
+      "name": "ADHD Stimulant Quantity Limits and Preferred Agents",
+      "archetype": "PHARMACY_SPECIALTY",
+      "dependency": "NDC_DRUG_PRODUCT",
+      "action": "Retain blocker until preferred-agent NDC list provided; no invented NDCs",
+      "synthetic_demo_allowed": false,
+      "status": "BLOCKER_RETAINED"
+    },
+    {
+      "policy_id": "d3b25dd6-57d6-49e9-8e1f-5f45438caa06",
+      "name": "Benzodiazepine Quantity Limits",
+      "archetype": "PHARMACY_SPECIALTY",
+      "dependency": "NDC_DRUG_PRODUCT",
+      "action": "Retain blocker \u2014 NDC/days-supply schedule required",
+      "synthetic_demo_allowed": false,
+      "status": "BLOCKER_RETAINED"
+    },
+    {
+      "policy_id": "a196ff6f-047b-4809-b83d-5df4194e4820",
+      "name": "Digital Therapeutics Coverage Criteria",
+      "archetype": "MEDICAL_NECESSITY_COVERAGE",
+      "dependency": "NDC_DRUG_PRODUCT",
+      "action": "DTx HCPCS/NDC product list UNRESOLVED",
+      "synthetic_demo_allowed": false,
+      "status": "BLOCKER_RETAINED"
+    },
+    {
+      "policy_id": "db345e39-73ba-4bde-9b04-0fdac8c4a7be",
+      "name": "Facility Fee Schedule and Bundled Payment Adjustments",
+      "archetype": "PAYMENT_REIMBURSEMENT",
+      "dependency": "REIMBURSEMENT_RATES",
+      "action": "Do not invent fee schedule tables or contracted rates",
+      "synthetic_demo_allowed": false,
+      "status": "BLOCKER_RETAINED"
+    },
+    {
+      "policy_id": "e78ce5cf-a37b-4b8a-b66e-42fb44c15651",
+      "name": "Hepatitis C Direct-Acting Antiviral Prior Authorization",
+      "archetype": "PRIOR_AUTH_UM",
+      "dependency": "NDC_DRUG_PRODUCT",
+      "action": "DAA NDC/formulary schedule required",
+      "synthetic_demo_allowed": false,
+      "status": "BLOCKER_RETAINED"
+    },
+    {
+      "policy_id": "c8c59559-b4b7-4cdc-9b48-9efed253be2b",
+      "name": "HIV Antiretroviral Formulary Management",
+      "archetype": "PHARMACY_SPECIALTY",
+      "dependency": "NDC_DRUG_PRODUCT",
+      "action": "ARV NDC formulary UNRESOLVED",
+      "synthetic_demo_allowed": false,
+      "status": "BLOCKER_RETAINED"
+    },
+    {
+      "policy_id": "46e3ebd7-3f65-43f2-9d3e-5bdeabdddacc",
+      "name": "MCG Clinical Criteria for Inpatient Admissions",
+      "archetype": "MEDICAL_NECESSITY_COVERAGE",
+      "dependency": "LICENSED_MCG_CRITERIA",
+      "action": "Licensed MCG content not redistributed \u2014 retain blocker",
+      "synthetic_demo_allowed": false,
+      "status": "BLOCKER_RETAINED"
+    },
+    {
+      "policy_id": "258dc9fb-8530-4d18-9b49-5a42f46c3469",
+      "name": "MCG-Style Clinical Criteria for Inpatient Admissions",
+      "archetype": "MEDICAL_NECESSITY_COVERAGE",
+      "dependency": "LICENSED_MCG_CRITERIA",
+      "action": "Illustrative label only \u2014 do not invent MCG criteria",
+      "synthetic_demo_allowed": false,
+      "status": "BLOCKER_RETAINED"
+    },
+    {
+      "policy_id": "cc1327fa-c66b-46dd-9271-03fb65a5bc73",
+      "name": "Medical Oncology Regimen Prior Authorization",
+      "archetype": "PRIOR_AUTH_UM",
+      "dependency": "NDC_DRUG_PRODUCT",
+      "action": "Regimen J-code/NDC product schedule UNRESOLVED",
+      "synthetic_demo_allowed": false,
+      "status": "BLOCKER_RETAINED"
+    },
+    {
+      "policy_id": "dacd8143-d53b-4ef8-ad40-65be55bd55d3",
+      "name": "NCCI and MUE Claims Edit Policy",
+      "archetype": "CODING_CLAIM_INTEGRITY",
+      "dependency": "MUE_SOURCE_AND_SEMANTICS",
+      "action": "Authoritative NCCI/MUE files required \u2014 do not invent MUE values",
+      "synthetic_demo_allowed": true,
+      "synthetic_note": "Dec4 MUE fixture already isolates synthetic demo separately",
+      "status": "BLOCKER_RETAINED"
+    },
+    {
+      "policy_id": "c5c9e942-0649-46b5-82e0-20e660ead31d",
+      "name": "Oncology Evidence-Based Clinical Pathway",
+      "archetype": "CLINICAL_PATHWAY",
+      "dependency": "LICENSED_CLINICAL_PATHWAY",
+      "action": "Pathway content licensed/product-specific",
+      "synthetic_demo_allowed": false,
+      "status": "BLOCKER_RETAINED"
+    },
+    {
+      "policy_id": "99dca188-8edd-4293-839f-29508666780d",
+      "name": "Oncology Oral Specialty Prior Authorization",
+      "archetype": "PRIOR_AUTH_UM",
+      "dependency": "NDC_DRUG_PRODUCT",
+      "action": "Oral oncolytic NDCs required",
+      "synthetic_demo_allowed": false,
+      "status": "BLOCKER_RETAINED"
+    },
+    {
+      "policy_id": "140fc121-b6b9-4166-bf5d-e2dfe2ea69db",
+      "name": "Opioid Quantity Limit - Chronic Pain",
+      "archetype": "PHARMACY_SPECIALTY",
+      "dependency": "NDC_DRUG_PRODUCT",
+      "action": "MME/NDC schedule UNRESOLVED \u2014 do not invent MME thresholds as verified",
+      "synthetic_demo_allowed": false,
+      "status": "BLOCKER_RETAINED"
+    },
+    {
+      "policy_id": "7a41ebf4-ce99-45da-9039-49a7bb262bc9",
+      "name": "Opioid Quantity Limit \u2014 Acute Pain",
+      "archetype": "PHARMACY_SPECIALTY",
+      "dependency": "NDC_DRUG_PRODUCT",
+      "action": "Acute opioid days-supply product rule UNRESOLVED",
+      "synthetic_demo_allowed": false,
+      "status": "BLOCKER_RETAINED"
+    },
+    {
+      "policy_id": "e885e4fb-d001-4bc5-aa0d-91067b3e550b",
+      "name": "Opioid Quantity Limit \u2014 Chronic Pain",
+      "archetype": "PHARMACY_SPECIALTY",
+      "dependency": "NDC_DRUG_PRODUCT",
+      "action": "Chronic opioid MME/NDC UNRESOLVED",
+      "synthetic_demo_allowed": false,
+      "status": "BLOCKER_RETAINED"
+    },
+    {
+      "policy_id": "cf421497-513a-4038-adcf-d5d6b176b940",
+      "name": "Retransplant Prior Authorization",
+      "archetype": "PRIOR_AUTH_UM",
+      "dependency": "TRANSPLANT_ORGAN_SCHEDULE",
+      "action": "Organ-specific transplant CPT/DRG schedule required",
+      "synthetic_demo_allowed": false,
+      "status": "BLOCKER_RETAINED"
+    },
+    {
+      "policy_id": "914684fd-7480-4902-89fa-e7ae006f192e",
+      "name": "Specialty Drug Days\u2019 Supply Limits",
+      "archetype": "PHARMACY_SPECIALTY",
+      "dependency": "NDC_DRUG_PRODUCT",
+      "action": "Specialty NDC days-supply list UNRESOLVED",
+      "synthetic_demo_allowed": false,
+      "status": "BLOCKER_RETAINED"
+    },
+    {
+      "policy_id": "b5895596-41cb-4f48-9f82-72d5ac388ea2",
+      "name": "Transplant Evaluation and Listing Authorization",
+      "archetype": "PRIOR_AUTH_UM",
+      "dependency": "TRANSPLANT_ORGAN_SCHEDULE",
+      "action": "Organ-specific evaluation CPT + network rules UNRESOLVED",
+      "synthetic_demo_allowed": false,
+      "status": "BLOCKER_RETAINED"
+    },
+    {
+      "policy_id": "d35e2fff-659c-4988-ab30-d55498631c2a",
+      "name": "UM Reduction for under age 45 and B1C",
+      "archetype": "PRIOR_AUTH_UM",
+      "dependency": "PLACEHOLDER_UM_RULES",
+      "action": "Internal program label \u2014 product clarification required",
+      "synthetic_demo_allowed": false,
+      "status": "BLOCKER_RETAINED"
+    },
+    {
+      "policy_id": "2c1ed7ac-99f1-44c4-9d38-8c0bb77b79c4",
+      "name": "UM Reduction for under age 45 and B1C",
+      "archetype": "PRIOR_AUTH_UM",
+      "dependency": "PLACEHOLDER_UM_RULES",
+      "action": "Internal program label \u2014 product clarification required",
+      "synthetic_demo_allowed": false,
+      "status": "BLOCKER_RETAINED"
+    },
+    {
+      "policy_id": "5e7a1a2b-5cbd-4a65-858f-a9b4f49fa7c4",
+      "name": "UM Validation ",
+      "archetype": "PRIOR_AUTH_UM",
+      "dependency": "PLACEHOLDER_UM_RULES",
+      "action": "Placeholder catalog name \u2014 rename/define before configuration",
+      "synthetic_demo_allowed": false,
+      "status": "BLOCKER_RETAINED"
+    },
+    {
+      "policy_id": "d9f83c02-fd70-41fa-b2c3-c93c103582eb",
+      "name": "Unbundling and Incidental Denial Policy",
+      "archetype": "CODING_CLAIM_INTEGRITY",
+      "dependency": "MUE_SOURCE_AND_SEMANTICS",
+      "action": "Requires versioned edit pairs \u2014 UNRESOLVED without source file",
+      "synthetic_demo_allowed": true,
+      "synthetic_note": "Only with isolated fixture; do not invent CMS edit pairs",
+      "status": "BLOCKER_RETAINED"
+    }
+  ]
+}

@@ -1,0 +1,159 @@
+{
+  "base": "http://127.0.0.1:7868",
+  "beats": [],
+  "warm": [
+    {
+      "ok": true,
+      "elapsed_s": 13.9,
+      "note": "executive frame",
+      "has_mri": false,
+      "has_on_track": true,
+      "url": "http://127.0.0.1:7868/dashboard/executive",
+      "beat": "01_open"
+    },
+    {
+      "ok": true,
+      "elapsed_s": 4.6,
+      "note": "",
+      "has_mri": true,
+      "has_on_track": false,
+      "url": "http://127.0.0.1:7868/policies/workspace/d403f101-08dd-45c9-ab83-d42e37c62018",
+      "beat": "02_policy"
+    },
+    {
+      "ok": true,
+      "elapsed_s": 5.8,
+      "note": "opened MRI baseline row",
+      "has_mri": true,
+      "has_on_track": false,
+      "url": "http://127.0.0.1:7868/baseline-analysis",
+      "beat": "03_baseline"
+    },
+    {
+      "ok": true,
+      "elapsed_s": 11.8,
+      "note": "predict via catalog dialog",
+      "has_mri": true,
+      "has_on_track": false,
+      "url": "http://127.0.0.1:7868/policies",
+      "beat": "04_predict"
+    },
+    {
+      "ok": true,
+      "elapsed_s": 2.9,
+      "note": "observation list after filter",
+      "has_mri": false,
+      "has_on_track": false,
+      "url": "http://127.0.0.1:7868/observation-analysis",
+      "beat": "05_observe"
+    },
+    {
+      "ok": true,
+      "elapsed_s": 7.1,
+      "note": "opened scenario run",
+      "has_mri": false,
+      "has_on_track": false,
+      "url": "http://127.0.0.1:7868/whatif/scenarios",
+      "beat": "06_whatif"
+    },
+    {
+      "ok": false,
+      "elapsed_s": 29.2,
+      "note": "verdicts page loaded",
+      "has_mri": false,
+      "has_on_track": false,
+      "url": "http://127.0.0.1:7868/login",
+      "beat": "07_verdict"
+    },
+    {
+      "ok": true,
+      "elapsed_s": 108.5,
+      "note": "executive frame",
+      "has_mri": false,
+      "has_on_track": true,
+      "url": "http://127.0.0.1:7868/dashboard/executive",
+      "beat": "08_close"
+    }
+  ],
+  "record": [
+    {
+      "ok": true,
+      "elapsed_s": 17.8,
+      "note": "executive frame",
+      "has_mri": false,
+      "has_on_track": true,
+      "url": "http://127.0.0.1:7868/dashboard/executive",
+      "beat": "01_open"
+    },
+    {
+      "ok": true,
+      "elapsed_s": 6.7,
+      "note": "",
+      "has_mri": true,
+      "has_on_track": false,
+      "url": "http://127.0.0.1:7868/policies/workspace/d403f101-08dd-45c9-ab83-d42e37c62018",
+      "beat": "02_policy"
+    },
+    {
+      "ok": true,
+      "elapsed_s": 9.2,
+      "note": "opened MRI baseline row",
+      "has_mri": true,
+      "has_on_track": false,
+      "url": "http://127.0.0.1:7868/baseline-analysis",
+      "beat": "03_baseline"
+    },
+    {
+      "ok": true,
+      "elapsed_s": 14.5,
+      "note": "predict via catalog dialog",
+      "has_mri": true,
+      "has_on_track": false,
+      "url": "http://127.0.0.1:7868/policies",
+      "beat": "04_predict"
+    },
+    {
+      "ok": true,
+      "elapsed_s": 67.7,
+      "note": "observation list after filter",
+      "has_mri": true,
+      "has_on_track": true,
+      "url": "http://127.0.0.1:7868/observation-analysis",
+      "beat": "05_observe"
+    },
+    {
+      "ok": true,
+      "elapsed_s": 10.1,
+      "note": "opened scenario run",
+      "has_mri": true,
+      "has_on_track": false,
+      "url": "http://127.0.0.1:7868/whatif/scenarios",
+      "beat": "06_whatif"
+    },
+    {
+      "ok": true,
+      "elapsed_s": 7.3,
+      "note": "verdicts page loaded",
+      "has_mri": true,
+      "has_on_track": true,
+      "url": "http://127.0.0.1:7868/policy-verdicts",
+      "beat": "07_verdict"
+    },
+    {
+      "ok": true,
+      "elapsed_s": 20.0,
+      "note": "executive frame",
+      "has_mri": false,
+      "has_on_track": true,
+      "url": "http://127.0.0.1:7868/dashboard/executive",
+      "beat": "08_close"
+    }
+  ],
+  "video": "/Users/nileshl/Private/HealthForesight/docs/demo/bcbs-nc/local_demo/BCBS_NC_Local_Demo_Rehearsal.mp4",
+  "webm": "/Users/nileshl/Private/HealthForesight/docs/demo/bcbs-nc/local_demo/rehearsal_raw/page@9262fd7c20b8da6b1ef9b318c2dd59eb.webm",
+  "pass": {
+    "all_ok": true,
+    "mri_on_policy": true,
+    "observe_or_verdict_on_track": true
+  }
+}

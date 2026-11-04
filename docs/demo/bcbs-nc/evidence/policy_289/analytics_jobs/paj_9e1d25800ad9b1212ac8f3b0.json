@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_9e1d25800ad9b1212ac8f3b0",
+  "policy_id": "1c33a9d1-fe18-451e-94b6-70f191a403f8",
+  "name": "Cardiac Episode Bundle",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "1438d9992ce68cc6",
+  "started_at": "2026-11-04T13:18:18.227822+00:00",
+  "finished_at": "2026-11-04T13:18:18.227823+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

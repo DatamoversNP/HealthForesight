@@ -14,11 +14,15 @@ function getSocketIoServerUrl(): string {
   }
   const api = import.meta.env.VITE_API_URL as string | undefined
   if (api) {
+    // Absolute API URL → use that origin
     try {
       const u = new URL(api)
       return `${u.protocol}//${u.host}`
     } catch {
-      /* ignore */
+      /* relative path like /api/v1 — same origin as the page (vite proxy) */
+    }
+    if (api.startsWith('/') && typeof window !== 'undefined') {
+      return window.location.origin
     }
   }
   if (typeof window !== 'undefined') {
@@ -28,6 +32,10 @@ function getSocketIoServerUrl(): string {
     }
     if (host.includes('azurestaticapps.net')) {
       return 'https://healthforesight-api.azurewebsites.net'
+    }
+    // Local vite (any port) — never invent :8000; use current origin / proxy
+    if (host === 'localhost' || host === '127.0.0.1') {
+      return window.location.origin
     }
   }
   return 'http://localhost:8000'

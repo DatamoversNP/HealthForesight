@@ -1,0 +1,19 @@
+{
+  "tests": [
+    {
+      "id": "T_SCOPE_PRESENT",
+      "given": "package loaded",
+      "expect": "states and markets non-empty"
+    },
+    {
+      "id": "T_LEVER_IN_SCOPE",
+      "given": "candidate codes present",
+      "expect": "every lever code listed in codeset.codes"
+    },
+    {
+      "id": "T_NO_BCBS_CLAIM",
+      "given": "classification",
+      "expect": "REPRESENTATIVE_PAYER_POLICY and not_claiming set"
+    }
+  ]
+}

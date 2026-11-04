@@ -1,0 +1,206 @@
+{
+  "batch": 1,
+  "offset": 0,
+  "policies": [
+    {
+      "policy_id": "6bdaa2ef-30ab-4818-a67e-a60217cd0537",
+      "name": "90-Day Retail Maintenance Program",
+      "policy_type": "BENEFIT",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "95725be2-26a7-4650-941c-a9cbaf48aadb",
+      "name": "ACA Essential Health Benefits Mapping",
+      "policy_type": "ADMINISTRATIVE_REQUIREMENT",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "5032227f-90d7-4bc3-bfc1-092ba76df743",
+      "name": "ACA Preventive Screening Coverage Requirements",
+      "policy_type": "PREVENTIVE_SERVICES",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "c09ab8fc-f4df-46f1-9cb7-e5e86cf1617d",
+      "name": "ACA Preventive Services Zero Cost Share",
+      "policy_type": "COST_SHARING",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "0a6506e3-3813-49cf-ab1a-002109fe1a02",
+      "name": "ACL Reconstruction Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "81d9a78e-cf2d-4667-8032-98a8c7c984d6",
+      "name": "Acupuncture Visit Limit",
+      "policy_type": "DURATION_FREQUENCY_LIMIT",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "c922a9bd-0292-4df1-9bdd-f4bda3709fbf",
+      "name": "ADHD Stimulant Quantity Limits and Preferred Agents",
+      "policy_type": "QUANTITY_LIMIT",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "a6adbb67-411c-4945-91b3-70774b8ccc3f",
+      "name": "Advanced Imaging Comprehensive Control",
+      "policy_type": "COMPOSITE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "939c6be2-50b9-4d9a-8f4f-916caa8c2764",
+      "name": "Advanced Imaging Control Bundle",
+      "policy_type": "COMPOSITE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "1b8a6ad3-3753-4fba-90eb-f0d1b6ac7f00",
+      "name": "Advanced Imaging Member Cost Share Design",
+      "policy_type": "COST_SHARING",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "993e9110-2623-4e41-b87c-ad8666cbb92c",
+      "name": "Air Ambulance Medical Necessity Review",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "ce65ce76-ea5b-4a7d-8260-84c11ae54bb2",
+      "name": "Ambulatory Surgery Center Preference",
+      "policy_type": "SITE_OF_CARE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "38525bee-e8b4-483c-85e1-5abdc2747be9",
+      "name": "Annual Maximum Benefit for Durable Medical Equipment",
+      "policy_type": "BENEFIT",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "42cf5e17-f0aa-4fb6-b28a-d8446330efc6",
+      "name": "Anti-Reflux Procedure Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "3ffebc5a-20c6-49fa-803e-8e9d2ac1cd0c",
+      "name": "Applied Behavior Analysis Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "b889bcf0-0c68-4950-bd24-4ac656ebe0ae",
+      "name": "Assistant Surgeon Payment Rules",
+      "policy_type": "PAYMENT_POLICY",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "280f62d7-7b49-40a0-9a47-862a4cf636e9",
+      "name": "Asthma and COPD Biologic Step Therapy",
+      "policy_type": "STEP_THERAPY",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "0f531198-6be7-4acf-b8fe-cd1f260772fb",
+      "name": "Audio-Only Telehealth Coverage Rules",
+      "policy_type": "COVERAGE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "853115f4-b3a4-4efe-9cf2-428c674464d5",
+      "name": "Away-From-Home Care / Guest Membership Rules",
+      "policy_type": "ADMINISTRATIVE_REQUIREMENT",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "d8318a2f-f0d8-47c2-b54c-a9f936d1aeff",
+      "name": "Bariatric Revisional Surgery Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "56901c32-9b11-484e-aed3-dd100b4160f8",
+      "name": "Bariatric Surgery Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "e0ac744f-34bf-42f1-ac44-5cbaf5beb823",
+      "name": "Behavioral Health Appointment Access Standards",
+      "policy_type": "ACCESS_AVAILABILITY_RULE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "ec25e932-b9e1-411d-a6ff-021a1e35d033",
+      "name": "Behavioral Health Inpatient Concurrent Review",
+      "policy_type": "CLINICAL_CRITERIA",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "d3b25dd6-57d6-49e9-8e1f-5f45438caa06",
+      "name": "Benzodiazepine Quantity Limits",
+      "policy_type": "QUANTITY_LIMIT",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "d1e25694-719d-428b-b5b5-329abb6147c0",
+      "name": "Biologic Step Therapy for Rheumatoid Arthritis",
+      "policy_type": "STEP_THERAPY",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    }
+  ]
+}

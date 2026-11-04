@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_8f5953a91152dc2516ce4f5c",
+  "policy_id": "e3193305-ea18-498f-a610-8f0eae608adc",
+  "name": "Dialysis Home Modality Preference",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "ed9603bf78d7fc1d",
+  "started_at": "2026-11-04T13:18:18.230330+00:00",
+  "finished_at": "2026-11-04T13:18:18.230331+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

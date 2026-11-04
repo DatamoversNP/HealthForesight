@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_0336b309aceec2ebf666b86d",
+  "policy_id": "d85a0b27-9972-4591-ae52-62e0ac732ab8",
+  "name": "MS Disease-Modifying Therapy Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "509edfc99449370f",
+  "started_at": "2026-11-04T13:18:18.236631+00:00",
+  "finished_at": "2026-11-04T13:18:18.236632+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

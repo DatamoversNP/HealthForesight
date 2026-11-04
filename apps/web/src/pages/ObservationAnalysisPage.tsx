@@ -49,6 +49,7 @@ import {
   CalendarToday as CalendarIcon,
   AccessTime as TimeIcon,
 } from '@mui/icons-material'
+import PolicyAutocomplete from '../components/common/PolicyAutocomplete'
 import {
   BarChart,
   Bar,
@@ -64,7 +65,7 @@ import {
   Area,
   AreaChart,
 } from 'recharts'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { apiClient } from '../lib/api'
 import { format } from 'date-fns'
 
@@ -253,11 +254,42 @@ function buildPrescriptiveRecommendations(obs: Observation): string[] {
   return [...new Set(lines)]
 }
 
+/** Color residual by |% miss|, not by sign — negative only means below prediction. */
+function forecastResidualStyle(errorPct: number | null | undefined): {
+  bgcolor: string
+  label: string
+  hint: string
+} {
+  const absPct = Math.abs(Number(errorPct) || 0)
+  if (absPct < 15) {
+    return {
+      bgcolor: '#2E8B57',
+      label: 'vs Predicted',
+      hint: absPct === 0 ? 'On prediction' : 'Small miss — within good forecast fit',
+    }
+  }
+  if (absPct < 30) {
+    return {
+      bgcolor: '#C47F17',
+      label: 'vs Predicted',
+      hint: 'Moderate miss — review assumptions',
+    }
+  }
+  return {
+    bgcolor: '#C04A4A',
+    label: 'vs Predicted',
+    hint: 'Large miss — forecast fit is weak',
+  }
+}
+
 export default function ObservationAnalysisPage() {
+  const [searchParams] = useSearchParams()
+  const urlObservationId = searchParams.get('observation')
+  const urlPolicyId = searchParams.get('policy')
   const [observations, setObservations] = useState<Observation[]>([])
   const [policies, setPolicies] = useState<Policy[]>([])
   const [selectedObservation, setSelectedObservation] = useState<Observation | null>(null)
-  const [selectedPolicy, setSelectedPolicy] = useState<string>('')
+  const [selectedPolicy, setSelectedPolicy] = useState<string>(urlPolicyId || '')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [creating, setCreating] = useState(false)
@@ -303,6 +335,35 @@ export default function ObservationAnalysisPage() {
     loadData()
   }, [])
 
+  // Deep-link from Policy Verdicts → /observation-analysis?policy=&observation=
+  useEffect(() => {
+    if (loading) return
+    if (!urlObservationId && !urlPolicyId) return
+
+    let cancelled = false
+    ;(async () => {
+      try {
+        if (urlPolicyId) {
+          setSelectedPolicy(urlPolicyId)
+          await loadObservations(urlPolicyId)
+        }
+        if (cancelled || !urlObservationId) return
+        const obs = await apiClient.getObservation(urlObservationId)
+        if (!cancelled && obs) {
+          setSelectedObservation(obs as Observation)
+          if (obs.policy_id) setSelectedPolicy(String(obs.policy_id))
+        }
+      } catch (e) {
+        console.warn('Observation deep-link failed:', e)
+      }
+    })()
+
+    return () => {
+      cancelled = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, urlObservationId, urlPolicyId])
+
   // Load forecast when Forecast tab is selected
   useEffect(() => {
     if (tabValue === 5 && selectedObservation && selectedPolicy) {
@@ -335,8 +396,8 @@ export default function ObservationAnalysisPage() {
       setLoading(true)
       setError(null)
 
-      // Load policies
-      const policiesData = await apiClient.getPolicies()
+      // Load policies (API default limit=100; catalog is 200+ so request the max)
+      const policiesData = await apiClient.getPolicies({ limit: 1000 })
       // Map policies to ensure they have the expected structure
       const mappedPolicies = Array.isArray(policiesData) 
         ? policiesData.map((p: any) => ({
@@ -345,6 +406,8 @@ export default function ObservationAnalysisPage() {
             policy_type: p.policy_type || 'UNKNOWN',
           }))
         : []
+      // Alphabetical for demo dropdown discoverability
+      mappedPolicies.sort((a, b) => String(a.name).localeCompare(String(b.name)))
       setPolicies(mappedPolicies)
 
       // Load observations
@@ -359,10 +422,11 @@ export default function ObservationAnalysisPage() {
 
   const loadObservations = async (policyId?: string) => {
     try {
-      const params: any = { include_trends: true, limit: 200 }
-      if (policyId) {
-        params.policy_id = policyId
-      }
+      // Portfolio: latest-only + summary (no N+1 analysis enrichment — that caused multi-minute loads).
+      // Policy view: full history + trends for Overview charts.
+      const params: any = policyId
+        ? { include_trends: true, limit: 500, policy_id: policyId }
+        : { include_trends: false, limit: 500, latest_only: true, summary: true }
       console.log('Loading observations with params:', params)
       const data = await apiClient.listObservations(params)
       console.log('Observations API response:', { 
@@ -371,28 +435,31 @@ export default function ObservationAnalysisPage() {
         data: data 
       })
       const observationsList = Array.isArray(data) ? data : []
-      
-      // Enrich observations with analysis dates
-      const enrichedObservations = await Promise.all(
-        observationsList.map(async (obs: Observation) => {
-          if (obs.analysis_id) {
-            try {
-              const analysis = await apiClient.getAnalysis(obs.analysis_id)
-              if (analysis) {
-                return {
-                  ...obs,
-                  analysis_created_at: analysis.created_at,
-                  analysis_executed_at: analysis.updated_at || analysis.created_at, // Use updated_at as executed date
+
+      let enrichedObservations: Observation[] = observationsList
+      // Only enrich with analysis dates for a single-policy history (bounded, not portfolio fan-out)
+      if (policyId && observationsList.length > 0 && observationsList.length <= 40) {
+        enrichedObservations = await Promise.all(
+          observationsList.map(async (obs: Observation) => {
+            if (obs.analysis_id) {
+              try {
+                const analysis = await apiClient.getAnalysis(obs.analysis_id)
+                if (analysis) {
+                  return {
+                    ...obs,
+                    analysis_created_at: analysis.created_at,
+                    analysis_executed_at: analysis.updated_at || analysis.created_at,
+                  }
                 }
+              } catch (err) {
+                console.error(`Error loading analysis ${obs.analysis_id}:`, err)
               }
-            } catch (err) {
-              console.error(`Error loading analysis ${obs.analysis_id}:`, err)
             }
-          }
-          return obs
-        })
-      )
-      
+            return obs
+          })
+        )
+      }
+
       console.log('Enriched observations:', enrichedObservations.length)
       enrichedObservations.sort(
         (a, b) =>
@@ -638,24 +705,15 @@ export default function ObservationAnalysisPage() {
         <CardContent>
           <Grid container spacing={3} alignItems="center">
             <Grid item xs={12} md={6}>
-              <FormControl fullWidth>
-                <InputLabel>Filter by Policy</InputLabel>
-                <Select
-                  value={selectedPolicy}
-                  onChange={(e) => {
-                    setSelectedPolicy(e.target.value)
-                    loadObservations(e.target.value || undefined)
-                  }}
-                  label="Filter by Policy"
-                >
-                  <MenuItem value="">All Policies</MenuItem>
-                  {policies.map((policy) => (
-                    <MenuItem key={policy.id} value={policy.id}>
-                      {policy.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+              <PolicyAutocomplete
+                policies={policies}
+                value={selectedPolicy}
+                label="Filter by Policy"
+                onChange={(id) => {
+                  setSelectedPolicy(id)
+                  loadObservations(id || undefined)
+                }}
+              />
             </Grid>
             <Grid item xs={12} md={6}>
               <Box sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end', flexWrap: 'wrap' }}>
@@ -709,7 +767,14 @@ export default function ObservationAnalysisPage() {
                   <Grid item xs={12} sm={6} md={4} key={`latest-${obs.policy_id}`}>
                     <Paper
                       elevation={0}
-                      onClick={() => setSelectedObservation(obs)}
+                      onClick={() => {
+                        setSelectedObservation(obs)
+                        setSelectedPolicy(obs.policy_id)
+                        // Reload full chronological history for this policy (trend chart needs every period end)
+                        void loadObservations(obs.policy_id).then(() => {
+                          setSelectedObservation((prev) => prev ?? obs)
+                        })
+                      }}
                       sx={{
                         p: 2,
                         cursor: 'pointer',
@@ -762,65 +827,100 @@ export default function ObservationAnalysisPage() {
         </Card>
       )}
 
-      {/* Focus Areas - Highlight observations that need attention */}
-      {observations.length > 0 && (
-        <Card sx={{ mb: 3, bgcolor: 'warning.light', color: 'warning.contrastText' }}>
-          <CardContent>
-            <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <AssessmentIcon /> Focus Areas
-            </Typography>
-            <Grid container spacing={2} sx={{ mt: 1 }}>
-              {observations.filter(obs => {
-                const vsPred = obs.comparisons?.vs_predicted
-                const vsBase = obs.comparisons?.vs_baseline
-                return (
-                  (vsPred && Math.abs(vsPred.prediction_error_pct || 0) > 15) ||
-                  (vsBase && Math.abs(vsBase.change_from_baseline_pct || 0) > 20) ||
-                  (vsPred && vsPred.prediction_accuracy_pct && vsPred.prediction_accuracy_pct < 70)
-                )
-              }).slice(0, 3).map((obs) => {
-                const policyName = policies.find(p => p.id === obs.policy_id)?.name || 'Unknown Policy'
-                const issues = []
-                if (obs.comparisons?.vs_predicted && Math.abs(obs.comparisons.vs_predicted.prediction_error_pct || 0) > 15) {
-                  issues.push(`High prediction error: ${Math.abs(obs.comparisons.vs_predicted.prediction_error_pct || 0).toFixed(1)}%`)
-                }
-                if (obs.comparisons?.vs_baseline && Math.abs(obs.comparisons.vs_baseline.change_from_baseline_pct || 0) > 20) {
-                  issues.push(`Significant baseline deviation: ${Math.abs(obs.comparisons.vs_baseline.change_from_baseline_pct || 0).toFixed(1)}%`)
-                }
-                return (
-                  <Grid item xs={12} sm={6} md={4} key={obs.observation_id}>
-                    <Paper sx={{ p: 2, bgcolor: 'background.paper' }}>
-                      <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                        {policyName}
-                      </Typography>
-                      {issues.map((issue, idx) => (
-                        <Typography key={idx} variant="body2" color="error.main">
-                          ⚠️ {issue}
+      {/* Focus Areas — one card per policy (latest run only), not one per historical observation */}
+      {latestByPolicy.length > 0 && (() => {
+        const focusObs = latestByPolicy.filter((obs) => {
+          const vsPred = obs.comparisons?.vs_predicted
+          const vsBase = obs.comparisons?.vs_baseline
+          return (
+            (vsPred && Math.abs(vsPred.prediction_error_pct || 0) > 15) ||
+            (vsBase && Math.abs(vsBase.change_from_baseline_pct || 0) > 20) ||
+            (vsPred && vsPred.prediction_accuracy_pct != null && vsPred.prediction_accuracy_pct < 70)
+          )
+        }).slice(0, 6)
+        return (
+          <Card
+            sx={{
+              mb: 3,
+              bgcolor: 'background.paper',
+              border: '1px solid',
+              borderColor: 'warning.main',
+              borderLeftWidth: 4,
+            }}
+          >
+            <CardContent>
+              <Typography
+                variant="h6"
+                gutterBottom
+                sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'text.primary', fontWeight: 600 }}
+              >
+                <AssessmentIcon sx={{ color: 'warning.dark' }} /> Focus Areas
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                Latest observation per policy that needs attention (not every historical run).
+              </Typography>
+              <Grid container spacing={2} sx={{ mt: 1 }}>
+                {focusObs.map((obs) => {
+                  const policyName = policies.find((p) => p.id === obs.policy_id)?.name || 'Unknown Policy'
+                  const issues: string[] = []
+                  if (
+                    obs.comparisons?.vs_predicted &&
+                    Math.abs(obs.comparisons.vs_predicted.prediction_error_pct || 0) > 15
+                  ) {
+                    issues.push(
+                      `High prediction error: ${Math.abs(obs.comparisons.vs_predicted.prediction_error_pct || 0).toFixed(1)}%`
+                    )
+                  }
+                  if (
+                    obs.comparisons?.vs_baseline &&
+                    Math.abs(obs.comparisons.vs_baseline.change_from_baseline_pct || 0) > 20
+                  ) {
+                    issues.push(
+                      `Significant baseline deviation: ${Math.abs(obs.comparisons.vs_baseline.change_from_baseline_pct || 0).toFixed(1)}%`
+                    )
+                  }
+                  if (
+                    obs.comparisons?.vs_predicted?.prediction_accuracy_pct != null &&
+                    obs.comparisons.vs_predicted.prediction_accuracy_pct < 70
+                  ) {
+                    issues.push(
+                      `Low forecast fit: ${obs.comparisons.vs_predicted.prediction_accuracy_pct.toFixed(0)}%`
+                    )
+                  }
+                  return (
+                    <Grid item xs={12} sm={6} md={4} key={`focus-${obs.policy_id}`}>
+                      <Paper
+                        variant="outlined"
+                        sx={{ p: 2, bgcolor: 'grey.50', borderColor: 'divider' }}
+                      >
+                        <Typography variant="subtitle2" fontWeight={700} color="text.primary" gutterBottom>
+                          {policyName}
                         </Typography>
-                      ))}
-                    </Paper>
+                        {issues.map((issue, idx) => (
+                          <Typography
+                            key={idx}
+                            variant="body2"
+                            sx={{ color: 'error.dark', fontWeight: 500, lineHeight: 1.5 }}
+                          >
+                            {issue}
+                          </Typography>
+                        ))}
+                      </Paper>
+                    </Grid>
+                  )
+                })}
+                {focusObs.length === 0 && (
+                  <Grid item xs={12}>
+                    <Typography variant="body2" color="text.secondary">
+                      No critical issues found. All observations are within expected ranges.
+                    </Typography>
                   </Grid>
-                )
-              })}
-              {observations.filter(obs => {
-                const vsPred = obs.comparisons?.vs_predicted
-                const vsBase = obs.comparisons?.vs_baseline
-                return (
-                  (vsPred && Math.abs(vsPred.prediction_error_pct || 0) > 15) ||
-                  (vsBase && Math.abs(vsBase.change_from_baseline_pct || 0) > 20) ||
-                  (vsPred && vsPred.prediction_accuracy_pct && vsPred.prediction_accuracy_pct < 70)
-                )
-              }).length === 0 && (
-                <Grid item xs={12}>
-                  <Typography variant="body2">
-                    ✅ No critical issues found. All observations are within expected ranges.
-                  </Typography>
-                </Grid>
-              )}
-            </Grid>
-          </CardContent>
-        </Card>
-      )}
+                )}
+              </Grid>
+            </CardContent>
+          </Card>
+        )
+      })()}
 
       {/* Observation timeline: X = run date (through date), Y = utilization/cost */}
       {selectedPolicy && observations.length > 1 && (
@@ -2669,37 +2769,64 @@ export default function ObservationAnalysisPage() {
                             )
                           })()}
 
-                          <Box sx={{ 
-                            p: 3, 
-                            bgcolor: Math.abs(selectedObservation.comparisons.vs_predicted.utilization_prediction_error || 0) < 10
-                              ? '#2E8B57'
-                              : '#C04A4A',
-                            color: 'white',
-                            border: 'none',
-                            mb: 2
-                          }}>
-                            <Typography variant="overline" sx={{ 
-                              fontSize: '0.6875rem',
-                              fontWeight: 600,
-                              letterSpacing: '0.08em',
-                              color: 'rgba(255,255,255,0.8)',
-                              textTransform: 'uppercase',
-                              mb: 1,
-                              display: 'block'
-                            }}>
-                              Prediction Error
-                            </Typography>
-                            <Typography variant="h4" fontWeight={700} sx={{ 
-                              letterSpacing: '-0.02em',
-                              lineHeight: 1.2,
-                              mb: 0.5
-                            }}>
-                              {selectedObservation.comparisons.vs_predicted.utilization_prediction_error?.toFixed(2) || 'N/A'}
-                            </Typography>
-                            <Typography variant="body1" sx={{ opacity: 0.9, fontSize: '0.9375rem' }}>
-                              {selectedObservation.comparisons.vs_predicted.utilization_prediction_error_pct?.toFixed(1) || 'N/A'}%
-                            </Typography>
-                          </Box>
+                          {(() => {
+                            const residual = forecastResidualStyle(
+                              selectedObservation.comparisons.vs_predicted.utilization_prediction_error_pct
+                            )
+                            const err =
+                              selectedObservation.comparisons.vs_predicted.utilization_prediction_error
+                            const errPct =
+                              selectedObservation.comparisons.vs_predicted.utilization_prediction_error_pct
+                            const direction =
+                              err == null
+                                ? ''
+                                : err < 0
+                                  ? 'Observed below prediction'
+                                  : err > 0
+                                    ? 'Observed above prediction'
+                                    : 'Matches prediction'
+                            return (
+                              <Box
+                                sx={{
+                                  p: 3,
+                                  bgcolor: residual.bgcolor,
+                                  color: 'white',
+                                  border: 'none',
+                                  mb: 2,
+                                }}
+                              >
+                                <Typography
+                                  variant="overline"
+                                  sx={{
+                                    fontSize: '0.6875rem',
+                                    fontWeight: 600,
+                                    letterSpacing: '0.08em',
+                                    color: 'rgba(255,255,255,0.8)',
+                                    textTransform: 'uppercase',
+                                    mb: 1,
+                                    display: 'block',
+                                  }}
+                                >
+                                  {residual.label}
+                                </Typography>
+                                <Typography
+                                  variant="h4"
+                                  fontWeight={700}
+                                  sx={{ letterSpacing: '-0.02em', lineHeight: 1.2, mb: 0.5 }}
+                                >
+                                  {err != null ? err.toFixed(2) : 'N/A'}
+                                </Typography>
+                                <Typography variant="body1" sx={{ opacity: 0.95, fontSize: '0.9375rem' }}>
+                                  {errPct != null ? `${errPct.toFixed(1)}%` : 'N/A'}
+                                </Typography>
+                                <Typography variant="caption" sx={{ display: 'block', mt: 1, opacity: 0.9 }}>
+                                  {direction}
+                                  {direction ? ' · ' : ''}
+                                  {residual.hint}
+                                </Typography>
+                              </Box>
+                            )
+                          })()}
 
                           <Box sx={{ 
                             p: 2, 
@@ -2801,37 +2928,64 @@ export default function ObservationAnalysisPage() {
                             )
                           })()}
 
-                          <Box sx={{ 
-                            p: 3, 
-                            bgcolor: Math.abs(selectedObservation.comparisons.vs_predicted.cost_prediction_error || 0) < 10
-                              ? '#2E8B57'
-                              : '#C04A4A',
-                            color: 'white',
-                            border: 'none',
-                            mb: 2
-                          }}>
-                            <Typography variant="overline" sx={{ 
-                              fontSize: '0.6875rem',
-                              fontWeight: 600,
-                              letterSpacing: '0.08em',
-                              color: 'rgba(255,255,255,0.8)',
-                              textTransform: 'uppercase',
-                              mb: 1,
-                              display: 'block'
-                            }}>
-                              Prediction Error
-                            </Typography>
-                            <Typography variant="h4" fontWeight={700} sx={{ 
-                              letterSpacing: '-0.02em',
-                              lineHeight: 1.2,
-                              mb: 0.5
-                            }}>
-                              ${selectedObservation.comparisons.vs_predicted.cost_prediction_error?.toFixed(2) || 'N/A'}
-                            </Typography>
-                            <Typography variant="body1" sx={{ opacity: 0.9, fontSize: '0.9375rem' }}>
-                              {selectedObservation.comparisons.vs_predicted.cost_prediction_error_pct?.toFixed(1) || 'N/A'}%
-                            </Typography>
-                          </Box>
+                          {(() => {
+                            const residual = forecastResidualStyle(
+                              selectedObservation.comparisons.vs_predicted.cost_prediction_error_pct
+                            )
+                            const err =
+                              selectedObservation.comparisons.vs_predicted.cost_prediction_error
+                            const errPct =
+                              selectedObservation.comparisons.vs_predicted.cost_prediction_error_pct
+                            const direction =
+                              err == null
+                                ? ''
+                                : err < 0
+                                  ? 'Observed below prediction'
+                                  : err > 0
+                                    ? 'Observed above prediction'
+                                    : 'Matches prediction'
+                            return (
+                              <Box
+                                sx={{
+                                  p: 3,
+                                  bgcolor: residual.bgcolor,
+                                  color: 'white',
+                                  border: 'none',
+                                  mb: 2,
+                                }}
+                              >
+                                <Typography
+                                  variant="overline"
+                                  sx={{
+                                    fontSize: '0.6875rem',
+                                    fontWeight: 600,
+                                    letterSpacing: '0.08em',
+                                    color: 'rgba(255,255,255,0.8)',
+                                    textTransform: 'uppercase',
+                                    mb: 1,
+                                    display: 'block',
+                                  }}
+                                >
+                                  {residual.label}
+                                </Typography>
+                                <Typography
+                                  variant="h4"
+                                  fontWeight={700}
+                                  sx={{ letterSpacing: '-0.02em', lineHeight: 1.2, mb: 0.5 }}
+                                >
+                                  {err != null ? `$${err.toFixed(2)}` : 'N/A'}
+                                </Typography>
+                                <Typography variant="body1" sx={{ opacity: 0.95, fontSize: '0.9375rem' }}>
+                                  {errPct != null ? `${errPct.toFixed(1)}%` : 'N/A'}
+                                </Typography>
+                                <Typography variant="caption" sx={{ display: 'block', mt: 1, opacity: 0.9 }}>
+                                  {direction}
+                                  {direction ? ' · ' : ''}
+                                  {residual.hint}
+                                </Typography>
+                              </Box>
+                            )
+                          })()}
 
                           <Box sx={{ 
                             p: 2, 
@@ -2932,33 +3086,51 @@ export default function ObservationAnalysisPage() {
                               </Box>
                             </Grid>
                             <Grid item xs={12} md={4}>
-                              <Box sx={{ 
-                                textAlign: 'center', 
-                                p: 3, 
-                                bgcolor: Math.abs(selectedObservation.comparisons.vs_predicted.prediction_error || 0) < 0.1
-                                  ? '#2E8B57'
-                                  : '#C04A4A',
-                                color: 'white',
-                                border: 'none'
-                              }}>
-                                <Typography variant="overline" sx={{ 
-                                  fontSize: '0.6875rem',
-                                  fontWeight: 600,
-                                  letterSpacing: '0.08em',
-                                  color: 'rgba(255,255,255,0.8)',
-                                  textTransform: 'uppercase',
-                                  mb: 1.5,
-                                  display: 'block'
-                                }}>
-                                  Error
-                                </Typography>
-                                <Typography variant="h4" fontWeight={700} sx={{ 
-                                  letterSpacing: '-0.02em',
-                                  lineHeight: 1.2
-                                }}>
-                                  {selectedObservation.comparisons.vs_predicted.prediction_error?.toFixed(2) || 'N/A'}
-                                </Typography>
-                              </Box>
+                              {(() => {
+                                const pct =
+                                  selectedObservation.comparisons.vs_predicted.prediction_error_pct
+                                const residual = forecastResidualStyle(pct)
+                                const err =
+                                  selectedObservation.comparisons.vs_predicted.prediction_error
+                                return (
+                                  <Box
+                                    sx={{
+                                      textAlign: 'center',
+                                      p: 3,
+                                      bgcolor: residual.bgcolor,
+                                      color: 'white',
+                                      border: 'none',
+                                    }}
+                                  >
+                                    <Typography
+                                      variant="overline"
+                                      sx={{
+                                        fontSize: '0.6875rem',
+                                        fontWeight: 600,
+                                        letterSpacing: '0.08em',
+                                        color: 'rgba(255,255,255,0.8)',
+                                        textTransform: 'uppercase',
+                                        mb: 1.5,
+                                        display: 'block',
+                                      }}
+                                    >
+                                      {residual.label}
+                                    </Typography>
+                                    <Typography
+                                      variant="h4"
+                                      fontWeight={700}
+                                      sx={{ letterSpacing: '-0.02em', lineHeight: 1.2 }}
+                                    >
+                                      {err != null ? err.toFixed(2) : 'N/A'}
+                                    </Typography>
+                                    {pct != null && (
+                                      <Typography variant="caption" sx={{ display: 'block', mt: 1, opacity: 0.9 }}>
+                                        {pct.toFixed(1)}% · {residual.hint}
+                                      </Typography>
+                                    )}
+                                  </Box>
+                                )
+                              })()}
                       </Grid>
                     </Grid>
                   </CardContent>
@@ -4590,20 +4762,15 @@ export default function ObservationAnalysisPage() {
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} maxWidth="sm" fullWidth>
         <DialogTitle>Create Observation from Impact Analysis</DialogTitle>
         <DialogContent>
-          <FormControl fullWidth sx={{ mt: 2 }}>
-            <InputLabel>Select Policy</InputLabel>
-            <Select
+          <Box sx={{ mt: 2 }}>
+            <PolicyAutocomplete
+              policies={policies}
               value={selectedPolicy}
-              onChange={(e) => setSelectedPolicy(e.target.value)}
               label="Select Policy"
-            >
-              {policies.map((policy) => (
-                <MenuItem key={policy.id} value={policy.id}>
-                  {policy.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+              allowAll={false}
+              onChange={setSelectedPolicy}
+            />
+          </Box>
           {creating && (
             <Box sx={{ mt: 2 }}>
               <LinearProgress />

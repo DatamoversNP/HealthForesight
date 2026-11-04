@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_a86c8e1c03ffa11694dbc5fb",
+  "policy_id": "f2b8e7f3-1627-5dbe-8d7e-757ce21aa55b",
+  "name": "Outpatient Therapy Coverage and Payment",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "73ecb87ab65cc6df",
+  "started_at": "2026-11-04T13:18:18.239355+00:00",
+  "finished_at": "2026-11-04T13:18:18.239356+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_1a891cf52760a57181df495d",
+  "policy_id": "75d2a776-fdb2-4fe6-b121-5b6d90611238",
+  "name": "Home Sleep Apnea Testing Preference",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "559cd8768cc68da0",
+  "started_at": "2026-11-04T13:18:18.233662+00:00",
+  "finished_at": "2026-11-04T13:18:18.233664+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

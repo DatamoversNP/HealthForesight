@@ -1,0 +1,32 @@
+{
+  "document_id": "DIRECT_TO_CONSUMER_LAB_NONCOVERAGE_CODESET",
+  "policy_id": "c1dd30a3-de81-4743-8433-c9c5b40a9d92",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abDirect-to-Consumer Lab Noncoverage\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "80053",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "80061",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "85025",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Common lab panels for DTC noncoverage illustration",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

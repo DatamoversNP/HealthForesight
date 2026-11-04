@@ -1,0 +1,177 @@
+{
+  "archetype": "COMPOSITE",
+  "offset": 0,
+  "count": 16,
+  "candidate_schedule": 0,
+  "unresolved": 0,
+  "not_applicable": 16,
+  "persisted_ok": 0,
+  "results": [
+    {
+      "policy_id": "a6adbb67-411c-4945-91b3-70774b8ccc3f",
+      "name": "Advanced Imaging Comprehensive Control",
+      "folder": "catalog/advanced_imaging_comprehensive_control",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [
+        "SCOPE: states=NC but markets are metro-only without lever codes justifying claim geography"
+      ],
+      "persist": null
+    },
+    {
+      "policy_id": "939c6be2-50b9-4d9a-8f4f-916caa8c2764",
+      "name": "Advanced Imaging Control Bundle",
+      "folder": "catalog/advanced_imaging_control_bundle",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [
+        "SCOPE: states=NC but markets are metro-only without lever codes justifying claim geography"
+      ],
+      "persist": null
+    },
+    {
+      "policy_id": "064c3a08-e3c4-4627-a701-7e83aaee2a52",
+      "name": "Cardiac Imaging Comprehensive Control",
+      "folder": "catalog/cardiac_imaging_comprehensive_control",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [
+        "SCOPE: states=NC but markets are metro-only without lever codes justifying claim geography"
+      ],
+      "persist": null
+    },
+    {
+      "policy_id": "814e7fbd-2ae4-4314-aa1b-a1ad104e5f7f",
+      "name": "CKD Disease Management Program",
+      "folder": "catalog/ckd_disease_management_program",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "5a9b27f6-e186-40ad-8b7e-0bd28e30f3f9",
+      "name": "Complex Case Management Program",
+      "folder": "catalog/complex_case_management_program",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "93c9c915-78e1-4b3a-8fff-20e30faa3bc1",
+      "name": "COPD Disease Management Program",
+      "folder": "catalog/copd_disease_management_program",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "1f3c9863-1264-4a01-b3ba-deb7d433302c",
+      "name": "Diabetes Disease Management Program",
+      "folder": "catalog/diabetes_disease_management_program",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "999cd635-0646-4880-9ab2-a9e2e5c0d2ff",
+      "name": "Elective Surgery Comprehensive Management",
+      "folder": "catalog/elective_surgery_comprehensive_management",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "f3bd54e4-caff-4aca-bc11-3551d07a9285",
+      "name": "Emergency Department Frequent Utilizer Program",
+      "folder": "catalog/emergency_department_frequent_utilizer_program",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "eea5fdd2-b04b-4dfb-9222-087946bcbe6e",
+      "name": "Heart Failure Disease Management Program",
+      "folder": "catalog/heart_failure_disease_management_program",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "dfd316ef-e39e-4781-a72d-b49e775d714e",
+      "name": "Maternity Management Program",
+      "folder": "catalog/maternity_management_program",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "6cf80c62-e9bd-4db7-8a35-84836c001982",
+      "name": "Medicare Stars Gap Closure Program",
+      "folder": "catalog/medicare_stars_gap_closure_program",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "c82dbb4c-7fc0-477b-b69d-dbae6e85a5b8",
+      "name": "Medication Therapy Management Program",
+      "folder": "catalog/medication_therapy_management_program",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "177be323-166d-4c45-8d34-f124245e651e",
+      "name": "Opioid Analgesic Utilization Management",
+      "folder": "catalog/opioid_analgesic_utilization_management",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "acd4be99-0a25-46b2-af2c-f02e10617779",
+      "name": "Specialty Drug Comprehensive Management",
+      "folder": "catalog/specialty_drug_comprehensive_management",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "50ce59e9-06e4-4391-9845-60f419d834e2",
+      "name": "Transition of Care Post-Discharge Program",
+      "folder": "catalog/transition_of_care_post_discharge_program",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    }
+  ]
+}

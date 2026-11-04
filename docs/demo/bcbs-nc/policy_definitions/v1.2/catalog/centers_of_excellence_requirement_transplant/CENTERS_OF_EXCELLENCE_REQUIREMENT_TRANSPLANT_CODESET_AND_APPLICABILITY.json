@@ -1,0 +1,10 @@
+{
+  "document_id": "CENTERS_OF_EXCELLENCE_REQUIREMENT_TRANSPLANT_CODESET",
+  "policy_id": "cc2953d0-4d9c-4e92-8861-0b0683e7c0b5",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abCenters of Excellence Requirement \u2014 Transplant\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Network / access / COE / referral rule \u2014 taxonomy/network IDs not CPT schedule",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

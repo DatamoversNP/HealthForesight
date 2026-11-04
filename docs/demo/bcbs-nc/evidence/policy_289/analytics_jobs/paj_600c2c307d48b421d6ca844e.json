@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_600c2c307d48b421d6ca844e",
+  "policy_id": "bca68d08-a955-46c8-aac7-5b8d1e438a0a",
+  "name": "Parenteral Nutrition Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "1230e1da0dbafd62",
+  "started_at": "2026-11-04T13:18:18.239550+00:00",
+  "finished_at": "2026-11-04T13:18:18.239551+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_a8544631f9ad2df810c13fb3",
+  "policy_id": "100e5690-fa88-4537-9d92-3d14b1c2c126",
+  "name": "CGM and Diabetes Supply Quantity Limits",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "cdf49fddc914238e",
+  "started_at": "2026-11-04T13:18:18.228489+00:00",
+  "finished_at": "2026-11-04T13:18:18.228490+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

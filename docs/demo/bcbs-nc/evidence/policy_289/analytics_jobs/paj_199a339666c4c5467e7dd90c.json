@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_199a339666c4c5467e7dd90c",
+  "policy_id": "2143bd76-cda4-4bdc-85b2-5d391eabbd2c",
+  "name": "Inpatient Rehabilitation Facility Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "5291f7595485ae48",
+  "started_at": "2026-11-04T13:18:18.234482+00:00",
+  "finished_at": "2026-11-04T13:18:18.234483+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

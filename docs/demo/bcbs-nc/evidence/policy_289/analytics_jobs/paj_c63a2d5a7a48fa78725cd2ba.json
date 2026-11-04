@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_c63a2d5a7a48fa78725cd2ba",
+  "policy_id": "2b82352a-b10a-41b8-a086-8f272b26872f",
+  "name": "Tiered Network Restriction for High-Cost Procedures",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "d2f5a4a184b8c16b",
+  "started_at": "2026-11-04T13:18:18.243649+00:00",
+  "finished_at": "2026-11-04T13:18:18.243650+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

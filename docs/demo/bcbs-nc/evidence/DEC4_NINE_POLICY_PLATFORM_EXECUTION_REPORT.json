@@ -1,0 +1,1113 @@
+{
+  "generated_at": "2026-11-03T15:44:12.321059+00:00",
+  "api_base": "http://127.0.0.1:7867/api/v1",
+  "claims_lines": 3505919,
+  "no_data_seed": true,
+  "frozen_fixtures_modified": false,
+  "operational_activation": false,
+  "seed_api": {
+    "ok": true,
+    "status": 200,
+    "data": {
+      "seeded": [
+        {
+          "source_document_id": "NCCI-PTP-PAIR-70553-70551",
+          "status": "updated"
+        },
+        {
+          "source_document_id": "NCCI-MUE-97110-DEMO",
+          "status": "updated"
+        },
+        {
+          "policy_id": "58b839b5-b6e0-59e0-9406-d817877c3ce8",
+          "status": "completed",
+          "name": "NCCI Procedure-to-Procedure Bundling"
+        },
+        {
+          "policy_id": "58b839b5-b6e0-59e0-9406-d817877c3ce8",
+          "completeness": {
+            "assumptions": 3,
+            "guardrails": 3,
+            "codes": 2,
+            "has_scope": true,
+            "has_enforcement": true,
+            "has_levers": true
+          }
+        },
+        {
+          "policy_id": "e11b049d-fcce-55cc-bcd7-71329038383b",
+          "status": "completed",
+          "name": "NCCI Medically Unlikely Units"
+        },
+        {
+          "policy_id": "e11b049d-fcce-55cc-bcd7-71329038383b",
+          "completeness": {
+            "assumptions": 2,
+            "guardrails": 2,
+            "codes": 1,
+            "has_scope": true,
+            "has_enforcement": true,
+            "has_levers": true
+          }
+        },
+        {
+          "policy_id": "f2b8e7f3-1627-5dbe-8d7e-757ce21aa55b",
+          "status": "completed",
+          "name": "Outpatient Therapy Coverage and Payment"
+        },
+        {
+          "policy_id": "f2b8e7f3-1627-5dbe-8d7e-757ce21aa55b",
+          "completeness": {
+            "assumptions": 2,
+            "guardrails": 2,
+            "codes": 2,
+            "has_scope": true,
+            "has_enforcement": true,
+            "has_levers": true
+          }
+        },
+        {
+          "policy_id": "11218053-bdc0-569f-a415-fb61c5dcda37",
+          "status": "completed",
+          "name": "Infusion Site-of-Care Optimization"
+        },
+        {
+          "policy_id": "11218053-bdc0-569f-a415-fb61c5dcda37",
+          "completeness": {
+            "assumptions": 3,
+            "guardrails": 2,
+            "codes": 0,
+            "has_scope": true,
+            "has_enforcement": true,
+            "has_levers": true
+          }
+        },
+        {
+          "policy_id": "4f8c34e3-015b-509d-90ba-521261464258",
+          "status": "completed",
+          "name": "NCD 220.2 MRI Coverage Change Study"
+        },
+        {
+          "policy_id": "4f8c34e3-015b-509d-90ba-521261464258",
+          "completeness": {
+            "assumptions": 1,
+            "guardrails": 1,
+            "codes": 6,
+            "has_scope": true,
+            "has_enforcement": true,
+            "has_levers": true
+          }
+        },
+        {
+          "policy_id": "649b4ac8-ca82-5b84-aa87-84834490731a",
+          "status": "completed",
+          "name": "LCD L34425 NC MRI Coverage Criteria"
+        },
+        {
+          "policy_id": "649b4ac8-ca82-5b84-aa87-84834490731a",
+          "completeness": {
+            "assumptions": 1,
+            "guardrails": 1,
+            "codes": 3,
+            "has_scope": true,
+            "has_enforcement": true,
+            "has_levers": true
+          }
+        }
+      ],
+      "known_answers": {
+        "ptp": {
+          "passed": true,
+          "checks": {
+            "baseline_paid": true,
+            "post_policy_paid": true,
+            "payment_impact": true,
+            "ptp_pairs_hit": true,
+            "modifier_bypass": true
+          },
+          "actual_totals": {
+            "baseline_paid": 4400.0,
+            "post_policy_paid": 3600.0,
+            "payment_impact": 800.0,
+            "payer_savings": 800.0,
+            "provider_payment_change": -800.0,
+            "ptp_pairs_hit": 3,
+            "ptp_pairs_bypassed_with_modifier": 1,
+            "volume_effect": 0.0,
+            "mix_effect": 0.0,
+            "price_effect": 800.0
+          },
+          "calculation_version": "reimbursement-ncci-ptp-v1"
+        },
+        "mue": {
+          "passed": true,
+          "checks": {
+            "baseline_paid": true,
+            "post_policy_paid": true,
+            "payment_impact": true,
+            "lines_capped": true
+          },
+          "actual_totals": {
+            "baseline_paid": 650.0,
+            "post_policy_paid": 550.0,
+            "payment_impact": 100.0,
+            "payer_savings": 100.0,
+            "provider_payment_change": -100.0,
+            "lines_capped": 1,
+            "mue_value": 4,
+            "volume_effect": 0.0,
+            "price_effect": 100.0
+          },
+          "calculation_version": "reimbursement-ncci-mue-v1"
+        },
+        "therapy": {
+          "passed": true,
+          "checks": {
+            "baseline_paid": true,
+            "post_policy_paid": true,
+            "payment_impact": true
+          },
+          "actual_totals": {
+            "baseline_paid": 420.0,
+            "post_policy_paid": 340.0,
+            "payment_impact": 80.0,
+            "payer_savings": 80.0,
+            "provider_payment_change": -80.0
+          }
+        },
+        "infusion": {
+          "passed": true,
+          "checks": {
+            "baseline_paid": true,
+            "post_policy_paid": true,
+            "payment_impact": true,
+            "episodes_steered": true
+          },
+          "actual_totals": {
+            "baseline_paid": 18200.0,
+            "post_policy_paid": 14600.0,
+            "payment_impact": 3600.0,
+            "payer_savings": 3600.0,
+            "provider_payment_change": -3600.0,
+            "episodes_steered": 2
+          }
+        }
+      },
+      "catalog_class": "DEMO_SYNTHETIC",
+      "policy_structure": "complete_standard",
+      "frozen_policies_untouched": [
+        "d403f101-08dd-45c9-ab83-d42e37c62018",
+        "d0eeb370-df14-4478-8755-dad6c3a35a47",
+        "d7441dd9-3bfe-405e-ae6c-0377204bbb7e"
+      ]
+    }
+  },
+  "seed_db": {
+    "seeded": [
+      {
+        "source_document_id": "NCCI-PTP-PAIR-70553-70551",
+        "status": "updated"
+      },
+      {
+        "source_document_id": "NCCI-MUE-97110-DEMO",
+        "status": "updated"
+      },
+      {
+        "policy_id": "58b839b5-b6e0-59e0-9406-d817877c3ce8",
+        "status": "completed",
+        "name": "NCCI Procedure-to-Procedure Bundling"
+      },
+      {
+        "policy_id": "58b839b5-b6e0-59e0-9406-d817877c3ce8",
+        "completeness": {
+          "assumptions": 3,
+          "guardrails": 3,
+          "codes": 2,
+          "has_scope": true,
+          "has_enforcement": true,
+          "has_levers": true
+        }
+      },
+      {
+        "policy_id": "e11b049d-fcce-55cc-bcd7-71329038383b",
+        "status": "completed",
+        "name": "NCCI Medically Unlikely Units"
+      },
+      {
+        "policy_id": "e11b049d-fcce-55cc-bcd7-71329038383b",
+        "completeness": {
+          "assumptions": 2,
+          "guardrails": 2,
+          "codes": 1,
+          "has_scope": true,
+          "has_enforcement": true,
+          "has_levers": true
+        }
+      },
+      {
+        "policy_id": "f2b8e7f3-1627-5dbe-8d7e-757ce21aa55b",
+        "status": "completed",
+        "name": "Outpatient Therapy Coverage and Payment"
+      },
+      {
+        "policy_id": "f2b8e7f3-1627-5dbe-8d7e-757ce21aa55b",
+        "completeness": {
+          "assumptions": 2,
+          "guardrails": 2,
+          "codes": 2,
+          "has_scope": true,
+          "has_enforcement": true,
+          "has_levers": true
+        }
+      },
+      {
+        "policy_id": "11218053-bdc0-569f-a415-fb61c5dcda37",
+        "status": "completed",
+        "name": "Infusion Site-of-Care Optimization"
+      },
+      {
+        "policy_id": "11218053-bdc0-569f-a415-fb61c5dcda37",
+        "completeness": {
+          "assumptions": 3,
+          "guardrails": 2,
+          "codes": 0,
+          "has_scope": true,
+          "has_enforcement": true,
+          "has_levers": true
+        }
+      },
+      {
+        "policy_id": "4f8c34e3-015b-509d-90ba-521261464258",
+        "status": "completed",
+        "name": "NCD 220.2 MRI Coverage Change Study"
+      },
+      {
+        "policy_id": "4f8c34e3-015b-509d-90ba-521261464258",
+        "completeness": {
+          "assumptions": 1,
+          "guardrails": 1,
+          "codes": 6,
+          "has_scope": true,
+          "has_enforcement": true,
+          "has_levers": true
+        }
+      },
+      {
+        "policy_id": "649b4ac8-ca82-5b84-aa87-84834490731a",
+        "status": "completed",
+        "name": "LCD L34425 NC MRI Coverage Criteria"
+      },
+      {
+        "policy_id": "649b4ac8-ca82-5b84-aa87-84834490731a",
+        "completeness": {
+          "assumptions": 1,
+          "guardrails": 1,
+          "codes": 3,
+          "has_scope": true,
+          "has_enforcement": true,
+          "has_levers": true
+        }
+      }
+    ],
+    "known_answers": {
+      "ptp": {
+        "passed": true,
+        "checks": {
+          "baseline_paid": true,
+          "post_policy_paid": true,
+          "payment_impact": true,
+          "ptp_pairs_hit": true,
+          "modifier_bypass": true
+        },
+        "actual_totals": {
+          "baseline_paid": 4400.0,
+          "post_policy_paid": 3600.0,
+          "payment_impact": 800.0,
+          "payer_savings": 800.0,
+          "provider_payment_change": -800.0,
+          "ptp_pairs_hit": 3,
+          "ptp_pairs_bypassed_with_modifier": 1,
+          "volume_effect": 0.0,
+          "mix_effect": 0.0,
+          "price_effect": 800.0
+        },
+        "calculation_version": "reimbursement-ncci-ptp-v1"
+      },
+      "mue": {
+        "passed": true,
+        "checks": {
+          "baseline_paid": true,
+          "post_policy_paid": true,
+          "payment_impact": true,
+          "lines_capped": true
+        },
+        "actual_totals": {
+          "baseline_paid": 650.0,
+          "post_policy_paid": 550.0,
+          "payment_impact": 100.0,
+          "payer_savings": 100.0,
+          "provider_payment_change": -100.0,
+          "lines_capped": 1,
+          "mue_value": 4,
+          "volume_effect": 0.0,
+          "price_effect": 100.0
+        },
+        "calculation_version": "reimbursement-ncci-mue-v1"
+      },
+      "therapy": {
+        "passed": true,
+        "checks": {
+          "baseline_paid": true,
+          "post_policy_paid": true,
+          "payment_impact": true
+        },
+        "actual_totals": {
+          "baseline_paid": 420.0,
+          "post_policy_paid": 340.0,
+          "payment_impact": 80.0,
+          "payer_savings": 80.0,
+          "provider_payment_change": -80.0
+        }
+      },
+      "infusion": {
+        "passed": true,
+        "checks": {
+          "baseline_paid": true,
+          "post_policy_paid": true,
+          "payment_impact": true,
+          "episodes_steered": true
+        },
+        "actual_totals": {
+          "baseline_paid": 18200.0,
+          "post_policy_paid": 14600.0,
+          "payment_impact": 3600.0,
+          "payer_savings": 3600.0,
+          "provider_payment_change": -3600.0,
+          "episodes_steered": 2
+        }
+      }
+    },
+    "catalog_class": "DEMO_SYNTHETIC",
+    "policy_structure": "complete_standard",
+    "frozen_policies_untouched": [
+      "d403f101-08dd-45c9-ab83-d42e37c62018",
+      "d0eeb370-df14-4478-8755-dad6c3a35a47",
+      "d7441dd9-3bfe-405e-ae6c-0377204bbb7e"
+    ]
+  },
+  "known_answers": {
+    "mppr_passed": true,
+    "mppr_savings": 600.0,
+    "sos_passed": true,
+    "sos_savings": 520.0,
+    "expansion": {
+      "ptp": true,
+      "mue": true,
+      "therapy": true,
+      "infusion": true
+    },
+    "mri_index_points_frozen": -9.4167,
+    "mppr_whatif_additional_expected": 120,
+    "sos_whatif_additional_expected": 260,
+    "ptp_mechanical_expected": 800,
+    "mue_mechanical_expected": 100,
+    "therapy_mechanical_expected": 80,
+    "infusion_mechanical_expected": 3600
+  },
+  "api_checks": 81,
+  "api_failures": 0,
+  "policies": [
+    {
+      "key": "mri",
+      "policy_id": "d403f101-08dd-45c9-ab83-d42e37c62018",
+      "name": "Outpatient MRI Prior Authorization",
+      "mechanism": "PRIOR_AUTH",
+      "definition_version": "v1.2.1",
+      "platform_integration": "OK",
+      "policy_http": 200,
+      "workspace_http": 200,
+      "baseline_status": "EXISTING_COMPLETED",
+      "prediction_status": "EXISTING",
+      "observation_status": "EXISTING",
+      "causal_feasibility_status": "CAUSAL_ESTIMATE_SUPPORTED",
+      "causal_estimate_status": "CAUSAL_ESTIMATE_SUPPORTED_FROZEN_DEMO",
+      "whatif_status": "EXISTING_SIMULATE",
+      "verdict_status": "OK",
+      "composition_status": "OK",
+      "persistence": {
+        "db_analyses": {
+          "BASELINE": {
+            "COMPLETED": 4
+          },
+          "SIMULATE": {
+            "FAILED": 2,
+            "COMPLETED": 3
+          },
+          "ELASTICITY": {
+            "COMPLETED": 1
+          }
+        },
+        "observation_count": 28,
+        "completed_simulate_ids": [
+          "89915374-644a-49ab-8f9b-4887fefec922",
+          "f73e506f-ace5-4815-aefb-979367621212",
+          "95283231-6bf6-43de-a8c0-92500c0c3e9c"
+        ]
+      },
+      "mechanical": {
+        "frozen_causal_index_points": -9.4167,
+        "unit": "INDEX_POINTS",
+        "note": "Do not reinterpret as utilization per 1,000; lumbar v1.2.1 is proposed definition only"
+      },
+      "evidence_class": "FULLY_VALIDATED_DEMO",
+      "operational_activation": "PROHIBITED",
+      "limitations_blockers": [
+        "DEFINITION_REVIEW_REQUIRED; lumbar scope proposed only; clinical non-operative"
+      ],
+      "browser_walkthrough": "PASS",
+      "persistence_replay": "PASS"
+    },
+    {
+      "key": "mppr",
+      "policy_id": "d0eeb370-df14-4478-8755-dad6c3a35a47",
+      "name": "Multiple Procedure Payment Reduction",
+      "mechanism": "PAYMENT_POLICY",
+      "definition_version": "v1.2.1-structural-controls",
+      "platform_integration": "OK",
+      "policy_http": 200,
+      "workspace_http": 200,
+      "baseline_status": "SYNTHETIC_MECHANICAL_FIXTURE",
+      "prediction_status": "SYNTHETIC_MECHANICAL",
+      "observation_status": "SYNTHETIC_OR_EXISTING",
+      "causal_feasibility_status": "CAUSAL_DESIGN_POSSIBLE_DATA_INSUFFICIENT",
+      "causal_estimate_status": "NOT_IDENTIFIABLE_AS_CAUSAL \u2014 deterministic payment effect",
+      "whatif_status": "completed",
+      "verdict_status": "OK",
+      "composition_status": "OK",
+      "persistence": {
+        "db_analyses": {
+          "BASELINE": {
+            "COMPLETED": 1
+          },
+          "SIMULATE": {
+            "FAILED": 1,
+            "COMPLETED": 2
+          },
+          "WHATIF_SCENARIO": {
+            "PENDING": 1
+          }
+        },
+        "observation_count": 12,
+        "completed_simulate_ids": [
+          "04a4bc17-5a72-4d1e-9519-ecf65b60dd37",
+          "d3d3c332-5eb8-4cca-b1d9-1e5c33c83208"
+        ]
+      },
+      "mechanical": {
+        "known_answer_passed": true,
+        "totals": {
+          "line_count": 6,
+          "claim_count": 3,
+          "multi_procedure_claims": 2,
+          "secondary_lines_reduced": 3,
+          "volume_units": 6.0,
+          "baseline_allowed": 3150.0,
+          "baseline_paid": 3150.0,
+          "post_policy_paid": 2550.0,
+          "payment_impact": 600.0,
+          "payer_savings": 600.0,
+          "provider_payment_change": -600.0,
+          "payment_impact_pct": 19.0476,
+          "reconciliation": {
+            "volume_effect": 0.0,
+            "mix_effect": 0.0,
+            "price_effect": 600.0,
+            "residual": 0.0,
+            "identity": "payment_impact = price_effect (volume & mix held at 0)"
+          }
+        },
+        "expected_savings": 600.0,
+        "whatif_additional_savings": null
+      },
+      "evidence_class": "FULLY_VALIDATED_DEMO",
+      "operational_activation": "PROHIBITED",
+      "limitations_blockers": [],
+      "browser_walkthrough": "PASS",
+      "persistence_replay": "PASS"
+    },
+    {
+      "key": "sos",
+      "policy_id": "d7441dd9-3bfe-405e-ae6c-0377204bbb7e",
+      "name": "Freestanding Imaging Steerage",
+      "mechanism": "SITE_OF_CARE",
+      "definition_version": "v1.2.1-structural-controls",
+      "platform_integration": "OK",
+      "policy_http": 200,
+      "workspace_http": 200,
+      "baseline_status": "SYNTHETIC_MECHANICAL_FIXTURE",
+      "prediction_status": "SYNTHETIC_MECHANICAL",
+      "observation_status": "SYNTHETIC_OR_EXISTING",
+      "causal_feasibility_status": "CAUSAL_DESIGN_POSSIBLE_DATA_INSUFFICIENT",
+      "causal_estimate_status": "NOT_IDENTIFIABLE_AS_CAUSAL \u2014 deterministic payment effect",
+      "whatif_status": "completed",
+      "verdict_status": "OK",
+      "composition_status": "OK",
+      "persistence": {
+        "db_analyses": {
+          "BASELINE": {
+            "COMPLETED": 1
+          },
+          "SIMULATE": {
+            "COMPLETED": 1
+          }
+        },
+        "observation_count": 10,
+        "completed_simulate_ids": [
+          "32506e08-bac7-458b-a6f0-1291ad9599c6"
+        ]
+      },
+      "mechanical": {
+        "known_answer_passed": true,
+        "totals": {
+          "line_count": 5,
+          "hospital_lines": 3,
+          "freestanding_lines": 2,
+          "volume_units": 5.0,
+          "baseline_allowed": 4000.0,
+          "baseline_paid": 4000.0,
+          "post_policy_paid": 3480.0,
+          "payment_impact": 520.0,
+          "payer_savings": 520.0,
+          "provider_payment_change": -520.0,
+          "payment_impact_pct": 13.0,
+          "reconciliation": {
+            "volume_effect": 0.0,
+            "mix_effect": 0.0,
+            "price_effect": 520.0,
+            "residual": 0.0,
+            "identity": "payment_impact = price_effect (volume & mix held at 0)"
+          }
+        },
+        "expected_savings": 520.0,
+        "whatif_additional_savings": null
+      },
+      "evidence_class": "FULLY_VALIDATED_DEMO",
+      "operational_activation": "PROHIBITED",
+      "limitations_blockers": [],
+      "browser_walkthrough": "PASS",
+      "persistence_replay": "PASS"
+    },
+    {
+      "key": "ptp",
+      "policy_id": "58b839b5-b6e0-59e0-9406-d817877c3ce8",
+      "name": "NCCI Procedure-to-Procedure Bundling",
+      "mechanism": "CODING_EDIT",
+      "definition_version": "v1.2.1-structural-controls",
+      "platform_integration": "OK",
+      "policy_http": 200,
+      "workspace_http": 200,
+      "baseline_status": "DATA_INSUFFICIENT \u2014 modifiers/edit semantics absent for empirical PTP",
+      "prediction_status": "SYNTHETIC_MECHANICAL",
+      "observation_status": "N/A_EMPIRICAL",
+      "causal_feasibility_status": "NOT_IDENTIFIABLE",
+      "causal_estimate_status": "DESCRIPTIVE_ONLY / mechanical synthetic",
+      "whatif_status": "completed",
+      "verdict_status": "OK",
+      "composition_status": "OK",
+      "persistence": {
+        "db_analyses": {
+          "SIMULATE": {
+            "COMPLETED": 3
+          }
+        },
+        "observation_count": 0,
+        "completed_simulate_ids": [
+          "3c69c659-b741-426c-8bc9-732f6953a915",
+          "d45ef563-34a7-4692-99df-bb141094ff6a",
+          "215f5561-74c0-484d-853e-5de0738abd75"
+        ]
+      },
+      "mechanical": {
+        "known_answer_passed": true,
+        "totals": {
+          "baseline_paid": 4400.0,
+          "post_policy_paid": 3600.0,
+          "payment_impact": 800.0,
+          "payer_savings": 800.0,
+          "provider_payment_change": -800.0,
+          "ptp_pairs_hit": 3,
+          "ptp_pairs_bypassed_with_modifier": 1,
+          "volume_effect": 0.0,
+          "mix_effect": 0.0,
+          "price_effect": 800.0
+        },
+        "label": "SYNTHETIC_FIXTURE_NOT_CMS_QUARTERLY"
+      },
+      "evidence_class": "FULLY_VALIDATED_DEMO",
+      "operational_activation": "PROHIBITED",
+      "limitations_blockers": [
+        "Synthetic edit \u2014 not authoritative CMS quarterly/confidential file"
+      ],
+      "browser_walkthrough": "PASS_HIGH_CONFIDENCE",
+      "persistence_replay": "PASS",
+      "demo_confidence": "HIGH",
+      "monitoring_panel": "PASS"
+    },
+    {
+      "key": "mue",
+      "policy_id": "e11b049d-fcce-55cc-bcd7-71329038383b",
+      "name": "NCCI Medically Unlikely Units",
+      "mechanism": "CODING_EDIT",
+      "definition_version": "v1.2.1-structural-controls",
+      "platform_integration": "OK",
+      "policy_http": 200,
+      "workspace_http": 200,
+      "baseline_status": "DATA_INSUFFICIENT \u2014 authoritative MUE file unavailable",
+      "prediction_status": "SYNTHETIC_MECHANICAL",
+      "observation_status": "N/A_EMPIRICAL",
+      "causal_feasibility_status": "CAUSAL_DESIGN_POSSIBLE_DATA_INSUFFICIENT",
+      "causal_estimate_status": "DESCRIPTIVE_ONLY / mechanical synthetic",
+      "whatif_status": "completed",
+      "verdict_status": "OK",
+      "composition_status": "OK",
+      "persistence": {
+        "db_analyses": {
+          "SIMULATE": {
+            "COMPLETED": 3
+          }
+        },
+        "observation_count": 0,
+        "completed_simulate_ids": [
+          "b09cfc91-b1bb-42a0-a9e4-f138d692bb28",
+          "873b54dc-90d4-4b4f-a275-ce1bb7e38e51",
+          "31e6ce7e-a594-421e-be65-e77138f02df0"
+        ]
+      },
+      "mechanical": {
+        "known_answer_passed": true,
+        "totals": {
+          "baseline_paid": 650.0,
+          "post_policy_paid": 550.0,
+          "payment_impact": 100.0,
+          "payer_savings": 100.0,
+          "provider_payment_change": -100.0,
+          "lines_capped": 1,
+          "mue_value": 4,
+          "volume_effect": 0.0,
+          "price_effect": 100.0
+        },
+        "label": "SYNTHETIC_MUE_THRESHOLD_NOT_CMS"
+      },
+      "evidence_class": "FULLY_VALIDATED_DEMO",
+      "operational_activation": "PROHIBITED",
+      "limitations_blockers": [
+        "Synthetic edit \u2014 not authoritative CMS quarterly/confidential file"
+      ],
+      "browser_walkthrough": "PASS_HIGH_CONFIDENCE",
+      "persistence_replay": "PASS",
+      "demo_confidence": "HIGH",
+      "monitoring_panel": "PASS"
+    },
+    {
+      "key": "therapy",
+      "policy_id": "f2b8e7f3-1627-5dbe-8d7e-757ce21aa55b",
+      "name": "Outpatient Therapy Coverage and Payment",
+      "mechanism": "COVERAGE_PAYMENT",
+      "definition_version": "v1.2.1-structural-controls",
+      "platform_integration": "OK",
+      "policy_http": 200,
+      "workspace_http": 200,
+      "baseline_status": "SYNTHETIC_MECHANICAL_FIXTURE",
+      "prediction_status": "SYNTHETIC_MECHANICAL",
+      "observation_status": "N/A_OR_SYNTHETIC",
+      "causal_feasibility_status": "CAUSAL_DESIGN_POSSIBLE_DATA_INSUFFICIENT",
+      "causal_estimate_status": "CAUSAL_DESIGN_POSSIBLE_DATA_INSUFFICIENT",
+      "whatif_status": "NOT_SUPPORTED_FOR_THIS_MECHANISM",
+      "verdict_status": "OK",
+      "composition_status": "OK",
+      "persistence": {
+        "db_analyses": {},
+        "observation_count": 0,
+        "completed_simulate_ids": []
+      },
+      "mechanical": {
+        "known_answer_passed": true,
+        "totals": {
+          "baseline_paid": 420.0,
+          "post_policy_paid": 340.0,
+          "payment_impact": 80.0,
+          "payer_savings": 80.0,
+          "provider_payment_change": -80.0
+        },
+        "expected_savings": 80.0
+      },
+      "evidence_class": "FULLY_VALIDATED_DEMO",
+      "operational_activation": "PROHIBITED",
+      "limitations_blockers": [
+        "What-if NOT_SUPPORTED_FOR_THIS_MECHANISM"
+      ],
+      "browser_walkthrough": "PASS_HIGH_CONFIDENCE",
+      "persistence_replay": "PASS",
+      "demo_confidence": "HIGH",
+      "monitoring_panel": "PASS"
+    },
+    {
+      "key": "infusion",
+      "policy_id": "11218053-bdc0-569f-a415-fb61c5dcda37",
+      "name": "Infusion Site-of-Care Optimization",
+      "mechanism": "SITE_OF_CARE",
+      "definition_version": "v1.2.1-structural-controls",
+      "platform_integration": "OK",
+      "policy_http": 200,
+      "workspace_http": 200,
+      "baseline_status": "SYNTHETIC_MECHANICAL_FIXTURE",
+      "prediction_status": "SYNTHETIC_MECHANICAL",
+      "observation_status": "N/A_OR_SYNTHETIC",
+      "causal_feasibility_status": "CAUSAL_DESIGN_POSSIBLE_DATA_INSUFFICIENT",
+      "causal_estimate_status": "NOT_IDENTIFIABLE_AS_CAUSAL \u2014 deterministic site differential",
+      "whatif_status": "completed",
+      "verdict_status": "OK",
+      "composition_status": "OK",
+      "persistence": {
+        "db_analyses": {
+          "SIMULATE": {
+            "COMPLETED": 3
+          }
+        },
+        "observation_count": 0,
+        "completed_simulate_ids": [
+          "49f2a086-6909-4d2b-951f-c79d81ae863d",
+          "711633fe-de77-45d6-b016-bb898c21f478",
+          "efc2f868-db9f-4601-8cc4-bbfd4dbb50ae"
+        ]
+      },
+      "mechanical": {
+        "known_answer_passed": true,
+        "totals": {
+          "baseline_paid": 18200.0,
+          "post_policy_paid": 14600.0,
+          "payment_impact": 3600.0,
+          "payer_savings": 3600.0,
+          "provider_payment_change": -3600.0,
+          "episodes_steered": 2
+        },
+        "expected_savings": 3600.0
+      },
+      "evidence_class": "FULLY_VALIDATED_DEMO",
+      "operational_activation": "PROHIBITED",
+      "limitations_blockers": [],
+      "browser_walkthrough": "PASS_HIGH_CONFIDENCE",
+      "persistence_replay": "PASS",
+      "demo_confidence": "HIGH",
+      "monitoring_panel": "PASS"
+    },
+    {
+      "key": "ncd",
+      "policy_id": "4f8c34e3-015b-509d-90ba-521261464258",
+      "name": "NCD 220.2 MRI Coverage Change Study",
+      "mechanism": "COVERAGE_STUDY",
+      "definition_version": "v1.2.1-structural-controls",
+      "platform_integration": "OK",
+      "policy_http": 200,
+      "workspace_http": 200,
+      "baseline_status": "N/A \u2014 PROVENANCE_ONLY",
+      "prediction_status": "N/A \u2014 PROVENANCE_ONLY",
+      "observation_status": "N/A \u2014 PROVENANCE_ONLY",
+      "causal_feasibility_status": "CAUSAL_DESIGN_POSSIBLE_DATA_INSUFFICIENT",
+      "causal_estimate_status": "NOT_IDENTIFIABLE / DESCRIPTIVE_ONLY study",
+      "whatif_status": "N/A \u2014 PROVENANCE_ONLY",
+      "verdict_status": "OK",
+      "composition_status": "OK",
+      "persistence": {
+        "db_analyses": {},
+        "observation_count": 0,
+        "completed_simulate_ids": []
+      },
+      "mechanical": {
+        "financial_baseline": "N/A",
+        "study_class": "PROVENANCE_ONLY",
+        "note": "Do not manufacture financial or causal estimates"
+      },
+      "evidence_class": "PROVENANCE_VALIDATED",
+      "operational_activation": "PROHIBITED",
+      "limitations_blockers": [
+        "PROVENANCE_ONLY \u2014 no financial lifecycle"
+      ],
+      "browser_walkthrough": "PASS_HIGH_CONFIDENCE",
+      "persistence_replay": "PASS",
+      "demo_confidence": "HIGH",
+      "monitoring_panel": "PASS"
+    },
+    {
+      "key": "lcd",
+      "policy_id": "649b4ac8-ca82-5b84-aa87-84834490731a",
+      "name": "LCD L34425 NC MRI Coverage Criteria Study",
+      "mechanism": "COVERAGE_STUDY",
+      "definition_version": "v1.2.1-structural-controls",
+      "platform_integration": "OK",
+      "policy_http": 200,
+      "workspace_http": 200,
+      "baseline_status": "N/A \u2014 PROVENANCE_ONLY",
+      "prediction_status": "N/A \u2014 PROVENANCE_ONLY",
+      "observation_status": "N/A \u2014 PROVENANCE_ONLY",
+      "causal_feasibility_status": "CAUSAL_DESIGN_POSSIBLE_DATA_INSUFFICIENT",
+      "causal_estimate_status": "NOT_IDENTIFIABLE / DESCRIPTIVE_ONLY study",
+      "whatif_status": "N/A \u2014 PROVENANCE_ONLY",
+      "verdict_status": "OK",
+      "composition_status": "OK",
+      "persistence": {
+        "db_analyses": {},
+        "observation_count": 0,
+        "completed_simulate_ids": []
+      },
+      "mechanical": {
+        "financial_baseline": "N/A",
+        "study_class": "PROVENANCE_ONLY",
+        "note": "Do not manufacture financial or causal estimates"
+      },
+      "evidence_class": "PROVENANCE_VALIDATED",
+      "operational_activation": "PROHIBITED",
+      "limitations_blockers": [
+        "PROVENANCE_ONLY \u2014 no financial lifecycle"
+      ],
+      "browser_walkthrough": "PASS_HIGH_CONFIDENCE",
+      "persistence_replay": "PASS",
+      "demo_confidence": "HIGH",
+      "monitoring_panel": "PASS"
+    }
+  ],
+  "primary_route": [
+    "mri",
+    "mppr",
+    "sos",
+    "medicare_rules",
+    "objectives_health"
+  ],
+  "browser_walkthrough": {
+    "generated_at": "2026-11-03T16:00:16.170852+00:00",
+    "base": "http://127.0.0.1:7868",
+    "primary_route_passed": true,
+    "all_workspaces_passed": true,
+    "results": [
+      {
+        "gate": "primary:executive",
+        "ok": true,
+        "matched": "Executive Dashboard",
+        "err": null
+      },
+      {
+        "gate": "primary:mri_workspace",
+        "ok": true,
+        "matched": "Outpatient MRI Prior Authorization",
+        "err": null
+      },
+      {
+        "gate": "primary:mppr_workspace",
+        "ok": true,
+        "matched": "Multiple Procedure Payment Reduction",
+        "err": null
+      },
+      {
+        "gate": "primary:sos_workspace",
+        "ok": true,
+        "matched": "Freestanding Imaging Steerage",
+        "err": null
+      },
+      {
+        "gate": "primary:medicare",
+        "ok": true,
+        "matched": "Medicare",
+        "err": null
+      },
+      {
+        "gate": "primary:objectives",
+        "ok": true,
+        "matched": "Objectives",
+        "err": null
+      },
+      {
+        "gate": "workspace:mri",
+        "policy_id": "d403f101-08dd-45c9-ab83-d42e37c62018",
+        "ok": true,
+        "matched": "Monitoring",
+        "monitoring_ok": null,
+        "err": null
+      },
+      {
+        "gate": "workspace:mppr",
+        "policy_id": "d0eeb370-df14-4478-8755-dad6c3a35a47",
+        "ok": true,
+        "matched": "Monitoring",
+        "monitoring_ok": null,
+        "err": null
+      },
+      {
+        "gate": "workspace:sos",
+        "policy_id": "d7441dd9-3bfe-405e-ae6c-0377204bbb7e",
+        "ok": true,
+        "matched": "Monitoring",
+        "monitoring_ok": null,
+        "err": null
+      },
+      {
+        "gate": "workspace:ptp",
+        "policy_id": "58b839b5-b6e0-59e0-9406-d817877c3ce8",
+        "ok": true,
+        "matched": "Monitoring",
+        "monitoring_ok": null,
+        "err": null
+      },
+      {
+        "gate": "workspace:mue",
+        "policy_id": "e11b049d-fcce-55cc-bcd7-71329038383b",
+        "ok": true,
+        "matched": "Monitoring",
+        "monitoring_ok": null,
+        "err": null
+      },
+      {
+        "gate": "workspace:therapy",
+        "policy_id": "f2b8e7f3-1627-5dbe-8d7e-757ce21aa55b",
+        "ok": true,
+        "matched": "Monitoring",
+        "monitoring_ok": null,
+        "err": null
+      },
+      {
+        "gate": "workspace:infusion",
+        "policy_id": "11218053-bdc0-569f-a415-fb61c5dcda37",
+        "ok": true,
+        "matched": "Monitoring",
+        "monitoring_ok": null,
+        "err": null
+      },
+      {
+        "gate": "workspace:ncd",
+        "policy_id": "4f8c34e3-015b-509d-90ba-521261464258",
+        "ok": true,
+        "matched": "Monitoring",
+        "monitoring_ok": null,
+        "err": null
+      },
+      {
+        "gate": "workspace:lcd",
+        "policy_id": "649b4ac8-ca82-5b84-aa87-84834490731a",
+        "ok": true,
+        "matched": "Monitoring",
+        "monitoring_ok": null,
+        "err": null
+      }
+    ],
+    "screenshots_dir": "/Users/nileshl/Private/HealthForesight/docs/demo/bcbs-nc/evidence/dec4_nine_browser"
+  },
+  "browser_primary_route_passed": true,
+  "browser_all_workspaces_passed": true,
+  "updated_at": "2026-11-03T16:16:36.029958+00:00",
+  "optional_six_high_confidence": true,
+  "optional_six_rehearsal": {
+    "generated_at": "2026-11-03T16:16:21.204378+00:00",
+    "base": "http://127.0.0.1:7868",
+    "high_confidence_six": true,
+    "results": [
+      {
+        "key": "ptp",
+        "policy_id": "58b839b5-b6e0-59e0-9406-d817877c3ce8",
+        "ok": true,
+        "panel_kind": "mechanical",
+        "missing_first": [],
+        "forbidden_first": [],
+        "missing_after_refresh": [],
+        "forbidden_after_refresh": [],
+        "composition_tab_ok": true,
+        "causal_tab_ok": true,
+        "persistence_ok": true
+      },
+      {
+        "key": "mue",
+        "policy_id": "e11b049d-fcce-55cc-bcd7-71329038383b",
+        "ok": true,
+        "panel_kind": "mechanical",
+        "missing_first": [],
+        "forbidden_first": [],
+        "missing_after_refresh": [],
+        "forbidden_after_refresh": [],
+        "composition_tab_ok": true,
+        "causal_tab_ok": true,
+        "persistence_ok": true
+      },
+      {
+        "key": "therapy",
+        "policy_id": "f2b8e7f3-1627-5dbe-8d7e-757ce21aa55b",
+        "ok": true,
+        "panel_kind": "mechanical",
+        "missing_first": [],
+        "forbidden_first": [],
+        "missing_after_refresh": [],
+        "forbidden_after_refresh": [],
+        "composition_tab_ok": true,
+        "causal_tab_ok": true,
+        "persistence_ok": true
+      },
+      {
+        "key": "infusion",
+        "policy_id": "11218053-bdc0-569f-a415-fb61c5dcda37",
+        "ok": true,
+        "panel_kind": "mechanical",
+        "missing_first": [],
+        "forbidden_first": [],
+        "missing_after_refresh": [],
+        "forbidden_after_refresh": [],
+        "composition_tab_ok": true,
+        "causal_tab_ok": true,
+        "persistence_ok": true
+      },
+      {
+        "key": "ncd",
+        "policy_id": "4f8c34e3-015b-509d-90ba-521261464258",
+        "ok": true,
+        "panel_kind": "provenance",
+        "missing_first": [],
+        "forbidden_first": [],
+        "missing_after_refresh": [],
+        "forbidden_after_refresh": [],
+        "composition_tab_ok": true,
+        "causal_tab_ok": true,
+        "persistence_ok": true
+      },
+      {
+        "key": "lcd",
+        "policy_id": "649b4ac8-ca82-5b84-aa87-84834490731a",
+        "ok": true,
+        "panel_kind": "provenance",
+        "missing_first": [],
+        "forbidden_first": [],
+        "missing_after_refresh": [],
+        "forbidden_after_refresh": [],
+        "composition_tab_ok": true,
+        "causal_tab_ok": true,
+        "persistence_ok": true
+      },
+      {
+        "key": "ptp:whatif_page",
+        "ok": true,
+        "err": null
+      },
+      {
+        "key": "mue:whatif_page",
+        "ok": true,
+        "err": null
+      },
+      {
+        "key": "therapy:whatif_page",
+        "ok": true,
+        "err": null
+      },
+      {
+        "key": "infusion:whatif_page",
+        "ok": true,
+        "err": null
+      }
+    ],
+    "screenshots_dir": "/Users/nileshl/Private/HealthForesight/docs/demo/bcbs-nc/evidence/dec4_six_optional"
+  }
+}

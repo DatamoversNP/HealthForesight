@@ -1,0 +1,10 @@
+{
+  "document_id": "SPECIALTY_PHARMACY_COINSURANCE_DESIGN_CODESET",
+  "policy_id": "6ba9c279-7867-429f-8e75-b20794f985d7",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abSpecialty Pharmacy Coinsurance Design\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Benefit coinsurance design",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

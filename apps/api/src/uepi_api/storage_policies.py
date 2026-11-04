@@ -8,12 +8,17 @@ from uepi_api.models.policy import Policy as PolicyDB
 from sqlalchemy import desc, or_
 
 
-def list_policies(tenant_id: UUID) -> List[Dict[str, Any]]:
-    """List all policies for a tenant - from database"""
-    return _list_policies(tenant_id)
+def list_policies(tenant_id: UUID, *, summary: bool = False) -> List[Dict[str, Any]]:
+    """List all policies for a tenant - from database.
+
+    summary=True: id/name/type/effective_period only — no per-policy assumptions,
+    guardrails, versions, or changelog round-trips (required for portfolio endpoints
+    like Objectives Health over Azure latency).
+    """
+    return _list_policies(tenant_id, summary=summary)
 
 
-def _list_policies(tenant_id: UUID) -> List[Dict[str, Any]]:
+def _list_policies(tenant_id: UUID, *, summary: bool = False) -> List[Dict[str, Any]]:
     """List policies from database"""
     from uepi_api.database import SessionLocal
     
@@ -52,12 +57,16 @@ def _list_policies(tenant_id: UUID) -> List[Dict[str, Any]]:
             PolicyDB.tenant_id == tenant_id
         ).order_by(desc(PolicyDB.created_at)).all()
         
-        print(f"DEBUG _list_policies: Found {len(policies_db)} policies for tenant {tenant_id}")
+        print(f"DEBUG _list_policies: Found {len(policies_db)} policies for tenant {tenant_id} summary={summary}")
         
         result = []
         for policy_db in policies_db:
             try:
-                policy_dict = _policy_db_to_dict(policy_db)
+                policy_dict = (
+                    _policy_db_to_summary_dict(policy_db)
+                    if summary
+                    else _policy_db_to_dict(policy_db)
+                )
                 if policy_dict is not None:
                     result.append(policy_dict)
             except Exception as e:
@@ -73,6 +82,21 @@ def _list_policies(tenant_id: UUID) -> List[Dict[str, Any]]:
         return []
     finally:
         db.close()
+
+
+def _policy_db_to_summary_dict(policy_db: PolicyDB) -> Dict[str, Any]:
+    """Slim policy row for portfolio/dashboard endpoints — no workspace N+1 loads."""
+    meta = policy_db.policy_metadata_json if policy_db.policy_metadata_json else {}
+    return {
+        "id": str(policy_db.id),
+        "policy_id": str(policy_db.id),
+        "tenant_id": str(policy_db.tenant_id),
+        "name": policy_db.name,
+        "policy_name": policy_db.name,
+        "policy_type": policy_db.policy_type,
+        "status": policy_db.status,
+        "effective_period": meta.get("effective_period") if isinstance(meta, dict) else None,
+    }
 
 
 def get_policy(policy_id: UUID | str, tenant_id: UUID) -> Optional[Dict[str, Any]]:

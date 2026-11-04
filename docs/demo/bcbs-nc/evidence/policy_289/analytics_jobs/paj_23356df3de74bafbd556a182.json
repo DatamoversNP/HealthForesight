@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_23356df3de74bafbd556a182",
+  "policy_id": "a517d486-b3e0-4c91-bb8b-4a49010745b2",
+  "name": "Nonparticipating Provider Exception Coverage Rules",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "6ead1174a02d22d3",
+  "started_at": "2026-11-04T13:18:18.237694+00:00",
+  "finished_at": "2026-11-04T13:18:18.237696+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

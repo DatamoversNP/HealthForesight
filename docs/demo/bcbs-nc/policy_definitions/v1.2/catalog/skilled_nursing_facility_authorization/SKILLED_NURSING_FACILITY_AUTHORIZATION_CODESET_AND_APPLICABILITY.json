@@ -1,0 +1,10 @@
+{
+  "document_id": "SKILLED_NURSING_FACILITY_AUTHORIZATION_CODESET",
+  "policy_id": "68e1befc-5e66-4d1b-85f1-7806ddcddd81",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abSkilled Nursing Facility Authorization\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "SNF authorization uses RUG/PDPM / revenue \u2014 not CPT PA",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

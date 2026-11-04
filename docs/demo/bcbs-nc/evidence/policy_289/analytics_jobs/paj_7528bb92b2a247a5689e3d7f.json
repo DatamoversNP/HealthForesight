@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_7528bb92b2a247a5689e3d7f",
+  "policy_id": "3b1ec8e6-2943-47b6-a160-8b3c25c5ad19",
+  "name": "PCSK9 Inhibitor Step Therapy",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "0c1a5d862c30de6e",
+  "started_at": "2026-11-04T13:18:18.239807+00:00",
+  "finished_at": "2026-11-04T13:18:18.239808+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

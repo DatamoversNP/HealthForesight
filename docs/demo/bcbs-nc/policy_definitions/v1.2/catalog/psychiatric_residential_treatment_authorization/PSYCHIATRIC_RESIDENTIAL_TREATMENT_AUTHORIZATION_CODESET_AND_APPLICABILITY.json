@@ -1,0 +1,32 @@
+{
+  "document_id": "PSYCHIATRIC_RESIDENTIAL_TREATMENT_AUTHORIZATION_CODESET",
+  "policy_id": "c2b71847-7db9-4b1f-a328-48529f1b4c73",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abPsychiatric Residential Treatment Authorization\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "HCPCS",
+      "code": "H0017",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "H0018",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "H0019",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Behavioral health residential HCPCS",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

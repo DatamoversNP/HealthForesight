@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_82966ee6ce87f33dbda05535",
+  "policy_id": "b4f4e29e-130f-4310-8626-fa32625b9513",
+  "name": "Peer-to-Peer Review Opportunity Policy",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "b6c1049719d4ec3b",
+  "started_at": "2026-11-04T13:18:18.239863+00:00",
+  "finished_at": "2026-11-04T13:18:18.239864+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

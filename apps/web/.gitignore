@@ -39,3 +39,4 @@ index.html
 
 # Netlify
 .netlify
+.env*

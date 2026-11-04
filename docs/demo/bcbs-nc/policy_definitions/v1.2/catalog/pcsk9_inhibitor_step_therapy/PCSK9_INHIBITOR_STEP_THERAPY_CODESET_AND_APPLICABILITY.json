@@ -1,0 +1,18 @@
+{
+  "document_id": "PCSK9_INHIBITOR_STEP_THERAPY_CODESET",
+  "policy_id": "3b1ec8e6-2943-47b6-a160-8b3c25c5ad19",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abPCSK9 Inhibitor Step Therapy\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "HCPCS",
+      "code": "J3490",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "PCSK9 often billed J3490/NDC \u2014 product NDCs UNRESOLVED",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

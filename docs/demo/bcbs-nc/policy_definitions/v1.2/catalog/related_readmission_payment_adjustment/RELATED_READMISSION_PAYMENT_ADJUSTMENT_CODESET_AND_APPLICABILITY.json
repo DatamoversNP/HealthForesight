@@ -1,0 +1,10 @@
+{
+  "document_id": "RELATED_READMISSION_PAYMENT_ADJUSTMENT_CODESET",
+  "policy_id": "0a6f2596-15d2-47e1-a979-06e46a061fb3",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abRelated Readmission Payment Adjustment\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Readmission payment rule \u2014 claim/DRG timing, not CPT PA",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

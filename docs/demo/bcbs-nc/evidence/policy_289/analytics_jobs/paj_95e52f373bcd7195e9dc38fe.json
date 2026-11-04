@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_95e52f373bcd7195e9dc38fe",
+  "policy_id": "5f4e30e8-ee6f-4d6a-b88d-24b03e58ed48",
+  "name": "Readmission Relatedness Review",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "786e92e2f699c11b",
+  "started_at": "2026-11-04T13:18:18.241387+00:00",
+  "finished_at": "2026-11-04T13:18:18.241388+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

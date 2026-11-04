@@ -1,0 +1,10 @@
+{
+  "document_id": "ANNUAL_MAXIMUM_BENEFIT_FOR_DURABLE_MEDICAL_EQUIPMENT_CODESET",
+  "policy_id": "38525bee-e8b4-483c-85e1-5abdc2747be9",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abAnnual Maximum Benefit for Durable Medical Equipment\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Benefit dollar cap \u2014 applies across DME HCPCS universe",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

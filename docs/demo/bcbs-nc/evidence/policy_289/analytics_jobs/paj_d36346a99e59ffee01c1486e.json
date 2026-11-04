@@ -1,0 +1,16 @@
+{
+  "job_id": "paj_d36346a99e59ffee01c1486e",
+  "policy_id": "90592b6e-95a3-4f83-aee5-ed17ddfa1d1b",
+  "name": "Experimental Treatment Coverage Exclusion",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "ec2609bfc206fe66",
+  "started_at": "2026-11-04T13:18:18.231929+00:00",
+  "finished_at": "2026-11-04T13:18:18.231931+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

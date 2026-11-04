@@ -1,0 +1,46 @@
+{
+  "batch": 12,
+  "offset": 275,
+  "policies": [
+    {
+      "policy_id": "ab3aa18a-45db-4a8d-a9fb-6e3f134b464b",
+      "name": "Value-Based Insurance Design Waivers",
+      "policy_type": "COST_SHARING",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "fd7a5b70-9c91-4a9f-b9cd-d442fcc67964",
+      "name": "Varicose Vein Ablation Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "096fea69-7f63-4bca-859b-12dfa779f3d0",
+      "name": "Vertebral Augmentation Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "51886386-a86a-4eb3-ae8e-b7f807464c96",
+      "name": "Virtual Visit Eligibility and Reimbursement Rules",
+      "policy_type": "TELEHEALTH_VIRTUAL_CARE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    },
+    {
+      "policy_id": "9b632583-b59b-4a1d-8c63-d9e6eb8282fa",
+      "name": "Vision Hardware vs Medical Eye Disease",
+      "policy_type": "COVERAGE",
+      "status": "ACTIVE",
+      "dec4_nine_key": null,
+      "prior_confidence": "UNTESTED"
+    }
+  ]
+}

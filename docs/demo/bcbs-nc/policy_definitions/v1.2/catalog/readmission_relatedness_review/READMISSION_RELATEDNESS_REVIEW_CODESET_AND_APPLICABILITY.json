@@ -1,0 +1,10 @@
+{
+  "document_id": "READMISSION_RELATEDNESS_REVIEW_CODESET",
+  "policy_id": "5f4e30e8-ee6f-4d6a-b88d-24b03e58ed48",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abReadmission Relatedness Review\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Readmission relatedness review process",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

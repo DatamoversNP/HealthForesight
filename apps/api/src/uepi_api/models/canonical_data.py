@@ -23,6 +23,8 @@ class ClaimsLineDB(Base):
         Index("ix_claims_lines_tenant_member", "tenant_id", "member_id"),
         Index("ix_claims_lines_tenant_provider", "tenant_id", "provider_id"),
         Index("ix_claims_lines_service_date", "service_date"),
+        # Date-window aggregates (dashboard, claim counts) — also created by migration 011
+        Index("ix_claims_lines_tenant_service_date", "tenant_id", "service_date"),
         Index("ix_claims_lines_lob_market", "lob", "market"),
         Index("ix_claims_lines_service_category", "service_category"),
         # Unique constraint on tenant + claim_line_id

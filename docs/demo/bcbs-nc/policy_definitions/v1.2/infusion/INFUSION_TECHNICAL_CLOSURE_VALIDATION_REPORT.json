@@ -1,0 +1,137 @@
+{
+  "document_id": "HF-RP-SOC-INF-001-TECHNICAL-CLOSURE-VALIDATION",
+  "generated_at": "2026-11-03T15:32:32.189928+00:00",
+  "package_version": "v1.2.1-structural-controls",
+  "reference_implementation": "mri/v1.2.1-technical-closure",
+  "self_approval": false,
+  "activation": false,
+  "frozen_fixtures_modified": false,
+  "statuses": {
+    "DEFINITION_REVIEW_REQUIRED": true,
+    "FULLY_VALIDATED_DEMO": "independent_where_supported",
+    "OPERATIONAL_ACTIVATION_PROHIBITED": true
+  },
+  "verdict": {
+    "structural_controls_applied": true,
+    "structural_technical_closure": "NOT_CLOSED",
+    "clinically_complete_policy": "NOT_APPROVED",
+    "production_enforceability": "NOT_APPROVED",
+    "mri_pass_does_not_imply_this_pass": true,
+    "summary": "MRI-derived engineering controls applied with mechanism-specific tables. Do not treat as technical closure PASS. Independent verification + blocker clearance required."
+  },
+  "requirements": [
+    {
+      "id": "R1_CODESET_SCHEMA",
+      "result": "FAIL"
+    },
+    {
+      "id": "R2_VERIFIED_SOURCE_EVIDENCE",
+      "result": "N/A",
+      "note": "No VERIFIED_SOURCE rows; weaker classes OK"
+    },
+    {
+      "id": "R3_NON_OPERATIVE_PROPOSED_CRITERIA",
+      "result": "PASS"
+    },
+    {
+      "id": "R4_URGENCY_BEFORE_ROUTINE",
+      "result": "PASS"
+    },
+    {
+      "id": "R5_ADVERSE_SPLIT",
+      "result": "PASS"
+    },
+    {
+      "id": "R6_SCOPE_MIGRATION_RECORDED",
+      "result": "N/A",
+      "note": "Add SCOPE_MIGRATION_DECISION if material scope change vs prior title/config"
+    },
+    {
+      "id": "R7_DETERMINISTIC_TEST_COVERAGE",
+      "result": "PASS",
+      "note": "Tests specified; independent execution not yet evidenced"
+    },
+    {
+      "id": "R8_STATUS_TRIAD_PRESERVED",
+      "result": "PASS"
+    }
+  ],
+  "failed_requirements": [
+    {
+      "id": "R1_CODESET_SCHEMA",
+      "result": "FAIL"
+    },
+    {
+      "requirement": "CODESET_NON_EMPTY_OR_EXPLICIT_SITE_ONLY_DESIGN",
+      "note": "platform procedure_codes=[] \u2014 product schedule unresolved"
+    }
+  ],
+  "release_blockers": [
+    {
+      "id": "CODESET_EMPTY_PRODUCT_UNRESOLVED",
+      "blocks": [
+        "applicability engine",
+        "activation"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "INFUSION_*"
+    },
+    {
+      "id": "SITE_NETWORK_SCHEDULE_UNSIGNED",
+      "blocks": [
+        "operative steerage"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "INFUSION_*"
+    },
+    {
+      "id": "PRODUCT_SCHEDULE_UNRESOLVED",
+      "blocks": [
+        "activation"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "INFUSION_*"
+    },
+    {
+      "id": "LEGAL_CLOCKS_UNRESOLVED",
+      "blocks": [
+        "activation"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "INFUSION_*"
+    },
+    {
+      "id": "GUARDRAIL_THRESHOLDS_UNAPPROVED",
+      "blocks": [
+        "production monitoring"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "INFUSION_*"
+    }
+  ],
+  "release_gate": {
+    "rule": "Any RELEASE_BLOCKER prevents OPERATIONAL_ACTIVATION",
+    "blocker_count": 5
+  },
+  "acceptance_tests_execution": "SPECIFIED_NOT_INDEPENDENTLY_EXECUTED",
+  "affected_artifacts": [
+    "v1.2/infusion/INFUSION_POLICY_DEFINITION_v1.2.md",
+    "v1.2/infusion/INFUSION_RELEASE_BLOCKERS.json",
+    "v1.2/infusion/INFUSION_CONFIG_RECONCILIATION_REPORT.md",
+    "v1.2/infusion/INFUSION_POLICY_ACCEPTANCE_TESTS.json",
+    "v1.2/infusion/INFUSION_DECISION_TABLES.json",
+    "v1.2/infusion/INFUSION_SOURCE_EVIDENCE_REGISTER.md",
+    "v1.2/infusion/INFUSION_OPERATIONAL_REQUIREMENTS_MATRIX.md",
+    "v1.2/infusion/INFUSION_CODESET_AND_APPLICABILITY.json"
+  ]
+}

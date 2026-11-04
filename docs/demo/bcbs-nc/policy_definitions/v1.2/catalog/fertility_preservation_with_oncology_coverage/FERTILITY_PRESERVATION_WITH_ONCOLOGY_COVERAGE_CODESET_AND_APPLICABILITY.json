@@ -1,0 +1,32 @@
+{
+  "document_id": "FERTILITY_PRESERVATION_WITH_ONCOLOGY_COVERAGE_CODESET",
+  "policy_id": "8ba97008-9418-4579-94b3-360aae322d17",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abFertility Preservation with Oncology Coverage\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "89258",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "89337",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "0058T",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Cryopreservation / oocyte representative set",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

@@ -1,0 +1,39 @@
+{
+  "oh": {
+    "policy_id": "d403f101-08dd-45c9-ab83-d42e37c62018",
+    "name": "Outpatient MRI Prior Authorization",
+    "policy_type": "PRIOR_AUTH",
+    "objective_label": "Utilization & cost management",
+    "status": "on_track",
+    "verdict": "ON_TRACK",
+    "verdict_label": "Saving / on track",
+    "utilization_change_pct": -10.060007138783444,
+    "cost_impact_pmpm": -18.11057061334573,
+    "confidence_pct": 91.13606791579053,
+    "observation_count": 1,
+    "observation_id": "b227220e-f9e0-45a6-8938-d55aad1fe25d",
+    "policy_effective_date": "2026-01-01T00:00:00",
+    "latest_observation_period_end": "2026-08-14T00:00:00",
+    "verdict_reason": "Observed utilization and cost are at or below baseline; policy is performing as intended.",
+    "recommendation": "Continue monitoring; consider expanding scope if sustained.",
+    "has_forecast": true,
+    "has_decision": true,
+    "is_predicted_only": false
+  },
+  "pv": {
+    "policy_id": "d403f101-08dd-45c9-ab83-d42e37c62018",
+    "policy_name": "Outpatient MRI Prior Authorization",
+    "policy_effective_date": "2026-01-01T00:00:00",
+    "verdict": "ON_TRACK",
+    "verdict_label": "Saving / on track",
+    "savings_or_cost_impact_pmpm": -18.11057061334573,
+    "cost_impact_pct": -12.47709226137935,
+    "utilization_impact_pct": -10.060007138783444,
+    "confidence_pct": 91.13606791579053,
+    "verdict_reason": "Observed utilization and cost are at or below baseline; policy is performing as intended.",
+    "recommendation": "Continue monitoring; consider expanding scope if sustained.",
+    "observation_id": "b227220e-f9e0-45a6-8938-d55aad1fe25d",
+    "observation_period_end": "2026-08-14T00:00:00",
+    "has_backfire_risk": false
+  }
+}

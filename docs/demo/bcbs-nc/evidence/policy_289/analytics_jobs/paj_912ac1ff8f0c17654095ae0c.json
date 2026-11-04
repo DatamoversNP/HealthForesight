@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_912ac1ff8f0c17654095ae0c",
+  "policy_id": "5d32b25b-591f-4dc2-bedb-40175803daeb",
+  "name": "Negative Pressure Wound Therapy Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "80549428da225eac",
+  "started_at": "2026-11-04T13:18:18.237138+00:00",
+  "finished_at": "2026-11-04T13:18:18.237139+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

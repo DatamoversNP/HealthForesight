@@ -1,0 +1,24 @@
+{
+  "document_id": "HF-RP-SOC-INF-001-CODESET",
+  "policy_id": "11218053-bdc0-569f-a415-fb61c5dcda37",
+  "version": "v1.2.1-structural-controls",
+  "schema": "../_controls/POLICY_CODESET_RECORD.schema.json",
+  "status": "DEFINITION_REVIEW_REQUIRED",
+  "operational_activation": "PROHIBITED",
+  "mechanism": "INFUSION_SITE_OF_CARE",
+  "intended_scope": "SPECIALTY_INFUSION",
+  "controls_ref": "../_controls/POLICY_ENGINEERING_CONTROLS_v1.md",
+  "mri_clinical_logic_copied": false,
+  "notes": [
+    "CANDIDATE_INCLUDE is not APPROVED_INCLUDE",
+    "Do not alter frozen Dec 4 demo fixtures",
+    "Mechanism-specific \u2014 not MRI lumbar PA criteria"
+  ],
+  "codes": [],
+  "fixtures_note": "infusion-soc-v1 $3600 known-answer",
+  "ambiguous_mapping_policy": {
+    "auto_deny": false,
+    "auto_impose_pa": false,
+    "route": "MANUAL_SCOPE_REVIEW"
+  }
+}

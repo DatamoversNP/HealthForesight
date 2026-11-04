@@ -6,8 +6,6 @@
 import { useState, useEffect } from 'react'
 import {
   Box,
-  Card,
-  CardContent,
   Typography,
   Table,
   TableBody,
@@ -18,16 +16,13 @@ import {
   CircularProgress,
   Alert,
   Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   Paper,
 } from '@mui/material'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { AccessTime as TimeIcon, ArrowBack as BackIcon, Refresh as RefreshIcon } from '@mui/icons-material'
 import { apiClient } from '../lib/api'
 import { format } from 'date-fns'
+import PolicyAutocomplete from '../components/common/PolicyAutocomplete'
 
 interface ObservationRow {
   observation_id: string
@@ -69,19 +64,20 @@ export default function ObservationRunHistoryPage() {
     setError(null)
     try {
       const [policiesData, observationsData] = await Promise.all([
-        apiClient.getPolicies(),
+        apiClient.getPolicies({ limit: 1000 }),
         apiClient.listObservations({
           include_trends: false,
           latest_only: !filterPolicyId,
           limit: filterPolicyId ? 200 : 100,
+          summary: true,
           ...(filterPolicyId ? { policy_id: filterPolicyId } : {}),
         }),
       ])
-      setPolicies(
-        Array.isArray(policiesData)
-          ? policiesData.map((p: any) => ({ id: p.id, name: p.name || p.policy_name || 'Unknown' }))
-          : []
-      )
+      const mapped = Array.isArray(policiesData)
+        ? policiesData.map((p: any) => ({ id: p.id, name: p.name || p.policy_name || 'Unknown' }))
+        : []
+      mapped.sort((a, b) => a.name.localeCompare(b.name))
+      setPolicies(mapped)
       setObservations(Array.isArray(observationsData) ? observationsData : [])
     } catch (err: any) {
       setError(err.message || 'Failed to load run history')
@@ -104,6 +100,8 @@ export default function ObservationRunHistoryPage() {
   const handleRowClick = (obs: ObservationRow) => {
     navigate(`/observation-analysis?observation=${obs.observation_id}`)
   }
+
+  const policyName = (id: string) => policies.find((p) => p.id === id)?.name || id
 
   return (
     <Box sx={{ p: 2 }}>
@@ -135,82 +133,101 @@ export default function ObservationRunHistoryPage() {
         </Alert>
       )}
 
-      <Card component={Paper} elevation={1} sx={{ mb: 2 }}>
-        <CardContent>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2, flexWrap: 'wrap' }}>
-            <FormControl size="small" sx={{ minWidth: 220 }}>
-              <InputLabel>Filter by policy</InputLabel>
-              <Select
-                value={filterPolicyId}
-                label="Filter by policy"
-                onChange={(e) => setFilterPolicyId(e.target.value)}
-              >
-                <MenuItem value="">All policies</MenuItem>
-                {policies.map((p) => (
-                  <MenuItem key={p.id} value={p.id}>
-                    {p.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+      <Paper elevation={1} sx={{ mb: 2, overflow: 'hidden' }}>
+        <Box
+          sx={{
+            px: 2,
+            pt: 1.5,
+            pb: 1.25,
+            borderBottom: 1,
+            borderColor: 'divider',
+            bgcolor: 'action.hover',
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: 1.5,
+            alignItems: 'center',
+          }}
+        >
+          <Box sx={{ minWidth: 280, flex: '1 1 280px', bgcolor: 'background.paper', borderRadius: 1 }}>
+            <PolicyAutocomplete
+              policies={policies}
+              value={filterPolicyId}
+              label="Filter by policy"
+              onChange={setFilterPolicyId}
+            />
           </Box>
+          <Typography variant="caption" color="text.secondary" sx={{ ml: { sm: 'auto' } }}>
+            Showing {sortedObservations.length} run{sortedObservations.length !== 1 ? 's' : ''}
+            {filterPolicyId ? ' for selected policy' : ' (latest per policy)'}
+          </Typography>
+        </Box>
 
-          {loading ? (
-            <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
-              <CircularProgress />
-            </Box>
-          ) : sortedObservations.length === 0 ? (
-            <Typography color="text.secondary" sx={{ py: 4, textAlign: 'center' }}>
-              No observations found. Run the daily job or create observations from Observation Analysis.
-            </Typography>
-          ) : (
-            <TableContainer>
-              <Table size="small">
-                <TableHead>
-                  <TableRow sx={{ bgcolor: 'action.hover' }}>
-                    <TableCell sx={{ fontWeight: 600 }}>Policy</TableCell>
-                    <TableCell sx={{ fontWeight: 600 }}>Run date</TableCell>
-                    <TableCell sx={{ fontWeight: 600 }}>Period (effective → through)</TableCell>
-                    <TableCell align="right" sx={{ fontWeight: 600 }}>Days</TableCell>
-                    <TableCell align="right" sx={{ fontWeight: 600 }}>Util per 1K</TableCell>
-                    <TableCell align="right" sx={{ fontWeight: 600 }}>Cost PMPM</TableCell>
+        {loading ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <TableContainer sx={{ maxHeight: '70vh' }}>
+            <Table size="small" stickyHeader>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Policy</TableCell>
+                  <TableCell>Period start</TableCell>
+                  <TableCell>Period end</TableCell>
+                  <TableCell>Run date</TableCell>
+                  <TableCell align="right">Util / 1k</TableCell>
+                  <TableCell align="right">Cost PMPM</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {sortedObservations.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={6} align="center">
+                      <Typography color="text.secondary" sx={{ py: 3 }}>
+                        No observation runs found
+                      </Typography>
+                    </TableCell>
                   </TableRow>
-                </TableHead>
-                <TableBody>
-                  {sortedObservations.map((obs) => {
-                    const start = obs.observation_period_start ? new Date(obs.observation_period_start) : null
-                    const end = obs.observation_period_end ? new Date(obs.observation_period_end) : null
-                    const days =
-                      start && end
-                        ? Math.round((end.getTime() - start.getTime()) / (24 * 60 * 60 * 1000))
-                        : null
-                    const policyName = policies.find((p) => p.id === obs.policy_id)?.name || 'Unknown'
-                    return (
-                      <TableRow
-                        key={obs.observation_id}
-                        hover
-                        onClick={() => handleRowClick(obs)}
-                        sx={{ cursor: 'pointer' }}
-                      >
-                        <TableCell>{policyName}</TableCell>
-                        <TableCell>{end ? format(end, 'MMM d, yyyy') : '—'}</TableCell>
-                        <TableCell>
-                          {start && end ? `${format(start, 'MMM d')} → ${format(end, 'MMM d, yyyy')}` : '—'}
-                        </TableCell>
-                        <TableCell align="right">{days != null ? days : '—'}</TableCell>
-                        <TableCell align="right">{(obs.metrics?.utilization_per_1k ?? 0).toFixed(1)}</TableCell>
-                        <TableCell align="right">
-                          ${(obs.metrics?.cost_pmpm ?? obs.metrics?.cost_per_member ?? 0).toFixed(2)}
-                        </TableCell>
-                      </TableRow>
-                    )
-                  })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          )}
-        </CardContent>
-      </Card>
+                ) : (
+                  sortedObservations.map((obs) => (
+                    <TableRow
+                      key={obs.observation_id}
+                      hover
+                      sx={{ cursor: 'pointer' }}
+                      onClick={() => handleRowClick(obs)}
+                    >
+                      <TableCell>{policyName(obs.policy_id)}</TableCell>
+                      <TableCell>
+                        {obs.observation_period_start
+                          ? format(new Date(obs.observation_period_start), 'MMM d, yyyy')
+                          : '—'}
+                      </TableCell>
+                      <TableCell>
+                        {obs.observation_period_end
+                          ? format(new Date(obs.observation_period_end), 'MMM d, yyyy')
+                          : '—'}
+                      </TableCell>
+                      <TableCell>
+                        {obs.computed_at ? format(new Date(obs.computed_at), 'MMM d, yyyy HH:mm') : '—'}
+                      </TableCell>
+                      <TableCell align="right">
+                        {obs.metrics?.utilization_per_1k != null
+                          ? Number(obs.metrics.utilization_per_1k).toFixed(1)
+                          : '—'}
+                      </TableCell>
+                      <TableCell align="right">
+                        {obs.metrics?.cost_pmpm != null || obs.metrics?.cost_per_member != null
+                          ? `$${Number(obs.metrics.cost_pmpm ?? obs.metrics.cost_per_member).toFixed(2)}`
+                          : '—'}
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
+      </Paper>
     </Box>
   )
 }

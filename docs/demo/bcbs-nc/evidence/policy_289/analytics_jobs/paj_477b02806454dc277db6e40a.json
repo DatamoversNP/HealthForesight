@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_477b02806454dc277db6e40a",
+  "policy_id": "7ddaaeb7-2cc9-4502-b83f-643ba0097bb3",
+  "name": "IBD Biologic Step Therapy",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "33049097ccc2f550",
+  "started_at": "2026-11-04T13:18:18.234053+00:00",
+  "finished_at": "2026-11-04T13:18:18.234055+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

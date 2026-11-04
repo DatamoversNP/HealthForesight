@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_a3764f485dfae1885f8e73a6",
+  "policy_id": "a89e86f3-066c-42c1-b83c-7d3f9ba952da",
+  "name": "Insulin Preferred Product and Biosimilar Step",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "bdc1ca1229b3faab",
+  "started_at": "2026-11-04T13:18:18.234659+00:00",
+  "finished_at": "2026-11-04T13:18:18.234660+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

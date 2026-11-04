@@ -1,0 +1,59 @@
+{
+  "document_id": "HF-RP-SOC-IMG-001-RELEASE-BLOCKERS",
+  "generated_at": "2026-11-03T15:32:32.189928+00:00",
+  "rule": "Hard release blockers \u2014 not informational warnings. Engineering must not self-clear.",
+  "blocks_operational_activation": true,
+  "blocker_count": 5,
+  "blockers": [
+    {
+      "id": "SITE_NETWORK_SCHEDULE_UNSIGNED",
+      "blocks": [
+        "operative steerage"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "SOS_*"
+    },
+    {
+      "id": "PRODUCT_SCHEDULE_UNRESOLVED",
+      "blocks": [
+        "activation"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "SOS_*"
+    },
+    {
+      "id": "LEGAL_CLOCKS_UNRESOLVED",
+      "blocks": [
+        "activation"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "SOS_*"
+    },
+    {
+      "id": "GUARDRAIL_THRESHOLDS_UNAPPROVED",
+      "blocks": [
+        "production monitoring"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "SOS_*"
+    },
+    {
+      "id": "ACCESS_EXCEPTION_RULES_UNRESOLVED",
+      "blocks": [
+        "distance/access exceptions"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "SOS_*"
+    }
+  ]
+}

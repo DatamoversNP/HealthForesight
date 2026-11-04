@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_7126ce375ee5fb5922b2cfad",
+  "policy_id": "961da9ed-a175-4746-bdf0-304e6b5ab071",
+  "name": "Home Health Episode Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "b4c8f4e1e977d709",
+  "started_at": "2026-11-04T13:18:18.233457+00:00",
+  "finished_at": "2026-11-04T13:18:18.233459+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

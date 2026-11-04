@@ -1,0 +1,21 @@
+{
+  "job_id": "paj_51b76ff905c04826d5464b15",
+  "policy_id": "db345e39-73ba-4bde-9b04-0fdac8c4a7be",
+  "name": "Facility Fee Schedule and Bundled Payment Adjustments",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "f581078dd046d4ee",
+  "started_at": "2026-11-04T13:18:18.232220+00:00",
+  "finished_at": "2026-11-04T13:18:18.232221+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "procedure_or_product_codes",
+      "scope.states",
+      "codeset_UNRESOLVED",
+      "definition_incomplete"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

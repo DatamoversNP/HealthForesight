@@ -1,0 +1,18 @@
+{
+  "document_id": "GROWTH_HORMONE_PRIOR_AUTHORIZATION_CODESET",
+  "policy_id": "6af40fde-2b70-43c0-90db-eef306f3badc",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abGrowth Hormone Prior Authorization\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "HCPCS",
+      "code": "J2941",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Somatropin injection HCPCS \u2014 NDCs product-specific UNRESOLVED",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

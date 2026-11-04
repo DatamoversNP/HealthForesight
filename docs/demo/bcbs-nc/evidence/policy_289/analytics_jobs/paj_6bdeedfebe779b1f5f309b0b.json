@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_6bdeedfebe779b1f5f309b0b",
+  "policy_id": "6b36eacc-0ea0-4089-bbf5-2ee51fced2a3",
+  "name": "Discharge Planning Requirements",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "b6e2b257ce46557d",
+  "started_at": "2026-11-04T13:18:18.230511+00:00",
+  "finished_at": "2026-11-04T13:18:18.230512+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

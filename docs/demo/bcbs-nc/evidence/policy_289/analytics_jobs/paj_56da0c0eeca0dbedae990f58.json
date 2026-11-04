@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_56da0c0eeca0dbedae990f58",
+  "policy_id": "51a72ae3-e33e-46cd-8884-8363028203c9",
+  "name": "Drug Testing Frequency Limits for Chronic Pain",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "192db9f80600d660",
+  "started_at": "2026-11-04T13:18:18.230709+00:00",
+  "finished_at": "2026-11-04T13:18:18.230710+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

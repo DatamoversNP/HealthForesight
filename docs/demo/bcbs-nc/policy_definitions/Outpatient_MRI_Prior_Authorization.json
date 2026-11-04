@@ -1,0 +1,490 @@
+{
+  "policy_id": "d403f101-08dd-45c9-ab83-d42e37c62018",
+  "name": "Outpatient MRI Prior Authorization",
+  "policy_type": "PRIOR_AUTH",
+  "status": "ACTIVE",
+  "description": "Require prior authorization for outpatient MRI to reduce inappropriate imaging.",
+  "owner_role": null,
+  "metadata": {
+    "scope": {
+      "lob": [
+        "COMMERCIAL"
+      ],
+      "markets": [
+        "NYC",
+        "DFW"
+      ],
+      "network": [
+        "IN"
+      ],
+      "procedure_codes": [
+        "99213",
+        "99214",
+        "72148",
+        "72149"
+      ],
+      "service_categories": [
+        "PRIMARY_CARE",
+        "ADVANCED_IMAGING"
+      ]
+    },
+    "domain": "Medical PA",
+    "inputs": {
+      "data_sources": [
+        "claims"
+      ],
+      "required_fields": [
+        "member_id",
+        "service_date"
+      ]
+    },
+    "outputs": {
+      "metrics": [
+        "utilization_rate",
+        "cost_pmpm"
+      ],
+      "reports": [
+        "monthly_utilization_report"
+      ]
+    },
+    "version": 1,
+    "metadata": {
+      "inputs": {
+        "data_sources": [
+          "claims"
+        ],
+        "required_fields": [
+          "member_id",
+          "service_date"
+        ]
+      },
+      "outputs": {
+        "metrics": [
+          "utilization_rate",
+          "cost_pmpm"
+        ],
+        "reports": [
+          "monthly_utilization_report"
+        ]
+      },
+      "version": 1,
+      "policy_id": "PA_MRI_OP_001",
+      "guardrails": [
+        {
+          "action": "alert",
+          "description": "Monitor utilization changes for Outpatient MRI Prior Authorization",
+          "metric_name": "utilization_rate",
+          "threshold_type": "change_pct",
+          "threshold_value": 20.0
+        }
+      ],
+      "assumptions": [
+        {
+          "value": "TBD",
+          "source": "Initial estimate",
+          "confidence": 0.5,
+          "description": "Expected impact for Outpatient MRI Prior Authorization",
+          "assumption_type": "ELASTICITY"
+        }
+      ]
+    },
+    "policy_id": "PA_MRI_OP_001",
+    "subdomain": "Imaging & radiology",
+    "apply_when": [],
+    "guardrails": [
+      {
+        "action": "alert",
+        "description": "Monitor utilization changes for Outpatient MRI Prior Authorization",
+        "metric_name": "utilization_rate",
+        "threshold_type": "change_pct",
+        "threshold_value": 20.0
+      }
+    ],
+    "assumptions": [
+      {
+        "value": "TBD",
+        "source": "Initial estimate",
+        "confidence": 0.5,
+        "description": "Expected impact for Outpatient MRI Prior Authorization",
+        "assumption_type": "ELASTICITY"
+      }
+    ],
+    "enforcement": {
+      "mechanism": "HARD",
+      "touchpoint": [
+        "PA_WORKFLOW"
+      ],
+      "override_allowed": false
+    },
+    "jurisdiction": "NC",
+    "policy_levers": [
+      {
+        "lever_type": "PRIOR_AUTH",
+        "parameters": {
+          "codes": [
+            "72148",
+            "72149",
+            "72158"
+          ],
+          "site_of_care": "OUTPATIENT"
+        }
+      }
+    ],
+    "standards_basis": [
+      "U.S. payer UM common practice",
+      "Blues-style medical/pharmacy program structure",
+      "CMS/ACA/MHPAEA concepts where noted by LOB"
+    ],
+    "effective_period": {
+      "end_date": null,
+      "start_date": "2026-01-01T00:00:00"
+    },
+    "global_exceptions": [],
+    "enterprise_classification": {
+      "stamped_at": "2026-11-03T09:07:04.414978Z",
+      "stamped_by": "stamp_catalog_classification.py",
+      "code_sets_status": "MISSING",
+      "provenance_status": "MISSING_AUTHORITATIVE_SOURCE",
+      "data_classification": "illustrative_catalog",
+      "catalog_accuracy_contract": {
+        "why": "Proprietary BCBS NC policy text is not publicly reproducible at 100% fidelity; mislabeling would reduce credibility",
+        "claim": "Industry-standard / Blues-aligned illustrative program catalog for NC-oriented demos",
+        "not_claiming": "Verbatim Blue Cross NC medical policies, CUMG text, or formulary NDC lists"
+      },
+      "not_verbatim_bcbsnc_policy": true,
+      "illustrative_standards_aligned": true,
+      "authoritative_source_reconciled": false
+    }
+  },
+  "assumptions_db": [
+    {
+      "assumption_type": "ELASTICITY",
+      "description": "Expected impact for Outpatient MRI Prior Authorization",
+      "value": "TBD",
+      "source": "Initial estimate",
+      "confidence": 0.5
+    },
+    {
+      "assumption_type": "ELASTICITY",
+      "description": "Price elasticity of demand for Outpatient MRI Prior Authorization",
+      "value": "-0.3",
+      "source": "Historical claims analysis",
+      "confidence": 0.75
+    },
+    {
+      "assumption_type": "SUBSTITUTION_RATE",
+      "description": "Expected substitution to alternative services",
+      "value": "0.15",
+      "source": "Provider behavior modeling",
+      "confidence": 0.7
+    },
+    {
+      "assumption_type": "LAG_DAYS",
+      "description": "Expected lag before policy impact is observed",
+      "value": "60",
+      "source": "Policy implementation timeline",
+      "confidence": 0.8
+    }
+  ],
+  "guardrails_db": [
+    {
+      "metric_name": "utilization_rate",
+      "threshold_type": "change_pct",
+      "threshold_value": 20.0,
+      "action": "alert",
+      "description": "Monitor utilization changes for Outpatient MRI Prior Authorization"
+    },
+    {
+      "metric_name": "UTILIZATION_INCREASE",
+      "threshold_type": "max",
+      "threshold_value": 0.2,
+      "action": "alert",
+      "description": "Alert if utilization increases more than 20% above baseline"
+    },
+    {
+      "metric_name": "COST_INCREASE",
+      "threshold_type": "max",
+      "threshold_value": 0.15,
+      "action": "alert",
+      "description": "Alert if cost per member per month increases more than 15%"
+    },
+    {
+      "metric_name": "ER_UTILIZATION",
+      "threshold_type": "max",
+      "threshold_value": 0.1,
+      "action": "alert",
+      "description": "Alert if ER utilization increases more than 10% (potential substitution effect)"
+    }
+  ],
+  "versions": [
+    {
+      "version_number": 1,
+      "effective_start_date": "2024-01-01T00:00:00",
+      "effective_end_date": null,
+      "change_type": "MINOR",
+      "enforcement_strength": "STANDARD",
+      "justification": "Initial policy version",
+      "version_metadata": {
+        "state": "ACTIVE",
+        "created_by": "00000000-0000-0000-0000-000000000001",
+        "approved_at": null,
+        "approved_by": null,
+        "change_details": {
+          "policy_snapshot": {
+            "id": "d403f101-08dd-45c9-ab83-d42e37c62018",
+            "name": "Outpatient MRI Prior Authorization",
+            "scope": {
+              "lob": [
+                "COMMERCIAL"
+              ],
+              "markets": [
+                "NYC",
+                "DFW"
+              ],
+              "network": [
+                "IN"
+              ]
+            },
+            "status": "ACTIVE",
+            "metadata": {
+              "scope": {
+                "lob": [
+                  "COMMERCIAL"
+                ],
+                "markets": [
+                  "NYC",
+                  "DFW"
+                ],
+                "network": [
+                  "IN"
+                ]
+              },
+              "inputs": {
+                "data_sources": [
+                  "claims"
+                ],
+                "required_fields": [
+                  "member_id",
+                  "service_date"
+                ]
+              },
+              "outputs": {
+                "metrics": [
+                  "utilization_rate",
+                  "cost_pmpm"
+                ],
+                "reports": [
+                  "monthly_utilization_report"
+                ]
+              },
+              "version": 1,
+              "metadata": {
+                "inputs": {
+                  "data_sources": [
+                    "claims"
+                  ],
+                  "required_fields": [
+                    "member_id",
+                    "service_date"
+                  ]
+                },
+                "outputs": {
+                  "metrics": [
+                    "utilization_rate",
+                    "cost_pmpm"
+                  ],
+                  "reports": [
+                    "monthly_utilization_report"
+                  ]
+                },
+                "version": 1,
+                "policy_id": "PA_MRI_OP_001",
+                "guardrails": [
+                  {
+                    "action": "alert",
+                    "description": "Monitor utilization changes for Outpatient MRI Prior Authorization",
+                    "metric_name": "utilization_rate",
+                    "threshold_type": "change_pct",
+                    "threshold_value": 20.0
+                  }
+                ],
+                "assumptions": [
+                  {
+                    "value": "TBD",
+                    "source": "Initial estimate",
+                    "confidence": 0.5,
+                    "description": "Expected impact for Outpatient MRI Prior Authorization",
+                    "assumption_type": "ELASTICITY"
+                  }
+                ]
+              },
+              "policy_id": "PA_MRI_OP_001",
+              "guardrails": [
+                {
+                  "action": "alert",
+                  "description": "Monitor utilization changes for Outpatient MRI Prior Authorization",
+                  "metric_name": "utilization_rate",
+                  "threshold_type": "change_pct",
+                  "threshold_value": 20.0
+                }
+              ],
+              "assumptions": [
+                {
+                  "value": "TBD",
+                  "source": "Initial estimate",
+                  "confidence": 0.5,
+                  "description": "Expected impact for Outpatient MRI Prior Authorization",
+                  "assumption_type": "ELASTICITY"
+                }
+              ],
+              "enforcement": {
+                "mechanism": "HARD",
+                "touchpoint": [
+                  "PA_WORKFLOW"
+                ],
+                "override_allowed": false
+              },
+              "policy_levers": [
+                {
+                  "lever_type": "PRIOR_AUTH",
+                  "parameters": {
+                    "codes": [
+                      "72148",
+                      "72149",
+                      "72158"
+                    ],
+                    "site_of_care": "OUTPATIENT"
+                  }
+                }
+              ],
+              "effective_period": {
+                "end_date": null,
+                "start_date": "2024-01-01"
+              }
+            },
+            "versions": [],
+            "changelog": [],
+            "policy_id": "d403f101-08dd-45c9-ab83-d42e37c62018",
+            "tenant_id": "00000000-0000-0000-0000-000000000001",
+            "created_at": "2026-04-03T14:00:03.686112",
+            "guardrails": [],
+            "owner_role": null,
+            "updated_at": "2026-04-03T14:00:03.686121",
+            "assumptions": [],
+            "description": "Require prior authorization for outpatient MRI to reduce inappropriate imaging.",
+            "enforcement": {
+              "mechanism": "HARD",
+              "touchpoint": [
+                "PA_WORKFLOW"
+              ],
+              "override_allowed": false
+            },
+            "policy_name": "Outpatient MRI Prior Authorization",
+            "policy_type": "PRIOR AUTH",
+            "policy_levers": [
+              {
+                "lever_type": "PRIOR_AUTH",
+                "parameters": {
+                  "codes": [
+                    "72148",
+                    "72149",
+                    "72158"
+                  ],
+                  "site_of_care": "OUTPATIENT"
+                }
+              }
+            ],
+            "effective_period": {
+              "end_date": null,
+              "start_date": "2024-01-01"
+            }
+          },
+          "changes_from_previous": {}
+        },
+        "change_summary": "Initial policy version"
+      },
+      "codes": []
+    },
+    {
+      "version_number": 2,
+      "effective_start_date": "2024-01-01T00:00:00",
+      "effective_end_date": null,
+      "change_type": "MINOR",
+      "enforcement_strength": "STANDARD",
+      "justification": "Initial policy version",
+      "version_metadata": {
+        "state": "ACTIVE",
+        "created_by": "00000000-0000-0000-0000-000000000001",
+        "approved_at": null,
+        "approved_by": null,
+        "change_details": {
+          "scope": {
+            "lob": [
+              "COMMERCIAL"
+            ],
+            "markets": [
+              "NYC",
+              "DFW"
+            ],
+            "network": [
+              "IN"
+            ]
+          },
+          "enforcement": {
+            "mechanism": "HARD",
+            "touchpoint": [
+              "PA_WORKFLOW"
+            ],
+            "override_allowed": false
+          },
+          "policy_type": "PRIOR AUTH"
+        },
+        "change_summary": "Initial policy version"
+      },
+      "codes": []
+    }
+  ],
+  "medicare_source_links": [
+    {
+      "link_role": "REFERENCES_NCD",
+      "family_id": "cms_ncd",
+      "source_document_id": "NCD220.2",
+      "title": "Magnetic Resonance Imaging",
+      "authority": "CMS",
+      "source_url": "https://www.cms.gov/medicare-coverage-database/view/ncd.aspx?NCDId=252"
+    },
+    {
+      "link_role": "REFERENCES_NCD",
+      "family_id": "cms_ncd",
+      "source_document_id": "NCD220.2",
+      "title": "Magnetic Resonance Imaging",
+      "authority": "CMS",
+      "source_url": "https://www.cms.gov/medicare-coverage-database/view/ncd.aspx?NCDId=177"
+    },
+    {
+      "link_role": "REFERENCES_LCD",
+      "family_id": "mac_lcd_nc",
+      "source_document_id": "L34425",
+      "title": "Magnetic Resonance Imaging of the Orbit, Face, and/or Neck",
+      "authority": "Palmetto GBA",
+      "source_url": "https://www.cms.gov/medicare-coverage-database/view/lcd.aspx?lcdId=34425"
+    },
+    {
+      "link_role": "HAS_RELATED_ARTICLE",
+      "family_id": "lcd_billing_coding_articles",
+      "source_document_id": "A56729",
+      "title": "Billing and Coding: Magnetic Resonance Imaging of the Orbit, Face, and/or Neck",
+      "authority": "Palmetto GBA",
+      "source_url": "https://www.cms.gov/medicare-coverage-database/view/article.aspx?articleId=56729"
+    },
+    {
+      "link_role": "USES_CODING_EDIT",
+      "family_id": "ncci_ptp",
+      "source_document_id": "NCCI-PTP-PAIR-70553-70551",
+      "title": "Demo PTP pair 70553/70551 (synthetic edit illustration)",
+      "authority": "CMS NCCI",
+      "source_url": "https://www.cms.gov/medicare/coding-billing/national-correct-coding-initiative-ncci-edits"
+    }
+  ],
+  "generated_at": "2026-11-03T14:38:38.859711+00:00"
+}

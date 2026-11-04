@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_05a9e1128d3694e41748f5d9",
+  "policy_id": "93b4929a-3d62-436e-8d3a-45f5bf55050f",
+  "name": "Retrospective Authorization Window",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "2847cecad63047c0",
+  "started_at": "2026-11-04T13:18:18.241661+00:00",
+  "finished_at": "2026-11-04T13:18:18.241662+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

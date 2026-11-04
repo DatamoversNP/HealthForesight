@@ -1,0 +1,10 @@
+{
+  "document_id": "OPIOID_QUANTITY_LIMIT_ACUTE_PAIN_CODESET",
+  "policy_id": "7a41ebf4-ce99-45da-9039-49a7bb262bc9",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abOpioid Quantity Limit \u2014 Acute Pain\u00bb",
+  "status": "UNRESOLVED",
+  "candidate_codes": [],
+  "notes": "Acute opioid days-supply product rule UNRESOLVED",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

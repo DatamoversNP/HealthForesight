@@ -254,7 +254,27 @@ def run_daily_job_task(tenant_id: UUID, target_date: datetime, run_observations:
                 )
                 if gen_result.get("success"):
                     claims_loaded = gen_result.get("claims_loaded", 0)
-                    print(f"✅ Generated and loaded {claims_loaded} claims for {target_date_obj}")
+                    # Re-runs often hit duplicate keys → claims_loaded=0 even though
+                    # rows for this date already exist. Count them so observations still run.
+                    if claims_loaded == 0:
+                        try:
+                            from uepi_api.repositories.canonical_data import CanonicalDataRepository
+                            existing_df = CanonicalDataRepository(db).get_claims_lines(
+                                tenant_id=tenant_id,
+                                start_date=target_date_obj,
+                                end_date=target_date_obj,
+                            )
+                            claims_loaded = int(len(existing_df)) if existing_df is not None else 0
+                            if claims_loaded > 0:
+                                print(
+                                    f"ℹ️  No new inserts for {target_date_obj}; "
+                                    f"using {claims_loaded} existing claims for observations",
+                                    flush=True,
+                                )
+                        except Exception as count_err:
+                            print(f"⚠️  Could not count existing claims for {target_date_obj}: {count_err}")
+                    else:
+                        print(f"✅ Generated and loaded {claims_loaded} claims for {target_date_obj}")
                 else:
                     error_msg = gen_result.get("error", "Unknown error")
                     raise Exception(f"Failed to generate data: {error_msg}")
@@ -322,9 +342,13 @@ def run_daily_job_task(tenant_id: UUID, target_date: datetime, run_observations:
         observations_created = 0
         observations_failed = 0
         
+        # After duplicate re-runs we count existing rows into claims_loaded so this still fires.
         if run_observations and claims_loaded > 0:
             try:
-                job.message = f"Data loaded ({claims_loaded} claims). Creating observations for active policies..."
+                job.message = (
+                    f"Data loaded ({claims_loaded} claims). "
+                    f"Creating observations for active policies..."
+                )
                 db.commit()
                 _long_timeout(db)
                 
@@ -337,6 +361,32 @@ def run_daily_job_task(tenant_id: UUID, target_date: datetime, run_observations:
                 active_policies = [p for p in policies if p.get("status") == "ACTIVE"]
                 
                 print(f"Found {len(active_policies)} active policies")
+
+                # Ensure a data period exists even when claims were pre-existing (claims_loaded
+                # counted after duplicate skip) so create_observation_from_analysis has an id.
+                if created_period_id is None and claims_loaded > 0:
+                    try:
+                        from uepi_api.integration_helpers import create_data_period_from_ingestion
+                        from uuid import uuid4
+                        data_period = create_data_period_from_ingestion(
+                            tenant_id=tenant_id,
+                            ingestion_id=str(uuid4()),
+                            ingestion_metadata={
+                                "source_date": target_date_obj.isoformat(),
+                                "claims_loaded": claims_loaded,
+                                "curated_partitions": [
+                                    f"year={target_date_obj.year}/month={target_date_obj.month}/day={target_date_obj.day}"
+                                ],
+                                "coverage": {
+                                    "start_date": target_date_obj.isoformat(),
+                                    "end_date": target_date_obj.isoformat(),
+                                },
+                            },
+                        )
+                        if data_period:
+                            created_period_id = data_period.get("id")
+                    except Exception as period_retry_err:
+                        print(f"⚠️  Data period retry skipped: {period_retry_err}")
                 
                 from uepi_api.baseline_refresh import _get_policy_effective_date
                 

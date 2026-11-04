@@ -1,0 +1,16 @@
+{
+  "job_id": "paj_a48fb4d6ed789d9a90f89a32",
+  "policy_id": "f54e4310-7f4b-4d6e-a6ab-c7b748722c8d",
+  "name": "SNF and Home Health Authorization Coverage Rules",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "de29b98eb9ab441d",
+  "started_at": "2026-11-04T13:18:18.241971+00:00",
+  "finished_at": "2026-11-04T13:18:18.241973+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

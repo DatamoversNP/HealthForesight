@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_1aa9be3521cd4912b25f1776",
+  "policy_id": "3daf6f28-4e94-4996-a26c-e92237d15aaf",
+  "name": "Preferred Laboratory Network Steerage",
+  "evidence_pathway": "EMPIRICAL_COHORT",
+  "configuration_digest": "b76a8c65e3154c40",
+  "started_at": "2026-11-04T13:18:18.240463+00:00",
+  "finished_at": "2026-11-04T13:18:18.240464+00:00",
+  "status": "EMPIRICAL_ELIGIBLE_QUEUED",
+  "duplicate_prevented": false,
+  "result": {
+    "cohort_count": 126453,
+    "message": "Preflight PASS \u2014 enqueue Celery/worker analytical services; not executed via bulk HTTP",
+    "next": "uepi_worker.tasks.policy_analytics_lifecycle_job"
+  },
+  "error": null
+}

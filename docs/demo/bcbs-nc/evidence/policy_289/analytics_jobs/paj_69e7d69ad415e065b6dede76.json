@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_69e7d69ad415e065b6dede76",
+  "policy_id": "fa30b827-51b3-40cd-99f0-f75874910586",
+  "name": "Hospital-Acquired Condition Nonpayment",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "ea0e4fa79d117ad2",
+  "started_at": "2026-11-04T13:18:18.233858+00:00",
+  "finished_at": "2026-11-04T13:18:18.233860+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

@@ -1,0 +1,10 @@
+{
+  "document_id": "PREFERRED_GENERIC_DRUG_TIER_DESIGN_CODESET",
+  "policy_id": "c262b624-22ab-489d-81f2-f51fc0ac2d89",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abPreferred Generic Drug Tier Design\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Formulary tier design",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

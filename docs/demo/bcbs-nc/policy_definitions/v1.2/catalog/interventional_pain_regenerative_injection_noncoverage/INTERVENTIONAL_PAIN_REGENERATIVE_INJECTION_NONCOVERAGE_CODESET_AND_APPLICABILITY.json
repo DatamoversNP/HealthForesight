@@ -1,0 +1,25 @@
+{
+  "document_id": "INTERVENTIONAL_PAIN_REGENERATIVE_INJECTION_NONCOVERAGE_CODESET",
+  "policy_id": "58f3f2b9-e9dc-4ee3-8a94-3fbc7c24ff02",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abInterventional Pain Regenerative Injection Noncoverage\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "0232T",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "0481T",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "PRP / regenerative investigational codes",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

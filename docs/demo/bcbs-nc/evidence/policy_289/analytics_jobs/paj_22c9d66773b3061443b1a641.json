@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_22c9d66773b3061443b1a641",
+  "policy_id": "22f5c407-92b5-4c96-9e34-cd8b5f37c918",
+  "name": "Value Prior Authorization Program",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "640b8389b77b3d8e",
+  "started_at": "2026-11-04T13:18:18.244619+00:00",
+  "finished_at": "2026-11-04T13:18:18.244621+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_78fe505f2768175ec25c80d3",
+  "policy_id": "77d22b39-7b29-496e-bf67-87876957d89a",
+  "name": "Nuclear Cardiology Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "45b7fc8af89bda5c",
+  "started_at": "2026-11-04T13:18:18.237844+00:00",
+  "finished_at": "2026-11-04T13:18:18.237847+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

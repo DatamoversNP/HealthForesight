@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_8f9a81314c426b1f423af8c3",
+  "policy_id": "c2b71847-7db9-4b1f-a328-48529f1b4c73",
+  "name": "Psychiatric Residential Treatment Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "d26aa04611e04c47",
+  "started_at": "2026-11-04T13:18:18.241146+00:00",
+  "finished_at": "2026-11-04T13:18:18.241147+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

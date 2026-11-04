@@ -1,0 +1,25 @@
+{
+  "document_id": "IBD_BIOLOGIC_STEP_THERAPY_CODESET",
+  "policy_id": "7ddaaeb7-2cc9-4502-b83f-643ba0097bb3",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abIBD Biologic Step Therapy\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "HCPCS",
+      "code": "J1745",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "J0717",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "IBD biologic J-code anchors",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

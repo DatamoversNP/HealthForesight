@@ -1,0 +1,16 @@
+{
+  "job_id": "paj_36cd66c14b8dff63853bcbb6",
+  "policy_id": "9458bc86-990a-4a2e-9cec-facbc9e3fe27",
+  "name": "Cancer Clinical Trial Routine Cost Coverage",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "4303377a9e92c189",
+  "started_at": "2026-11-04T13:18:18.227547+00:00",
+  "finished_at": "2026-11-04T13:18:18.227548+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

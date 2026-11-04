@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_b28d972867cdeb45ec0b5c48",
+  "policy_id": "d98beb20-e1c1-41a4-b7bd-2e32cdf533a5",
+  "name": "Medicare NCD and LCD Precedence Policy",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "ef99933373141b44",
+  "started_at": "2026-11-04T13:18:18.236001+00:00",
+  "finished_at": "2026-11-04T13:18:18.236002+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

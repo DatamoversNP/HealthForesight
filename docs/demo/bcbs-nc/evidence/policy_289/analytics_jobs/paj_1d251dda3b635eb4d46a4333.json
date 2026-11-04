@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_1d251dda3b635eb4d46a4333",
+  "policy_id": "fae6bd6d-9a3f-4873-942c-9cd2bfb2b68f",
+  "name": "Elective Joint Arthroplasty Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "393c996d7e174add",
+  "started_at": "2026-11-04T13:18:18.231141+00:00",
+  "finished_at": "2026-11-04T13:18:18.231149+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_3c27ae0a0b3702de07436b01",
+  "policy_id": "56901c32-9b11-484e-aed3-dd100b4160f8",
+  "name": "Bariatric Surgery Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "dbd81002da246c9a",
+  "started_at": "2026-11-04T13:18:18.226501+00:00",
+  "finished_at": "2026-11-04T13:18:18.226503+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

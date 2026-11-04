@@ -1,0 +1,18 @@
+{
+  "document_id": "CARDIAC_CT_ANGIOGRAPHY_PRIOR_AUTHORIZATION_CODESET",
+  "policy_id": "3e0b2ec4-217c-4d08-914d-015e9b8961d6",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abCardiac CT Angiography Prior Authorization\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "75574",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "CTA heart with contrast",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

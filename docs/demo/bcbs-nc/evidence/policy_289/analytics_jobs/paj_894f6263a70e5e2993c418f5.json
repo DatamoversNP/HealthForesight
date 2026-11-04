@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_894f6263a70e5e2993c418f5",
+  "policy_id": "f371fc34-e3e6-4bb5-a45b-890fab0239f5",
+  "name": "Interventional Radiology Procedure Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "6eba4cd4d0a592d9",
+  "started_at": "2026-11-04T13:18:18.234838+00:00",
+  "finished_at": "2026-11-04T13:18:18.234839+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

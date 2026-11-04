@@ -1,0 +1,25 @@
+{
+  "document_id": "MIGRAINE_CGRP_STEP_THERAPY_CODESET",
+  "policy_id": "e3fdab6b-2850-4930-b293-5387476674a6",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abMigraine CGRP Step Therapy\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "HCPCS",
+      "code": "J3032",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "J3031",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "CGRP antagonist injection HCPCS anchors",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

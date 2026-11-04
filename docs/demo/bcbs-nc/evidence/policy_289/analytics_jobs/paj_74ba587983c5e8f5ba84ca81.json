@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_74ba587983c5e8f5ba84ca81",
+  "policy_id": "f7d9efc7-2a22-4197-aeda-7fb830651990",
+  "name": "Hearing Aid Coverage Criteria",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "68e035943cabdbfc",
+  "started_at": "2026-11-04T13:18:18.232969+00:00",
+  "finished_at": "2026-11-04T13:18:18.232970+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_894824e0d673b335b2c05418",
+  "policy_id": "853115f4-b3a4-4efe-9cf2-428c674464d5",
+  "name": "Away-From-Home Care / Guest Membership Rules",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "7a7a38df0583462c",
+  "started_at": "2026-11-04T13:18:18.226376+00:00",
+  "finished_at": "2026-11-04T13:18:18.226377+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

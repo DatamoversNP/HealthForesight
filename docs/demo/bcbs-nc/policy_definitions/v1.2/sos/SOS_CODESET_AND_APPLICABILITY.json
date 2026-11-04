@@ -1,0 +1,118 @@
+{
+  "document_id": "HF-RP-SOC-IMG-001-CODESET",
+  "policy_id": "d7441dd9-3bfe-405e-ae6c-0377204bbb7e",
+  "version": "v1.2.1-structural-controls",
+  "schema": "../_controls/POLICY_CODESET_RECORD.schema.json",
+  "status": "DEFINITION_REVIEW_REQUIRED",
+  "operational_activation": "PROHIBITED",
+  "mechanism": "FREESTANDING_IMAGING_STEERAGE",
+  "intended_scope": "OUTPATIENT_IMAGING_SITE",
+  "controls_ref": "../_controls/POLICY_ENGINEERING_CONTROLS_v1.md",
+  "mri_clinical_logic_copied": false,
+  "notes": [
+    "CANDIDATE_INCLUDE is not APPROVED_INCLUDE",
+    "Do not alter frozen Dec 4 demo fixtures",
+    "Mechanism-specific \u2014 not MRI lumbar PA criteria"
+  ],
+  "codes": [
+    {
+      "code_system": "CPT",
+      "code": "72148",
+      "description": "MRI lumbar spine without contrast",
+      "anatomical_region": "OUTPATIENT_IMAGING_SITE",
+      "contrast_variant": "WITHOUT",
+      "setting": "OUTPATIENT",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "effective_from": null,
+      "effective_to": null,
+      "evidence_class": "REPRESENTATIVE_DESIGN",
+      "source_evidence_note": "Mechanism candidate; not approved include",
+      "evidence": {
+        "evidence_id": null,
+        "source_system": null,
+        "source_document_id": null,
+        "source_version": null,
+        "source_url": null,
+        "retrieved_at": null,
+        "content_checksum_sha256": null,
+        "applicability_period_start": null,
+        "applicability_period_end": null,
+        "notes": "Not a CMS verification claim"
+      },
+      "medicare_applicability": {
+        "ncd_220_2": "REFERENCE_ONLY_FFS",
+        "lcd_l34425": "NOT_APPLICABLE",
+        "article_a56729": "NOT_APPLICABLE"
+      },
+      "scope_role": null
+    },
+    {
+      "code_system": "CPT",
+      "code": "72149",
+      "description": "MRI lumbar spine with contrast",
+      "anatomical_region": "OUTPATIENT_IMAGING_SITE",
+      "contrast_variant": "WITH",
+      "setting": "OUTPATIENT",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "effective_from": null,
+      "effective_to": null,
+      "evidence_class": "REPRESENTATIVE_DESIGN",
+      "source_evidence_note": "Mechanism candidate; not approved include",
+      "evidence": {
+        "evidence_id": null,
+        "source_system": null,
+        "source_document_id": null,
+        "source_version": null,
+        "source_url": null,
+        "retrieved_at": null,
+        "content_checksum_sha256": null,
+        "applicability_period_start": null,
+        "applicability_period_end": null,
+        "notes": "Not a CMS verification claim"
+      },
+      "medicare_applicability": {
+        "ncd_220_2": "REFERENCE_ONLY_FFS",
+        "lcd_l34425": "NOT_APPLICABLE",
+        "article_a56729": "NOT_APPLICABLE"
+      },
+      "scope_role": null
+    },
+    {
+      "code_system": "CPT",
+      "code": "70553",
+      "description": "MRI brain without then with contrast",
+      "anatomical_region": "OUTPATIENT_IMAGING_SITE",
+      "contrast_variant": "WITHOUT_THEN_WITH",
+      "setting": "OUTPATIENT",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "effective_from": null,
+      "effective_to": null,
+      "evidence_class": "REPRESENTATIVE_DESIGN",
+      "source_evidence_note": "Mechanism candidate; not approved include",
+      "evidence": {
+        "evidence_id": null,
+        "source_system": null,
+        "source_document_id": null,
+        "source_version": null,
+        "source_url": null,
+        "retrieved_at": null,
+        "content_checksum_sha256": null,
+        "applicability_period_start": null,
+        "applicability_period_end": null,
+        "notes": "Not a CMS verification claim"
+      },
+      "medicare_applicability": {
+        "ncd_220_2": "REFERENCE_ONLY_FFS",
+        "lcd_l34425": "NOT_APPLICABLE",
+        "article_a56729": "NOT_APPLICABLE"
+      },
+      "scope_role": null
+    }
+  ],
+  "fixtures_note": "reimbursement-sos-v1 known-answer $520",
+  "ambiguous_mapping_policy": {
+    "auto_deny": false,
+    "auto_impose_pa": false,
+    "route": "MANUAL_SCOPE_REVIEW"
+  }
+}

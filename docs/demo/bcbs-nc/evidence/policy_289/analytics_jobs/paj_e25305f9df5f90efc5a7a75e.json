@@ -1,0 +1,16 @@
+{
+  "job_id": "paj_e25305f9df5f90efc5a7a75e",
+  "policy_id": "d7441dd9-3bfe-405e-ae6c-0377204bbb7e",
+  "name": "Freestanding Imaging Steerage",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "7667c0985232257e",
+  "started_at": "2026-11-04T13:18:18.232477+00:00",
+  "finished_at": "2026-11-04T13:18:18.232479+00:00",
+  "status": "SYNTHETIC_VERIFY_ONLY",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Dec4 frozen KA \u2014 verify path only; no rewrite",
+    "ka_frozen": true
+  },
+  "error": null
+}

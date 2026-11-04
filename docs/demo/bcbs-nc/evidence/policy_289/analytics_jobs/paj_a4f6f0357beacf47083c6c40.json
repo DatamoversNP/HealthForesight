@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_a4f6f0357beacf47083c6c40",
+  "policy_id": "a6adbb67-411c-4945-91b3-70774b8ccc3f",
+  "name": "Advanced Imaging Comprehensive Control",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "63caff02e45e546b",
+  "started_at": "2026-11-04T13:18:18.225639+00:00",
+  "finished_at": "2026-11-04T13:18:18.225641+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

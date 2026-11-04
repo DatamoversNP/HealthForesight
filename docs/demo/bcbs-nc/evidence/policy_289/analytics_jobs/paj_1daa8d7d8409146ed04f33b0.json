@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_1daa8d7d8409146ed04f33b0",
+  "policy_id": "e3fdab6b-2850-4930-b293-5387476674a6",
+  "name": "Migraine CGRP Step Therapy",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "daed517956c64ddd",
+  "started_at": "2026-11-04T13:18:18.236484+00:00",
+  "finished_at": "2026-11-04T13:18:18.236486+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

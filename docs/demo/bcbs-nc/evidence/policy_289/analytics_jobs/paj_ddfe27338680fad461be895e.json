@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_ddfe27338680fad461be895e",
+  "policy_id": "787ea442-3c27-4a3d-8a19-6f103be70e2a",
+  "name": "Capsule Endoscopy Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "46ae158c4f557fbb",
+  "started_at": "2026-11-04T13:18:18.227614+00:00",
+  "finished_at": "2026-11-04T13:18:18.227615+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

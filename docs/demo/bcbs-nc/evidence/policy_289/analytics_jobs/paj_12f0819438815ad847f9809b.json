@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_12f0819438815ad847f9809b",
+  "policy_id": "7a41ebf4-ce99-45da-9039-49a7bb262bc9",
+  "name": "Opioid Quantity Limit \u2014 Acute Pain",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "aa6d507db21e2c1b",
+  "started_at": "2026-11-04T13:18:18.238829+00:00",
+  "finished_at": "2026-11-04T13:18:18.238831+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "codeset_UNRESOLVED",
+      "definition_incomplete"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_663dfee6a4f01ed73998f355",
+  "policy_id": "9f06d32c-82f0-4dd9-a3ff-b0e11d3ecc4d",
+  "name": "Cochlear Implant Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "6fa8edd7ee281df1",
+  "started_at": "2026-11-04T13:18:18.228666+00:00",
+  "finished_at": "2026-11-04T13:18:18.228667+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

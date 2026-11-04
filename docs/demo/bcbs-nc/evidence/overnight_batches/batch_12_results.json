@@ -1,0 +1,164 @@
+{
+  "batch": 12,
+  "generated_at": "2026-11-04T11:35:52.454982+00:00",
+  "n": 5,
+  "high": 5,
+  "fail": 0,
+  "results": [
+    {
+      "policy_id": "ab3aa18a-45db-4a8d-a9fb-6e3f134b464b",
+      "name": "Value-Based Insurance Design Waivers",
+      "policy_type": "COST_SHARING",
+      "status": "ACTIVE",
+      "batch": 12,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T10:57:30.604254+00:00"
+    },
+    {
+      "policy_id": "fd7a5b70-9c91-4a9f-b9cd-d442fcc67964",
+      "name": "Varicose Vein Ablation Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 12,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T10:59:04.322565+00:00"
+    },
+    {
+      "policy_id": "096fea69-7f63-4bca-859b-12dfa779f3d0",
+      "name": "Vertebral Augmentation Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "status": "ACTIVE",
+      "batch": 12,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T11:00:34.521559+00:00"
+    },
+    {
+      "policy_id": "51886386-a86a-4eb3-ae8e-b7f807464c96",
+      "name": "Virtual Visit Eligibility and Reimbursement Rules",
+      "policy_type": "TELEHEALTH_VIRTUAL_CARE",
+      "status": "ACTIVE",
+      "batch": 12,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T11:02:07.161896+00:00"
+    },
+    {
+      "policy_id": "9b632583-b59b-4a1d-8c63-d9e6eb8282fa",
+      "name": "Vision Hardware vs Medical Eye Disease",
+      "policy_type": "COVERAGE",
+      "status": "ACTIVE",
+      "batch": 12,
+      "confidence": "HIGH",
+      "api": {
+        "api_ok": true,
+        "workspace_name_ok": true,
+        "http": {
+          "policy": 200,
+          "workspace": 200,
+          "composition": 200,
+          "causal_feasibility": 200,
+          "causal_impact": 200,
+          "verdict_evidence": 200
+        },
+        "errors": {}
+      },
+      "browser": {
+        "browser_ok": true,
+        "workspace_ok": true,
+        "monitoring_ok": true,
+        "composition_ok": true,
+        "causal_ok": true,
+        "persistence_ok": true,
+        "err": null
+      },
+      "evaluated_at": "2026-11-04T11:03:38.229803+00:00"
+    }
+  ]
+}

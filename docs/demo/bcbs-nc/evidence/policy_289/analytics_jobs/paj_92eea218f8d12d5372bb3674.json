@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_92eea218f8d12d5372bb3674",
+  "policy_id": "875b5c39-f8ea-481c-ae79-3c59552362ab",
+  "name": "Infertility Treatment Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "f29917e5ae3817fb",
+  "started_at": "2026-11-04T13:18:18.234187+00:00",
+  "finished_at": "2026-11-04T13:18:18.234189+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

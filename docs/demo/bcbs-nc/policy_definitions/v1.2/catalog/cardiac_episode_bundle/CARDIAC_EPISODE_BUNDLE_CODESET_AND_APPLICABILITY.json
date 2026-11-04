@@ -1,0 +1,32 @@
+{
+  "document_id": "CARDIAC_EPISODE_BUNDLE_CODESET",
+  "policy_id": "1c33a9d1-fe18-451e-94b6-70f191a403f8",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abCardiac Episode Bundle\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "33533",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "92928",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "93458",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "CABG/PCI/cath anchors \u2014 episode price UNRESOLVED",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

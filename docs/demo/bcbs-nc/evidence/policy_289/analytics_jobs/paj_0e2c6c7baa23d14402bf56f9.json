@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_0e2c6c7baa23d14402bf56f9",
+  "policy_id": "9ec59e47-daf0-49c7-99d5-023335e33847",
+  "name": "Medication-Assisted Treatment Access Policy",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "d102dbbdda0c5524",
+  "started_at": "2026-11-04T13:18:18.236207+00:00",
+  "finished_at": "2026-11-04T13:18:18.236208+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

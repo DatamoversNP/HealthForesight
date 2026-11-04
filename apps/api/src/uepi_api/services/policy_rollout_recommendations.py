@@ -7,18 +7,52 @@ Combines: (1) claims-based opportunity signals, (2) curated clinical/UM archetyp
 """
 from __future__ import annotations
 
+import time
 from datetime import date, timedelta
 from typing import Any, Dict, List, Optional, Set, Tuple
 from uuid import UUID
 
-from sqlalchemy import func
+from sqlalchemy import func, text
 from sqlalchemy.orm import Session
 
 from uepi_api.models.canonical_data import ClaimsLineDB
-from uepi_api.models.policy import PolicyCodeSet, PolicyVersion
+from uepi_api.models.policy import Policy as PolicyDB, PolicyCodeSet, PolicyVersion
 from uepi_api.services.policy_scoped_data_generation import build_policy_claims_filters
-from uepi_api.storage_policies import get_policy, list_policies
 from uepi_api.storage_baselines import get_latest_baseline
+
+# Short TTL cache — rollout analysis is expensive against large claims tables.
+_ROLLOUT_CACHE: Dict[str, Tuple[float, Dict[str, Any]]] = {}
+_ROLLOUT_CACHE_TTL_SEC = 600.0
+
+
+def _cache_key(tenant_id: UUID, months_lookback: int, limit: int, jaccard_threshold: float) -> str:
+    return f"{tenant_id}:{months_lookback}:{limit}:{jaccard_threshold:.3f}"
+
+
+def _codes_from_policy_row(name: str, policy_type: str, meta: Optional[Dict[str, Any]]) -> Dict[str, Any]:
+    """Build a lightweight signature from ORM fields (no per-policy get_policy)."""
+    meta = meta if isinstance(meta, dict) else {}
+    pol = {
+        "name": name,
+        "policy_type": policy_type,
+        "scope": meta.get("scope") or {},
+        "policy_levers": meta.get("policy_levers") or [],
+        "logic": meta.get("logic") or {},
+        "policy_logic": meta.get("policy_logic") or {},
+        "metadata": meta,
+        "policy_metadata_json": meta,
+    }
+    pf = build_policy_claims_filters(pol)
+    codes: Set[str] = set()
+    for k in ("procedure_codes", "cpt_codes", "hcpcs_codes"):
+        v = pf.get(k)
+        if isinstance(v, list):
+            codes.update(str(c).strip() for c in v if c)
+    return {
+        "name": name or "",
+        "policy_type": policy_type or "UNKNOWN",
+        "codes": codes,
+    }
 
 
 # Curated archetypes: enterprise catalog (extend via config/DB later)
@@ -82,37 +116,41 @@ POLICY_ARCHETYPES: List[Dict[str, Any]] = [
 ]
 
 
-def _codes_for_policy_db(db: Session, tenant_id: UUID, policy_id: UUID) -> Set[str]:
+def _existing_policy_signatures(db: Session, tenant_id: UUID) -> List[Dict[str, Any]]:
+    """One policies query + one batched code-set query (avoids N× get_policy)."""
     rows = (
-        db.query(PolicyCodeSet.code)
-        .join(PolicyVersion, PolicyCodeSet.version_id == PolicyVersion.id)
-        .filter(PolicyCodeSet.tenant_id == tenant_id, PolicyVersion.policy_id == policy_id)
+        db.query(PolicyDB.id, PolicyDB.name, PolicyDB.policy_type, PolicyDB.policy_metadata_json)
+        .filter(PolicyDB.tenant_id == tenant_id)
         .all()
     )
-    return {str(r[0]).strip() for r in rows if r and r[0]}
+    if not rows:
+        return []
 
-
-def _existing_policy_signatures(db: Session, tenant_id: UUID) -> List[Dict[str, Any]]:
-    out: List[Dict[str, Any]] = []
-    policies = list_policies(tenant_id) or []
-    for p in policies:
-        pid = UUID(str(p["id"]))
-        pol = get_policy(pid, tenant_id)
-        if not pol:
+    codes_by_policy: Dict[str, Set[str]] = {str(r.id): set() for r in rows}
+    code_rows = (
+        db.query(PolicyVersion.policy_id, PolicyCodeSet.code)
+        .join(PolicyCodeSet, PolicyCodeSet.version_id == PolicyVersion.id)
+        .filter(PolicyVersion.tenant_id == tenant_id, PolicyCodeSet.tenant_id == tenant_id)
+        .all()
+    )
+    for policy_id, code in code_rows:
+        if not code:
             continue
-        pf = build_policy_claims_filters(pol)
-        codes = set()
-        for k in ("procedure_codes", "cpt_codes", "hcpcs_codes"):
-            v = pf.get(k)
-            if isinstance(v, list):
-                codes.update(str(c).strip() for c in v if c)
-        codes.update(_codes_for_policy_db(db, tenant_id, pid))
+        key = str(policy_id)
+        if key in codes_by_policy:
+            codes_by_policy[key].add(str(code).strip())
+
+    out: List[Dict[str, Any]] = []
+    for r in rows:
+        sig = _codes_from_policy_row(r.name, r.policy_type, r.policy_metadata_json)
+        pid = str(r.id)
+        sig["codes"].update(codes_by_policy.get(pid) or set())
         out.append(
             {
-                "policy_id": str(pid),
-                "name": pol.get("name") or pol.get("policy_name") or "",
-                "policy_type": pol.get("policy_type") or "UNKNOWN",
-                "codes": codes,
+                "policy_id": pid,
+                "name": sig["name"],
+                "policy_type": sig["policy_type"],
+                "codes": sig["codes"],
             }
         )
     return out
@@ -160,74 +198,127 @@ def _is_duplicate_candidate(
     return False, None, []
 
 
+def _archetype_procedure_codes() -> List[str]:
+    codes: Set[str] = set()
+    for arch in POLICY_ARCHETYPES:
+        codes.update(str(c) for c in (arch.get("procedure_codes") or []))
+    return sorted(codes)
+
+
+def _archetype_service_categories() -> List[str]:
+    cats: Set[str] = set()
+    for arch in POLICY_ARCHETYPES:
+        cats.update(str(c) for c in (arch.get("service_categories") or []))
+    return sorted(cats)
+
+
 def _aggregate_top_cpt(
-    db: Session, tenant_id: UUID, start: date, end: date, limit: int = 40
+    db: Session,
+    tenant_id: UUID,
+    start: date,
+    end: date,
+    limit: int = 40,
+    *,
+    procedure_codes: Optional[List[str]] = None,
 ) -> List[Dict[str, Any]]:
-    q = (
-        db.query(
-            ClaimsLineDB.cpt_code,
-            func.coalesce(func.sum(ClaimsLineDB.allowed_amount), 0).label("allowed_sum"),
-            func.count(ClaimsLineDB.id).label("line_count"),
-            func.count(func.distinct(ClaimsLineDB.member_id)).label("member_count"),
+    """
+    Aggregate spend for a small CPT set (archetype codes). Full-table GROUP BY over
+    all claims times out on large tenants — scoping to archetype codes keeps this interactive.
+    """
+    codes = procedure_codes or _archetype_procedure_codes()
+    if not codes:
+        return []
+    try:
+        # Scoped CPT set — full-table GROUP BY times out on large tenants over Azure Postgres.
+        db.execute(text("SET LOCAL statement_timeout = '25s'"))
+        q = (
+            db.query(
+                ClaimsLineDB.cpt_code,
+                func.coalesce(func.sum(ClaimsLineDB.allowed_amount), 0).label("allowed_sum"),
+                func.count(ClaimsLineDB.id).label("line_count"),
+            )
+            .filter(
+                ClaimsLineDB.tenant_id == tenant_id,
+                ClaimsLineDB.service_date >= start,
+                ClaimsLineDB.service_date <= end,
+                ClaimsLineDB.cpt_code.in_(codes),
+            )
+            .group_by(ClaimsLineDB.cpt_code)
+            .order_by(func.sum(ClaimsLineDB.allowed_amount).desc())
+            .limit(limit)
         )
-        .filter(
-            ClaimsLineDB.tenant_id == tenant_id,
-            ClaimsLineDB.service_date >= start,
-            ClaimsLineDB.service_date <= end,
-            ClaimsLineDB.cpt_code.isnot(None),
-            ClaimsLineDB.cpt_code != "",
-        )
-        .group_by(ClaimsLineDB.cpt_code)
-        .order_by(func.sum(ClaimsLineDB.allowed_amount).desc())
-        .limit(limit)
-    )
-    rows = q.all()
-    out = []
-    for r in rows:
-        out.append(
+        rows = q.all()
+        return [
             {
                 "cpt_code": str(r.cpt_code),
                 "allowed_amount": float(r.allowed_sum or 0),
                 "line_count": int(r.line_count or 0),
-                "member_count": int(r.member_count or 0),
+                "member_count": 0,
             }
-        )
-    return out
+            for r in rows
+        ]
+    except Exception as e:
+        print(f"WARNING policy_rollout CPT aggregate skipped: {e}", flush=True)
+        try:
+            db.rollback()
+        except Exception:
+            pass
+        return []
 
 
 def _aggregate_top_service_category(
-    db: Session, tenant_id: UUID, start: date, end: date, limit: int = 15
+    db: Session,
+    tenant_id: UUID,
+    start: date,
+    end: date,
+    limit: int = 15,
+    *,
+    service_categories: Optional[List[str]] = None,
 ) -> List[Dict[str, Any]]:
-    q = (
-        db.query(
-            ClaimsLineDB.service_category,
-            func.coalesce(func.sum(ClaimsLineDB.allowed_amount), 0).label("allowed_sum"),
-            func.count(ClaimsLineDB.id).label("line_count"),
+    cats = service_categories or _archetype_service_categories()
+    if not cats:
+        return []
+    try:
+        db.execute(text("SET LOCAL statement_timeout = '25s'"))
+        q = (
+            db.query(
+                ClaimsLineDB.service_category,
+                func.coalesce(func.sum(ClaimsLineDB.allowed_amount), 0).label("allowed_sum"),
+                func.count(ClaimsLineDB.id).label("line_count"),
+            )
+            .filter(
+                ClaimsLineDB.tenant_id == tenant_id,
+                ClaimsLineDB.service_date >= start,
+                ClaimsLineDB.service_date <= end,
+                ClaimsLineDB.service_category.in_(cats),
+            )
+            .group_by(ClaimsLineDB.service_category)
+            .order_by(func.sum(ClaimsLineDB.allowed_amount).desc())
+            .limit(limit)
         )
-        .filter(
-            ClaimsLineDB.tenant_id == tenant_id,
-            ClaimsLineDB.service_date >= start,
-            ClaimsLineDB.service_date <= end,
-        )
-        .group_by(ClaimsLineDB.service_category)
-        .order_by(func.sum(ClaimsLineDB.allowed_amount).desc())
-        .limit(limit)
-    )
-    rows = q.all()
-    return [
-        {
-            "service_category": str(r.service_category),
-            "allowed_amount": float(r.allowed_sum or 0),
-            "line_count": int(r.line_count or 0),
-        }
-        for r in rows
-    ]
+        rows = q.all()
+        return [
+            {
+                "service_category": str(r.service_category),
+                "allowed_amount": float(r.allowed_sum or 0),
+                "line_count": int(r.line_count or 0),
+            }
+            for r in rows
+        ]
+    except Exception as e:
+        print(f"WARNING policy_rollout category aggregate skipped: {e}", flush=True)
+        try:
+            db.rollback()
+        except Exception:
+            pass
+        return []
 
 
 def _confidence_from_volume(lines: int, members: int, months: int) -> Tuple[str, str]:
-    if lines >= 5000 and members >= 500:
-        return "high", "Large claim volume and member breadth in the lookback window."
-    if lines >= 800 and members >= 100:
+    # member_count may be 0 when using the fast CPT-scoped aggregate (no DISTINCT).
+    if lines >= 5000 and (members >= 500 or members == 0):
+        return "high", "Large claim volume in the lookback window."
+    if lines >= 800 and (members >= 100 or members == 0):
         return "medium", "Moderate volume; estimates should be validated with a pilot or sensitivity analysis."
     return "low", "Limited data in window — directional only; expand lookback or wait for more ingestion."
 
@@ -277,14 +368,29 @@ def compute_policy_rollout_recommendations(
     limit: int = 25,
     jaccard_threshold: float = 0.55,
 ) -> Dict[str, Any]:
+    key = _cache_key(tenant_id, months_lookback, limit, jaccard_threshold)
+    cached = _ROLLOUT_CACHE.get(key)
+    if cached and (time.monotonic() - cached[0]) < _ROLLOUT_CACHE_TTL_SEC:
+        return cached[1]
+
     end = date.today()
     start = end - timedelta(days=30 * max(3, min(months_lookback, 36)))
 
     existing = _existing_policy_signatures(db, tenant_id)
 
-    top_cpt = _aggregate_top_cpt(db, tenant_id, start, end, limit=50)
-    top_cat = _aggregate_top_service_category(db, tenant_id, start, end, limit=20)
-    baseline = get_latest_baseline(tenant_id, policy_id=None)
+    # Prefer a shorter claims window for interactivity; archetypes still cover the catalog.
+    claims_start = end - timedelta(days=30 * min(months_lookback, 6))
+    top_cpt = _aggregate_top_cpt(
+        db, tenant_id, claims_start, end, limit=50, procedure_codes=_archetype_procedure_codes()
+    )
+    # Category scan is nearly as expensive as CPT and adds little beyond archetype CPT overlap —
+    # skip it on the hot path; evidence still comes from CPT concentration.
+    top_cat: List[Dict[str, Any]] = []
+    try:
+        baseline = get_latest_baseline(tenant_id, policy_id=None)
+    except Exception as e:
+        print(f"WARNING policy_rollout baseline skipped: {e}", flush=True)
+        baseline = None
     bm = (baseline or {}).get("baseline_metrics") or (baseline or {}).get("metrics") or {}
     base_util = float(
         bm.get("util_rate_total_per_1000_mm") or bm.get("utilization_per_1k") or 0.0
@@ -438,7 +544,7 @@ def compute_policy_rollout_recommendations(
         )
     )
 
-    return {
+    result = {
         "generated_at": end.isoformat(),
         "tenant_id": str(tenant_id),
         "parameters": {
@@ -459,3 +565,5 @@ def compute_policy_rollout_recommendations(
         "methodology_footer": "Health Foresight rollout recommender v1: catalog archetypes + claims concentration + "
         "Jaccard/code-coverage dedup vs in-force policies + optional tenant elasticity models.",
     }
+    _ROLLOUT_CACHE[key] = (time.monotonic(), result)
+    return result

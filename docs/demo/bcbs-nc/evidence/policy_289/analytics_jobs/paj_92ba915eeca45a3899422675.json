@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_92ba915eeca45a3899422675",
+  "policy_id": "36228118-affa-48f1-abad-c3fb6091d870",
+  "name": "Mandatory Mail-Order Maintenance Medications",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "e2891c7e5f11d4ef",
+  "started_at": "2026-11-04T13:18:18.235163+00:00",
+  "finished_at": "2026-11-04T13:18:18.235165+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

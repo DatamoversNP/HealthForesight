@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_d9c3269a83124cd90e7e074d",
+  "policy_id": "3d1d4a09-c7ce-4935-ad95-b477831a1002",
+  "name": "Proton Beam Therapy Coverage Criteria",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "18b38b357d06ed57",
+  "started_at": "2026-11-04T13:18:18.240865+00:00",
+  "finished_at": "2026-11-04T13:18:18.240866+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

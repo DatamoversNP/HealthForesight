@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_94289bc12a15021fb6705dfb",
+  "policy_id": "472286dc-090b-4ea9-b4aa-b33877c1a1e6",
+  "name": "North Carolina Mandated Benefit Administration",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "b0ba9780c945f8a3",
+  "started_at": "2026-11-04T13:18:18.237769+00:00",
+  "finished_at": "2026-11-04T13:18:18.237771+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

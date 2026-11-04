@@ -1,0 +1,32 @@
+{
+  "document_id": "ADVANCED_IMAGING_MEMBER_COST_SHARE_DESIGN_CODESET",
+  "policy_id": "1b8a6ad3-3753-4fba-90eb-f0d1b6ac7f00",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abAdvanced Imaging Member Cost Share Design\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "70553",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "72148",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "71260",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Imaging cost-share design anchors \u2014 copay amounts UNRESOLVED product terms",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

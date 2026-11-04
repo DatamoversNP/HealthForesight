@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_f735538f4eb18386c0c98eba",
+  "policy_id": "12dc4c83-bc61-48d7-ada2-3648b16c7c6c",
+  "name": "Sleep Surgery Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "20602a5c282b7c6c",
+  "started_at": "2026-11-04T13:18:18.241917+00:00",
+  "finished_at": "2026-11-04T13:18:18.241918+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

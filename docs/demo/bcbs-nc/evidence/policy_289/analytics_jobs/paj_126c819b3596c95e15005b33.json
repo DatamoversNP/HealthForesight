@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_126c819b3596c95e15005b33",
+  "policy_id": "d36d2783-37b6-4b30-9787-fea2dfcccb14",
+  "name": "Esketamine Treatment Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "f28ca4d033894861",
+  "started_at": "2026-11-04T13:18:18.231716+00:00",
+  "finished_at": "2026-11-04T13:18:18.231718+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

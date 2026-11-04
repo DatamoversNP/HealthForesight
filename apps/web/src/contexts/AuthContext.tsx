@@ -101,6 +101,48 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     loadUser({ sessionOnly: true }).catch(() => setLoading(false))
   }, [])
 
+  // Keep session alive while the tab is open (demo warm / idle should not force re-login).
+  // Refreshes when <15 min remain, or every 10 min as a heartbeat when refresh API is available.
+  useEffect(() => {
+    if (!user || !apiClient.getToken()) return
+
+    let cancelled = false
+    const refreshIfNeeded = async () => {
+      if (cancelled || !apiClient.getToken()) return
+      if (apiClient.isAccessTokenExpired()) {
+        apiClient.setToken(null)
+        setUser(null)
+        return
+      }
+      const remaining = apiClient.getAccessTokenSecondsRemaining()
+      // Refresh when under 15 minutes left, or always try periodically for sliding session
+      const shouldRefresh = remaining == null || remaining < 15 * 60
+      if (!shouldRefresh) return
+      try {
+        const res = await apiClient.refreshAccessToken()
+        if (res?.access_token && !cancelled) {
+          apiClient.setToken(res.access_token)
+        }
+      } catch {
+        // Older API without /auth/refresh — ignore; longer JWT TTL still applies after deploy
+      }
+    }
+
+    void refreshIfNeeded()
+    const id = window.setInterval(() => {
+      void refreshIfNeeded()
+    }, 10 * 60 * 1000)
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') void refreshIfNeeded()
+    }
+    document.addEventListener('visibilitychange', onVisible)
+    return () => {
+      cancelled = true
+      window.clearInterval(id)
+      document.removeEventListener('visibilitychange', onVisible)
+    }
+  }, [user])
+
   const clearApiUnavailable = () => setApiUnavailable(false)
 
   const login = async (token: string) => {

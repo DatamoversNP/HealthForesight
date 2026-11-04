@@ -1,0 +1,10 @@
+{
+  "document_id": "PHARMACY_PRIOR_AUTHORIZATION_PROGRAM_CODESET",
+  "policy_id": "3137bb4b-516d-44eb-b023-d5b891de1bd4",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abPharmacy Prior Authorization Program\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Program umbrella \u2014 constituent drug lists product-specific",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

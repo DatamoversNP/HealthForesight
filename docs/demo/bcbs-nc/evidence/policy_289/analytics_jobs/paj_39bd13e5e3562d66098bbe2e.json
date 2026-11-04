@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_39bd13e5e3562d66098bbe2e",
+  "policy_id": "6190a653-b9d5-4aec-ba49-58927eb13bb8",
+  "name": "Provider Specialty Eligibility for High-Cost Codes",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "14466e38de2a8c03",
+  "started_at": "2026-11-04T13:18:18.241034+00:00",
+  "finished_at": "2026-11-04T13:18:18.241035+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

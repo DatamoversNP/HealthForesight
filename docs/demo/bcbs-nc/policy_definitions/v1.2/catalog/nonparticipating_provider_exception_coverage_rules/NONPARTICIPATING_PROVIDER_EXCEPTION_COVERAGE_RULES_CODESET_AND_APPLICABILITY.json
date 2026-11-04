@@ -1,0 +1,10 @@
+{
+  "document_id": "NONPARTICIPATING_PROVIDER_EXCEPTION_COVERAGE_RULES_CODESET",
+  "policy_id": "a517d486-b3e0-4c91-bb8b-4a49010745b2",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abNonparticipating Provider Exception Coverage Rules\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "Network / access / COE / referral rule \u2014 taxonomy/network IDs not CPT schedule",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

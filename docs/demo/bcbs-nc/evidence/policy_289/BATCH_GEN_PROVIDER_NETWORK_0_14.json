@@ -1,0 +1,153 @@
+{
+  "archetype": "PROVIDER_NETWORK",
+  "offset": 0,
+  "count": 14,
+  "candidate_schedule": 0,
+  "unresolved": 0,
+  "not_applicable": 14,
+  "persisted_ok": 0,
+  "results": [
+    {
+      "policy_id": "e0ac744f-34bf-42f1-ac44-5cbaf5beb823",
+      "name": "Behavioral Health Appointment Access Standards",
+      "folder": "catalog/behavioral_health_appointment_access_standards",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "7b7666c6-90fb-4a19-b7ea-581400fd405f",
+      "name": "Centers of Excellence Requirement \u2014 Bariatric",
+      "folder": "catalog/centers_of_excellence_requirement_bariatric",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "8e4ff210-8d77-4b27-9a86-1e6f50986033",
+      "name": "Centers of Excellence Requirement \u2014 Complex Cancer",
+      "folder": "catalog/centers_of_excellence_requirement_complex_cancer",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "cc2953d0-4d9c-4e92-8861-0b0683e7c0b5",
+      "name": "Centers of Excellence Requirement \u2014 Transplant",
+      "folder": "catalog/centers_of_excellence_requirement_transplant",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "444130ea-9eb9-497a-9c9a-c9f7779f657d",
+      "name": "Continuity of Care After Provider Termination",
+      "folder": "catalog/continuity_of_care_after_provider_termination",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "6634c873-73b0-4a60-8a96-a01d690f1898",
+      "name": "Maximum Wait Time for Specialist Appointments",
+      "folder": "catalog/maximum_wait_time_for_specialist_appointments",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "a517d486-b3e0-4c91-bb8b-4a49010745b2",
+      "name": "Nonparticipating Provider Exception Coverage Rules",
+      "folder": "catalog/nonparticipating_provider_exception_coverage_rules",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "828e0c91-a8ad-454b-b667-01fb13470117",
+      "name": "Out-of-Network Elective Services Restriction",
+      "folder": "catalog/out_of_network_elective_services_restriction",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "0a19b3f5-f5b5-4ceb-8ea5-39eab4d937eb",
+      "name": "PCP Referral Requirement for Specialist Visits",
+      "folder": "catalog/pcp_referral_requirement_for_specialist_visits",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "52e12f77-ddf0-4252-9ec9-04eccbbb9732",
+      "name": "Preferred Dialysis Network Policy",
+      "folder": "catalog/preferred_dialysis_network_policy",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "6190a653-b9d5-4aec-ba49-58927eb13bb8",
+      "name": "Provider Specialty Eligibility for High-Cost Codes",
+      "folder": "catalog/provider_specialty_eligibility_for_high_cost_codes",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "3476e04f-6f18-40b7-a7a6-28fad5c84048",
+      "name": "Specialist Provider Eligibility for Specialty Services",
+      "folder": "catalog/specialist_provider_eligibility_for_specialty_services",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "b0b19eb0-1ec0-45b6-87c0-06d0f7cef655",
+      "name": "Telehealth Vendor Network Rules",
+      "folder": "catalog/telehealth_vendor_network_rules",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [],
+      "persist": null
+    },
+    {
+      "policy_id": "2b82352a-b10a-41b8-a086-8f272b26872f",
+      "name": "Tiered Network Restriction for High-Cost Procedures",
+      "folder": "catalog/tiered_network_restriction_for_high_cost_procedures",
+      "codeset_status": "NOT_APPLICABLE",
+      "code_count": 0,
+      "definition_status": "DEFINITION_COMPLETE_CANDIDATE",
+      "accuracy_failures": [
+        "SCOPE: states=NC but markets are metro-only without lever codes justifying claim geography"
+      ],
+      "persist": null
+    }
+  ]
+}

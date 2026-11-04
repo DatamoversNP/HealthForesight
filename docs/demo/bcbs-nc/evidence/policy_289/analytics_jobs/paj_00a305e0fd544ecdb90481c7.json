@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_00a305e0fd544ecdb90481c7",
+  "policy_id": "a48ca309-5f0d-4cf1-bda0-ccdbeccb0bfe",
+  "name": "Power Mobility Device Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "d00cf26f873dadcb",
+  "started_at": "2026-11-04T13:18:18.240226+00:00",
+  "finished_at": "2026-11-04T13:18:18.240227+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

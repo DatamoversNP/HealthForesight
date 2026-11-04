@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_c2498fecdcb5d798ada4f8c6",
+  "policy_id": "c5c9e942-0649-46b5-82e0-20e660ead31d",
+  "name": "Oncology Evidence-Based Clinical Pathway",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "c1e90b0bff0d7f34",
+  "started_at": "2026-11-04T13:18:18.238196+00:00",
+  "finished_at": "2026-11-04T13:18:18.238203+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "codeset_UNRESOLVED",
+      "definition_incomplete"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

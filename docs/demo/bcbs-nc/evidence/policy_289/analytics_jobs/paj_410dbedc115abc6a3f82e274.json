@@ -1,0 +1,18 @@
+{
+  "job_id": "paj_410dbedc115abc6a3f82e274",
+  "policy_id": "d8167a61-8d8a-4b7b-b1d8-889bfe5fedfd",
+  "name": "Outpatient Advanced Imaging Medical Necessity Criteria",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "412844a82d575ffc",
+  "started_at": "2026-11-04T13:18:18.239156+00:00",
+  "finished_at": "2026-11-04T13:18:18.239157+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "scope.states"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

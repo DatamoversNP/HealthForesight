@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_54624875c52a49576c39a1a4",
+  "policy_id": "fd7a5b70-9c91-4a9f-b9cd-d442fcc67964",
+  "name": "Varicose Vein Ablation Prior Authorization",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "e72fee44bc861099",
+  "started_at": "2026-11-04T13:18:18.244745+00:00",
+  "finished_at": "2026-11-04T13:18:18.244746+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

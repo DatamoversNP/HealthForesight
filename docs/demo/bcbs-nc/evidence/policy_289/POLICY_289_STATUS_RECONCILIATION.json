@@ -1,0 +1,103 @@
+{
+  "document_id": "POLICY_289_STATUS_RECONCILIATION",
+  "generated_at": "2026-11-04T14:55:19.247502+00:00",
+  "definitions": {
+    "DIRECTIONALLY_ACCURATE": "Policy realism + valid codes/levers/scope for Representative Payer demo; BCBS NC exact fidelity NOT required; OPERATIONALLY_APPROVED prohibited.",
+    "DEMO_READY": "Directionally accurate AND evidence pathway classified as EMPIRICAL_COHORT | REPRESENTATIVE_SYNTHETIC_FIXTURE | PROVENANCE_ONLY (not BLOCKED). Executable scenario bounded and labeled.",
+    "BLOCKED_PATHWAY": "Lane B: cannot run numerical mechanism \u2014 missing codeset/definition/inputs/cohort. Persisting BLOCKED is orchestration success, NOT mechanism execution success.",
+    "DIRECTIONAL_FAIL": "Lane A: unresolved proprietary/licensed inputs (NDC/MCG/MUE/rates/placeholders) or lever FAIL \u2014 do not invent authoritative rules.",
+    "ORCHESTRATION_COMPLETED": "Worker/job pathway finished and persisted a typed evidence record (empirical | synthetic | provenance | blocked). \u2260 numerical analysis success."
+  },
+  "counts": {
+    "preflighted": 289,
+    "nonzero_cohorts": 52,
+    "mechanism_inputs_sufficient": 246,
+    "empirical_eligible": 9,
+    "synthetic_pathway": 179,
+    "provenance_only": 53,
+    "blocked_pathway": 48,
+    "directional_pass": 267,
+    "directional_fail": 22,
+    "demo_ready_pass": 241
+  },
+  "separate_conditions_note": "nonzero cohort \u2260 inputs sufficient \u2260 empirical eligible. These are sequential gates, not interchangeable.",
+  "evidence_type_counts": {
+    "EMPIRICAL_ANALYTICAL_RESULT": 9,
+    "SYNTHETIC_ANALYTICAL_RESULT": 179,
+    "PROVENANCE_RESULT": 53,
+    "BLOCKED_PREFLIGHT_RESULT": 48
+  },
+  "mechanism_execution_vs_orchestration": {
+    "orchestration_completed_289": true,
+    "mechanism_execution_true_approx": 12,
+    "blocked_persisted_is_not_mechanism_success": true
+  },
+  "reconcile_48_vs_22": {
+    "blocked_pathways": 48,
+    "directional_fails": 22,
+    "intersection": 22,
+    "blocked_but_directionally_pass": [
+      "17415dd5-1a1a-4e82-959e-a1924cc9c121",
+      "2b1a9c48-8352-4fd5-be6f-d12c7647de7d",
+      "2c003e47-6137-4402-bbaa-67589ef2654b",
+      "2c14270f-aca3-4268-8562-235dce612e9f",
+      "38525bee-e8b4-483c-85e1-5abdc2747be9",
+      "3e0b2ec4-217c-4d08-914d-015e9b8961d6",
+      "51886386-a86a-4eb3-ae8e-b7f807464c96",
+      "6c9cac8c-65f6-4214-8d9d-50dcf5f98bda",
+      "7ccbdad3-8688-4b4b-b21a-07c4877a9956",
+      "7e2ac9e6-7493-40c1-8bc3-7c4fe7347fdb",
+      "7e9ec991-76a0-4da9-86f0-f0a940b063e7",
+      "8de16b8c-7bbb-49ca-850a-73b8e8f81908",
+      "90592b6e-95a3-4f83-aee5-ed17ddfa1d1b",
+      "9458bc86-990a-4a2e-9cec-facbc9e3fe27",
+      "9fb617a1-2718-47dd-995d-b4fe2a77ca3a",
+      "a45b26ab-305a-485a-8e29-17735584aaff",
+      "b0d2714b-8bf5-40d4-a44e-8a9912ba6740",
+      "b815e37b-98c9-40b4-8e17-b0821566fcaf",
+      "ce65ce76-ea5b-4a7d-8260-84c11ae54bb2",
+      "d1bffe1f-683f-4086-a873-7d1bcf4fa059",
+      "d1e25694-719d-428b-b5b5-329abb6147c0",
+      "d8167a61-8d8a-4b7b-b1d8-889bfe5fedfd",
+      "ef853bdb-40fb-4e68-8013-a4f8bf8d9b2c",
+      "f0fb116f-2ef1-48d3-bbe1-3d4c7b5cf7d8",
+      "f54e4310-7f4b-4d6e-a6ab-c7b748722c8d",
+      "fc8541ac-c246-40f2-afdc-9e1d8b50180c"
+    ],
+    "directional_fail_but_not_blocked": [],
+    "explanation": "Blocked (Lane B) = cannot execute numerical analysis with current inputs/cohort. Directional fail (Lane A) = definition/codeset unresolved or lever FAIL. A policy can be directionally OK but blocked for analytics (e.g. missing scope.states for coded empirical path), or both."
+  },
+  "reconcile_267_vs_241": {
+    "directional_pass": 267,
+    "demo_ready_pass": 241,
+    "directional_pass_not_demo_ready": [
+      "17415dd5-1a1a-4e82-959e-a1924cc9c121",
+      "2b1a9c48-8352-4fd5-be6f-d12c7647de7d",
+      "2c003e47-6137-4402-bbaa-67589ef2654b",
+      "2c14270f-aca3-4268-8562-235dce612e9f",
+      "38525bee-e8b4-483c-85e1-5abdc2747be9",
+      "3e0b2ec4-217c-4d08-914d-015e9b8961d6",
+      "51886386-a86a-4eb3-ae8e-b7f807464c96",
+      "6c9cac8c-65f6-4214-8d9d-50dcf5f98bda",
+      "7ccbdad3-8688-4b4b-b21a-07c4877a9956",
+      "7e2ac9e6-7493-40c1-8bc3-7c4fe7347fdb",
+      "7e9ec991-76a0-4da9-86f0-f0a940b063e7",
+      "8de16b8c-7bbb-49ca-850a-73b8e8f81908",
+      "90592b6e-95a3-4f83-aee5-ed17ddfa1d1b",
+      "9458bc86-990a-4a2e-9cec-facbc9e3fe27",
+      "9fb617a1-2718-47dd-995d-b4fe2a77ca3a",
+      "a45b26ab-305a-485a-8e29-17735584aaff",
+      "b0d2714b-8bf5-40d4-a44e-8a9912ba6740",
+      "b815e37b-98c9-40b4-8e17-b0821566fcaf",
+      "ce65ce76-ea5b-4a7d-8260-84c11ae54bb2",
+      "d1bffe1f-683f-4086-a873-7d1bcf4fa059",
+      "d1e25694-719d-428b-b5b5-329abb6147c0",
+      "d8167a61-8d8a-4b7b-b1d8-889bfe5fedfd",
+      "ef853bdb-40fb-4e68-8013-a4f8bf8d9b2c",
+      "f0fb116f-2ef1-48d3-bbe1-3d4c7b5cf7d8",
+      "f54e4310-7f4b-4d6e-a6ab-c7b748722c8d",
+      "fc8541ac-c246-40f2-afdc-9e1d8b50180c"
+    ],
+    "explanation": "DEMO_READY requires directional PASS plus a non-BLOCKED evidence pathway. The gap is primarily directionally accurate policies still classified BLOCKED for mechanism execution."
+  }
+}

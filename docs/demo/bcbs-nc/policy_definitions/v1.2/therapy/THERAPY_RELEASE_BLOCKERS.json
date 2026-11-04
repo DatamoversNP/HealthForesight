@@ -1,0 +1,60 @@
+{
+  "document_id": "HF-RP-COV-THER-001-RELEASE-BLOCKERS",
+  "generated_at": "2026-11-03T15:32:32.189928+00:00",
+  "rule": "Hard release blockers \u2014 not informational warnings. Engineering must not self-clear.",
+  "blocks_operational_activation": true,
+  "blocker_count": 5,
+  "blockers": [
+    {
+      "id": "CLINICAL_SCHEDULE_UNSIGNED",
+      "blocks": [
+        "operative APPROVED",
+        "ADVERSE_DETERMINATION_ISSUED"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "THERAPY_*"
+    },
+    {
+      "id": "PRODUCT_SCHEDULE_UNRESOLVED",
+      "blocks": [
+        "activation"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "THERAPY_*"
+    },
+    {
+      "id": "LEGAL_CLOCKS_UNRESOLVED",
+      "blocks": [
+        "activation"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "THERAPY_*"
+    },
+    {
+      "id": "THERAPY_VISIT_LIMITS_UNRESOLVED",
+      "blocks": [
+        "operative caps"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "THERAPY_*"
+    },
+    {
+      "id": "GUARDRAIL_THRESHOLDS_UNAPPROVED",
+      "blocks": [
+        "production monitoring"
+      ],
+      "severity": "RELEASE_BLOCKER",
+      "informational_only": false,
+      "blocks_operational_activation": true,
+      "artifact": "THERAPY_*"
+    }
+  ]
+}

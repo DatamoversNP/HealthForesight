@@ -97,7 +97,7 @@ export class ApiClient {
   constructor() {
     this.client = axios.create({
       baseURL: API_BASE_URL,
-      timeout: 90000, // 90s default when server is busy (with-claim-counts, analyses, etc.)
+      timeout: 45000, // keep interactive; long jobs must use explicit timeouts
       headers: {
         'Content-Type': 'application/json',
       },
@@ -115,14 +115,13 @@ export class ApiClient {
           config.headers.Authorization = `Bearer ${token}`
         }
         
-        // Log request
+        // Debug-only request trace (logger redacts secrets; suppressed in production builds)
         logger.debug('API_REQUEST', `${config.method?.toUpperCase()} ${config.url}`, {
           method: config.method,
           url: config.url,
-          headers: config.headers,
           data: config.data,
         })
-        
+
         return config
       },
       (error) => {
@@ -297,16 +296,54 @@ export class ApiClient {
     return response.data
   }
 
+  /** Sliding session — requires a still-valid token; returns a new access_token. */
+  async refreshAccessToken() {
+    const response = await this.client.post('/auth/refresh', null, { timeout: 20000 })
+    return response.data as { access_token?: string }
+  }
+
+  /** Seconds until JWT exp (null if unknown / non-JWT). */
+  getAccessTokenSecondsRemaining(): number | null {
+    const t = this.getToken()
+    if (!t) return null
+    const exp = jwtExpSeconds(t)
+    if (exp == null) return null
+    return Math.floor(exp - Date.now() / 1000)
+  }
+
   // Policy endpoints
+  private _policiesCache: { key: string; at: number; data: any } | null = null
+  private _policiesInflight: Map<string, Promise<any>> = new Map()
+
   async getPolicies(params?: { skip?: number; limit?: number; policy_type?: string }) {
-    // Use longer timeout for policies endpoint since it may load many files
-    const response = await this.client.get('/policies', { params, timeout: 60000 }) // 60 seconds
-    return response.data
+    const key = JSON.stringify(params || {})
+    const now = Date.now()
+    if (this._policiesCache && this._policiesCache.key === key && now - this._policiesCache.at < 60_000) {
+      return this._policiesCache.data
+    }
+    const existing = this._policiesInflight.get(key)
+    if (existing) return existing
+
+    const promise = this.client
+      .get('/policies', { params, timeout: 60000 })
+      .then((response) => {
+        this._policiesCache = { key, at: Date.now(), data: response.data }
+        return response.data
+      })
+      .finally(() => {
+        this._policiesInflight.delete(key)
+      })
+    this._policiesInflight.set(key, promise)
+    return promise
   }
 
   /** Policies with claim counts (sorted by claim_count desc). Use to pick policy with most data for what-if. */
   async getPoliciesWithClaimCounts(limit = 20) {
-    const response = await this.client.get('/policies/with-claim-counts', { params: { limit }, timeout: 120000 })
+    // Tip endpoint only — must not pin the UI/API for minutes
+    const response = await this.client.get('/policies/with-claim-counts', {
+      params: { limit },
+      timeout: 15000,
+    })
     return response.data
   }
 
@@ -316,7 +353,10 @@ export class ApiClient {
   }
 
   async getPolicyClaimCountsBreakdown(policyId: string) {
-    const response = await this.client.get(`/policies/${policyId}/claim-counts-breakdown`)
+    // Heavy claims scan — keep interactive and fail soft for workspace/catalog dialogs
+    const response = await this.client.get(`/policies/${policyId}/claim-counts-breakdown`, {
+      timeout: 20000,
+    })
     return response.data
   }
 
@@ -350,18 +390,48 @@ export class ApiClient {
     return response.data
   }
 
+  /** True when payload has usable Stage 3.5 metrics (API may return 200 with empty metrics). */
+  hasUsablePredictedImpact(impact: any): boolean {
+    const m = impact?.metrics
+    if (!m || typeof m !== 'object') return false
+    return (
+      m.cost_change_pmpm != null ||
+      m.cost_change != null ||
+      m.utilization_change_pct != null ||
+      m.utilization_change_per_1k != null ||
+      m.utilization_change != null
+    )
+  }
+
+  /** Slim latest predicted impact per policy — one round-trip for overview grids. */
+  async listPredictedImpactsSummary(limit = 500) {
+    const response = await this.client.get('/policies/predicted-impacts', {
+      params: { limit },
+      timeout: 60000,
+    })
+    return response.data
+  }
+
   async getPolicyPredictedImpact(policyId: string) {
     try {
       // Accept 404 so axios doesn't throw (avoids console errors for policies without predicted impact)
       const response = await this.client.get(`/policies/${policyId}/predicted-impact`, {
-        timeout: 15000,
+        timeout: 30000,
         validateStatus: (status) =>
           status === 200 || status === 204 || status === 404 || status === 500,
       })
       if (response.status === 404 || response.status === 204 || response.status === 500) return null
-      return response.data
+      const data = response.data
+      // Backend returns 200 + empty metrics when missing — treat as absent
+      if (!this.hasUsablePredictedImpact(data)) return null
+      return data
     } catch (error: any) {
-      if (error.code === 'ECONNABORTED' || error.message?.includes('timeout') || !error.response) return null
+      if (error.code === 'ECONNABORTED' || error.message?.includes('timeout') || !error.response) {
+        const timedOut = new Error('Predicted impact request timed out') as any
+        timedOut.code = 'ECONNABORTED'
+        timedOut.status = 0
+        throw timedOut
+      }
       throw error
     }
   }
@@ -668,7 +738,8 @@ export class ApiClient {
   }
 
   async createSimulateAnalysis(data: any) {
-    const response = await this.client.post('/analyses/simulate', data, { timeout: 120000 })
+    // POST should return PENDING quickly; results are polled separately
+    const response = await this.client.post('/analyses/simulate', data, { timeout: 30000 })
     return response.data
   }
 
@@ -734,15 +805,35 @@ export class ApiClient {
   }
 
   /**
-   * List baselines
+   * List baselines. Pass summary=true for fast list views (slim metrics).
    */
-  async listBaselines(policyId?: string, baselineType?: string) {
+  async listBaselines(
+    policyId?: string,
+    baselineType?: string,
+    opts?: {
+      summary?: boolean
+      limit?: number
+      general_only?: boolean
+      /** Default true: one row per general/policy + window (hides refresh duplicates). */
+      latest_per_window?: boolean
+    }
+  ) {
     const response = await this.client.get('/baselines', {
       params: {
         policy_id: policyId,
         baseline_type: baselineType,
+        summary: opts?.summary,
+        limit: opts?.limit,
+        general_only: opts?.general_only,
+        latest_per_window: opts?.latest_per_window ?? true,
       },
     })
+    return response.data
+  }
+
+  /** Full baseline by id (use after summary list selection). */
+  async getBaseline(baselineId: string) {
+    const response = await this.client.get(`/baselines/${baselineId}`)
     return response.data
   }
 
@@ -789,7 +880,10 @@ export class ApiClient {
   }
 
   async getAnalyses(params?: { skip?: number; limit?: number; analysis_type?: string }) {
-    const response = await this.client.get('/analyses', { params, timeout: 90000 })
+    const response = await this.client.get('/analyses', {
+      params: { limit: 50, ...params },
+      timeout: 90000,
+    })
     return response.data
   }
 
@@ -800,7 +894,11 @@ export class ApiClient {
 
   async getAnalysisResults(id: string, resultType?: string) {
     const params = resultType ? { result_type: resultType } : {}
-    const response = await this.client.get(`/analyses/${id}/results`, { params })
+    // Indexed JSONB lookup — should be seconds, not minutes; keep timeout tight
+    const response = await this.client.get(`/analyses/${id}/results`, {
+      params,
+      timeout: 30000,
+    })
     return response.data
   }
 
@@ -844,7 +942,9 @@ export class ApiClient {
   }
 
   async getObservationEvidencePack(observationId: string) {
-    const response = await this.client.get(`/observations/${observationId}/evidence-pack`)
+    const response = await this.client.get(`/observations/${observationId}/evidence-pack`, {
+      timeout: 30000,
+    })
     return response.data
   }
 
@@ -856,19 +956,42 @@ export class ApiClient {
     include_trends?: boolean
     latest_only?: boolean
     limit?: number
+    /** Slim payloads for portfolio lists (same schema; heavy nests omitted). */
+    summary?: boolean
   }) {
-    const response = await this.client.get('/observations', { params })
+    const response = await this.client.get('/observations', {
+      params,
+      // Azure cold observation list can exceed the default 45s interactive timeout
+      timeout: 90000,
+    })
     return response.data
   }
 
   /** Enterprise policy rollout recommender: claims + catalog + dedup + explainability */
+  private _policyRolloutInflight: Map<string, Promise<any>> = new Map()
+
   async getPolicyRolloutRecommendations(params?: {
     months_lookback?: number
     limit?: number
     jaccard_threshold?: number
   }) {
-    const response = await this.client.get('/recommendations/policy-rollouts', { params })
-    return response.data
+    const key = JSON.stringify(params || {})
+    const existing = this._policyRolloutInflight.get(key)
+    if (existing) return existing
+
+    const promise = this.client
+      .get('/recommendations/policy-rollouts', {
+        params,
+        // Claims aggregation + dedup can exceed the default 45s on cold Azure DB
+        timeout: 180000,
+      })
+      .then((response) => response.data)
+      .finally(() => {
+        this._policyRolloutInflight.delete(key)
+      })
+
+    this._policyRolloutInflight.set(key, promise)
+    return promise
   }
 
   async getObservation(observationId: string) {
@@ -1204,7 +1327,7 @@ export class ApiClient {
   }
 
   async getPredictionAccuracy(policyId: string) {
-    const response = await this.client.get(`/learning/accuracy/${policyId}`)
+    const response = await this.client.get(`/learning/accuracy/${policyId}`, { timeout: 20000 })
     return response.data
   }
 
@@ -1261,14 +1384,42 @@ export class ApiClient {
   }
 
   // Dashboard endpoints (Phase 9)
+  /** In-flight / short-TTL cache — StrictMode + persona redirect used to stampede this. */
+  private _dashboardSummaryInflight: Promise<any> | null = null
+  private _dashboardSummaryCached: { at: number; data: any } | null = null
+
   async getDashboardSummary() {
-    const response = await this.client.get('/dashboard/summary')
-    return response.data
+    const TTL_MS = 60_000
+    if (this._dashboardSummaryCached && Date.now() - this._dashboardSummaryCached.at < TTL_MS) {
+      return this._dashboardSummaryCached.data
+    }
+    if (this._dashboardSummaryInflight) {
+      return this._dashboardSummaryInflight
+    }
+    this._dashboardSummaryInflight = this.client
+      .get('/dashboard/summary', { timeout: 90000 })
+      .then((response) => {
+        this._dashboardSummaryCached = { at: Date.now(), data: response.data }
+        return response.data
+      })
+      .finally(() => {
+        this._dashboardSummaryInflight = null
+      })
+    return this._dashboardSummaryInflight
   }
 
   async getPolicyPerformance(limit: number = 10) {
     const response = await this.client.get('/dashboard/policy-performance', {
       params: { limit },
+      timeout: 60000,
+    })
+    return response.data
+  }
+
+  /** Authoritative Objectives Health snapshot — deterministic for fixed persisted data. */
+  async getObjectivesHealth() {
+    const response = await this.client.get('/dashboard/objectives-health', {
+      timeout: 90000,
     })
     return response.data
   }
@@ -1458,7 +1609,10 @@ export class ApiClient {
 
   // Epic 2: Policy Workspace API
   async getPolicyWorkspace(policyId: string) {
-    const response = await this.client.get(`/policies/${policyId}/workspace`)
+    // Workspace aggregates versions/assumptions/guardrails — cold Azure can exceed default 45s
+    const response = await this.client.get(`/policies/${policyId}/workspace`, {
+      timeout: 120000,
+    })
     return response.data
   }
 
@@ -1591,7 +1745,7 @@ export class ApiClient {
     return response.data
   }
 
-  async getForecasts(params?: { metric_name?: string }) {
+  async getForecasts(params?: { metric_name?: string; policy_id?: string }) {
     const response = await this.client.get('/forecasts', { params })
     return response.data
   }
@@ -1606,7 +1760,7 @@ export class ApiClient {
     return response.data
   }
 
-  async getScenarios(params?: { scenario_name?: string }) {
+  async getScenarios(params?: { scenario_name?: string; policy_id?: string }) {
     const response = await this.client.get('/scenarios', { params })
     return response.data
   }
@@ -1644,6 +1798,172 @@ export class ApiClient {
   // Epic 5: Behavioral Signal Detection
   async createBehaviorProfile(profileData: any) {
     const response = await this.client.post('/behavior-profiles', profileData)
+    return response.data
+  }
+
+  // BCBS NC Dec 4 — enterprise intelligence
+  async getEnterprisePolicyDefinitionPackage(policyId: string) {
+    const response = await this.client.get(`/enterprise/policies/${policyId}/definition-package`, {
+      timeout: 30000,
+    })
+    return response.data
+  }
+
+  async getEnterprisePolicyComposition(policyId: string) {
+    const response = await this.client.get(`/enterprise/policies/${policyId}/composition`, {
+      timeout: 30000,
+    })
+    return response.data
+  }
+
+  async getEnterpriseCausalImpact(policyId: string) {
+    const response = await this.client.get(`/enterprise/policies/${policyId}/causal-impact`, {
+      timeout: 30000,
+    })
+    return response.data
+  }
+
+  async getEnterpriseCausalFeasibility(policyId: string) {
+    const response = await this.client.get(`/enterprise/policies/${policyId}/causal-feasibility`, {
+      timeout: 30000,
+    })
+    return response.data
+  }
+
+  async getEnterpriseProviderBehavior(policyId: string) {
+    const response = await this.client.get(`/enterprise/policies/${policyId}/provider-behavior`, {
+      timeout: 30000,
+    })
+    return response.data
+  }
+
+  async getEnterpriseColdStart(policyId: string) {
+    const response = await this.client.get(`/enterprise/policies/${policyId}/cold-start`, {
+      timeout: 30000,
+    })
+    return response.data
+  }
+
+  async resolveEnterpriseApplicability(params?: {
+    program?: string
+    state?: string
+    service_category?: string
+    as_of?: string
+  }) {
+    const response = await this.client.get('/enterprise/applicability/resolve', {
+      params,
+      timeout: 30000,
+    })
+    return response.data
+  }
+
+  async getEnterpriseVerdictEvidence(policyId: string, observationVerdict?: string) {
+    const response = await this.client.get(`/enterprise/policies/${policyId}/verdict-evidence`, {
+      params: observationVerdict ? { observation_verdict: observationVerdict } : undefined,
+      timeout: 30000,
+    })
+    return response.data
+  }
+
+  async getEnterpriseCausalValidationSuite() {
+    const response = await this.client.get('/enterprise/causal/validation-suite', {
+      timeout: 30000,
+    })
+    return response.data
+  }
+
+  async getEnterpriseImplementationInventory() {
+    const response = await this.client.get('/enterprise/implementation-inventory', {
+      timeout: 30000,
+    })
+    return response.data
+  }
+
+  async getEnterpriseCoverageManifest() {
+    const response = await this.client.get('/enterprise/coverage-manifest', {
+      timeout: 90000,
+    })
+    return response.data
+  }
+
+  async getEnterpriseAnalyticalReadiness() {
+    const response = await this.client.get('/enterprise/analytical-readiness', {
+      timeout: 90000,
+    })
+    return response.data
+  }
+
+  async getEnterpriseReconciliationGate() {
+    const response = await this.client.get('/enterprise/reconciliation-gate', {
+      timeout: 120000,
+    })
+    return response.data
+  }
+
+  async getEnterprisePolicyReconciliationGate(policyId: string) {
+    const response = await this.client.get(
+      `/enterprise/policies/${policyId}/reconciliation-gate`,
+      { timeout: 60000 }
+    )
+    return response.data
+  }
+
+  async getEnterpriseDemoPack() {
+    const response = await this.client.get('/enterprise/demo-pack', { timeout: 60000 })
+    return response.data
+  }
+
+  async listMedicareRules(params?: { kind?: string; q?: string }) {
+    const response = await this.client.get('/enterprise/medicare-rules', {
+      params,
+      timeout: 60000,
+    })
+    return response.data
+  }
+
+  async getApplicableMedicareRules(
+    policyId: string,
+    params?: { program?: string; state?: string; as_of?: string }
+  ) {
+    const response = await this.client.get(
+      `/enterprise/policies/${policyId}/applicable-medicare-rules`,
+      { params, timeout: 60000 }
+    )
+    return response.data
+  }
+
+  async seedMriMedicareLinks() {
+    const response = await this.client.post('/enterprise/medicare-rules/seed-mri-links', null, {
+      timeout: 120000,
+    })
+    return response.data
+  }
+
+  async getMpprVertical() {
+    const response = await this.client.get('/enterprise/reimbursement/mppr-vertical', {
+      timeout: 60000,
+    })
+    return response.data
+  }
+
+  async getSosVertical() {
+    const response = await this.client.get('/enterprise/reimbursement/sos-vertical', {
+      timeout: 60000,
+    })
+    return response.data
+  }
+
+  async getDemoExpansionVerticals() {
+    const response = await this.client.get('/enterprise/demo-expansion/verticals', {
+      timeout: 60000,
+    })
+    return response.data
+  }
+
+  async seedDemoExpansion() {
+    const response = await this.client.post('/enterprise/demo-expansion/seed', null, {
+      timeout: 120000,
+    })
     return response.data
   }
 

@@ -1,0 +1,18 @@
+{
+  "document_id": "LOW_DOSE_CT_LUNG_CANCER_SCREENING_CRITERIA_CODESET",
+  "policy_id": "46fff8f9-314b-4787-a7de-f98d2960264f",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abLow-Dose CT Lung Cancer Screening Criteria\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "71271",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "LDCT thorax for lung cancer screening",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

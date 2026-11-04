@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_1eac2d8358d695c1183f4710",
+  "policy_id": "f70c2bc6-eff4-426c-8970-69721ca9f21b",
+  "name": "Mental Health Parity Comparative Analysis Policy",
+  "evidence_pathway": "PROVENANCE_ONLY",
+  "configuration_digest": "5605c5e6783bc594",
+  "started_at": "2026-11-04T13:18:18.236342+00:00",
+  "finished_at": "2026-11-04T13:18:18.236344+00:00",
+  "status": "PROVENANCE_COMPLETED",
+  "duplicate_prevented": false,
+  "result": {
+    "actions": [
+      "source_applicability_recorded",
+      "jurisdiction_noted",
+      "no_financial_outcomes_manufactured"
+    ]
+  },
+  "error": null
+}

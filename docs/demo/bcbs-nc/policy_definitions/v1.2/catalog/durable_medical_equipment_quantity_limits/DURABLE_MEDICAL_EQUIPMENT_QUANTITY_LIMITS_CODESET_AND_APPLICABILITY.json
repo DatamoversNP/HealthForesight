@@ -1,0 +1,32 @@
+{
+  "document_id": "DURABLE_MEDICAL_EQUIPMENT_QUANTITY_LIMITS_CODESET",
+  "policy_id": "2b1a9c48-8352-4fd5-be6f-d12c7647de7d",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abDurable Medical Equipment Quantity Limits\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "HCPCS",
+      "code": "E0601",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "E0431",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "HCPCS",
+      "code": "K0001",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Representative DME quantity-limit anchors",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

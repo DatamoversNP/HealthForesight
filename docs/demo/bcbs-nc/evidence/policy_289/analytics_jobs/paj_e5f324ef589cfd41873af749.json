@@ -1,0 +1,19 @@
+{
+  "job_id": "paj_e5f324ef589cfd41873af749",
+  "policy_id": "914684fd-7480-4902-89fa-e7ae006f192e",
+  "name": "Specialty Drug Days\u2019 Supply Limits",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "9b03206666bdda65",
+  "started_at": "2026-11-04T13:18:18.242144+00:00",
+  "finished_at": "2026-11-04T13:18:18.242145+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "codeset_UNRESOLVED",
+      "definition_incomplete"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

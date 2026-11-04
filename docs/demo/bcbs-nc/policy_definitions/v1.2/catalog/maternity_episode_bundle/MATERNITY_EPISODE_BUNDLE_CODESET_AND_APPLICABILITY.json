@@ -1,0 +1,25 @@
+{
+  "document_id": "MATERNITY_EPISODE_BUNDLE_CODESET",
+  "policy_id": "1cd9d934-4d3d-4d7d-b49e-97edf3b5c448",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abMaternity Episode Bundle\u00bb",
+  "status": "CANDIDATE_SCHEDULE",
+  "candidate_codes": [
+    {
+      "code_system": "CPT",
+      "code": "59400",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    },
+    {
+      "code_system": "CPT",
+      "code": "59510",
+      "description": "",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "evidence_class": "REPRESENTATIVE_DESIGN"
+    }
+  ],
+  "notes": "Global OB anchors \u2014 episode price UNRESOLVED",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

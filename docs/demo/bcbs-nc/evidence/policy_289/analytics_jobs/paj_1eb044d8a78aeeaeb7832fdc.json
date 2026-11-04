@@ -1,0 +1,18 @@
+{
+  "job_id": "paj_1eb044d8a78aeeaeb7832fdc",
+  "policy_id": "7e2ac9e6-7493-40c1-8bc3-7c4fe7347fdb",
+  "name": "Home Health Care Preference",
+  "evidence_pathway": "BLOCKED",
+  "configuration_digest": "347e8d23e67432d8",
+  "started_at": "2026-11-04T13:18:18.233394+00:00",
+  "finished_at": "2026-11-04T13:18:18.233396+00:00",
+  "status": "BLOCKED_PERSISTED",
+  "duplicate_prevented": false,
+  "result": {
+    "missing_inputs": [
+      "scope.states"
+    ],
+    "message": "Numerical engines not invoked \u2014 required inputs absent"
+  },
+  "error": null
+}

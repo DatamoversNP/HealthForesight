@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_6ff73c1279ab830eac792b56",
+  "policy_id": "6ba9c279-7867-429f-8e75-b20794f985d7",
+  "name": "Specialty Pharmacy Coinsurance Design",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "f6ae7823359577e4",
+  "started_at": "2026-11-04T13:18:18.242337+00:00",
+  "finished_at": "2026-11-04T13:18:18.242339+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

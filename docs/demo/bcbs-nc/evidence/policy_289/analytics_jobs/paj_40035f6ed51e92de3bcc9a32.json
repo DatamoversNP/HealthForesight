@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_40035f6ed51e92de3bcc9a32",
+  "policy_id": "b5d48dc5-2d6a-4a32-b3c7-54d4f9e77b77",
+  "name": "Home Infusion Preference",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "f93653e8583adab4",
+  "started_at": "2026-11-04T13:18:18.233523+00:00",
+  "finished_at": "2026-11-04T13:18:18.233525+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

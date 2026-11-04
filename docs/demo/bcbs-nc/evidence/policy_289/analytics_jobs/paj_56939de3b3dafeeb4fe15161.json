@@ -1,0 +1,17 @@
+{
+  "job_id": "paj_56939de3b3dafeeb4fe15161",
+  "policy_id": "6a55bc25-74a2-492f-b755-8049e2248ee0",
+  "name": "Tonsillectomy and Adenoidectomy Criteria",
+  "evidence_pathway": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+  "configuration_digest": "6c6dacb0eac4272c",
+  "started_at": "2026-11-04T13:18:18.243904+00:00",
+  "finished_at": "2026-11-04T13:18:18.243906+00:00",
+  "status": "SYNTHETIC_QUEUED_BOUNDED",
+  "duplicate_prevented": false,
+  "result": {
+    "message": "Eligible for representative synthetic fixture; requires policy-specific known-answer inputs before numerical demo",
+    "label": "REPRESENTATIVE_SYNTHETIC_FIXTURE",
+    "not": "empirical_or_causal"
+  },
+  "error": null
+}

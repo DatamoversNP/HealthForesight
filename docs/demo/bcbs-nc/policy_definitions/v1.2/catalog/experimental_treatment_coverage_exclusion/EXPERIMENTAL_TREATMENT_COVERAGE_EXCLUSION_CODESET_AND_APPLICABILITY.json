@@ -1,0 +1,10 @@
+{
+  "document_id": "EXPERIMENTAL_TREATMENT_COVERAGE_EXCLUSION_CODESET",
+  "policy_id": "90592b6e-95a3-4f83-aee5-ed17ddfa1d1b",
+  "package_version": "v1.2.0-representative-batch",
+  "intended_scope": "Representative Payer configuration for catalog policy \u00abExperimental Treatment Coverage Exclusion\u00bb",
+  "status": "NOT_APPLICABLE",
+  "candidate_codes": [],
+  "notes": "E&I exclusion framework",
+  "classification": "REPRESENTATIVE_PAYER_POLICY"
+}

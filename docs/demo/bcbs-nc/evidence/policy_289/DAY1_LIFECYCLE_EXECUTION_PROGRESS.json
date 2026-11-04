@@ -1,0 +1,40 @@
+{
+  "document_id": "DAY1_LIFECYCLE_EXECUTION_PROGRESS",
+  "generated_at": "2026-11-04T09:33:43.931081+00:00",
+  "definition_complete": 267,
+  "unresolved_definitions": 22,
+  "attempted": 34,
+  "mechanism_execution_success": 10,
+  "supported_lifecycle_complete": 33,
+  "baseline_pass": 8,
+  "prediction_pass": 31,
+  "observation_pass": 3,
+  "partial_prediction_without_cohort": 23,
+  "candidate_levers_executed": 24,
+  "approved_live_levers": 0,
+  "success_rule": "baseline PASS OR (prediction+observation PASS) OR verify/provenance; candidate\u2260approved",
+  "dec4_nine_verify": {
+    "attempted": 9,
+    "mechanism_execution_success": 9,
+    "mri_mppr_sos_protected": true
+  },
+  "batch_1_prior_auth": {
+    "attempted": 25,
+    "note": "Most baselines DATA_INSUFFICIENT \u2014 candidate CPT/HCPCS not present in NC claim markets; prediction alone does not count as mechanism success after reclassification"
+  },
+  "unresolved_22_by_dependency": {
+    "NDC_DRUG_PRODUCT": 11,
+    "PLACEHOLDER_UM_RULES": 3,
+    "LICENSED_MCG_CRITERIA": 2,
+    "MUE_SOURCE_AND_SEMANTICS": 2,
+    "TRANSPLANT_ORGAN_SCHEDULE": 2,
+    "REIMBURSEMENT_RATES": 1,
+    "LICENSED_CLINICAL_PATHWAY": 1
+  },
+  "overnight_health": "separate \u2014 reliability \u2260 execution completeness",
+  "next": [
+    "Claim-market / code cohort alignment for candidate schedules (MRI pattern)",
+    "Continue batches 2+ with tightened success rule",
+    "Do not invent NDCs/MUEs/rates for remaining 22"
+  ]
+}
