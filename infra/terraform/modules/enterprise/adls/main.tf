@@ -18,13 +18,19 @@ variable "resource_group_name" {
   type = string
 }
 
+variable "replication_type" {
+  type        = string
+  default     = "ZRS"
+  description = "Lean staging may use LRS to reduce cost; production prefers ZRS/GZRS."
+}
+
 resource "azurerm_storage_account" "lake" {
   count                    = var.enable_provision ? 1 : 0
-  name                     = replace("${var.name_prefix}lake", "-", "")
+  name                     = substr(replace("${var.name_prefix}lake", "-", ""), 0, 24)
   resource_group_name      = var.resource_group_name
   location                 = var.location
   account_tier             = "Standard"
-  account_replication_type = "ZRS"
+  account_replication_type = var.replication_type
   account_kind             = "StorageV2"
   is_hns_enabled           = true
   min_tls_version          = "TLS1_2"
@@ -54,6 +60,10 @@ resource "azurerm_storage_container" "results" {
 
 output "storage_account_id" {
   value = try(azurerm_storage_account.lake[0].id, null)
+}
+
+output "storage_account_name" {
+  value = try(azurerm_storage_account.lake[0].name, null)
 }
 
 output "containers" {

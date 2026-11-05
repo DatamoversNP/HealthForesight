@@ -1,0 +1,169 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.9.8",
+  "resource_changes": [
+    {
+      "address": "azurerm_consumption_budget_resource_group.lean[0]",
+      "actions": [
+        "create"
+      ],
+      "type": "azurerm_consumption_budget_resource_group"
+    },
+    {
+      "address": "azurerm_key_vault_secret.pg_fqdn[0]",
+      "actions": [
+        "create"
+      ],
+      "type": "azurerm_key_vault_secret"
+    },
+    {
+      "address": "azurerm_key_vault_secret.pg_password[0]",
+      "actions": [
+        "create"
+      ],
+      "type": "azurerm_key_vault_secret"
+    },
+    {
+      "address": "azurerm_resource_group.lean[0]",
+      "actions": [
+        "create"
+      ],
+      "type": "azurerm_resource_group"
+    },
+    {
+      "address": "azurerm_role_assignment.kv_secrets_officer_deployer[0]",
+      "actions": [
+        "create"
+      ],
+      "type": "azurerm_role_assignment"
+    },
+    {
+      "address": "random_password.pg[0]",
+      "actions": [
+        "create"
+      ],
+      "type": "random_password"
+    },
+    {
+      "address": "module.adls.azurerm_storage_account.lake[0]",
+      "actions": [
+        "create"
+      ],
+      "type": "azurerm_storage_account"
+    },
+    {
+      "address": "module.adls.azurerm_storage_container.curated[0]",
+      "actions": [
+        "create"
+      ],
+      "type": "azurerm_storage_container"
+    },
+    {
+      "address": "module.adls.azurerm_storage_container.raw[0]",
+      "actions": [
+        "create"
+      ],
+      "type": "azurerm_storage_container"
+    },
+    {
+      "address": "module.adls.azurerm_storage_container.results[0]",
+      "actions": [
+        "create"
+      ],
+      "type": "azurerm_storage_container"
+    },
+    {
+      "address": "module.container_apps.azurerm_container_app_environment.enterprise[0]",
+      "actions": [
+        "create"
+      ],
+      "type": "azurerm_container_app_environment"
+    },
+    {
+      "address": "module.container_apps.azurerm_log_analytics_workspace.aca[0]",
+      "actions": [
+        "create"
+      ],
+      "type": "azurerm_log_analytics_workspace"
+    },
+    {
+      "address": "module.key_vault.azurerm_key_vault.staging[0]",
+      "actions": [
+        "create"
+      ],
+      "type": "azurerm_key_vault"
+    },
+    {
+      "address": "module.key_vault.azurerm_user_assigned_identity.staging[0]",
+      "actions": [
+        "create"
+      ],
+      "type": "azurerm_user_assigned_identity"
+    },
+    {
+      "address": "module.networking.azurerm_subnet.container_apps[0]",
+      "actions": [
+        "create"
+      ],
+      "type": "azurerm_subnet"
+    },
+    {
+      "address": "module.networking.azurerm_subnet.data[0]",
+      "actions": [
+        "create"
+      ],
+      "type": "azurerm_subnet"
+    },
+    {
+      "address": "module.networking.azurerm_subnet.private_endpoints[0]",
+      "actions": [
+        "create"
+      ],
+      "type": "azurerm_subnet"
+    },
+    {
+      "address": "module.networking.azurerm_virtual_network.enterprise[0]",
+      "actions": [
+        "create"
+      ],
+      "type": "azurerm_virtual_network"
+    },
+    {
+      "address": "module.postgres.azurerm_postgresql_flexible_server.enterprise[0]",
+      "actions": [
+        "create"
+      ],
+      "type": "azurerm_postgresql_flexible_server"
+    },
+    {
+      "address": "module.postgres.azurerm_postgresql_flexible_server_firewall_rule.allow_azure[0]",
+      "actions": [
+        "create"
+      ],
+      "type": "azurerm_postgresql_flexible_server_firewall_rule"
+    },
+    {
+      "address": "module.service_bus.azurerm_servicebus_namespace.enterprise[0]",
+      "actions": [
+        "create"
+      ],
+      "type": "azurerm_servicebus_namespace"
+    },
+    {
+      "address": "module.service_bus.azurerm_servicebus_queue.interactive[0]",
+      "actions": [
+        "create"
+      ],
+      "type": "azurerm_servicebus_queue"
+    },
+    {
+      "address": "module.service_bus.azurerm_servicebus_queue.policy_analytics[0]",
+      "actions": [
+        "create"
+      ],
+      "type": "azurerm_servicebus_queue"
+    }
+  ],
+  "plan": "23 to add, 0 to change, 0 to destroy",
+  "demo_touch_risk": []
+}

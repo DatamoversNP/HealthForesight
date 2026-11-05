@@ -1,0 +1,22 @@
+{
+  "postgres_B2s_compute_usd_mo": 49.64,
+  "postgres_storage_32GiB_usd_mo": 3.68,
+  "postgres_backup_included_note": "backup up to 100% provisioned storage typically included",
+  "service_bus_standard_base_usd_mo": 10.0,
+  "service_bus_standard_ops_included": "13M ops included; lean staging expected within included",
+  "adls_lrs_50gb_usd_mo": 0.9,
+  "log_analytics_5gb_usd_mo": 13.8,
+  "vnet_usd_mo": 0,
+  "key_vault_secrets_ops_usd_mo": 3,
+  "managed_identity_usd_mo": 0,
+  "aca_environment_idle_usd_mo": 0,
+  "aca_apps_deferred_note": "No Container App revisions in this plan \u2014 only environment + LAW",
+  "budget_alert_usd": 400,
+  "planning_total_low_usd_mo": 72.22,
+  "planning_total_high_usd_mo": 143,
+  "sources": [
+    "Azure public list-price ballparks eastus2-class (Oct/Nov 2026 research)",
+    "Not a subscription-specific quote \u2014 confirm in Pricing Calculator before apply"
+  ],
+  "within_400_ceiling": true
+}

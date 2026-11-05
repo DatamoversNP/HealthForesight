@@ -1,8 +1,10 @@
 # Enterprise staging — cost approval brief
 
-**Status:** AWAITING OWNER AUTHORIZATION  
+**Status:** OPTION B DIRECTION APPROVED — lean **plan package ready**; **`terraform apply` still blocked**  
+**Follow-up package:** `LEAN_STAGING_APPROVAL_PACKAGE.md` (subscription, plan, costs, teardown)  
 **Demo constraint:** Dec4 freeze unchanged. No alembic past **012** on demo DB. No changes to `healthforesight-rg` demo apps for this work.  
-**IaC:** `infra/terraform/envs/enterprise-staging` (`enable_provision=false` until authorized)
+**IaC (lean):** `infra/terraform/envs/enterprise-lean-staging`  
+**IaC (full/expensive reference):** `infra/terraform/envs/enterprise-staging` (Premium + ZR HA — not for first apply)
 
 ## What we are asking to create
 

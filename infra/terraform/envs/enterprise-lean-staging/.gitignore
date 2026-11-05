@@ -1,0 +1,10 @@
+.terraform/
+terraform.tfvars
+*.tfstate
+*.tfstate.*
+crash.log
+override.tf
+*_override.tf
+plan.binary
+plan.json
+# Keep .terraform.lock.hcl versioned

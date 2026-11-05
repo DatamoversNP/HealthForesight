@@ -23,13 +23,19 @@ variable "subnet_id" {
   default = null
 }
 
+variable "log_retention_days" {
+  type        = number
+  default     = 30
+  description = "Lean staging should use short retention (e.g. 7) to control ingestion cost."
+}
+
 resource "azurerm_log_analytics_workspace" "aca" {
   count               = var.enable_provision ? 1 : 0
   name                = "${var.name_prefix}-law"
   location            = var.location
   resource_group_name = var.resource_group_name
   sku                 = "PerGB2018"
-  retention_in_days   = 30
+  retention_in_days   = var.log_retention_days
 }
 
 resource "azurerm_container_app_environment" "enterprise" {

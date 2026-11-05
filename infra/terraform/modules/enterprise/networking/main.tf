@@ -44,7 +44,17 @@ resource "azurerm_subnet" "container_apps" {
   name                 = "snet-container-apps"
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.enterprise[0].name
-  address_prefixes     = ["10.40.1.0/24"]
+  address_prefixes     = [cidrsubnet(var.address_space[0], 8, 1)]
+
+  delegation {
+    name = "aca-delegation"
+    service_delegation {
+      name = "Microsoft.App/environments"
+      actions = [
+        "Microsoft.Network/virtualNetworks/subnets/join/action",
+      ]
+    }
+  }
 }
 
 resource "azurerm_subnet" "data" {
@@ -52,7 +62,7 @@ resource "azurerm_subnet" "data" {
   name                 = "snet-data"
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.enterprise[0].name
-  address_prefixes     = ["10.40.2.0/24"]
+  address_prefixes     = [cidrsubnet(var.address_space[0], 8, 2)]
 }
 
 resource "azurerm_subnet" "private_endpoints" {
@@ -60,7 +70,7 @@ resource "azurerm_subnet" "private_endpoints" {
   name                 = "snet-private-endpoints"
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.enterprise[0].name
-  address_prefixes     = ["10.40.3.0/24"]
+  address_prefixes     = [cidrsubnet(var.address_space[0], 8, 3)]
 }
 
 output "vnet_id" {

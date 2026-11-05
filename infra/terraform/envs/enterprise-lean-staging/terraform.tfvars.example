@@ -1,0 +1,22 @@
+# Copy to terraform.tfvars (gitignored). DO NOT set enable_provision=true
+# until the owner approves the final plan + cost package in writing.
+
+enable_provision           = false
+deployment_mode            = "saas"
+name_prefix                = "hfleanstg"
+location                   = "eastus2"
+resource_group_name        = "rg-healthforesight-enterprise-staging"
+owner_subscription_label   = "healthforesight"
+
+# Lean SKUs (Option B)
+postgres_sku_name          = "B_Standard_B2s"
+postgres_storage_mb        = 32768
+service_bus_sku            = "Standard"
+adls_replication_type      = "LRS"
+vnet_address_space         = ["10.50.0.0/16"]
+log_retention_days         = 30
+create_container_apps_environment = true
+
+monthly_budget_usd         = 400
+# Required for useful budget emails (placeholder invalid address is used if empty):
+budget_contact_emails      = ["YOUR_EMAIL@example.com"]

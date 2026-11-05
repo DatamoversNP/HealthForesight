@@ -67,6 +67,8 @@ module "service_bus" {
   name_prefix         = var.name_prefix
   location            = var.location
   resource_group_name = var.resource_group_name
+  sku                 = "Premium"
+  capacity            = 1
 }
 
 module "container_apps" {
@@ -76,14 +78,18 @@ module "container_apps" {
   location            = var.location
   resource_group_name = var.resource_group_name
   subnet_id           = module.networking.subnet_container_apps_id
+  log_retention_days  = 30
 }
 
 module "postgres_ha" {
-  source              = "../../modules/enterprise/postgres_ha"
-  enable_provision    = var.enable_provision
-  name_prefix         = var.name_prefix
-  location            = var.location
-  resource_group_name = var.resource_group_name
+  source                   = "../../modules/enterprise/postgres_ha"
+  enable_provision         = var.enable_provision
+  name_prefix              = var.name_prefix
+  location                 = var.location
+  resource_group_name      = var.resource_group_name
+  sku_name                 = "GP_Standard_D4s_v3"
+  storage_mb               = 131072
+  enable_zone_redundant_ha = true
 }
 
 module "adls" {
@@ -92,6 +98,7 @@ module "adls" {
   name_prefix         = var.name_prefix
   location            = var.location
   resource_group_name = var.resource_group_name
+  replication_type    = "ZRS"
 }
 
 output "provision_enabled" {
