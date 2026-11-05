@@ -110,7 +110,15 @@ export default function PolicyMonitoringPanel({
 
         const observations = Array.isArray(obsList) ? obsList : []
         const forPolicy = observations.filter((o: any) => String(o.policy_id) === String(policyId))
-        const obs = forPolicy[0] || null
+        // Prefer latest observation window (same rule as Policy Verdicts), not array order /
+        // most-recently-computed monthly fixtures.
+        const obs =
+          [...forPolicy].sort((a: any, b: any) => {
+            const ae = String(a?.observation_period_end || '')
+            const be = String(b?.observation_period_end || '')
+            if (ae !== be) return be.localeCompare(ae)
+            return String(b?.computed_at || '').localeCompare(String(a?.computed_at || ''))
+          })[0] || null
         setObservation(obs)
         onObservationVerdict?.(obs?.verdict_status || undefined)
         setPredictedImpact(apiClient.hasUsablePredictedImpact(impact) ? impact : null)
@@ -264,18 +272,36 @@ export default function PolicyMonitoringPanel({
             Catalog policy monitoring
           </Typography>
           <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 1 }}>
-            <Chip size="small" label="CATALOG_POLICY" />
-            <Chip size="small" variant="outlined" label="NO_SYNTHETIC_KA" />
+            <Chip size="small" label="CATALOG_POLICY" title="Policy class — not an observation verdict" />
+            <Chip
+              size="small"
+              variant="outlined"
+              label="NO_SYNTHETIC_KA"
+              title="No mechanical known-answer fixture for this policy"
+            />
             <Chip size="small" color="warning" label="OPERATIONAL_ACTIVATION_PROHIBITED" />
           </Box>
           <Alert severity="info" data-testid="demo-catalog-note">
             {mechanical.note}
           </Alert>
           <Typography variant="body2" sx={{ mt: 1 }}>
-            Observation:{' '}
+            Latest observation verdict:{' '}
             <strong data-testid="demo-catalog-observation">
               {observation ? observation.verdict_status || 'PRESENT' : 'NONE'}
             </strong>
+            {observation?.observation_period_end ? (
+              <>
+                {' '}
+                <Typography component="span" variant="caption" color="text.secondary">
+                  (period end{' '}
+                  {format(new Date(observation.observation_period_end), 'MMM d, yyyy')}
+                  {observation.observation_id
+                    ? ` · ${String(observation.observation_id).slice(0, 8)}…`
+                    : ''}
+                  )
+                </Typography>
+              </>
+            ) : null}
             {' · '}
             Predicted impact:{' '}
             <strong data-testid="demo-catalog-predicted">{predictedImpact ? 'PRESENT' : 'NONE'}</strong>
@@ -355,7 +381,9 @@ export default function PolicyMonitoringPanel({
         </Paper>
       )}
 
-      {mechanical && mechanical.demo_kind !== 'provenance_study' && (
+      {mechanical &&
+        mechanical.demo_kind !== 'provenance_study' &&
+        mechanical.demo_kind !== 'catalog_monitoring' && (
         <Paper variant="outlined" sx={{ p: 2, mb: 2 }} data-testid="demo-mechanical-panel">
           <Typography variant="subtitle1" fontWeight={700} gutterBottom>
             Mechanical / synthetic calculation

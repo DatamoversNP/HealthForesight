@@ -1,0 +1,56 @@
+{
+  "login_ms": 1323.551709,
+  "first_after_login": [
+    {
+      "path": "/health",
+      "code": 200,
+      "bytes": 85,
+      "ms": 990.6636670000001
+    },
+    {
+      "path": "/dashboard/summary",
+      "code": 200,
+      "bytes": 2822,
+      "ms": 9064.068459
+    },
+    {
+      "path": "/observations?policy_id=d403f101-08dd-45c9-ab83-d42e37c62018&latest_only=true&summary=true&limit=5",
+      "code": 200,
+      "bytes": 10519,
+      "ms": 1454.4510419999988
+    },
+    {
+      "path": "/policy-verdicts?limit=50",
+      "code": 200,
+      "bytes": 193414,
+      "ms": 2202.282083
+    }
+  ],
+  "warm_3x": [
+    {
+      "path": "/health",
+      "ms_mean": 975.5938473333323,
+      "ms_min": 955.9738340000017,
+      "ms_max": 985.4919999999971
+    },
+    {
+      "path": "/dashboard/summary",
+      "ms_mean": 9259.319639,
+      "ms_min": 9155.714124999999,
+      "ms_max": 9373.380583999999
+    },
+    {
+      "path": "/observations?policy_id=d403f101-08dd-45c9-ab83-d42e37c62018&latest_only=true&summary=true&limit=5",
+      "ms_mean": 1300.5402356666689,
+      "ms_min": 999.8422910000002,
+      "ms_max": 1502.954166000002
+    },
+    {
+      "path": "/policy-verdicts?limit=50",
+      "ms_mean": 1814.8974719999983,
+      "ms_min": 1734.2248749999953,
+      "ms_max": 1889.051582999997
+    }
+  ],
+  "note": "Deployed Azure API timings; cold=first request after login in this script (App Service may already be warm)."
+}

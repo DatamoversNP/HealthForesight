@@ -440,7 +440,20 @@ def _list_observations(
 
         limit = min(limit or LIST_OBSERVATIONS_DEFAULT_LIMIT, 500)
 
-        if latest_only and not policy_id:
+        if latest_only and policy_id:
+            # Single policy: latest by observation window, then compute time.
+            # (Previously latest_only was ignored when policy_id was set, so Monitoring
+            # bound to the most recently *computed* monthly fixture — e.g. AT_RISK —
+            # instead of the authoritative latest-period observation used by verdicts.)
+            observations = (
+                query.order_by(
+                    desc(Observation.observation_period_end),
+                    desc(Observation.computed_at),
+                )
+                .limit(1)
+                .all()
+            )
+        elif latest_only and not policy_id:
             # Postgres DISTINCT ON: one row per policy (latest period_end, then computed_at)
             query = query.filter(Observation.policy_id.isnot(None))
             query = query.distinct(Observation.policy_id).order_by(
@@ -449,6 +462,16 @@ def _list_observations(
                 desc(Observation.computed_at),
             )
             observations = query.limit(limit).all()
+        elif policy_id:
+            # Policy-scoped history: newest window first (not compute stamp)
+            observations = (
+                query.order_by(
+                    desc(Observation.observation_period_end),
+                    desc(Observation.computed_at),
+                )
+                .limit(limit)
+                .all()
+            )
         else:
             observations = query.order_by(desc(Observation.computed_at)).limit(limit).all()
 

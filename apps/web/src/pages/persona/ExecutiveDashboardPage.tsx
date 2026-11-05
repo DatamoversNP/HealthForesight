@@ -200,9 +200,17 @@ export default function ExecutiveDashboardPage() {
     
     if (topPolicies.length > 0) {
       const topPolicy = topPolicies[0]
+      const util = Number(topPolicy.utilization_change_pct)
+      const cost = Number(topPolicy.cost_impact)
+      const utilLabel = Number.isFinite(util) ? `${Math.abs(util).toFixed(1)}%` : 'n/a'
+      const costLabel = Number.isFinite(cost)
+        ? `$${Math.abs(cost).toLocaleString(undefined, { maximumFractionDigits: 2 })}${
+            topPolicy.cost_impact_unit === 'pmpm' || !topPolicy.cost_impact_unit ? ' PMPM' : ''
+          }`
+        : 'unavailable'
       insights.push({
         title: `Top Policy Impact: ${topPolicy.policy_name || 'Policy'}`,
-        description: `This policy shows ${Math.abs(topPolicy.utilization_change_pct || 0).toFixed(1)}% utilization change with ${topPolicy.cost_impact ? `$${Math.abs(topPolicy.cost_impact).toLocaleString()}` : 'significant'} cost impact.`,
+        description: `This policy shows ${utilLabel} utilization change with ${costLabel} cost Δ.`,
         category: 'Policy Performance',
         confidence: 'high',
         impact: 'positive',
@@ -223,13 +231,32 @@ export default function ExecutiveDashboardPage() {
       })
     }
     
-    if (metrics.total_cost_impact) {
-      const impact = metrics.total_cost_impact
+    if (metrics.total_cost_impact != null && Number.isFinite(Number(metrics.total_cost_impact))) {
+      const impact = Number(metrics.total_cost_impact)
+      const unit = metrics.total_cost_impact_unit === 'pmpm_sum' ? 'Σ policy Δ PMPM' : 'portfolio $'
+      const baselinePmpm = summary?.general_baseline?.cost_pmpm
+      let vsBaseline = ''
+      if (
+        metrics.total_cost_impact_unit === 'pmpm_sum' &&
+        baselinePmpm != null &&
+        Number.isFinite(Number(baselinePmpm)) &&
+        Number(baselinePmpm) !== 0
+      ) {
+        const pct = (Math.abs(impact) / Math.abs(Number(baselinePmpm))) * 100
+        if (Number.isFinite(pct)) {
+          vsBaseline = ` Relative to general baseline cost PMPM ($${Number(baselinePmpm).toFixed(2)}), magnitude is ${pct.toFixed(1)}% of that PMPM (not portfolio ROI).`
+        }
+      } else if (metrics.portfolio_financials_available === false) {
+        vsBaseline =
+          ' Portfolio $ ROI / % of book is unavailable — do not treat this PMPM rollup as savings.'
+      }
       insights.push({
-        title: `Cost Impact: ${impact < 0 ? 'Savings' : 'Increase'}`,
-        description: `Total cost impact of ${impact < 0 ? 'savings' : 'increase'} is $${Math.abs(impact).toLocaleString()}. This represents ${((Math.abs(impact) / 10000000) * 100).toFixed(1)}% of baseline costs.`,
+        title: `Cost Impact: ${impact < 0 ? 'Favorable PMPM' : 'Adverse PMPM'}`,
+        description: `${unit}: ${impact < 0 ? '' : '+'}${impact.toLocaleString(undefined, {
+          maximumFractionDigits: 2,
+        })}.${vsBaseline}`,
         category: 'Cost',
-        confidence: 'high',
+        confidence: 'medium',
         impact: impact < 0 ? 'positive' : 'negative',
         timestamp: new Date().toISOString(),
       })
@@ -418,11 +445,44 @@ export default function ExecutiveDashboardPage() {
         <Grid item xs={12} sm={6} md={3}>
           <MetricCard
             label="Total Cost Impact (current)"
-            value={Math.abs(metrics.total_cost_impact || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-            unit="$"
-            trend={metrics.total_cost_impact < 0 ? 'down' : 'up'}
-            subtitle={metrics.total_cost_impact < 0 ? 'Savings vs. pre-policy baseline' : 'Increase vs. pre-policy baseline'}
-            color={metrics.total_cost_impact < 0 ? 'success' : 'warning'}
+            value={
+              metrics.total_cost_impact == null || !Number.isFinite(Number(metrics.total_cost_impact))
+                ? 'Unavailable'
+                : Math.abs(Number(metrics.total_cost_impact)).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })
+            }
+            unit={
+              metrics.total_cost_impact == null || !Number.isFinite(Number(metrics.total_cost_impact))
+                ? undefined
+                : metrics.total_cost_impact_unit === 'pmpm_sum'
+                  ? 'Σ ΔPMPM'
+                  : '$'
+            }
+            trend={
+              metrics.total_cost_impact == null || !Number.isFinite(Number(metrics.total_cost_impact))
+                ? undefined
+                : metrics.total_cost_impact < 0
+                  ? 'down'
+                  : 'up'
+            }
+            subtitle={
+              metrics.portfolio_financials_available === false
+                ? 'Policy Δ PMPM rollup — portfolio $ ROI unavailable'
+                : metrics.total_cost_impact_unit === 'pmpm_sum'
+                  ? 'Sum of latest-per-policy cost Δ PMPM'
+                  : metrics.total_cost_impact < 0
+                    ? 'Savings vs. pre-policy baseline'
+                    : 'Increase vs. pre-policy baseline'
+            }
+            color={
+              metrics.total_cost_impact == null || !Number.isFinite(Number(metrics.total_cost_impact))
+                ? undefined
+                : metrics.total_cost_impact < 0
+                  ? 'success'
+                  : 'warning'
+            }
           />
         </Grid>
         <Grid item xs={12} sm={6} md={3}>

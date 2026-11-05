@@ -214,35 +214,45 @@ async def get_dashboard_summary(
         except Exception as e:
             print(f"WARNING get_dashboard_summary: Could not load general baseline: {e}")
 
-        total_cost_impact = 0.0
-        total_cost_savings = 0.0
         total_utilization_change = 0.0
         total_utilization_reduction = 0.0
+        sum_cost_change_pmpm = 0.0
+        n_cost_pmpm = 0
         policy_performance = []
-        annualized_savings = 0.0
-        roi_estimate = 0.0
 
         for obs in observations:
             metrics = obs.get("metrics", {}) or {}
             comparisons = obs.get("comparisons", {}) or {}
             vs_baseline = comparisons.get("vs_baseline", {}) if isinstance(comparisons, dict) else {}
-            cost_change = 0.0
+            cost_change_pmpm = None
             if vs_baseline:
-                cost_change_pmpm = vs_baseline.get("cost_change_pmpm", 0) or vs_baseline.get(
-                    "change_from_baseline", 0
-                )
-                member_months = vs_baseline.get("baseline_member_months") or (member_count * 1)
-                cost_change = float(cost_change_pmpm or 0) * float(member_months or 1)
-                total_cost_impact += cost_change
-                if cost_change < 0:
-                    total_cost_savings += abs(cost_change)
+                raw = vs_baseline.get("cost_change_pmpm")
+                if raw is None:
+                    raw = vs_baseline.get("change_from_baseline")
+                try:
+                    if raw is not None:
+                        cost_change_pmpm = float(raw)
+                        sum_cost_change_pmpm += cost_change_pmpm
+                        n_cost_pmpm += 1
+                except (TypeError, ValueError):
+                    cost_change_pmpm = None
 
-            utilization_change = metrics.get("observed_percent_change", 0) or metrics.get(
-                "utilization_change_pct", 0
-            )
-            total_utilization_change += float(utilization_change or 0)
-            if utilization_change and float(utilization_change) < 0:
-                total_utilization_reduction += abs(float(utilization_change))
+            utilization_change = None
+            if vs_baseline:
+                utilization_change = vs_baseline.get("utilization_change_pct")
+                if utilization_change is None:
+                    utilization_change = vs_baseline.get("change_from_baseline_pct")
+            if utilization_change is None:
+                utilization_change = metrics.get("observed_percent_change") or metrics.get(
+                    "utilization_change_pct", 0
+                )
+            try:
+                utilization_change_f = float(utilization_change or 0)
+            except (TypeError, ValueError):
+                utilization_change_f = 0.0
+            total_utilization_change += utilization_change_f
+            if utilization_change_f < 0:
+                total_utilization_reduction += abs(utilization_change_f)
 
             policy_id = obs.get("policy_id")
             if policy_id:
@@ -251,8 +261,11 @@ async def get_dashboard_summary(
                     {
                         "policy_id": policy_id,
                         "policy_name": policy_name_by_id.get(policy_id_str, "Unknown"),
-                        "utilization_change_pct": utilization_change,
-                        "cost_impact": cost_change if vs_baseline else 0,
+                        "utilization_change_pct": utilization_change_f,
+                        # PMPM only — do not multiply by member_months (that fabricated
+                        # portfolio "$ savings" and drove inflated ROI on the exec dashboard).
+                        "cost_impact": cost_change_pmpm if cost_change_pmpm is not None else 0,
+                        "cost_impact_unit": "pmpm",
                         "observation_date": obs.get("computed_at"),
                     }
                 )
@@ -261,7 +274,6 @@ async def get_dashboard_summary(
             try:
                 from uepi_api.storage_policy_predicted_impact import get_predicted_impact
 
-                # Sample up to 10 policies for predicted fallback (avoids N× all)
                 sample_policies = (
                     db.query(Policy.id, Policy.name)
                     .filter(Policy.tenant_id == tenant_id)
@@ -277,15 +289,24 @@ async def get_dashboard_summary(
                         metrics = predicted_impact.get("metrics", {}) or {}
                         utilization_change = metrics.get("utilization_change_pct", 0)
                         cost_change_pmpm = metrics.get("cost_change_pmpm", 0)
-                        cost_change = float(cost_change_pmpm or 0) * 10000
-                        total_utilization_change += float(utilization_change or 0)
-                        total_cost_impact += cost_change
+                        try:
+                            utilization_change_f = float(utilization_change or 0)
+                        except (TypeError, ValueError):
+                            utilization_change_f = 0.0
+                        try:
+                            cost_pmpm_f = float(cost_change_pmpm or 0)
+                        except (TypeError, ValueError):
+                            cost_pmpm_f = 0.0
+                        total_utilization_change += utilization_change_f
+                        sum_cost_change_pmpm += cost_pmpm_f
+                        n_cost_pmpm += 1
                         policy_performance.append(
                             {
                                 "policy_id": str(pid),
                                 "policy_name": pname or "Unknown",
-                                "utilization_change_pct": utilization_change,
-                                "cost_impact": cost_change,
+                                "utilization_change_pct": utilization_change_f,
+                                "cost_impact": cost_pmpm_f,
+                                "cost_impact_unit": "pmpm",
                                 "observation_date": predicted_impact.get("predicted_at"),
                                 "is_predicted": True,
                             }
@@ -303,23 +324,21 @@ async def get_dashboard_summary(
         avg_utilization_change = (
             total_utilization_change / num_data_points if num_data_points > 0 else 0
         )
-        avg_cost_impact = total_cost_impact / num_data_points if num_data_points > 0 else 0
+        avg_cost_impact_pmpm = (
+            sum_cost_change_pmpm / n_cost_pmpm if n_cost_pmpm > 0 else 0
+        )
 
-        if total_cost_savings > 0 and num_data_points > 0:
-            avg_monthly_savings = total_cost_savings / num_data_points
-            annualized_savings = avg_monthly_savings * 12
-
-        implementation_cost = active_policies_count * 50000 if active_policies_count else 1
-        if annualized_savings > 0:
-            roi_estimate = (
-                ((annualized_savings - implementation_cost) / implementation_cost) * 100
-                if implementation_cost > 0
-                else 0
+        # Do not invent ROI from policies×$50k or Σ(pmpm×member_months).
+        portfolio_financials_available = bool(member_count and member_count > 0 and total_paid_amount > 0)
+        portfolio_financials_reason = None
+        if not portfolio_financials_available:
+            portfolio_financials_reason = (
+                "Portfolio ROI / annualized $ savings unavailable: membership or paid totals "
+                "not present on general baseline. Policy-level PMPM deltas remain available."
             )
 
-        cost_pmpm_current = (total_paid_amount / (member_count * 12)) if member_count > 0 else 0
-        savings_pmpm = (annualized_savings / (member_count * 12)) if member_count > 0 else 0
-        members_impacted = member_count
+        cost_pmpm_current = (total_paid_amount / (member_count * 12)) if member_count > 0 else None
+        members_impacted = member_count if member_count > 0 else None
 
         top_policies = sorted(
             policy_performance,
@@ -335,12 +354,12 @@ async def get_dashboard_summary(
                     "message": f"Average utilization decreased by {abs(avg_utilization_change):.1f}%",
                 }
             )
-        if avg_cost_impact < -1000:
+        if avg_cost_impact_pmpm < -10:
             risk_indicators.append(
                 {
                     "type": "HIGH_COST_IMPACT",
                     "severity": "MEDIUM",
-                    "message": f"Significant cost impact detected: ${abs(avg_cost_impact):,.0f}",
+                    "message": f"Average policy cost Δ PMPM: ${avg_cost_impact_pmpm:,.2f}",
                 }
             )
 
@@ -354,8 +373,12 @@ async def get_dashboard_summary(
             },
             "metrics": {
                 "avg_utilization_change_pct": round(avg_utilization_change, 2),
-                "avg_cost_impact": round(avg_cost_impact, 2),
-                "total_cost_impact": round(total_cost_impact, 2),
+                "avg_cost_impact": round(avg_cost_impact_pmpm, 2),
+                "avg_cost_impact_unit": "pmpm",
+                "total_cost_impact": round(sum_cost_change_pmpm, 2) if n_cost_pmpm else 0,
+                "total_cost_impact_unit": "pmpm_sum",
+                "portfolio_financials_available": portfolio_financials_available,
+                "portfolio_financials_reason": portfolio_financials_reason,
             },
             "business_metrics": {
                 "member_count": member_count,
@@ -363,23 +386,25 @@ async def get_dashboard_summary(
                 "total_paid_amount": round(total_paid_amount, 2),
                 "total_allowed_amount": round(total_allowed_amount, 2),
                 "claims_date_range": claims_date_range,
-                "cost_pmpm_current": round(cost_pmpm_current, 2),
-                "total_cost_savings": round(total_cost_savings, 2),
-                "annualized_savings": round(annualized_savings, 2),
-                "savings_pmpm": round(savings_pmpm, 2),
-                "total_utilization_reduction_pct": round(total_utilization_reduction, 2),
+                "cost_pmpm_current": round(cost_pmpm_current, 2) if cost_pmpm_current is not None else None,
+                "total_cost_savings": None,
+                "annualized_savings": None,
+                "savings_pmpm": None,
+                "total_utilization_reduction_pct": round(
+                    (total_utilization_reduction / num_data_points) if num_data_points else 0, 2
+                ),
                 "members_impacted": members_impacted,
-                "roi_estimate_pct": round(roi_estimate, 2),
-                "implementation_cost": implementation_cost,
-                "payback_period_months": round(implementation_cost / (annualized_savings / 12), 1)
-                if annualized_savings > 0
-                else None,
+                "roi_estimate_pct": None,
+                "implementation_cost": None,
+                "payback_period_months": None,
+                "portfolio_financials_available": portfolio_financials_available,
+                "portfolio_financials_reason": portfolio_financials_reason,
                 "claims_per_member": round(total_claims_count / member_count, 2)
                 if member_count > 0
-                else 0,
+                else None,
                 "cost_per_claim": round(total_paid_amount / total_claims_count, 2)
                 if total_claims_count > 0
-                else 0,
+                else None,
             },
             "top_policies": top_policies,
             "recent_activity": recent_activity,

@@ -1,0 +1,24 @@
+{
+  "deployed_revision": {
+    "api_image": "healthforesightacr.azurecr.io/healthforesight-api:dec4-freeze-89f742f",
+    "git": "89f742f",
+    "tag": "demo-dec4-freeze-2026-11-04",
+    "web": "healthforesight-web.azurewebsites.net Running"
+  },
+  "mri_monitoring_before": {
+    "query": "GET /observations?policy_id=d403f101\u2026&latest_only=true&summary=true&limit=5",
+    "first_row_id": "obs-mon-20260731-d403f101",
+    "first_row_verdict": "AT_RISK",
+    "hero_obs_id": "b227220e-f9e0-45a6-8938-d55aad1fe25d",
+    "hero_verdict": "ON_TRACK",
+    "ui": "CATALOG_POLICY chip + Observation: AT_RISK"
+  },
+  "executive_before": {
+    "total_cost_impact": -525611323.26,
+    "roi_estimate_pct": 357.6,
+    "member_count": 0,
+    "implementation_cost_formula": "active_policies * 50000",
+    "nan_pct_cause": "ConfidenceBadge score=undefined from confidence='high' prop \u2192 (undefined*100).toFixed \u2192 NaN%",
+    "inflated_pct_cause": "((abs(impact)/10000000)*100) hardcoded denominator \u2192 5256.1%"
+  }
+}

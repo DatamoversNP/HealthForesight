@@ -298,14 +298,36 @@ export default function DashboardPage() {
         <Grid item xs={12} sm={6} md={3}>
           <MetricCard
             label="Total Cost Impact"
-            value={Math.abs(metrics.total_cost_impact || 0).toLocaleString()}
-            unit="$"
-            subtitle={
-              metrics.total_cost_impact < 0
-                ? `Avg savings vs. pre-policy baseline`
-                : `Avg impact vs. pre-policy baseline`
+            value={
+              metrics.total_cost_impact == null || !Number.isFinite(Number(metrics.total_cost_impact))
+                ? 'Unavailable'
+                : Math.abs(Number(metrics.total_cost_impact)).toLocaleString(undefined, {
+                    maximumFractionDigits: 2,
+                  })
             }
-            color={metrics.total_cost_impact < 0 ? 'success' : 'warning'}
+            unit={
+              metrics.total_cost_impact == null || !Number.isFinite(Number(metrics.total_cost_impact))
+                ? undefined
+                : metrics.total_cost_impact_unit === 'pmpm_sum'
+                  ? 'Σ ΔPMPM'
+                  : '$'
+            }
+            subtitle={
+              metrics.portfolio_financials_available === false
+                ? 'Policy Δ PMPM rollup — portfolio $ ROI unavailable'
+                : metrics.total_cost_impact_unit === 'pmpm_sum'
+                  ? 'Sum of latest-per-policy cost Δ PMPM'
+                  : metrics.total_cost_impact < 0
+                    ? 'Avg savings vs. pre-policy baseline'
+                    : 'Avg impact vs. pre-policy baseline'
+            }
+            color={
+              metrics.total_cost_impact == null || !Number.isFinite(Number(metrics.total_cost_impact))
+                ? undefined
+                : metrics.total_cost_impact < 0
+                  ? 'success'
+                  : 'warning'
+            }
           />
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
@@ -405,13 +427,17 @@ export default function DashboardPage() {
                     <Grid item xs={6}>
                       <Typography variant="caption" color="text.secondary">Annualized Savings</Typography>
                       <Typography variant="h6" sx={{ fontWeight: 600, color: healthForesightColors.success.main }}>
-                        ${(dashboardData.business_metrics?.annualized_savings || 0).toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                        {dashboardData.business_metrics?.annualized_savings == null
+                          ? 'Unavailable'
+                          : `$${Number(dashboardData.business_metrics.annualized_savings).toLocaleString(undefined, { maximumFractionDigits: 0 })}`}
                       </Typography>
                     </Grid>
                     <Grid item xs={6}>
                       <Typography variant="caption" color="text.secondary">Savings PMPM</Typography>
                       <Typography variant="h6" sx={{ fontWeight: 600, color: healthForesightColors.success.main }}>
-                        ${dashboardData.business_metrics?.savings_pmpm?.toFixed(2) || 'N/A'}
+                        {dashboardData.business_metrics?.savings_pmpm == null
+                          ? 'Unavailable'
+                          : `$${Number(dashboardData.business_metrics.savings_pmpm).toFixed(2)}`}
                       </Typography>
                     </Grid>
                   </Grid>
@@ -428,13 +454,23 @@ export default function DashboardPage() {
                     <Grid item xs={6}>
                       <Typography variant="caption" color="text.secondary">ROI Estimate</Typography>
                       <Typography variant="h6" sx={{ fontWeight: 600, color: healthForesightColors.success.main }}>
-                        {dashboardData.business_metrics?.roi_estimate_pct?.toFixed(1) || 'N/A'}%
+                        {dashboardData.business_metrics?.roi_estimate_pct == null ||
+                        !Number.isFinite(Number(dashboardData.business_metrics.roi_estimate_pct))
+                          ? 'Unavailable'
+                          : `${Number(dashboardData.business_metrics.roi_estimate_pct).toFixed(1)}%`}
                       </Typography>
+                      {dashboardData.business_metrics?.portfolio_financials_reason && (
+                        <Typography variant="caption" color="text.secondary" display="block">
+                          {dashboardData.business_metrics.portfolio_financials_reason}
+                        </Typography>
+                      )}
                     </Grid>
                     <Grid item xs={6}>
                       <Typography variant="caption" color="text.secondary">Payback Period</Typography>
                       <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                        {dashboardData.business_metrics?.payback_period_months ? `${dashboardData.business_metrics.payback_period_months} months` : 'N/A'}
+                        {dashboardData.business_metrics?.payback_period_months == null
+                          ? 'Unavailable'
+                          : `${dashboardData.business_metrics.payback_period_months} months`}
                       </Typography>
                     </Grid>
                     <Grid item xs={6}>

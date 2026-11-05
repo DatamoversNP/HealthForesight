@@ -45,6 +45,17 @@ export default function LoginPage() {
     }
   }, [isAuthenticated, navigate])
 
+  // Safe warm-up: ping API health on login mount so first dashboard call is less cold.
+  // Does not change analytics or known-answer data; ignore failures.
+  useEffect(() => {
+    const base =
+      import.meta.env.VITE_API_URL ||
+      (typeof window !== 'undefined' && window.location.hostname.endsWith('.azurewebsites.net')
+        ? `${window.location.origin}/api/v1`
+        : '/api/v1')
+    fetch(`${String(base).replace(/\/$/, '')}/health`).catch(() => {})
+  }, [])
+
   const handleOIDCCallback = async (code: string) => {
     setLoading(true)
     setError(null)
