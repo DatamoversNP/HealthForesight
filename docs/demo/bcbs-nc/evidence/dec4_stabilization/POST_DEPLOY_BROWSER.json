@@ -1,0 +1,29 @@
+{
+  "executive": {
+    "has_nan_pct": false,
+    "has_unavailable": false,
+    "no_525m": true,
+    "snip": "HealthForesightby DataMoversadmin@healthforesight.com"
+  },
+  "mri_monitoring": {
+    "chip": "NONE",
+    "on_track": false,
+    "has_latest_label": true,
+    "snip": "HealthForesightby DataMoversadmin@healthforesight.comBack to PoliciesOutpatient MRI Prior AuthorizationACTIVEPRIOR_AUTHEdit PolicyOverviewDefinitionScopeLeversAssumptionsGuardrailsMonitoringCompositionCausal ImpactCold StartApplicabilityVerdict EvidenceVersionsChangelogDecisionsEvidenceForecastsScenariosRisk RegisterBehaviorAlertsCommentsTasksActivityNarrativePerformance monitoringLatest observation, predicted impact, and guardrail status for Out"
+  },
+  "mppr": {
+    "hits": [
+      "$600",
+      "$3,150",
+      "$2,550"
+    ],
+    "ok": true
+  },
+  "sos": {
+    "hits": [
+      "$520",
+      "$260"
+    ],
+    "ok": true
+  }
+}

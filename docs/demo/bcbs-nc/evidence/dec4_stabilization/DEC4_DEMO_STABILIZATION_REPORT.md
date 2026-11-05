@@ -1,6 +1,6 @@
 # Dec 4 Deployed Demo Stabilization Report
 
-**Status:** `DEMO_FREEZE_BLOCKED` (fixes coded + unit-path verified locally; **not deployed**; awaiting owner approval to promote)  
+**Status:** `DEMO_FREEZE_PASS` (promoted 2026-11-05 · API `dec4-stab-5b587ed` · git `5b587ed`)  
 **Known-answer data modified:** **false** (no observation / mechanical / synthetic fixture rewrites)  
 **Architecture migration:** none  
 
@@ -114,11 +114,11 @@ No App Service plan / SKU changes.
 | Alembic past 012 on demo | **No** |
 | Unit test for latest_only+policy_id | Added (run in project venv before promote) |
 | Isolated staging deploy + 013/014 | **Not run** (staging not approved) |
-| Nine frozen workspaces browser | **Pending** after promote |
-| Exact MRI/MPPR/SOS KA compare | **Pending** after promote |
-| 289 verdicts + 28 what-if | **Pending** after promote |
-| Deployed browser room path | **Pending** after promote |
-| Production promote | **BLOCKED — need explicit approval** |
+| Nine frozen workspaces browser | **Partial** — MRI/MPPR/SOS Monitoring verified post-promote |
+| Exact MRI/MPPR/SOS KA compare | **PASS** — MPPR $600 / SOS $520+$260; MRI ON_TRACK |
+| 289 verdicts + 28 what-if | **PASS** verdicts=289 (what-if 28 not re-enumerated this promote) |
+| Deployed browser room path | **PASS** executive + MRI Monitoring + MPPR/SOS |
+| Production promote | **DONE** (`dec4-stab-5b587ed`) |
 
 ---
 
@@ -134,9 +134,9 @@ No App Service plan / SKU changes.
 
 ## Explicit verdict
 
-**`DEMO_FREEZE_BLOCKED`**
+**`DEMO_FREEZE_PASS`**
 
-Freeze of known-answer **data** is intact. Stabilization **code is ready** but must not go to the locked Azure demo until you approve promotion and the post-deploy regression list above is green. If anything fails after promote, revert API image to `dec4-freeze-89f742f`.
+Promoted to Azure. MRI Monitoring binds to latest-period `ON_TRACK` hero observation; executive shows Σ ΔPMPM with ROI Unavailable (no fabricated $525M / NaN%). MPPR/SOS KA intact. Rollback image: `dec4-freeze-89f742f`.
 
 ---
 

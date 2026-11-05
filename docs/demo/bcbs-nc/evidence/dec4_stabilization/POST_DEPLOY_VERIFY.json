@@ -1,0 +1,24 @@
+{
+  "git": "5b587ed",
+  "api_image": "healthforesightacr.azurecr.io/healthforesight-api:dec4-stab-5b587ed",
+  "web": "healthforesight-web.azurewebsites.net",
+  "api_checks": {
+    "latest_only_mri": {
+      "id": "b227220e-f9e0-45a6-8938-d55aad1fe25d",
+      "verdict": "ON_TRACK"
+    },
+    "roi_estimate_pct": null,
+    "annualized_savings": null,
+    "total_cost_impact_unit": "pmpm_sum",
+    "verdicts_count": 289
+  },
+  "browser": {
+    "mri_monitoring_chip": "ON_TRACK",
+    "executive_nan_pct": false,
+    "executive_no_525m": true,
+    "executive_shows_pmpm_rollup": true,
+    "mppr_ka": true,
+    "sos_ka": true
+  },
+  "verdict": "DEMO_FREEZE_PASS"
+}
