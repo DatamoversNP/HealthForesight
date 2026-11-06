@@ -482,7 +482,7 @@ async def get_policy_performance(
         except Exception:
             pass
         if not member_count:
-            member_count = 10000
+            member_count = None
 
         policies = (
             db.query(Policy.id, Policy.name, Policy.status, Policy.policy_metadata_json)
@@ -517,30 +517,37 @@ async def get_policy_performance(
                 metrics = obs.get("metrics") or {}
                 comparisons = obs.get("comparisons") or {}
                 vb = comparisons.get("vs_baseline", {}) if isinstance(comparisons, dict) else {}
-                avg_utilization_change = float(
-                    metrics.get("observed_percent_change", 0)
-                    or metrics.get("utilization_change_pct", 0)
-                    or 0
-                )
-                cost_change_pmpm = vb.get("cost_change_pmpm") or vb.get("cost_change")
+                raw_util = metrics.get("observed_percent_change")
+                if raw_util is None:
+                    raw_util = metrics.get("utilization_change_pct")
+                avg_utilization_change = None if raw_util is None else float(raw_util)
+                cost_change_pmpm = vb.get("cost_change_pmpm")
+                if cost_change_pmpm is None:
+                    cost_change_pmpm = vb.get("cost_change")
                 if cost_change_pmpm is None and (
-                    vb.get("baseline_cost_pmpm") is not None or vb.get("observed_cost_pmpm") is not None
+                    vb.get("baseline_cost_pmpm") is not None and vb.get("observed_cost_pmpm") is not None
                 ):
-                    base = float(vb.get("baseline_cost_pmpm") or 0)
-                    observed = float(vb.get("observed_cost_pmpm") or 0)
-                    cost_change_pmpm = observed - base
-                member_months = vb.get("baseline_member_months") or member_count
-                avg_cost_impact = float(cost_change_pmpm or 0) * float(member_months or member_count)
+                    cost_change_pmpm = float(vb.get("observed_cost_pmpm")) - float(vb.get("baseline_cost_pmpm"))
+                exposure = vb.get("baseline_member_months")
+                if exposure is None:
+                    exposure = member_count
+                if cost_change_pmpm is None or exposure is None:
+                    avg_cost_impact = None
+                else:
+                    avg_cost_impact = float(cost_change_pmpm) * float(exposure)
 
-                if abs(avg_cost_impact) < 1e-6:
+                if avg_cost_impact is None:
                     try:
                         from uepi_api.storage_policy_predicted_impact import get_predicted_impact
 
                         predicted_impact = get_predicted_impact(policy_id, tenant_id)
-                        if predicted_impact:
+                        if predicted_impact and member_count is not None:
                             pm = predicted_impact.get("metrics", {}) or {}
-                            cost_change_pmpm = pm.get("cost_change_pmpm") or pm.get("cost_change", 0)
-                            avg_cost_impact = float(cost_change_pmpm or 0) * member_count
+                            predicted_cost = pm.get("cost_change_pmpm")
+                            if predicted_cost is None:
+                                predicted_cost = pm.get("cost_change")
+                            if predicted_cost is not None:
+                                avg_cost_impact = float(predicted_cost) * float(member_count)
                     except Exception:
                         pass
 
@@ -553,8 +560,8 @@ async def get_policy_performance(
                         "policy_name": policy.name or "Unknown",
                         "status": policy.status,
                         "observations_count": 1,
-                        "avg_utilization_change_pct": round(avg_utilization_change, 2),
-                        "avg_cost_impact": round(float(avg_cost_impact or 0), 2),
+                        "avg_utilization_change_pct": None if avg_utilization_change is None else round(avg_utilization_change, 2),
+                        "avg_cost_impact": None if avg_cost_impact is None else round(float(avg_cost_impact), 2),
                         "avg_prediction_accuracy_pct": round(avg_prediction_accuracy, 2)
                         if avg_prediction_accuracy is not None
                         else None,
@@ -564,22 +571,23 @@ async def get_policy_performance(
                     }
                 )
             else:
-                avg_cost_impact = 0.0
-                avg_utilization_change = 0.0
+                avg_cost_impact = None
+                avg_utilization_change = None
                 try:
                     from uepi_api.storage_policy_predicted_impact import get_predicted_impact
 
                     predicted_impact = get_predicted_impact(policy_id, tenant_id)
                     if predicted_impact:
                         metrics = predicted_impact.get("metrics", {}) or {}
-                        avg_utilization_change = float(
-                            metrics.get("utilization_change_pct", 0)
-                            or metrics.get("utilization_change", 0)
-                            or metrics.get("utilization_change_per_1k", 0)
-                            or 0
-                        )
-                        cost_change_pmpm = metrics.get("cost_change_pmpm") or metrics.get("cost_change", 0)
-                        avg_cost_impact = float(cost_change_pmpm or 0) * member_count
+                        raw_util = metrics.get("utilization_change_pct")
+                        if raw_util is None:
+                            raw_util = metrics.get("utilization_change")
+                        avg_utilization_change = None if raw_util is None else float(raw_util)
+                        cost_change_pmpm = metrics.get("cost_change_pmpm")
+                        if cost_change_pmpm is None:
+                            cost_change_pmpm = metrics.get("cost_change")
+                        if cost_change_pmpm is not None and member_count is not None:
+                            avg_cost_impact = float(cost_change_pmpm) * float(member_count)
                 except Exception:
                     pass
                 performance_data.append(
@@ -588,10 +596,10 @@ async def get_policy_performance(
                         "policy_name": policy.name or "Unknown",
                         "status": policy.status,
                         "observations_count": 0,
-                        "avg_utilization_change_pct": round(avg_utilization_change, 2),
-                        "avg_cost_impact": round(avg_cost_impact, 2),
+                        "avg_utilization_change_pct": None if avg_utilization_change is None else round(avg_utilization_change, 2),
+                        "avg_cost_impact": None if avg_cost_impact is None else round(avg_cost_impact, 2),
                         "avg_prediction_accuracy_pct": None,
-                        "is_predicted": bool(avg_cost_impact != 0 or avg_utilization_change != 0),
+                        "is_predicted": avg_cost_impact is not None or avg_utilization_change is not None,
                         "latest_observation_period_end": None,
                         "policy_effective_date": policy_effective_date,
                     }

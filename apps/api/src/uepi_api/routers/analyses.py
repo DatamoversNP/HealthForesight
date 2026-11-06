@@ -680,12 +680,18 @@ async def get_analysis_trust_panel(
         # Legacy format - build trust panel from available data
         impact_result = results.get("impact_estimate", results.get("impact_result", {}))
         method_checks = results.get("method_checks", results.get("data_sufficiency_checks", {}))
-        confidence_score = results.get("confidence_score", results.get("summary", {}).get("confidence_score", 70.0))
+        summary = results.get("summary") or {}
+        confidence_score = results.get("confidence_score", summary.get("confidence_score"))
         
         trust_panel = {
             "confidence_score": {
                 "overall_score": confidence_score,
-                "category": "HIGH" if confidence_score >= 80 else "MEDIUM" if confidence_score >= 60 else "LOW",
+                "category": (
+                    "UNAVAILABLE" if confidence_score is None
+                    else "HIGH" if confidence_score >= 80
+                    else "MEDIUM" if confidence_score >= 60
+                    else "LOW"
+                ),
                 "components": {
                     "method_confidence": 90.0 if impact_result.get("method") == "difference_in_differences" else 70.0,
                     "data_quality_score": 85.0,
@@ -1516,12 +1522,14 @@ async def complete_all_pending_analyses(
             "observed_percent_change": -15.0,
             "confidence_interval_lower": -0.20,
             "confidence_interval_upper": -0.10,
-            "p_value": 0.01,
+            "p_value": None,
+            "uncertainty_status": "UNAVAILABLE",
+            "evidence_class": "SIMULATION_ONLY",
         },
         "pre_period": {"start": "2024-06-01", "end": "2024-11-30", "utilization_per_1k": 125.5, "cost_per_member": 45.2},
         "post_period": {"start": "2024-12-01", "end": "2024-12-31", "utilization_per_1k": 106.7, "cost_per_member": 38.4},
         "method_checks": {"pre_trends_parallel": True, "control_balance": True, "seasonality_risk": "LOW"},
-        "trust_panel": {"confidence_score": 0.85, "data_sufficiency": "SUFFICIENT"},
+        "trust_panel": {"confidence_score": None, "data_sufficiency": "NOT_ASSESSED", "evidence_class": "SIMULATION_ONLY"},
     }
     
     completed = 0

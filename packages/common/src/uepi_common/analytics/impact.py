@@ -9,6 +9,14 @@ import polars as pl
 
 from uepi_common.data.parquet_service import ParquetDataService
 from uepi_common.data_contracts.claims import ServiceCategory
+from uepi_common.metrics.measurement_integrity import uncertainty_fields
+
+
+def _relative_percent(effect: float, baseline: Optional[float]) -> Optional[float]:
+    """Percent change is undefined when the baseline is missing or not positive."""
+    if baseline is None or baseline <= 0:
+        return None
+    return effect / baseline * 100
 
 
 class ImpactResult:
@@ -63,16 +71,21 @@ class ImpactResult:
     
     def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary for API responses"""
+        lower = upper = None
+        if self.confidence_interval and len(self.confidence_interval) == 2:
+            lower, upper = self.confidence_interval
         return {
             "method": self.method,
             "effect_size": self.effect_size,
             "percent_change": self.percent_change,
+            "change_status": "MEASURED" if self.percent_change is not None else "UNAVAILABLE",
             "confidence_interval": {
-                "lower": self.confidence_interval[0],
-                "upper": self.confidence_interval[1],
-                "level": 0.95,
+                "lower": lower,
+                "upper": upper,
+                "level": None,
             },
-            "p_value": self.p_value,
+            "p_value": None,
+            **uncertainty_fields(),
             "treatment_pre_metric": self.treatment_pre_metric,
             "treatment_post_metric": self.treatment_post_metric,
             "control_pre_metric": self.control_pre_metric,
@@ -168,7 +181,7 @@ class ImpactAnalysisEngine:
             control_diff = control_post_metric - control_pre_metric
             did_estimate = treatment_diff - control_diff
             
-            percent_change = (did_estimate / treatment_pre_metric * 100) if treatment_pre_metric > 0 else 0.0
+            percent_change = _relative_percent(did_estimate, treatment_pre_metric)
             
             # Bootstrap confidence interval for DiD
             ci_lower, ci_upper = self._bootstrap_did_ci(
@@ -181,8 +194,8 @@ class ImpactAnalysisEngine:
                 confidence_level,
             )
             
-            # Compute p-value (simplified - would use t-test in production)
-            p_value = self._compute_p_value(did_estimate, ci_lower, ci_upper)
+            # Placeholder 0.01/0.50 values are not a test. Leave unavailable.
+            p_value = None
             
             return ImpactResult(
                 method="difference_in_differences",
@@ -202,7 +215,7 @@ class ImpactAnalysisEngine:
         else:
             # Pre/post (no control group)
             change = treatment_post_metric - treatment_pre_metric
-            percent_change = (change / treatment_pre_metric * 100) if treatment_pre_metric > 0 else 0.0
+            percent_change = _relative_percent(change, treatment_pre_metric)
             
             # Bootstrap confidence interval for pre/post
             ci_lower, ci_upper = self._bootstrap_pre_post_ci(
@@ -213,8 +226,7 @@ class ImpactAnalysisEngine:
                 confidence_level,
             )
             
-            # Compute p-value
-            p_value = self._compute_p_value(change, ci_lower, ci_upper)
+            p_value = None
             
             return ImpactResult(
                 method="pre_post",
@@ -506,12 +518,6 @@ class ImpactAnalysisEngine:
         Returns:
             P-value (or None if cannot compute)
         """
-        # Simplified p-value computation
-        # In production, would use proper statistical test
-        if ci_lower <= 0 <= ci_upper:
-            # CI contains zero, effect not significant
-            return 0.5  # Placeholder
-        else:
-            # CI doesn't contain zero, effect significant
-            return 0.01  # Placeholder
+        # No test is defined here. Do not emit 0.01 or 0.50.
+        return None
 

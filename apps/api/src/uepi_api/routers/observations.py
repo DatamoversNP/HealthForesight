@@ -655,7 +655,7 @@ async def list_policy_verdicts_route(
         )
 
     # Build one row per policy that has at least one observation (use latest observation)
-    from uepi_api.verdict import compute_verdict
+    from uepi_api.verdict import compute_verdict, endpoint_contract_from_policy
     rows = []
     for pid, obs_list in by_policy.items():
         if not pid:
@@ -666,12 +666,18 @@ async def list_policy_verdicts_route(
         vs_b = comparisons.get("vs_baseline") or {}
         vs_p = comparisons.get("vs_predicted") or {}
         cost_change_pct = vs_b.get("cost_change_pct")
-        util_change_pct = vs_b.get("utilization_change_pct") or vs_b.get("change_from_baseline_pct")
+        util_change_pct = vs_b.get("utilization_change_pct")
+        if util_change_pct is None:
+            util_change_pct = vs_b.get("change_from_baseline_pct")
         cost_change_pmpm = vs_b.get("cost_change_pmpm")
         confidence_pct = vs_p.get("prediction_accuracy_pct")
-        # Recompute verdict from comparison data so it stays consistent with displayed metrics
-        verdict_status, verdict_reason, recommendation = compute_verdict(comparisons, behavioral)
+        # Recompute for this response only. Stored verdict_status is not written here.
         p = policies.get(pid) or {}
+        verdict_status, verdict_reason, recommendation = compute_verdict(
+            comparisons,
+            behavioral,
+            required_endpoints=endpoint_contract_from_policy(p),
+        )
         eff = p.get("effective_period") or {}
         policy_effective_date = eff.get("start_date") if isinstance(eff, dict) else None
         rows.append({
@@ -679,6 +685,8 @@ async def list_policy_verdicts_route(
             "policy_name": p.get("name") or p.get("policy_name") or "Unknown",
             "policy_effective_date": policy_effective_date,
             "verdict": verdict_status,
+            "historical_verdict_status": latest.get("verdict_status"),
+            "verdict_is_recomputed": True,
             "verdict_label": _verdict_display_label(verdict_status),
             "savings_or_cost_impact_pmpm": cost_change_pmpm,
             "cost_impact_pct": cost_change_pct,
@@ -810,12 +818,14 @@ async def create_all_observations_from_pending_analyses(
             "observed_percent_change": -15.0,
             "confidence_interval_lower": -0.20,
             "confidence_interval_upper": -0.10,
-            "p_value": 0.01,
+            "p_value": None,
+            "uncertainty_status": "UNAVAILABLE",
+            "evidence_class": "SIMULATION_ONLY",
         },
         "pre_period": {"start": "2024-06-01", "end": "2024-11-30", "utilization_per_1k": 125.5, "cost_per_member": 45.2},
         "post_period": {"start": "2024-12-01", "end": "2024-12-31", "utilization_per_1k": 106.7, "cost_per_member": 38.4},
         "method_checks": {"pre_trends_parallel": True, "control_balance": True, "seasonality_risk": "LOW"},
-        "trust_panel": {"confidence_score": 0.85, "data_sufficiency": "SUFFICIENT"},
+        "trust_panel": {"confidence_score": None, "data_sufficiency": "NOT_ASSESSED", "evidence_class": "SIMULATION_ONLY"},
         }
         
         # Step 2: Complete all analyses

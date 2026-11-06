@@ -93,22 +93,25 @@ def compute_general_baseline_from_database(
     months = _baseline_calendar_months_inclusive(start_date, end_date)
     member_months = float(unique_members * months) if unique_members > 0 else 0.0
 
-    utilization_per_1k = (total_claims / member_months * 1000) if member_months > 0 else 0.0
-    cost_pmpm = (total_paid / member_months) if member_months > 0 else 0.0
-    allowed_pmpm = (total_allowed / member_months) if member_months > 0 else 0.0
+    utilization_per_1k = (total_claims / member_months * 1000) if member_months > 0 else None
+    cost_pmpm = (total_paid / member_months) if member_months > 0 else None
+    allowed_pmpm = (total_allowed / member_months) if member_months > 0 else None
 
     out: Dict[str, Any] = {
-        "member_months": member_months,
+        "member_months": member_months if unique_members > 0 else None,
         "unique_members": unique_members,
         "total_claims": total_claims,
         "total_paid": total_paid,
         "total_allowed": total_allowed,
-        "util_rate_total_per_1000_mm": float(utilization_per_1k),
-        "allowed_pmpm_total": float(allowed_pmpm),
-        "paid_pmpm_total": float(cost_pmpm),
-        "claims_per_member": (total_claims / unique_members) if unique_members > 0 else 0.0,
+        "util_rate_total_per_1000_mm": utilization_per_1k,
+        "allowed_pmpm_total": allowed_pmpm,
+        "paid_pmpm_total": cost_pmpm,
+        "claims_per_member": (total_claims / unique_members) if unique_members > 0 else None,
         "cost_per_claim": (total_paid / total_claims) if total_claims > 0 else 0.0,
+        "cost_pmpm_meaning": "PAID",
     }
+    from uepi_common.metrics.measurement_integrity import annotate_claimant_exposure
+    annotate_claimant_exposure(out, unique_members, enrollment_measured=False)
     try:
         seg_df = repo.get_claims_lines(
             tenant_id=tenant_id,
@@ -240,23 +243,26 @@ def compute_policy_specific_baseline_from_database(
 
     months = _baseline_calendar_months_inclusive(start_date, end_date)
     member_months = unique_members * months if unique_members > 0 else 0
-    utilization_per_1k = (total_claims / member_months * 1000) if member_months > 0 else 0.0
-    cost_pmpm = (total_paid / member_months) if member_months > 0 else 0.0
-    allowed_pmpm = (total_allowed / member_months) if member_months > 0 else 0.0
+    utilization_per_1k = (total_claims / member_months * 1000) if member_months > 0 else None
+    cost_pmpm = (total_paid / member_months) if member_months > 0 else None
+    allowed_pmpm = (total_allowed / member_months) if member_months > 0 else None
 
     out = {
-        "member_months": float(member_months),
+        "member_months": float(member_months) if unique_members > 0 else None,
         "unique_members": int(unique_members),
         "total_claims": int(total_claims),
         "total_paid": float(total_paid),
         "total_allowed": float(total_allowed),
-        "util_rate_target_per_1000_mm": float(utilization_per_1k),
-        "allowed_pmpm_target": float(allowed_pmpm),
-        "paid_pmpm_target": float(cost_pmpm),
-        "claims_per_member": (total_claims / unique_members) if unique_members > 0 else 0.0,
+        "util_rate_target_per_1000_mm": utilization_per_1k,
+        "allowed_pmpm_target": allowed_pmpm,
+        "paid_pmpm_target": cost_pmpm,
+        "claims_per_member": (total_claims / unique_members) if unique_members > 0 else None,
         "cost_per_claim": (total_paid / total_claims) if total_claims > 0 else 0.0,
         "policy_id": str(policy_id),
+        "cost_pmpm_meaning": "PAID",
     }
+    from uepi_common.metrics.measurement_integrity import annotate_claimant_exposure
+    annotate_claimant_exposure(out, int(unique_members or 0), enrollment_measured=False)
     try:
         seg_df = repo.get_claims_lines(
             tenant_id=tenant_id,

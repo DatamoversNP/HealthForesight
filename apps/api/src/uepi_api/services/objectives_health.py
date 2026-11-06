@@ -59,7 +59,7 @@ def build_objectives_health_snapshot(
     generated_at: Optional[str] = None,
 ) -> Dict[str, Any]:
     """Pure builder — unit-testable for reproducibility."""
-    from uepi_api.verdict import compute_verdict
+    from uepi_api.verdict import compute_verdict, endpoint_contract_from_policy
 
     # Stable policy order
     policy_rows_src = sorted(
@@ -116,9 +116,15 @@ def build_objectives_health_snapshot(
             behavioral = latest.get("behavioral_explanation") or {}
             vs_b = comparisons.get("vs_baseline") or {}
             vs_p = comparisons.get("vs_predicted") or {}
-            verdict_status, verdict_reason, recommendation = compute_verdict(comparisons, behavioral)
+            verdict_status, verdict_reason, recommendation = compute_verdict(
+                comparisons,
+                behavioral,
+                required_endpoints=endpoint_contract_from_policy(p),
+            )
             cost_pmpm = vs_b.get("cost_change_pmpm")
-            util_pct = vs_b.get("utilization_change_pct") or vs_b.get("change_from_baseline_pct")
+            util_pct = vs_b.get("utilization_change_pct")
+            if util_pct is None:
+                util_pct = vs_b.get("change_from_baseline_pct")
             observation_ids.append(pid)
             if verdict_status == "BACKFIRE":
                 backfire_ids.append(pid)

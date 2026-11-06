@@ -525,7 +525,7 @@ class BaselineBenchmarkCalculator:
                 benchmarks.append(BaselineBenchmark(
                     metric_name="util_rate_total_per_1000_mm",
                     metric_value=float(per_1k),
-                    unit="claim_lines per 1,000 member-months",
+                    unit="claim lines per 1,000 claimant-months; not enrolled utilization",
                     segment="_".join(group_by),
                     segment_value=str(group_key),
                     sample_size=int(len(group_df)),  # Ensure int
@@ -539,7 +539,7 @@ class BaselineBenchmarkCalculator:
                     benchmarks.append(BaselineBenchmark(
                         metric_name="allowed_pmpm_total",
                         metric_value=float(pmpm),
-                        unit="dollars PMPM",
+                        unit="dollars per claimant-month; not enrolled PMPM",
                         segment="_".join(group_by),
                         segment_value=str(group_key),
                         sample_size=int(len(group_df)),  # Ensure int
@@ -567,7 +567,7 @@ class BaselineBenchmarkCalculator:
             benchmarks.append(BaselineBenchmark(
                 metric_name="util_rate_total_per_1000_mm",
                 metric_value=float(per_1k),
-                unit="claim_lines per 1,000 member-months",
+                unit="claim lines per 1,000 claimant-months; not enrolled utilization",
                 sample_size=int(len(claims_df)),  # Ensure int
             ))
             
@@ -579,7 +579,7 @@ class BaselineBenchmarkCalculator:
                 benchmarks.append(BaselineBenchmark(
                     metric_name="allowed_pmpm_total",
                     metric_value=float(pmpm),
-                    unit="dollars PMPM",
+                    unit="dollars per claimant-month; not enrolled PMPM",
                     sample_size=int(len(claims_df)),  # Ensure int
                 ))
             

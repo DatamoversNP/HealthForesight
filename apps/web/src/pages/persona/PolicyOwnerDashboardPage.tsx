@@ -3,6 +3,7 @@
  * Focus: Lifecycle states, assumptions, approvals, compliance signals, rollback triggers
  */
 import { useState, useEffect } from 'react'
+import { costLabel, utilizationLabel } from '../../utils/measurementIntegrity'
 import {
   Box,
   Card,
@@ -501,13 +502,13 @@ export default function PolicyOwnerDashboardPage() {
             </Typography>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6} md={3}>
-                <Typography variant="caption" color="text.secondary">Utilization per 1K</Typography>
+                <Typography variant="caption" color="text.secondary">{utilizationLabel(generalBaseline as any)}</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 600 }}>
                   {(generalBaseline as any).utilization_per_1k?.toFixed(1) ?? '—'}
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
-                <Typography variant="caption" color="text.secondary">Cost PMPM</Typography>
+                <Typography variant="caption" color="text.secondary">{costLabel(generalBaseline as any)}</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 600 }}>
                   ${(generalBaseline as any).cost_pmpm?.toFixed(2) ?? '—'}
                 </Typography>

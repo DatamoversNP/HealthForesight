@@ -39,7 +39,7 @@ export default function ConfidenceInterval({
           {value.toFixed(2)}
           {unit && <Typography component="span" variant="body2" color="text.secondary"> {unit}</Typography>}
         </Typography>
-        <Tooltip title={`95% CI: [${lower.toFixed(2)}, ${upper.toFixed(2)}] ${unit}`}>
+        <Tooltip title={`Line-level resample range (not inferential uncertainty): [${lower.toFixed(2)}, ${upper.toFixed(2)}] ${unit}`}>
           <InfoIcon fontSize="small" color="action" />
         </Tooltip>
       </Box>
@@ -80,7 +80,7 @@ export default function ConfidenceInterval({
         </Box>
       )}
       <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block' }}>
-        95% Confidence Interval: [{lower.toFixed(2)}, {upper.toFixed(2)}] {unit}
+        Line-level resample range, not a validated confidence interval: [{lower.toFixed(2)}, {upper.toFixed(2)}] {unit}
       </Typography>
     </Box>
   )

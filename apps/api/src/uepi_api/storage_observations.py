@@ -154,7 +154,11 @@ def _create_observation(
         from uepi_api.verdict import compute_verdict, VERDICT_RULE_VERSION
         comparisons = observation_data.get("comparisons") or {}
         behavioral = observation_data.get("behavioral_explanation") or {}
-        verdict_status, verdict_reason, recommendation = compute_verdict(comparisons, behavioral)
+        verdict_status, verdict_reason, recommendation = compute_verdict(
+            comparisons,
+            behavioral,
+            required_endpoints=observation_data.get("required_endpoints"),
+        )
         
         # Create observation in database
         observation = Observation(

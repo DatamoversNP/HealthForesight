@@ -32,8 +32,10 @@ def _build_observed_measures(observation_metrics: Dict[str, Any]) -> Dict[str, f
     mapping = [
         ("utilization_per_1k", "util_rate_target_per_1000_mm"),
         ("util_rate_per_1k", "util_rate_total_per_1000_mm"),
-        ("cost_pmpm", "allowed_pmpm_target"),
-        ("cost_per_member", "allowed_pmpm_target"),
+        ("paid_pmpm", "paid_pmpm_total"),
+        ("cost_pmpm", "paid_pmpm_total"),
+        ("cost_per_member", "paid_pmpm_total"),
+        ("allowed_pmpm", "allowed_pmpm_target"),
         ("member_months", "member_months"),
         ("unique_members", "unique_members"),
     ]
@@ -50,9 +52,13 @@ def _build_observed_measures(observation_metrics: Dict[str, Any]) -> Dict[str, f
             out["util_rate_target_per_1000_mm"] = float(obs.get("utilization_per_1k") or 0)
         except (TypeError, ValueError):
             pass
-    if "allowed_pmpm_target" not in out and ("cost_pmpm" in obs or "cost_per_member" in obs):
+    if "paid_pmpm_total" not in out and ("cost_pmpm" in obs or "paid_pmpm" in obs):
         try:
-            out["allowed_pmpm_target"] = float(obs.get("cost_pmpm") or obs.get("cost_per_member") or 0)
+            paid_val = obs.get("paid_pmpm")
+            if paid_val is None:
+                paid_val = obs.get("cost_pmpm")
+            if paid_val is not None:
+                out["paid_pmpm_total"] = float(paid_val)
         except (TypeError, ValueError):
             pass
     return out
@@ -69,10 +75,10 @@ def _build_baseline_measures(baseline_metrics: Dict[str, Any], baseline: Optiona
         ("util_rate_total_per_1000_mm", "util_rate_total_per_1000_mm"),
         ("utilization_per_1k", "util_rate_target_per_1000_mm"),
         ("allowed_pmpm_target", "allowed_pmpm_target"),
-        ("paid_pmpm_target", "allowed_pmpm_target"),
+        ("paid_pmpm_target", "paid_pmpm_target"),
         ("allowed_pmpm_total", "allowed_pmpm_total"),
         ("paid_pmpm_total", "paid_pmpm_total"),
-        ("cost_pmpm", "allowed_pmpm_target"),
+        ("cost_pmpm", "paid_pmpm_total"),
         ("member_months", "member_months"),
         ("policy_eligible_member_months", "policy_eligible_member_months"),
         ("unique_members", "unique_members"),
@@ -108,12 +114,13 @@ def _build_comparison_by_measure_baseline(
         "change": utilization_change,
         "change_pct": utilization_change_pct,
     }
-    # Cost
-    by_measure["allowed_pmpm_target"] = {
+    # Paid dollars stay on a paid key. Do not file them as allowed.
+    by_measure["paid_pmpm_target"] = {
         "baseline": baseline_cost_pmpm,
         "observed": observed_cost_pmpm,
         "change": cost_change_pmpm,
         "change_pct": cost_change_pct,
+        "cost_identity": "PAID",
     }
     # Optional: add others from baseline_measures/observed_measures if present
     for key in ("member_months", "unique_members", "util_rate_total_per_1000_mm", "allowed_pmpm_total", "paid_pmpm_total"):
@@ -156,23 +163,26 @@ def extract_metrics_from_analysis_result(analysis_result: Dict[str, Any]) -> Dic
         treatment_post = analysis_result["post_period"]
     
     if treatment_post:
-        # Extract utilization
-        metrics["utilization_per_1k"] = float(
-            treatment_post.get("utilization_per_1k", 0.0) or 
-            treatment_post.get("util_rate_per_1k", 0.0) or
-            0.0
-        )
-        
-        # Extract cost - try multiple field names
-        cost_pmpm = float(
-            treatment_post.get("cost_pmpm", 0.0) or
-            treatment_post.get("paid_pmpm", 0.0) or 
-            treatment_post.get("allowed_pmpm", 0.0) or
-            treatment_post.get("cost_per_member", 0.0) or
-            0.0
-        )
-        metrics["cost_per_member"] = cost_pmpm
-        metrics["cost_pmpm"] = cost_pmpm  # Also store as cost_pmpm for frontend compatibility
+        # Extract utilization. A missing rate stays missing.
+        raw_util = treatment_post.get("utilization_per_1k")
+        if raw_util is None:
+            raw_util = treatment_post.get("util_rate_per_1k")
+        if raw_util is not None:
+            metrics["utilization_per_1k"] = float(raw_util)
+
+        # Paid identity only. Allowed dollars stay on the allowed key.
+        meaning = treatment_post.get("cost_pmpm_meaning")
+        raw_paid = treatment_post.get("paid_pmpm")
+        if raw_paid is None and meaning != "ALLOWED":
+            raw_paid = treatment_post.get("cost_pmpm")
+        if raw_paid is None and meaning != "ALLOWED":
+            raw_paid = treatment_post.get("cost_per_member")
+        if raw_paid is not None:
+            metrics["cost_per_member"] = float(raw_paid)
+            metrics["cost_pmpm"] = float(raw_paid)
+            metrics["cost_pmpm_meaning"] = "PAID"
+        if treatment_post.get("allowed_pmpm") is not None:
+            metrics["allowed_pmpm"] = float(treatment_post["allowed_pmpm"])
         
         # Extract other metrics
         metrics["total_claims"] = int(treatment_post.get("total_claims", 0) or 0)
@@ -188,59 +198,48 @@ def extract_metrics_from_analysis_result(analysis_result: Dict[str, Any]) -> Dic
     # Extract effect size from impact_estimate, did_result, or impact_summary
     if "impact_estimate" in analysis_result:
         impact_estimate = analysis_result["impact_estimate"]
-        metrics["observed_effect_size"] = float(impact_estimate.get("effect_size", 0.0) or 0.0)
-        metrics["observed_percent_change"] = float(impact_estimate.get("percent_change", 0.0) or 0.0)
-        ci = impact_estimate.get("confidence_interval", [0.0, 0.0])
-        if isinstance(ci, list) and len(ci) >= 2:
-            metrics["confidence_interval"] = [float(ci[0] or 0.0), float(ci[1] or 0.0)]
-        metrics["p_value"] = float(impact_estimate.get("p_value", 1.0) or 1.0)
+        raw_effect = impact_estimate.get("effect_size")
+        raw_pct = impact_estimate.get("percent_change")
+        metrics["observed_effect_size"] = None if raw_effect is None else float(raw_effect)
+        metrics["observed_percent_change"] = None if raw_pct is None else float(raw_pct)
+        ci = impact_estimate.get("confidence_interval")
+        if isinstance(ci, list) and len(ci) >= 2 and ci[0] is not None and ci[1] is not None:
+            metrics["confidence_interval"] = [float(ci[0]), float(ci[1])]
+        raw_p = impact_estimate.get("p_value")
+        metrics["p_value"] = float(raw_p) if raw_p is not None else None
     elif "did_result" in analysis_result:
         did_result = analysis_result["did_result"]
-        metrics["observed_effect_size"] = float(did_result.get("effect_size", 0.0) or 0.0)
-        metrics["observed_percent_change"] = float(did_result.get("percent_change", 0.0) or 0.0)
-        ci = did_result.get("confidence_interval", [0.0, 0.0])
-        if isinstance(ci, list) and len(ci) >= 2:
-            metrics["confidence_interval"] = [float(ci[0] or 0.0), float(ci[1] or 0.0)]
-        metrics["p_value"] = float(did_result.get("p_value", 1.0) or 1.0)
+        raw_effect = did_result.get("effect_size")
+        raw_pct = did_result.get("percent_change")
+        metrics["observed_effect_size"] = None if raw_effect is None else float(raw_effect)
+        metrics["observed_percent_change"] = None if raw_pct is None else float(raw_pct)
+        ci = did_result.get("confidence_interval")
+        if isinstance(ci, list) and len(ci) >= 2 and ci[0] is not None and ci[1] is not None:
+            metrics["confidence_interval"] = [float(ci[0]), float(ci[1])]
+        raw_p = did_result.get("p_value")
+        metrics["p_value"] = float(raw_p) if raw_p is not None else None
     elif "impact_summary" in analysis_result:
         # Database-computed structure
         impact_summary = analysis_result["impact_summary"]
-        metrics["observed_effect_size"] = float(impact_summary.get("observed_effect_size", 0.0) or 0.0)
-        metrics["observed_percent_change"] = float(impact_summary.get("observed_percent_change", 0.0) or 0.0)
-        ci_lower = float(impact_summary.get("confidence_interval_lower", 0.0) or 0.0)
-        ci_upper = float(impact_summary.get("confidence_interval_upper", 0.0) or 0.0)
-        metrics["confidence_interval"] = [ci_lower, ci_upper]
-        metrics["p_value"] = float(impact_summary.get("p_value", 1.0) or 1.0)
+        raw_effect = impact_summary.get("observed_effect_size")
+        raw_pct = impact_summary.get("observed_percent_change")
+        metrics["observed_effect_size"] = None if raw_effect is None else float(raw_effect)
+        metrics["observed_percent_change"] = None if raw_pct is None else float(raw_pct)
+        ci_lower = impact_summary.get("confidence_interval_lower")
+        ci_upper = impact_summary.get("confidence_interval_upper")
+        if ci_lower is not None and ci_upper is not None:
+            metrics["confidence_interval"] = [float(ci_lower), float(ci_upper)]
+        raw_p = impact_summary.get("p_value")
+        metrics["p_value"] = float(raw_p) if raw_p is not None else None
     
     # Extract confidence score if available
-    if "confidence_score" in analysis_result:
-        metrics["confidence_score"] = float(analysis_result.get("confidence_score", 0.0) or 0.0)
-    elif "trust_panel" in analysis_result:
-        trust_panel = analysis_result.get("trust_panel", {})
-        if "confidence_score" in trust_panel:
-            metrics["confidence_score"] = float(trust_panel.get("confidence_score", 0.0) or 0.0)
-    
-    # Ensure all required fields are present (no None values)
-    required_fields = {
-        "utilization_per_1k": 0.0,
-        "cost_per_member": 0.0,
-        "cost_pmpm": 0.0,
-        "total_claims": 0,
-        "total_paid": 0.0,
-        "total_allowed": 0.0,
-        "observed_effect_size": 0.0,
-        "observed_percent_change": 0.0,
-    }
-    
-    for field, default_value in required_fields.items():
-        if field not in metrics or metrics[field] is None:
-            metrics[field] = default_value
-        else:
-            # Ensure it's the right type
-            if field in ["total_claims"]:
-                metrics[field] = int(metrics[field] or 0)
-            else:
-                metrics[field] = float(metrics[field] or 0.0)
+    raw_confidence = analysis_result.get("confidence_score")
+    if raw_confidence is None and isinstance(analysis_result.get("trust_panel"), dict):
+        raw_confidence = analysis_result["trust_panel"].get("confidence_score")
+        if isinstance(raw_confidence, dict):
+            raw_confidence = raw_confidence.get("overall_score")
+    if raw_confidence is not None:
+        metrics["confidence_score"] = float(raw_confidence)
     
     print(f"DEBUG: Extracted metrics - utilization_per_1k: {metrics.get('utilization_per_1k')}, cost_pmpm: {metrics.get('cost_pmpm')}, effect_size: {metrics.get('observed_effect_size')}")
     
@@ -469,55 +468,59 @@ def extract_behavioral_explanation_from_analysis_result(analysis_result: Dict[st
     # ENHANCED BEHAVIORAL EXPLANATION - Detailed Analysis
     # ============================================================================
     
+    percent_change = impact_estimate.get("percent_change")
+    if percent_change is None:
+        percent_change = metrics.get("observed_percent_change")
+
     # Build comprehensive, detailed summary with multiple aspects
     if not behavioral_explanation.get("summary") or behavioral_explanation.get("summary") == "":
-        effect_size = impact_estimate.get("effect_size", 0.0)
-        p_value = impact_estimate.get("p_value", 1.0)
-        confidence_interval = impact_estimate.get("confidence_interval", [0.0, 0.0])
+        effect_size = impact_estimate.get("effect_size")
+        p_value = impact_estimate.get("p_value")
+        confidence_interval = impact_estimate.get("confidence_interval") or []
         
         # Build a comprehensive, multi-paragraph summary
         summary_parts = []
         detailed_analysis = []
         
         # Primary impact statement
-        if percent_change != 0:
+        if percent_change not in (None, 0):
             direction = "reduction" if percent_change < 0 else "increase"
             magnitude = abs(percent_change)
             impact_strength = "substantial" if magnitude > 20 else "moderate" if magnitude > 10 else "modest"
             summary_parts.append(f"Policy implementation resulted in a {impact_strength} {magnitude:.1f}% {direction} in target service utilization")
         
         # Statistical significance
-        if effect_size != 0:
+        if effect_size not in (None, 0):
             effect_magnitude = abs(effect_size)
             effect_desc = "strong" if effect_magnitude > 0.5 else "moderate" if effect_magnitude > 0.2 else "weak"
             summary_parts.append(f"with a {effect_desc} effect size of {effect_size:.3f}")
         
-        # Statistical significance details
-        if p_value < 0.05:
-            summary_parts.append("(statistically significant, p < 0.05)")
-            detailed_analysis.append("The observed changes are statistically significant, indicating a high degree of confidence that the policy is driving the observed outcomes rather than random variation.")
-        elif p_value < 0.10:
-            summary_parts.append("(marginally significant, p < 0.10)")
-            detailed_analysis.append("The observed changes show marginal statistical significance, suggesting the policy impact is likely real but requires continued monitoring.")
-        else:
-            detailed_analysis.append("While the observed changes may be meaningful, they do not meet traditional statistical significance thresholds. Additional data collection may be needed to confirm policy effectiveness.")
+        detailed_analysis.append(
+            "No inferential p-value is available. A line-level resample range is not a validated confidence interval."
+        )
         
-        # Confidence interval
-        if len(confidence_interval) == 2 and confidence_interval[0] != confidence_interval[1]:
+        # Resample range, not a 95% confidence interval
+        if isinstance(confidence_interval, (list, tuple)) and len(confidence_interval) == 2 and confidence_interval[0] != confidence_interval[1]:
             ci_lower = confidence_interval[0]
             ci_upper = confidence_interval[1]
-            summary_parts.append(f"95% CI: [{ci_lower:.3f}, {ci_upper:.3f}]")
-            detailed_analysis.append(f"The 95% confidence interval [{ci_lower:.3f}, {ci_upper:.3f}] provides a range of plausible effect sizes, indicating the true impact likely falls within this range.")
+            summary_parts.append(
+                f"Line-level resample range: [{ci_lower:.3f}, {ci_upper:.3f}] (not inferential uncertainty)"
+            )
+            detailed_analysis.append(
+                f"Line-level resample range [{ci_lower:.3f}, {ci_upper:.3f}] is not a validated confidence interval and is not inferential uncertainty."
+            )
         
         # Combine summary
-        main_summary = " ".join(summary_parts) if summary_parts else "Policy implementation shows expected reduction in utilization"
+        main_summary = " ".join(summary_parts) if summary_parts else "No policy endpoint contract is defined, so this change is not a performance result."
         
         # Add detailed context
         if treatment_pre and treatment_post:
             pre_util = treatment_pre.get("utilization_per_1k", 0.0)
             post_util = treatment_post.get("utilization_per_1k", 0.0)
             if pre_util > 0:
-                detailed_analysis.append(f"Utilization decreased from {pre_util:.1f} to {post_util:.1f} services per 1,000 members, representing a meaningful shift in care patterns.")
+                detailed_analysis.append(
+                    f"Utilization changed from {pre_util:.1f} to {post_util:.1f} claim lines per 1,000 claimants. This is not enrolled utilization."
+                )
         
         # Add provider behavior context
         if "provider_archetype_shares" in behavioral_explanation:
@@ -702,8 +705,16 @@ def extract_behavioral_explanation_from_analysis_result(analysis_result: Dict[st
     recommendations = []
     strategic_considerations = []
     
-    # Primary policy effectiveness insights
-    if percent_change < -20:
+    required_endpoints = analysis_result.get("required_endpoints") or []
+    percent_change = impact_estimate.get("percent_change")
+    if percent_change is None:
+        percent_change = metrics.get("observed_percent_change")
+    effect_size = impact_estimate.get("effect_size")
+
+    # Primary policy effectiveness insights require a declared endpoint.
+    if not required_endpoints or percent_change is None:
+        insights.append("No policy endpoint contract is defined, so this change is not a performance result.")
+    elif percent_change < -20 and any(str(ep.get("direction")) == "decrease" for ep in required_endpoints if isinstance(ep, dict)):
         insights.append("Policy is achieving strong reduction in utilization. Consider maintaining current approach.")
         strategic_considerations.append("Strong policy performance suggests the intervention is well-designed and effectively implemented. Consider expanding to similar service categories or member populations.")
     elif percent_change < -10:
@@ -796,13 +807,20 @@ def extract_behavioral_explanation_from_analysis_result(analysis_result: Dict[st
     # Add comprehensive policy performance narrative
     performance_narrative = []
     
-    # Overall performance assessment
-    if percent_change < -15:
+    # Overall performance assessment. No contract and no inferential p-value.
+    if not required_endpoints or percent_change is None:
         performance_narrative.append({
             "aspect": "Overall Performance",
-            "assessment": "EXCELLENT",
-            "description": f"Policy demonstrates excellent performance with {abs(percent_change):.1f}% utilization reduction. The intervention is achieving its primary objectives effectively.",
-            "evidence": f"Statistical analysis shows {abs(effect_size):.3f} effect size with {'statistically significant' if p_value < 0.05 else 'marginally significant'} results (p={p_value:.3f})"
+            "assessment": "INCONCLUSIVE",
+            "description": "No policy endpoint contract is defined, so this change is not a performance result.",
+            "evidence": "Objective not defined. Line-level resampling is not inferential uncertainty.",
+        })
+    elif percent_change < -15 and any(str(ep.get("direction")) == "decrease" for ep in required_endpoints if isinstance(ep, dict)):
+        performance_narrative.append({
+            "aspect": "Overall Performance",
+            "assessment": "ALIGNED",
+            "description": f"The declared decrease endpoint moved by {abs(percent_change):.1f}%.",
+            "evidence": "Direction matches the endpoint contract. This is not an inferential test.",
         })
     elif percent_change < -8:
         performance_narrative.append({
@@ -953,13 +971,12 @@ def extract_behavioral_explanation_from_analysis_result(analysis_result: Dict[st
     # Add statistical significance information
     if impact_estimate:
         p_value = impact_estimate.get("p_value")
-        if p_value is not None:
-            behavioral_explanation["statistical_significance"] = {
-                "p_value": p_value,
-                "significant": p_value < 0.05,
-                "marginally_significant": 0.05 <= p_value < 0.10,
-                "interpretation": "Statistically significant" if p_value < 0.05 else "Marginally significant" if p_value < 0.10 else "Not statistically significant"
-            }
+        behavioral_explanation["statistical_significance"] = {
+            "p_value": None,
+            "significant": None,
+            "uncertainty_status": "UNAVAILABLE",
+            "interpretation": "No inferential p-value is available.",
+        }
     
     # If still empty, create a basic explanation from available data
     if not behavioral_explanation or (len(behavioral_explanation) == 0 or all(not v for v in behavioral_explanation.values() if not isinstance(v, dict) and not isinstance(v, list))):
@@ -1007,8 +1024,8 @@ def enhance_comparisons_with_baseline(
         )
         base_util = float(ref_baseline.get("utilization_per_1k", 0.0) or 0.0)
         base_cost = float(ref_baseline.get("cost_pmpm", 0.0) or ref_baseline.get("cost_per_member", 0.0) or 0.0)
-        util_change_pct = ((observed_utilization - base_util) / base_util * 100) if base_util else 0.0
-        cost_change_pct = ((observed_cost_pmpm - base_cost) / base_cost * 100) if base_cost else 0.0
+        util_change_pct = ((observed_utilization - base_util) / base_util * 100) if base_util else None
+        cost_change_pct = ((observed_cost_pmpm - base_cost) / base_cost * 100) if base_cost else None
         cost_change_pmpm = observed_cost_pmpm - base_cost
         utilization_change = observed_utilization - base_util
         return {
@@ -1023,6 +1040,8 @@ def enhance_comparisons_with_baseline(
             "cost_change": cost_change_pmpm,
             "cost_change_pmpm": cost_change_pmpm,
             "cost_change_pct": cost_change_pct,
+            "utilization_change_status": "MEASURED" if util_change_pct is not None else "UNAVAILABLE",
+            "cost_change_status": "MEASURED" if cost_change_pct is not None else "UNAVAILABLE",
             "baseline_member_months": ref_baseline.get("member_months"),
             "baseline_version_id": None,
         }
@@ -1046,16 +1065,18 @@ def enhance_comparisons_with_baseline(
             0.0
         )
         return {
-            "baseline_utilization_per_1k": 0.0,
+            "baseline_utilization_per_1k": None,
             "observed_utilization_per_1k": observed_utilization,
-            "change_from_baseline": 0.0,
-            "change_from_baseline_pct": 0.0,
-            "utilization_change": 0.0,
-            "utilization_change_pct": 0.0,
-            "baseline_cost_pmpm": 0.0,
+            "change_from_baseline": None,
+            "change_from_baseline_pct": None,
+            "utilization_change": None,
+            "utilization_change_pct": None,
+            "utilization_change_status": "UNAVAILABLE",
+            "baseline_cost_pmpm": None,
             "observed_cost_pmpm": observed_cost_pmpm,
-            "cost_change_pmpm": 0.0,
-            "cost_change_pct": 0.0,
+            "cost_change_pmpm": None,
+            "cost_change_pct": None,
+            "cost_change_status": "UNAVAILABLE",
             "baseline_member_months": None,
             "baseline_version_id": None,  # baseline is None here, so return None
         }
@@ -1098,52 +1119,38 @@ def enhance_comparisons_with_baseline(
         
         print(f"DEBUG: Baseline extraction - is_policy_specific: {is_policy_specific}, util: {baseline_utilization}, cost: {baseline_cost_pmpm}")
     
-    # Convert to float, defaulting to 0.0 if None
-    if baseline_utilization is None:
-        baseline_utilization = 0.0
-    else:
-        baseline_utilization = float(baseline_utilization)
-    
-    if baseline_cost_pmpm is None:
-        baseline_cost_pmpm = 0.0
-    else:
-        baseline_cost_pmpm = float(baseline_cost_pmpm)
-    
-    # Extract observed metrics - try multiple field names
-    observed_utilization = float(observation_metrics.get("utilization_per_1k", 0.0) or 0.0)
-    observed_cost_pmpm = float(
-        observation_metrics.get("cost_pmpm", 0.0) or 
-        observation_metrics.get("cost_per_member", 0.0) or 
-        observation_metrics.get("paid_pmpm", 0.0) or
-        observation_metrics.get("allowed_pmpm", 0.0) or
-        0.0
+    baseline_utilization = None if baseline_utilization is None else float(baseline_utilization)
+    baseline_cost_pmpm = None if baseline_cost_pmpm is None else float(baseline_cost_pmpm)
+
+    def _first_number(*values):
+        for value in values:
+            if value is None:
+                continue
+            try:
+                return float(value)
+            except (TypeError, ValueError):
+                continue
+        return None
+
+    observed_utilization = _first_number(observation_metrics.get("utilization_per_1k"))
+    observed_cost_pmpm = _first_number(
+        observation_metrics.get("paid_pmpm"),
+        observation_metrics.get("cost_pmpm"),
+        observation_metrics.get("cost_per_member"),
     )
-    
-    # Calculate cost comparison
-    cost_change = observed_cost_pmpm - baseline_cost_pmpm
-    cost_change_pct = 0.0
-    if baseline_cost_pmpm > 0:
-        cost_change_pct = (cost_change / baseline_cost_pmpm) * 100
-    elif observed_cost_pmpm > 0:
-        cost_change_pct = 999.0  # Infinite change if going from 0 to non-zero
-    
-    # Calculate utilization comparison
-    utilization_change = observed_utilization - baseline_utilization
-    if baseline_utilization > 0:
-        utilization_change_pct = (utilization_change / baseline_utilization) * 100
-    elif observed_utilization > 0:
-        utilization_change_pct = 999.0 if utilization_change > 0 else -999.0
-    else:
-        utilization_change_pct = 0.0
-    
-    # Calculate cost comparison
-    cost_change_pmpm = observed_cost_pmpm - baseline_cost_pmpm
-    if baseline_cost_pmpm > 0:
-        cost_change_pct = (cost_change_pmpm / baseline_cost_pmpm) * 100
-    elif observed_cost_pmpm > 0:
-        cost_change_pct = 999.0 if cost_change_pmpm > 0 else -999.0
-    else:
-        cost_change_pct = 0.0
+
+    def _relative(baseline, observed):
+        if baseline is None or observed is None or baseline <= 0:
+            return None, None, "UNAVAILABLE"
+        change = observed - baseline
+        if observed == baseline:
+            return change, 0.0, "MEASURED"
+        return change, (change / baseline) * 100, "MEASURED"
+
+    cost_change_pmpm, cost_change_pct, cost_change_status = _relative(baseline_cost_pmpm, observed_cost_pmpm)
+    utilization_change, utilization_change_pct, utilization_change_status = _relative(
+        baseline_utilization, observed_utilization
+    )
     
     # Unified measure framework: flat measures and comparison_by_measure for single comparison table
     observed_measures = _build_observed_measures(observation_metrics)
@@ -1170,13 +1177,16 @@ def enhance_comparisons_with_baseline(
         "change_from_baseline_pct": utilization_change_pct,  # Keep for backward compatibility
         "utilization_change": utilization_change,
         "utilization_change_pct": utilization_change_pct,
+        "utilization_change_status": utilization_change_status,
         
-        # Cost metrics
+        # Cost metrics. The legacy key is paid dollars, not allowed.
         "baseline_cost_pmpm": baseline_cost_pmpm,
         "observed_cost_pmpm": observed_cost_pmpm,
-        "cost_change": cost_change_pmpm,  # Absolute cost change (alias for cost_change_pmpm)
-        "cost_change_pmpm": cost_change_pmpm,  # PMPM cost change
+        "cost_identity": "PAID",
+        "cost_change": cost_change_pmpm,
+        "cost_change_pmpm": cost_change_pmpm,
         "cost_change_pct": cost_change_pct,
+        "cost_change_status": cost_change_status,
         
         # Unified measure framework (same measures everywhere)
         "baseline_measures": baseline_measures,

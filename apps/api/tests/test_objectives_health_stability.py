@@ -68,7 +68,8 @@ def test_snapshot_is_deterministic_across_builds():
     assert a["calculation_version"] == CALCULATION_VERSION
     assert a == b
     assert a["policy_rows"][0]["name"] == "Alpha MRI"  # sorted by name
-    assert a["policy_rows"][0]["status"] in ("on_track", "at_risk", "no_data")
+    assert a["policy_rows"][0]["status"] == "no_data"
+    assert a["policy_rows"][0]["verdict"] == "INCONCLUSIVE"
     assert a["policy_rows"][1]["status"] == "no_data"
     assert a["policy_rows"][1]["verdict"] == "UNKNOWN"
     assert POLICY_A in a["strategic"][0]["policy_ids"]  # A = forecasts
@@ -169,3 +170,37 @@ def test_objectives_health_verdicts_match_compute_verdict_invariant():
     assert fo["has_forecast"] is True
     assert fo["utilization_change_pct"] is None
     assert fo["cost_impact_pmpm"] is None
+
+
+def test_one_endpoint_contract_can_be_on_track_without_a_cost_change():
+    policies = [
+        {
+            "id": POLICY_A,
+            "name": "One Endpoint",
+            "policy_type": "PRIOR_AUTH",
+            "required_endpoints": [
+                {"metric_id": "utilization_per_1k", "direction": "decrease"},
+            ],
+        }
+    ]
+    observations = [
+        {
+            "policy_id": POLICY_A,
+            "observation_id": "obs-endpoint",
+            "observation_period_end": "2024-06-30",
+            "computed_at": "2024-07-01T00:00:00Z",
+            "comparisons": {"vs_baseline": {"utilization_change_pct": -8.0}},
+            "behavioral_explanation": {},
+        }
+    ]
+    snap = build_objectives_health_snapshot(
+        tenant_id=TENANT,
+        policies=policies,
+        latest_observations=observations,
+        predicted_impacts=[],
+        decisions=[],
+        generated_at="FIXED",
+    )
+    row = snap["policy_rows"][0]
+    assert row["verdict"] == "ON_TRACK"
+    assert row["status"] == "on_track"

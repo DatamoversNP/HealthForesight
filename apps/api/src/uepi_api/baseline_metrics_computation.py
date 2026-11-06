@@ -71,24 +71,32 @@ def compute_baseline_metrics_from_analysis_result(
     if "allowed_pmpm_target" in baseline_metrics and "policy_eligible_member_months" in baseline_metrics:
         # Annualize: (pmpm * member_months / months_in_period) * 12
         policy_eligible_mm = baseline_metrics["policy_eligible_member_months"]
-        if policy_eligible_mm > 0 and start_date and end_date:
+        allowed_pmpm_target = baseline_metrics["allowed_pmpm_target"]
+        if policy_eligible_mm and allowed_pmpm_target is not None and policy_eligible_mm > 0 and start_date and end_date:
             months_in_period = max(1, (end_date.year - start_date.year) * 12 + (end_date.month - start_date.month) + 1)
-            allowed_pmpm_target = baseline_metrics["allowed_pmpm_target"]
             baseline_metrics["allowed_total_annualized"] = (allowed_pmpm_target * policy_eligible_mm / months_in_period) * 12
+            baseline_metrics["annualization_basis"] = "CLAIMANT_MONTHS"
+            baseline_metrics["annualization_label"] = (
+                "Claimant-based annualized total. Not enrolled-population spend."
+            )
     elif "allowed_pmpm_total" in baseline_metrics and "member_months" in baseline_metrics:
         # Fallback to global metrics
         member_months = baseline_metrics["member_months"]
-        if member_months > 0 and start_date and end_date:
+        allowed_pmpm_total = baseline_metrics["allowed_pmpm_total"]
+        if member_months and allowed_pmpm_total is not None and member_months > 0 and start_date and end_date:
             months_in_period = max(1, (end_date.year - start_date.year) * 12 + (end_date.month - start_date.month) + 1)
-            allowed_pmpm_total = baseline_metrics["allowed_pmpm_total"]
             baseline_metrics["allowed_total_annualized"] = (allowed_pmpm_total * member_months / months_in_period) * 12
+            baseline_metrics["annualization_basis"] = "CLAIMANT_MONTHS"
+            baseline_metrics["annualization_label"] = (
+                "Claimant-based annualized total. Not enrolled-population spend."
+            )
     
     # Backward compatibility aliases
     if "util_rate_total_per_1000_mm" in baseline_metrics:
         baseline_metrics["utilization_per_1k"] = baseline_metrics["util_rate_total_per_1000_mm"]
     if "util_rate_target_per_1000_mm" in baseline_metrics:
         baseline_metrics["utilization_per_1k"] = baseline_metrics["util_rate_target_per_1000_mm"]
-    if "allowed_pmpm_total" in baseline_metrics:
+    if baseline_metrics.get("allowed_pmpm_total") is not None:
         baseline_metrics["cost_per_1k"] = baseline_metrics["allowed_pmpm_total"] * 12 / 1000  # Rough conversion
     
     return baseline_metrics

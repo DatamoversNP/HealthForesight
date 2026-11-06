@@ -30,10 +30,17 @@ def calculate_prediction_accuracy(
         Dictionary with accuracy metrics
     """
     prediction_error = observed_effect_size - predicted_effect_size
-    prediction_error_pct = 0.0
-    if predicted_effect_size != 0:
-        prediction_error_pct = (prediction_error / abs(predicted_effect_size)) * 100
-    
+    if predicted_effect_size == 0:
+        return {
+            "prediction_error": prediction_error,
+            "prediction_error_pct": None,
+            "prediction_accuracy_pct": None,
+            "accuracy_status": "UNAVAILABLE",
+            "mae": abs(prediction_error),
+            "rmse": abs(prediction_error),
+            "within_range": None,
+        }
+    prediction_error_pct = (prediction_error / abs(predicted_effect_size)) * 100
     prediction_accuracy_pct = 100.0 - abs(prediction_error_pct)
     
     # Calculate MAE and RMSE (simplified - in full implementation, would use multiple observations)
@@ -47,6 +54,7 @@ def calculate_prediction_accuracy(
         "mae": mae,
         "rmse": rmse,
         "within_range": abs(prediction_error_pct) < 20.0,  # Within 20% is considered good
+        "accuracy_status": "MEASURED",
     }
 
 
@@ -366,13 +374,25 @@ def get_prediction_accuracy_summary(
         }
     
     # Calculate averages
-    accuracy_pcts = [r.get("prediction_accuracy_pct", 0.0) for r in accuracy_records]
-    maes = [r.get("metrics", {}).get("mae", 0.0) for r in accuracy_records]
-    rmses = [r.get("metrics", {}).get("rmse", 0.0) for r in accuracy_records]
+    accuracy_pcts = [
+        r.get("prediction_accuracy_pct")
+        for r in accuracy_records
+        if r.get("prediction_accuracy_pct") is not None
+    ]
+    maes = [
+        (r.get("metrics") or {}).get("mae")
+        for r in accuracy_records
+        if (r.get("metrics") or {}).get("mae") is not None
+    ]
+    rmses = [
+        (r.get("metrics") or {}).get("rmse")
+        for r in accuracy_records
+        if (r.get("metrics") or {}).get("rmse") is not None
+    ]
     
-    avg_accuracy_pct = sum(accuracy_pcts) / len(accuracy_pcts) if accuracy_pcts else 0.0
-    avg_mae = sum(maes) / len(maes) if maes else 0.0
-    avg_rmse = sum(rmses) / len(rmses) if rmses else 0.0
+    avg_accuracy_pct = sum(accuracy_pcts) / len(accuracy_pcts) if accuracy_pcts else None
+    avg_mae = sum(maes) / len(maes) if maes else None
+    avg_rmse = sum(rmses) / len(rmses) if rmses else None
     
     return {
         "policy_id": str(policy_id),

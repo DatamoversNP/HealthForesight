@@ -547,18 +547,20 @@ export default function AnalysisWorkspacePage() {
                     <Typography variant="h6" gutterBottom>
                       Impact Results
                     </Typography>
-                    {analysisResult.effect_size !== undefined && (
+                    {analysisResult.effect_size != null &&
+                      analysisResult.confidence_interval?.[0] != null &&
+                      analysisResult.confidence_interval?.[1] != null && (
                       <Box sx={{ mb: 3 }}>
                         <ConfidenceInterval
                           value={analysisResult.effect_size}
-                          lower={analysisResult.confidence_interval?.[0] || 0}
-                          upper={analysisResult.confidence_interval?.[1] || 0}
-                          unit="per 1k members"
-                          label="Effect Size"
+                          lower={analysisResult.confidence_interval[0]}
+                          upper={analysisResult.confidence_interval[1]}
+                          unit="effect units"
+                          label="Line-level resample range"
                         />
                       </Box>
                     )}
-                    {analysisResult.percent_change !== undefined && (
+                    {analysisResult.percent_change != null && (
                       <Typography variant="body1" gutterBottom>
                         Percent Change: {analysisResult.percent_change > 0 ? '+' : ''}
                         {analysisResult.percent_change.toFixed(2)}%
@@ -586,7 +588,7 @@ export default function AnalysisWorkspacePage() {
                           <Tooltip />
                           <Legend />
                           <Line type="monotone" dataKey="utilization" stroke="#8884d8" name="Utilization" />
-                          <Line type="monotone" dataKey="allowed_pmpm" stroke="#82ca9d" name="Allowed PMPM" />
+                          <Line type="monotone" dataKey="allowed_pmpm" stroke="#82ca9d" name="Allowed $ / claimant-month (not enrolled PMPM)" />
                         </LineChart>
                       </ResponsiveContainer>
                     </CardContent>

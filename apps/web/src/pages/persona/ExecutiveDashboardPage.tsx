@@ -525,13 +525,13 @@ export default function ExecutiveDashboardPage() {
             </Typography>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6} md={3}>
-                <Typography variant="caption" color="text.secondary">Utilization per 1K</Typography>
+                <Typography variant="caption" color="text.secondary">Claim lines per 1,000 claimants (not enrolled utilization)</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 600 }}>
                   {dashboardData.general_baseline.utilization_per_1k?.toFixed(1) ?? '—'}
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
-                <Typography variant="caption" color="text.secondary">Cost PMPM</Typography>
+                <Typography variant="caption" color="text.secondary">Paid dollars per claimant-month (not enrolled PMPM)</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 600 }}>
                   ${dashboardData.general_baseline.cost_pmpm?.toFixed(2) ?? '—'}
                 </Typography>

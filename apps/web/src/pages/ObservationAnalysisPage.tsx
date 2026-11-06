@@ -1505,14 +1505,14 @@ export default function ObservationAnalysisPage() {
                       ...Object.keys(byPredicted)
                     ])).filter(Boolean)
                     const measureDisplay: Record<string, string> = {
-                      util_rate_target_per_1000_mm: 'Utilization (per 1K MM)',
-                      allowed_pmpm_target: 'Cost PMPM (allowed)',
-                      allowed_pmpm_total: 'Allowed PMPM (total)',
-                      paid_pmpm_total: 'Paid PMPM',
-                      member_months: 'Member months',
-                      unique_members: 'Unique members',
-                      util_rate_total_per_1000_mm: 'Utilization total (per 1K MM)',
-                      allowed_total_annualized: 'Allowed total (annualized)'
+                      util_rate_target_per_1000_mm: 'Claim lines per 1,000 claimants (not enrolled utilization)',
+                      allowed_pmpm_target: 'Allowed dollars per claimant-month (not enrolled PMPM)',
+                      allowed_pmpm_total: 'Allowed dollars per claimant-month (not enrolled PMPM)',
+                      paid_pmpm_total: 'Paid dollars per claimant-month (not enrolled PMPM)',
+                      member_months: 'Claimant-months',
+                      unique_members: 'Unique claimants',
+                      util_rate_total_per_1000_mm: 'Claim lines per 1,000 claimants (not enrolled utilization)',
+                      allowed_total_annualized: 'Claimant-based annualized total. Not enrolled-population spend.'
                     }
                     const formatVal = (v: number | undefined | null, key: string): string => {
                       if (v === undefined || v === null) return '—'
@@ -1755,7 +1755,7 @@ export default function ObservationAnalysisPage() {
                                 fontWeight: 500,
                                 fontSize: '0.875rem'
                               }}>
-                                Cost PMPM
+                                Paid dollars per claimant-month (not enrolled PMPM)
                               </Typography>
                               <Typography variant="h6" fontWeight={600} sx={{ 
                                 color: '#0F172A',
@@ -3243,7 +3243,7 @@ export default function ObservationAnalysisPage() {
                               }))}>
                                 <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
                                 <XAxis dataKey="month" label={{ value: 'Month', position: 'insideBottom', offset: -5 }} stroke="#64748B" />
-                                <YAxis label={{ value: 'Cost PMPM', angle: -90, position: 'insideLeft' }} stroke="#64748B" />
+                                <YAxis label={{ value: 'Paid $ / claimant-month', angle: -90, position: 'insideLeft' }} stroke="#64748B" />
                                 <Tooltip 
                                   contentStyle={{ 
                                     backgroundColor: '#FFFFFF', 
@@ -3252,7 +3252,7 @@ export default function ObservationAnalysisPage() {
                                     borderRadius: 6,
                                     boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1)'
                                   }}
-                                  formatter={(value: any) => [`$${value.toFixed(2)}`, 'Cost PMPM']}
+                                  formatter={(value: any) => [value == null ? '—' : `$${Number(value).toFixed(2)}`, 'Paid $ / claimant-month']}
                                 />
                                 <Line 
                                   type="monotone" 
@@ -3393,7 +3393,7 @@ export default function ObservationAnalysisPage() {
                           
                           {hasMetrics && (
                             <>
-                            {explanation.effect_size !== undefined && (
+                            {explanation.effect_size != null && (
                               <Grid container spacing={2.5} sx={{ mb: 4 }}>
                                 <Grid item xs={12} sm={6} md={3}>
                                   <Card sx={{ 
@@ -3425,7 +3425,7 @@ export default function ObservationAnalysisPage() {
                                   </Typography>
                                   </Card>
                                 </Grid>
-                                {explanation.percent_change !== undefined && (
+                                {explanation.percent_change != null && (
                                   <Grid item xs={12} sm={6} md={3}>
                                     <Card sx={{ 
                                       p: 3, 
@@ -3695,7 +3695,7 @@ export default function ObservationAnalysisPage() {
                                       fontWeight: 500,
                                       fontSize: '0.9375rem'
                                     }}>
-                                      per 1,000 member-months
+                                      per 1,000 claimants (not enrolled utilization)
                                     </Typography>
                                     <Typography variant="caption" sx={{ 
                                       color: '#64748B', 
@@ -4076,7 +4076,7 @@ export default function ObservationAnalysisPage() {
                                     <Grid container spacing={3} sx={{ mb: 3 }}>
                                       <Grid item xs={12} sm={6} md={3}>
                                         <Box sx={{ textAlign: 'center', p: 2, bgcolor: '#F8FAFC', border: '1px solid #E5E7EB' }}>
-                                          <Typography variant="caption" sx={{ color: '#64748B', fontSize: '0.75rem' }}>Pre-Policy Cost PMPM</Typography>
+                                          <Typography variant="caption" sx={{ color: '#64748B', fontSize: '0.75rem' }}>Pre-policy paid $ / claimant-month</Typography>
                                           <Typography variant="h6" sx={{ color: '#0F172A', fontWeight: 600, mt: 0.5 }}>
                                             ${explanation.cost_impact.pre_cost_pmpm?.toFixed(2) || 'N/A'}
                                           </Typography>
@@ -4084,7 +4084,7 @@ export default function ObservationAnalysisPage() {
                                       </Grid>
                                       <Grid item xs={12} sm={6} md={3}>
                                         <Box sx={{ textAlign: 'center', p: 2, bgcolor: '#F8FAFC', border: '1px solid #E5E7EB' }}>
-                                          <Typography variant="caption" sx={{ color: '#64748B', fontSize: '0.75rem' }}>Post-Policy Cost PMPM</Typography>
+                                          <Typography variant="caption" sx={{ color: '#64748B', fontSize: '0.75rem' }}>Post-policy paid $ / claimant-month</Typography>
                                           <Typography variant="h6" sx={{ color: '#0F172A', fontWeight: 600, mt: 0.5 }}>
                                             ${explanation.cost_impact.post_cost_pmpm?.toFixed(2) || 'N/A'}
                                           </Typography>

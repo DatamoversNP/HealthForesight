@@ -27,11 +27,13 @@ UNIFIED_MEASURE_KEYS: List[str] = [
 
 # Aliases: map from keys used in baseline_metrics / observation to canonical key
 # so we can normalize when building observed_measures and comparison_by_measure.
+# Paid keys must not canonicalize to allowed. cost_pmpm is paid in the claims loader.
 BASELINE_KEY_ALIASES: Dict[str, str] = {
     "utilization_per_1k": "util_rate_target_per_1000_mm",
     "util_rate_per_1k": "util_rate_total_per_1000_mm",
-    "cost_pmpm": "allowed_pmpm_target",
-    "cost_per_member": "allowed_pmpm_target",
+    "paid_pmpm": "paid_pmpm_total",
+    "cost_pmpm": "paid_pmpm_total",
+    "cost_per_member": "paid_pmpm_total",
 }
 
 
@@ -47,13 +49,15 @@ def get_measure_display(metric_key: str) -> Dict[str, Any]:
         }
     # Fallback for aliases
     if metric_key == "util_rate_target_per_1000_mm":
-        return {"name": "Utilization (per 1K)", "unit": "per 1,000 member-months", "formula": ""}
-    if metric_key == "allowed_pmpm_target" or metric_key == "paid_pmpm_total":
-        return {"name": "Cost PMPM", "unit": "dollars PMPM", "formula": ""}
+        return {"name": "Utilization (per 1K claimants)", "unit": "per 1,000 claimants unless denominator_basis is ENROLLMENT", "formula": ""}
+    if metric_key == "paid_pmpm_total":
+        return {"name": "Paid per claimant-month", "unit": "paid dollars; not allowed and not enrolled PMPM unless denominator_basis is ENROLLMENT", "formula": ""}
+    if metric_key == "allowed_pmpm_target":
+        return {"name": "Allowed per claimant-month", "unit": "allowed dollars; not enrolled PMPM unless denominator_basis is ENROLLMENT", "formula": ""}
     if metric_key == "util_rate_total_per_1000_mm":
-        return {"name": "Utilization total (per 1K)", "unit": "per 1,000 member-months", "formula": ""}
+        return {"name": "Utilization total (per 1K claimants)", "unit": "per 1,000 claimants unless denominator_basis is ENROLLMENT", "formula": ""}
     if metric_key == "allowed_pmpm_total":
-        return {"name": "Cost total PMPM", "unit": "dollars PMPM", "formula": ""}
+        return {"name": "Allowed total per claimant-month", "unit": "allowed dollars; not enrolled PMPM unless denominator_basis is ENROLLMENT", "formula": ""}
     return {"name": metric_key.replace("_", " ").title(), "unit": "", "formula": ""}
 
 

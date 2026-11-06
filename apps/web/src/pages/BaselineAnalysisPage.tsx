@@ -3,6 +3,7 @@
  * Enhanced with name field, comparison functionality, and rich visualizations
  */
 import { useState, useEffect, useMemo } from 'react'
+import { costLabel, utilizationLabel } from '../utils/measurementIntegrity'
 import {
   Box,
   Button,
@@ -1656,8 +1657,8 @@ function SingleAnalysisView({
                     avg_cost_per_claim: 'Avg cost per claim',
                     avg_cost_per_member: 'Avg cost per member',
                     avg_claims_per_member: 'Avg claims per member',
-                    utilization_per_1k: 'Utilization per 1k',
-                    cost_pmpm: 'Cost PMPM',
+                    utilization_per_1k: 'Claim lines per 1,000 claimants (not enrolled utilization)',
+                    cost_pmpm: 'Paid dollars per claimant-month (not enrolled PMPM)',
                   }
                   const utilizationData = profileEntries.map(([key, value]) => ({
                     key,
@@ -2191,7 +2192,7 @@ function StoredBaselineDetailView({
               {(() => {
                 const m = baseline.baseline_metrics || baseline.metrics || {}
                 const n = m.total_claims ?? m.unique_members ?? m.member_months
-                return n != null ? `${Number(n).toLocaleString()} ${m.total_claims != null ? 'claims' : m.unique_members != null ? 'members' : 'member-months'}` : '—'
+                return n != null ? `${Number(n).toLocaleString()} ${m.total_claims != null ? 'claims' : m.unique_members != null ? 'claimants' : 'claimant-months'}` : '—'
               })()}
             </Typography>
           </Grid>
@@ -2293,13 +2294,13 @@ function StoredBaselineDetailView({
 
 /** Metric key -> display label and unit for stored baseline metrics */
 const BASELINE_METRIC_LABELS: Record<string, { label: string; unit: string }> = {
-  util_rate_total_per_1000_mm: { label: 'Utilization (per 1k member-months)', unit: 'per_1k' },
-  util_rate_target_per_1000_mm: { label: 'Utilization target (per 1k)', unit: 'per_1k' },
-  utilization_per_1k: { label: 'Utilization per 1k', unit: 'per_1k' },
-  allowed_pmpm_total: { label: 'Allowed PMPM', unit: 'PMPM' },
-  allowed_pmpm_target: { label: 'Allowed PMPM (target)', unit: 'PMPM' },
-  cost_pmpm: { label: 'Cost PMPM', unit: 'PMPM' },
-  paid_pmpm_target: { label: 'Paid PMPM (target)', unit: 'PMPM' },
+  util_rate_total_per_1000_mm: { label: 'Claim lines per 1,000 claimants (not enrolled utilization)', unit: 'per_1k_claimants' },
+  util_rate_target_per_1000_mm: { label: 'Claim lines per 1,000 claimants (not enrolled utilization)', unit: 'per_1k_claimants' },
+  utilization_per_1k: { label: 'Claim lines per 1,000 claimants (not enrolled utilization)', unit: 'per_1k_claimants' },
+  allowed_pmpm_total: { label: 'Allowed dollars per claimant-month (not enrolled PMPM)', unit: 'per_claimant_month' },
+  allowed_pmpm_target: { label: 'Allowed dollars per claimant-month (not enrolled PMPM)', unit: 'per_claimant_month' },
+  cost_pmpm: { label: 'Paid dollars per claimant-month (not enrolled PMPM)', unit: 'per_claimant_month' },
+  paid_pmpm_target: { label: 'Paid dollars per claimant-month (not enrolled PMPM)', unit: 'per_claimant_month' },
   total_claims: { label: 'Total claims', unit: 'count' },
   unique_members: { label: 'Unique members', unit: 'count' },
   member_months: { label: 'Member months', unit: 'count' },
@@ -2369,8 +2370,8 @@ function StoredBaselinesView({
                   <TableCell>Type</TableCell>
                   <TableCell>Window</TableCell>
                   <TableCell>Computed</TableCell>
-                  <TableCell>Utilization (per 1k)</TableCell>
-                  <TableCell>Cost (PMPM)</TableCell>
+                  <TableCell>{utilizationLabel(undefined)}</TableCell>
+                  <TableCell>{costLabel(undefined)}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -2438,7 +2439,7 @@ function StoredBaselinesView({
                   {(() => {
                     const m = selectedBaseline.baseline_metrics || selectedBaseline.metrics || {}
                     const n = m.total_claims ?? m.unique_members ?? m.member_months
-                    return n != null ? `${Number(n).toLocaleString()} ${m.total_claims != null ? 'claims' : m.unique_members != null ? 'members' : 'member-months'}` : '—'
+                    return n != null ? `${Number(n).toLocaleString()} ${m.total_claims != null ? 'claims' : m.unique_members != null ? 'claimants' : 'claimant-months'}` : '—'
                   })()}
                 </Typography>
               </Grid>

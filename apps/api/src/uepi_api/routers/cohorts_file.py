@@ -230,8 +230,8 @@ async def get_cohort_members_endpoint(
                         performance.append({
                             "policy_id": policy_id_str,
                             "policy_name": policy_name,
-                            "avg_utilization_change_pct": metrics.get("utilization_change_pct", 0),
-                            "avg_cost_impact": metrics.get("cost_change_pmpm", 0) * 10000,  # Rough estimate
+                            "avg_utilization_change_pct": metrics.get("utilization_change_pct"),
+                            "avg_cost_impact": metrics.get("cost_change_total"),
                             "is_predicted": True,
                         })
                 except Exception:

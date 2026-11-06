@@ -17,6 +17,7 @@ import {
 } from '@mui/material'
 import { format } from 'date-fns'
 import { apiClient } from '../../lib/api'
+import { costLabel, formatOptionalPercent, utilizationLabel } from '../../utils/measurementIntegrity'
 
 interface PolicyMonitoringPanelProps {
   policyId: string
@@ -544,7 +545,7 @@ export default function PolicyMonitoringPanel({
                 Observed vs baseline
               </Typography>
               <Typography variant="body2">
-                Util / 1k:{' '}
+                {utilizationLabel(metrics)}:{' '}
                 <strong>
                   {metrics.utilization_per_1k != null
                     ? Number(metrics.utilization_per_1k).toFixed(1)
@@ -552,7 +553,7 @@ export default function PolicyMonitoringPanel({
                 </strong>
               </Typography>
               <Typography variant="body2">
-                Cost PMPM:{' '}
+                {costLabel(metrics)}:{' '}
                 <strong>
                   {metrics.cost_pmpm != null || metrics.cost_per_member != null
                     ? `$${Number(metrics.cost_pmpm ?? metrics.cost_per_member).toFixed(2)}`
@@ -563,10 +564,10 @@ export default function PolicyMonitoringPanel({
                 Cost change:{' '}
                 <strong>
                   {vsBaseline.cost_change_pct != null
-                    ? `${Number(vsBaseline.cost_change_pct).toFixed(1)}%`
-                    : metrics.observed_percent_change != null
-                      ? `${Number(metrics.observed_percent_change).toFixed(1)}%`
-                      : '—'}
+                    ? formatOptionalPercent(Number(vsBaseline.cost_change_pct))
+                    : formatOptionalPercent(
+                        metrics.observed_percent_change != null ? Number(metrics.observed_percent_change) : null
+                      )}
                 </strong>
               </Typography>
               <Typography variant="body2">
@@ -596,7 +597,7 @@ export default function PolicyMonitoringPanel({
                     </strong>
                   </Typography>
                   <Typography variant="body2">
-                    Cost PMPM change:{' '}
+                    Paid dollars per claimant-month change (not enrolled PMPM):{' '}
                     <strong>
                       {predictedImpact.metrics?.cost_change_pmpm != null
                         ? `$${Number(predictedImpact.metrics.cost_change_pmpm).toFixed(2)}`

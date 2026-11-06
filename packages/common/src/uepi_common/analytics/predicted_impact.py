@@ -14,13 +14,14 @@ import numpy as np
 
 class PredictedImpactMetrics(BaseModel):
     """Predicted impact metrics"""
-    utilization_change_per_1k: float = Field(..., description="Predicted change in utilization per 1,000 members")
-    cost_change_pmpm: float = Field(..., description="Predicted change in cost per member per month ($)")
-    cost_change_total: float = Field(..., description="Predicted total cost change")
-    utilization_change_pct: float = Field(..., description="Predicted percentage change in utilization")
-    cost_change_pct: float = Field(..., description="Predicted percentage change in cost")
-    confidence_score: float = Field(..., ge=0, le=100, description="Confidence score (0-100)")
-    prediction_method: str = Field(..., description="Method used for prediction (e.g., 'ELASTICITY_MODEL', 'BEHAVIORAL_MODEL')")
+    utilization_change_per_1k: Optional[float] = Field(None, description="Predicted change in utilization per 1,000 claimants; null when baseline is missing")
+    cost_change_pmpm: Optional[float] = Field(None, description="Predicted paid change per claimant-month; null when baseline is missing")
+    cost_change_total: Optional[float] = Field(None, description="Predicted total cost change; null when baseline or membership is missing")
+    utilization_change_pct: float = Field(..., description="Scenario percent change in utilization from the lookup")
+    cost_change_pct: float = Field(..., description="Scenario percent change in cost from the lookup")
+    confidence_score: Optional[float] = Field(None, description="Unavailable. Lookup confidence is not a probability.")
+    prediction_method: str = Field(..., description="SIMULATION_LOOKUP or CALLER_ELASTICITY")
+    evidence_class: str = Field("SIMULATION_ONLY", description="This generator does not produce an authoritative effect")
 
 
 class PredictedSubstitutionEffect(BaseModel):
@@ -28,7 +29,7 @@ class PredictedSubstitutionEffect(BaseModel):
     service_category: str
     predicted_substitution_rate: float = Field(..., ge=0, le=1, description="Predicted rate of substitution (0-1)")
     predicted_substitute_services: list[str] = Field(default_factory=list, description="List of predicted substitute services")
-    confidence_score: float = Field(..., ge=0, le=100, description="Confidence in substitution prediction")
+    confidence_score: Optional[float] = Field(None, description="Unavailable for the lookup table")
 
 
 class PredictedProviderResponse(BaseModel):
@@ -37,7 +38,7 @@ class PredictedProviderResponse(BaseModel):
     adaptive_pct: float = Field(..., ge=0, le=100, description="Percentage predicted to adapt")
     resistant_pct: float = Field(..., ge=0, le=100, description="Percentage predicted to resist")
     circumvention_pct: float = Field(..., ge=0, le=100, description="Percentage predicted to circumvent")
-    confidence_score: float = Field(..., ge=0, le=100, description="Confidence in provider response prediction")
+    confidence_score: Optional[float] = Field(None, description="Unavailable for the lookup table")
 
 
 class PredictedPatientResponse(BaseModel):
@@ -45,7 +46,7 @@ class PredictedPatientResponse(BaseModel):
     defer_rate: float = Field(..., ge=0, le=1, description="Predicted rate of care deferral")
     substitute_rate: float = Field(..., ge=0, le=1, description="Predicted rate of service substitution")
     er_fallback_rate: float = Field(..., ge=0, le=1, description="Predicted ER fallback rate (adverse effect)")
-    confidence_score: float = Field(..., ge=0, le=100, description="Confidence in patient response prediction")
+    confidence_score: Optional[float] = Field(None, description="Unavailable for the lookup table")
 
 
 class PredictedImpactResult(BaseModel):
@@ -113,7 +114,8 @@ class PredictedImpactGenerator:
         # Estimate policy "friction" level (simplified)
         friction_level = self._estimate_friction_level(policy_levers)
         
-        # Use default elasticity if not provided
+        # A missing elasticity argument is a lookup. Do not relabel it as a fitted model.
+        caller_supplied_elasticity = bool(elasticity_data)
         if not elasticity_data:
             elasticity_data = self._get_default_elasticity(affected_services)
         
@@ -125,15 +127,26 @@ class PredictedImpactGenerator:
         # Predict cost change (simplified - assumes cost changes proportionally)
         cost_change_pct = utilization_change_pct * 0.9  # Slight cost reduction per unit due to selection
         
-        # Get baseline metrics (if provided, otherwise use defaults)
-        baseline_utilization = baseline_metrics.get("utilization_per_1k", 100.0) if baseline_metrics else 100.0
-        baseline_cost_pmpm = baseline_metrics.get("cost_pmpm", 500.0) if baseline_metrics else 500.0
-        member_count = baseline_metrics.get("member_count", 10000) if baseline_metrics else 10000
+        # Missing baselines stay missing. Do not substitute 100, $500, or 10,000 members.
+        baseline_utilization = baseline_metrics.get("utilization_per_1k") if baseline_metrics else None
+        baseline_cost_pmpm = baseline_metrics.get("cost_pmpm") if baseline_metrics else None
+        member_count = baseline_metrics.get("member_count") if baseline_metrics else None
         
-        # Calculate predicted changes
-        utilization_change_per_1k = baseline_utilization * (utilization_change_pct / 100)
-        cost_change_pmpm = baseline_cost_pmpm * (cost_change_pct / 100)
-        cost_change_total = cost_change_pmpm * member_count * 12  # Annual cost change
+        utilization_change_per_1k = (
+            baseline_utilization * (utilization_change_pct / 100)
+            if baseline_utilization is not None
+            else None
+        )
+        cost_change_pmpm = (
+            baseline_cost_pmpm * (cost_change_pct / 100)
+            if baseline_cost_pmpm is not None
+            else None
+        )
+        cost_change_total = (
+            cost_change_pmpm * member_count * 12
+            if cost_change_pmpm is not None and member_count is not None
+            else None
+        )
         
         # Predict substitution effects
         substitution_effects = self._predict_substitution_effects(
@@ -146,23 +159,19 @@ class PredictedImpactGenerator:
         # Predict patient response
         patient_response = self._predict_patient_response(policy_levers, friction_level)
         
-        # Calculate confidence score
-        confidence_score = self._calculate_confidence_score(
-            elasticity_data, baseline_metrics, policy_levers
-        )
-        
-        # Determine prediction method
-        prediction_method = "ELASTICITY_MODEL" if elasticity_data else "DEFAULT_MODEL"
+        # Lookup confidence is not a probability. Leave it unavailable.
+        confidence_score = None
+        prediction_method = "CALLER_ELASTICITY" if caller_supplied_elasticity else "SIMULATION_LOOKUP"
         
         # Collect warnings and limitations
         warnings = []
         limitations = []
-        if not elasticity_data:
-            warnings.append("Using default elasticity estimates - prediction may be less accurate")
-            limitations.append("No historical elasticity data available")
-        if not baseline_metrics:
-            warnings.append("Using default baseline metrics - prediction accuracy may be reduced")
-            limitations.append("Baseline metrics not available")
+        if not caller_supplied_elasticity:
+            warnings.append("Scenario lookup only. This is not a fitted elasticity model.")
+            limitations.append("No caller-supplied elasticity. Category table is a simulation.")
+        if baseline_utilization is None or baseline_cost_pmpm is None:
+            warnings.append("Baseline metric missing. Level changes are unavailable.")
+            limitations.append("Missing baseline values were not replaced with 100 or 500.")
         if friction_level < 0.3:
             warnings.append("Low policy friction - impact may be minimal")
         
@@ -314,7 +323,7 @@ class PredictedImpactGenerator:
                 service_category=service,
                 predicted_substitution_rate=substitution_rate,
                 predicted_substitute_services=pattern["substitute_services"],
-                confidence_score=70.0,  # Moderate confidence for MVP
+                confidence_score=None,
             ))
         
         return effects
@@ -350,7 +359,7 @@ class PredictedImpactGenerator:
             adaptive_pct=adaptive,
             resistant_pct=resistant,
             circumvention_pct=circumvention,
-            confidence_score=75.0,  # Moderate confidence for MVP
+            confidence_score=None,
         )
     
     def _predict_patient_response(
@@ -368,7 +377,7 @@ class PredictedImpactGenerator:
             defer_rate=defer_rate,
             substitute_rate=substitute_rate,
             er_fallback_rate=er_fallback_rate,
-            confidence_score=70.0,  # Moderate confidence for MVP
+            confidence_score=None,
         )
     
     def _calculate_confidence_score(

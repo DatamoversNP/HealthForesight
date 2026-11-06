@@ -285,24 +285,25 @@ def compute_metrics_from_database_claims(
     if allowed_col:
         total_allowed = float(claims_df[allowed_col].sum())
     
-    # Compute metrics - Industry standard definitions (HEDIS/NQF alignment)
-    # Utilization: services per 1,000 member-months (SMPM) - standard healthcare utilization rate
-    # PMPM: Per Member Per Month - total $ / member_months (paid = actual spend, allowed = contracted)
-    member_months = member_count * months if member_count > 0 else 1
+    # Claimant-months, not enrolled member-months. cost_pmpm is paid dollars.
+    member_months = member_count * months if member_count > 0 else None
 
-    utilization_per_1k = (total_claims / member_months * 1000) if member_months > 0 else 0.0  # SMPM
-    paid_pmpm = (total_paid / member_months) if member_months > 0 else 0.0
-    allowed_pmpm = (total_allowed / member_months) if member_months > 0 else 0.0
+    utilization_per_1k = (total_claims / member_months * 1000) if member_months else None
+    paid_pmpm = (total_paid / member_months) if member_months else None
+    allowed_pmpm = (total_allowed / member_months) if member_months else None
 
-    return {
-        "utilization_per_1k": max(0.0, float(utilization_per_1k)),
-        "cost_per_member": float(paid_pmpm),
-        "cost_pmpm": float(paid_pmpm),
-        "paid_pmpm": float(paid_pmpm),
-        "allowed_pmpm": float(allowed_pmpm),
+    out = {
+        "utilization_per_1k": None if utilization_per_1k is None else max(0.0, float(utilization_per_1k)),
+        "cost_per_member": paid_pmpm,
+        "cost_pmpm": paid_pmpm,
+        "paid_pmpm": paid_pmpm,
+        "allowed_pmpm": allowed_pmpm,
         "total_claims": int(total_claims),
         "total_paid": float(total_paid),
         "total_allowed": float(total_allowed),
-        "member_months": float(member_months),
+        "member_months": None if member_months is None else float(member_months),
         "unique_members": int(member_count),
+        "cost_pmpm_meaning": "PAID",
     }
+    from uepi_common.metrics.measurement_integrity import annotate_claimant_exposure
+    return annotate_claimant_exposure(out, int(member_count or 0), enrollment_measured=False)

@@ -708,8 +708,8 @@ function renderModels(subsection: string) {
               <strong>Metrics Computed:</strong>
             </Typography>
             <Box component="ul" sx={{ pl: 4 }}>
-              <li>Utilization rate per 1,000 member-months (M1)</li>
-              <li>Allowed PMPM (M2)</li>
+              <li>Claim lines per 1,000 claimants unless denominator_basis is ENROLLMENT (M1). Not enrolled utilization.</li>
+              <li>Allowed dollars per claimant-month unless denominator_basis is ENROLLMENT (M2). Not enrolled PMPM.</li>
               <li>Paid PMPM (M3)</li>
               <li>Site of care mix percentages</li>
               <li>Service mix percentages</li>

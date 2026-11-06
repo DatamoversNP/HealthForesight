@@ -275,7 +275,14 @@ export default function PolicyVerdictsPage() {
                         ? format(parseISO(row.observation_period_end.split('T')[0]), 'MMM d, yyyy')
                         : '—'}
                     </TableCell>
-                    <TableCell><VerdictChip row={row} /></TableCell>
+                    <TableCell>
+                      <VerdictChip row={row} />
+                      {row.verdict_is_recomputed && (
+                        <Typography variant="caption" color="text.secondary" display="block">
+                          Screen value. Stored status: {row.historical_verdict_status || 'not recorded'}
+                        </Typography>
+                      )}
+                    </TableCell>
                     <TableCell align="right">
                       {row.savings_or_cost_impact_pmpm != null
                         ? `$${row.savings_or_cost_impact_pmpm.toFixed(2)}`

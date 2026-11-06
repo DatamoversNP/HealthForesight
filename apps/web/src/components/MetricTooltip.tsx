@@ -35,29 +35,29 @@ const METRIC_FORMULAS: Record<string, { formula: string; description: string }> 
   // Baseline Metrics
   util_rate_total_per_1000_mm: {
     formula: '(Total claim lines / Member-months) × 1,000',
-    description: 'Utilization rate per 1,000 member-months. Total claim lines divided by total member-months, multiplied by 1,000.',
+    description: 'Claim lines per 1,000 claimants unless denominator_basis is ENROLLMENT. Do not read a claimant ratio as enrolled utilization.',
   },
   allowed_pmpm_total: {
     formula: 'Total allowed amount / Member-months',
-    description: 'Cost per member per month (PMPM). Total allowed amount (or paid_amount) divided by total member-months.',
+    description: 'Allowed dollars per claimant-month unless denominator_basis is ENROLLMENT. Not enrolled PMPM, and not paid dollars.',
   },
   cost_pmpm: {
     formula: 'Total cost / Member-months',
-    description: 'Cost per member per month (PMPM). Alternative name for allowed_pmpm_total.',
+    description: 'Paid dollars per claimant-month when cost_pmpm_meaning is PAID. Not allowed dollars and not enrolled PMPM.',
   },
   total_cost_per_1k: {
     formula: '(Total cost / Member-months) × 1,000',
-    description: 'Cost per 1,000 member-months. Total cost divided by member-months, multiplied by 1,000.',
+    description: 'Dollars per 1,000 claimants unless denominator_basis is ENROLLMENT. Not enrolled PMPM.',
   },
   
   // Additional common metric names (normalized)
   'util rate total per 1000 mm': {
     formula: '(Total claim lines / Member-months) × 1,000',
-    description: 'Utilization rate per 1,000 member-months.',
+    description: 'Claim lines per 1,000 claimants unless denominator_basis is ENROLLMENT.',
   },
   'allowed pmpm total': {
     formula: 'Total allowed amount / Member-months',
-    description: 'Cost per member per month (PMPM).',
+    description: 'Allowed dollars per claimant-month unless denominator_basis is ENROLLMENT. Not enrolled PMPM.',
   },
   
   // Patient Segment Metrics

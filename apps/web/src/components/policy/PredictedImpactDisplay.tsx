@@ -19,6 +19,7 @@ import {
   TableRow,
   Paper,
 } from '@mui/material'
+import { confidenceText } from '../../utils/measurementIntegrity'
 import {
   TrendingUp as TrendingUpIcon,
   TrendingDown as TrendingDownIcon,
@@ -33,12 +34,12 @@ import PolicyScopeDisplay from './PolicyScopeDisplay'
 import { format } from 'date-fns'
 
 interface PredictedImpactMetrics {
-  utilization_change_per_1k: number
-  cost_change_pmpm: number
-  cost_change_total: number
+  utilization_change_per_1k: number | null
+  cost_change_pmpm: number | null
+  cost_change_total: number | null
   utilization_change_pct: number
   cost_change_pct: number
-  confidence_score: number
+  confidence_score: number | null
   prediction_method: string
 }
 
@@ -46,7 +47,7 @@ interface PredictedSubstitutionEffect {
   service_category: string
   predicted_substitution_rate: number
   predicted_substitute_services: string[]
-  confidence_score: number
+  confidence_score: number | null
 }
 
 interface PredictedProviderResponse {
@@ -54,14 +55,14 @@ interface PredictedProviderResponse {
   adaptive_pct: number
   resistant_pct: number
   circumvention_pct: number
-  confidence_score: number
+  confidence_score: number | null
 }
 
 interface PredictedPatientResponse {
   defer_rate: number
   substitute_rate: number
   er_fallback_rate: number
-  confidence_score: number
+  confidence_score: number | null
 }
 
 interface ProviderArchetypePredictionRow {
@@ -204,7 +205,7 @@ export default function PredictedImpactDisplay({ predictedImpact }: PredictedImp
                 <Typography variant="body2" color="text.secondary">
                   Utilization Change
                 </Typography>
-                {metrics.utilization_change_per_1k >= 0 ? (
+                {metrics.utilization_change_per_1k == null ? null : metrics.utilization_change_per_1k >= 0 ? (
                   <TrendingUpIcon color="error" fontSize="small" />
                 ) : (
                   <TrendingDownIcon color="success" fontSize="small" />
@@ -215,7 +216,7 @@ export default function PredictedImpactDisplay({ predictedImpact }: PredictedImp
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 {metrics.utilization_change_per_1k !== undefined && metrics.utilization_change_per_1k !== null 
-                  ? `${metrics.utilization_change_per_1k >= 0 ? '+' : ''}${metrics.utilization_change_per_1k.toFixed(1)} per 1K members`
+                  ? `${metrics.utilization_change_per_1k >= 0 ? '+' : ''}${metrics.utilization_change_per_1k.toFixed(1)} per 1,000 claimants (not enrolled utilization)`
                   : 'N/A'}
               </Typography>
             </CardContent>
@@ -229,7 +230,7 @@ export default function PredictedImpactDisplay({ predictedImpact }: PredictedImp
                 <Typography variant="body2" color="text.secondary">
                   Cost Change (PMPM)
                 </Typography>
-                {metrics.cost_change_pmpm >= 0 ? (
+                {metrics.cost_change_pmpm == null ? null : metrics.cost_change_pmpm >= 0 ? (
                   <TrendingUpIcon color="error" fontSize="small" />
                 ) : (
                   <TrendingDownIcon color="success" fontSize="small" />
@@ -268,14 +269,23 @@ export default function PredictedImpactDisplay({ predictedImpact }: PredictedImp
                 Prediction Confidence
               </Typography>
               <Box sx={{ mb: 1 }}>
-                <ConfidenceBadge score={metrics.confidence_score / 100} />
+                {metrics.confidence_score == null ? (
+                  <Chip label="Unavailable" size="small" />
+                ) : (
+                  <ConfidenceBadge score={metrics.confidence_score / 100} />
+                )}
               </Box>
+              {metrics.confidence_score != null && (
               <LinearProgress
                 variant="determinate"
                 value={metrics.confidence_score}
                 sx={{ height: 8, borderRadius: 1 }}
                 color={metrics.confidence_score >= 70 ? 'success' : metrics.confidence_score >= 40 ? 'warning' : 'error'}
               />
+              )}
+              {metrics.confidence_score == null && (
+                <Typography variant="caption" color="text.secondary">{confidenceText(metrics.confidence_score)}</Typography>
+              )}
             </CardContent>
           </Card>
         </Grid>
@@ -291,9 +301,9 @@ export default function PredictedImpactDisplay({ predictedImpact }: PredictedImp
                 Predicted Provider Response
               </Typography>
               <Chip
-                label={`${provider_response.confidence_score.toFixed(0)}% confidence`}
+                label={provider_response.confidence_score == null ? 'Confidence unavailable' : `${provider_response.confidence_score.toFixed(0)}% confidence`}
                 size="small"
-                color={provider_response.confidence_score >= 70 ? 'success' : provider_response.confidence_score >= 40 ? 'warning' : 'error'}
+                color={provider_response.confidence_score == null ? 'default' : provider_response.confidence_score >= 70 ? 'success' : provider_response.confidence_score >= 40 ? 'warning' : 'error'}
               />
             </Box>
             <Grid container spacing={2}>
@@ -406,9 +416,9 @@ export default function PredictedImpactDisplay({ predictedImpact }: PredictedImp
                 Predicted Patient Response
               </Typography>
               <Chip
-                label={`${patient_response.confidence_score.toFixed(0)}% confidence`}
+                label={patient_response.confidence_score == null ? 'Confidence unavailable' : `${patient_response.confidence_score.toFixed(0)}% confidence`}
                 size="small"
-                color={patient_response.confidence_score >= 70 ? 'success' : patient_response.confidence_score >= 40 ? 'warning' : 'error'}
+                color={patient_response.confidence_score == null ? 'default' : patient_response.confidence_score >= 70 ? 'success' : patient_response.confidence_score >= 40 ? 'warning' : 'error'}
               />
             </Box>
             <Grid container spacing={2}>
@@ -545,9 +555,9 @@ export default function PredictedImpactDisplay({ predictedImpact }: PredictedImp
                       </TableCell>
                       <TableCell align="right">
                         <Chip
-                          label={`${effect.confidence_score.toFixed(0)}%`}
+                          label={confidenceText(effect.confidence_score)}
                           size="small"
-                          color={effect.confidence_score >= 70 ? 'success' : effect.confidence_score >= 40 ? 'warning' : 'error'}
+                          color={effect.confidence_score == null ? 'default' : effect.confidence_score >= 70 ? 'success' : effect.confidence_score >= 40 ? 'warning' : 'error'}
                         />
                       </TableCell>
                     </TableRow>

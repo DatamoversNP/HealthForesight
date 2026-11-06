@@ -78,6 +78,8 @@ export interface PolicyVerdictRow {
   policy_name: string
   policy_effective_date?: string | null
   verdict: string
+  historical_verdict_status?: string | null
+  verdict_is_recomputed?: boolean
   verdict_label: string
   savings_or_cost_impact_pmpm?: number | null
   cost_impact_pct?: number | null

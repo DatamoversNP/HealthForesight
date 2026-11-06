@@ -419,7 +419,7 @@ export default function DashboardPage() {
                       </Typography>
                     </Grid>
                     <Grid item xs={6}>
-                      <Typography variant="caption" color="text.secondary">Cost PMPM</Typography>
+                      <Typography variant="caption" color="text.secondary">Paid dollars per claimant-month (not enrolled PMPM)</Typography>
                       <Typography variant="h6" sx={{ fontWeight: 600 }}>
                         ${dashboardData.business_metrics?.cost_pmpm_current?.toFixed(2) || 'N/A'}
                       </Typography>
@@ -526,7 +526,7 @@ export default function DashboardPage() {
                         </Typography>
                       </Grid>
                       <Grid item xs={6}>
-                        <Typography variant="caption" color="text.secondary">Cost PMPM</Typography>
+                        <Typography variant="caption" color="text.secondary">Paid dollars per claimant-month (not enrolled PMPM)</Typography>
                         <Typography variant="h6" sx={{ fontWeight: 600 }}>
                           ${dashboardData.general_baseline.cost_pmpm?.toFixed(2) ?? '—'}
                         </Typography>

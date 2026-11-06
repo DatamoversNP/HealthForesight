@@ -1594,7 +1594,9 @@ export default function WhatIfAnalysisPage() {
                       }}
                     >
                       <Typography variant="body2" sx={{ color: 'primary.contrastText', fontWeight: 600, mb: 0.5 }}>
-                        Low Confidence Score ({scenarioResult.confidence_score.toFixed(0)}%)
+                        {scenarioResult.confidence_score == null
+                          ? 'Confidence unavailable'
+                          : `Low Confidence Score (${scenarioResult.confidence_score.toFixed(0)}%)`}
                       </Typography>
                       <Typography variant="body2" sx={{ color: 'primary.contrastText', opacity: 0.9, fontSize: '0.85rem' }}>
                         To improve: Use shorter projection horizon (≤12 months), ensure sufficient baseline data (500+ claims), and run elasticity analysis for more accurate models.
@@ -1635,7 +1637,7 @@ export default function WhatIfAnalysisPage() {
                   <Grid item xs={12} sm={6} md={4}>
                     <Paper sx={{ p: 2, textAlign: 'center' }}>
                       <Typography variant="body2" color="text.secondary">
-                        Allowed PMPM
+                        Allowed $ / claimant-month (not enrolled PMPM)
                       </Typography>
                       <Typography variant="h5" color={scenarioResult.impact_metrics.percent_changes.allowed_pmpm < 0 ? 'success.main' : 'error.main'}>
                         {formatPercent(scenarioResult.impact_metrics.percent_changes.allowed_pmpm)}
@@ -1791,7 +1793,7 @@ export default function WhatIfAnalysisPage() {
                               </TableCell>
                             </TableRow>
                             <TableRow>
-                              <TableCell>Cost PMPM</TableCell>
+                              <TableCell>Paid $ / claimant-month (not enrolled PMPM)</TableCell>
                               <TableCell align="right">
                                 {formatCurrency(scenarioResult.impact_metrics.risk_analysis.worst_case.cost_pmpm)}
                                 {' '}
@@ -1822,7 +1824,7 @@ export default function WhatIfAnalysisPage() {
                               </TableCell>
                             </TableRow>
                             <TableRow>
-                              <TableCell>Cost PMPM</TableCell>
+                              <TableCell>Paid $ / claimant-month (not enrolled PMPM)</TableCell>
                               <TableCell align="right">
                                 {formatCurrency(scenarioResult.impact_metrics.risk_analysis.best_case.cost_pmpm)}
                                 {' '}
@@ -1884,7 +1886,7 @@ export default function WhatIfAnalysisPage() {
                         <TableCell align="right">{scenarioResult.confidence_intervals.utilization_per_1k[1].toFixed(2)}</TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell>Allowed PMPM</TableCell>
+                        <TableCell>Allowed $ / claimant-month (not enrolled PMPM)</TableCell>
                         <TableCell align="right">{formatCurrency(scenarioResult.baseline_metrics.allowed_pmpm)}</TableCell>
                         <TableCell align="right">{formatCurrency(scenarioResult.projected_metrics.allowed_pmpm)}</TableCell>
                         <TableCell align="right">{formatCurrency(scenarioResult.confidence_intervals.allowed_pmpm[0])}</TableCell>

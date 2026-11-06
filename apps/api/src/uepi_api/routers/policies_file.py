@@ -409,11 +409,18 @@ async def generate_policy_predicted_impact(
             if baseline_metrics_dict:
                 # Map baseline metric dictionary names to what predicted impact expects
                 # Use policy-specific metrics (util_rate_target_per_1000_mm) if available, otherwise general (util_rate_total_per_1000_mm)
+                paid = baseline_metrics_dict.get("paid_pmpm_target")
+                if paid is None:
+                    paid = baseline_metrics_dict.get("paid_pmpm")
+                if paid is None and baseline_metrics_dict.get("cost_pmpm_meaning") == "PAID":
+                    paid = baseline_metrics_dict.get("cost_pmpm")
+                unique_members = baseline_metrics_dict.get("unique_members")
                 baseline_metrics_for_prediction = {
                     "utilization_per_1k": baseline_metrics_dict.get("util_rate_target_per_1000_mm") or baseline_metrics_dict.get("util_rate_total_per_1000_mm") or baseline_metrics_dict.get("utilization_per_1k"),
-                    "cost_pmpm": baseline_metrics_dict.get("allowed_pmpm_target") or baseline_metrics_dict.get("allowed_pmpm_total") or baseline_metrics_dict.get("cost_pmpm"),
-                    "member_count": int(baseline_metrics_dict.get("unique_members", 0)) or int(baseline_metrics_dict.get("member_months", 10000) / 12),
-                    "member_months": baseline_metrics_dict.get("member_months", 10000),
+                    "cost_pmpm": paid,
+                    "allowed_pmpm": baseline_metrics_dict.get("allowed_pmpm_target") or baseline_metrics_dict.get("allowed_pmpm_total"),
+                    "member_count": int(unique_members) if unique_members not in (None, 0) else None,
+                    "member_months": baseline_metrics_dict.get("member_months"),
                 }
                 # Remove None values and zeros
                 baseline_metrics_for_prediction = {
@@ -565,12 +572,18 @@ async def generate_all_policies_predicted_impact(
                     baseline_metrics_dict = latest_baseline.get("baseline_metrics", {}) or latest_baseline.get("metrics", {})
                     if baseline_metrics_dict:
                         # Map baseline metric dictionary names to what predicted impact expects
+                        paid = baseline_metrics_dict.get("paid_pmpm_total")
+                        if paid is None:
+                            paid = baseline_metrics_dict.get("paid_pmpm")
+                        if paid is None and baseline_metrics_dict.get("cost_pmpm_meaning") == "PAID":
+                            paid = baseline_metrics_dict.get("cost_pmpm")
+                        unique_members = baseline_metrics_dict.get("unique_members")
                         baseline_metrics_for_prediction = {
-                            # Map metric dictionary names to predicted impact expected names
                             "utilization_per_1k": baseline_metrics_dict.get("util_rate_total_per_1000_mm") or baseline_metrics_dict.get("utilization_per_1k"),
-                            "cost_pmpm": baseline_metrics_dict.get("allowed_pmpm_total") or baseline_metrics_dict.get("cost_pmpm"),
-                            "member_count": int(baseline_metrics_dict.get("member_months", 10000) / 12),  # Approximate from member-months
-                            "member_months": baseline_metrics_dict.get("member_months", 10000),
+                            "cost_pmpm": paid,
+                            "allowed_pmpm": baseline_metrics_dict.get("allowed_pmpm_total"),
+                            "member_count": int(unique_members) if unique_members not in (None, 0) else None,
+                            "member_months": baseline_metrics_dict.get("member_months"),
                         }
                         # Remove None values
                         baseline_metrics_for_prediction = {k: v for k, v in baseline_metrics_for_prediction.items() if v is not None}

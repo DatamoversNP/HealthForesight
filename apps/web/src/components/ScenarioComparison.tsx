@@ -2,6 +2,7 @@
  * Scenario Comparison Component - Side-by-side comparison of multiple scenarios
  */
 import { useState } from 'react'
+import { confidenceText } from '../utils/measurementIntegrity'
 import {
   Box,
   Card,
@@ -54,7 +55,7 @@ interface ScenarioResult {
       paid_pmpm: number
     }
   }
-  confidence_score: number
+  confidence_score: number | null
 }
 
 interface ScenarioComparisonProps {
@@ -131,7 +132,7 @@ export default function ScenarioComparison({
               <Tooltip formatter={(value: number) => formatPercent(value)} />
               <Legend />
               <Bar dataKey="Utilization Change (%)" fill="#8884d8" name="Utilization per 1k" />
-              <Bar dataKey="Allowed PMPM Change (%)" fill="#82ca9d" name="Allowed PMPM" />
+              <Bar dataKey="Allowed PMPM Change (%)" fill="#82ca9d" name="Allowed $ / claimant-month (not enrolled PMPM)" />
               <Bar dataKey="Paid PMPM Change (%)" fill="#ffc658" name="Paid PMPM" />
             </BarChart>
           </ResponsiveContainer>
@@ -156,10 +157,10 @@ export default function ScenarioComparison({
                 <TableRow>
                   <TableCell><strong>Scenario</strong></TableCell>
                   <TableCell align="right"><strong>Utilization Change (%)</strong></TableCell>
-                  <TableCell align="right"><strong>Allowed PMPM Change (%)</strong></TableCell>
+                  <TableCell align="right"><strong>Allowed $ / claimant-month change (%)</strong></TableCell>
                   <TableCell align="right"><strong>Paid PMPM Change (%)</strong></TableCell>
-                  <TableCell align="right"><strong>Baseline Allowed PMPM</strong></TableCell>
-                  <TableCell align="right"><strong>Projected Allowed PMPM</strong></TableCell>
+                  <TableCell align="right"><strong>Baseline allowed $ / claimant-month</strong></TableCell>
+                  <TableCell align="right"><strong>Projected allowed $ / claimant-month</strong></TableCell>
                   <TableCell align="right"><strong>Confidence</strong></TableCell>
                   <TableCell><strong>Actions</strong></TableCell>
                 </TableRow>
@@ -211,8 +212,8 @@ export default function ScenarioComparison({
                     </TableCell>
                     <TableCell align="right">
                       <Chip
-                        label={`${scenario.confidence_score.toFixed(0)}%`}
-                        color={scenario.confidence_score >= 70 ? 'success' : scenario.confidence_score >= 40 ? 'warning' : 'error'}
+                        label={confidenceText(scenario.confidence_score)}
+                        color={scenario.confidence_score == null ? 'default' : scenario.confidence_score >= 70 ? 'success' : scenario.confidence_score >= 40 ? 'warning' : 'error'}
                         size="small"
                       />
                     </TableCell>

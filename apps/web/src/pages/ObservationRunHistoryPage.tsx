@@ -175,8 +175,8 @@ export default function ObservationRunHistoryPage() {
                   <TableCell>Period start</TableCell>
                   <TableCell>Period end</TableCell>
                   <TableCell>Run date</TableCell>
-                  <TableCell align="right">Util / 1k</TableCell>
-                  <TableCell align="right">Cost PMPM</TableCell>
+                  <TableCell align="right">Claim lines / 1,000 claimants</TableCell>
+                  <TableCell align="right">Paid $ / claimant-month</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

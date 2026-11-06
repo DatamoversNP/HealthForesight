@@ -224,7 +224,7 @@ def load_reconciliation_gate(tenant_id: UUID) -> Dict[str, Any]:
     from uepi_api.storage_policies import list_policies
     from uepi_api.storage_observations import list_observations
     from uepi_api.storage_policy_predicted_impact import list_latest_predicted_impacts
-    from uepi_api.verdict import compute_verdict
+    from uepi_api.verdict import compute_verdict, endpoint_contract_from_policy
     from uepi_api.services.policy_inventory_manifest import _classify_catalog_row, DECLARED_SOURCE_FAMILIES
 
     adapter_by_family = {f["family_id"]: f["adapter_status"] for f in DECLARED_SOURCE_FAMILIES}
@@ -234,6 +234,7 @@ def load_reconciliation_gate(tenant_id: UUID) -> Dict[str, Any]:
         return fam, adapter_by_family.get(fam, "UNKNOWN")
 
     policies = list_policies(tenant_id, summary=True) or []
+    policy_by_id = {str(p.get("id") or p.get("policy_id")): p for p in policies}
     baseline_ids = set()
     try:
         from uepi_api.storage_baselines import list_baselines
@@ -259,7 +260,11 @@ def load_reconciliation_gate(tenant_id: UUID) -> Dict[str, Any]:
             continue
         comparisons = obs.get("comparisons") or {}
         behavioral = obs.get("behavioral_explanation") or {}
-        verdict_status, _, _ = compute_verdict(comparisons, behavioral)
+        verdict_status, _, _ = compute_verdict(
+            comparisons,
+            behavioral,
+            required_endpoints=endpoint_contract_from_policy(policy_by_id.get(pid)),
+        )
         observation_by_policy[pid] = {
             **obs,
             "verdict": verdict_status,

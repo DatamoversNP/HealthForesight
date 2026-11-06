@@ -29,14 +29,16 @@ def generate_scorecard_from_predicted_impact(
     
     # Try new format first (metrics), fallback to old format (projected_impact)
     if metrics:
+        cost_pct = metrics.get("cost_change_pct")
+        util_pct = metrics.get("utilization_change_pct")
         cost_savings = {
-            "total_savings_pct": abs(metrics.get("cost_change_pct", 0)) if metrics.get("cost_change_pct", 0) < 0 else 0
+            "total_savings_pct": abs(cost_pct) if cost_pct is not None and cost_pct < 0 else None
         }
         utilization_change = {
-            "percent_change": metrics.get("utilization_change_pct", 0)
+            "percent_change": util_pct
         }
         behavioral_response = {
-            "defer_rate": abs(metrics.get("utilization_change_pct", 0)) * 0.1 if metrics.get("utilization_change_pct", 0) < 0 else 0
+            "defer_rate": abs(util_pct) * 0.1 if util_pct is not None and util_pct < 0 else None
         }
     else:
         # Old format
@@ -52,20 +54,22 @@ def generate_scorecard_from_predicted_impact(
     # - Regulatory defensibility: 20%
     
     # Cost impact score (0-100): Higher is better (more savings, lower costs)
-    cost_savings_pct = cost_savings.get("total_savings_pct", 0)
-    cost_impact_score = min(100, max(0, 50 + (cost_savings_pct * 2)))  # 0% savings = 50, 25% savings = 100
+    cost_savings_pct = cost_savings.get("total_savings_pct")
+    cost_impact_score = None if cost_savings_pct is None else min(100, max(0, 50 + (cost_savings_pct * 2)))
     
     # Behavioral risk score (0-100): Lower risk = higher score
-    defer_rate = behavioral_response.get("defer_rate", 0)
-    behavioral_risk_score = min(100, max(0, 100 - (defer_rate * 200)))  # 0% defer = 100, 0.5% defer = 0
+    defer_rate = behavioral_response.get("defer_rate")
+    behavioral_risk_score = None if defer_rate is None else min(100, max(0, 100 - (defer_rate * 200)))
     
     # Access impact score (0-100): Based on substitution effects and access changes
     substitution_score = 80  # Default - would be calculated from substitution effects
     access_impact_score = substitution_score
     
     # Regulatory defensibility score (0-100): Based on policy type and evidence
-    confidence = predicted_impact.get("confidence_score", 50)
-    regulatory_defensibility_score = min(100, confidence + 20)  # Boost based on confidence
+    confidence = predicted_impact.get("confidence_score")
+    if confidence is None and isinstance(predicted_impact.get("metrics"), dict):
+        confidence = predicted_impact["metrics"].get("confidence_score")
+    regulatory_defensibility_score = None if confidence is None else min(100, confidence + 20)
     
     # Weighted effectiveness index
     weights = {
@@ -75,23 +79,32 @@ def generate_scorecard_from_predicted_impact(
         "regulatory_defensibility": 0.20,
     }
     
-    effectiveness_index = (
-        cost_impact_score * weights["cost_impact"] +
-        behavioral_risk_score * weights["behavioral_risk"] +
-        access_impact_score * weights["access_impact"] +
-        regulatory_defensibility_score * weights["regulatory_defensibility"]
+    component_scores = (
+        cost_impact_score,
+        behavioral_risk_score,
+        access_impact_score,
+        regulatory_defensibility_score,
     )
+    if any(score is None for score in component_scores):
+        effectiveness_index = None
+    else:
+        effectiveness_index = (
+            cost_impact_score * weights["cost_impact"] +
+            behavioral_risk_score * weights["behavioral_risk"] +
+            access_impact_score * weights["access_impact"] +
+            regulatory_defensibility_score * weights["regulatory_defensibility"]
+        )
     
     # Create scorecard entry
     scorecard = {
         "id": str(uuid4()),
         "policy_id": str(policy_id),
         "period": period,
-        "effectiveness_index": round(effectiveness_index, 2),
-        "cost_impact_score": round(cost_impact_score, 2),
-        "behavioral_risk_score": round(behavioral_risk_score, 2),
-        "access_impact_score": round(access_impact_score, 2),
-        "regulatory_defensibility_score": round(regulatory_defensibility_score, 2),
+        "effectiveness_index": None if effectiveness_index is None else round(effectiveness_index, 2),
+        "cost_impact_score": None if cost_impact_score is None else round(cost_impact_score, 2),
+        "behavioral_risk_score": None if behavioral_risk_score is None else round(behavioral_risk_score, 2),
+        "access_impact_score": None if access_impact_score is None else round(access_impact_score, 2),
+        "regulatory_defensibility_score": None if regulatory_defensibility_score is None else round(regulatory_defensibility_score, 2),
         "weights": weights,
         "created_at": datetime.utcnow().isoformat(),
         "updated_at": datetime.utcnow().isoformat(),

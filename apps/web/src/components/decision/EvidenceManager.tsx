@@ -130,7 +130,7 @@ export default function EvidenceManager({ policyId, onEvidenceLinked }: Evidence
           title: 'Stage 3.5 predicted impact',
           subtitle:
             impact.metrics?.cost_change_pmpm != null
-              ? `Cost PMPM Δ $${Number(impact.metrics.cost_change_pmpm).toFixed(2)}`
+              ? `Paid $ / claimant-month change $${Number(impact.metrics.cost_change_pmpm).toFixed(2)} (not enrolled PMPM)`
               : undefined,
           href: '/predicted-impacts',
         })

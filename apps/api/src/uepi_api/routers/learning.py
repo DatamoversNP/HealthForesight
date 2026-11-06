@@ -64,8 +64,9 @@ class AccuracyRecordResponse(BaseModel):
     predicted_effect_size: float
     observed_effect_size: float
     prediction_error: float
-    prediction_error_pct: float
-    prediction_accuracy_pct: float
+    prediction_error_pct: Optional[float] = None
+    prediction_accuracy_pct: Optional[float] = None
+    accuracy_status: Optional[str] = None
     metrics: dict
     recorded_at: str
     metadata: dict
