@@ -236,6 +236,116 @@ def test_missing_metrics_are_not_filled_with_zero_or_a_fake_interval():
     assert "confidence_interval" not in metrics
 
 
+def test_mounted_policy_inputs_do_not_copy_allowed_into_paid_or_fill_zero():
+    from uepi_common.metrics.measurement_integrity import paid_rate, prediction_baseline_inputs
+    import uepi_api.routers.policies as policies_router
+
+    inputs = prediction_baseline_inputs({
+        "allowed_pmpm_target": 100.0,
+        "util_rate_target_per_1000_mm": None,
+        "unique_members": 0,
+    })
+    assert inputs["allowed_pmpm"] == 100.0
+    assert "cost_pmpm" not in inputs
+    assert "utilization_per_1k" not in inputs
+    assert "member_count" not in inputs
+    assert paid_rate({"allowed_pmpm": 100.0, "cost_pmpm_meaning": "ALLOWED"}) is None
+    source = inspect.getsource(policies_router)
+    assert 'baseline_metrics_dict.get("allowed_pmpm_target") or baseline_metrics_dict.get("allowed_pmpm_total") or 0.0' not in source
+
+
+def test_reference_comparison_does_not_turn_allowed_or_missing_into_paid_zero():
+    from uuid import uuid4
+    from uepi_api.observation_enhancement import enhance_comparisons_with_baseline
+
+    compared = enhance_comparisons_with_baseline(
+        uuid4(),
+        {
+            "_reference_baseline": {"utilization_per_1k": 100.0, "allowed_pmpm": 80.0},
+            "utilization_per_1k": 90.0,
+            "allowed_pmpm": 70.0,
+        },
+    )
+    assert compared["observed_cost_pmpm"] is None
+    assert compared["baseline_cost_pmpm"] is None
+    assert compared["cost_change_pct"] is None
+    assert compared["cost_change_status"] == "UNAVAILABLE"
+    assert compared["utilization_change_pct"] == -10.0
+
+
+def test_recomputed_verdict_does_not_replace_the_stored_reconciliation_status():
+    from uepi_api.services.policy_reconciliation_gate import reconcile_policy_version
+
+    row = reconcile_policy_version(
+        policy={"id": "m1", "name": "MRI PA", "policy_type": "PRIOR_AUTH"},
+        inventory_family="bcnc_medical",
+        inventory_status="PARTIAL_CATALOG_SEED",
+        source_provenance=None,
+        applicability=None,
+        has_baseline=True,
+        has_forecast=False,
+        forecast_evidence_tier=None,
+        has_observation=True,
+        observation_verdict="ON_TRACK",
+        recomputed_verdict_status="INCONCLUSIVE",
+        causal_status="INCONCLUSIVE",
+    )
+    assert row["states"]["verdict_state"] == "READY"
+    assert row["verdict_distinction"]["historical_verdict_status"] == "ON_TRACK"
+    assert row["verdict_distinction"]["recomputed_verdict_status"] == "INCONCLUSIVE"
+    assert row["verdict_distinction"]["verdict_is_recomputed"] is False
+    assert "not the stored outcome" in row["explanations"]["verdict"]
+
+
+def test_objectives_health_keeps_stored_and_recomputed_verdicts_apart():
+    from uepi_api.services.objectives_health import build_objectives_health_snapshot
+
+    snap = build_objectives_health_snapshot(
+        tenant_id=uuid4(),
+        policies=[{"id": "p1", "name": "One", "policy_type": "PRIOR_AUTH"}],
+        latest_observations=[{
+            "policy_id": "p1",
+            "observation_id": "obs",
+            "verdict_status": "ON_TRACK",
+            "observation_period_end": "2024-06-30",
+            "computed_at": "2024-07-01T00:00:00Z",
+            "comparisons": {"vs_baseline": {"utilization_change_pct": -8.0}},
+            "behavioral_explanation": {},
+        }],
+        predicted_impacts=[],
+        decisions=[],
+        generated_at="FIXED",
+    )
+    row = snap["policy_rows"][0]
+    assert row["historical_verdict_status"] == "ON_TRACK"
+    assert row["recomputed_verdict_status"] == "INCONCLUSIVE"
+    assert row["verdict_is_recomputed"] is True
+    assert row["verdict"] == "INCONCLUSIVE"
+
+
+def test_dashboard_summary_does_not_prefer_allowed_or_fill_zero():
+    import uepi_api.routers.dashboard as dashboard_router
+    source = inspect.getsource(dashboard_router)
+    assert "round(float(util or 0), 2)" not in source
+    assert 'bm.get("allowed_pmpm_total")' not in source
+
+
+def test_authoritative_screens_do_not_use_bare_pmpm_headings():
+    from pathlib import Path
+    root = Path(__file__).resolve().parents[2] / "web" / "src"
+    files = [
+        root / "pages" / "PolicyVerdictsPage.tsx",
+        root / "pages" / "ObservationAnalysisPage.tsx",
+        root / "pages" / "WhatIfAnalysisPage.tsx",
+        root / "components" / "ScenarioComparison.tsx",
+    ]
+    banned = ["Cost impact (PMPM)", "Cost (PMPM)", "Utilization (per 1K)", ">Paid PMPM<", ">Utilization per 1k<"]
+    for path in files:
+        text = path.read_text()
+        for phrase in banned:
+            assert phrase not in text, f"{path.name} still contains {phrase}"
+
+
 def test_scorecard_does_not_invent_confidence():
     card = generate_scorecard_from_predicted_impact(
         uuid4(),

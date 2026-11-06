@@ -617,10 +617,11 @@ def extract_behavioral_explanation_from_analysis_result(analysis_result: Dict[st
     
     # Add cost impact analysis
     if treatment_pre and treatment_post:
-        pre_cost = treatment_pre.get("paid_pmpm") or treatment_pre.get("allowed_pmpm") or treatment_pre.get("cost_pmpm") or 0.0
-        post_cost = treatment_post.get("paid_pmpm") or treatment_post.get("allowed_pmpm") or treatment_post.get("cost_pmpm") or 0.0
+        from uepi_common.metrics.measurement_integrity import paid_rate
+        pre_cost = paid_rate(treatment_pre)
+        post_cost = paid_rate(treatment_post)
         
-        if pre_cost > 0:
+        if pre_cost is not None and pre_cost > 0 and post_cost is not None:
             cost_change_pct = ((post_cost - pre_cost) / pre_cost) * 100
             cost_change_abs = post_cost - pre_cost
             cost_impact = {
@@ -646,17 +647,18 @@ def extract_behavioral_explanation_from_analysis_result(analysis_result: Dict[st
                 cost_impact["financial_impact"]["savings_category"] = "LOW"
             
             # Estimate annual savings for 10k members
-            annual_savings_10k = cost_change_abs * 10000 * 12
-            cost_impact["financial_impact"]["annual_savings_per_10k_members"] = annual_savings_10k
+            cost_impact["financial_impact"]["annual_savings_per_10k_members"] = None
+            cost_impact["financial_impact"]["annual_savings_note"] = "Unavailable. Member exposure was not replaced with 10,000."
             
             behavioral_explanation["cost_impact"] = cost_impact
     
     # Add utilization trend analysis
     if treatment_pre and treatment_post:
-        pre_util = treatment_pre.get("utilization_per_1k") or 0.0
-        post_util = treatment_post.get("utilization_per_1k") or 0.0
+        from uepi_common.metrics.measurement_integrity import as_optional_float
+        pre_util = as_optional_float(treatment_pre.get("utilization_per_1k"))
+        post_util = as_optional_float(treatment_post.get("utilization_per_1k"))
         
-        if pre_util > 0:
+        if pre_util is not None and pre_util > 0 and post_util is not None:
             util_change_pct = ((post_util - pre_util) / pre_util) * 100
             util_change_abs = post_util - pre_util
             utilization_trend = {
@@ -1015,19 +1017,27 @@ def enhance_comparisons_with_baseline(
     
     # When daily job provides reference_baseline (unvaried metrics), compare observed to it so cost_change_pct = (mult-1)*100
     if ref_baseline:
-        observed_utilization = float(observation_metrics.get("utilization_per_1k", 0.0) or 0.0)
-        observed_cost_pmpm = float(
-            observation_metrics.get("cost_pmpm", 0.0) or
-            observation_metrics.get("cost_per_member", 0.0) or
-            observation_metrics.get("paid_pmpm", 0.0) or
-            observation_metrics.get("allowed_pmpm", 0.0) or 0.0
+        from uepi_common.metrics.measurement_integrity import as_optional_float, first_present, paid_rate
+        observed_utilization = as_optional_float(first_present(
+            observation_metrics.get("utilization_per_1k"),
+            observation_metrics.get("util_rate_per_1k"),
+        ))
+        observed_cost_pmpm = paid_rate(observation_metrics)
+        base_util = as_optional_float(first_present(
+            ref_baseline.get("utilization_per_1k"),
+            ref_baseline.get("util_rate_total_per_1000_mm"),
+        ))
+        base_cost = paid_rate(ref_baseline)
+        utilization_change = None if observed_utilization is None or base_util is None else observed_utilization - base_util
+        cost_change_pmpm = None if observed_cost_pmpm is None or base_cost is None else observed_cost_pmpm - base_cost
+        util_change_pct = (
+            None if base_util is None or base_util <= 0 or utilization_change is None
+            else utilization_change / base_util * 100
         )
-        base_util = float(ref_baseline.get("utilization_per_1k", 0.0) or 0.0)
-        base_cost = float(ref_baseline.get("cost_pmpm", 0.0) or ref_baseline.get("cost_per_member", 0.0) or 0.0)
-        util_change_pct = ((observed_utilization - base_util) / base_util * 100) if base_util else None
-        cost_change_pct = ((observed_cost_pmpm - base_cost) / base_cost * 100) if base_cost else None
-        cost_change_pmpm = observed_cost_pmpm - base_cost
-        utilization_change = observed_utilization - base_util
+        cost_change_pct = (
+            None if base_cost is None or base_cost <= 0 or cost_change_pmpm is None
+            else cost_change_pmpm / base_cost * 100
+        )
         return {
             "baseline_utilization_per_1k": base_util,
             "observed_utilization_per_1k": observed_utilization,
@@ -1056,14 +1066,12 @@ def enhance_comparisons_with_baseline(
     if not baseline:
         print(f"WARNING: No baseline found for tenant {tenant_id}")
         # Still return a structure with 0 values so UI can display them
-        observed_utilization = float(observation_metrics.get("utilization_per_1k", 0.0) or 0.0)
-        observed_cost_pmpm = float(
-            observation_metrics.get("cost_pmpm", 0.0) or 
-            observation_metrics.get("cost_per_member", 0.0) or 
-            observation_metrics.get("paid_pmpm", 0.0) or
-            observation_metrics.get("allowed_pmpm", 0.0) or
-            0.0
-        )
+        from uepi_common.metrics.measurement_integrity import as_optional_float, first_present, paid_rate
+        observed_utilization = as_optional_float(first_present(
+            observation_metrics.get("utilization_per_1k"),
+            observation_metrics.get("util_rate_per_1k"),
+        ))
+        observed_cost_pmpm = paid_rate(observation_metrics)
         return {
             "baseline_utilization_per_1k": None,
             "observed_utilization_per_1k": observed_utilization,
@@ -1095,24 +1103,19 @@ def enhance_comparisons_with_baseline(
         
         if is_policy_specific:
             # Policy-specific baseline: use target metrics
-            baseline_utilization = baseline_metrics.get("util_rate_target_per_1000_mm")
-            baseline_cost_pmpm = baseline_metrics.get("paid_pmpm_target") or baseline_metrics.get("allowed_pmpm_target")
-            
-            # Fallback to alternative field names
-            if baseline_utilization is None:
-                baseline_utilization = baseline_metrics.get("utilization_per_1k")
-            if baseline_cost_pmpm is None:
-                baseline_cost_pmpm = baseline_metrics.get("cost_pmpm") or baseline_metrics.get("allowed_pmpm")
+            from uepi_common.metrics.measurement_integrity import first_present, paid_rate
+            baseline_utilization = first_present(
+                baseline_metrics.get("util_rate_target_per_1000_mm"),
+                baseline_metrics.get("utilization_per_1k"),
+            )
+            baseline_cost_pmpm = paid_rate(baseline_metrics)
         else:
-            # General baseline: use total metrics
-            baseline_utilization = baseline_metrics.get("util_rate_total_per_1000_mm")
-            baseline_cost_pmpm = baseline_metrics.get("allowed_pmpm_total")
-            
-            # Fallback to alternative field names
-            if baseline_utilization is None:
-                baseline_utilization = baseline_metrics.get("utilization_per_1k")
-            if baseline_cost_pmpm is None:
-                baseline_cost_pmpm = baseline_metrics.get("cost_pmpm") or baseline_metrics.get("allowed_pmpm")
+            from uepi_common.metrics.measurement_integrity import first_present, paid_rate
+            baseline_utilization = first_present(
+                baseline_metrics.get("util_rate_total_per_1000_mm"),
+                baseline_metrics.get("utilization_per_1k"),
+            )
+            baseline_cost_pmpm = paid_rate(baseline_metrics)
         
         # Get member months for context
         baseline_member_months = baseline_metrics.get("member_months") or baseline_metrics.get("policy_eligible_member_months")
@@ -1299,69 +1302,80 @@ def enhance_comparisons_with_predicted(
             (predicted_utilization_change / 100.0 if predicted_utilization_change != 0 else 0.0)
         )
         
-        # Get observed metrics
-        observed_utilization = float(observation_metrics.get("utilization_per_1k", 0.0) or 0.0)
-        observed_cost_pmpm = float(observation_metrics.get("cost_pmpm", 0.0) or observation_metrics.get("cost_per_member", 0.0) or 0.0)
-        observed_effect_size = float(observation_metrics.get("observed_effect_size", 0.0) or observation_metrics.get("effect_size", 0.0) or 0.0)
+        from uepi_common.metrics.measurement_integrity import as_optional_float, first_present, paid_rate
+        observed_utilization = as_optional_float(observation_metrics.get("utilization_per_1k"))
+        observed_cost_pmpm = paid_rate(observation_metrics)
+        observed_effect_size = as_optional_float(first_present(
+            observation_metrics.get("observed_effect_size"),
+            observation_metrics.get("effect_size"),
+        ))
         
-        # Get baseline for comparison
-        baseline_utilization = observation_metrics.get("baseline_utilization_per_1k")
-        baseline_cost_pmpm = observation_metrics.get("baseline_cost_pmpm")
+        baseline_utilization = as_optional_float(observation_metrics.get("baseline_utilization_per_1k"))
+        baseline_cost_pmpm = None
+        if observation_metrics.get("cost_pmpm_meaning") == "PAID" or observation_metrics.get("cost_identity") == "PAID":
+            baseline_cost_pmpm = as_optional_float(observation_metrics.get("baseline_cost_pmpm"))
         
-        if baseline_utilization is None:
+        if baseline_utilization is None or baseline_cost_pmpm is None:
             baseline_obj = get_latest_baseline(tenant_id)
             if baseline_obj:
                 baseline_metrics_dict = baseline_obj.get("baseline_metrics", {}) or baseline_obj.get("metrics", {})
-                baseline_utilization = baseline_metrics_dict.get("util_rate_total_per_1000_mm") or baseline_metrics_dict.get("utilization_per_1k", 0.0)
-                baseline_cost_pmpm = baseline_metrics_dict.get("allowed_pmpm_total") or baseline_metrics_dict.get("cost_pmpm", 0.0)
+                if baseline_utilization is None:
+                    baseline_utilization = as_optional_float(first_present(
+                        baseline_metrics_dict.get("util_rate_total_per_1000_mm"),
+                        baseline_metrics_dict.get("utilization_per_1k"),
+                    ))
+                if baseline_cost_pmpm is None:
+                    baseline_cost_pmpm = paid_rate(baseline_metrics_dict)
         
-        baseline_utilization = float(baseline_utilization or 0.0)
-        baseline_cost_pmpm = float(baseline_cost_pmpm or 0.0)
+        predicted_utilization = (
+            baseline_utilization + predicted_utilization_change
+            if baseline_utilization is not None and baseline_utilization > 0 and predicted_utilization_change is not None
+            else None
+        )
+        predicted_cost_pmpm = (
+            baseline_cost_pmpm + predicted_cost_change_pmpm
+            if baseline_cost_pmpm is not None and baseline_cost_pmpm > 0 and predicted_cost_change_pmpm is not None
+            else None
+        )
         
-        # Calculate predicted utilization and cost (predicted = baseline + predicted_change)
-        predicted_utilization = baseline_utilization + predicted_utilization_change if baseline_utilization > 0 else observed_utilization
-        predicted_cost_pmpm = baseline_cost_pmpm + predicted_cost_change_pmpm if baseline_cost_pmpm > 0 else observed_cost_pmpm
+        utilization_prediction_error = (
+            None if observed_utilization is None or predicted_utilization is None
+            else observed_utilization - predicted_utilization
+        )
+        cost_prediction_error = (
+            None if observed_cost_pmpm is None or predicted_cost_pmpm is None
+            else observed_cost_pmpm - predicted_cost_pmpm
+        )
+        effect_size_prediction_error = (
+            None if observed_effect_size is None or predicted_effect_size is None
+            else observed_effect_size - predicted_effect_size
+        )
         
-        # Calculate prediction errors
-        utilization_prediction_error = observed_utilization - predicted_utilization
-        cost_prediction_error = observed_cost_pmpm - predicted_cost_pmpm
-        effect_size_prediction_error = observed_effect_size - predicted_effect_size
+        utilization_prediction_error_pct = (
+            None if utilization_prediction_error is None or not predicted_utilization
+            else (utilization_prediction_error / abs(predicted_utilization)) * 100
+        )
+        cost_prediction_error_pct = (
+            None if cost_prediction_error is None or not predicted_cost_pmpm
+            else (cost_prediction_error / abs(predicted_cost_pmpm)) * 100
+        )
+        effect_size_prediction_error_pct = (
+            None if effect_size_prediction_error is None or not predicted_effect_size
+            else (effect_size_prediction_error / abs(predicted_effect_size)) * 100
+        )
         
-        # Calculate percentage errors
-        utilization_prediction_error_pct = 0.0
-        if predicted_utilization != 0:
-            utilization_prediction_error_pct = (utilization_prediction_error / abs(predicted_utilization)) * 100
+        def _accuracy(error_pct, predicted_level):
+            if error_pct is None or predicted_level is None or predicted_level <= 0:
+                return None
+            return max(0.0, min(100.0, 100.0 - min(abs(error_pct), 200.0)))
         
-        cost_prediction_error_pct = 0.0
-        if predicted_cost_pmpm != 0:
-            cost_prediction_error_pct = (cost_prediction_error / abs(predicted_cost_pmpm)) * 100
-        
-        effect_size_prediction_error_pct = 0.0
-        if predicted_effect_size != 0:
-            effect_size_prediction_error_pct = (effect_size_prediction_error / abs(predicted_effect_size)) * 100
-        
-        # Overall prediction accuracy (clamped to 0-100% range)
-        # Accuracy = 100% - absolute error percentage, but cap error at 200% to prevent negative accuracy
-        utilization_accuracy = 0.0
-        if predicted_utilization > 0:
-            error_pct = abs(utilization_prediction_error_pct)
-            utilization_accuracy = max(0.0, min(100.0, 100.0 - min(error_pct, 200.0)))
-        
-        cost_accuracy = 0.0
-        if predicted_cost_pmpm > 0:
-            error_pct = abs(cost_prediction_error_pct)
-            cost_accuracy = max(0.0, min(100.0, 100.0 - min(error_pct, 200.0)))
-        
-        if predicted_utilization > 0 and predicted_cost_pmpm > 0:
+        utilization_accuracy = _accuracy(utilization_prediction_error_pct, predicted_utilization)
+        cost_accuracy = _accuracy(cost_prediction_error_pct, predicted_cost_pmpm)
+        if utilization_accuracy is not None and cost_accuracy is not None:
             prediction_accuracy_pct = (utilization_accuracy + cost_accuracy) / 2.0
-        elif predicted_utilization > 0:
-            prediction_accuracy_pct = utilization_accuracy
-        elif predicted_cost_pmpm > 0:
-            prediction_accuracy_pct = cost_accuracy
         else:
-            prediction_accuracy_pct = 0.0
+            prediction_accuracy_pct = utilization_accuracy if utilization_accuracy is not None else cost_accuracy
         
-        # Unified measure framework: comparison_by_measure for same table (predicted | observed | error | error_pct)
         comparison_by_measure_pred = {
             "util_rate_target_per_1000_mm": {
                 "predicted": predicted_utilization,
@@ -1369,16 +1383,17 @@ def enhance_comparisons_with_predicted(
                 "error": utilization_prediction_error,
                 "error_pct": utilization_prediction_error_pct,
             },
-            "allowed_pmpm_target": {
+            "paid_pmpm_target": {
                 "predicted": predicted_cost_pmpm,
                 "observed": observed_cost_pmpm,
                 "error": cost_prediction_error,
                 "error_pct": cost_prediction_error_pct,
+                "cost_identity": "PAID",
             },
         }
         predicted_measures = {
             "util_rate_target_per_1000_mm": predicted_utilization,
-            "allowed_pmpm_target": predicted_cost_pmpm,
+            "paid_pmpm_target": predicted_cost_pmpm,
         }
         
         vs_predicted = {

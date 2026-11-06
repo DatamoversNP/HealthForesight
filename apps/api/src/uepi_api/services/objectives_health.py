@@ -142,6 +142,9 @@ def build_objectives_health_snapshot(
                     "status": _verdict_to_health(verdict_status),
                     "verdict": verdict_status,
                     "verdict_label": _verdict_display_label(verdict_status),
+                    "historical_verdict_status": latest.get("verdict_status"),
+                    "recomputed_verdict_status": verdict_status,
+                    "verdict_is_recomputed": True,
                     "utilization_change_pct": util_pct,
                     "cost_impact_pmpm": cost_pmpm,
                     "confidence_pct": vs_p.get("prediction_accuracy_pct"),
@@ -283,7 +286,11 @@ def build_objectives_health_snapshot(
         "policy_rows": policy_rows,
         "strategic": strategic,
         "stability": {
-            "status_source": "compute_verdict(latest_observation.comparisons) — same as /policy-verdicts",
+            "status_source": (
+                "policy_rows.verdict is recomputed for this response and is not the stored "
+                "observation column. historical_verdict_status is the stored value. "
+                "Same recomputation as /policy-verdicts."
+            ),
             "forecast_source": "persisted policy_predicted_impacts (list_latest)",
             "never_uses": [
                 "client N+1 predicted-impact probes",

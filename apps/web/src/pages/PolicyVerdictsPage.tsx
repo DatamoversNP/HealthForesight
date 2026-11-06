@@ -40,6 +40,7 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import RefreshIcon from '@mui/icons-material/Refresh'
 import LightbulbIcon from '@mui/icons-material/Lightbulb'
 import { format, parseISO } from 'date-fns'
+import { costLabel } from '../utils/measurementIntegrity'
 
 function VerdictChip({ row }: { row: PolicyVerdictRow }) {
   const isBackfire = row.verdict === 'BACKFIRE'
@@ -243,7 +244,7 @@ export default function PolicyVerdictsPage() {
                   <TableCell><strong>Effective</strong></TableCell>
                   <TableCell><strong>Through</strong></TableCell>
                   <TableCell><strong>Verdict</strong></TableCell>
-                  <TableCell align="right"><strong>Cost impact (PMPM)</strong></TableCell>
+                  <TableCell align="right"><strong>{costLabel(undefined)}</strong></TableCell>
                   <TableCell align="right"><strong>Cost %</strong></TableCell>
                   <TableCell align="right"><strong>Confidence</strong></TableCell>
                   <TableCell><strong>Reason</strong></TableCell>
@@ -356,7 +357,7 @@ export default function PolicyVerdictsPage() {
               <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr 1fr' }, gap: 2 }}>
                 <Paper variant="outlined" sx={{ p: 2 }}>
                   <Typography variant="caption" color="text.secondary">
-                    Cost impact (PMPM)
+                    {costLabel(undefined)}
                   </Typography>
                   <Typography variant="h6">
                     {evidenceRow.savings_or_cost_impact_pmpm != null

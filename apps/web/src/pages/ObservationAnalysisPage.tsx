@@ -934,7 +934,7 @@ export default function ObservationAnalysisPage() {
             </Typography>
             <Grid container spacing={3} sx={{ mt: 1 }}>
               <Grid item xs={12} md={6}>
-                <Typography variant="subtitle2" gutterBottom>Utilization (per 1K) vs Through date</Typography>
+                <Typography variant="subtitle2" gutterBottom>Claim lines per 1,000 claimants (not enrolled utilization) vs through date</Typography>
                 <ResponsiveContainer width="100%" height={250}>
                   <LineChart data={observations
                     .sort((a, b) => new Date(a.observation_period_end || a.computed_at).getTime() - 
@@ -957,7 +957,7 @@ export default function ObservationAnalysisPage() {
                 </ResponsiveContainer>
               </Grid>
               <Grid item xs={12} md={6}>
-                <Typography variant="subtitle2" gutterBottom>Cost (PMPM) vs Through date</Typography>
+                <Typography variant="subtitle2" gutterBottom>Paid $ / claimant-month (not enrolled PMPM) vs through date</Typography>
                 <ResponsiveContainer width="100%" height={250}>
                   <LineChart data={observations
                     .sort((a, b) => new Date(a.observation_period_end || a.computed_at).getTime() - 
@@ -1089,14 +1089,14 @@ export default function ObservationAnalysisPage() {
                         </Box>
                       </Grid>
                     )}
-                    {observation.metrics.utilization_per_1k && (
+                    {observation.metrics.utilization_per_1k != null && (
                       <Grid item xs={12} sm={6} md={3}>
                         <Box>
                           <Typography variant="caption" color="text.secondary">
-                            Observed Utilization
+                            Claim lines per 1,000 claimants (not enrolled utilization)
                           </Typography>
                           <Typography variant="h6">
-                            {observation.metrics.utilization_per_1k.toFixed(1)} per 1K
+                            {Number(observation.metrics.utilization_per_1k).toFixed(1)}
                           </Typography>
                         </Box>
                       </Grid>
@@ -1305,7 +1305,7 @@ export default function ObservationAnalysisPage() {
                       <Grid container spacing={3}>
                         <Grid item xs={12} md={6}>
                           <Typography variant="subtitle2" gutterBottom>
-                            Utilization (per 1K) by period end
+                            Claim lines per 1,000 claimants (not enrolled utilization) by period end
                           </Typography>
                           <Box sx={{ width: '100%', height: 260 }}>
                             <ResponsiveContainer width="100%" height="100%">
@@ -1370,7 +1370,7 @@ export default function ObservationAnalysisPage() {
                         </Grid>
                         <Grid item xs={12} md={6}>
                           <Typography variant="subtitle2" gutterBottom>
-                            Cost (PMPM) by period end
+                            Paid $ / claimant-month (not enrolled PMPM) by period end
                           </Typography>
                           <Box sx={{ width: '100%', height: 260 }}>
                             <ResponsiveContainer width="100%" height="100%">
@@ -1574,7 +1574,7 @@ export default function ObservationAnalysisPage() {
                             mb: 1.5,
                             display: 'block'
                           }}>
-                            Utilization (per 1K)
+                            Claim lines per 1,000 claimants (not enrolled utilization)
                           </Typography>
                           <Typography variant="h3" sx={{ 
                             fontWeight: 700,
@@ -1733,7 +1733,7 @@ export default function ObservationAnalysisPage() {
                                 fontWeight: 500,
                                 fontSize: '0.875rem'
                               }}>
-                                Utilization (per 1K)
+                                Claim lines per 1,000 claimants (not enrolled utilization)
                               </Typography>
                               <Typography variant="h6" fontWeight={600} sx={{ 
                                 color: '#0F172A',
@@ -2150,7 +2150,7 @@ export default function ObservationAnalysisPage() {
                                       fontWeight: 500,
                                       fontSize: '0.875rem'
                                     }}>
-                                      Baseline (PMPM)
+                                      Baseline paid $ / claimant-month (not enrolled PMPM)
                                     </Typography>
                                     <Typography variant="h6" fontWeight={600} sx={{ 
                                       color: '#0F172A',
@@ -2179,7 +2179,7 @@ export default function ObservationAnalysisPage() {
                                       fontWeight: 500,
                                       fontSize: '0.875rem'
                                     }}>
-                                      Observed (PMPM)
+                                      Observed paid $ / claimant-month (not enrolled PMPM)
                                     </Typography>
                                     <Typography variant="h6" fontWeight={600} sx={{ 
                                       color: '#2EC4C6',
@@ -2230,7 +2230,7 @@ export default function ObservationAnalysisPage() {
                                     ? '#1B5E20'
                                     : '#B71C1C'
                                 }}>
-                                  Change (PMPM)
+                                  Change in paid $ / claimant-month (not enrolled PMPM)
                                 </Typography>
                               </Box>
                               <Typography variant="h6" fontWeight={700} sx={{ 
@@ -2462,7 +2462,7 @@ export default function ObservationAnalysisPage() {
                                       fontWeight: 500,
                                       fontSize: '0.875rem'
                                     }}>
-                                      Policy Baseline (PMPM)
+                                      Policy Baseline paid $ / claimant-month (not enrolled PMPM)
                                     </Typography>
                                     <Typography variant="h6" fontWeight={600} sx={{ 
                                       color: '#0F172A',
@@ -2491,7 +2491,7 @@ export default function ObservationAnalysisPage() {
                                       fontWeight: 500,
                                       fontSize: '0.875rem'
                                     }}>
-                                      Observed (PMPM)
+                                      Observed paid $ / claimant-month (not enrolled PMPM)
                                     </Typography>
                                     <Typography variant="h6" fontWeight={600} sx={{ 
                                       color: '#2EC4C6',
@@ -2542,7 +2542,7 @@ export default function ObservationAnalysisPage() {
                                     ? '#1B5E20'
                                     : '#B71C1C'
                                 }}>
-                                  Change (PMPM)
+                                  Change in paid $ / claimant-month (not enrolled PMPM)
                                 </Typography>
                               </Box>
                               <Typography variant="h6" fontWeight={700} sx={{ 
@@ -2887,7 +2887,7 @@ export default function ObservationAnalysisPage() {
                                     fontSize: '0.875rem',
                                     mb: 1
                                   }}>
-                                    Predicted (PMPM)
+                                    Predicted paid $ / claimant-month (not enrolled PMPM)
                                   </Typography>
                                   <Typography variant="h6" fontWeight={600} sx={{ 
                                     color: '#0F172A',
@@ -2915,7 +2915,7 @@ export default function ObservationAnalysisPage() {
                                     fontSize: '0.875rem',
                                     mb: 1
                                   }}>
-                                    Observed (PMPM)
+                                    Observed paid $ / claimant-month (not enrolled PMPM)
                                   </Typography>
                                   <Typography variant="h6" fontWeight={600} sx={{ 
                                     color: '#2EC4C6',
@@ -2998,7 +2998,7 @@ export default function ObservationAnalysisPage() {
                               fontSize: '0.875rem',
                               mb: 0.5
                             }}>
-                              Predicted Change (PMPM)
+                              Predicted Change in paid $ / claimant-month (not enrolled PMPM)
                             </Typography>
                             <Typography variant="body1" fontWeight={600} sx={{ 
                               color: '#0F172A',
@@ -3183,7 +3183,7 @@ export default function ObservationAnalysisPage() {
                               }))}>
                                 <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
                                 <XAxis dataKey="month" label={{ value: 'Month', position: 'insideBottom', offset: -5 }} stroke="#64748B" />
-                                <YAxis label={{ value: 'Utilization per 1K', angle: -90, position: 'insideLeft' }} stroke="#64748B" />
+                                <YAxis label={{ value: 'Claim lines / 1,000 claimants', angle: -90, position: 'insideLeft' }} stroke="#64748B" />
                                 <Tooltip 
                                   contentStyle={{ 
                                     backgroundColor: '#FFFFFF', 
@@ -4544,7 +4544,7 @@ export default function ObservationAnalysisPage() {
                               fontSize: '1rem',
                               letterSpacing: '-0.01em'
                             }}>
-                              Forecast Projection ({forecastMetricType === 'utilization' ? 'per 1K' : 'PMPM'})
+                              Forecast Projection ({forecastMetricType === 'utilization' ? 'claim lines / 1,000 claimants (not enrolled utilization)' : 'paid $ / claimant-month (not enrolled PMPM)'})
                             </Typography>
                             <ResponsiveContainer width="100%" height={400}>
                               <LineChart data={forecastData.forecast_values.map((fv: any) => ({

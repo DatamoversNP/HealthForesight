@@ -1330,14 +1330,8 @@ async def generate_policy_predicted_impact(
                 baseline_metrics_dict = baseline.get("baseline_metrics", {}) or baseline.get("metrics", {})
                 if baseline_metrics_dict:
                     # Map baseline metric names to predicted impact expected names
-                    baseline_metrics = {
-                        "utilization_per_1k": baseline_metrics_dict.get("util_rate_target_per_1000_mm") or baseline_metrics_dict.get("util_rate_total_per_1000_mm") or 0.0,
-                        "cost_pmpm": baseline_metrics_dict.get("allowed_pmpm_target") or baseline_metrics_dict.get("allowed_pmpm_total") or 0.0,
-                        "member_count": int(baseline_metrics_dict.get("unique_members", 0)),
-                        "member_months": baseline_metrics_dict.get("member_months", 0),
-                    }
-                    # Drop None only — keep zeros (0 is valid for member_count / utilization)
-                    baseline_metrics = {k: v for k, v in baseline_metrics.items() if v is not None}
+                    from uepi_common.metrics.measurement_integrity import prediction_baseline_inputs
+                    baseline_metrics = prediction_baseline_inputs(baseline_metrics_dict)
                     if not baseline_metrics:
                         baseline_metrics = None
         except Exception as e:
@@ -1502,12 +1496,8 @@ def generate_all_policies_predicted_impact(
                         baseline_metrics_dict = policy_baseline.get("baseline_metrics", {}) or policy_baseline.get("metrics", {})
                         if baseline_metrics_dict:
                             # Map to format expected by predicted impact generator
-                            baseline_metrics = {
-                                "utilization_per_1k": baseline_metrics_dict.get("util_rate_target_per_1000_mm") or baseline_metrics_dict.get("util_rate_total_per_1000_mm") or 0.0,
-                                "cost_pmpm": baseline_metrics_dict.get("allowed_pmpm_target") or baseline_metrics_dict.get("allowed_pmpm_total") or 0.0,
-                                "member_count": _safe_int(baseline_metrics_dict.get("unique_members"), 0),
-                                "member_months": _safe_int(baseline_metrics_dict.get("member_months"), 0),
-                            }
+                            from uepi_common.metrics.measurement_integrity import prediction_baseline_inputs
+                            baseline_metrics = prediction_baseline_inputs(baseline_metrics_dict)
                 except Exception as e:
                     print(f"Warning: Could not load baseline metrics for policy {policy.id}: {e}")
                 

@@ -74,6 +74,8 @@ interface ObjectiveRow {
   policyEffectiveDate?: string | null
   latestObservationPeriodEnd?: string | null
   verdict?: string
+  historicalVerdictStatus?: string | null
+  verdictIsRecomputed?: boolean
 }
 
 type StrategicObjectiveKey = 'A' | 'B' | 'C' | 'D' | 'E' | 'F'
@@ -146,6 +148,8 @@ export default function ObjectivesHealthPage() {
       policyEffectiveDate: r.policy_effective_date ?? null,
       latestObservationPeriodEnd: r.latest_observation_period_end ?? null,
       verdict: r.verdict,
+      historicalVerdictStatus: r.historical_verdict_status,
+      verdictIsRecomputed: r.verdict_is_recomputed,
     }))
     setObjectives(rows)
     const s = snap.summary || {}
@@ -245,7 +249,7 @@ export default function ObjectivesHealthPage() {
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
           Track how objectives A–F are met across the policy portfolio. Drill down to see which policies meet each
-          objective. Status uses the same verdict engine as Policy Verdicts.
+          objective. The status chip is a screen recomputation. It is not the stored observation verdict.
         </Typography>
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', alignItems: 'center', mb: 2 }}>
           <Chip
@@ -551,6 +555,11 @@ export default function ObjectivesHealthPage() {
                   <TableCell>{formatPolicyTypeLabel(row.policyType)}</TableCell>
                   <TableCell>
                     <StatusChip status={row.status} />
+                    {row.verdictIsRecomputed && (
+                      <Typography variant="caption" color="text.secondary" display="block">
+                        Screen value. Stored status: {row.historicalVerdictStatus || 'not recorded'}
+                      </Typography>
+                    )}
                   </TableCell>
                   <TableCell align="right">
                     {row.utilizationChangePct == null ? '—' : Number(row.utilizationChangePct).toFixed(1)}

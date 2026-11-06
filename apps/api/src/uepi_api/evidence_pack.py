@@ -56,9 +56,12 @@ def build_evidence_pack(tenant_id: UUID, observation_id: str) -> Optional[Dict[s
 
     verdict = {
         "verdict_status": obs.get("verdict_status"),
+        "historical_verdict_status": obs.get("verdict_status"),
+        "verdict_is_recomputed": False,
         "verdict_reason": obs.get("verdict_reason"),
         "recommendation": obs.get("recommendation"),
         "verdict_rule_version": obs.get("verdict_rule_version"),
+        "note": "Evidence pack verdict_status is the stored historical column, not a screen recomputation.",
     }
 
     # One-page executive summary: savings estimate, confidence, reason if wrong, decision recommendation

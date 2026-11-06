@@ -131,9 +131,9 @@ export default function ScenarioComparison({
               <YAxis label={{ value: 'Percent Change (%)', angle: -90, position: 'insideLeft' }} />
               <Tooltip formatter={(value: number) => formatPercent(value)} />
               <Legend />
-              <Bar dataKey="Utilization Change (%)" fill="#8884d8" name="Utilization per 1k" />
+              <Bar dataKey="Utilization Change (%)" fill="#8884d8" name="Claim lines per 1,000 claimants (not enrolled utilization)" />
               <Bar dataKey="Allowed PMPM Change (%)" fill="#82ca9d" name="Allowed $ / claimant-month (not enrolled PMPM)" />
-              <Bar dataKey="Paid PMPM Change (%)" fill="#ffc658" name="Paid PMPM" />
+              <Bar dataKey="Paid PMPM Change (%)" fill="#ffc658" name="Paid $ / claimant-month (not enrolled PMPM)" />
             </BarChart>
           </ResponsiveContainer>
         </CardContent>
@@ -158,7 +158,7 @@ export default function ScenarioComparison({
                   <TableCell><strong>Scenario</strong></TableCell>
                   <TableCell align="right"><strong>Utilization Change (%)</strong></TableCell>
                   <TableCell align="right"><strong>Allowed $ / claimant-month change (%)</strong></TableCell>
-                  <TableCell align="right"><strong>Paid PMPM Change (%)</strong></TableCell>
+                  <TableCell align="right"><strong>Paid $ / claimant-month change (not enrolled PMPM)</strong></TableCell>
                   <TableCell align="right"><strong>Baseline allowed $ / claimant-month</strong></TableCell>
                   <TableCell align="right"><strong>Projected allowed $ / claimant-month</strong></TableCell>
                   <TableCell align="right"><strong>Confidence</strong></TableCell>

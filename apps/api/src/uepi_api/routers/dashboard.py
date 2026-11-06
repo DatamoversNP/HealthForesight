@@ -190,22 +190,28 @@ async def get_dashboard_summary(
             baseline = get_latest_baseline(tenant_id, policy_id=None)
             if baseline:
                 bm = baseline.get("baseline_metrics") or baseline.get("metrics") or {}
-                util = (
-                    bm.get("util_rate_total_per_1000_mm")
-                    or bm.get("util_rate_target_per_1000_mm")
-                    or bm.get("utilization_per_1k")
+                from uepi_common.metrics.measurement_integrity import (
+                    allowed_rate,
+                    as_optional_float,
+                    first_present,
+                    paid_rate,
                 )
-                cost = (
-                    bm.get("allowed_pmpm_total")
-                    or bm.get("paid_pmpm_total")
-                    or bm.get("allowed_pmpm_target")
-                    or bm.get("paid_pmpm_target")
-                    or bm.get("cost_pmpm")
-                )
-                if util is not None or cost is not None:
+                util = as_optional_float(first_present(
+                    bm.get("util_rate_total_per_1000_mm"),
+                    bm.get("util_rate_target_per_1000_mm"),
+                    bm.get("utilization_per_1k"),
+                ))
+                paid = paid_rate(bm)
+                allowed = allowed_rate(bm)
+                if util is not None or paid is not None or allowed is not None:
                     general_baseline = {
-                        "utilization_per_1k": round(float(util or 0), 2),
-                        "cost_pmpm": round(float(cost or 0), 2),
+                        "utilization_per_1k": None if util is None else round(util, 2),
+                        "paid_pmpm": None if paid is None else round(paid, 2),
+                        "allowed_pmpm": None if allowed is None else round(allowed, 2),
+                        "cost_pmpm": None if paid is None else round(paid, 2),
+                        "cost_pmpm_meaning": None if paid is None else "PAID",
+                        "denominator_basis": bm.get("denominator_basis") or "CLAIMANT_MONTHS",
+                        "enrolled_rate_status": bm.get("enrolled_rate_status") or "NOT_MEASURABLE",
                         "member_months": bm.get("member_months"),
                         "unique_members": bm.get("unique_members"),
                         "window_start": baseline.get("window_start_date"),

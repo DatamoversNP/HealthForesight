@@ -126,3 +126,79 @@ def presents_as_enrolled(label: str) -> bool:
     if "not enrolled" in lowered:
         return False
     return "member-month" in lowered or "pmpm" in lowered
+
+
+def first_present(*values: Any) -> Any:
+    """First value that is present. Zero is present. None and blank are not."""
+    for value in values:
+        if value is None or value == "":
+            continue
+        return value
+    return None
+
+
+def as_optional_float(value: Any) -> Optional[float]:
+    if value is None or value == "":
+        return None
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def paid_rate(metrics: Optional[Dict[str, Any]]) -> Optional[float]:
+    """Paid dollars only. Allowed dollars are never a substitute."""
+    if not isinstance(metrics, dict):
+        return None
+    paid = first_present(
+        metrics.get("paid_pmpm"),
+        metrics.get("paid_pmpm_target"),
+        metrics.get("paid_pmpm_total"),
+    )
+    if paid is None and metrics.get("cost_pmpm_meaning") != "ALLOWED":
+        paid = first_present(metrics.get("cost_pmpm"), metrics.get("cost_per_member"))
+    return as_optional_float(paid)
+
+
+def allowed_rate(metrics: Optional[Dict[str, Any]]) -> Optional[float]:
+    if not isinstance(metrics, dict):
+        return None
+    if metrics.get("cost_pmpm_meaning") == "ALLOWED":
+        allowed = first_present(metrics.get("cost_pmpm"), metrics.get("allowed_pmpm"))
+    else:
+        allowed = None
+    allowed = first_present(
+        metrics.get("allowed_pmpm"),
+        metrics.get("allowed_pmpm_target"),
+        metrics.get("allowed_pmpm_total"),
+        allowed,
+    )
+    return as_optional_float(allowed)
+
+
+def prediction_baseline_inputs(baseline_metrics: Optional[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
+    """Inputs for the prediction generator. Missing rates stay missing. Allowed is not paid."""
+    if not isinstance(baseline_metrics, dict) or not baseline_metrics:
+        return None
+    util = as_optional_float(first_present(
+        baseline_metrics.get("util_rate_target_per_1000_mm"),
+        baseline_metrics.get("util_rate_total_per_1000_mm"),
+        baseline_metrics.get("utilization_per_1k"),
+    ))
+    paid = paid_rate(baseline_metrics)
+    allowed = allowed_rate(baseline_metrics)
+    unique = baseline_metrics.get("unique_members")
+    member_months = as_optional_float(baseline_metrics.get("member_months"))
+    out: Dict[str, Any] = {}
+    if util is not None:
+        out["utilization_per_1k"] = util
+    if paid is not None:
+        out["cost_pmpm"] = paid
+        out["cost_pmpm_meaning"] = "PAID"
+    if allowed is not None:
+        out["allowed_pmpm"] = allowed
+    if unique not in (None, "", 0):
+        out["member_count"] = int(unique)
+    if member_months not in (None, 0):
+        out["member_months"] = member_months
+    return out or None

@@ -31,6 +31,7 @@ def reconcile_policy_version(
     observation_verdict: Optional[str],
     causal_status: str,
     causal_limitations: Optional[List[str]] = None,
+    recomputed_verdict_status: Optional[str] = None,
 ) -> Dict[str, Any]:
     """Single policy-version reconciliation explanation."""
     readiness = compute_policy_readiness(
@@ -107,13 +108,14 @@ def reconcile_policy_version(
         if observation_verdict == "INCONCLUSIVE":
             verdict_state = "INCONCLUSIVE"
             verdict_explanation = (
-                "Verdict computed but inconclusive — evidence insufficient for ON_TRACK/AT_RISK/BACKFIRE."
+                "Stored historical verdict is INCONCLUSIVE. "
+                "This readiness flag uses the stored status, not a screen recomputation."
             )
         else:
             verdict_state = "READY"
             verdict_explanation = (
-                f"Verdict ready from observation comparisons (status={observation_verdict}); "
-                f"aligned with Objectives Health / Policy Verdicts calculation ({OH_CALC_VERSION} / compute_verdict)."
+                f"Stored historical verdict is {observation_verdict}. "
+                "This readiness flag uses the stored status, not a screen recomputation."
             )
     elif has_forecast and not has_observation:
         verdict_state = "LIMITED"
@@ -124,6 +126,12 @@ def reconcile_policy_version(
     else:
         verdict_state = "INCONCLUSIVE"
         verdict_explanation = "Insufficient evidence for a policy impact verdict."
+    if recomputed_verdict_status is not None:
+        verdict_explanation += (
+            f" Screen recomputation is {recomputed_verdict_status}. "
+            f"Stored historical status remains {observation_verdict or 'not recorded'}. "
+            "The recomputed status is not the stored outcome."
+        )
 
     return {
         "gate_version": GATE_VERSION,
@@ -153,6 +161,12 @@ def reconcile_policy_version(
         "measurement_note": readiness["measurement_note"],
         "missing_for_full_lifecycle": readiness["missing_for_full_lifecycle"],
         "never_invent": True,
+        "verdict_distinction": {
+            "historical_verdict_status": observation_verdict,
+            "recomputed_verdict_status": recomputed_verdict_status,
+            "verdict_is_recomputed": False,
+            "note": "observation_verdict and verdict_state use the stored historical status.",
+        },
     }
 
 
@@ -188,7 +202,8 @@ def build_reconciliation_gate_for_tenant(
                 forecast_evidence_tier=(fc or {}).get("evidence_tier")
                 or (fc or {}).get("prediction_method"),
                 has_observation=obs is not None,
-                observation_verdict=(obs or {}).get("verdict"),
+                observation_verdict=(obs or {}).get("historical_verdict_status", (obs or {}).get("verdict_status")),
+                recomputed_verdict_status=(obs or {}).get("recomputed_verdict_status"),
                 causal_status=causal_status,
             )
         )
@@ -260,14 +275,18 @@ def load_reconciliation_gate(tenant_id: UUID) -> Dict[str, Any]:
             continue
         comparisons = obs.get("comparisons") or {}
         behavioral = obs.get("behavioral_explanation") or {}
-        verdict_status, _, _ = compute_verdict(
+        stored_verdict = obs.get("verdict_status")
+        recomputed_verdict, _, _ = compute_verdict(
             comparisons,
             behavioral,
             required_endpoints=endpoint_contract_from_policy(policy_by_id.get(pid)),
         )
         observation_by_policy[pid] = {
             **obs,
-            "verdict": verdict_status,
+            "verdict": stored_verdict,
+            "historical_verdict_status": stored_verdict,
+            "recomputed_verdict_status": recomputed_verdict,
+            "verdict_is_recomputed": False,
         }
 
     return build_reconciliation_gate_for_tenant(

@@ -228,7 +228,7 @@ export default function PredictedImpactDisplay({ predictedImpact }: PredictedImp
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
                 <Typography variant="body2" color="text.secondary">
-                  Cost Change (PMPM)
+                  Paid $ / claimant-month change (not enrolled PMPM)
                 </Typography>
                 {metrics.cost_change_pmpm == null ? null : metrics.cost_change_pmpm >= 0 ? (
                   <TrendingUpIcon color="error" fontSize="small" />

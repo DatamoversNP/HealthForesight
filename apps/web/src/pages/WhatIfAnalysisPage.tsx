@@ -1624,7 +1624,7 @@ export default function WhatIfAnalysisPage() {
                   <Grid item xs={12} sm={6} md={4}>
                     <Paper sx={{ p: 2, textAlign: 'center' }}>
                       <Typography variant="body2" color="text.secondary">
-                        Utilization per 1k
+                        Claim lines per 1,000 claimants (not enrolled utilization)
                       </Typography>
                       <Typography variant="h5" color={scenarioResult.impact_metrics.percent_changes.utilization_per_1k < 0 ? 'success.main' : 'error.main'}>
                         {formatPercent(scenarioResult.impact_metrics.percent_changes.utilization_per_1k)}
@@ -1650,7 +1650,7 @@ export default function WhatIfAnalysisPage() {
                   <Grid item xs={12} sm={6} md={4}>
                     <Paper sx={{ p: 2, textAlign: 'center' }}>
                       <Typography variant="body2" color="text.secondary">
-                        Paid PMPM
+                        Paid $ / claimant-month (not enrolled PMPM)
                       </Typography>
                       <Typography variant="h5" color={scenarioResult.impact_metrics.percent_changes.paid_pmpm < 0 ? 'success.main' : 'error.main'}>
                         {formatPercent(scenarioResult.impact_metrics.percent_changes.paid_pmpm)}
@@ -1783,7 +1783,7 @@ export default function WhatIfAnalysisPage() {
                         <Table size="small">
                           <TableBody>
                             <TableRow>
-                              <TableCell>Utilization per 1k</TableCell>
+                              <TableCell>Claim lines per 1,000 claimants (not enrolled utilization)</TableCell>
                               <TableCell align="right">
                                 {scenarioResult.impact_metrics.risk_analysis.worst_case.utilization_per_1k.toFixed(2)}
                                 {' '}
@@ -1814,7 +1814,7 @@ export default function WhatIfAnalysisPage() {
                         <Table size="small">
                           <TableBody>
                             <TableRow>
-                              <TableCell>Utilization per 1k</TableCell>
+                              <TableCell>Claim lines per 1,000 claimants (not enrolled utilization)</TableCell>
                               <TableCell align="right">
                                 {scenarioResult.impact_metrics.risk_analysis.best_case.utilization_per_1k.toFixed(2)}
                                 {' '}
@@ -1879,7 +1879,7 @@ export default function WhatIfAnalysisPage() {
                     </TableHead>
                     <TableBody>
                       <TableRow>
-                        <TableCell>Utilization per 1k</TableCell>
+                        <TableCell>Claim lines per 1,000 claimants (not enrolled utilization)</TableCell>
                         <TableCell align="right">{scenarioResult.baseline_metrics.utilization_per_1k.toFixed(2)}</TableCell>
                         <TableCell align="right">{scenarioResult.projected_metrics.utilization_per_1k.toFixed(2)}</TableCell>
                         <TableCell align="right">{scenarioResult.confidence_intervals.utilization_per_1k[0].toFixed(2)}</TableCell>
@@ -1893,7 +1893,7 @@ export default function WhatIfAnalysisPage() {
                         <TableCell align="right">{formatCurrency(scenarioResult.confidence_intervals.allowed_pmpm[1])}</TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell>Paid PMPM</TableCell>
+                        <TableCell>Paid $ / claimant-month (not enrolled PMPM)</TableCell>
                         <TableCell align="right">{formatCurrency(scenarioResult.baseline_metrics.paid_pmpm)}</TableCell>
                         <TableCell align="right">{formatCurrency(scenarioResult.projected_metrics.paid_pmpm)}</TableCell>
                         <TableCell align="right">{formatCurrency(scenarioResult.confidence_intervals.paid_pmpm[0])}</TableCell>

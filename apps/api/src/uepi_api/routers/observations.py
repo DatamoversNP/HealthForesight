@@ -689,6 +689,8 @@ async def list_policy_verdicts_route(
             "verdict_is_recomputed": True,
             "verdict_label": _verdict_display_label(verdict_status),
             "savings_or_cost_impact_pmpm": cost_change_pmpm,
+            "denominator_basis": (latest.get("metrics") or {}).get("denominator_basis"),
+            "enrolled_rate_status": (latest.get("metrics") or {}).get("enrolled_rate_status"),
             "cost_impact_pct": cost_change_pct,
             "utilization_impact_pct": util_change_pct,
             "confidence_pct": confidence_pct,
