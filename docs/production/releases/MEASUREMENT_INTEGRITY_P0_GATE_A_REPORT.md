@@ -2,6 +2,8 @@
 
 Branch: `measurement-integrity-gate-a`
 
+Implementation commit: `c2336ac040aad7e876b6f2359840994c534ee474`
+
 Governing documents: `HEALTHFORESIGHT_FORMULA_DECISION_STANDARD_V2.md` and `MEASUREMENT_INTEGRITY_P0_IMPLEMENTATION_SPEC.md`.
 
 This commit implements Gate A in application code and synthetic tests. It does not deploy, does not connect to a database, does not change a schema, and does not write staging, production, or the December 4 demo.
