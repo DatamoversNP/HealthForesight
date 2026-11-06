@@ -87,6 +87,10 @@ def _list_policies(tenant_id: UUID, *, summary: bool = False) -> List[Dict[str, 
 def _policy_db_to_summary_dict(policy_db: PolicyDB) -> Dict[str, Any]:
     """Slim policy row for portfolio/dashboard endpoints — no workspace N+1 loads."""
     meta = policy_db.policy_metadata_json if policy_db.policy_metadata_json else {}
+    if not isinstance(meta, dict):
+        meta = {}
+    measurement = meta.get("measurement") if isinstance(meta.get("measurement"), dict) else {}
+    required_endpoints = meta.get("required_endpoints") or measurement.get("required_endpoints")
     return {
         "id": str(policy_db.id),
         "policy_id": str(policy_db.id),
@@ -95,7 +99,11 @@ def _policy_db_to_summary_dict(policy_db: PolicyDB) -> Dict[str, Any]:
         "policy_name": policy_db.name,
         "policy_type": policy_db.policy_type,
         "status": policy_db.status,
-        "effective_period": meta.get("effective_period") if isinstance(meta, dict) else None,
+        "effective_period": meta.get("effective_period"),
+        "required_endpoints": required_endpoints if isinstance(required_endpoints, list) else None,
+        "metadata": {
+            "required_endpoints": required_endpoints if isinstance(required_endpoints, list) else None,
+        },
     }
 
 

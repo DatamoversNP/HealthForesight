@@ -346,6 +346,44 @@ def test_authoritative_screens_do_not_use_bare_pmpm_headings():
             assert phrase not in text, f"{path.name} still contains {phrase}"
 
 
+def test_summary_policy_keeps_endpoint_contract_for_mounted_verdict_routes():
+    from types import SimpleNamespace
+    from uuid import UUID
+    from uepi_api.storage_policies import _policy_db_to_summary_dict
+    from uepi_api.verdict import endpoint_contract_from_policy
+
+    policy = SimpleNamespace(
+        id=UUID("11111111-1111-1111-1111-111111111111"),
+        tenant_id=UUID("00000000-0000-0000-0000-000000000001"),
+        name="Single endpoint",
+        policy_type="PRIOR_AUTH",
+        status="ACTIVE",
+        policy_metadata_json={
+            "measurement": {
+                "required_endpoints": [
+                    {"metric_id": "utilization_per_1k", "direction": "decrease"}
+                ]
+            }
+        },
+    )
+    summary = _policy_db_to_summary_dict(policy)
+    contract = endpoint_contract_from_policy(summary)
+    assert contract is not None
+    assert contract[0]["metric_id"] == "utilization_per_1k"
+
+
+def test_multi_policy_what_if_does_not_turn_missing_allowed_into_zero():
+    from pathlib import Path
+    root = Path(__file__).resolve().parents[2] / "web" / "src"
+    page = (root / "pages" / "WhatIfAnalysisPage.tsx").read_text()
+    module = (root / "pages" / "whatIfMultiPolicy.ts").read_text()
+    assert "impact.allowed_pmpm || 0" not in page
+    assert "baselineMetrics.allowed_pmpm || 0" not in page
+    assert "from './whatIfMultiPolicy'" in page
+    assert "sumAllOrUnavailable" in module
+    assert "allowed_pmpm: totalAllowedChange" in module
+
+
 def test_scorecard_does_not_invent_confidence():
     card = generate_scorecard_from_predicted_impact(
         uuid4(),

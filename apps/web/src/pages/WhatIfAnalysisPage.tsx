@@ -3,6 +3,7 @@
  * Allows users to adjust policy parameters and see projected impact
  */
 import React, { useState, useEffect, useRef } from 'react'
+import { combineMultiPolicyResults } from './whatIfMultiPolicy'
 import { Link as RouterLink, useSearchParams } from 'react-router-dom'
 import {
   Box,
@@ -426,86 +427,6 @@ export default function WhatIfAnalysisPage() {
     }
   }
 
-  // Combine results from multiple policies
-  const combineMultiPolicyResults = (policyResults: Array<{ policy: Policy; scenario: any }>, scenarioName: string): ScenarioResult => {
-    if (policyResults.length === 0) {
-      throw new Error('No policy results to combine')
-    }
-
-    // Aggregate baseline metrics (use first policy's baseline as reference)
-    const baselineMetrics = { ...policyResults[0].scenario.baseline_metrics }
-
-    // Aggregate projected metrics by summing impacts
-    let totalCostChangePMPM = 0
-    let totalUtilizationChange1K = 0
-    let totalCostChangeTotal = 0
-    let totalUtilizationChangePct = 0
-    let totalClaimCount = 0
-    let totalMemberMonths = baselineMetrics.member_months || 0
-    let totalConfidenceScore = 0
-    let totalAllowedPMPM = baselineMetrics.allowed_pmpm || 0
-    let totalPaidPMPM = baselineMetrics.paid_pmpm || 0
-
-    for (const { scenario } of policyResults) {
-      const impact = scenario.impact_metrics || {}
-      const projected = scenario.projected_metrics || {}
-      
-      totalCostChangePMPM += impact.allowed_pmpm || 0
-      totalUtilizationChange1K += impact.utilization_per_1k || 0
-      totalCostChangeTotal += impact.allowed_pmpm ? (impact.allowed_pmpm * (projected.member_months || totalMemberMonths)) : 0
-      totalUtilizationChangePct += impact.percent_changes?.utilization_per_1k || 0
-      totalClaimCount += projected.claim_count || 0
-      totalAllowedPMPM += impact.allowed_pmpm || 0
-      totalPaidPMPM += impact.paid_pmpm || 0
-      totalConfidenceScore += scenario.confidence_score || 0
-    }
-
-    // Average confidence score
-    const avgConfidenceScore = totalConfidenceScore / policyResults.length
-
-    // Calculate combined projected metrics
-    const projectedMetrics = {
-      utilization_per_1k: baselineMetrics.utilization_per_1k + totalUtilizationChange1K,
-      allowed_pmpm: baselineMetrics.allowed_pmpm + totalCostChangePMPM,
-      paid_pmpm: baselineMetrics.paid_pmpm + (totalPaidPMPM - totalCostChangePMPM),
-      claim_count: totalClaimCount || baselineMetrics.claim_count,
-      member_months: totalMemberMonths,
-    }
-
-    // Combined impact metrics
-    const impactMetrics = {
-      utilization_per_1k: totalUtilizationChange1K,
-      allowed_pmpm: totalCostChangePMPM,
-      paid_pmpm: totalPaidPMPM - totalCostChangePMPM,
-      claim_count: totalClaimCount - (baselineMetrics.claim_count || 0),
-      member_months: 0,
-      percent_changes: {
-        utilization_per_1k: totalUtilizationChangePct / policyResults.length,
-        allowed_pmpm: baselineMetrics.allowed_pmpm ? ((totalCostChangePMPM / baselineMetrics.allowed_pmpm) * 100) : 0,
-        paid_pmpm: baselineMetrics.paid_pmpm ? (((totalPaidPMPM - totalCostChangePMPM) / baselineMetrics.paid_pmpm) * 100) : 0,
-      },
-    }
-
-    return {
-      scenario_id: `multi-policy-${Date.now()}`,
-      scenario_name: scenarioName,
-      baseline_metrics: baselineMetrics,
-      projected_metrics: projectedMetrics,
-      impact_metrics: impactMetrics,
-      confidence_intervals: policyResults[0].scenario.confidence_intervals || {},
-      confidence_score: avgConfidenceScore,
-      sensitivity_analysis: {
-        policies_count: policyResults.length,
-        individual_impacts: policyResults.map(({ policy, scenario }) => ({
-          policy_id: policy.id,
-          policy_name: policy.name,
-          cost_impact: scenario.impact_metrics?.allowed_pmpm || 0,
-          utilization_impact: scenario.impact_metrics?.utilization_per_1k || 0,
-        })),
-      },
-    }
-  }
-
   // Scenario Accuracy Tracking Functions (Phase 7)
   const loadScenarioAccuracy = async (policyId?: string, scenarioAnalysisId?: string) => {
     try {
@@ -917,12 +838,19 @@ export default function WhatIfAnalysisPage() {
     }))
   }
 
-  const formatCurrency = (value: number) => {
+  const formatCurrency = (value: number | null | undefined) => {
+    if (value == null || Number.isNaN(value)) return 'Unavailable'
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 }).format(value)
   }
 
-  const formatPercent = (value: number) => {
+  const formatPercent = (value: number | null | undefined) => {
+    if (value == null || Number.isNaN(value)) return 'Unavailable'
     return `${value >= 0 ? '+' : ''}${value.toFixed(2)}%`
+  }
+
+  const formatFixed = (value: number | null | undefined) => {
+    if (value == null || Number.isNaN(value)) return 'Unavailable'
+    return value.toFixed(2)
   }
 
   return (
@@ -1531,13 +1459,14 @@ export default function WhatIfAnalysisPage() {
                       <Typography 
                         variant="h4" 
                         sx={{ 
-                          color: scenarioResult.confidence_score >= 80 ? 'success.light' :
+                          color: scenarioResult.confidence_score == null ? 'primary.contrastText' :
+                                 scenarioResult.confidence_score >= 80 ? 'success.light' :
                                  scenarioResult.confidence_score >= 60 ? 'warning.light' :
                                  scenarioResult.confidence_score >= 40 ? 'info.light' : 'error.light',
                           fontWeight: 600
                         }}
                       >
-                        {scenarioResult.confidence_score?.toFixed(0) || 0}%
+                        {scenarioResult.confidence_score == null ? 'Unavailable' : `${scenarioResult.confidence_score.toFixed(0)}%`}
                       </Typography>
                     </Box>
                   )}
@@ -1626,11 +1555,11 @@ export default function WhatIfAnalysisPage() {
                       <Typography variant="body2" color="text.secondary">
                         Claim lines per 1,000 claimants (not enrolled utilization)
                       </Typography>
-                      <Typography variant="h5" color={scenarioResult.impact_metrics.percent_changes.utilization_per_1k < 0 ? 'success.main' : 'error.main'}>
+                      <Typography variant="h5" color={scenarioResult.impact_metrics.percent_changes.utilization_per_1k == null ? 'text.secondary' : scenarioResult.impact_metrics.percent_changes.utilization_per_1k < 0 ? 'success.main' : 'error.main'}>
                         {formatPercent(scenarioResult.impact_metrics.percent_changes.utilization_per_1k)}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
-                        {scenarioResult.baseline_metrics.utilization_per_1k.toFixed(2)} → {scenarioResult.projected_metrics.utilization_per_1k.toFixed(2)}
+                        {formatFixed(scenarioResult.baseline_metrics.utilization_per_1k)} → {formatFixed(scenarioResult.projected_metrics.utilization_per_1k)}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -1639,7 +1568,7 @@ export default function WhatIfAnalysisPage() {
                       <Typography variant="body2" color="text.secondary">
                         Allowed $ / claimant-month (not enrolled PMPM)
                       </Typography>
-                      <Typography variant="h5" color={scenarioResult.impact_metrics.percent_changes.allowed_pmpm < 0 ? 'success.main' : 'error.main'}>
+                      <Typography variant="h5" color={scenarioResult.impact_metrics.percent_changes.allowed_pmpm == null ? 'text.secondary' : scenarioResult.impact_metrics.percent_changes.allowed_pmpm < 0 ? 'success.main' : 'error.main'}>
                         {formatPercent(scenarioResult.impact_metrics.percent_changes.allowed_pmpm)}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
@@ -1652,7 +1581,7 @@ export default function WhatIfAnalysisPage() {
                       <Typography variant="body2" color="text.secondary">
                         Paid $ / claimant-month (not enrolled PMPM)
                       </Typography>
-                      <Typography variant="h5" color={scenarioResult.impact_metrics.percent_changes.paid_pmpm < 0 ? 'success.main' : 'error.main'}>
+                      <Typography variant="h5" color={scenarioResult.impact_metrics.percent_changes.paid_pmpm == null ? 'text.secondary' : scenarioResult.impact_metrics.percent_changes.paid_pmpm < 0 ? 'success.main' : 'error.main'}>
                         {formatPercent(scenarioResult.impact_metrics.percent_changes.paid_pmpm)}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
@@ -1880,24 +1809,24 @@ export default function WhatIfAnalysisPage() {
                     <TableBody>
                       <TableRow>
                         <TableCell>Claim lines per 1,000 claimants (not enrolled utilization)</TableCell>
-                        <TableCell align="right">{scenarioResult.baseline_metrics.utilization_per_1k.toFixed(2)}</TableCell>
-                        <TableCell align="right">{scenarioResult.projected_metrics.utilization_per_1k.toFixed(2)}</TableCell>
-                        <TableCell align="right">{scenarioResult.confidence_intervals.utilization_per_1k[0].toFixed(2)}</TableCell>
-                        <TableCell align="right">{scenarioResult.confidence_intervals.utilization_per_1k[1].toFixed(2)}</TableCell>
+                        <TableCell align="right">{formatFixed(scenarioResult.baseline_metrics.utilization_per_1k)}</TableCell>
+                        <TableCell align="right">{formatFixed(scenarioResult.projected_metrics.utilization_per_1k)}</TableCell>
+                        <TableCell align="right">{formatFixed(scenarioResult.confidence_intervals?.utilization_per_1k?.[0])}</TableCell>
+                        <TableCell align="right">{formatFixed(scenarioResult.confidence_intervals?.utilization_per_1k?.[1])}</TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell>Allowed $ / claimant-month (not enrolled PMPM)</TableCell>
                         <TableCell align="right">{formatCurrency(scenarioResult.baseline_metrics.allowed_pmpm)}</TableCell>
                         <TableCell align="right">{formatCurrency(scenarioResult.projected_metrics.allowed_pmpm)}</TableCell>
-                        <TableCell align="right">{formatCurrency(scenarioResult.confidence_intervals.allowed_pmpm[0])}</TableCell>
-                        <TableCell align="right">{formatCurrency(scenarioResult.confidence_intervals.allowed_pmpm[1])}</TableCell>
+                        <TableCell align="right">{formatCurrency(scenarioResult.confidence_intervals?.allowed_pmpm?.[0])}</TableCell>
+                        <TableCell align="right">{formatCurrency(scenarioResult.confidence_intervals?.allowed_pmpm?.[1])}</TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell>Paid $ / claimant-month (not enrolled PMPM)</TableCell>
                         <TableCell align="right">{formatCurrency(scenarioResult.baseline_metrics.paid_pmpm)}</TableCell>
                         <TableCell align="right">{formatCurrency(scenarioResult.projected_metrics.paid_pmpm)}</TableCell>
-                        <TableCell align="right">{formatCurrency(scenarioResult.confidence_intervals.paid_pmpm[0])}</TableCell>
-                        <TableCell align="right">{formatCurrency(scenarioResult.confidence_intervals.paid_pmpm[1])}</TableCell>
+                        <TableCell align="right">{formatCurrency(scenarioResult.confidence_intervals?.paid_pmpm?.[0])}</TableCell>
+                        <TableCell align="right">{formatCurrency(scenarioResult.confidence_intervals?.paid_pmpm?.[1])}</TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>

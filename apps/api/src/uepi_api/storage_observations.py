@@ -330,6 +330,9 @@ _OBS_SUMMARY_METRIC_KEYS = (
     "member_months",
     "unique_members",
     "total_claims",
+    "denominator_basis",
+    "enrolled_rate_status",
+    "cost_pmpm_meaning",
 )
 
 
