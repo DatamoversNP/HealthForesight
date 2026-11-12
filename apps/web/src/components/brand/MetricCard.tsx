@@ -64,6 +64,10 @@ export default function MetricCard({
     <Card
       onClick={onClick}
       sx={{
+        height: '100%',
+        minHeight: 148,
+        display: 'flex',
+        flexDirection: 'column',
         cursor: onClick ? 'pointer' : 'default',
         transition: 'all 150ms cubic-bezier(0.4, 0, 0.2, 1)',
         '&:hover': onClick
@@ -74,8 +78,8 @@ export default function MetricCard({
           : {},
       }}
     >
-      <CardContent>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
+      <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1, minHeight: 36 }}>
           <Typography
             variant="body2"
             sx={{
@@ -84,6 +88,10 @@ export default function MetricCard({
               fontSize: '12px',
               textTransform: 'uppercase',
               letterSpacing: '0.05em',
+              display: '-webkit-box',
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
             }}
           >
             {label}
@@ -125,7 +133,7 @@ export default function MetricCard({
           )}
         </Box>
         {(trend || subtitle) && (
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1 }}>
+          <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1, mt: 'auto', pt: 1, minHeight: 40 }}>
             {trend && getTrendIcon()}
             {trendValue && (
               <Typography variant="caption" sx={{ color: healthForesightColors.neutral.mid }}>
@@ -133,7 +141,16 @@ export default function MetricCard({
               </Typography>
             )}
             {subtitle && (
-              <Typography variant="caption" sx={{ color: healthForesightColors.neutral.mid }}>
+              <Typography
+                variant="caption"
+                sx={{
+                  color: healthForesightColors.neutral.mid,
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden',
+                }}
+              >
                 {subtitle}
               </Typography>
             )}

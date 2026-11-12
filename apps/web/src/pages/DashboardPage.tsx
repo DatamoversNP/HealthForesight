@@ -55,6 +55,7 @@ import { healthForesightColors } from '../theme/healthForesightTheme'
 import { format } from 'date-fns'
 import { useRole } from '../contexts/RoleContext'
 import TourButton from '../components/tour/TourButton'
+import { costRollupPresentation, utilizationRollupPresentation } from './dashboardRollup'
 
 export default function DashboardPage() {
   const navigate = useNavigate()
@@ -65,8 +66,10 @@ export default function DashboardPage() {
 
   // ALL HOOKS MUST BE CALLED BEFORE ANY CONDITIONAL RETURNS
   const [loading, setLoading] = useState(true)
+  const [redirecting, setRedirecting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [dashboardData, setDashboardData] = useState<any>(null)
+  const [coveredLives, setCoveredLives] = useState<number | null>(null)
   const [policyPerformance, setPolicyPerformance] = useState<any[]>([])
   const [widgetConfig, setWidgetConfig] = useState<any[]>([])
   const [perfSearch, setPerfSearch] = useState('')
@@ -125,7 +128,7 @@ export default function DashboardPage() {
       setError(null)
 
       // Load dashboard summary and policy performance
-      const [summary, performance] = await Promise.all([
+      const [summary, performance, identity] = await Promise.all([
         apiClient.getDashboardSummary().catch((err) => {
           console.error('Error loading dashboard summary:', err)
           return null
@@ -134,7 +137,9 @@ export default function DashboardPage() {
           console.error('Error loading policy performance:', err)
           return []
         }),
+        apiClient.getSyntheticPayerIdentity().catch(() => null),
       ])
+      setCoveredLives(identity?.synthetic ? Number(identity.covered_lives) : null)
 
       console.log('Dashboard data loaded:', { 
         summary: summary ? 'present' : 'null', 
@@ -170,6 +175,7 @@ export default function DashboardPage() {
       OPS_CLINICAL: '/dashboard/ops-clinical',
     }
     if (currentPersona && personaRoutes[currentPersona]) {
+      setRedirecting(true)
       setLoading(false)
       return
     }
@@ -183,16 +189,34 @@ export default function DashboardPage() {
   // The routing logic above will navigate to persona-specific routes when persona is set
 
 
-  if (loading && !dashboardData) {
+  if ((loading && !dashboardData) || redirecting) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
-        <CircularProgress />
+        <Box sx={{ textAlign: 'center' }}>
+          <CircularProgress />
+          <Typography variant="body2" sx={{ mt: 2 }}>
+            {redirecting ? 'Opening your role dashboard' : 'Loading dashboard metrics'}
+          </Typography>
+        </Box>
+      </Box>
+    )
+  }
+
+  if (!dashboardData) {
+    return (
+      <Box>
+        <Typography variant="h4" sx={{ fontWeight: 600, mb: 2 }}>Executive Dashboard</Typography>
+        <Alert severity="info">
+          Dashboard metrics are unavailable. No measured cost or utilization rollup is shown.
+        </Alert>
       </Box>
     )
   }
 
   const summary = dashboardData?.summary || {}
   const metrics = dashboardData?.metrics || {}
+  const costRollup = costRollupPresentation(metrics)
+  const utilizationRollup = utilizationRollupPresentation(metrics)
   const riskIndicators = dashboardData?.risk_indicators || []
   const recentActivity = dashboardData?.recent_activity || []
 
@@ -201,14 +225,14 @@ export default function DashboardPage() {
     .slice(0, 5)
     .map((policy) => ({
       name: policy.policy_name?.substring(0, 20) || 'Policy',
-      cost: Math.abs(policy.avg_cost_impact || 0),
-      utilization: Math.abs(policy.avg_utilization_change_pct || 0),
+      cost: policy.avg_cost_impact == null ? null : Math.abs(policy.avg_cost_impact),
+      utilization: policy.avg_utilization_change_pct == null ? null : Math.abs(policy.avg_utilization_change_pct),
     }))
 
   // Prepare utilization trend data
   const utilizationTrendData = policyPerformance.slice(0, 6).map((policy, idx) => ({
     period: `P${idx + 1}`,
-    change: policy.avg_utilization_change_pct || 0,
+    change: policy.avg_utilization_change_pct,
   }))
 
   return (
@@ -298,49 +322,21 @@ export default function DashboardPage() {
         <Grid item xs={12} sm={6} md={3}>
           <MetricCard
             label="Total Cost Impact"
-            value={
-              metrics.total_cost_impact == null || !Number.isFinite(Number(metrics.total_cost_impact))
-                ? 'Unavailable'
-                : Math.abs(Number(metrics.total_cost_impact)).toLocaleString(undefined, {
-                    maximumFractionDigits: 2,
-                  })
-            }
-            unit={
-              metrics.total_cost_impact == null || !Number.isFinite(Number(metrics.total_cost_impact))
-                ? undefined
-                : metrics.total_cost_impact_unit === 'pmpm_sum'
-                  ? 'Σ ΔPMPM'
-                  : '$'
-            }
-            subtitle={
-              metrics.portfolio_financials_available === false
-                ? 'Policy Δ PMPM rollup — portfolio $ ROI unavailable'
-                : metrics.total_cost_impact_unit === 'pmpm_sum'
-                  ? 'Sum of latest-per-policy cost Δ PMPM'
-                  : metrics.total_cost_impact < 0
-                    ? 'Avg savings vs. pre-policy baseline'
-                    : 'Avg impact vs. pre-policy baseline'
-            }
-            color={
-              metrics.total_cost_impact == null || !Number.isFinite(Number(metrics.total_cost_impact))
-                ? undefined
-                : metrics.total_cost_impact < 0
-                  ? 'success'
-                  : 'warning'
-            }
+            value={costRollup.valueText}
+            unit={costRollup.unit}
+            subtitle={costRollup.subtitle}
+            trend={costRollup.trend}
+            color={costRollup.color}
           />
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
           <MetricCard
             label="Avg Utilization Change"
-            value={Math.abs(metrics.avg_utilization_change_pct || 0).toFixed(1)}
-            unit="%"
-            subtitle={
-              metrics.avg_utilization_change_pct < 0
-                ? 'Reduction vs. pre-policy baseline'
-                : 'Increase vs. pre-policy baseline'
-            }
-            color={metrics.avg_utilization_change_pct < 0 ? 'success' : 'error'}
+            value={utilizationRollup.valueText}
+            unit={utilizationRollup.unit}
+            subtitle={utilizationRollup.subtitle}
+            trend={utilizationRollup.trend}
+            color={utilizationRollup.color}
           />
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
@@ -378,13 +374,25 @@ export default function DashboardPage() {
                   </Typography>
                   <Grid container spacing={2}>
                     <Grid item xs={6}>
-                      <Typography variant="caption" color="text.secondary">Total Members</Typography>
+                      <Typography variant="caption" color="text.secondary">
+                        {coveredLives != null ? 'Members with claims' : 'Total Members'}
+                      </Typography>
                       <Typography variant="h6" sx={{ fontWeight: 600 }}>
                         {dashboardData.business_metrics?.member_count?.toLocaleString() || 'N/A'}
                       </Typography>
                     </Grid>
+                    {coveredLives != null && (
+                      <Grid item xs={6}>
+                        <Typography variant="caption" color="text.secondary">Covered lives</Typography>
+                        <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                          {coveredLives.toLocaleString()}
+                        </Typography>
+                      </Grid>
+                    )}
                     <Grid item xs={6}>
-                      <Typography variant="caption" color="text.secondary">Total Claims</Typography>
+                      <Typography variant="caption" color="text.secondary">
+                        {coveredLives != null ? 'Policy-event claim rows' : 'Total Claims'}
+                      </Typography>
                       <Typography variant="h6" sx={{ fontWeight: 600 }}>
                         {dashboardData.business_metrics?.total_claims_count?.toLocaleString() || 'N/A'}
                       </Typography>
@@ -480,7 +488,9 @@ export default function DashboardPage() {
                       </Typography>
                     </Grid>
                     <Grid item xs={6}>
-                      <Typography variant="caption" color="text.secondary">Members Impacted</Typography>
+                      <Typography variant="caption" color="text.secondary">
+                        {coveredLives != null ? 'Members with claims' : 'Members Impacted'}
+                      </Typography>
                       <Typography variant="h6" sx={{ fontWeight: 600 }}>
                         {dashboardData.business_metrics?.members_impacted?.toLocaleString() || 'N/A'}
                       </Typography>
@@ -693,22 +703,27 @@ export default function DashboardPage() {
                           </TableCell>
                           <TableCell align="right">
                             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 0.5 }}>
-                              {policy.avg_utilization_change_pct < 0 ? (
-                                <TrendingDownIcon color="success" fontSize="small" />
-                              ) : (
-                                <TrendingUpIcon color="error" fontSize="small" />
-                              )}
-                              {Math.abs(policy.avg_utilization_change_pct || 0).toFixed(1)}%
+                              {policy.avg_utilization_change_pct == null
+                                ? 'Unavailable'
+                                : (
+                                  <>
+                                    {policy.avg_utilization_change_pct < 0 ? (
+                                      <TrendingDownIcon color="success" fontSize="small" />
+                                    ) : policy.avg_utilization_change_pct > 0 ? (
+                                      <TrendingUpIcon color="error" fontSize="small" />
+                                    ) : null}
+                                    {Math.abs(policy.avg_utilization_change_pct).toFixed(1)}%
+                                  </>
+                                )}
                             </Box>
                           </TableCell>
                           <TableCell align="right">
-                            {policy.avg_cost_impact < 0 ? (
-                              <Typography variant="body2" color="success.main">
-                                ${Math.abs(policy.avg_cost_impact || 0).toLocaleString()}
-                              </Typography>
+                            {policy.avg_cost_impact == null ? (
+                              <Typography variant="body2" color="text.secondary">Unavailable</Typography>
                             ) : (
-                              <Typography variant="body2" color="error.main">
-                                ${Math.abs(policy.avg_cost_impact || 0).toLocaleString()}
+                              <Typography variant="body2" color={policy.avg_cost_impact < 0 ? 'success.main' : 'text.primary'}>
+                                {policy.cost_impact_label ? `${policy.cost_impact_label}: ` : ''}
+                                ${Math.abs(policy.avg_cost_impact).toLocaleString()}
                               </Typography>
                             )}
                           </TableCell>

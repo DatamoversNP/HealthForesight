@@ -1,0 +1,3305 @@
+{
+  "generated_at": "2026-11-07T02:48:29.176956+00:00",
+  "spec_version": "correction_spec_v1.0_2026-11-05",
+  "database": "hfleanstg",
+  "population_preserved": {
+    "claims_lines": 1423575,
+    "enrollment_records": 9479433
+  },
+  "deleted_lifecycle_before": {
+    "scorecard_entries": 0,
+    "scorecards": 0,
+    "scenario_accuracy": 0,
+    "whatif_scenario_results": 0,
+    "observations": 287,
+    "policy_predicted_impacts": 287,
+    "baselines": 288,
+    "analyses": 0,
+    "elasticity_analysis_results": 0,
+    "impact_analysis_results": 0,
+    "elasticity_models": 0,
+    "forecasts": 0,
+    "risks": 0,
+    "alert_events": 0,
+    "policy_assumptions": 556,
+    "policy_guardrails": 834,
+    "policy_changelog": 0,
+    "policy_decisions": 0,
+    "policy_code_sets": 0,
+    "policy_versions": 0,
+    "scenarios": 0,
+    "policies": 287
+  },
+  "after": {
+    "policies": 250,
+    "policy_assumptions": 500,
+    "policy_guardrails": 432,
+    "observations": 0,
+    "baselines": 0,
+    "policy_predicted_impacts": 0
+  },
+  "seeded_policies": 250,
+  "claims_execution_allowed": 0,
+  "acceptance": {
+    "accounted_for": "250/250",
+    "claims_executable": 0,
+    "lifecycle_present": false,
+    "note": "Policies seeded from correction register only. No baselines/observations/predictions. No fabricated codes. Population (500k) untouched."
+  },
+  "by_register_status": {
+    "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP": 160,
+    "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION": 90
+  },
+  "policies": [
+    {
+      "register_index": 1,
+      "policy": "90-Day Retail Maintenance Program",
+      "policy_id": "ca9bcb8d-27eb-52c9-8952-9e2fe3c69f10",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "QUANTITY_LIMIT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 2,
+      "policy": "ACA Essential Health Benefits Mapping",
+      "policy_id": "4caf2669-0134-5eb5-a136-4a38df4b6a81",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 3,
+      "policy": "ACA Preventive Services Zero Cost Share",
+      "policy_id": "81dfe602-8afb-51c4-82d7-d2fb605b9ad4",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COST_SHARING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 4,
+      "policy": "ACL Reconstruction Prior Authorization",
+      "policy_id": "3f67a648-22d1-5cff-8f32-95458decc947",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 5,
+      "policy": "Acupuncture Visit Limit",
+      "policy_id": "304bf083-e310-549f-a265-54af97131ec2",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "MECHANISM_REVIEW_REQUIRED",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 6,
+      "policy": "ADHD Stimulant Quantity Limits and Preferred Agents",
+      "policy_id": "a73b95a8-ba9f-572d-968c-6e77d433dd45",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "QUANTITY_LIMIT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 7,
+      "policy": "Advanced Imaging Member Cost Share Design",
+      "policy_id": "5ca93c95-65bc-56df-9176-762f4459b053",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "COST_SHARING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 8,
+      "policy": "Air Ambulance Medical Necessity Review",
+      "policy_id": "5736a938-9d00-59b5-8fbe-f783569e7b62",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 9,
+      "policy": "Ambulatory Surgery Center Preference",
+      "policy_id": "e81b235f-b285-5ded-b323-ef05d876d6b2",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "SITE_OF_CARE",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 10,
+      "policy": "Anti-Reflux Procedure Prior Authorization",
+      "policy_id": "ad879d0c-7377-52bc-94b3-7d66c66643f2",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 11,
+      "policy": "Applied Behavior Analysis Prior Authorization",
+      "policy_id": "0bdb72fe-2617-5618-b8ee-595b7f72d6bf",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 12,
+      "policy": "Assistant Surgeon Payment Rules",
+      "policy_id": "a16aa063-1e31-50c4-b00e-a024d048197d",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PAYMENT_EDIT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 13,
+      "policy": "Asthma and COPD Biologic Step Therapy",
+      "policy_id": "d85edd1f-0720-5803-af33-9a3c4af324d9",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "STEP_THERAPY",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 14,
+      "policy": "Audio-Only Telehealth Coverage Rules",
+      "policy_id": "04d7120b-de83-5069-b485-982851e3695e",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 15,
+      "policy": "Away-From-Home Care / Guest Membership Rules",
+      "policy_id": "58c790a7-11e7-5d2d-97ec-5cf120fcdd40",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COMPLIANCE_MAPPING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 16,
+      "policy": "Bariatric Revisional Surgery Prior Authorization",
+      "policy_id": "c342bfd5-9b25-5a41-a56d-bb56e15f1501",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 17,
+      "policy": "Bariatric Surgery Prior Authorization",
+      "policy_id": "d2712042-f00b-56ab-9ab9-942b4450d6a9",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 18,
+      "policy": "Behavioral Health Appointment Access Standards",
+      "policy_id": "a6d7de6e-462f-5b0c-96c9-1f56f616b52f",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "ACCESS_STANDARD",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 19,
+      "policy": "Behavioral Health Inpatient Concurrent Review",
+      "policy_id": "06eb4a4c-83eb-5ca0-80ad-00fef3320e57",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 20,
+      "policy": "Benzodiazepine Quantity Limits",
+      "policy_id": "9fc8dd3b-3640-5913-b2cf-84c76eb01f48",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "QUANTITY_LIMIT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 21,
+      "policy": "Biosimilar Preferencing Policy",
+      "policy_id": "080c31d0-0c03-5b0f-8208-61db60a61f9e",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "STEP_THERAPY",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 22,
+      "policy": "Blood Glucose Test Strip Step Therapy",
+      "policy_id": "dac277c1-f5a1-585c-bfa8-85f25f45a93b",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "STEP_THERAPY",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 23,
+      "policy": "BlueCard Home Plan Medical Policy Application",
+      "policy_id": "0de1203e-a139-5c96-b8fc-f20d891f0d0e",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COMPLIANCE_MAPPING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 24,
+      "policy": "BlueCard Host Plan Local Rules Application",
+      "policy_id": "3d836980-f9f6-5fa5-98bb-55d682330317",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COMPLIANCE_MAPPING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 25,
+      "policy": "Bone Densitometry Frequency Limits",
+      "policy_id": "96f8feb2-38e2-55a7-8637-4e79b1c91390",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 26,
+      "policy": "Bone Growth Stimulator Prior Authorization",
+      "policy_id": "3b29e2c5-ce15-50fa-850a-66cf0b95dcaa",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 27,
+      "policy": "Breast MRI Medical Necessity Criteria",
+      "policy_id": "9d1557fd-1d80-597e-8716-12d49b517244",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 28,
+      "policy": "Breast Reduction Medical Necessity",
+      "policy_id": "597b109f-94a6-55f8-b913-3f357e3cb0e2",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 29,
+      "policy": "Bundled Payment for Joint Replacement",
+      "policy_id": "137d0d9d-69d7-598a-962a-19048c16beb7",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PAYMENT_EDIT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 30,
+      "policy": "Bunion and Forefoot Elective Surgery Prior Authorization",
+      "policy_id": "0479a97b-6321-51b4-8723-ff7ccea1d11c",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 31,
+      "policy": "Cancer Clinical Trial Routine Cost Coverage",
+      "policy_id": "3db9c621-1d5d-50dc-910f-03b4238c827b",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 32,
+      "policy": "Capsule Endoscopy Prior Authorization",
+      "policy_id": "9ed274f5-38b0-5c33-a006-c9c98a6a1df0",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 33,
+      "policy": "Cardiac CT Angiography Prior Authorization",
+      "policy_id": "d42255ef-7f7a-5392-8981-efc2dad031d9",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 34,
+      "policy": "Cardiac Episode Bundle",
+      "policy_id": "be95012c-4442-597c-af15-d57b5227a57d",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PAYMENT_EDIT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 35,
+      "policy": "Cardiac Implantable Device Prior Authorization",
+      "policy_id": "c41743ea-57fd-5980-9061-9c5f6c720ba7",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 36,
+      "policy": "Cardiac Rehabilitation Authorization",
+      "policy_id": "a50b71e6-ac20-5441-851d-87bd44b7efb6",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 37,
+      "policy": "Cardiac Rehabilitation Session Limit",
+      "policy_id": "866c7afd-a527-556b-bbda-ebb809a95081",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "MECHANISM_REVIEW_REQUIRED",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 38,
+      "policy": "Cardiac Stress Testing Prior Authorization",
+      "policy_id": "33eded7e-65ef-5761-aeb3-795b7a3171f2",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 39,
+      "policy": "CAR-T and Cellular Therapy Prior Authorization",
+      "policy_id": "0915667c-1015-56d3-a9a0-65fe08c89bad",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 40,
+      "policy": "Cataract Surgery Second-Eye and Specialty Lens Rules",
+      "policy_id": "2d91a6c3-8634-5fb2-bc24-cc5cdae1cb86",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 41,
+      "policy": "Centers of Excellence Requirement \u2014 Bariatric",
+      "policy_id": "b22ae090-401a-5414-8ee7-9ea4547888fb",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "NETWORK_RESTRICTION",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 42,
+      "policy": "Centers of Excellence Requirement \u2014 Complex Cancer",
+      "policy_id": "f6132f91-0176-5b0f-83fe-c7a2a1580b5b",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "NETWORK_RESTRICTION",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 43,
+      "policy": "Centers of Excellence Requirement \u2014 Transplant",
+      "policy_id": "f43110ad-48fd-51da-acfc-97d98637af27",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "NETWORK_RESTRICTION",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 44,
+      "policy": "CGM and Diabetes Supply Quantity Limits",
+      "policy_id": "efd83a70-fa6f-592b-9419-9c488d5e35e8",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "QUANTITY_LIMIT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 45,
+      "policy": "Chiropractic Visit Limit",
+      "policy_id": "c5bc9dfe-460b-57e6-9d4f-350630c2fd2d",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "MECHANISM_REVIEW_REQUIRED",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 46,
+      "policy": "CKD Disease Management Program",
+      "policy_id": "411cf16b-5386-5e1e-b176-7a98ee77bb33",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "CARE_MANAGEMENT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 47,
+      "policy": "Cochlear Implant Prior Authorization",
+      "policy_id": "86d77021-4a2d-5153-a113-8463008b7c1c",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 48,
+      "policy": "Colonoscopy Screening and Surveillance Intervals",
+      "policy_id": "580daf3c-0556-5c55-ae4e-8cdda87630ed",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 49,
+      "policy": "Complex Case Management Program",
+      "policy_id": "bb4ef06e-9535-5815-85ce-3cbcd8fad24a",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "CARE_MANAGEMENT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 50,
+      "policy": "Complex Hernia Repair Prior Authorization",
+      "policy_id": "c64e47ba-c794-5433-a436-59216ea20121",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 51,
+      "policy": "Concurrent DUR Safety Edits",
+      "policy_id": "af9c0d70-f98b-50c6-9bc7-da3ed5a39ad1",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COMPLIANCE_MAPPING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 52,
+      "policy": "Continuity of Care After Provider Termination",
+      "policy_id": "b2f9c1d9-c11e-5c4a-bbb4-f008b4e7c11f",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "NETWORK_RESTRICTION",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 53,
+      "policy": "Continuity of Medications During Appeal",
+      "policy_id": "7b68ec1f-81de-5a48-9222-6d3a16ae1b13",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COMPLIANCE_MAPPING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 54,
+      "policy": "Convenience Care Exclusion",
+      "policy_id": "6226e3a7-bb1e-5776-90f9-dee9f5bf958e",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 55,
+      "policy": "Coordination of Benefits Administration",
+      "policy_id": "c1129d9a-615d-5c33-8b19-e6dba5349d57",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PAYMENT_EDIT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 56,
+      "policy": "COPD Disease Management Program",
+      "policy_id": "42736b47-678b-579e-b66f-6fb45fd434ac",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "CARE_MANAGEMENT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 57,
+      "policy": "Coronary Calcium Scoring Coverage Criteria",
+      "policy_id": "5db8d55d-b83b-5481-9ff2-faca30793f1f",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 58,
+      "policy": "Cosmetic Services Exclusion",
+      "policy_id": "aa5ccff4-4a24-5add-9ddb-dc6126dcb7ae",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 59,
+      "policy": "Cosmetic Surgery Exclusion Policy",
+      "policy_id": "64b95720-c5a8-5f39-bff0-84761271debf",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 60,
+      "policy": "CPAP Supply Replacement Schedules",
+      "policy_id": "7a454bd2-58dc-54aa-b2c3-739e0653a9c3",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 61,
+      "policy": "Custodial Care Exclusion",
+      "policy_id": "3fc8f0a3-04d4-50f9-ba8e-227432ae727d",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 62,
+      "policy": "Custom Orthotic and Brace Prior Authorization",
+      "policy_id": "edd6177e-1834-53c4-ae19-76fc08162636",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 63,
+      "policy": "Dermatology Biologic Step Therapy",
+      "policy_id": "bcab2cb7-58b4-59c6-86c3-e9d4d49e1853",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "STEP_THERAPY",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 64,
+      "policy": "Diabetes Disease Management Program",
+      "policy_id": "f7d38b7e-6aa5-5342-8cc6-6e4661524948",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "CARE_MANAGEMENT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 65,
+      "policy": "Diagnostic Cardiac Catheterization Appropriateness",
+      "policy_id": "82c79130-abc2-5195-9996-232304a3a3f9",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 66,
+      "policy": "Dialysis Home Modality Preference",
+      "policy_id": "aefbc07f-40fe-570d-bc7e-823f9285083a",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "SITE_OF_CARE",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 67,
+      "policy": "Digital Therapeutics Coverage Criteria",
+      "policy_id": "4cb64cf5-de30-587e-9e80-053e09362f12",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 68,
+      "policy": "Direct-to-Consumer Lab Noncoverage",
+      "policy_id": "326b182f-3f15-5ddc-8dc1-d7d606390844",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 69,
+      "policy": "Discharge Planning Requirements",
+      "policy_id": "b4420829-c78c-51f0-8ef7-c2f6a581d1ac",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 70,
+      "policy": "DRG Inpatient Payment Policy",
+      "policy_id": "ed1d2f97-ab6b-5f29-a96e-1e88688c1115",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PAYMENT_EDIT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 71,
+      "policy": "Drug Testing Frequency Limits for Chronic Pain",
+      "policy_id": "0587708d-e8c8-5eb6-8999-e811ff8d09cf",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 72,
+      "policy": "Eating Disorder Level-of-Care Authorization",
+      "policy_id": "fa4d509f-857b-5280-ad89-46d814d08fc1",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 73,
+      "policy": "ECT Authorization Criteria",
+      "policy_id": "949a7e6c-bd02-5852-93a5-35d44318d512",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 74,
+      "policy": "Elective Delivery Before 39 Weeks Restriction",
+      "policy_id": "d78431bb-4f1e-5cc7-945a-160f4bdc1023",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 75,
+      "policy": "Elective Joint Arthroplasty Prior Authorization",
+      "policy_id": "7546818f-eaf2-5add-a407-382b91da4c71",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 76,
+      "policy": "Emergency Department Frequent Utilizer Program",
+      "policy_id": "063ebce2-b24e-596a-8410-b154aaf6d42f",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "CARE_MANAGEMENT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 77,
+      "policy": "Emergency vs Urgent Care Cost Share Differential",
+      "policy_id": "2861fb53-f2f6-5819-b6a3-65e20340b4e6",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "COST_SHARING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 78,
+      "policy": "Enteral Nutrition Prior Authorization",
+      "policy_id": "3fcbbc9f-6743-5bb9-9faf-083ed3cd07aa",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 79,
+      "policy": "Epidural Steroid Injection Prior Authorization",
+      "policy_id": "11ee2dae-8ad5-5293-8ac0-d3aba4d21dfb",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 80,
+      "policy": "Esketamine Treatment Prior Authorization",
+      "policy_id": "f8233ce2-60fd-5801-8ceb-fc4a007c11dc",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 81,
+      "policy": "Experimental and Investigational Exclusion Framework",
+      "policy_id": "73db227f-2986-5e00-9fff-3bba138fbae8",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 82,
+      "policy": "Experimental and Investigational Services Policy",
+      "policy_id": "973d223c-6b50-5163-b82f-6ee7cce45b70",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 83,
+      "policy": "External Review / IRO Process",
+      "policy_id": "5202156c-fbfa-5473-ac04-c888bca066f4",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COMPLIANCE_MAPPING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 84,
+      "policy": "Eyelid Surgery Medical Necessity",
+      "policy_id": "5055a08e-b5d9-5a70-9b5e-d0b8ee0a51c6",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 85,
+      "policy": "Facet Joint Intervention Prior Authorization",
+      "policy_id": "96242620-af4c-5f23-84ab-291fe4efe468",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 86,
+      "policy": "Facility Polysomnography Prior Authorization",
+      "policy_id": "9e09921d-c277-58c0-9024-7bec12b27442",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 87,
+      "policy": "Fertility Preservation with Oncology Coverage",
+      "policy_id": "521e7068-8bb5-5195-90f5-d259f0a19a3a",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 88,
+      "policy": "Freestanding Imaging Steerage",
+      "policy_id": "715db14a-0797-5425-b928-4150e930e7c9",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "SITE_OF_CARE",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 89,
+      "policy": "Gender-Affirming Surgery Coverage Criteria",
+      "policy_id": "4a4e31e5-15c4-59c3-9974-e0ce2ffe07a0",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 90,
+      "policy": "Gene Therapy One-Time High-Cost Prior Authorization",
+      "policy_id": "f515577a-0b72-59ae-ae03-b5b4d255b56e",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 91,
+      "policy": "GLP-1 Coverage Criteria for Obesity",
+      "policy_id": "276436f9-c589-5e5f-9123-cf7adb57255e",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "STEP_THERAPY",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 92,
+      "policy": "GLP-1 Step Therapy for Type 2 Diabetes",
+      "policy_id": "54d49d15-8908-5993-a9c2-77070053b516",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "STEP_THERAPY",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 93,
+      "policy": "Growth Hormone Prior Authorization",
+      "policy_id": "f42e2ba1-9693-5c7c-8b00-d74be9ac5ef0",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 94,
+      "policy": "Hearing Aid Benefit and Replacement Cycle",
+      "policy_id": "3188f8e6-5d5a-5191-b85e-068099355ecc",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 95,
+      "policy": "Hearing Aid Coverage Criteria",
+      "policy_id": "08a329d1-a0e4-53cd-8fc3-ca4658e768ab",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 96,
+      "policy": "Heart Failure Disease Management Program",
+      "policy_id": "4c2a23a0-268d-5da2-b31b-44abfe6dd1be",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "CARE_MANAGEMENT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 97,
+      "policy": "Hepatitis C Direct-Acting Antiviral Prior Authorization",
+      "policy_id": "76eae98f-f03a-54db-be75-8380c0b9be7a",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 98,
+      "policy": "Hereditary Cancer Gene Panel Prior Authorization",
+      "policy_id": "ff69ca71-9248-5eec-ac8f-69012f2462bd",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 99,
+      "policy": "High-Risk Obstetrics Case Management Referral",
+      "policy_id": "8faf341f-7181-58da-bd3f-71a4b56941bc",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 100,
+      "policy": "HIV Antiretroviral Formulary Management",
+      "policy_id": "cf626be3-d049-50fc-b832-bf76a0d48307",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COST_SHARING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 101,
+      "policy": "Home Health Episode Authorization",
+      "policy_id": "951762be-9825-5a0d-812e-67268b17c793",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 102,
+      "policy": "Home Infusion Preference",
+      "policy_id": "deac5fb8-b58a-5e2f-8b46-993de8d9825a",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "SITE_OF_CARE",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 103,
+      "policy": "Home Oxygen Qualification Criteria",
+      "policy_id": "daefea58-165a-5aa1-ba10-1dda0a55de27",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 104,
+      "policy": "Home Sleep Apnea Testing Preference",
+      "policy_id": "85f748d5-e7c1-5b5f-9956-a171b841d819",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "SITE_OF_CARE",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 105,
+      "policy": "Home Sleep Testing Before Facility PSG",
+      "policy_id": "c0228fe1-3ee7-575b-9b4a-ad1238f4b914",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "SITE_OF_CARE",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 106,
+      "policy": "Hospice Election and Concurrent Care Rules",
+      "policy_id": "76d830df-c2ad-522f-95f8-bddfdcdfda19",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 107,
+      "policy": "Hospital-Acquired Condition Nonpayment",
+      "policy_id": "5ebc712e-f36b-5fb9-9b18-b848c16e6e86",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PAYMENT_EDIT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 108,
+      "policy": "Hyperbaric Oxygen Therapy Prior Authorization",
+      "policy_id": "a4a0fe1d-9020-53d8-8130-93d8c08ebb25",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 109,
+      "policy": "Hysterectomy Route Medical Necessity",
+      "policy_id": "b2f2b953-c95b-59d1-b329-d00de77a9549",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 110,
+      "policy": "IBD Biologic Step Therapy",
+      "policy_id": "db6957d3-f204-5f8c-8819-2e2241b9ddbe",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "STEP_THERAPY",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 111,
+      "policy": "Infertility Diagnostic Coverage Criteria",
+      "policy_id": "fc3a68e7-a014-53f9-9f13-3b6a77aa45d6",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 112,
+      "policy": "Infertility Treatment Prior Authorization",
+      "policy_id": "e8dcb220-ec65-5071-870c-f1347d6aaf00",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 113,
+      "policy": "Infusion Site-of-Care Optimization",
+      "policy_id": "067f0f25-427b-5b78-8b65-341c61a843dd",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "SITE_OF_CARE",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 114,
+      "policy": "Inpatient Concurrent Stay Review",
+      "policy_id": "3f838a09-5d1d-5ce3-aa2f-855d91abc572",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 115,
+      "policy": "Inpatient Rehabilitation Facility Authorization",
+      "policy_id": "bf5307e7-fdb7-5e44-ac9e-cfafb72cb3bd",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 116,
+      "policy": "Inpatient vs Observation Status Determination",
+      "policy_id": "5305c67b-2ed1-5bc4-80cf-974d0d770877",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 117,
+      "policy": "Insertable Cardiac Monitor Prior Authorization",
+      "policy_id": "1e5ac2f1-1b88-589b-bb54-89d36f1ffbcb",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 118,
+      "policy": "Insulin Preferred Product and Biosimilar Step",
+      "policy_id": "644d664e-c59a-5422-aae7-bdbc7077db1e",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "STEP_THERAPY",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 119,
+      "policy": "Insulin Pump and CGM Medical Benefit Criteria",
+      "policy_id": "6570dace-cd02-5c26-9e44-9215a671bf19",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 120,
+      "policy": "Interventional Pain Regenerative Injection Noncoverage",
+      "policy_id": "c7db38b2-18f6-52d7-bab6-7e1febb4b1f6",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 121,
+      "policy": "Interventional Radiology Procedure Prior Authorization",
+      "policy_id": "73b9180a-bc48-5fdb-b55f-f2509691c3bc",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 122,
+      "policy": "Intrathecal Drug Pump Prior Authorization",
+      "policy_id": "fb71cbd3-ac77-5682-ad99-934fdcbf8f8c",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 123,
+      "policy": "LCD L34425 NC MRI Coverage Criteria",
+      "policy_id": "7165a6d3-e944-5a92-a5bf-5b36500ae99b",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 124,
+      "policy": "Long-Term Acute Care Hospital Authorization",
+      "policy_id": "8eefd542-7026-52ab-94bd-b33cef622f0a",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 125,
+      "policy": "Low-Dose CT Lung Cancer Screening Criteria",
+      "policy_id": "c27ad00d-d62d-5afa-b16c-24cfdac6f4da",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 126,
+      "policy": "Mandatory Mail-Order Maintenance Medications",
+      "policy_id": "db1b2a06-ad5f-5be6-bd20-cf5f03a06162",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COST_SHARING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 127,
+      "policy": "Manual Wheelchair Medical Necessity",
+      "policy_id": "0773e852-ba98-5fcd-8ffd-e9b7726019cc",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 128,
+      "policy": "Maternity Episode Bundle",
+      "policy_id": "9334b4c8-8b91-54e0-8f4c-b2b17e222001",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PAYMENT_EDIT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 129,
+      "policy": "Maternity Management Program",
+      "policy_id": "41f363e3-bc1d-525a-b7b6-4d2fa9eec9a7",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "CARE_MANAGEMENT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 130,
+      "policy": "Maximum Wait Time for Specialist Appointments",
+      "policy_id": "25e2d967-4f29-5f1c-bbfc-188cc4fd5cd5",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "ACCESS_STANDARD",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 131,
+      "policy": "MCG-Style Clinical Criteria for Inpatient Admissions",
+      "policy_id": "8e4038c7-5bfd-5711-bb69-3727bd633073",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 132,
+      "policy": "Medicaid EPSDT Coverage Obligation",
+      "policy_id": "88843a60-3233-50fc-b738-7a069805f65e",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COMPLIANCE_MAPPING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 133,
+      "policy": "Medical-Dental Crossover Trauma Policy",
+      "policy_id": "25a4d6bb-d2eb-55aa-acf4-5d9a4257436f",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 134,
+      "policy": "Medical Eye Disease vs Routine Vision Separation",
+      "policy_id": "621a39de-eaa3-5ef4-956f-143e567542d4",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 135,
+      "policy": "Medical Oncology Regimen Prior Authorization",
+      "policy_id": "1449bbe4-86e5-5cc4-9038-2695d58a342b",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 136,
+      "policy": "Medical Records Request Standards",
+      "policy_id": "3b98ff25-1103-51ba-aa31-5c85995822b6",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COMPLIANCE_MAPPING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 137,
+      "policy": "Medical vs Pharmacy Benefit Channeling",
+      "policy_id": "086c40fa-c1b7-5a53-bee9-b6dd257f99f1",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "COMPLIANCE_MAPPING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 138,
+      "policy": "Medicare NCD and LCD Precedence Policy",
+      "policy_id": "fe539e5b-03b0-51cd-b2aa-3417eabdb23d",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 139,
+      "policy": "Medicare Stars Gap Closure Program",
+      "policy_id": "091df7cb-fd6c-5327-b97d-a2b264e8d07c",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "CARE_MANAGEMENT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 140,
+      "policy": "Medication-Assisted Treatment Access Policy",
+      "policy_id": "daef718b-5986-56b3-a666-76cb034431c8",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 141,
+      "policy": "Medication Therapy Management Program",
+      "policy_id": "b8e1e644-8b85-5bbe-9869-290145bce0e1",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "CARE_MANAGEMENT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 142,
+      "policy": "Member Appeal and Grievance Timelines",
+      "policy_id": "e5033c95-58e5-5545-8019-1081cd5792a3",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COMPLIANCE_MAPPING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 143,
+      "policy": "Mental Health Parity Comparative Analysis Policy",
+      "policy_id": "3331c489-2f8c-5fb1-b1fc-3210a5bfe766",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "COMPLIANCE_MAPPING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 144,
+      "policy": "Mental Health Parity NQTL Documentation Policy",
+      "policy_id": "0bb81811-0890-5f89-bb32-d69e8d32b106",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "COMPLIANCE_MAPPING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 145,
+      "policy": "Migraine CGRP Step Therapy",
+      "policy_id": "e44742d6-d095-52c3-a033-6382820ee723",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "STEP_THERAPY",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 146,
+      "policy": "MS Disease-Modifying Therapy Prior Authorization",
+      "policy_id": "6e7bcb9c-0ac8-525f-ad50-267721889f29",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 147,
+      "policy": "Multiple Procedure Payment Reduction",
+      "policy_id": "9d825635-a8ab-5276-8d1b-07b51e20ea59",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PAYMENT_EDIT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 148,
+      "policy": "National Account Custom Benefit Administration",
+      "policy_id": "c4f0c0c7-48ad-59b6-a15b-4fd29d539f78",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COMPLIANCE_MAPPING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 149,
+      "policy": "NCCI and MUE Claims Edit Policy",
+      "policy_id": "4ef21513-f5a4-5123-9b26-c252880597d7",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PAYMENT_EDIT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 150,
+      "policy": "NCCI Medically Unlikely Units",
+      "policy_id": "0da50b7a-b721-5e02-87ca-38a1dc23835e",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PAYMENT_EDIT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 151,
+      "policy": "NCCI Procedure-to-Procedure Bundling",
+      "policy_id": "8cad88b5-84e5-5777-a57e-97c81a76f165",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PAYMENT_EDIT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 152,
+      "policy": "NCD 220.2 MRI Coverage Change Study",
+      "policy_id": "c0fc50e5-bee3-5456-9e93-c8f85a34bea4",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 153,
+      "policy": "Negative Pressure Wound Therapy Prior Authorization",
+      "policy_id": "11898f3f-dce2-5637-8bc4-d6e583a07c4c",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 154,
+      "policy": "Neuropsychological Testing Prior Authorization",
+      "policy_id": "e5f74dc7-b8b8-510a-876b-4c00774bb283",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 155,
+      "policy": "NICU Concurrent Review",
+      "policy_id": "2491e06d-afbc-56a3-bcd0-d999e1ac8d63",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 156,
+      "policy": "NICU Level-of-Care Authorization",
+      "policy_id": "a81afc01-39de-5e3e-abf2-429ffd5f1f26",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 157,
+      "policy": "Non-Emergency Ambulance Prior Authorization",
+      "policy_id": "7312ed69-db38-5eac-90eb-24abc0aee6a1",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 158,
+      "policy": "Non-Formulary Exception Review",
+      "policy_id": "1c379530-06ad-5d79-b817-5ad3101b9f3f",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 159,
+      "policy": "Noninvasive Ventilation Prior Authorization",
+      "policy_id": "834d8235-62db-5cdd-aad3-1808602520ea",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 160,
+      "policy": "North Carolina Mandated Benefit Administration",
+      "policy_id": "9591e510-55eb-527b-b548-ee3cdb3df2c3",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COMPLIANCE_MAPPING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 161,
+      "policy": "No Surprises Act Emergency Services No-PA Rule",
+      "policy_id": "7da84a05-33f8-5299-9a96-2cdebdd9182c",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "COMPLIANCE_MAPPING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 162,
+      "policy": "Nuclear Cardiology Prior Authorization",
+      "policy_id": "60c10662-f42e-58fc-b043-9da18a8eedcf",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 163,
+      "policy": "Occupational Therapy Annual Limit",
+      "policy_id": "572eefda-7748-5cf9-944d-92809492a858",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "MECHANISM_REVIEW_REQUIRED",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 164,
+      "policy": "Oncology Genomic Profiling Prior Authorization",
+      "policy_id": "9b831ccd-7d3d-5261-8d7e-598046cdb1ba",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 165,
+      "policy": "Oncology Infusion Site Steerage",
+      "policy_id": "11df4056-191f-5361-8957-bc20af9ee927",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "SITE_OF_CARE",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 166,
+      "policy": "Oncology Oral Specialty Prior Authorization",
+      "policy_id": "4ba5a08f-8f6b-5646-847b-3c14f20414fa",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 167,
+      "policy": "Oncology-Related Dental Clearance Coverage",
+      "policy_id": "27a0cb6b-1c17-5ee0-9e40-6ec5cb9a03e6",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 168,
+      "policy": "Opioid Analgesic Utilization Management",
+      "policy_id": "5cf3f57c-84e1-56fd-9169-77708298a380",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "MECHANISM_REVIEW_REQUIRED",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 169,
+      "policy": "Opioid Quantity Limit \u2014 Acute Pain",
+      "policy_id": "e8b8c41f-b32a-5e60-8f0c-481f81525365",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "QUANTITY_LIMIT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 170,
+      "policy": "Opioid Quantity Limit \u2014 Chronic Pain",
+      "policy_id": "ed785a3a-7101-5321-a721-db133763e30b",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "QUANTITY_LIMIT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 171,
+      "policy": "Orthobiologics and PRP Noncoverage",
+      "policy_id": "519a1aef-78e8-5d07-b59b-2f97cfb487de",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 172,
+      "policy": "Out-of-Network Elective Services Restriction",
+      "policy_id": "86d58488-7c78-5254-a8e7-9eb333f66f26",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "NETWORK_RESTRICTION",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 173,
+      "policy": "Out-of-Network Inpatient Authorization",
+      "policy_id": "22dea44d-5083-5647-ad85-6b75b30cf56c",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 174,
+      "policy": "Outpatient CT / CTA Prior Authorization",
+      "policy_id": "0b3189eb-0803-5c37-bc33-43580eec31ad",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 175,
+      "policy": "Outpatient MRI Prior Authorization",
+      "policy_id": "207ea461-d892-5bfe-9e23-965165888a84",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 176,
+      "policy": "Outpatient Therapy Coverage and Payment",
+      "policy_id": "96688fda-92e3-5b91-8e3e-12bd4d3f7bf8",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 177,
+      "policy": "Panniculectomy Medical Necessity",
+      "policy_id": "22475a9d-190b-5042-96a0-f3ea149df982",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 178,
+      "policy": "PAP Therapy Initiation and Compliance",
+      "policy_id": "705b1eb9-9ccd-5624-84c4-f65952263d80",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 179,
+      "policy": "Parenteral Nutrition Prior Authorization",
+      "policy_id": "d47fe184-87fe-5520-9c5f-53ccf47bad40",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 180,
+      "policy": "Partial Hospitalization and IOP Authorization",
+      "policy_id": "a9298cb7-fa4d-5e0f-bf21-4f723b0e6f66",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 181,
+      "policy": "PCI Elective Appropriateness Review",
+      "policy_id": "d0974906-6c39-57aa-9fc9-a7c944570119",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 182,
+      "policy": "PCP Referral Requirement for Specialist Visits",
+      "policy_id": "b36c2130-3d61-5bc1-9b53-ce13835d1c3b",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "NETWORK_RESTRICTION",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 183,
+      "policy": "PCSK9 Inhibitor Step Therapy",
+      "policy_id": "00f0e598-aace-5fa2-bf95-b44a0a97f1af",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "STEP_THERAPY",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 184,
+      "policy": "Peer-to-Peer Review Opportunity Policy",
+      "policy_id": "2c86e805-5ccb-5e66-a2ec-c5053e91f5f2",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "COMPLIANCE_MAPPING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 185,
+      "policy": "Peripheral Vascular Intervention Prior Authorization",
+      "policy_id": "d23b0b9b-3a94-51e7-a902-40c68e0de4f6",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 186,
+      "policy": "PET / PET-CT Prior Authorization",
+      "policy_id": "1a4b7dc0-9899-5f1b-9633-97fe7e35f2e6",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 187,
+      "policy": "Pharmacogenomic Testing Coverage Criteria",
+      "policy_id": "da5f8480-dd1d-5d87-8352-1c83e8dcc22d",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 188,
+      "policy": "Pharmacy Prior Authorization Program",
+      "policy_id": "5c9630d8-85a4-5afb-ad47-3af14cdbe263",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 189,
+      "policy": "Physical Therapy Visit Limit",
+      "policy_id": "be053981-a165-57c4-a806-c2f5fe265385",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "MECHANISM_REVIEW_REQUIRED",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 190,
+      "policy": "Power Mobility Device Prior Authorization",
+      "policy_id": "421649ce-c911-596d-9dca-115f075af797",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 191,
+      "policy": "Preferred Dialysis Network Policy",
+      "policy_id": "653ae0c6-7f6c-5448-873b-1c2862f2111d",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "NETWORK_RESTRICTION",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 192,
+      "policy": "Preferred Generic Drug Tier Design",
+      "policy_id": "eba7749d-0192-522f-bc9c-ae11a6e32737",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "COST_SHARING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 193,
+      "policy": "Preferred Laboratory Network Steerage",
+      "policy_id": "4cadd001-b546-59c5-937e-4177beebd89a",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "NETWORK_RESTRICTION",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 194,
+      "policy": "Preferred Pharmacy Network Policy",
+      "policy_id": "eaeabddf-de7a-5d09-89b2-b166b25629d9",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "NETWORK_RESTRICTION",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 195,
+      "policy": "Prior Authorization Submission and Turnaround Standards",
+      "policy_id": "b35ac90c-17bd-5e31-bf0f-051e0dc90f54",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COMPLIANCE_MAPPING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 196,
+      "policy": "Private Duty Nursing Prior Authorization",
+      "policy_id": "28d0df28-fca8-590f-ad39-a193a3d488d6",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 197,
+      "policy": "Prostate Procedure Prior Authorization",
+      "policy_id": "b43eb4d0-64fe-5377-be11-96132c44e80a",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 198,
+      "policy": "Prosthetic Limb Prior Authorization",
+      "policy_id": "ac005c34-65cd-59e5-a9d5-ac5269d796e4",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 199,
+      "policy": "Proton Beam Therapy Coverage Criteria",
+      "policy_id": "28614f25-8cd1-59f0-99b1-6be262dea327",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 200,
+      "policy": "Provider Reconsideration / Dispute Process",
+      "policy_id": "b2ac23f2-ee51-517e-b8d8-01f79796b16c",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COMPLIANCE_MAPPING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 201,
+      "policy": "Provider Specialty Eligibility for High-Cost Codes",
+      "policy_id": "d91a0ccb-6082-51a0-8bf6-de95e32be053",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "MECHANISM_REVIEW_REQUIRED",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 202,
+      "policy": "Psychiatric Inpatient Prior Authorization",
+      "policy_id": "222488d1-288a-5db5-a423-d0a959172c1e",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 203,
+      "policy": "Psychiatric Residential Treatment Authorization",
+      "policy_id": "e254c080-5de2-5270-8360-3c414b321dac",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 204,
+      "policy": "Pulmonary Rehabilitation Authorization",
+      "policy_id": "526707c6-dcdd-5d95-974b-bffd613ef3f7",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 205,
+      "policy": "Pulmonary Rehabilitation Session Limit",
+      "policy_id": "f129005e-9ba1-50c8-8489-b21b7678d9cc",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "MECHANISM_REVIEW_REQUIRED",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 206,
+      "policy": "Radiation Therapy Modality Prior Authorization",
+      "policy_id": "ce80d611-54f6-56c8-9e9c-b25217b85f96",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 207,
+      "policy": "Readmission Relatedness Review",
+      "policy_id": "c737850a-b6e0-5ddc-9bab-7cd735e93d93",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 208,
+      "policy": "Refill-Too-Soon Edit Policy",
+      "policy_id": "f2bed6ec-db7f-5925-bcc1-b6f2d0cfb79a",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COMPLIANCE_MAPPING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 209,
+      "policy": "Related Readmission Payment Adjustment",
+      "policy_id": "1446e873-edfb-509d-b254-9a39cb869b64",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PAYMENT_EDIT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 210,
+      "policy": "Remote Patient Monitoring Coverage Criteria",
+      "policy_id": "ca75afed-80d0-50ac-9352-762332429fed",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 211,
+      "policy": "Retransplant Prior Authorization",
+      "policy_id": "be4fce43-efc8-5ce5-82d0-1594901012e7",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 212,
+      "policy": "Retrospective Authorization Window",
+      "policy_id": "53dedc24-1797-589f-94b3-366393da72d6",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COMPLIANCE_MAPPING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 213,
+      "policy": "Rheumatology Biologic Step Therapy for RA",
+      "policy_id": "76f9a820-9d23-57d6-850c-ae014701b9c1",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "STEP_THERAPY",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 214,
+      "policy": "Sinus Surgery Prior Authorization",
+      "policy_id": "99ae5a7c-e9d9-53dc-9336-c704864434b4",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 215,
+      "policy": "Skilled Nursing Facility Authorization",
+      "policy_id": "2f317118-1715-56d8-9c98-ec5c7520f831",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 216,
+      "policy": "Sleep Surgery Prior Authorization",
+      "policy_id": "d6753ec4-4902-586e-afdb-e6cdd4ba1181",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 217,
+      "policy": "Specialty Drug Days\u2019 Supply Limits",
+      "policy_id": "8790592c-b970-51a9-91c5-5e30c3dcca0b",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "QUANTITY_LIMIT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 218,
+      "policy": "Specialty Infusion Site-of-Care Optimization",
+      "policy_id": "a04e3495-78a4-57cc-9af6-43d0afb3196f",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "SITE_OF_CARE",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 219,
+      "policy": "Specialty Pharmacy Coinsurance Design",
+      "policy_id": "f5966e9c-16a2-5ca5-9217-fd4a6138d212",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "COST_SHARING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 220,
+      "policy": "Specialty Pharmacy Exclusive Network",
+      "policy_id": "f11fed27-ee39-5205-9cc1-0b2e5072447f",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "NETWORK_RESTRICTION",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 221,
+      "policy": "Specialty Tier Coinsurance Design",
+      "policy_id": "05e2dc4b-bd71-5262-862c-cbc5134ecb60",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "COST_SHARING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 222,
+      "policy": "Speech Generating Device Prior Authorization",
+      "policy_id": "a5fe7326-c45d-5e2b-8740-1d6597d93d8a",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 223,
+      "policy": "Speech Therapy Visit Limit",
+      "policy_id": "2fdcfbde-6505-5cff-a896-b7eaec900f27",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "MECHANISM_REVIEW_REQUIRED",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 224,
+      "policy": "Spinal Cord Stimulator Trial and Implant Prior Authorization",
+      "policy_id": "95e5a2e5-f257-5c93-b6d1-0ea914663388",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 225,
+      "policy": "Spinal Decompression Without Fusion Prior Authorization",
+      "policy_id": "91727e83-6412-54c4-8b4a-3974f70589cd",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 226,
+      "policy": "Spine Fusion Prior Authorization",
+      "policy_id": "21442da3-95c7-5a3c-b2c9-be8c2027bfc6",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 227,
+      "policy": "Split-Fill Specialty Program",
+      "policy_id": "6a5bf0ba-b09c-5f22-aadd-ffea385174c0",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "QUANTITY_LIMIT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 228,
+      "policy": "Store-and-Forward Teledermatology Coverage",
+      "policy_id": "57bb3af1-359e-55ab-a612-995a617ce296",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 229,
+      "policy": "Structural Heart Procedure Prior Authorization",
+      "policy_id": "d350c4a0-2f81-5dcf-a20e-b792fcf70e49",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 230,
+      "policy": "SUD Detoxification Authorization",
+      "policy_id": "9597634e-cb5c-5af2-861f-1a928e06da3a",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 231,
+      "policy": "SUD Residential and IOP Authorization",
+      "policy_id": "0571d5f5-e44b-506f-8233-d6bc32bd934d",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 232,
+      "policy": "Surrogacy Exclusion Policy",
+      "policy_id": "1aa48480-74bd-5bf7-9a4c-13328fcabf79",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 233,
+      "policy": "Telehealth Cost Sharing Parity Policy",
+      "policy_id": "6a644eb3-b027-50fb-a39f-e04186ab5639",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "COST_SHARING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 234,
+      "policy": "Telehealth Covered Services List",
+      "policy_id": "52e6541e-878c-586c-974f-f31f907369cb",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 235,
+      "policy": "Telehealth Vendor Network Rules",
+      "policy_id": "93049249-761c-5596-83af-5aaad384ce24",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "NETWORK_RESTRICTION",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 236,
+      "policy": "Third-Party Liability and Subrogation",
+      "policy_id": "4342a0cc-e0ad-5a3b-9288-edfa201cb2dc",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PAYMENT_EDIT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 237,
+      "policy": "Tiered Network Specialist Steerage",
+      "policy_id": "0602c349-c3c3-54fc-9ee9-b8ea9ab7342c",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "NETWORK_RESTRICTION",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 238,
+      "policy": "Timely Filing Limit \u2014 Provider Claims",
+      "policy_id": "40d42141-17e1-589f-9698-103b1aec69af",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PAYMENT_EDIT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 239,
+      "policy": "TMS Prior Authorization",
+      "policy_id": "64512e07-eea7-55d7-86e2-50a0e8733717",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 240,
+      "policy": "Tonsillectomy and Adenoidectomy Criteria",
+      "policy_id": "1c04d542-b0db-59d5-9bc8-ae1ebb2f390b",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 241,
+      "policy": "Transition of Care Post-Discharge Program",
+      "policy_id": "ae067dae-fe74-5cc3-8508-541660084c31",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "CARE_MANAGEMENT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 242,
+      "policy": "Transplant Evaluation and Listing Authorization",
+      "policy_id": "f8c43908-2c82-5f9d-a02d-e8d1e12799c9",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 243,
+      "policy": "Unbundling and Incidental Denial Policy",
+      "policy_id": "9fbb4f0e-620e-58b5-b34d-dd896a5f210d",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "PAYMENT_EDIT",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 244,
+      "policy": "Upper Endoscopy Frequency Criteria",
+      "policy_id": "1b437afc-d0b0-5e73-8a11-334dd5e8a07a",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 245,
+      "policy": "Urgent Care Preference Over Non-Emergent ER",
+      "policy_id": "5290364e-e874-55ab-8482-6cd9b833c129",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "RETAINED_PENDING_AUTHORITY_REVIEW",
+      "lever_type": "SITE_OF_CARE",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "AUTHORITY_CERTIFICATION_REQUIRED",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 246,
+      "policy": "Value-Based Insurance Design Waivers",
+      "policy_id": "e64d7969-2f5e-59f8-99ad-a4ae82551efb",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COST_SHARING",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 247,
+      "policy": "Value Prior Authorization Program",
+      "policy_id": "18cf4584-5885-587b-9531-56e664dc3bad",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 248,
+      "policy": "Varicose Vein Ablation Prior Authorization",
+      "policy_id": "5a8301fe-061a-548b-8dc1-7694e46c0dd7",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 249,
+      "policy": "Vertebral Augmentation Prior Authorization",
+      "policy_id": "494fb506-e4c9-5903-b3d7-3b185c835438",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "PRIOR_AUTH",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    },
+    {
+      "register_index": 250,
+      "policy": "Vision Hardware vs Medical Eye Disease",
+      "policy_id": "2ef58ca4-477c-5b99-901a-51cf9a41770b",
+      "register_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "code_mapping_state": "UNVERIFIED_CODE_MAPPING",
+      "lever_type": "COVERAGE_CRITERIA",
+      "result": "CORRECTED_WITH_UNRESOLVED",
+      "unresolved": [
+        "UNVERIFIED_CODE_MAPPING",
+        "SERVICE_CATEGORY_RECLASSIFICATION_REQUIRED"
+      ]
+    }
+  ]
+}

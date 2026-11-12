@@ -276,7 +276,11 @@ def _benchmark_rows_from_claims_slice(
 
 
 def patient_segments_from_claims_df(df: pd.DataFrame, max_segments: int = 12) -> List[Dict[str, Any]]:
-    """Segment members by LOB × utilization tertile; shape matches BaselineAnalysis PatientSegment."""
+    """Segment members by LOB × utilization band; shape matches BaselineAnalysis PatientSegment.
+
+    Prefer claim-volume tertiles; if claim counts are too uniform, band on allowed spend so
+    the UI always has comparable multi-segment charts (not a single "All members" blob).
+    """
     if df is None or df.empty or "member_id" not in df.columns:
         return []
 
@@ -288,48 +292,115 @@ def patient_segments_from_claims_df(df: pd.DataFrame, max_segments: int = 12) ->
         mem = mem.drop(columns=["allowed_amount"])
     else:
         mem["allowed"] = 0.0
+    if "paid_amount" in df.columns:
+        pd_amt = df.groupby("member_id", as_index=False)["paid_amount"].sum()
+        mem = mem.merge(pd_amt, on="member_id", how="left")
+        mem["paid"] = mem["paid_amount"].fillna(0.0)
+        mem = mem.drop(columns=["paid_amount"])
+    else:
+        mem["paid"] = mem["allowed"]
     if "lob" in df.columns:
         lob_m = df.groupby("member_id", as_index=False)["lob"].first()
         mem = mem.merge(lob_m, on="member_id", how="left")
+        mem["lob"] = mem["lob"].fillna("ALL").astype(str)
     else:
         mem["lob"] = "ALL"
-
-    nuniq = mem["claims"].nunique()
-    if nuniq < 2:
-        mem["util_band"] = "All members"
+    if "market" in df.columns:
+        mk = df.groupby("member_id", as_index=False)["market"].first()
+        mem = mem.merge(mk, on="member_id", how="left")
+        mem["market"] = mem["market"].fillna("ALL").astype(str)
     else:
+        mem["market"] = "ALL"
+
+    labels = ["Lower utilization", "Middle utilization", "Higher utilization"]
+
+    def _band(series: pd.Series, q: int = 3) -> pd.Series:
+        nuniq = int(series.nunique())
+        if nuniq < 2 or len(series) < 3:
+            return pd.Series(["All members"] * len(series), index=series.index)
         try:
-            mem["util_band"] = pd.qcut(
-                mem["claims"],
-                q=min(3, nuniq),
-                labels=["Lower utilization", "Middle utilization", "Higher utilization"][: min(3, nuniq)],
-                duplicates="drop",
-            ).astype(str)
+            qq = min(q, nuniq, len(series))
+            # Rank breaks ties so uniform claim counts still split into visual bands.
+            ranked = series.rank(method="first")
+            return pd.qcut(ranked, q=qq, labels=labels[:qq], duplicates="drop").astype(str)
         except Exception:
-            mem["util_band"] = "All members"
+            try:
+                return pd.qcut(
+                    series.rank(method="first"),
+                    q=2,
+                    labels=["Lower utilization", "Higher utilization"],
+                    duplicates="drop",
+                ).astype(str)
+            except Exception:
+                return pd.Series(["All members"] * len(series), index=series.index)
+
+    mem["util_band"] = _band(mem["claims"])
+    if (mem["util_band"] == "All members").all():
+        mem["util_band"] = _band(mem["allowed"])
 
     grouped = (
         mem.groupby(["lob", "util_band"], as_index=False)
-        .agg(member_count=("member_id", "count"), avg_claims=("claims", "mean"), avg_allowed=("allowed", "mean"))
+        .agg(
+            member_count=("member_id", "count"),
+            avg_claims=("claims", "mean"),
+            avg_allowed=("allowed", "mean"),
+            avg_paid=("paid", "mean"),
+            total_claims=("claims", "sum"),
+            total_allowed=("allowed", "sum"),
+        )
         .sort_values("member_count", ascending=False)
         .head(max_segments)
     )
 
+    # If still a single LOB×band cell, also emit market bands so charts have contrast.
+    if len(grouped) < 2 and mem["market"].nunique() > 1:
+        mk_grouped = (
+            mem.groupby(["market", "util_band"], as_index=False)
+            .agg(
+                member_count=("member_id", "count"),
+                avg_claims=("claims", "mean"),
+                avg_allowed=("allowed", "mean"),
+                avg_paid=("paid", "mean"),
+                total_claims=("claims", "sum"),
+                total_allowed=("allowed", "sum"),
+            )
+            .sort_values("member_count", ascending=False)
+            .head(max_segments)
+        )
+        mk_grouped = mk_grouped.rename(columns={"market": "lob"})
+        grouped = mk_grouped
+
     out: List[Dict[str, Any]] = []
     for _, row in grouped.iterrows():
+        mc = max(1, int(row["member_count"]))
+        avg_claims = float(row["avg_claims"])
+        avg_allowed = float(row["avg_allowed"])
+        avg_paid = float(row["avg_paid"])
         name = f"{row['lob']} · {row['util_band']}"
         out.append(
             {
                 "segment_id": len(out) + 1,
                 "segment_name": name,
                 "member_count": int(row["member_count"]),
-                "characteristics": {"lob": str(row["lob"]), "utilization_band": str(row["util_band"])},
+                "characteristics": {
+                    "lob": str(row["lob"]),
+                    "utilization_band": str(row["util_band"]),
+                    "share_of_members_pct": None,  # filled by UI from totals
+                },
                 "utilization_profile": {
-                    "avg_claim_lines_per_member": round(float(row["avg_claims"]), 2),
-                    "avg_allowed_per_member": round(float(row["avg_allowed"]), 2),
+                    "avg_claim_lines_per_member": round(avg_claims, 2),
+                    "avg_allowed_per_member": round(avg_allowed, 2),
+                    "avg_paid_per_member": round(avg_paid, 2),
+                    "avg_cost_per_claim": round(avg_allowed / avg_claims, 2) if avg_claims else 0.0,
+                    "utilization_per_1k": round(avg_claims * 1000.0, 2),
+                    "cost_pmpm": round(avg_paid, 2),
                 },
             }
         )
+    # annotate shares
+    total_m = sum(s["member_count"] for s in out) or 1
+    for s in out:
+        s["characteristics"]["share_of_members_pct"] = round(100.0 * s["member_count"] / total_m, 1)
     return out
 
 

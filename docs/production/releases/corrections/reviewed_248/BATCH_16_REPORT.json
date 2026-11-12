@@ -1,0 +1,274 @@
+{
+  "generated_at": "2026-11-07T12:30:24.482825+00:00",
+  "batch": 16,
+  "batch_size": 10,
+  "source_system": "SYNTHETIC_REVIEWED_248_V1",
+  "policies": [
+    {
+      "register_index": 152,
+      "name": "NCD 220.2 MRI Coverage Change Study",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 4586,
+        "baseline_members": 3829,
+        "baseline_allowed": 6599328.42,
+        "avg_allowed_per_line": 1439.0162276493677,
+        "observation_claims": 3853,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "70551",
+          "70552",
+          "70553",
+          "72148",
+          "72149",
+          "72158"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "91611dbe-40b9-4498-b19c-c4c8d1d180af",
+        "prediction_id": "324f8033-2376-4382-8db1-ea1dda70a7d9",
+        "observations": 10,
+        "allowed_pmpm": 45.82866958333333,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 153,
+      "name": "Negative Pressure Wound Therapy Prior Authorization",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 154,
+      "name": "Neuropsychological Testing Prior Authorization",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 155,
+      "name": "NICU Concurrent Review",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 14261,
+        "baseline_members": 8386,
+        "baseline_allowed": 3227970.77,
+        "avg_allowed_per_line": 226.3495386017811,
+        "observation_claims": 11878,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99221",
+          "99222",
+          "99223",
+          "99231",
+          "99232",
+          "99233"
+        ],
+        "service_category": "inpatient"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "7e6353d1-dfbb-4c50-baa3-442ac7ed5846",
+        "prediction_id": "2e30f45c-fa27-494a-9961-1ac9aad1ee46",
+        "observations": 10,
+        "allowed_pmpm": 22.416463680555555,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 156,
+      "name": "NICU Level-of-Care Authorization",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 3995,
+        "baseline_members": 3379,
+        "baseline_allowed": 1135210.4,
+        "avg_allowed_per_line": 284.1577972465582,
+        "observation_claims": 3458,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "59400",
+          "59510",
+          "99223",
+          "99468"
+        ],
+        "service_category": "inpatient"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "1b111c4d-0b4f-48b9-80bb-8f8e3bfef5ce",
+        "prediction_id": "f734e265-cf0d-48ef-bba9-b577baebf51b",
+        "observations": 10,
+        "allowed_pmpm": 7.883405555555555,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 157,
+      "name": "Non-Emergency Ambulance Prior Authorization",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 5184,
+        "baseline_members": 4182,
+        "baseline_allowed": 1161370.24,
+        "avg_allowed_per_line": 224.02975308641976,
+        "observation_claims": 4320,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99284",
+          "99285",
+          "G0380",
+          "G0381"
+        ],
+        "service_category": "ed"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "cfbde90a-614c-49d6-bcc8-600e9cc27d06",
+        "prediction_id": "99fc01fb-191c-4e1d-8bab-61c95cda0459",
+        "observations": 10,
+        "allowed_pmpm": 8.065071111111111,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 158,
+      "name": "Non-Formulary Exception Review",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 159,
+      "name": "Noninvasive Ventilation Prior Authorization",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 160,
+      "name": "North Carolina Mandated Benefit Administration",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 161,
+      "name": "No Surprises Act Emergency Services No-PA Rule",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 5184,
+        "baseline_members": 4182,
+        "baseline_allowed": 1161370.24,
+        "avg_allowed_per_line": 224.02975308641976,
+        "observation_claims": 4320,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99284",
+          "99285",
+          "G0380",
+          "G0381"
+        ],
+        "service_category": "ed"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "65aa1a7f-f0d6-4dce-a10b-3dbf6386f28e",
+        "prediction_id": "eff29b19-0468-49b6-a2fa-e5bcbc8d1de1",
+        "observations": 10,
+        "allowed_pmpm": 8.065071111111111,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    }
+  ],
+  "population": {
+    "loaded": false,
+    "claims": 348744,
+    "members": 12000,
+    "source_system": "SYNTHETIC_REVIEWED_248_V1",
+    "book_mm_2025": 144000.0
+  },
+  "validation_summary": {
+    "policies_in_batch": 10,
+    "configured": 10,
+    "measurable_completed": 5,
+    "config_only": 5,
+    "thin_but_measured": 0,
+    "failed": 0,
+    "rate_continuity_checked": 5,
+    "pass": true
+  }
+}

@@ -1,0 +1,2109 @@
+{
+  "generated_at": "2026-11-07T07:27:52.575654+00:00",
+  "database": "hfleanstg",
+  "window": [
+    "2025-01-01",
+    "2025-12-31"
+  ],
+  "read_only": true,
+  "mutations": "none",
+  "grain_definition": {
+    "selected_claims_in_report": "claims_lines rows (claim lines), not claim headers",
+    "stored_pmpm_formula": "sum(allowed_amount on selected claim lines) / member_months",
+    "stored_member_months_source": "Single tenant-wide enrollment member-month total reused for every policy (lean_staging_nine_policy_baselines_2025.py)."
+  },
+  "tenant_exposure": {
+    "enrollment_by_source": [
+      {
+        "source_system": "SYNTHETIC_LONGITUDINAL_V1",
+        "rows": 9479433,
+        "members": 500000
+      },
+      {
+        "source_system": "SYNTHETIC_NINE_POLICY_5K_V1",
+        "rows": 110000,
+        "members": 5000
+      }
+    ],
+    "product_enrollment_mm_cy2025": {
+      "mm": 5374450.412213371,
+      "rows": 5517383,
+      "members": 505000
+    },
+    "script_tenant_wide_mm_cy2025": 5554299.26899384
+  },
+  "cy2025_claims_by_source": [
+    {
+      "source_system": "SYNTHETIC_LONGITUDINAL_V1",
+      "lines": 985102,
+      "members": 448575,
+      "headers": 968658,
+      "allowed": 449896132.06,
+      "paid": 359916858.59,
+      "avg_allowed": 456.7000493959001,
+      "med_allowed": 319.59
+    },
+    {
+      "source_system": "SYNTHETIC_NINE_POLICY_5K_V1",
+      "lines": 28835,
+      "members": 5000,
+      "headers": 26629,
+      "allowed": 30387379.65,
+      "paid": 24309904.08,
+      "avg_allowed": 1053.8366447026183,
+      "med_allowed": 961.48
+    }
+  ],
+  "realism": {
+    "overall_allowed": {
+      "neg": 0,
+      "zero": 0,
+      "gt100k": 0,
+      "med": 327.07,
+      "avg": 473.6818083470669,
+      "max_allowed": 5249.45,
+      "lines": 1013937
+    },
+    "allowed_by_service_category_top40": [
+      {
+        "service_category": "INPATIENT",
+        "lines": 15224,
+        "allowed": 34637472.48,
+        "avg_allowed": 2275.188681029953,
+        "p10": 2167.979,
+        "p50": 2200.0,
+        "p90": 2290.4779999999996,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "infusion",
+        "lines": 7091,
+        "allowed": 29069581.39,
+        "avg_allowed": 4099.50379213087,
+        "p10": 2625.66,
+        "p50": 4992.79,
+        "p90": 5072.8,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "EMERGENCY",
+        "lines": 33206,
+        "allowed": 27481639.41,
+        "avg_allowed": 827.610655002108,
+        "p10": 790.085,
+        "p50": 800.0,
+        "p90": 829.635,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "OUTPATIENT",
+        "lines": 22658,
+        "allowed": 26324080.13,
+        "avg_allowed": 1161.8006942360314,
+        "p10": 1175.22,
+        "p50": 1200.0,
+        "p90": 1240.0729999999999,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "PROFESSIONAL",
+        "lines": 162653,
+        "allowed": 24662043.51,
+        "avg_allowed": 151.62366209046252,
+        "p10": 147.83,
+        "p50": 150.0,
+        "p90": 155.42,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "mppr",
+        "lines": 22580,
+        "allowed": 22397807.79,
+        "avg_allowed": 991.9312573073516,
+        "p10": 400.0,
+        "p50": 1128.695,
+        "p90": 1442.141,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "mri",
+        "lines": 14396,
+        "allowed": 13747869.5,
+        "avg_allowed": 954.9784315087525,
+        "p10": 888.68,
+        "p50": 900.0,
+        "p90": 941.165,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "ptp",
+        "lines": 14720,
+        "allowed": 13578791.19,
+        "avg_allowed": 922.4722275815218,
+        "p10": 699.6990000000001,
+        "p50": 1013.19,
+        "p90": 1133.193,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "sos",
+        "lines": 11255,
+        "allowed": 13051195.57,
+        "avg_allowed": 1159.5908991559306,
+        "p10": 897.148,
+        "p50": 919.04,
+        "p90": 1869.528,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "ncd",
+        "lines": 10181,
+        "allowed": 9565560.52,
+        "avg_allowed": 939.5501934976918,
+        "p10": 700.0,
+        "p50": 718.12,
+        "p90": 1552.32,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "PHARMACY",
+        "lines": 83335,
+        "allowed": 7366631.2,
+        "avg_allowed": 88.39780644387112,
+        "p10": 83.25,
+        "p50": 85.16,
+        "p90": 88.58,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "lcd",
+        "lines": 7212,
+        "allowed": 5139412.54,
+        "avg_allowed": 712.6195978924015,
+        "p10": 643.35,
+        "p50": 650.0,
+        "p90": 903.8010000000012,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "therapy",
+        "lines": 9782,
+        "allowed": 2281618.2,
+        "avg_allowed": 233.2465957881824,
+        "p10": 102.51400000000001,
+        "p50": 291.24,
+        "p90": 309.354,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "mue",
+        "lines": 6467,
+        "allowed": 2009833.24,
+        "avg_allowed": 310.7829349002629,
+        "p10": 196.624,
+        "p50": 300.0,
+        "p90": 412.99600000000004,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "specialty_pharmacy_exclusive_network",
+        "lines": 2353,
+        "allowed": 1781073.99,
+        "avg_allowed": 756.9375223119422,
+        "p10": 740.938,
+        "p50": 754.14,
+        "p90": 781.518,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "partial_hospitalization_and_iop_authorization",
+        "lines": 2241,
+        "allowed": 1751617.06,
+        "avg_allowed": 781.622962962963,
+        "p10": 766.06,
+        "p50": 779.19,
+        "p90": 804.21,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "home_sleep_apnea_testing_preference",
+        "lines": 2256,
+        "allowed": 1742769.79,
+        "avg_allowed": 772.5043395390071,
+        "p10": 758.47,
+        "p50": 769.29,
+        "p90": 795.735,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "bone_densitometry_frequency_limits",
+        "lines": 2203,
+        "allowed": 1727233.34,
+        "avg_allowed": 784.0369223785747,
+        "p10": 769.506,
+        "p50": 781.61,
+        "p90": 805.128,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "home_sleep_testing_before_facility_psg",
+        "lines": 2234,
+        "allowed": 1724796.12,
+        "avg_allowed": 772.0663025962399,
+        "p10": 757.256,
+        "p50": 769.29,
+        "p90": 795.862,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "provider_network_change_continuity_of_care_coverage",
+        "lines": 2198,
+        "allowed": 1724260.57,
+        "avg_allowed": 784.467957233849,
+        "p10": 770.097,
+        "p50": 781.41,
+        "p90": 808.212,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "anti_reflux_procedure_prior_authorization",
+        "lines": 2210,
+        "allowed": 1718658.42,
+        "avg_allowed": 777.6734932126697,
+        "p10": 764.173,
+        "p50": 774.74,
+        "p90": 800.626,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "retrospective_authorization_window",
+        "lines": 2154,
+        "allowed": 1714104.98,
+        "avg_allowed": 795.7776137418756,
+        "p10": 784.665,
+        "p50": 792.52,
+        "p90": 818.302,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "low_dose_ct_lung_cancer_screening_criteria",
+        "lines": 2231,
+        "allowed": 1713878.4,
+        "avg_allowed": 768.2108471537427,
+        "p10": 754.4,
+        "p50": 764.84,
+        "p90": 792.29,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "cgm_and_diabetes_supply_quantity_limits",
+        "lines": 2163,
+        "allowed": 1689666.32,
+        "avg_allowed": 781.1679704114656,
+        "p10": 766.9499999999999,
+        "p50": 777.97,
+        "p90": 805.378,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "bluecard_host_plan_local_rules_application",
+        "lines": 2189,
+        "allowed": 1680410.6,
+        "avg_allowed": 767.6613065326633,
+        "p10": 755.04,
+        "p50": 765.05,
+        "p90": 788.766,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "inpatient_concurrent_stay_review",
+        "lines": 2149,
+        "allowed": 1672164.29,
+        "avg_allowed": 778.112745463006,
+        "p10": 764.888,
+        "p50": 775.75,
+        "p90": 799.692,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "breast_mri_medical_necessity_criteria",
+        "lines": 2219,
+        "allowed": 1669692.95,
+        "avg_allowed": 752.4528841820639,
+        "p10": 737.8040000000001,
+        "p50": 749.89,
+        "p90": 775.644,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "oncology_evidence_based_clinical_pathway",
+        "lines": 2216,
+        "allowed": 1662069.64,
+        "avg_allowed": 750.0314259927798,
+        "p10": 735.035,
+        "p50": 747.07,
+        "p90": 773.765,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "eyelid_surgery_medical_necessity",
+        "lines": 2193,
+        "allowed": 1648242.62,
+        "avg_allowed": 751.5926219790242,
+        "p10": 736.462,
+        "p50": 748.48,
+        "p90": 775.586,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "pulmonary_rehabilitation_authorization",
+        "lines": 2285,
+        "allowed": 1641871.74,
+        "avg_allowed": 718.5434310722101,
+        "p10": 705.378,
+        "p50": 715.35,
+        "p90": 741.18,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "spine_surgery_prior_authorization",
+        "lines": 2108,
+        "allowed": 1640091.53,
+        "avg_allowed": 778.0320351043644,
+        "p10": 766.485,
+        "p50": 775.15,
+        "p90": 799.151,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "spinal_decompression_without_fusion_prior_authorization",
+        "lines": 2102,
+        "allowed": 1635161.0,
+        "avg_allowed": 777.907231208373,
+        "p10": 764.375,
+        "p50": 775.15,
+        "p90": 800.481,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "member_appeal_and_grievance_timelines",
+        "lines": 2207,
+        "allowed": 1630865.76,
+        "avg_allowed": 738.951409152696,
+        "p10": 724.702,
+        "p50": 735.95,
+        "p90": 761.94,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "oncology_infusion_site_steerage",
+        "lines": 2329,
+        "allowed": 1618326.45,
+        "avg_allowed": 694.8589308716187,
+        "p10": 680.5459999999999,
+        "p50": 692.32,
+        "p90": 716.664,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "dermatology_biologic_step_therapy",
+        "lines": 2136,
+        "allowed": 1616754.83,
+        "avg_allowed": 756.9076919475656,
+        "p10": 742.375,
+        "p50": 753.93,
+        "p90": 780.545,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "specialty_drug_site_of_administration_management",
+        "lines": 2298,
+        "allowed": 1597288.18,
+        "avg_allowed": 695.0775369886858,
+        "p10": 682.0169999999999,
+        "p50": 692.32,
+        "p90": 716.2959999999999,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "bariatric_revisional_surgery_prior_authorization",
+        "lines": 2303,
+        "allowed": 1592409.72,
+        "avg_allowed": 691.4501606600087,
+        "p10": 675.9680000000001,
+        "p50": 689.09,
+        "p90": 712.662,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "enteral_nutrition_prior_authorization",
+        "lines": 2171,
+        "allowed": 1588760.54,
+        "avg_allowed": 731.8104744357439,
+        "p10": 719.5,
+        "p50": 729.09,
+        "p90": 753.3,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "opioid_quantity_limit_chronic_pain",
+        "lines": 2082,
+        "allowed": 1584059.2,
+        "avg_allowed": 760.8353506243997,
+        "p10": 751.172,
+        "p50": 758.18,
+        "p90": 782.145,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      },
+      {
+        "service_category": "cosmetic_services_exclusion",
+        "lines": 2106,
+        "allowed": 1583186.64,
+        "avg_allowed": 751.7505413105413,
+        "p10": 742.925,
+        "p50": 748.48,
+        "p90": 773.5250000000001,
+        "neg": 0,
+        "zero": 0,
+        "gt50k": 0
+      }
+    ],
+    "key_procedure_allowed_distributions": [
+      {
+        "code": "27447",
+        "lines": 13461,
+        "avg_allowed": 1402.1410400416016,
+        "p50": 1400.0,
+        "p10": 587.87,
+        "p90": 1463.37
+      },
+      {
+        "code": "64483",
+        "lines": 11290,
+        "avg_allowed": 425.5209681133747,
+        "p50": 400.0,
+        "p10": 395.62,
+        "p90": 419.15
+      },
+      {
+        "code": "70540",
+        "lines": 6660,
+        "avg_allowed": 685.7426456456457,
+        "p50": 650.0,
+        "p10": 642.75,
+        "p90": 679.092
+      },
+      {
+        "code": "70542",
+        "lines": 552,
+        "avg_allowed": 1036.8958695652175,
+        "p50": 1031.445,
+        "p10": 698.771,
+        "p90": 1390.711
+      },
+      {
+        "code": "70551",
+        "lines": 17372,
+        "avg_allowed": 756.9275794381764,
+        "p50": 700.0,
+        "p10": 536.559,
+        "p90": 1003.7019999999997
+      },
+      {
+        "code": "70553",
+        "lines": 11771,
+        "avg_allowed": 1063.0406456545747,
+        "p50": 1100.0,
+        "p10": 646.86,
+        "p90": 1386.87
+      },
+      {
+        "code": "72148",
+        "lines": 22845,
+        "avg_allowed": 983.27019260232,
+        "p50": 900.0,
+        "p10": 889.404,
+        "p90": 1137.006000000001
+      },
+      {
+        "code": "72149",
+        "lines": 2806,
+        "avg_allowed": 1545.351931575196,
+        "p50": 1538.42,
+        "p10": 1025.355,
+        "p90": 2065.1
+      },
+      {
+        "code": "96413",
+        "lines": 17720,
+        "avg_allowed": 2011.22134255079,
+        "p50": 697.025,
+        "p10": 691.246,
+        "p90": 5000.0
+      },
+      {
+        "code": "97110",
+        "lines": 14016,
+        "avg_allowed": 286.3089390696347,
+        "p50": 300.0,
+        "p10": 157.85000000000002,
+        "p90": 355.28499999999997
+      },
+      {
+        "code": "97112",
+        "lines": 1131,
+        "avg_allowed": 124.83746242263484,
+        "p50": 124.92,
+        "p10": 80.33,
+        "p90": 167.96
+      },
+      {
+        "code": "97140",
+        "lines": 1102,
+        "avg_allowed": 124.6408166969147,
+        "p50": 123.115,
+        "p10": 82.622,
+        "p90": 168.603
+      },
+      {
+        "code": "J1745",
+        "lines": 2594,
+        "avg_allowed": 884.0325867386276,
+        "p50": 531.91,
+        "p10": 529.671,
+        "p90": 2192.9290000000005
+      }
+    ]
+  },
+  "policies": [
+    {
+      "policy_id": "a9e032f8-d4fc-599c-8ea4-4e58a0f929e3",
+      "name": "Imaging Site-of-Service Policy",
+      "policy_key": "sos",
+      "baseline_id": "e668addf-f273-4b4d-b5a9-1e88e53f0d41",
+      "configuration": {
+        "codes": [
+          "72148",
+          "72149"
+        ],
+        "service_categories": [
+          "sos"
+        ],
+        "lob_in_current_scope": null,
+        "markets_in_current_scope": null,
+        "lob_used_in_stored_filters": null,
+        "markets_used_in_stored_filters": null,
+        "synthetic_scope_alignment": null,
+        "execution_eligibility": "DIRECTIONALLY_VALID",
+        "register_status": "AWAITING_CONFIGURATION_PARAMETERS",
+        "code_mapping_state": "CANDIDATE_DEMO_MAPPING",
+        "mechanism": "SITE_OF_SERVICE",
+        "effective_period": {
+          "end_date": null,
+          "start_date": "2026-01-01T00:00:00"
+        }
+      },
+      "stored_baseline": {
+        "total_claims": 11255,
+        "unique_members": 6710,
+        "member_months": 5554299.26899384,
+        "total_allowed": 13051195.57,
+        "total_paid": 10440956.91,
+        "allowed_pmpm_target": 2.349746554503575,
+        "exposure_method": "ENROLLMENT_PARTIAL_MONTH",
+        "denominator_basis": "ENROLLMENT",
+        "scope_resolution": "policy_definition_codesets"
+      },
+      "independent": {
+        "grain": "claim_line",
+        "lines": 11255,
+        "headers": 11255,
+        "distinct_members_on_selected_claims": 6710,
+        "units_sum": 11255.0,
+        "total_allowed": 13051195.57,
+        "total_paid": 10440956.91,
+        "avg_allowed_per_line": 1159.59,
+        "p10_allowed_per_line": 897.15,
+        "p50_allowed_per_line": 919.04,
+        "p90_allowed_per_line": 1869.53,
+        "neg_allowed_lines": 0,
+        "zero_allowed_lines": 0,
+        "source_mix": {
+          "lines_5k": 4448,
+          "lines_500k": 6807,
+          "members_5k": 2221,
+          "members_500k": 4489,
+          "population": "COMBINED"
+        },
+        "denominators": {
+          "script_tenant_wide_mm": 5554299.26899384,
+          "product_enrollment_mm": 5374450.412213371,
+          "claimant_times_12": 80520.0,
+          "enrollment_mm_for_selected_claimants": 73656.16359447018,
+          "enrolled_members_among_selected_claimants": 6710
+        },
+        "pmpm_variants": {
+          "using_script_tenant_wide_mm": 2.349746554503575,
+          "using_product_enrollment_mm": 2.428377707298466,
+          "using_claimant_x12": 162.08638313462495,
+          "using_selected_claimant_enrollment_mm": 177.19081381778392
+        },
+        "util_lines_per_1k_member_years_using_selected_claimant_mm": 1833.6550997089914,
+        "by_code": [
+          {
+            "code": "72148",
+            "lines": 9032,
+            "allowed": 9605930.61,
+            "avg_allowed": 1063.5441330823737
+          },
+          {
+            "code": "72149",
+            "lines": 2223,
+            "allowed": 3445264.96,
+            "avg_allowed": 1549.8267926225822
+          }
+        ],
+        "by_source_lob_market": [
+          {
+            "source_system": "SYNTHETIC_LONGITUDINAL_V1",
+            "lob": "COMMERCIAL",
+            "market": "SYNTHETIC",
+            "lines": 6807,
+            "allowed": 6157709.76
+          },
+          {
+            "source_system": "SYNTHETIC_NINE_POLICY_5K_V1",
+            "lob": "COMMERCIAL",
+            "market": "SYNTHETIC",
+            "lines": 4448,
+            "allowed": 6893485.81
+          }
+        ],
+        "exclusions": {
+          "code_match_any_category": {
+            "lines_code_only": 25651,
+            "allowed_code_only": 26799065.07
+          },
+          "excluded_by_service_category_filter": {
+            "lines": 14396,
+            "allowed": 13747869.5,
+            "reason": "AND filter: codeset \u2229 service_category"
+          }
+        },
+        "em_check": null
+      },
+      "reconciliation": {
+        "claims_delta_indep_minus_stored": 0,
+        "allowed_delta_indep_minus_stored": 0.0,
+        "numerator_match": true,
+        "claims_match": true,
+        "stored_denominator_equals_script_tenant_mm": true,
+        "stored_pmpm_reproducible_from_script_mm": true
+      }
+    },
+    {
+      "policy_id": "fce62ce1-1476-520d-81a6-daf0e9507743",
+      "name": "Infusion Site-of-Care and Reimbursement Policy",
+      "policy_key": "infusion",
+      "baseline_id": "ddfb032d-d467-45ab-b9f5-db9d15bb0f8b",
+      "configuration": {
+        "codes": [
+          "96413",
+          "J1745"
+        ],
+        "service_categories": [
+          "infusion"
+        ],
+        "lob_in_current_scope": null,
+        "markets_in_current_scope": null,
+        "lob_used_in_stored_filters": null,
+        "markets_used_in_stored_filters": null,
+        "synthetic_scope_alignment": null,
+        "execution_eligibility": "DIRECTIONALLY_VALID",
+        "register_status": "AWAITING_CONFIGURATION_PARAMETERS",
+        "code_mapping_state": "CANDIDATE_DEMO_MAPPING",
+        "mechanism": "INFUSION_SITE_OF_CARE",
+        "effective_period": {
+          "end_date": null,
+          "start_date": "2026-01-01T00:00:00"
+        }
+      },
+      "stored_baseline": {
+        "total_claims": 7091,
+        "unique_members": 4779,
+        "member_months": 5554299.26899384,
+        "total_allowed": 29069581.39,
+        "total_paid": 23255665.1,
+        "allowed_pmpm_target": 5.233708156900582,
+        "exposure_method": "ENROLLMENT_PARTIAL_MONTH",
+        "denominator_basis": "ENROLLMENT",
+        "scope_resolution": "policy_definition_codesets"
+      },
+      "independent": {
+        "grain": "claim_line",
+        "lines": 7091,
+        "headers": 7091,
+        "distinct_members_on_selected_claims": 4779,
+        "units_sum": 7091.0,
+        "total_allowed": 29069581.39,
+        "total_paid": 23255665.1,
+        "avg_allowed_per_line": 4099.5,
+        "p10_allowed_per_line": 2625.66,
+        "p50_allowed_per_line": 4992.79,
+        "p90_allowed_per_line": 5072.8,
+        "neg_allowed_lines": 0,
+        "zero_allowed_lines": 0,
+        "source_mix": {
+          "lines_5k": 1094,
+          "lines_500k": 5997,
+          "members_5k": 556,
+          "members_500k": 4223,
+          "population": "COMBINED"
+        },
+        "denominators": {
+          "script_tenant_wide_mm": 5554299.26899384,
+          "product_enrollment_mm": 5374450.412213371,
+          "claimant_times_12": 57348.0,
+          "enrollment_mm_for_selected_claimants": 50701.28686635946,
+          "enrolled_members_among_selected_claimants": 4779
+        },
+        "pmpm_variants": {
+          "using_script_tenant_wide_mm": 5.233708156900582,
+          "using_product_enrollment_mm": 5.408847260724509,
+          "using_claimant_x12": 506.8979108251378,
+          "using_selected_claimant_enrollment_mm": 573.3499717003791
+        },
+        "util_lines_per_1k_member_years_using_selected_claimant_mm": 1678.3005966749718,
+        "by_code": [
+          {
+            "code": "96413",
+            "lines": 6526,
+            "allowed": 27859361.58,
+            "avg_allowed": 4268.97970885688
+          },
+          {
+            "code": "J1745",
+            "lines": 565,
+            "allowed": 1210219.81,
+            "avg_allowed": 2141.98196460177
+          }
+        ],
+        "by_source_lob_market": [
+          {
+            "source_system": "SYNTHETIC_LONGITUDINAL_V1",
+            "lob": "COMMERCIAL",
+            "market": "SYNTHETIC",
+            "lines": 5997,
+            "allowed": 26691677.99
+          },
+          {
+            "source_system": "SYNTHETIC_NINE_POLICY_5K_V1",
+            "lob": "COMMERCIAL",
+            "market": "SYNTHETIC",
+            "lines": 1094,
+            "allowed": 2377903.4
+          }
+        ],
+        "exclusions": {
+          "code_match_any_category": {
+            "lines_code_only": 20314,
+            "allowed_code_only": 37932022.72
+          },
+          "excluded_by_service_category_filter": {
+            "lines": 13223,
+            "allowed": 8862441.329999998,
+            "reason": "AND filter: codeset \u2229 service_category"
+          }
+        },
+        "em_check": null
+      },
+      "reconciliation": {
+        "claims_delta_indep_minus_stored": 0,
+        "allowed_delta_indep_minus_stored": 0.0,
+        "numerator_match": true,
+        "claims_match": true,
+        "stored_denominator_equals_script_tenant_mm": true,
+        "stored_pmpm_reproducible_from_script_mm": true
+      }
+    },
+    {
+      "policy_id": "20fe5bcf-f112-5033-a2c3-4702179e6652",
+      "name": "Local Coverage Determination Study \u2014 LCD L34425",
+      "policy_key": "lcd",
+      "baseline_id": "2d1ec398-d9de-4123-9be3-e587f3a75664",
+      "configuration": {
+        "codes": [
+          "70540",
+          "70542"
+        ],
+        "service_categories": [
+          "lcd"
+        ],
+        "lob_in_current_scope": null,
+        "markets_in_current_scope": null,
+        "lob_used_in_stored_filters": null,
+        "markets_used_in_stored_filters": null,
+        "synthetic_scope_alignment": {
+          "reason": "Configured Medicare/NC filters do not match loaded COMMERCIAL/SYNTHETIC claims.",
+          "cleared_lob_markets": true,
+          "authority_labels_retained": "LCD L34425"
+        },
+        "execution_eligibility": "DIRECTIONALLY_VALID",
+        "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+        "code_mapping_state": "CANDIDATE_DEMO_MAPPING",
+        "mechanism": "LCD_COVERAGE_STUDY",
+        "effective_period": {
+          "end_date": null,
+          "start_date": "2026-01-01T00:00:00"
+        }
+      },
+      "stored_baseline": {
+        "total_claims": 7212,
+        "unique_members": 4773,
+        "member_months": 5554299.26899384,
+        "total_allowed": 5139412.54,
+        "total_paid": 4111529.85,
+        "allowed_pmpm_target": 0.925303497542905,
+        "exposure_method": "ENROLLMENT_PARTIAL_MONTH",
+        "denominator_basis": "ENROLLMENT",
+        "scope_resolution": "policy_definition_codesets"
+      },
+      "independent": {
+        "grain": "claim_line",
+        "lines": 7212,
+        "headers": 7212,
+        "distinct_members_on_selected_claims": 4773,
+        "units_sum": 7212.0,
+        "total_allowed": 5139412.54,
+        "total_paid": 4111529.85,
+        "avg_allowed_per_line": 712.62,
+        "p10_allowed_per_line": 643.35,
+        "p50_allowed_per_line": 650.0,
+        "p90_allowed_per_line": 903.8,
+        "neg_allowed_lines": 0,
+        "zero_allowed_lines": 0,
+        "source_mix": {
+          "lines_5k": 1105,
+          "lines_500k": 6107,
+          "members_5k": 556,
+          "members_500k": 4217,
+          "population": "COMBINED"
+        },
+        "denominators": {
+          "script_tenant_wide_mm": 5554299.26899384,
+          "product_enrollment_mm": 5374450.412213371,
+          "claimant_times_12": 57276.0,
+          "enrollment_mm_for_selected_claimants": 50590.43855606738,
+          "enrolled_members_among_selected_claimants": 4773
+        },
+        "pmpm_variants": {
+          "using_script_tenant_wide_mm": 0.925303497542905,
+          "using_product_enrollment_mm": 0.9562675521799865,
+          "using_claimant_x12": 89.73064704239123,
+          "using_selected_claimant_enrollment_mm": 101.58861410746998
+        },
+        "util_lines_per_1k_member_years_using_selected_claimant_mm": 1710.6789834226622,
+        "by_code": [
+          {
+            "code": "70540",
+            "lines": 6660,
+            "allowed": 4567046.02,
+            "avg_allowed": 685.7426456456457
+          },
+          {
+            "code": "70542",
+            "lines": 552,
+            "allowed": 572366.52,
+            "avg_allowed": 1036.8958695652175
+          }
+        ],
+        "by_source_lob_market": [
+          {
+            "source_system": "SYNTHETIC_LONGITUDINAL_V1",
+            "lob": "COMMERCIAL",
+            "market": "SYNTHETIC",
+            "lines": 6107,
+            "allowed": 3986239.81
+          },
+          {
+            "source_system": "SYNTHETIC_NINE_POLICY_5K_V1",
+            "lob": "COMMERCIAL",
+            "market": "SYNTHETIC",
+            "lines": 1105,
+            "allowed": 1153172.73
+          }
+        ],
+        "exclusions": {
+          "code_match_any_category": {
+            "lines_code_only": 7212,
+            "allowed_code_only": 5139412.54
+          },
+          "excluded_by_service_category_filter": {
+            "lines": 0,
+            "allowed": 0.0,
+            "reason": "AND filter: codeset \u2229 service_category"
+          }
+        },
+        "em_check": null
+      },
+      "reconciliation": {
+        "claims_delta_indep_minus_stored": 0,
+        "allowed_delta_indep_minus_stored": 0.0,
+        "numerator_match": true,
+        "claims_match": true,
+        "stored_denominator_equals_script_tenant_mm": true,
+        "stored_pmpm_reproducible_from_script_mm": true
+      }
+    },
+    {
+      "policy_id": "d65d0f7a-ab72-5dde-9cd0-1c75b79efc66",
+      "name": "Medically Unlikely Edit (MUE) / Unit Cap",
+      "policy_key": "mue",
+      "baseline_id": "7a01af49-5b39-43e2-8f0d-d06f81d6a0f9",
+      "configuration": {
+        "codes": [
+          "97110"
+        ],
+        "service_categories": [
+          "mue"
+        ],
+        "lob_in_current_scope": null,
+        "markets_in_current_scope": null,
+        "lob_used_in_stored_filters": null,
+        "markets_used_in_stored_filters": null,
+        "synthetic_scope_alignment": null,
+        "execution_eligibility": "DIRECTIONALLY_VALID",
+        "register_status": "AWAITING_CONFIGURATION_PARAMETERS",
+        "code_mapping_state": "CANDIDATE_DEMO_MAPPING",
+        "mechanism": "UNIT_CAP",
+        "effective_period": {
+          "end_date": null,
+          "start_date": "2026-01-01T00:00:00"
+        }
+      },
+      "stored_baseline": {
+        "total_claims": 6467,
+        "unique_members": 4576,
+        "member_months": 5554299.26899384,
+        "total_allowed": 2009833.24,
+        "total_paid": 1607866.46,
+        "allowed_pmpm_target": 0.361851809321769,
+        "exposure_method": "ENROLLMENT_PARTIAL_MONTH",
+        "denominator_basis": "ENROLLMENT",
+        "scope_resolution": "policy_definition_codesets"
+      },
+      "independent": {
+        "grain": "claim_line",
+        "lines": 6467,
+        "headers": 6467,
+        "distinct_members_on_selected_claims": 4576,
+        "units_sum": 35674.0,
+        "total_allowed": 2009833.24,
+        "total_paid": 1607866.46,
+        "avg_allowed_per_line": 310.78,
+        "p10_allowed_per_line": 196.62,
+        "p50_allowed_per_line": 300.0,
+        "p90_allowed_per_line": 413.0,
+        "neg_allowed_lines": 0,
+        "zero_allowed_lines": 0,
+        "source_mix": {
+          "lines_5k": 1087,
+          "lines_500k": 5380,
+          "members_5k": 555,
+          "members_500k": 4021,
+          "population": "COMBINED"
+        },
+        "denominators": {
+          "script_tenant_wide_mm": 5554299.26899384,
+          "product_enrollment_mm": 5374450.412213371,
+          "claimant_times_12": 54912.0,
+          "enrollment_mm_for_selected_claimants": 48520.79162826416,
+          "enrolled_members_among_selected_claimants": 4576
+        },
+        "pmpm_variants": {
+          "using_script_tenant_wide_mm": 0.361851809321769,
+          "using_product_enrollment_mm": 0.3739607003225259,
+          "using_claimant_x12": 36.60098412004662,
+          "using_selected_claimant_enrollment_mm": 41.4221032376817
+        },
+        "util_lines_per_1k_member_years_using_selected_claimant_mm": 1599.396823418569,
+        "by_code": [
+          {
+            "code": "97110",
+            "lines": 6467,
+            "allowed": 2009833.24,
+            "avg_allowed": 310.7829349002629
+          }
+        ],
+        "by_source_lob_market": [
+          {
+            "source_system": "SYNTHETIC_LONGITUDINAL_V1",
+            "lob": "COMMERCIAL",
+            "market": "SYNTHETIC",
+            "lines": 5380,
+            "allowed": 1543957.93
+          },
+          {
+            "source_system": "SYNTHETIC_NINE_POLICY_5K_V1",
+            "lob": "COMMERCIAL",
+            "market": "SYNTHETIC",
+            "lines": 1087,
+            "allowed": 465875.31
+          }
+        ],
+        "exclusions": {
+          "code_match_any_category": {
+            "lines_code_only": 14016,
+            "allowed_code_only": 4012906.09
+          },
+          "excluded_by_service_category_filter": {
+            "lines": 7549,
+            "allowed": 2003072.8499999999,
+            "reason": "AND filter: codeset \u2229 service_category"
+          }
+        },
+        "em_check": null
+      },
+      "reconciliation": {
+        "claims_delta_indep_minus_stored": 0,
+        "allowed_delta_indep_minus_stored": 0.0,
+        "numerator_match": true,
+        "claims_match": true,
+        "stored_denominator_equals_script_tenant_mm": true,
+        "stored_pmpm_reproducible_from_script_mm": true
+      }
+    },
+    {
+      "policy_id": "7e7f480d-dc95-50a9-bbab-77a8c225f81f",
+      "name": "Multiple Procedure Payment Reduction (MPPR)",
+      "policy_key": "mppr",
+      "baseline_id": "fc18f4c6-2f23-40d4-a59b-2627a4bb9fd8",
+      "configuration": {
+        "codes": [
+          "27447",
+          "64483"
+        ],
+        "service_categories": [
+          "mppr"
+        ],
+        "lob_in_current_scope": null,
+        "markets_in_current_scope": null,
+        "lob_used_in_stored_filters": null,
+        "markets_used_in_stored_filters": null,
+        "synthetic_scope_alignment": null,
+        "execution_eligibility": "DIRECTIONALLY_VALID",
+        "register_status": "AWAITING_CONFIGURATION_PARAMETERS",
+        "code_mapping_state": "CANDIDATE_DEMO_MAPPING",
+        "mechanism": "PAYMENT_EDIT",
+        "effective_period": {
+          "end_date": null,
+          "start_date": "2026-01-01T00:00:00"
+        }
+      },
+      "stored_baseline": {
+        "total_claims": 22580,
+        "unique_members": 8175,
+        "member_months": 5554299.26899384,
+        "total_allowed": 22397807.79,
+        "total_paid": 17918246.19,
+        "allowed_pmpm_target": 4.032517281708762,
+        "exposure_method": "ENROLLMENT_PARTIAL_MONTH",
+        "denominator_basis": "ENROLLMENT",
+        "scope_resolution": "policy_definition_codesets"
+      },
+      "independent": {
+        "grain": "claim_line",
+        "lines": 22580,
+        "headers": 11290,
+        "distinct_members_on_selected_claims": 8175,
+        "units_sum": 22580.0,
+        "total_allowed": 22397807.79,
+        "total_paid": 17918246.19,
+        "avg_allowed_per_line": 991.93,
+        "p10_allowed_per_line": 400.0,
+        "p50_allowed_per_line": 1128.7,
+        "p90_allowed_per_line": 1442.14,
+        "neg_allowed_lines": 0,
+        "zero_allowed_lines": 0,
+        "source_mix": {
+          "lines_5k": 2150,
+          "lines_500k": 20430,
+          "members_5k": 555,
+          "members_500k": 7620,
+          "population": "COMBINED"
+        },
+        "denominators": {
+          "script_tenant_wide_mm": 5554299.26899384,
+          "product_enrollment_mm": 5374450.412213371,
+          "claimant_times_12": 98100.0,
+          "enrollment_mm_for_selected_claimants": 87208.37603686616,
+          "enrolled_members_among_selected_claimants": 8175
+        },
+        "pmpm_variants": {
+          "using_script_tenant_wide_mm": 4.032517281708762,
+          "using_product_enrollment_mm": 4.1674601256160555,
+          "using_claimant_x12": 228.3160834862385,
+          "using_selected_claimant_enrollment_mm": 256.830923907259
+        },
+        "util_lines_per_1k_member_years_using_selected_claimant_mm": 3107.041001261798,
+        "by_code": [
+          {
+            "code": "27447",
+            "lines": 11290,
+            "allowed": 17593676.06,
+            "avg_allowed": 1558.3415465013286
+          },
+          {
+            "code": "64483",
+            "lines": 11290,
+            "allowed": 4804131.73,
+            "avg_allowed": 425.5209681133747
+          }
+        ],
+        "by_source_lob_market": [
+          {
+            "source_system": "SYNTHETIC_LONGITUDINAL_V1",
+            "lob": "COMMERCIAL",
+            "market": "SYNTHETIC",
+            "lines": 20430,
+            "allowed": 18474460.51
+          },
+          {
+            "source_system": "SYNTHETIC_NINE_POLICY_5K_V1",
+            "lob": "COMMERCIAL",
+            "market": "SYNTHETIC",
+            "lines": 2150,
+            "allowed": 3923347.28
+          }
+        ],
+        "exclusions": {
+          "code_match_any_category": {
+            "lines_code_only": 24751,
+            "allowed_code_only": 23678352.27
+          },
+          "excluded_by_service_category_filter": {
+            "lines": 2171,
+            "allowed": 1280544.4800000004,
+            "reason": "AND filter: codeset \u2229 service_category"
+          }
+        },
+        "em_check": null
+      },
+      "reconciliation": {
+        "claims_delta_indep_minus_stored": 0,
+        "allowed_delta_indep_minus_stored": 0.0,
+        "numerator_match": true,
+        "claims_match": true,
+        "stored_denominator_equals_script_tenant_mm": true,
+        "stored_pmpm_reproducible_from_script_mm": true
+      }
+    },
+    {
+      "policy_id": "b7e4ec54-64d6-5e70-8808-6e5fa0c229c7",
+      "name": "National Coverage Determination Study \u2014 MRI (NCD 220.2)",
+      "policy_key": "ncd",
+      "baseline_id": "6751714c-b647-42c9-b424-6dd6542e15fa",
+      "configuration": {
+        "codes": [
+          "70551",
+          "70553"
+        ],
+        "service_categories": [
+          "ncd"
+        ],
+        "lob_in_current_scope": null,
+        "markets_in_current_scope": null,
+        "lob_used_in_stored_filters": null,
+        "markets_used_in_stored_filters": null,
+        "synthetic_scope_alignment": {
+          "reason": "Configured Medicare/NC filters do not match loaded COMMERCIAL/SYNTHETIC claims.",
+          "cleared_lob_markets": true,
+          "authority_labels_retained": "NCD 220.2"
+        },
+        "execution_eligibility": "DIRECTIONALLY_VALID",
+        "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+        "code_mapping_state": "CANDIDATE_DEMO_MAPPING",
+        "mechanism": "NCD_COVERAGE_STUDY",
+        "effective_period": {
+          "end_date": null,
+          "start_date": "2026-01-01T00:00:00"
+        }
+      },
+      "stored_baseline": {
+        "total_claims": 10181,
+        "unique_members": 6359,
+        "member_months": 5554299.26899384,
+        "total_allowed": 9565560.52,
+        "total_paid": 7652448.48,
+        "allowed_pmpm_target": 1.7221903352234744,
+        "exposure_method": "ENROLLMENT_PARTIAL_MONTH",
+        "denominator_basis": "ENROLLMENT",
+        "scope_resolution": "policy_definition_codesets"
+      },
+      "independent": {
+        "grain": "claim_line",
+        "lines": 10181,
+        "headers": 10181,
+        "distinct_members_on_selected_claims": 6359,
+        "units_sum": 10181.0,
+        "total_allowed": 9565560.52,
+        "total_paid": 7652448.48,
+        "avg_allowed_per_line": 939.55,
+        "p10_allowed_per_line": 700.0,
+        "p50_allowed_per_line": 718.12,
+        "p90_allowed_per_line": 1552.32,
+        "neg_allowed_lines": 0,
+        "zero_allowed_lines": 0,
+        "source_mix": {
+          "lines_5k": 4418,
+          "lines_500k": 5763,
+          "members_5k": 2223,
+          "members_500k": 4136,
+          "population": "COMBINED"
+        },
+        "denominators": {
+          "script_tenant_wide_mm": 5554299.26899384,
+          "product_enrollment_mm": 5374450.412213371,
+          "claimant_times_12": 76308.0,
+          "enrollment_mm_for_selected_claimants": 69912.98847926255,
+          "enrolled_members_among_selected_claimants": 6359
+        },
+        "pmpm_variants": {
+          "using_script_tenant_wide_mm": 1.7221903352234744,
+          "using_product_enrollment_mm": 1.7798211512496949,
+          "using_claimant_x12": 125.35462232007129,
+          "using_selected_claimant_enrollment_mm": 136.82093596724616
+        },
+        "util_lines_per_1k_member_years_using_selected_claimant_mm": 1747.4864493346383,
+        "by_code": [
+          {
+            "code": "70551",
+            "lines": 7930,
+            "allowed": 6752244.78,
+            "avg_allowed": 851.4810567465322
+          },
+          {
+            "code": "70553",
+            "lines": 2251,
+            "allowed": 2813315.74,
+            "avg_allowed": 1249.8070812972012
+          }
+        ],
+        "by_source_lob_market": [
+          {
+            "source_system": "SYNTHETIC_LONGITUDINAL_V1",
+            "lob": "COMMERCIAL",
+            "market": "SYNTHETIC",
+            "lines": 5763,
+            "allowed": 4052061.86
+          },
+          {
+            "source_system": "SYNTHETIC_NINE_POLICY_5K_V1",
+            "lob": "COMMERCIAL",
+            "market": "SYNTHETIC",
+            "lines": 4418,
+            "allowed": 5513498.66
+          }
+        ],
+        "exclusions": {
+          "code_match_any_category": {
+            "lines_code_only": 29143,
+            "allowed_code_only": 25662397.35
+          },
+          "excluded_by_service_category_filter": {
+            "lines": 18962,
+            "allowed": 16096836.830000002,
+            "reason": "AND filter: codeset \u2229 service_category"
+          }
+        },
+        "em_check": null
+      },
+      "reconciliation": {
+        "claims_delta_indep_minus_stored": 0,
+        "allowed_delta_indep_minus_stored": 0.0,
+        "numerator_match": true,
+        "claims_match": true,
+        "stored_denominator_equals_script_tenant_mm": true,
+        "stored_pmpm_reproducible_from_script_mm": true
+      }
+    },
+    {
+      "policy_id": "d6339860-d85a-5dc5-babd-9c91390fde36",
+      "name": "Outpatient MRI Prior Authorization",
+      "policy_key": "mri",
+      "baseline_id": "fc67b40c-e1b9-40a7-963e-72f1163896fa",
+      "configuration": {
+        "codes": [
+          "72148",
+          "72149"
+        ],
+        "service_categories": [
+          "mri"
+        ],
+        "lob_in_current_scope": null,
+        "markets_in_current_scope": null,
+        "lob_used_in_stored_filters": null,
+        "markets_used_in_stored_filters": null,
+        "synthetic_scope_alignment": null,
+        "execution_eligibility": "DIRECTIONALLY_VALID",
+        "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+        "code_mapping_state": "CANDIDATE_DEMO_MAPPING",
+        "mechanism": "OUTPATIENT_MRI_PRIOR_AUTH",
+        "effective_period": {
+          "end_date": null,
+          "start_date": "2026-01-01T00:00:00"
+        }
+      },
+      "stored_baseline": {
+        "total_claims": 14396,
+        "unique_members": 9411,
+        "member_months": 5554299.26899384,
+        "total_allowed": 13747869.5,
+        "total_paid": 10998295.91,
+        "allowed_pmpm_target": 2.4751762255133984,
+        "exposure_method": "ENROLLMENT_PARTIAL_MONTH",
+        "denominator_basis": "ENROLLMENT",
+        "scope_resolution": "policy_definition_codesets"
+      },
+      "independent": {
+        "grain": "claim_line",
+        "lines": 14396,
+        "headers": 14396,
+        "distinct_members_on_selected_claims": 9411,
+        "units_sum": 14396.0,
+        "total_allowed": 13747869.5,
+        "total_paid": 10998295.91,
+        "avg_allowed_per_line": 954.98,
+        "p10_allowed_per_line": 888.68,
+        "p50_allowed_per_line": 900.0,
+        "p90_allowed_per_line": 941.17,
+        "neg_allowed_lines": 0,
+        "zero_allowed_lines": 0,
+        "source_mix": {
+          "lines_5k": 1128,
+          "lines_500k": 13268,
+          "members_5k": 556,
+          "members_500k": 8855,
+          "population": "COMBINED"
+        },
+        "denominators": {
+          "script_tenant_wide_mm": 5554299.26899384,
+          "product_enrollment_mm": 5374450.412213371,
+          "claimant_times_12": 112932.0,
+          "enrollment_mm_for_selected_claimants": 99343.805145929,
+          "enrolled_members_among_selected_claimants": 9411
+        },
+        "pmpm_variants": {
+          "using_script_tenant_wide_mm": 2.4751762255133984,
+          "using_product_enrollment_mm": 2.558004715934887,
+          "using_claimant_x12": 121.73581889986895,
+          "using_selected_claimant_enrollment_mm": 138.38678194181665
+        },
+        "util_lines_per_1k_member_years_using_selected_claimant_mm": 1738.9307742565286,
+        "by_code": [
+          {
+            "code": "72148",
+            "lines": 13813,
+            "allowed": 12856876.94,
+            "avg_allowed": 930.7809266632883
+          },
+          {
+            "code": "72149",
+            "lines": 583,
+            "allowed": 890992.56,
+            "avg_allowed": 1528.2891252144082
+          }
+        ],
+        "by_source_lob_market": [
+          {
+            "source_system": "SYNTHETIC_LONGITUDINAL_V1",
+            "lob": "COMMERCIAL",
+            "market": "SYNTHETIC",
+            "lines": 13268,
+            "allowed": 11999762.83
+          },
+          {
+            "source_system": "SYNTHETIC_NINE_POLICY_5K_V1",
+            "lob": "COMMERCIAL",
+            "market": "SYNTHETIC",
+            "lines": 1128,
+            "allowed": 1748106.67
+          }
+        ],
+        "exclusions": {
+          "code_match_any_category": {
+            "lines_code_only": 25651,
+            "allowed_code_only": 26799065.07
+          },
+          "excluded_by_service_category_filter": {
+            "lines": 11255,
+            "allowed": 13051195.57,
+            "reason": "AND filter: codeset \u2229 service_category"
+          }
+        },
+        "em_check": {
+          "em_in_selected_mri_population": 0
+        }
+      },
+      "reconciliation": {
+        "claims_delta_indep_minus_stored": 0,
+        "allowed_delta_indep_minus_stored": 0.0,
+        "numerator_match": true,
+        "claims_match": true,
+        "stored_denominator_equals_script_tenant_mm": true,
+        "stored_pmpm_reproducible_from_script_mm": true
+      }
+    },
+    {
+      "policy_id": "435e1461-b57e-5af3-ad08-e15aac690310",
+      "name": "Outpatient Therapy Utilization and Payment Policy",
+      "policy_key": "therapy",
+      "baseline_id": "82ac2c0c-80a1-42af-bfff-3c9cc2a06b5d",
+      "configuration": {
+        "codes": [
+          "97110",
+          "97112",
+          "97140"
+        ],
+        "service_categories": [
+          "therapy"
+        ],
+        "lob_in_current_scope": null,
+        "markets_in_current_scope": null,
+        "lob_used_in_stored_filters": null,
+        "markets_used_in_stored_filters": null,
+        "synthetic_scope_alignment": null,
+        "execution_eligibility": "DIRECTIONALLY_VALID",
+        "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+        "code_mapping_state": "CANDIDATE_DEMO_MAPPING",
+        "mechanism": "THERAPY",
+        "effective_period": {
+          "end_date": null,
+          "start_date": "2026-01-01T00:00:00"
+        }
+      },
+      "stored_baseline": {
+        "total_claims": 9782,
+        "unique_members": 6037,
+        "member_months": 5554299.26899384,
+        "total_allowed": 2281618.2,
+        "total_paid": 1825294.34,
+        "allowed_pmpm_target": 0.41078416727324,
+        "exposure_method": "ENROLLMENT_PARTIAL_MONTH",
+        "denominator_basis": "ENROLLMENT",
+        "scope_resolution": "policy_definition_codesets"
+      },
+      "independent": {
+        "grain": "claim_line",
+        "lines": 9782,
+        "headers": 9782,
+        "distinct_members_on_selected_claims": 6037,
+        "units_sum": 40461.0,
+        "total_allowed": 2281618.2,
+        "total_paid": 1825294.34,
+        "avg_allowed_per_line": 233.25,
+        "p10_allowed_per_line": 102.51,
+        "p50_allowed_per_line": 291.24,
+        "p90_allowed_per_line": 309.35,
+        "neg_allowed_lines": 0,
+        "zero_allowed_lines": 0,
+        "source_mix": {
+          "lines_5k": 3333,
+          "lines_500k": 6449,
+          "members_5k": 1667,
+          "members_500k": 4370,
+          "population": "COMBINED"
+        },
+        "denominators": {
+          "script_tenant_wide_mm": 5554299.26899384,
+          "product_enrollment_mm": 5374450.412213371,
+          "claimant_times_12": 72444.0,
+          "enrollment_mm_for_selected_claimants": 65683.00084485405,
+          "enrolled_members_among_selected_claimants": 6037
+        },
+        "pmpm_variants": {
+          "using_script_tenant_wide_mm": 0.41078416727324,
+          "using_product_enrollment_mm": 0.424530514750876,
+          "using_claimant_x12": 31.494922974987578,
+          "using_selected_claimant_enrollment_mm": 34.73681425410627
+        },
+        "util_lines_per_1k_member_years_using_selected_claimant_mm": 1787.1290667316778,
+        "by_code": [
+          {
+            "code": "97110",
+            "lines": 7549,
+            "allowed": 2003072.85,
+            "avg_allowed": 265.3428069943039
+          },
+          {
+            "code": "97112",
+            "lines": 1131,
+            "allowed": 141191.17,
+            "avg_allowed": 124.83746242263484
+          },
+          {
+            "code": "97140",
+            "lines": 1102,
+            "allowed": 137354.18,
+            "avg_allowed": 124.6408166969147
+          }
+        ],
+        "by_source_lob_market": [
+          {
+            "source_system": "SYNTHETIC_LONGITUDINAL_V1",
+            "lob": "COMMERCIAL",
+            "market": "SYNTHETIC",
+            "lines": 6449,
+            "allowed": 1864880.5
+          },
+          {
+            "source_system": "SYNTHETIC_NINE_POLICY_5K_V1",
+            "lob": "COMMERCIAL",
+            "market": "SYNTHETIC",
+            "lines": 3333,
+            "allowed": 416737.7
+          }
+        ],
+        "exclusions": {
+          "code_match_any_category": {
+            "lines_code_only": 16249,
+            "allowed_code_only": 4291451.44
+          },
+          "excluded_by_service_category_filter": {
+            "lines": 6467,
+            "allowed": 2009833.2400000002,
+            "reason": "AND filter: codeset \u2229 service_category"
+          }
+        },
+        "em_check": null
+      },
+      "reconciliation": {
+        "claims_delta_indep_minus_stored": 0,
+        "allowed_delta_indep_minus_stored": 0.0,
+        "numerator_match": true,
+        "claims_match": true,
+        "stored_denominator_equals_script_tenant_mm": true,
+        "stored_pmpm_reproducible_from_script_mm": true
+      }
+    },
+    {
+      "policy_id": "1d6d3332-88fd-54ac-8227-2d2bf856ed5f",
+      "name": "Procedure-to-Procedure (PTP) Coding Edit",
+      "policy_key": "ptp",
+      "baseline_id": "73496368-008e-449e-b962-69d9654a88b4",
+      "configuration": {
+        "codes": [
+          "70551",
+          "70553"
+        ],
+        "service_categories": [
+          "ptp"
+        ],
+        "lob_in_current_scope": null,
+        "markets_in_current_scope": null,
+        "lob_used_in_stored_filters": null,
+        "markets_used_in_stored_filters": null,
+        "synthetic_scope_alignment": null,
+        "execution_eligibility": "DIRECTIONALLY_VALID",
+        "register_status": "AWAITING_CONFIGURATION_PARAMETERS",
+        "code_mapping_state": "CANDIDATE_DEMO_MAPPING",
+        "mechanism": "PTP_EDIT",
+        "effective_period": {
+          "end_date": null,
+          "start_date": "2026-01-01T00:00:00"
+        }
+      },
+      "stored_baseline": {
+        "total_claims": 14720,
+        "unique_members": 4847,
+        "member_months": 5554299.26899384,
+        "total_allowed": 13578791.19,
+        "total_paid": 10863033.48,
+        "allowed_pmpm_target": 2.444735246046581,
+        "exposure_method": "ENROLLMENT_PARTIAL_MONTH",
+        "denominator_basis": "ENROLLMENT",
+        "scope_resolution": "policy_definition_codesets"
+      },
+      "independent": {
+        "grain": "claim_line",
+        "lines": 14720,
+        "headers": 7360,
+        "distinct_members_on_selected_claims": 4847,
+        "units_sum": 14720.0,
+        "total_allowed": 13578791.19,
+        "total_paid": 10863033.48,
+        "avg_allowed_per_line": 922.47,
+        "p10_allowed_per_line": 699.7,
+        "p50_allowed_per_line": 1013.19,
+        "p90_allowed_per_line": 1133.19,
+        "neg_allowed_lines": 0,
+        "zero_allowed_lines": 0,
+        "source_mix": {
+          "lines_5k": 2262,
+          "lines_500k": 12458,
+          "members_5k": 555,
+          "members_500k": 4292,
+          "population": "COMBINED"
+        },
+        "denominators": {
+          "script_tenant_wide_mm": 5554299.26899384,
+          "product_enrollment_mm": 5374450.412213371,
+          "claimant_times_12": 58164.0,
+          "enrollment_mm_for_selected_claimants": 51530.84377880179,
+          "enrolled_members_among_selected_claimants": 4847
+        },
+        "pmpm_variants": {
+          "using_script_tenant_wide_mm": 2.444735246046581,
+          "using_product_enrollment_mm": 2.5265450694534954,
+          "using_claimant_x12": 233.4569697751186,
+          "using_selected_claimant_enrollment_mm": 263.5080311955982
+        },
+        "util_lines_per_1k_member_years_using_selected_claimant_mm": 3427.849944748319,
+        "by_code": [
+          {
+            "code": "70551",
+            "lines": 7360,
+            "allowed": 5281804.86,
+            "avg_allowed": 717.6365298913043
+          },
+          {
+            "code": "70553",
+            "lines": 7360,
+            "allowed": 8296986.33,
+            "avg_allowed": 1127.3079252717391
+          }
+        ],
+        "by_source_lob_market": [
+          {
+            "source_system": "SYNTHETIC_LONGITUDINAL_V1",
+            "lob": "COMMERCIAL",
+            "market": "SYNTHETIC",
+            "lines": 12458,
+            "allowed": 11263659.01
+          },
+          {
+            "source_system": "SYNTHETIC_NINE_POLICY_5K_V1",
+            "lob": "COMMERCIAL",
+            "market": "SYNTHETIC",
+            "lines": 2262,
+            "allowed": 2315132.18
+          }
+        ],
+        "exclusions": {
+          "code_match_any_category": {
+            "lines_code_only": 29143,
+            "allowed_code_only": 25662397.35
+          },
+          "excluded_by_service_category_filter": {
+            "lines": 14423,
+            "allowed": 12083606.160000002,
+            "reason": "AND filter: codeset \u2229 service_category"
+          }
+        },
+        "em_check": null
+      },
+      "reconciliation": {
+        "claims_delta_indep_minus_stored": 0,
+        "allowed_delta_indep_minus_stored": 0.0,
+        "numerator_match": true,
+        "claims_match": true,
+        "stored_denominator_equals_script_tenant_mm": true,
+        "stored_pmpm_reproducible_from_script_mm": true
+      }
+    }
+  ],
+  "preliminary_findings": [
+    {
+      "policy_key": "sos",
+      "name": "Imaging Site-of-Service Policy",
+      "primary_classification": "EXPECTED_LOW_PMPM",
+      "notes": [
+        "Allowed PMPM uses tenant-wide enrollment MM as denominator while numerator is policy-selected service spending only."
+      ],
+      "result": "PASS"
+    },
+    {
+      "policy_key": "infusion",
+      "name": "Infusion Site-of-Care and Reimbursement Policy",
+      "primary_classification": "EXPECTED_LOW_PMPM",
+      "notes": [
+        "Allowed PMPM uses tenant-wide enrollment MM as denominator while numerator is policy-selected service spending only."
+      ],
+      "result": "PASS"
+    },
+    {
+      "policy_key": "lcd",
+      "name": "Local Coverage Determination Study \u2014 LCD L34425",
+      "primary_classification": "EXPECTED_LOW_PMPM",
+      "notes": [
+        "Allowed PMPM uses tenant-wide enrollment MM as denominator while numerator is policy-selected service spending only.",
+        "NCD/LCD measurement used commercial/synthetic proxy after clearing MEDICARE/NC filters."
+      ],
+      "result": "PASS"
+    },
+    {
+      "policy_key": "mue",
+      "name": "Medically Unlikely Edit (MUE) / Unit Cap",
+      "primary_classification": "EXPECTED_LOW_PMPM",
+      "notes": [
+        "Allowed PMPM uses tenant-wide enrollment MM as denominator while numerator is policy-selected service spending only."
+      ],
+      "result": "PASS"
+    },
+    {
+      "policy_key": "mppr",
+      "name": "Multiple Procedure Payment Reduction (MPPR)",
+      "primary_classification": "EXPECTED_LOW_PMPM",
+      "notes": [
+        "Allowed PMPM uses tenant-wide enrollment MM as denominator while numerator is policy-selected service spending only."
+      ],
+      "result": "PASS"
+    },
+    {
+      "policy_key": "ncd",
+      "name": "National Coverage Determination Study \u2014 MRI (NCD 220.2)",
+      "primary_classification": "EXPECTED_LOW_PMPM",
+      "notes": [
+        "Allowed PMPM uses tenant-wide enrollment MM as denominator while numerator is policy-selected service spending only.",
+        "NCD/LCD measurement used commercial/synthetic proxy after clearing MEDICARE/NC filters."
+      ],
+      "result": "PASS"
+    },
+    {
+      "policy_key": "mri",
+      "name": "Outpatient MRI Prior Authorization",
+      "primary_classification": "EXPECTED_LOW_PMPM",
+      "notes": [
+        "Allowed PMPM uses tenant-wide enrollment MM as denominator while numerator is policy-selected service spending only."
+      ],
+      "result": "PASS"
+    },
+    {
+      "policy_key": "therapy",
+      "name": "Outpatient Therapy Utilization and Payment Policy",
+      "primary_classification": "EXPECTED_LOW_PMPM",
+      "notes": [
+        "Allowed PMPM uses tenant-wide enrollment MM as denominator while numerator is policy-selected service spending only."
+      ],
+      "result": "PASS"
+    },
+    {
+      "policy_key": "ptp",
+      "name": "Procedure-to-Procedure (PTP) Coding Edit",
+      "primary_classification": "EXPECTED_LOW_PMPM",
+      "notes": [
+        "Allowed PMPM uses tenant-wide enrollment MM as denominator while numerator is policy-selected service spending only."
+      ],
+      "result": "PASS"
+    }
+  ],
+  "final_findings": [
+    {
+      "policy_key": "sos",
+      "name": "Imaging Site-of-Service Policy",
+      "primary_classification": "EXPECTED_LOW_PMPM",
+      "secondary_classifications": [
+        "DENOMINATOR_OR_GRAIN_ISSUE"
+      ],
+      "result": "REVIEW_REQUIRED",
+      "reasons": [
+        "Stored allowed totals and claim-line counts independently reproduce exactly.",
+        "Stored PMPM = selected allowed / tenant-wide enrollment member-months (~5.55M).",
+        "Per-line allowed amounts align with synthetic fee schedules (e.g. 72148 ~$900).",
+        "Metric is book-level service allowed PMPM (numerator=policy services; denominator=whole enrolled book). It is not PMPM among a policy-eligible subpopulation. Claimant-enrollment PMPM is much higher (e.g. 177.19)."
+      ],
+      "stored_pmpm": 2.349746554503575,
+      "independent_book_pmpm": 2.349746554503575,
+      "independent_selected_claimant_enrollment_pmpm": 177.19081381778392,
+      "avg_allowed_per_line": 1159.59,
+      "lines": 11255,
+      "headers": 11255,
+      "population": "COMBINED"
+    },
+    {
+      "policy_key": "infusion",
+      "name": "Infusion Site-of-Care and Reimbursement Policy",
+      "primary_classification": "EXPECTED_LOW_PMPM",
+      "secondary_classifications": [
+        "DENOMINATOR_OR_GRAIN_ISSUE",
+        "INSUFFICIENT_EVIDENCE"
+      ],
+      "result": "REVIEW_REQUIRED",
+      "reasons": [
+        "Stored allowed totals and claim-line counts independently reproduce exactly.",
+        "Stored PMPM = selected allowed / tenant-wide enrollment member-months (~5.55M).",
+        "Per-line allowed amounts align with synthetic fee schedules (e.g. 72148 ~$900).",
+        "Metric is book-level service allowed PMPM (numerator=policy services; denominator=whole enrolled book). It is not PMPM among a policy-eligible subpopulation. Claimant-enrollment PMPM is much higher (e.g. 573.35).",
+        "96413 allowed distribution is bimodal (office vs HOPD-like); drug J1745 present but facility components limited in operational claims_lines."
+      ],
+      "stored_pmpm": 5.233708156900582,
+      "independent_book_pmpm": 5.233708156900582,
+      "independent_selected_claimant_enrollment_pmpm": 573.3499717003791,
+      "avg_allowed_per_line": 4099.5,
+      "lines": 7091,
+      "headers": 7091,
+      "population": "COMBINED"
+    },
+    {
+      "policy_key": "lcd",
+      "name": "Local Coverage Determination Study \u2014 LCD L34425",
+      "primary_classification": "EXPECTED_LOW_PMPM",
+      "secondary_classifications": [
+        "POLICY_CONFIGURATION_ISSUE",
+        "DENOMINATOR_OR_GRAIN_ISSUE"
+      ],
+      "result": "REVIEW_REQUIRED",
+      "reasons": [
+        "Stored allowed totals and claim-line counts independently reproduce exactly.",
+        "Stored PMPM = selected allowed / tenant-wide enrollment member-months (~5.55M).",
+        "Per-line allowed amounts align with synthetic fee schedules (e.g. 72148 ~$900).",
+        "Measurement uses commercial/synthetic proxy after clearing MEDICARE/NC filters; not certified NCD/LCD applicability.",
+        "Metric is book-level service allowed PMPM (numerator=policy services; denominator=whole enrolled book). It is not PMPM among a policy-eligible subpopulation. Claimant-enrollment PMPM is much higher (e.g. 101.59)."
+      ],
+      "stored_pmpm": 0.925303497542905,
+      "independent_book_pmpm": 0.925303497542905,
+      "independent_selected_claimant_enrollment_pmpm": 101.58861410746998,
+      "avg_allowed_per_line": 712.62,
+      "lines": 7212,
+      "headers": 7212,
+      "population": "COMBINED"
+    },
+    {
+      "policy_key": "mue",
+      "name": "Medically Unlikely Edit (MUE) / Unit Cap",
+      "primary_classification": "EXPECTED_LOW_PMPM",
+      "secondary_classifications": [
+        "DENOMINATOR_OR_GRAIN_ISSUE",
+        "INSUFFICIENT_EVIDENCE"
+      ],
+      "result": "REVIEW_REQUIRED",
+      "reasons": [
+        "Stored allowed totals and claim-line counts independently reproduce exactly.",
+        "Stored PMPM = selected allowed / tenant-wide enrollment member-months (~5.55M).",
+        "Per-line allowed amounts align with synthetic fee schedules (e.g. 72148 ~$900).",
+        "Metric is book-level service allowed PMPM (numerator=policy services; denominator=whole enrolled book). It is not PMPM among a policy-eligible subpopulation. Claimant-enrollment PMPM is much higher (e.g. 41.42).",
+        "Baseline selects candidate spending exposure; it is not edit-violation or savings opportunity volume.",
+        "No edit-table/payment-factor parameterization present to measure mechanism-eligible exposure separately from candidate codes."
+      ],
+      "stored_pmpm": 0.361851809321769,
+      "independent_book_pmpm": 0.361851809321769,
+      "independent_selected_claimant_enrollment_pmpm": 41.4221032376817,
+      "avg_allowed_per_line": 310.78,
+      "lines": 6467,
+      "headers": 6467,
+      "population": "COMBINED"
+    },
+    {
+      "policy_key": "mppr",
+      "name": "Multiple Procedure Payment Reduction (MPPR)",
+      "primary_classification": "EXPECTED_LOW_PMPM",
+      "secondary_classifications": [
+        "DENOMINATOR_OR_GRAIN_ISSUE",
+        "INSUFFICIENT_EVIDENCE"
+      ],
+      "result": "REVIEW_REQUIRED",
+      "reasons": [
+        "Stored allowed totals and claim-line counts independently reproduce exactly.",
+        "Stored PMPM = selected allowed / tenant-wide enrollment member-months (~5.55M).",
+        "Per-line allowed amounts align with synthetic fee schedules (e.g. 72148 ~$900).",
+        "Metric is book-level service allowed PMPM (numerator=policy services; denominator=whole enrolled book). It is not PMPM among a policy-eligible subpopulation. Claimant-enrollment PMPM is much higher (e.g. 256.83).",
+        "Baseline selects candidate spending exposure; it is not edit-violation or savings opportunity volume.",
+        "No edit-table/payment-factor parameterization present to measure mechanism-eligible exposure separately from candidate codes."
+      ],
+      "stored_pmpm": 4.032517281708762,
+      "independent_book_pmpm": 4.032517281708762,
+      "independent_selected_claimant_enrollment_pmpm": 256.830923907259,
+      "avg_allowed_per_line": 991.93,
+      "lines": 22580,
+      "headers": 11290,
+      "population": "COMBINED"
+    },
+    {
+      "policy_key": "ncd",
+      "name": "National Coverage Determination Study \u2014 MRI (NCD 220.2)",
+      "primary_classification": "EXPECTED_LOW_PMPM",
+      "secondary_classifications": [
+        "POLICY_CONFIGURATION_ISSUE",
+        "DENOMINATOR_OR_GRAIN_ISSUE"
+      ],
+      "result": "REVIEW_REQUIRED",
+      "reasons": [
+        "Stored allowed totals and claim-line counts independently reproduce exactly.",
+        "Stored PMPM = selected allowed / tenant-wide enrollment member-months (~5.55M).",
+        "Per-line allowed amounts align with synthetic fee schedules (e.g. 72148 ~$900).",
+        "Measurement uses commercial/synthetic proxy after clearing MEDICARE/NC filters; not certified NCD/LCD applicability.",
+        "Metric is book-level service allowed PMPM (numerator=policy services; denominator=whole enrolled book). It is not PMPM among a policy-eligible subpopulation. Claimant-enrollment PMPM is much higher (e.g. 136.82)."
+      ],
+      "stored_pmpm": 1.7221903352234744,
+      "independent_book_pmpm": 1.7221903352234744,
+      "independent_selected_claimant_enrollment_pmpm": 136.82093596724616,
+      "avg_allowed_per_line": 939.55,
+      "lines": 10181,
+      "headers": 10181,
+      "population": "COMBINED"
+    },
+    {
+      "policy_key": "mri",
+      "name": "Outpatient MRI Prior Authorization",
+      "primary_classification": "EXPECTED_LOW_PMPM",
+      "secondary_classifications": [
+        "DENOMINATOR_OR_GRAIN_ISSUE"
+      ],
+      "result": "REVIEW_REQUIRED",
+      "reasons": [
+        "Stored allowed totals and claim-line counts independently reproduce exactly.",
+        "Stored PMPM = selected allowed / tenant-wide enrollment member-months (~5.55M).",
+        "Per-line allowed amounts align with synthetic fee schedules (e.g. 72148 ~$900).",
+        "Metric is book-level service allowed PMPM (numerator=policy services; denominator=whole enrolled book). It is not PMPM among a policy-eligible subpopulation. Claimant-enrollment PMPM is much higher (e.g. 138.39).",
+        "E/M 99213/99214 not present in selected MRI population (0). MRI fixture illustrative $2.40 PMPM is consistent with stored $2.48 book-level PMPM."
+      ],
+      "stored_pmpm": 2.4751762255133984,
+      "independent_book_pmpm": 2.4751762255133984,
+      "independent_selected_claimant_enrollment_pmpm": 138.38678194181665,
+      "avg_allowed_per_line": 954.98,
+      "lines": 14396,
+      "headers": 14396,
+      "population": "COMBINED"
+    },
+    {
+      "policy_key": "therapy",
+      "name": "Outpatient Therapy Utilization and Payment Policy",
+      "primary_classification": "EXPECTED_LOW_PMPM",
+      "secondary_classifications": [
+        "DENOMINATOR_OR_GRAIN_ISSUE"
+      ],
+      "result": "REVIEW_REQUIRED",
+      "reasons": [
+        "Stored allowed totals and claim-line counts independently reproduce exactly.",
+        "Stored PMPM = selected allowed / tenant-wide enrollment member-months (~5.55M).",
+        "Per-line allowed amounts align with synthetic fee schedules (e.g. 72148 ~$900).",
+        "Metric is book-level service allowed PMPM (numerator=policy services; denominator=whole enrolled book). It is not PMPM among a policy-eligible subpopulation. Claimant-enrollment PMPM is much higher (e.g. 34.74)."
+      ],
+      "stored_pmpm": 0.41078416727324,
+      "independent_book_pmpm": 0.41078416727324,
+      "independent_selected_claimant_enrollment_pmpm": 34.73681425410627,
+      "avg_allowed_per_line": 233.25,
+      "lines": 9782,
+      "headers": 9782,
+      "population": "COMBINED"
+    },
+    {
+      "policy_key": "ptp",
+      "name": "Procedure-to-Procedure (PTP) Coding Edit",
+      "primary_classification": "EXPECTED_LOW_PMPM",
+      "secondary_classifications": [
+        "DENOMINATOR_OR_GRAIN_ISSUE",
+        "INSUFFICIENT_EVIDENCE"
+      ],
+      "result": "REVIEW_REQUIRED",
+      "reasons": [
+        "Stored allowed totals and claim-line counts independently reproduce exactly.",
+        "Stored PMPM = selected allowed / tenant-wide enrollment member-months (~5.55M).",
+        "Per-line allowed amounts align with synthetic fee schedules (e.g. 72148 ~$900).",
+        "Metric is book-level service allowed PMPM (numerator=policy services; denominator=whole enrolled book). It is not PMPM among a policy-eligible subpopulation. Claimant-enrollment PMPM is much higher (e.g. 263.51).",
+        "Baseline selects candidate spending exposure; it is not edit-violation or savings opportunity volume.",
+        "No edit-table/payment-factor parameterization present to measure mechanism-eligible exposure separately from candidate codes."
+      ],
+      "stored_pmpm": 2.444735246046581,
+      "independent_book_pmpm": 2.444735246046581,
+      "independent_selected_claimant_enrollment_pmpm": 263.5080311955982,
+      "avg_allowed_per_line": 922.47,
+      "lines": 14720,
+      "headers": 7360,
+      "population": "COMBINED"
+    }
+  ],
+  "verdict_summary": {
+    "all_numerators_reconcile": true,
+    "all_pmpm_reproducible": true,
+    "calculation_defect_confirmed": false,
+    "data_regeneration_recommended": false,
+    "configuration_changes_recommended": true,
+    "configuration_change_topics": [
+      "Label book-level service PMPM distinctly from eligible-cohort PMPM",
+      "Preserve NCD/LCD authoritative MEDICARE/NC scope separately from synthetic commercial proxy measurement",
+      "Clarify whether service_category tags are applicability rules or synthetic book partitions"
+    ],
+    "baselines_mutated": false,
+    "claims_mutated": false
+  },
+  "updated_at": "2026-11-07T07:31:56.542905+00:00"
+}

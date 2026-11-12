@@ -48,6 +48,44 @@ def _merge_baseline_segmentation_from_claims_df(metrics: Dict[str, Any], claims_
         metrics["patient_segments"] = ps
 
 
+def _measurement_book_source(policy: Optional[Dict[str, Any]]) -> Optional[str]:
+    """Explicit measurement-book contract from policy metadata, when configured."""
+    if not isinstance(policy, dict):
+        return None
+    meta = policy.get("policy_metadata_json") or policy.get("metadata") or {}
+    if not isinstance(meta, dict):
+        meta = {}
+    book = meta.get("measurement_book")
+    if isinstance(book, dict) and book.get("source_system"):
+        return str(book["source_system"])
+    return None
+
+
+def _exposure_for_baseline(
+    db: Session,
+    tenant_id: UUID,
+    start_date: date,
+    end_date: date,
+    unique_members: int,
+    source_system: Optional[str] = None,
+):
+    """Use stored enrollment spans when they exist. Otherwise keep claimant months.
+
+    When a measurement_book source_system is configured, exposure uses that book only.
+    MM = distinct covered days / calendar days (half-open spans, capped at 1.0).
+    """
+    from uepi_api.services.enrollment_exposure import measured_enrollment_member_months
+
+    measured = measured_enrollment_member_months(
+        db, tenant_id, start_date, end_date, source_system=source_system
+    )
+    if measured is None:
+        months = _baseline_calendar_months_inclusive(start_date, end_date)
+        value = float(unique_members * months) if unique_members > 0 else 0.0
+        return value, False, "CLAIMANT_TIMES_CALENDAR_MONTHS"
+    return float(measured), True, "ENROLLMENT_DISTINCT_COVERED_DAYS"
+
+
 def _expand_all_markets(market_filter: Any) -> Optional[Any]:
     """If market filter is or contains 'ALL', return concrete demo markets list; else return as-is."""
     if market_filter is None:
@@ -90,8 +128,9 @@ def compute_general_baseline_from_database(
     total_paid = float(agg["total_paid"])
     total_allowed = float(agg["total_allowed"])
 
-    months = _baseline_calendar_months_inclusive(start_date, end_date)
-    member_months = float(unique_members * months) if unique_members > 0 else 0.0
+    member_months, enrollment_measured, exposure_method = _exposure_for_baseline(
+        db, tenant_id, start_date, end_date, unique_members
+    )
 
     utilization_per_1k = (total_claims / member_months * 1000) if member_months > 0 else None
     cost_pmpm = (total_paid / member_months) if member_months > 0 else None
@@ -109,9 +148,10 @@ def compute_general_baseline_from_database(
         "claims_per_member": (total_claims / unique_members) if unique_members > 0 else None,
         "cost_per_claim": (total_paid / total_claims) if total_claims > 0 else 0.0,
         "cost_pmpm_meaning": "PAID",
+        "exposure_method": exposure_method,
     }
     from uepi_common.metrics.measurement_integrity import annotate_claimant_exposure
-    annotate_claimant_exposure(out, unique_members, enrollment_measured=False)
+    annotate_claimant_exposure(out, unique_members, enrollment_measured=enrollment_measured)
     try:
         seg_df = repo.get_claims_lines(
             tenant_id=tenant_id,
@@ -162,9 +202,13 @@ def compute_policy_specific_baseline_from_database(
     lob_filter = None
     market_filter = None
 
+    claims_execution_blocked = False
+    claims_execution_block_reason = None
     if policy:
         try:
             pf = build_policy_claims_filters(policy)
+            claims_execution_blocked = bool(pf.get("claims_execution_blocked"))
+            claims_execution_block_reason = pf.get("claims_execution_block_reason")
             merged_procedure_codes = pf.get("procedure_codes") or pf.get("cpt_codes") or []
             merged_service_categories = pf.get("service_categories") or ([pf["service_category"]] if pf.get("service_category") else [])
             merged_diagnosis_codes = pf.get("diagnosis_codes") or []
@@ -186,6 +230,19 @@ def compute_policy_specific_baseline_from_database(
                 lob_filter = policy_scope.get("lob")
                 market_filter = policy_scope.get("markets") or policy_scope.get("market")
     
+    if claims_execution_blocked:
+        return {
+            "measurement_status": "NOT_MEASURABLE",
+            "claims_execution_blocked": True,
+            "claims_execution_block_reason": claims_execution_block_reason,
+            "total_paid": None,
+            "total_allowed": None,
+            "total_claims": None,
+            "member_months": None,
+            "policy_id": str(policy_id),
+            "reason": "Production claims execution is blocked. No whole-book baseline was substituted.",
+        }
+
     # Use aggregate query in DB (no row limit) so baseline scales to production volumes
     procedure_codes_for_query = merged_procedure_codes
     if not procedure_codes_for_query and policy_scope and policy_scope.get("target_codes"):
@@ -204,6 +261,8 @@ def compute_policy_specific_baseline_from_database(
     print(f"      CPT codes: {merged_procedure_codes[:5] if merged_procedure_codes else 'None'}...")
     print(f"      Service categories: {merged_service_categories if merged_service_categories else 'None'}")
 
+    # Scope: policy codesets + optional explicit measurement_book source.
+    measurement_source = _measurement_book_source(policy)
     agg = repo.aggregate_claims_for_baseline(
         tenant_id=tenant_id,
         start_date=start_date,
@@ -214,6 +273,9 @@ def compute_policy_specific_baseline_from_database(
         hcpcs_codes=procedure_codes_for_query if procedure_codes_for_query else None,
         service_categories=merged_service_categories if merged_service_categories else None,
         diagnosis_codes=merged_diagnosis_codes if merged_diagnosis_codes else None,
+        source_system=measurement_source,
+        require_enrollment_on_service_date=True,
+        exclude_void_reversal=True,
     )
 
     if not agg:
@@ -241,9 +303,18 @@ def compute_policy_specific_baseline_from_database(
 
     print(f"   ✅ Aggregated {total_claims} claims, {unique_members} members (no row limit)")
 
-    months = _baseline_calendar_months_inclusive(start_date, end_date)
-    member_months = unique_members * months if unique_members > 0 else 0
+    member_months, enrollment_measured, exposure_method = _exposure_for_baseline(
+        db,
+        tenant_id,
+        start_date,
+        end_date,
+        int(unique_members or 0),
+        source_system=measurement_source,
+    )
     utilization_per_1k = (total_claims / member_months * 1000) if member_months > 0 else None
+    util_per_1k_member_years = (
+        (total_claims / member_months) * 12.0 * 1000.0 if member_months > 0 else None
+    )
     cost_pmpm = (total_paid / member_months) if member_months > 0 else None
     allowed_pmpm = (total_allowed / member_months) if member_months > 0 else None
 
@@ -254,15 +325,22 @@ def compute_policy_specific_baseline_from_database(
         "total_paid": float(total_paid),
         "total_allowed": float(total_allowed),
         "util_rate_target_per_1000_mm": utilization_per_1k,
+        "util_rate_per_1000_member_years": util_per_1k_member_years,
         "allowed_pmpm_target": allowed_pmpm,
         "paid_pmpm_target": cost_pmpm,
         "claims_per_member": (total_claims / unique_members) if unique_members > 0 else None,
         "cost_per_claim": (total_paid / total_claims) if total_claims > 0 else 0.0,
         "policy_id": str(policy_id),
         "cost_pmpm_meaning": "PAID",
+        "exposure_method": exposure_method,
+        "claims_execution_blocked": False,
+        "scope_resolution": "policy_definition_codesets",
+        "measurement_book": measurement_source,
+        "require_enrollment_on_service_date": True,
+        "exclude_void_reversal": True,
     }
     from uepi_common.metrics.measurement_integrity import annotate_claimant_exposure
-    annotate_claimant_exposure(out, int(unique_members or 0), enrollment_measured=False)
+    annotate_claimant_exposure(out, int(unique_members or 0), enrollment_measured=enrollment_measured)
     try:
         seg_df = repo.get_claims_lines(
             tenant_id=tenant_id,

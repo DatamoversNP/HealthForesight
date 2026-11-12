@@ -1,0 +1,229 @@
+{
+  "generated_at": "2026-11-07T12:14:47.101613+00:00",
+  "batch": 8,
+  "batch_size": 10,
+  "source_system": "SYNTHETIC_REVIEWED_248_V1",
+  "policies": [
+    {
+      "register_index": 71,
+      "name": "Drug Testing Frequency Limits for Chronic Pain",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 72,
+      "name": "Eating Disorder Level-of-Care Authorization",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 73,
+      "name": "ECT Authorization Criteria",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 74,
+      "name": "Elective Delivery Before 39 Weeks Restriction",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 75,
+      "name": "Elective Joint Arthroplasty Prior Authorization",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 5614,
+        "baseline_members": 4457,
+        "baseline_allowed": 19089354.27,
+        "avg_allowed_per_line": 3400.312481296758,
+        "observation_claims": 4683,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "27447",
+          "27130",
+          "27446"
+        ],
+        "service_category": "surgery"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "85f2a86e-5540-4e7e-93d8-32cd008ba0fb",
+        "prediction_id": "300bc01d-5070-4468-b573-b8299a09dbdc",
+        "observations": 10,
+        "allowed_pmpm": 132.56496020833333,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 76,
+      "name": "Emergency Department Frequent Utilizer Program",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 5184,
+        "baseline_members": 4182,
+        "baseline_allowed": 1161370.24,
+        "avg_allowed_per_line": 224.02975308641976,
+        "observation_claims": 4320,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99284",
+          "99285",
+          "G0380",
+          "G0381"
+        ],
+        "service_category": "ed"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "8cf62c20-9283-4650-8a4a-8815f7577ece",
+        "prediction_id": "abc21edb-d33c-4ca4-89c6-9b73eb31b0e0",
+        "observations": 10,
+        "allowed_pmpm": 8.065071111111111,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 77,
+      "name": "Emergency vs Urgent Care Cost Share Differential",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1612,
+        "baseline_allowed": 1275891.15,
+        "avg_allowed_per_line": 738.3629340277777,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99202",
+          "S9083"
+        ],
+        "service_category": "surgery"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "939b79d3-54cc-4182-b569-a1e6a87db5b6",
+        "prediction_id": "271dfb7d-8a43-46cf-819f-ccf77f86a1df",
+        "observations": 10,
+        "allowed_pmpm": 8.860355208333333,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 78,
+      "name": "Enteral Nutrition Prior Authorization",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 79,
+      "name": "Epidural Steroid Injection Prior Authorization",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 80,
+      "name": "Esketamine Treatment Prior Authorization",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    }
+  ],
+  "population": {
+    "loaded": false,
+    "claims": 348744,
+    "members": 12000,
+    "source_system": "SYNTHETIC_REVIEWED_248_V1",
+    "book_mm_2025": 144000.0
+  },
+  "validation_summary": {
+    "policies_in_batch": 10,
+    "configured": 10,
+    "measurable_completed": 3,
+    "config_only": 7,
+    "thin_but_measured": 0,
+    "failed": 0,
+    "rate_continuity_checked": 3,
+    "pass": true
+  }
+}

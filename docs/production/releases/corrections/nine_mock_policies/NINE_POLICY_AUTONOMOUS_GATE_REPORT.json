@@ -1,0 +1,821 @@
+{
+  "started_at": "2026-11-08T02:38:53.276650+00:00",
+  "database": "hfleanstg",
+  "api": "https://hfleanstg-api.whiteplant-64737337.eastus2.azurecontainerapps.io/api/v1",
+  "policies": [
+    {
+      "policy_id": "a9e032f8-d4fc-599c-8ea4-4e58a0f929e3",
+      "name": "Imaging Site-of-Service Policy",
+      "policy_type": "SITE_OF_CARE",
+      "policy_key": "sos",
+      "verdict": "ON_TRACK",
+      "verdict_label": "Saving / on track",
+      "savings_or_cost_impact_pmpm": -21.033824166666662,
+      "utilization_impact_pct": -18.255395683453226,
+      "confidence_pct": 81.69243420840522,
+      "verdict_reason": "Required endpoints moved in the declared direction: util_rate_total_per_1000_mm, allowed_pmpm_total.",
+      "recommendation": "Continue monitoring the declared endpoints.",
+      "has_backfire_risk": false
+    },
+    {
+      "policy_id": "fce62ce1-1476-520d-81a6-daf0e9507743",
+      "name": "Infusion Site-of-Care and Reimbursement Policy",
+      "policy_type": "SITE_OF_CARE",
+      "policy_key": "infusion",
+      "verdict": "BACKFIRE",
+      "verdict_label": "Backfire risk",
+      "savings_or_cost_impact_pmpm": 2.9960246666666634,
+      "utilization_impact_pct": 11.882998171846442,
+      "confidence_pct": 92.44033714742156,
+      "verdict_reason": "A required endpoint missed its direction and behavioral warnings are present: util_rate_total_per_1000_mm +11.9% vs decrease, allowed_pmpm_total +7.6% vs decrease.",
+      "recommendation": "Review the declared endpoint and the behavioral explanation.",
+      "has_backfire_risk": true
+    },
+    {
+      "policy_id": "20fe5bcf-f112-5033-a2c3-4702179e6652",
+      "name": "Local Coverage Determination Study \u2014 LCD L34425",
+      "policy_type": "COVERAGE",
+      "policy_key": "lcd",
+      "verdict": "ON_TRACK",
+      "verdict_label": "Saving / on track",
+      "savings_or_cost_impact_pmpm": -0.46962749999999787,
+      "utilization_impact_pct": -6.60633484162897,
+      "confidence_pct": 97.55651089668068,
+      "verdict_reason": "Required endpoints moved in the declared direction: util_rate_total_per_1000_mm, allowed_pmpm_total.",
+      "recommendation": "Continue monitoring the declared endpoints.",
+      "has_backfire_risk": false
+    },
+    {
+      "policy_id": "d65d0f7a-ab72-5dde-9cd0-1c75b79efc66",
+      "name": "Medically Unlikely Edit (MUE) / Unit Cap",
+      "policy_type": "CODING_AND_BILLING",
+      "policy_key": "mue",
+      "verdict": "ON_TRACK",
+      "verdict_label": "Saving / on track",
+      "savings_or_cost_impact_pmpm": -0.9189064999999994,
+      "utilization_impact_pct": -17.2033118675253,
+      "confidence_pct": 88.16541919768189,
+      "verdict_reason": "Required endpoints moved in the declared direction: util_rate_total_per_1000_mm, allowed_pmpm_total.",
+      "recommendation": "Continue monitoring the declared endpoints.",
+      "has_backfire_risk": false
+    },
+    {
+      "policy_id": "7e7f480d-dc95-50a9-bbab-77a8c225f81f",
+      "name": "Multiple Procedure Payment Reduction (MPPR)",
+      "policy_type": "PAYMENT_POLICY",
+      "policy_key": "mppr",
+      "verdict": "ON_TRACK",
+      "verdict_label": "Saving / on track",
+      "savings_or_cost_impact_pmpm": -11.297817333333334,
+      "utilization_impact_pct": -18.511627906976752,
+      "confidence_pct": 82.722175947677,
+      "verdict_reason": "Required endpoints moved in the declared direction: util_rate_total_per_1000_mm, allowed_pmpm_total.",
+      "recommendation": "Continue monitoring the declared endpoints.",
+      "has_backfire_risk": false
+    },
+    {
+      "policy_id": "b7e4ec54-64d6-5e70-8808-6e5fa0c229c7",
+      "name": "National Coverage Determination Study \u2014 MRI (NCD 220.2)",
+      "policy_type": "COVERAGE",
+      "policy_key": "ncd",
+      "verdict": "ON_TRACK",
+      "verdict_label": "Saving / on track",
+      "savings_or_cost_impact_pmpm": -8.531258333333327,
+      "utilization_impact_pct": -10.366681756450873,
+      "confidence_pct": 90.71595856704171,
+      "verdict_reason": "Required endpoints moved in the declared direction: util_rate_total_per_1000_mm, allowed_pmpm_total.",
+      "recommendation": "Continue monitoring the declared endpoints.",
+      "has_backfire_risk": false
+    },
+    {
+      "policy_id": "d6339860-d85a-5dc5-babd-9c91390fde36",
+      "name": "Outpatient MRI Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "policy_key": "mri",
+      "verdict": "ON_TRACK",
+      "verdict_label": "Saving / on track",
+      "savings_or_cost_impact_pmpm": -3.284781166666665,
+      "utilization_impact_pct": -8.510638297872347,
+      "confidence_pct": 88.72569544054197,
+      "verdict_reason": "Required endpoints moved in the declared direction: util_rate_total_per_1000_mm, allowed_pmpm_total.",
+      "recommendation": "Continue monitoring the declared endpoints.",
+      "has_backfire_risk": false
+    },
+    {
+      "policy_id": "435e1461-b57e-5af3-ad08-e15aac690310",
+      "name": "Outpatient Therapy Utilization and Payment Policy",
+      "policy_type": "COVERAGE",
+      "policy_key": "therapy",
+      "verdict": "ON_TRACK",
+      "verdict_label": "Saving / on track",
+      "savings_or_cost_impact_pmpm": -0.322162333333333,
+      "utilization_impact_pct": -4.950495049504963,
+      "confidence_pct": 95.36165314537178,
+      "verdict_reason": "Required endpoints moved in the declared direction: util_rate_total_per_1000_mm, allowed_pmpm_total.",
+      "recommendation": "Continue monitoring the declared endpoints.",
+      "has_backfire_risk": false
+    },
+    {
+      "policy_id": "1d6d3332-88fd-54ac-8227-2d2bf856ed5f",
+      "name": "Procedure-to-Procedure (PTP) Coding Edit",
+      "policy_type": "CODING_AND_BILLING",
+      "policy_key": "ptp",
+      "verdict": "ON_TRACK",
+      "verdict_label": "Saving / on track",
+      "savings_or_cost_impact_pmpm": -4.636398333333339,
+      "utilization_impact_pct": -11.936339522546401,
+      "confidence_pct": 87.98410292063754,
+      "verdict_reason": "Required endpoints moved in the declared direction: util_rate_total_per_1000_mm, allowed_pmpm_total.",
+      "recommendation": "Continue monitoring the declared endpoints.",
+      "has_backfire_risk": false
+    }
+  ],
+  "rollout_ideas": {
+    "parameters": {
+      "months_lookback": 12,
+      "jaccard_duplicate_threshold": 0.55,
+      "max_recommendations_returned": 20
+    },
+    "existing_policies_count": 257,
+    "recommendation_count": 5,
+    "methodology_footer": "Health Foresight rollout recommender v1: catalog archetypes + claims concentration + Jaccard/code-coverage dedup vs in-force policies + optional tenant elasticity models.",
+    "recommendations": [
+      {
+        "recommendation_id": "rollout_pa_advanced_imaging",
+        "priority": "high",
+        "title": "Prior authorization \u2014 advanced outpatient imaging",
+        "policy_type": "PRIOR_AUTH",
+        "archetype_id": "pa_advanced_imaging",
+        "summary": "High unit cost and discretionary scheduling make imaging a standard UM lever; evidence of volume or spend concentration supports staged rollout.",
+        "estimated_impact": {
+          "methodology": "catalog_benchmarks",
+          "lookback_start": "2025-11-13",
+          "lookback_end": "2026-11-08",
+          "months_lookback": 12,
+          "utilization_change_pct_range": [
+            -6.0,
+            -2.5
+          ],
+          "cost_pmpm_change_pct_range": [
+            -5.0,
+            -2.0
+          ],
+          "baseline_util_per_1k_reference": null,
+          "baseline_allowed_pmpm_reference": null,
+          "projected_util_per_1k_range": null,
+          "projected_allowed_pmpm_range": null,
+          "confidence": "high",
+          "confidence_explanation": "Large claim volume in the lookback window.",
+          "elasticity_note": "Industry-typical elasticity band for this archetype (no tenant-specific elasticity model)."
+        },
+        "overlap_with_nine": [
+          "Imaging Site-of-Service Policy"
+        ]
+      },
+      {
+        "recommendation_id": "rollout_site_of_care_infusion",
+        "priority": "high",
+        "title": "Site-of-care steerage \u2014 hospital vs free-standing infusion",
+        "policy_type": "SITE_OF_CARE",
+        "archetype_id": "site_of_care_infusion",
+        "summary": "Infusion often shows site price dispersion; members can be steered with network design and benefit design.",
+        "estimated_impact": {
+          "methodology": "catalog_benchmarks",
+          "lookback_start": "2025-11-13",
+          "lookback_end": "2026-11-08",
+          "months_lookback": 12,
+          "utilization_change_pct_range": [
+            -4.0,
+            -1.5
+          ],
+          "cost_pmpm_change_pct_range": [
+            -8.0,
+            -3.0
+          ],
+          "baseline_util_per_1k_reference": null,
+          "baseline_allowed_pmpm_reference": null,
+          "projected_util_per_1k_range": null,
+          "projected_allowed_pmpm_range": null,
+          "confidence": "medium",
+          "confidence_explanation": "Moderate volume; estimates should be validated with a pilot or sensitivity analysis.",
+          "elasticity_note": "Industry-typical elasticity band for this archetype (no tenant-specific elasticity model)."
+        },
+        "overlap_with_nine": [
+          "Infusion Site-of-Care and Reimbursement Policy"
+        ]
+      },
+      {
+        "recommendation_id": "rollout_step_therapy_specialty",
+        "priority": "high",
+        "title": "Step therapy \u2014 specialty pharmacy / biologic sequence",
+        "policy_type": "STEP_THERAPY",
+        "archetype_id": "step_therapy_specialty",
+        "summary": "Specialty drug spend is concentrated; step protocols are common where PBM data aligns.",
+        "estimated_impact": {
+          "methodology": "catalog_benchmarks",
+          "lookback_start": "2025-11-13",
+          "lookback_end": "2026-11-08",
+          "months_lookback": 12,
+          "utilization_change_pct_range": [
+            -5.0,
+            -2.0
+          ],
+          "cost_pmpm_change_pct_range": [
+            -10.0,
+            -4.0
+          ],
+          "baseline_util_per_1k_reference": null,
+          "baseline_allowed_pmpm_reference": null,
+          "projected_util_per_1k_range": null,
+          "projected_allowed_pmpm_range": null,
+          "confidence": "medium",
+          "confidence_explanation": "Moderate volume; estimates should be validated with a pilot or sensitivity analysis.",
+          "elasticity_note": "Industry-typical elasticity band for this archetype (no tenant-specific elasticity model)."
+        },
+        "overlap_with_nine": [
+          "Outpatient Therapy Utilization and Payment Policy"
+        ]
+      },
+      {
+        "recommendation_id": "rollout_urgent_care_redirect",
+        "priority": "high",
+        "title": "Urgent care / convenience access \u2014 ED avoidable utilization",
+        "policy_type": "BENEFIT",
+        "archetype_id": "urgent_care_redirect",
+        "summary": "When ED-coded urgent care appears in claims, benefit and steerage can shift lower-acuity volume.",
+        "estimated_impact": {
+          "methodology": "catalog_benchmarks",
+          "lookback_start": "2025-11-13",
+          "lookback_end": "2026-11-08",
+          "months_lookback": 12,
+          "utilization_change_pct_range": [
+            -3.0,
+            -1.0
+          ],
+          "cost_pmpm_change_pct_range": [
+            -4.0,
+            -1.5
+          ],
+          "baseline_util_per_1k_reference": null,
+          "baseline_allowed_pmpm_reference": null,
+          "projected_util_per_1k_range": null,
+          "projected_allowed_pmpm_range": null,
+          "confidence": "medium",
+          "confidence_explanation": "Moderate volume; estimates should be validated with a pilot or sensitivity analysis.",
+          "elasticity_note": "Industry-typical elasticity band for this archetype (no tenant-specific elasticity model)."
+        },
+        "overlap_with_nine": []
+      },
+      {
+        "recommendation_id": "rollout_lab_high_volume",
+        "priority": "high",
+        "title": "Laboratory \u2014 high-volume panel optimization",
+        "policy_type": "PRIOR_AUTH",
+        "archetype_id": "lab_high_volume",
+        "summary": "Routine lab panels drive claim volume; modest UM or network tiering can reduce low-value repeats.",
+        "estimated_impact": {
+          "methodology": "catalog_benchmarks",
+          "lookback_start": "2025-11-13",
+          "lookback_end": "2026-11-08",
+          "months_lookback": 12,
+          "utilization_change_pct_range": [
+            -4.0,
+            -1.0
+          ],
+          "cost_pmpm_change_pct_range": [
+            -3.0,
+            -1.0
+          ],
+          "baseline_util_per_1k_reference": null,
+          "baseline_allowed_pmpm_reference": null,
+          "projected_util_per_1k_range": null,
+          "projected_allowed_pmpm_range": null,
+          "confidence": "medium",
+          "confidence_explanation": "Moderate volume; estimates should be validated with a pilot or sensitivity analysis.",
+          "elasticity_note": "Industry-typical elasticity band for this archetype (no tenant-specific elasticity model)."
+        },
+        "overlap_with_nine": []
+      }
+    ],
+    "note": "Rollout recommender proposes net-new catalog archetypes after dedup vs in-force book. The nine mock policies are already in-force, so ideas are adjacent gaps (e.g. advanced imaging PA, infusion steerage), not duplicates of the nine."
+  },
+  "whatifs": [
+    {
+      "policy_id": "a9e032f8-d4fc-599c-8ea4-4e58a0f929e3",
+      "policy_name": "Imaging Site-of-Service Policy",
+      "policy_key": "sos",
+      "analysis_id": "44d23f34-ec07-404f-b6fb-9561030b67a1",
+      "scenario_label": "SOS hospital share 80%\u219270%",
+      "scenario_params": {
+        "base_hospital_pct": 0.8,
+        "hospital_pct": 0.7
+      },
+      "runner_status": "completed",
+      "message": null,
+      "strategy": {
+        "registry_version": "analytical-strategy-registry-v1",
+        "mechanism": "SITE_OF_SERVICE_PAYMENT_DIFFERENTIAL",
+        "engine_id": "reimbursement_sos_v1",
+        "calculation_family": "REIMBURSEMENT",
+        "calculation_version": "reimbursement-sos-v1",
+        "dispatch": "ENGINE",
+        "supports_whatif": true,
+        "field_gate": {
+          "ok": true,
+          "missing_fields": [],
+          "available_claim_fields_sample": [
+            "allowed_amount",
+            "claim_id",
+            "claim_line_id",
+            "cpt_code",
+            "facility_type",
+            "hcpcs_code",
+            "lob",
+            "member_id",
+            "paid_amount",
+            "place_of_service",
+            "provider_id",
+            "service_date",
+            "units"
+          ]
+        },
+        "notes": "Hospital outpatient paid at reduced % of allowed vs freestanding.",
+        "sign_convention": {
+          "payment_impact": "Payer savings = baseline_paid \u2212 post_policy_paid. Positive means the payer pays less (provider receives less).",
+          "provider_payment_change": "Negative of payment_impact (provider perspective).",
+          "delta_payment_impact": "Incremental payer savings vs base scenario. Positive = additional payer savings (not increased provider payment).",
+          "volume_effect": "Change attributable to units/volume; 0 when volume held constant.",
+          "price_effect": "Change attributable to unit price / payment rules.",
+          "mix_effect": "Change attributable to service/site mix shifts."
+        },
+        "forbid_utilization_elasticity": true
+      },
+      "impact_metrics": {
+        "delta_payment_impact": 260.0,
+        "delta_payer_savings": 260.0,
+        "delta_provider_payment_change": -260.0,
+        "price_effect_delta": 260.0,
+        "volume_effect": 0.0,
+        "mix_effect": 0.0
+      },
+      "confidence_score": 1.0,
+      "db_status": "COMPLETED",
+      "db_error": null
+    },
+    {
+      "policy_id": "fce62ce1-1476-520d-81a6-daf0e9507743",
+      "policy_name": "Infusion Site-of-Care and Reimbursement Policy",
+      "policy_key": "infusion",
+      "analysis_id": "a5e604aa-3d7a-4923-b012-53e71e866353",
+      "scenario_label": "Infusion steer HOPD 2\u21923",
+      "scenario_params": {
+        "base_steer_hopd_count": 2,
+        "steer_hopd_count": 3
+      },
+      "runner_status": "completed",
+      "message": null,
+      "strategy": {
+        "registry_version": "analytical-strategy-registry-v1",
+        "mechanism": "SITE_OF_SERVICE_PAYMENT_DIFFERENTIAL",
+        "engine_id": "reimbursement_sos_v1",
+        "calculation_family": "REIMBURSEMENT",
+        "calculation_version": "reimbursement-sos-v1",
+        "dispatch": "ENGINE",
+        "supports_whatif": true,
+        "field_gate": {
+          "ok": true,
+          "missing_fields": [],
+          "available_claim_fields_sample": [
+            "allowed_amount",
+            "claim_id",
+            "claim_line_id",
+            "cpt_code",
+            "facility_type",
+            "hcpcs_code",
+            "lob",
+            "member_id",
+            "paid_amount",
+            "place_of_service",
+            "provider_id",
+            "service_date",
+            "units"
+          ]
+        },
+        "notes": "Hospital outpatient paid at reduced % of allowed vs freestanding.",
+        "sign_convention": {
+          "payment_impact": "Payer savings = baseline_paid \u2212 post_policy_paid. Positive means the payer pays less (provider receives less).",
+          "provider_payment_change": "Negative of payment_impact (provider perspective).",
+          "delta_payment_impact": "Incremental payer savings vs base scenario. Positive = additional payer savings (not increased provider payment).",
+          "volume_effect": "Change attributable to units/volume; 0 when volume held constant.",
+          "price_effect": "Change attributable to unit price / payment rules.",
+          "mix_effect": "Change attributable to service/site mix shifts."
+        },
+        "forbid_utilization_elasticity": true
+      },
+      "impact_metrics": {
+        "delta_payment_impact": 1800.0,
+        "delta_payer_savings": 1800.0,
+        "delta_provider_payment_change": -1800.0,
+        "price_effect_delta": 1800.0,
+        "volume_effect": 0.0,
+        "mix_effect": 0.0
+      },
+      "confidence_score": 1.0,
+      "db_status": "COMPLETED",
+      "db_error": null
+    },
+    {
+      "policy_id": "20fe5bcf-f112-5033-a2c3-4702179e6652",
+      "policy_name": "Local Coverage Determination Study \u2014 LCD L34425",
+      "policy_key": "lcd",
+      "analysis_id": "97ee35b2-6bcf-4567-ab9a-d4916479565d",
+      "scenario_label": "Coverage study \u2014 financial effect UNESTIMATED",
+      "scenario_params": {
+        "projection_months": 12
+      },
+      "runner_status": "completed",
+      "message": null,
+      "strategy": {
+        "registry_version": "analytical-strategy-registry-v1",
+        "mechanism": "COVERAGE_DETERMINATION",
+        "engine_id": "coverage_criteria_v1",
+        "calculation_family": "COVERAGE",
+        "calculation_version": "coverage-criteria-v1",
+        "dispatch": "ENGINE",
+        "supports_whatif": true,
+        "field_gate": {
+          "ok": true,
+          "missing_fields": [],
+          "available_claim_fields_sample": [
+            "allowed_amount",
+            "claim_id",
+            "claim_line_id",
+            "cpt_code",
+            "facility_type",
+            "hcpcs_code",
+            "lob",
+            "member_id",
+            "paid_amount",
+            "place_of_service",
+            "provider_id",
+            "service_date",
+            "units"
+          ]
+        },
+        "notes": "NCD/LCD-linked coverage criteria; mechanical unit/necessity rules when configured.",
+        "sign_convention": {
+          "payment_impact": "Payer savings = baseline_paid \u2212 post_policy_paid. Positive means the payer pays less (provider receives less).",
+          "provider_payment_change": "Negative of payment_impact (provider perspective).",
+          "delta_payment_impact": "Incremental payer savings vs base scenario. Positive = additional payer savings (not increased provider payment).",
+          "volume_effect": "Change attributable to units/volume; 0 when volume held constant.",
+          "price_effect": "Change attributable to unit price / payment rules.",
+          "mix_effect": "Change attributable to service/site mix shifts."
+        },
+        "forbid_utilization_elasticity": false
+      },
+      "impact_metrics": {
+        "payment_impact_dollars": null,
+        "cost_change_pmpm": null,
+        "utilization_change_pct": null,
+        "policy_effect_status": "UNESTIMATED",
+        "interpretation": "This policy is a coverage/provenance study. What-if does not invent attributed savings; compare observations vs continuation instead."
+      },
+      "confidence_score": null,
+      "db_status": "COMPLETED",
+      "db_error": null
+    },
+    {
+      "policy_id": "d65d0f7a-ab72-5dde-9cd0-1c75b79efc66",
+      "policy_name": "Medically Unlikely Edit (MUE) / Unit Cap",
+      "policy_key": "mue",
+      "analysis_id": "a49e9d64-bf23-4368-ab50-e29fd3e94021",
+      "scenario_label": "MUE threshold 4\u21923",
+      "scenario_params": {
+        "base_mue_value": 4,
+        "mue_value": 3
+      },
+      "runner_status": "completed",
+      "message": null,
+      "strategy": {
+        "registry_version": "analytical-strategy-registry-v1",
+        "mechanism": "FEE_SCHEDULE_UNIT_PRICE",
+        "engine_id": "reimbursement_fee_schedule_v1",
+        "calculation_family": "REIMBURSEMENT",
+        "calculation_version": "reimbursement-fee-schedule-v1",
+        "dispatch": "ENGINE",
+        "supports_whatif": true,
+        "field_gate": {
+          "ok": true,
+          "missing_fields": [],
+          "available_claim_fields_sample": [
+            "allowed_amount",
+            "claim_id",
+            "claim_line_id",
+            "cpt_code",
+            "facility_type",
+            "hcpcs_code",
+            "lob",
+            "member_id",
+            "paid_amount",
+            "place_of_service",
+            "provider_id",
+            "service_date",
+            "units"
+          ]
+        },
+        "notes": "Unit allowed/price adjustment; not yet seeded as FULLY_VALIDATED_DEMO.",
+        "sign_convention": {
+          "payment_impact": "Payer savings = baseline_paid \u2212 post_policy_paid. Positive means the payer pays less (provider receives less).",
+          "provider_payment_change": "Negative of payment_impact (provider perspective).",
+          "delta_payment_impact": "Incremental payer savings vs base scenario. Positive = additional payer savings (not increased provider payment).",
+          "volume_effect": "Change attributable to units/volume; 0 when volume held constant.",
+          "price_effect": "Change attributable to unit price / payment rules.",
+          "mix_effect": "Change attributable to service/site mix shifts."
+        },
+        "forbid_utilization_elasticity": true
+      },
+      "impact_metrics": {
+        "delta_payment_impact": 100.0,
+        "delta_payer_savings": 100.0,
+        "delta_provider_payment_change": -100.0,
+        "price_effect_delta": 100.0,
+        "volume_effect": 0.0,
+        "mix_effect": 0.0
+      },
+      "confidence_score": 1.0,
+      "db_status": "COMPLETED",
+      "db_error": null
+    },
+    {
+      "policy_id": "7e7f480d-dc95-50a9-bbab-77a8c225f81f",
+      "policy_name": "Multiple Procedure Payment Reduction (MPPR)",
+      "policy_key": "mppr",
+      "analysis_id": "9a9e3f37-754b-4421-bdad-9b1d3d148885",
+      "scenario_label": "MPPR secondary 50%\u219240%",
+      "scenario_params": {
+        "base_secondary_pct": 0.5,
+        "secondary_pct": 0.4
+      },
+      "runner_status": "completed",
+      "message": null,
+      "strategy": {
+        "registry_version": "analytical-strategy-registry-v1",
+        "mechanism": "MULTIPLE_PROCEDURE_PAYMENT_REDUCTION",
+        "engine_id": "reimbursement_mppr_v1",
+        "calculation_family": "REIMBURSEMENT",
+        "calculation_version": "reimbursement-mppr-v1",
+        "dispatch": "ENGINE",
+        "supports_whatif": true,
+        "field_gate": {
+          "ok": true,
+          "missing_fields": [],
+          "available_claim_fields_sample": [
+            "allowed_amount",
+            "claim_id",
+            "claim_line_id",
+            "cpt_code",
+            "facility_type",
+            "hcpcs_code",
+            "lob",
+            "member_id",
+            "paid_amount",
+            "place_of_service",
+            "provider_id",
+            "service_date",
+            "units"
+          ]
+        },
+        "notes": "MPPR secondary % of allowed; volume held constant.",
+        "sign_convention": {
+          "payment_impact": "Payer savings = baseline_paid \u2212 post_policy_paid. Positive means the payer pays less (provider receives less).",
+          "provider_payment_change": "Negative of payment_impact (provider perspective).",
+          "delta_payment_impact": "Incremental payer savings vs base scenario. Positive = additional payer savings (not increased provider payment).",
+          "volume_effect": "Change attributable to units/volume; 0 when volume held constant.",
+          "price_effect": "Change attributable to unit price / payment rules.",
+          "mix_effect": "Change attributable to service/site mix shifts."
+        },
+        "forbid_utilization_elasticity": true
+      },
+      "impact_metrics": {
+        "delta_payment_impact": 120.0,
+        "delta_payer_savings": 120.0,
+        "delta_provider_payment_change": -120.0,
+        "price_effect_delta": 120.0,
+        "volume_effect": 0.0,
+        "mix_effect": 0.0
+      },
+      "confidence_score": 1.0,
+      "db_status": "COMPLETED",
+      "db_error": null
+    },
+    {
+      "policy_id": "b7e4ec54-64d6-5e70-8808-6e5fa0c229c7",
+      "policy_name": "National Coverage Determination Study \u2014 MRI (NCD 220.2)",
+      "policy_key": "ncd",
+      "analysis_id": "65bd2736-bfe4-4fb9-9b88-70bfe294411a",
+      "scenario_label": "Coverage study \u2014 financial effect UNESTIMATED",
+      "scenario_params": {
+        "projection_months": 12
+      },
+      "runner_status": "completed",
+      "message": null,
+      "strategy": {
+        "registry_version": "analytical-strategy-registry-v1",
+        "mechanism": "COVERAGE_DETERMINATION",
+        "engine_id": "coverage_criteria_v1",
+        "calculation_family": "COVERAGE",
+        "calculation_version": "coverage-criteria-v1",
+        "dispatch": "ENGINE",
+        "supports_whatif": true,
+        "field_gate": {
+          "ok": true,
+          "missing_fields": [],
+          "available_claim_fields_sample": [
+            "allowed_amount",
+            "claim_id",
+            "claim_line_id",
+            "cpt_code",
+            "facility_type",
+            "hcpcs_code",
+            "lob",
+            "member_id",
+            "paid_amount",
+            "place_of_service",
+            "provider_id",
+            "service_date",
+            "units"
+          ]
+        },
+        "notes": "NCD/LCD-linked coverage criteria; mechanical unit/necessity rules when configured.",
+        "sign_convention": {
+          "payment_impact": "Payer savings = baseline_paid \u2212 post_policy_paid. Positive means the payer pays less (provider receives less).",
+          "provider_payment_change": "Negative of payment_impact (provider perspective).",
+          "delta_payment_impact": "Incremental payer savings vs base scenario. Positive = additional payer savings (not increased provider payment).",
+          "volume_effect": "Change attributable to units/volume; 0 when volume held constant.",
+          "price_effect": "Change attributable to unit price / payment rules.",
+          "mix_effect": "Change attributable to service/site mix shifts."
+        },
+        "forbid_utilization_elasticity": false
+      },
+      "impact_metrics": {
+        "payment_impact_dollars": null,
+        "cost_change_pmpm": null,
+        "utilization_change_pct": null,
+        "policy_effect_status": "UNESTIMATED",
+        "interpretation": "This policy is a coverage/provenance study. What-if does not invent attributed savings; compare observations vs continuation instead."
+      },
+      "confidence_score": null,
+      "db_status": "COMPLETED",
+      "db_error": null
+    },
+    {
+      "policy_id": "d6339860-d85a-5dc5-babd-9c91390fde36",
+      "policy_name": "Outpatient MRI Prior Authorization",
+      "policy_key": "mri",
+      "analysis_id": "d52ce1ed-741e-4b5d-ba64-8d71001a2024",
+      "scenario_label": "UM elasticity scenario (\u22125% utilization trend, 12mo)",
+      "scenario_params": {
+        "lever_adjustments": {},
+        "elasticity_adjustments": {},
+        "member_count_multiplier": 1.0,
+        "utilization_trend": -0.05,
+        "cost_inflation": 0.02,
+        "projection_months": 12
+      },
+      "runner_status": "completed",
+      "message": null,
+      "strategy": null,
+      "impact_metrics": null,
+      "confidence_score": 100.0,
+      "db_status": "COMPLETED",
+      "db_error": null
+    },
+    {
+      "policy_id": "435e1461-b57e-5af3-ad08-e15aac690310",
+      "policy_name": "Outpatient Therapy Utilization and Payment Policy",
+      "policy_key": "therapy",
+      "analysis_id": "1c6e18c8-1fac-4837-8a13-e6bec675a482",
+      "scenario_label": "Coverage/utilization study \u2014 financial effect UNESTIMATED unless payment engine",
+      "scenario_params": {
+        "projection_months": 12
+      },
+      "runner_status": "completed",
+      "message": null,
+      "strategy": {
+        "registry_version": "analytical-strategy-registry-v1",
+        "mechanism": "COVERAGE_DETERMINATION",
+        "engine_id": "coverage_criteria_v1",
+        "calculation_family": "COVERAGE",
+        "calculation_version": "coverage-criteria-v1",
+        "dispatch": "ENGINE",
+        "supports_whatif": true,
+        "field_gate": {
+          "ok": true,
+          "missing_fields": [],
+          "available_claim_fields_sample": [
+            "allowed_amount",
+            "claim_id",
+            "claim_line_id",
+            "cpt_code",
+            "facility_type",
+            "hcpcs_code",
+            "lob",
+            "member_id",
+            "paid_amount",
+            "place_of_service",
+            "provider_id",
+            "service_date",
+            "units"
+          ]
+        },
+        "notes": "NCD/LCD-linked coverage criteria; mechanical unit/necessity rules when configured.",
+        "sign_convention": {
+          "payment_impact": "Payer savings = baseline_paid \u2212 post_policy_paid. Positive means the payer pays less (provider receives less).",
+          "provider_payment_change": "Negative of payment_impact (provider perspective).",
+          "delta_payment_impact": "Incremental payer savings vs base scenario. Positive = additional payer savings (not increased provider payment).",
+          "volume_effect": "Change attributable to units/volume; 0 when volume held constant.",
+          "price_effect": "Change attributable to unit price / payment rules.",
+          "mix_effect": "Change attributable to service/site mix shifts."
+        },
+        "forbid_utilization_elasticity": false
+      },
+      "impact_metrics": {
+        "payment_impact_dollars": null,
+        "cost_change_pmpm": null,
+        "utilization_change_pct": null,
+        "policy_effect_status": "UNESTIMATED",
+        "interpretation": "This policy is a coverage/provenance study. What-if does not invent attributed savings; compare observations vs continuation instead."
+      },
+      "confidence_score": null,
+      "db_status": "COMPLETED",
+      "db_error": null
+    },
+    {
+      "policy_id": "1d6d3332-88fd-54ac-8227-2d2bf856ed5f",
+      "policy_name": "Procedure-to-Procedure (PTP) Coding Edit",
+      "policy_key": "ptp",
+      "analysis_id": "2201bced-d80f-4e3c-b632-456966887a97",
+      "scenario_label": "PTP fixture modifier-indicator scenario",
+      "scenario_params": {},
+      "runner_status": "completed",
+      "message": null,
+      "strategy": {
+        "registry_version": "analytical-strategy-registry-v1",
+        "mechanism": "NCCI_PTP_FIXTURE",
+        "engine_id": "reimbursement_ncci_ptp_v1",
+        "calculation_family": "REIMBURSEMENT",
+        "calculation_version": "reimbursement-ncci-ptp-v1",
+        "dispatch": "ENGINE",
+        "supports_whatif": true,
+        "field_gate": {
+          "ok": true,
+          "missing_fields": [],
+          "available_claim_fields_sample": [
+            "allowed_amount",
+            "claim_id",
+            "claim_line_id",
+            "cpt_code",
+            "facility_type",
+            "hcpcs_code",
+            "lob",
+            "member_id",
+            "paid_amount",
+            "place_of_service",
+            "provider_id",
+            "service_date",
+            "units"
+          ]
+        },
+        "notes": "Synthetic known-answer PTP with modifier-indicator semantics; not a live quarterly CMS file.",
+        "sign_convention": {
+          "payment_impact": "Payer savings = baseline_paid \u2212 post_policy_paid. Positive means the payer pays less (provider receives less).",
+          "provider_payment_change": "Negative of payment_impact (provider perspective).",
+          "delta_payment_impact": "Incremental payer savings vs base scenario. Positive = additional payer savings (not increased provider payment).",
+          "volume_effect": "Change attributable to units/volume; 0 when volume held constant.",
+          "price_effect": "Change attributable to unit price / payment rules.",
+          "mix_effect": "Change attributable to service/site mix shifts."
+        },
+        "forbid_utilization_elasticity": true
+      },
+      "impact_metrics": {
+        "delta_payment_impact": 400.0,
+        "delta_payer_savings": 400.0,
+        "delta_provider_payment_change": -400.0,
+        "price_effect_delta": 400.0,
+        "volume_effect": 0.0,
+        "mix_effect": 0.0
+      },
+      "confidence_score": 1.0,
+      "db_status": "COMPLETED",
+      "db_error": null
+    }
+  ],
+  "finished_at": "2026-11-08T02:39:57.265403+00:00",
+  "summary": {
+    "verdicts_on_track": 8,
+    "verdicts_backfire": 1,
+    "whatifs_completed": 9,
+    "whatifs_failed": 0,
+    "rollout_recommendations": 5
+  }
+}

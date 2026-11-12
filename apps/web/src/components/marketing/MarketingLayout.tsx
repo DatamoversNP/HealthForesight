@@ -24,6 +24,7 @@ import {
 } from '@mui/material'
 import { Menu as MenuIcon, Close as CloseIcon } from '@mui/icons-material'
 import { healthForesightColors } from '../../theme/healthForesightTheme'
+import { appName, logoSrc } from '../../brand'
 
 interface Props {
   children?: React.ReactElement
@@ -126,8 +127,8 @@ export default function MarketingLayout() {
               >
                 <Box
                   component="img"
-                  src="/healthforesight-logo.svg"
-                  alt="HealthForesight"
+                  src={logoSrc}
+                  alt={appName}
                   sx={{
                     height: { xs: 32, sm: 36, md: 44 },
                     width: 'auto',
@@ -306,8 +307,8 @@ export default function MarketingLayout() {
             <Box sx={{ mb: { xs: 2, md: 0 } }}>
               <Box
                 component="img"
-                src="/healthforesight-logo.svg"
-                alt="HealthForesight"
+                src={logoSrc}
+                alt={appName}
                 sx={{
                   height: { xs: 36, md: 40 },
                   width: 'auto',

@@ -1,0 +1,251 @@
+{
+  "generated_at": "2026-11-07T12:24:32.376334+00:00",
+  "batch": 13,
+  "batch_size": 10,
+  "source_system": "SYNTHETIC_REVIEWED_248_V1",
+  "policies": [
+    {
+      "register_index": 121,
+      "name": "Interventional Radiology Procedure Prior Authorization",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 122,
+      "name": "Intrathecal Drug Pump Prior Authorization",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 123,
+      "name": "LCD L34425 NC MRI Coverage Criteria",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1602,
+        "baseline_allowed": 2510747.63,
+        "avg_allowed_per_line": 1452.9789525462963,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "70540",
+          "70542",
+          "70543"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "26509634-87fc-4b3e-81bd-252f3a5b56e9",
+        "prediction_id": "62f267f8-eb16-4ef2-b9ee-764b130789a3",
+        "observations": 10,
+        "allowed_pmpm": 17.435747430555555,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 124,
+      "name": "Long-Term Acute Care Hospital Authorization",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 125,
+      "name": "Low-Dose CT Lung Cancer Screening Criteria",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 126,
+      "name": "Mandatory Mail-Order Maintenance Medications",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 127,
+      "name": "Manual Wheelchair Medical Necessity",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 5184,
+        "baseline_members": 4236,
+        "baseline_allowed": 2572748.85,
+        "avg_allowed_per_line": 496.2864293981482,
+        "observation_claims": 4320,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "E0143",
+          "E1390",
+          "K0001",
+          "L4360",
+          "E0601"
+        ],
+        "service_category": "dme"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "af12720b-48d4-4d65-a1ef-f20181745705",
+        "prediction_id": "71787203-0d60-4527-bb10-d23ca89ac792",
+        "observations": 10,
+        "allowed_pmpm": 17.866311458333335,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 128,
+      "name": "Maternity Episode Bundle",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 3456,
+        "baseline_members": 2978,
+        "baseline_allowed": 1241148.84,
+        "avg_allowed_per_line": 359.1287152777778,
+        "observation_claims": 2880,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "59400",
+          "59510",
+          "99223",
+          "99468"
+        ],
+        "service_category": "ed"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "6d3eba2f-16c5-4351-8569-3bc5547ac22b",
+        "prediction_id": "8fe5346a-a9e6-4f1f-a890-9a90f1eea2f6",
+        "observations": 10,
+        "allowed_pmpm": 8.619089166666667,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 129,
+      "name": "Maternity Management Program",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 3456,
+        "baseline_members": 2978,
+        "baseline_allowed": 1241148.84,
+        "avg_allowed_per_line": 359.1287152777778,
+        "observation_claims": 2880,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "59400",
+          "59510",
+          "99223",
+          "99468"
+        ],
+        "service_category": "ed"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "7685d0ef-a1b8-4d25-90af-872858624165",
+        "prediction_id": "c6f9c7d8-e2f9-4471-848d-4fea7f52e950",
+        "observations": 10,
+        "allowed_pmpm": 8.619089166666667,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 130,
+      "name": "Maximum Wait Time for Specialist Appointments",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    }
+  ],
+  "population": {
+    "loaded": false,
+    "claims": 348744,
+    "members": 12000,
+    "source_system": "SYNTHETIC_REVIEWED_248_V1",
+    "book_mm_2025": 144000.0
+  },
+  "validation_summary": {
+    "policies_in_batch": 10,
+    "configured": 10,
+    "measurable_completed": 4,
+    "config_only": 6,
+    "thin_but_measured": 0,
+    "failed": 0,
+    "rate_continuity_checked": 4,
+    "pass": true
+  }
+}

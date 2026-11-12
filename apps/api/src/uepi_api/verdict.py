@@ -61,6 +61,30 @@ def _direction_met(direction: str, change: float) -> Optional[bool]:
     return None
 
 
+def with_screen_verdict(
+    observation: Optional[Dict[str, Any]],
+    policy: Optional[Dict[str, Any]],
+) -> Dict[str, Any]:
+    """Read-time screen verdict. Stored verdict fields are copied through unchanged."""
+    source = observation if isinstance(observation, dict) else {}
+    out = dict(source)
+    screen_status, screen_reason, screen_recommendation = compute_verdict(
+        source.get("comparisons") or {},
+        source.get("behavioral_explanation") or {},
+        required_endpoints=endpoint_contract_from_policy(policy),
+    )
+    out["screen_verdict"] = screen_status
+    out["screen_verdict_reason"] = screen_reason
+    out["screen_recommendation"] = screen_recommendation
+    out["historical_verdict_status"] = source.get("verdict_status")
+    out["verdict_is_recomputed"] = True
+    out["verdict_status"] = source.get("verdict_status")
+    out["verdict_reason"] = source.get("verdict_reason")
+    out["recommendation"] = source.get("recommendation")
+    out["verdict_rule_version"] = source.get("verdict_rule_version")
+    return out
+
+
 def compute_verdict(
     comparisons: Dict[str, Any],
     behavioral_explanation: Dict[str, Any],

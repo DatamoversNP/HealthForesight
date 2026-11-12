@@ -1,0 +1,228 @@
+{
+  "generated_at": "2026-11-07T12:09:40.407735+00:00",
+  "batch": 5,
+  "batch_size": 10,
+  "source_system": "SYNTHETIC_REVIEWED_248_V1",
+  "policies": [
+    {
+      "register_index": 41,
+      "name": "Centers of Excellence Requirement \u2014 Bariatric",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 5184,
+        "baseline_members": 4202,
+        "baseline_allowed": 17504604.09,
+        "avg_allowed_per_line": 3376.6597395833332,
+        "observation_claims": 4320,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "43644",
+          "43775",
+          "43846"
+        ],
+        "service_category": "surgery"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "9e659d1e-8cef-42ab-b6f2-184148465581",
+        "prediction_id": "85783473-4b6c-4799-91b4-629aed3ad8c4",
+        "observations": 10,
+        "allowed_pmpm": 121.55975062499999,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 42,
+      "name": "Centers of Excellence Requirement \u2014 Complex Cancer",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 43,
+      "name": "Centers of Excellence Requirement \u2014 Transplant",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 44,
+      "name": "CGM and Diabetes Supply Quantity Limits",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 11230,
+        "baseline_members": 7302,
+        "baseline_allowed": 14601531.61,
+        "avg_allowed_per_line": 1300.2254327693677,
+        "observation_claims": 9347,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J3490",
+          "S5000"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "6178e5ef-d210-4556-b02f-f73a3d70373d",
+        "prediction_id": "cce0017a-1cfd-4a43-ba1d-2539527bc334",
+        "observations": 10,
+        "allowed_pmpm": 101.39952506944444,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 45,
+      "name": "Chiropractic Visit Limit",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 46,
+      "name": "CKD Disease Management Program",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 47,
+      "name": "Cochlear Implant Prior Authorization",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 48,
+      "name": "Colonoscopy Screening and Surveillance Intervals",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 49,
+      "name": "Complex Case Management Program",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 50,
+      "name": "Complex Hernia Repair Prior Authorization",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1627,
+        "baseline_allowed": 5880099.94,
+        "avg_allowed_per_line": 3402.835613425926,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "49505",
+          "49507",
+          "49650"
+        ],
+        "service_category": "surgery"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "a72367ef-80e1-4ebb-a99f-eb9689d8a507",
+        "prediction_id": "6a13e069-899c-42eb-8511-7b40d7281da7",
+        "observations": 10,
+        "allowed_pmpm": 40.83402736111111,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    }
+  ],
+  "population": {
+    "loaded": false,
+    "claims": 348744,
+    "members": 12000,
+    "source_system": "SYNTHETIC_REVIEWED_248_V1",
+    "book_mm_2025": 144000.0
+  },
+  "validation_summary": {
+    "policies_in_batch": 10,
+    "configured": 10,
+    "measurable_completed": 3,
+    "config_only": 7,
+    "thin_but_measured": 0,
+    "failed": 0,
+    "rate_continuity_checked": 3,
+    "pass": true
+  }
+}

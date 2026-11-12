@@ -1,0 +1,1478 @@
+[
+  {
+    "policy": "Imaging Site-of-Service Policy",
+    "policy_id": "a9e032f8-d4fc-599c-8ea4-4e58a0f929e3",
+    "baseline": {
+      "version": 3,
+      "book": "SYNTHETIC_NINE_POLICY_5K_V1",
+      "window": [
+        "2025-01-01",
+        "2025-12-31"
+      ],
+      "member_months": 60000.0,
+      "claims": 4448,
+      "members": 2221,
+      "allowed": 6893485.81,
+      "paid": 5514789.11,
+      "allowed_pmpm": 114.8914,
+      "paid_pmpm": 91.9132,
+      "util_per_1k_mm": 74.1333,
+      "exposure": "ENROLLMENT_DISTINCT_COVERED_DAYS"
+    },
+    "predicted": {
+      "method": "HISTORICAL_RATE_CONTINUATION_V1",
+      "continuation": "AVAILABLE",
+      "policy_effect": "UNESTIMATED",
+      "horizon": [
+        "2026-01-01",
+        "2026-10-31"
+      ],
+      "forecast_mm": 50000.0,
+      "predicted_services": 3706.7,
+      "predicted_allowed": 5744571.51,
+      "continuation_allowed_pmpm": 114.8914,
+      "hist_svc_rate": 0.074133,
+      "hist_util_1k_my": 889.6,
+      "predicted_at": "2026-11-07 08:00:10"
+    },
+    "observed_totals": {
+      "months": 10,
+      "window": [
+        "2026-01-01",
+        "2026-10-31"
+      ],
+      "claims": 3291,
+      "member_months": 50000.0,
+      "allowed": 5110465.82,
+      "paid": 4088372.39,
+      "avg_allowed_pmpm": 102.2093,
+      "verdicts": [
+        "INCONCLUSIVE"
+      ]
+    },
+    "monthly": [
+      {
+        "ym": "2026-01",
+        "claims": 351,
+        "mm": 5000.0,
+        "allowed": 547128.36,
+        "allowed_pmpm": 109.4257,
+        "util_per_1k_mm": 70.2,
+        "vs_cont_allowed_var": -27328.79,
+        "vs_cont_adj_allowed_var": -27328.79,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-02",
+        "claims": 302,
+        "mm": 5000.0,
+        "allowed": 472219.96,
+        "allowed_pmpm": 94.444,
+        "util_per_1k_mm": 60.4,
+        "vs_cont_allowed_var": -102237.19,
+        "vs_cont_adj_allowed_var": -102237.19,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-03",
+        "claims": 347,
+        "mm": 5000.0,
+        "allowed": 532807.37,
+        "allowed_pmpm": 106.5615,
+        "util_per_1k_mm": 69.4,
+        "vs_cont_allowed_var": -41649.78,
+        "vs_cont_adj_allowed_var": -41649.78,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-04",
+        "claims": 296,
+        "mm": 5000.0,
+        "allowed": 463281.36,
+        "allowed_pmpm": 92.6563,
+        "util_per_1k_mm": 59.2,
+        "vs_cont_allowed_var": -111175.79,
+        "vs_cont_adj_allowed_var": -111175.79,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-05",
+        "claims": 384,
+        "mm": 5000.0,
+        "allowed": 605609.32,
+        "allowed_pmpm": 121.1219,
+        "util_per_1k_mm": 76.8,
+        "vs_cont_allowed_var": 31152.17,
+        "vs_cont_adj_allowed_var": 31152.17,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-06",
+        "claims": 327,
+        "mm": 5000.0,
+        "allowed": 508513.87,
+        "allowed_pmpm": 101.7028,
+        "util_per_1k_mm": 65.4,
+        "vs_cont_allowed_var": -65943.28,
+        "vs_cont_adj_allowed_var": -65943.28,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-07",
+        "claims": 320,
+        "mm": 5000.0,
+        "allowed": 494499.77,
+        "allowed_pmpm": 98.9,
+        "util_per_1k_mm": 64.0,
+        "vs_cont_allowed_var": -79957.38,
+        "vs_cont_adj_allowed_var": -79957.38,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-08",
+        "claims": 332,
+        "mm": 5000.0,
+        "allowed": 512882.65,
+        "allowed_pmpm": 102.5765,
+        "util_per_1k_mm": 66.4,
+        "vs_cont_allowed_var": -61574.5,
+        "vs_cont_adj_allowed_var": -61574.5,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-09",
+        "claims": 329,
+        "mm": 5000.0,
+        "allowed": 504235.13,
+        "allowed_pmpm": 100.847,
+        "util_per_1k_mm": 65.8,
+        "vs_cont_allowed_var": -70222.02,
+        "vs_cont_adj_allowed_var": -70222.02,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-10",
+        "claims": 303,
+        "mm": 5000.0,
+        "allowed": 469288.03,
+        "allowed_pmpm": 93.8576,
+        "util_per_1k_mm": 60.6,
+        "vs_cont_allowed_var": -105169.12,
+        "vs_cont_adj_allowed_var": -105169.12,
+        "verdict": "INCONCLUSIVE"
+      }
+    ]
+  },
+  {
+    "policy": "Infusion Site-of-Care and Reimbursement Policy",
+    "policy_id": "fce62ce1-1476-520d-81a6-daf0e9507743",
+    "baseline": {
+      "version": 3,
+      "book": "SYNTHETIC_NINE_POLICY_5K_V1",
+      "window": [
+        "2025-01-01",
+        "2025-12-31"
+      ],
+      "member_months": 60000.0,
+      "claims": 1094,
+      "members": 556,
+      "allowed": 2377903.4,
+      "paid": 1902322.73,
+      "allowed_pmpm": 39.6317,
+      "paid_pmpm": 31.7054,
+      "util_per_1k_mm": 18.2333,
+      "exposure": "ENROLLMENT_DISTINCT_COVERED_DAYS"
+    },
+    "predicted": {
+      "method": "HISTORICAL_RATE_CONTINUATION_V1",
+      "continuation": "AVAILABLE",
+      "policy_effect": "UNESTIMATED",
+      "horizon": [
+        "2026-01-01",
+        "2026-10-31"
+      ],
+      "forecast_mm": 50000.0,
+      "predicted_services": 911.7,
+      "predicted_allowed": 1981586.17,
+      "continuation_allowed_pmpm": 39.6317,
+      "hist_svc_rate": 0.018233,
+      "hist_util_1k_my": 218.8,
+      "predicted_at": "2026-11-07 08:00:11"
+    },
+    "observed_totals": {
+      "months": 10,
+      "window": [
+        "2026-01-01",
+        "2026-10-31"
+      ],
+      "claims": 862,
+      "member_months": 50000.0,
+      "allowed": 1822731.31,
+      "paid": 1458184.87,
+      "avg_allowed_pmpm": 36.4546,
+      "verdicts": [
+        "INCONCLUSIVE"
+      ]
+    },
+    "monthly": [
+      {
+        "ym": "2026-01",
+        "claims": 89,
+        "mm": 5000.0,
+        "allowed": 202765.8,
+        "allowed_pmpm": 40.5532,
+        "util_per_1k_mm": 17.8,
+        "vs_cont_allowed_var": 4607.18,
+        "vs_cont_adj_allowed_var": 4607.18,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-02",
+        "claims": 83,
+        "mm": 5000.0,
+        "allowed": 178242.81,
+        "allowed_pmpm": 35.6486,
+        "util_per_1k_mm": 16.6,
+        "vs_cont_allowed_var": -19915.81,
+        "vs_cont_adj_allowed_var": -19915.81,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-03",
+        "claims": 91,
+        "mm": 5000.0,
+        "allowed": 189101.65,
+        "allowed_pmpm": 37.8203,
+        "util_per_1k_mm": 18.2,
+        "vs_cont_allowed_var": -9056.97,
+        "vs_cont_adj_allowed_var": -9056.97,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-04",
+        "claims": 67,
+        "mm": 5000.0,
+        "allowed": 145316.83,
+        "allowed_pmpm": 29.0634,
+        "util_per_1k_mm": 13.4,
+        "vs_cont_allowed_var": -52841.79,
+        "vs_cont_adj_allowed_var": -52841.79,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-05",
+        "claims": 89,
+        "mm": 5000.0,
+        "allowed": 188180.3,
+        "allowed_pmpm": 37.6361,
+        "util_per_1k_mm": 17.8,
+        "vs_cont_allowed_var": -9978.32,
+        "vs_cont_adj_allowed_var": -9978.32,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-06",
+        "claims": 74,
+        "mm": 5000.0,
+        "allowed": 158739.21,
+        "allowed_pmpm": 31.7478,
+        "util_per_1k_mm": 14.8,
+        "vs_cont_allowed_var": -39419.41,
+        "vs_cont_adj_allowed_var": -39419.41,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-07",
+        "claims": 91,
+        "mm": 5000.0,
+        "allowed": 186020.8,
+        "allowed_pmpm": 37.2042,
+        "util_per_1k_mm": 18.2,
+        "vs_cont_allowed_var": -12137.82,
+        "vs_cont_adj_allowed_var": -12137.82,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-08",
+        "claims": 87,
+        "mm": 5000.0,
+        "allowed": 176704.47,
+        "allowed_pmpm": 35.3409,
+        "util_per_1k_mm": 17.4,
+        "vs_cont_allowed_var": -21454.15,
+        "vs_cont_adj_allowed_var": -21454.15,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-09",
+        "claims": 89,
+        "mm": 5000.0,
+        "allowed": 184520.7,
+        "allowed_pmpm": 36.9041,
+        "util_per_1k_mm": 17.8,
+        "vs_cont_allowed_var": -13637.92,
+        "vs_cont_adj_allowed_var": -13637.92,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-10",
+        "claims": 102,
+        "mm": 5000.0,
+        "allowed": 213138.74,
+        "allowed_pmpm": 42.6277,
+        "util_per_1k_mm": 20.4,
+        "vs_cont_allowed_var": 14980.12,
+        "vs_cont_adj_allowed_var": 14980.12,
+        "verdict": "INCONCLUSIVE"
+      }
+    ]
+  },
+  {
+    "policy": "Local Coverage Determination Study \u2014 LCD L34425",
+    "policy_id": "20fe5bcf-f112-5033-a2c3-4702179e6652",
+    "baseline": {
+      "version": 3,
+      "book": "SYNTHETIC_NINE_POLICY_5K_V1",
+      "window": [
+        "2025-01-01",
+        "2025-12-31"
+      ],
+      "member_months": 60000.0,
+      "claims": 1105,
+      "members": 556,
+      "allowed": 1153172.73,
+      "paid": 922538.13,
+      "allowed_pmpm": 19.2195,
+      "paid_pmpm": 15.3756,
+      "util_per_1k_mm": 18.4167,
+      "exposure": "ENROLLMENT_DISTINCT_COVERED_DAYS"
+    },
+    "predicted": {
+      "method": "HISTORICAL_RATE_CONTINUATION_V1",
+      "continuation": "AVAILABLE",
+      "policy_effect": "UNESTIMATED",
+      "horizon": [
+        "2026-01-01",
+        "2026-10-31"
+      ],
+      "forecast_mm": 50000.0,
+      "predicted_services": 920.8,
+      "predicted_allowed": 960977.28,
+      "continuation_allowed_pmpm": 19.2195,
+      "hist_svc_rate": 0.018417,
+      "hist_util_1k_my": 221.0,
+      "predicted_at": "2026-11-07 08:00:12"
+    },
+    "observed_totals": {
+      "months": 10,
+      "window": [
+        "2026-01-01",
+        "2026-10-31"
+      ],
+      "claims": 807,
+      "member_months": 50000.0,
+      "allowed": 855733.8,
+      "paid": 684587.04,
+      "avg_allowed_pmpm": 17.1147,
+      "verdicts": [
+        "INCONCLUSIVE"
+      ]
+    },
+    "monthly": [
+      {
+        "ym": "2026-01",
+        "claims": 75,
+        "mm": 5000.0,
+        "allowed": 80184.8,
+        "allowed_pmpm": 16.037,
+        "util_per_1k_mm": 15.0,
+        "vs_cont_allowed_var": -15912.93,
+        "vs_cont_adj_allowed_var": -15912.93,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-02",
+        "claims": 70,
+        "mm": 5000.0,
+        "allowed": 70646.4,
+        "allowed_pmpm": 14.1293,
+        "util_per_1k_mm": 14.0,
+        "vs_cont_allowed_var": -25451.33,
+        "vs_cont_adj_allowed_var": -25451.33,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-03",
+        "claims": 74,
+        "mm": 5000.0,
+        "allowed": 74622.61,
+        "allowed_pmpm": 14.9245,
+        "util_per_1k_mm": 14.8,
+        "vs_cont_allowed_var": -21475.12,
+        "vs_cont_adj_allowed_var": -21475.12,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-04",
+        "claims": 88,
+        "mm": 5000.0,
+        "allowed": 91382.55,
+        "allowed_pmpm": 18.2765,
+        "util_per_1k_mm": 17.6,
+        "vs_cont_allowed_var": -4715.18,
+        "vs_cont_adj_allowed_var": -4715.18,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-05",
+        "claims": 83,
+        "mm": 5000.0,
+        "allowed": 89480.36,
+        "allowed_pmpm": 17.8961,
+        "util_per_1k_mm": 16.6,
+        "vs_cont_allowed_var": -6617.37,
+        "vs_cont_adj_allowed_var": -6617.37,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-06",
+        "claims": 71,
+        "mm": 5000.0,
+        "allowed": 75775.32,
+        "allowed_pmpm": 15.1551,
+        "util_per_1k_mm": 14.2,
+        "vs_cont_allowed_var": -20322.41,
+        "vs_cont_adj_allowed_var": -20322.41,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-07",
+        "claims": 87,
+        "mm": 5000.0,
+        "allowed": 90050.35,
+        "allowed_pmpm": 18.0101,
+        "util_per_1k_mm": 17.4,
+        "vs_cont_allowed_var": -6047.38,
+        "vs_cont_adj_allowed_var": -6047.38,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-08",
+        "claims": 94,
+        "mm": 5000.0,
+        "allowed": 103715.7,
+        "allowed_pmpm": 20.7431,
+        "util_per_1k_mm": 18.8,
+        "vs_cont_allowed_var": 7617.97,
+        "vs_cont_adj_allowed_var": 7617.97,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-09",
+        "claims": 79,
+        "mm": 5000.0,
+        "allowed": 86126.12,
+        "allowed_pmpm": 17.2252,
+        "util_per_1k_mm": 15.8,
+        "vs_cont_allowed_var": -9971.61,
+        "vs_cont_adj_allowed_var": -9971.61,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-10",
+        "claims": 86,
+        "mm": 5000.0,
+        "allowed": 93749.59,
+        "allowed_pmpm": 18.7499,
+        "util_per_1k_mm": 17.2,
+        "vs_cont_allowed_var": -2348.14,
+        "vs_cont_adj_allowed_var": -2348.14,
+        "verdict": "INCONCLUSIVE"
+      }
+    ]
+  },
+  {
+    "policy": "Medically Unlikely Edit (MUE) / Unit Cap",
+    "policy_id": "d65d0f7a-ab72-5dde-9cd0-1c75b79efc66",
+    "baseline": {
+      "version": 3,
+      "book": "SYNTHETIC_NINE_POLICY_5K_V1",
+      "window": [
+        "2025-01-01",
+        "2025-12-31"
+      ],
+      "member_months": 60000.0,
+      "claims": 1087,
+      "members": 555,
+      "allowed": 465875.31,
+      "paid": 372700.13,
+      "allowed_pmpm": 7.7646,
+      "paid_pmpm": 6.2117,
+      "util_per_1k_mm": 18.1167,
+      "exposure": "ENROLLMENT_DISTINCT_COVERED_DAYS"
+    },
+    "predicted": {
+      "method": "HISTORICAL_RATE_CONTINUATION_V1",
+      "continuation": "AVAILABLE",
+      "policy_effect": "UNESTIMATED",
+      "horizon": [
+        "2026-01-01",
+        "2026-10-31"
+      ],
+      "forecast_mm": 50000.0,
+      "predicted_services": 905.8,
+      "predicted_allowed": 388229.43,
+      "continuation_allowed_pmpm": 7.7646,
+      "hist_svc_rate": 0.018117,
+      "hist_util_1k_my": 217.4,
+      "predicted_at": "2026-11-07 08:00:13"
+    },
+    "observed_totals": {
+      "months": 10,
+      "window": [
+        "2026-01-01",
+        "2026-10-31"
+      ],
+      "claims": 836,
+      "member_months": 50000.0,
+      "allowed": 363690.79,
+      "paid": 290952.69,
+      "avg_allowed_pmpm": 7.2738,
+      "verdicts": [
+        "INCONCLUSIVE"
+      ]
+    },
+    "monthly": [
+      {
+        "ym": "2026-01",
+        "claims": 80,
+        "mm": 5000.0,
+        "allowed": 32659.42,
+        "allowed_pmpm": 6.5319,
+        "util_per_1k_mm": 16.0,
+        "vs_cont_allowed_var": -6163.52,
+        "vs_cont_adj_allowed_var": -6163.52,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-02",
+        "claims": 73,
+        "mm": 5000.0,
+        "allowed": 32645.15,
+        "allowed_pmpm": 6.529,
+        "util_per_1k_mm": 14.6,
+        "vs_cont_allowed_var": -6177.79,
+        "vs_cont_adj_allowed_var": -6177.79,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-03",
+        "claims": 99,
+        "mm": 5000.0,
+        "allowed": 44071.81,
+        "allowed_pmpm": 8.8144,
+        "util_per_1k_mm": 19.8,
+        "vs_cont_allowed_var": 5248.87,
+        "vs_cont_adj_allowed_var": 5248.87,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-04",
+        "claims": 90,
+        "mm": 5000.0,
+        "allowed": 40083.19,
+        "allowed_pmpm": 8.0166,
+        "util_per_1k_mm": 18.0,
+        "vs_cont_allowed_var": 1260.25,
+        "vs_cont_adj_allowed_var": 1260.25,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-05",
+        "claims": 90,
+        "mm": 5000.0,
+        "allowed": 40665.61,
+        "allowed_pmpm": 8.1331,
+        "util_per_1k_mm": 18.0,
+        "vs_cont_allowed_var": 1842.67,
+        "vs_cont_adj_allowed_var": 1842.67,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-06",
+        "claims": 72,
+        "mm": 5000.0,
+        "allowed": 29486.76,
+        "allowed_pmpm": 5.8974,
+        "util_per_1k_mm": 14.4,
+        "vs_cont_allowed_var": -9336.18,
+        "vs_cont_adj_allowed_var": -9336.18,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-07",
+        "claims": 80,
+        "mm": 5000.0,
+        "allowed": 31577.14,
+        "allowed_pmpm": 6.3154,
+        "util_per_1k_mm": 16.0,
+        "vs_cont_allowed_var": -7245.8,
+        "vs_cont_adj_allowed_var": -7245.8,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-08",
+        "claims": 94,
+        "mm": 5000.0,
+        "allowed": 38478.35,
+        "allowed_pmpm": 7.6957,
+        "util_per_1k_mm": 18.8,
+        "vs_cont_allowed_var": -344.59,
+        "vs_cont_adj_allowed_var": -344.59,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-09",
+        "claims": 83,
+        "mm": 5000.0,
+        "allowed": 39794.95,
+        "allowed_pmpm": 7.959,
+        "util_per_1k_mm": 16.6,
+        "vs_cont_allowed_var": 972.01,
+        "vs_cont_adj_allowed_var": 972.01,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-10",
+        "claims": 75,
+        "mm": 5000.0,
+        "allowed": 34228.41,
+        "allowed_pmpm": 6.8457,
+        "util_per_1k_mm": 15.0,
+        "vs_cont_allowed_var": -4594.53,
+        "vs_cont_adj_allowed_var": -4594.53,
+        "verdict": "INCONCLUSIVE"
+      }
+    ]
+  },
+  {
+    "policy": "Multiple Procedure Payment Reduction (MPPR)",
+    "policy_id": "7e7f480d-dc95-50a9-bbab-77a8c225f81f",
+    "baseline": {
+      "version": 3,
+      "book": "SYNTHETIC_NINE_POLICY_5K_V1",
+      "window": [
+        "2025-01-01",
+        "2025-12-31"
+      ],
+      "member_months": 60000.0,
+      "claims": 2150,
+      "members": 555,
+      "allowed": 3923347.28,
+      "paid": 3138677.87,
+      "allowed_pmpm": 65.3891,
+      "paid_pmpm": 52.3113,
+      "util_per_1k_mm": 35.8333,
+      "exposure": "ENROLLMENT_DISTINCT_COVERED_DAYS"
+    },
+    "predicted": {
+      "method": "HISTORICAL_RATE_CONTINUATION_V1",
+      "continuation": "AVAILABLE",
+      "policy_effect": "UNESTIMATED",
+      "horizon": [
+        "2026-01-01",
+        "2026-10-31"
+      ],
+      "forecast_mm": 50000.0,
+      "predicted_services": 1791.7,
+      "predicted_allowed": 3269456.07,
+      "continuation_allowed_pmpm": 65.3891,
+      "hist_svc_rate": 0.035833,
+      "hist_util_1k_my": 430.0,
+      "predicted_at": "2026-11-07 08:00:14"
+    },
+    "observed_totals": {
+      "months": 10,
+      "window": [
+        "2026-01-01",
+        "2026-10-31"
+      ],
+      "claims": 1682,
+      "member_months": 50000.0,
+      "allowed": 3065680.53,
+      "paid": 2452544.37,
+      "avg_allowed_pmpm": 61.3136,
+      "verdicts": [
+        "INCONCLUSIVE"
+      ]
+    },
+    "monthly": [
+      {
+        "ym": "2026-01",
+        "claims": 202,
+        "mm": 5000.0,
+        "allowed": 367657.01,
+        "allowed_pmpm": 73.5314,
+        "util_per_1k_mm": 40.4,
+        "vs_cont_allowed_var": 40711.4,
+        "vs_cont_adj_allowed_var": 40711.4,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-02",
+        "claims": 180,
+        "mm": 5000.0,
+        "allowed": 323220.08,
+        "allowed_pmpm": 64.644,
+        "util_per_1k_mm": 36.0,
+        "vs_cont_allowed_var": -3725.53,
+        "vs_cont_adj_allowed_var": -3725.53,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-03",
+        "claims": 132,
+        "mm": 5000.0,
+        "allowed": 245453.16,
+        "allowed_pmpm": 49.0906,
+        "util_per_1k_mm": 26.4,
+        "vs_cont_allowed_var": -81492.45,
+        "vs_cont_adj_allowed_var": -81492.45,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-04",
+        "claims": 168,
+        "mm": 5000.0,
+        "allowed": 319081.43,
+        "allowed_pmpm": 63.8163,
+        "util_per_1k_mm": 33.6,
+        "vs_cont_allowed_var": -7864.18,
+        "vs_cont_adj_allowed_var": -7864.18,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-05",
+        "claims": 188,
+        "mm": 5000.0,
+        "allowed": 345726.72,
+        "allowed_pmpm": 69.1453,
+        "util_per_1k_mm": 37.6,
+        "vs_cont_allowed_var": 18781.11,
+        "vs_cont_adj_allowed_var": 18781.11,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-06",
+        "claims": 168,
+        "mm": 5000.0,
+        "allowed": 297980.56,
+        "allowed_pmpm": 59.5961,
+        "util_per_1k_mm": 33.6,
+        "vs_cont_allowed_var": -28965.05,
+        "vs_cont_adj_allowed_var": -28965.05,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-07",
+        "claims": 134,
+        "mm": 5000.0,
+        "allowed": 242478.67,
+        "allowed_pmpm": 48.4957,
+        "util_per_1k_mm": 26.8,
+        "vs_cont_allowed_var": -84466.94,
+        "vs_cont_adj_allowed_var": -84466.94,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-08",
+        "claims": 192,
+        "mm": 5000.0,
+        "allowed": 348073.93,
+        "allowed_pmpm": 69.6148,
+        "util_per_1k_mm": 38.4,
+        "vs_cont_allowed_var": 21128.32,
+        "vs_cont_adj_allowed_var": 21128.32,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-09",
+        "claims": 172,
+        "mm": 5000.0,
+        "allowed": 305552.45,
+        "allowed_pmpm": 61.1105,
+        "util_per_1k_mm": 34.4,
+        "vs_cont_allowed_var": -21393.16,
+        "vs_cont_adj_allowed_var": -21393.16,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-10",
+        "claims": 146,
+        "mm": 5000.0,
+        "allowed": 270456.52,
+        "allowed_pmpm": 54.0913,
+        "util_per_1k_mm": 29.2,
+        "vs_cont_allowed_var": -56489.09,
+        "vs_cont_adj_allowed_var": -56489.09,
+        "verdict": "INCONCLUSIVE"
+      }
+    ]
+  },
+  {
+    "policy": "National Coverage Determination Study \u2014 MRI (NCD 220.2)",
+    "policy_id": "b7e4ec54-64d6-5e70-8808-6e5fa0c229c7",
+    "baseline": {
+      "version": 3,
+      "book": "SYNTHETIC_NINE_POLICY_5K_V1",
+      "window": [
+        "2025-01-01",
+        "2025-12-31"
+      ],
+      "member_months": 60000.0,
+      "claims": 4418,
+      "members": 2223,
+      "allowed": 5513498.66,
+      "paid": 4410798.97,
+      "allowed_pmpm": 91.8916,
+      "paid_pmpm": 73.5133,
+      "util_per_1k_mm": 73.6333,
+      "exposure": "ENROLLMENT_DISTINCT_COVERED_DAYS"
+    },
+    "predicted": {
+      "method": "HISTORICAL_RATE_CONTINUATION_V1",
+      "continuation": "AVAILABLE",
+      "policy_effect": "UNESTIMATED",
+      "horizon": [
+        "2026-01-01",
+        "2026-10-31"
+      ],
+      "forecast_mm": 50000.0,
+      "predicted_services": 3681.7,
+      "predicted_allowed": 4594582.22,
+      "continuation_allowed_pmpm": 91.8916,
+      "hist_svc_rate": 0.073633,
+      "hist_util_1k_my": 883.6,
+      "predicted_at": "2026-11-07 08:00:15"
+    },
+    "observed_totals": {
+      "months": 10,
+      "window": [
+        "2026-01-01",
+        "2026-10-31"
+      ],
+      "claims": 3313,
+      "member_months": 50000.0,
+      "allowed": 4121950.4,
+      "paid": 3297560.64,
+      "avg_allowed_pmpm": 82.439,
+      "verdicts": [
+        "INCONCLUSIVE"
+      ]
+    },
+    "monthly": [
+      {
+        "ym": "2026-01",
+        "claims": 330,
+        "mm": 5000.0,
+        "allowed": 410102.64,
+        "allowed_pmpm": 82.0205,
+        "util_per_1k_mm": 66.0,
+        "vs_cont_allowed_var": -49355.58,
+        "vs_cont_adj_allowed_var": -49355.58,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-02",
+        "claims": 333,
+        "mm": 5000.0,
+        "allowed": 412399.02,
+        "allowed_pmpm": 82.4798,
+        "util_per_1k_mm": 66.6,
+        "vs_cont_allowed_var": -47059.2,
+        "vs_cont_adj_allowed_var": -47059.2,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-03",
+        "claims": 357,
+        "mm": 5000.0,
+        "allowed": 439533.04,
+        "allowed_pmpm": 87.9066,
+        "util_per_1k_mm": 71.4,
+        "vs_cont_allowed_var": -19925.18,
+        "vs_cont_adj_allowed_var": -19925.18,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-04",
+        "claims": 306,
+        "mm": 5000.0,
+        "allowed": 373043.94,
+        "allowed_pmpm": 74.6088,
+        "util_per_1k_mm": 61.2,
+        "vs_cont_allowed_var": -86414.28,
+        "vs_cont_adj_allowed_var": -86414.28,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-05",
+        "claims": 334,
+        "mm": 5000.0,
+        "allowed": 427107.28,
+        "allowed_pmpm": 85.4215,
+        "util_per_1k_mm": 66.8,
+        "vs_cont_allowed_var": -32350.94,
+        "vs_cont_adj_allowed_var": -32350.94,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-06",
+        "claims": 330,
+        "mm": 5000.0,
+        "allowed": 410845.91,
+        "allowed_pmpm": 82.1692,
+        "util_per_1k_mm": 66.0,
+        "vs_cont_allowed_var": -48612.31,
+        "vs_cont_adj_allowed_var": -48612.31,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-07",
+        "claims": 340,
+        "mm": 5000.0,
+        "allowed": 416218.83,
+        "allowed_pmpm": 83.2438,
+        "util_per_1k_mm": 68.0,
+        "vs_cont_allowed_var": -43239.39,
+        "vs_cont_adj_allowed_var": -43239.39,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-08",
+        "claims": 348,
+        "mm": 5000.0,
+        "allowed": 432322.31,
+        "allowed_pmpm": 86.4645,
+        "util_per_1k_mm": 69.6,
+        "vs_cont_allowed_var": -27135.91,
+        "vs_cont_adj_allowed_var": -27135.91,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-09",
+        "claims": 305,
+        "mm": 5000.0,
+        "allowed": 383575.5,
+        "allowed_pmpm": 76.7151,
+        "util_per_1k_mm": 61.0,
+        "vs_cont_allowed_var": -75882.72,
+        "vs_cont_adj_allowed_var": -75882.72,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-10",
+        "claims": 330,
+        "mm": 5000.0,
+        "allowed": 416801.93,
+        "allowed_pmpm": 83.3604,
+        "util_per_1k_mm": 66.0,
+        "vs_cont_allowed_var": -42656.29,
+        "vs_cont_adj_allowed_var": -42656.29,
+        "verdict": "INCONCLUSIVE"
+      }
+    ]
+  },
+  {
+    "policy": "Outpatient MRI Prior Authorization",
+    "policy_id": "d6339860-d85a-5dc5-babd-9c91390fde36",
+    "baseline": {
+      "version": 3,
+      "book": "SYNTHETIC_NINE_POLICY_5K_V1",
+      "window": [
+        "2025-01-01",
+        "2025-12-31"
+      ],
+      "member_months": 60000.0,
+      "claims": 1128,
+      "members": 556,
+      "allowed": 1748106.67,
+      "paid": 1398485.35,
+      "allowed_pmpm": 29.1351,
+      "paid_pmpm": 23.3081,
+      "util_per_1k_mm": 18.8,
+      "exposure": "ENROLLMENT_DISTINCT_COVERED_DAYS"
+    },
+    "predicted": {
+      "method": "HISTORICAL_RATE_CONTINUATION_V1",
+      "continuation": "AVAILABLE",
+      "policy_effect": "UNESTIMATED",
+      "horizon": [
+        "2026-01-01",
+        "2026-10-31"
+      ],
+      "forecast_mm": 50000.0,
+      "predicted_services": 940.0,
+      "predicted_allowed": 1456755.56,
+      "continuation_allowed_pmpm": 29.1351,
+      "hist_svc_rate": 0.0188,
+      "hist_util_1k_my": 225.6,
+      "predicted_at": "2026-11-07 08:00:16"
+    },
+    "observed_totals": {
+      "months": 10,
+      "window": [
+        "2026-01-01",
+        "2026-10-31"
+      ],
+      "claims": 834,
+      "member_months": 50000.0,
+      "allowed": 1297020.07,
+      "paid": 1037616.16,
+      "avg_allowed_pmpm": 25.9404,
+      "verdicts": [
+        "INCONCLUSIVE"
+      ]
+    },
+    "monthly": [
+      {
+        "ym": "2026-01",
+        "claims": 88,
+        "mm": 5000.0,
+        "allowed": 140643.07,
+        "allowed_pmpm": 28.1286,
+        "util_per_1k_mm": 17.6,
+        "vs_cont_allowed_var": -5032.49,
+        "vs_cont_adj_allowed_var": -5032.49,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-02",
+        "claims": 75,
+        "mm": 5000.0,
+        "allowed": 116824.56,
+        "allowed_pmpm": 23.3649,
+        "util_per_1k_mm": 15.0,
+        "vs_cont_allowed_var": -28851.0,
+        "vs_cont_adj_allowed_var": -28851.0,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-03",
+        "claims": 104,
+        "mm": 5000.0,
+        "allowed": 157335.61,
+        "allowed_pmpm": 31.4671,
+        "util_per_1k_mm": 20.8,
+        "vs_cont_allowed_var": 11660.05,
+        "vs_cont_adj_allowed_var": 11660.05,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-04",
+        "claims": 84,
+        "mm": 5000.0,
+        "allowed": 136845.13,
+        "allowed_pmpm": 27.369,
+        "util_per_1k_mm": 16.8,
+        "vs_cont_allowed_var": -8830.43,
+        "vs_cont_adj_allowed_var": -8830.43,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-05",
+        "claims": 81,
+        "mm": 5000.0,
+        "allowed": 129390.2,
+        "allowed_pmpm": 25.878,
+        "util_per_1k_mm": 16.2,
+        "vs_cont_allowed_var": -16285.36,
+        "vs_cont_adj_allowed_var": -16285.36,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-06",
+        "claims": 83,
+        "mm": 5000.0,
+        "allowed": 127555.69,
+        "allowed_pmpm": 25.5111,
+        "util_per_1k_mm": 16.6,
+        "vs_cont_allowed_var": -18119.87,
+        "vs_cont_adj_allowed_var": -18119.87,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-07",
+        "claims": 79,
+        "mm": 5000.0,
+        "allowed": 126767.37,
+        "allowed_pmpm": 25.3535,
+        "util_per_1k_mm": 15.8,
+        "vs_cont_allowed_var": -18908.19,
+        "vs_cont_adj_allowed_var": -18908.19,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-08",
+        "claims": 78,
+        "mm": 5000.0,
+        "allowed": 117499.81,
+        "allowed_pmpm": 23.5,
+        "util_per_1k_mm": 15.6,
+        "vs_cont_allowed_var": -28175.75,
+        "vs_cont_adj_allowed_var": -28175.75,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-09",
+        "claims": 76,
+        "mm": 5000.0,
+        "allowed": 114906.98,
+        "allowed_pmpm": 22.9814,
+        "util_per_1k_mm": 15.2,
+        "vs_cont_allowed_var": -30768.58,
+        "vs_cont_adj_allowed_var": -30768.58,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-10",
+        "claims": 86,
+        "mm": 5000.0,
+        "allowed": 129251.65,
+        "allowed_pmpm": 25.8503,
+        "util_per_1k_mm": 17.2,
+        "vs_cont_allowed_var": -16423.91,
+        "vs_cont_adj_allowed_var": -16423.91,
+        "verdict": "INCONCLUSIVE"
+      }
+    ]
+  },
+  {
+    "policy": "Outpatient Therapy Utilization and Payment Policy",
+    "policy_id": "435e1461-b57e-5af3-ad08-e15aac690310",
+    "baseline": {
+      "version": 3,
+      "book": "SYNTHETIC_NINE_POLICY_5K_V1",
+      "window": [
+        "2025-01-01",
+        "2025-12-31"
+      ],
+      "member_months": 60000.0,
+      "claims": 3333,
+      "members": 1667,
+      "allowed": 416737.7,
+      "paid": 333389.89,
+      "allowed_pmpm": 6.9456,
+      "paid_pmpm": 5.5565,
+      "util_per_1k_mm": 55.55,
+      "exposure": "ENROLLMENT_DISTINCT_COVERED_DAYS"
+    },
+    "predicted": {
+      "method": "HISTORICAL_RATE_CONTINUATION_V1",
+      "continuation": "AVAILABLE",
+      "policy_effect": "UNESTIMATED",
+      "horizon": [
+        "2026-01-01",
+        "2026-10-31"
+      ],
+      "forecast_mm": 50000.0,
+      "predicted_services": 2777.5,
+      "predicted_allowed": 347281.42,
+      "continuation_allowed_pmpm": 6.9456,
+      "hist_svc_rate": 0.05555,
+      "hist_util_1k_my": 666.6,
+      "predicted_at": "2026-11-07 08:00:17"
+    },
+    "observed_totals": {
+      "months": 10,
+      "window": [
+        "2026-01-01",
+        "2026-10-31"
+      ],
+      "claims": 2524,
+      "member_months": 50000.0,
+      "allowed": 319605.43,
+      "paid": 255684.35,
+      "avg_allowed_pmpm": 6.3921,
+      "verdicts": [
+        "INCONCLUSIVE"
+      ]
+    },
+    "monthly": [
+      {
+        "ym": "2026-01",
+        "claims": 262,
+        "mm": 5000.0,
+        "allowed": 34665.47,
+        "allowed_pmpm": 6.9331,
+        "util_per_1k_mm": 52.4,
+        "vs_cont_allowed_var": -62.67,
+        "vs_cont_adj_allowed_var": -62.67,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-02",
+        "claims": 219,
+        "mm": 5000.0,
+        "allowed": 27326.5,
+        "allowed_pmpm": 5.4653,
+        "util_per_1k_mm": 43.8,
+        "vs_cont_allowed_var": -7401.64,
+        "vs_cont_adj_allowed_var": -7401.64,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-03",
+        "claims": 237,
+        "mm": 5000.0,
+        "allowed": 30263.81,
+        "allowed_pmpm": 6.0528,
+        "util_per_1k_mm": 47.4,
+        "vs_cont_allowed_var": -4464.33,
+        "vs_cont_adj_allowed_var": -4464.33,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-04",
+        "claims": 256,
+        "mm": 5000.0,
+        "allowed": 32506.3,
+        "allowed_pmpm": 6.5013,
+        "util_per_1k_mm": 51.2,
+        "vs_cont_allowed_var": -2221.84,
+        "vs_cont_adj_allowed_var": -2221.84,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-05",
+        "claims": 263,
+        "mm": 5000.0,
+        "allowed": 32283.18,
+        "allowed_pmpm": 6.4566,
+        "util_per_1k_mm": 52.6,
+        "vs_cont_allowed_var": -2444.96,
+        "vs_cont_adj_allowed_var": -2444.96,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-06",
+        "claims": 251,
+        "mm": 5000.0,
+        "allowed": 31302.61,
+        "allowed_pmpm": 6.2605,
+        "util_per_1k_mm": 50.2,
+        "vs_cont_allowed_var": -3425.53,
+        "vs_cont_adj_allowed_var": -3425.53,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-07",
+        "claims": 236,
+        "mm": 5000.0,
+        "allowed": 30365.94,
+        "allowed_pmpm": 6.0732,
+        "util_per_1k_mm": 47.2,
+        "vs_cont_allowed_var": -4362.2,
+        "vs_cont_adj_allowed_var": -4362.2,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-08",
+        "claims": 255,
+        "mm": 5000.0,
+        "allowed": 31425.78,
+        "allowed_pmpm": 6.2852,
+        "util_per_1k_mm": 51.0,
+        "vs_cont_allowed_var": -3302.36,
+        "vs_cont_adj_allowed_var": -3302.36,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-09",
+        "claims": 281,
+        "mm": 5000.0,
+        "allowed": 36348.51,
+        "allowed_pmpm": 7.2697,
+        "util_per_1k_mm": 56.2,
+        "vs_cont_allowed_var": 1620.37,
+        "vs_cont_adj_allowed_var": 1620.37,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-10",
+        "claims": 264,
+        "mm": 5000.0,
+        "allowed": 33117.33,
+        "allowed_pmpm": 6.6235,
+        "util_per_1k_mm": 52.8,
+        "vs_cont_allowed_var": -1610.81,
+        "vs_cont_adj_allowed_var": -1610.81,
+        "verdict": "INCONCLUSIVE"
+      }
+    ]
+  },
+  {
+    "policy": "Procedure-to-Procedure (PTP) Coding Edit",
+    "policy_id": "1d6d3332-88fd-54ac-8227-2d2bf856ed5f",
+    "baseline": {
+      "version": 3,
+      "book": "SYNTHETIC_NINE_POLICY_5K_V1",
+      "window": [
+        "2025-01-01",
+        "2025-12-31"
+      ],
+      "member_months": 60000.0,
+      "claims": 2262,
+      "members": 555,
+      "allowed": 2315132.18,
+      "paid": 1852106.08,
+      "allowed_pmpm": 38.5855,
+      "paid_pmpm": 30.8684,
+      "util_per_1k_mm": 37.7,
+      "exposure": "ENROLLMENT_DISTINCT_COVERED_DAYS"
+    },
+    "predicted": {
+      "method": "HISTORICAL_RATE_CONTINUATION_V1",
+      "continuation": "AVAILABLE",
+      "policy_effect": "UNESTIMATED",
+      "horizon": [
+        "2026-01-01",
+        "2026-10-31"
+      ],
+      "forecast_mm": 50000.0,
+      "predicted_services": 1885.0,
+      "predicted_allowed": 1929276.82,
+      "continuation_allowed_pmpm": 38.5855,
+      "hist_svc_rate": 0.0377,
+      "hist_util_1k_my": 452.4,
+      "predicted_at": "2026-11-07 08:00:18"
+    },
+    "observed_totals": {
+      "months": 10,
+      "window": [
+        "2026-01-01",
+        "2026-10-31"
+      ],
+      "claims": 1650,
+      "member_months": 50000.0,
+      "allowed": 1696692.06,
+      "paid": 1357353.54,
+      "avg_allowed_pmpm": 33.9338,
+      "verdicts": [
+        "INCONCLUSIVE"
+      ]
+    },
+    "monthly": [
+      {
+        "ym": "2026-01",
+        "claims": 152,
+        "mm": 5000.0,
+        "allowed": 158485.41,
+        "allowed_pmpm": 31.6971,
+        "util_per_1k_mm": 30.4,
+        "vs_cont_allowed_var": -34442.27,
+        "vs_cont_adj_allowed_var": -34442.27,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-02",
+        "claims": 132,
+        "mm": 5000.0,
+        "allowed": 135914.08,
+        "allowed_pmpm": 27.1828,
+        "util_per_1k_mm": 26.4,
+        "vs_cont_allowed_var": -57013.6,
+        "vs_cont_adj_allowed_var": -57013.6,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-03",
+        "claims": 192,
+        "mm": 5000.0,
+        "allowed": 200797.12,
+        "allowed_pmpm": 40.1594,
+        "util_per_1k_mm": 38.4,
+        "vs_cont_allowed_var": 7869.44,
+        "vs_cont_adj_allowed_var": 7869.44,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-04",
+        "claims": 196,
+        "mm": 5000.0,
+        "allowed": 200018.29,
+        "allowed_pmpm": 40.0037,
+        "util_per_1k_mm": 39.2,
+        "vs_cont_allowed_var": 7090.61,
+        "vs_cont_adj_allowed_var": 7090.61,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-05",
+        "claims": 186,
+        "mm": 5000.0,
+        "allowed": 185667.16,
+        "allowed_pmpm": 37.1334,
+        "util_per_1k_mm": 37.2,
+        "vs_cont_allowed_var": -7260.52,
+        "vs_cont_adj_allowed_var": -7260.52,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-06",
+        "claims": 154,
+        "mm": 5000.0,
+        "allowed": 158064.64,
+        "allowed_pmpm": 31.6129,
+        "util_per_1k_mm": 30.8,
+        "vs_cont_allowed_var": -34863.04,
+        "vs_cont_adj_allowed_var": -34863.04,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-07",
+        "claims": 170,
+        "mm": 5000.0,
+        "allowed": 174230.54,
+        "allowed_pmpm": 34.8461,
+        "util_per_1k_mm": 34.0,
+        "vs_cont_allowed_var": -18697.14,
+        "vs_cont_adj_allowed_var": -18697.14,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-08",
+        "claims": 136,
+        "mm": 5000.0,
+        "allowed": 142269.01,
+        "allowed_pmpm": 28.4538,
+        "util_per_1k_mm": 27.2,
+        "vs_cont_allowed_var": -50658.67,
+        "vs_cont_adj_allowed_var": -50658.67,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-09",
+        "claims": 166,
+        "mm": 5000.0,
+        "allowed": 171500.12,
+        "allowed_pmpm": 34.3,
+        "util_per_1k_mm": 33.2,
+        "vs_cont_allowed_var": -21427.56,
+        "vs_cont_adj_allowed_var": -21427.56,
+        "verdict": "INCONCLUSIVE"
+      },
+      {
+        "ym": "2026-10",
+        "claims": 166,
+        "mm": 5000.0,
+        "allowed": 169745.69,
+        "allowed_pmpm": 33.9491,
+        "util_per_1k_mm": 33.2,
+        "vs_cont_allowed_var": -23181.99,
+        "vs_cont_adj_allowed_var": -23181.99,
+        "verdict": "INCONCLUSIVE"
+      }
+    ]
+  }
+]

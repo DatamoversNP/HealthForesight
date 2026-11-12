@@ -14,6 +14,8 @@ import {
   Box,
   Container,
   IconButton,
+  useMediaQuery,
+  useTheme,
   Menu,
   MenuItem,
   Avatar,
@@ -44,6 +46,7 @@ import {
   Storage as StorageIcon,
   AccountCircle,
   Logout,
+  Menu as MenuIcon,
   HelpOutline as HelpIcon,
   Flag as FlagIcon,
   PlayArrow as PlayArrowIcon,
@@ -57,6 +60,7 @@ import RoleSwitcher from './rbac/RoleSwitcher'
 import ToursMenu from './tour/ToursMenu'
 import ConversationalAIButton from './conversational-ai/ConversationalAIButton'
 import { appBarFullLogo, appByline, appName, logoIconSrc, logoOnDarkSrc } from '../brand'
+import SyntheticDatasetBanner from './SyntheticDatasetBanner'
 
 const drawerWidth = 260
 
@@ -118,6 +122,9 @@ export default function Layout() {
   const navigate = useNavigate()
   const { user, logout } = useAuth()
   const { state: tourState } = useTour()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+  const [mobileOpen, setMobileOpen] = React.useState(false)
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [toursAnchorEl, setToursAnchorEl] = React.useState<null | HTMLElement>(null)
   
@@ -155,6 +162,11 @@ export default function Layout() {
         sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
       >
         <Toolbar>
+          {isMobile && (
+            <IconButton color="inherit" aria-label="Open navigation" onClick={() => setMobileOpen(true)} sx={{ mr: 1 }}>
+              <MenuIcon />
+            </IconButton>
+          )}
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexGrow: 1 }}>
             <Box
               sx={{ display: 'flex', alignItems: 'center', gap: 1.5, cursor: 'pointer' }}
@@ -218,8 +230,10 @@ export default function Layout() {
               )}
             </Box>
           </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <RoleSwitcher />
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, minWidth: 0 }}>
+            <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+              <RoleSwitcher />
+            </Box>
             <IconButton 
               onClick={handleToursMenuOpen} 
               color="inherit" 
@@ -266,9 +280,11 @@ export default function Layout() {
         </Toolbar>
       </AppBar>
       <Drawer
-        variant="permanent"
+        variant={isMobile ? 'temporary' : 'permanent'}
+        open={isMobile ? mobileOpen : true}
+        onClose={() => setMobileOpen(false)}
         sx={{
-          width: drawerWidth,
+          width: isMobile ? 0 : drawerWidth,
           flexShrink: 0,
           '& .MuiDrawer-paper': {
             width: drawerWidth,
@@ -284,7 +300,12 @@ export default function Layout() {
                 {groupIndex > 0 && <Divider sx={{ my: 0.5 }} />}
                 {group.map((item) => (
                   <ListItem key={`${groupIndex}-${item.text}`} disablePadding>
-                    <ListItemButton onClick={() => navigate(item.path)}>
+                    <ListItemButton
+                      onClick={() => {
+                        navigate(item.path)
+                        setMobileOpen(false)
+                      }}
+                    >
                       <ListItemIcon>{item.icon}</ListItemIcon>
                       <ListItemText primary={item.text} />
                     </ListItemButton>
@@ -320,14 +341,16 @@ export default function Layout() {
         component="main"
         sx={{
           flexGrow: 1,
+          minWidth: 0,
           bgcolor: 'background.default',
-          p: 3,
+          p: { xs: 1.5, sm: 3 },
           marginLeft: `${tourPanelWidth}px`,
           transition: 'margin-left 0.3s ease',
         }}
       >
         <Toolbar />
         <Container maxWidth="xl">
+          <SyntheticDatasetBanner />
           <Outlet />
         </Container>
       </Box>

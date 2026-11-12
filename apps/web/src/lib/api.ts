@@ -49,7 +49,8 @@ const getApiBaseUrl = () => {
   // Production build: prefer baked API URL so login works when the Web App only serves static
   // files or the Node proxy is not running. API CORS allows healthforesight-web*.azurewebsites.net.
   if (import.meta.env.VITE_API_URL) {
-    return import.meta.env.VITE_API_URL
+    const configured = String(import.meta.env.VITE_API_URL).replace(/\/$/, '')
+    return configured.endsWith('/api/v1') ? configured : `${configured}/api/v1`
   }
 
   // App Service UI with Node proxy (no VITE_API_URL): same-origin /api/v1 → server.mjs → API
@@ -82,6 +83,8 @@ export interface PolicyVerdictRow {
   verdict_is_recomputed?: boolean
   verdict_label: string
   savings_or_cost_impact_pmpm?: number | null
+  denominator_basis?: string | null
+  enrolled_rate_status?: string | null
   cost_impact_pct?: number | null
   utilization_impact_pct?: number | null
   confidence_pct?: number | null
@@ -339,6 +342,11 @@ export class ApiClient {
     return promise
   }
 
+  async getPolicyExecutionSummary() {
+    const response = await this.client.get('/policy-execution/summary', { timeout: 60000 })
+    return response.data
+  }
+
   /** Policies with claim counts (sorted by claim_count desc). Use to pick policy with most data for what-if. */
   async getPoliciesWithClaimCounts(limit = 20) {
     // Tip endpoint only — must not pin the UI/API for minutes
@@ -396,12 +404,25 @@ export class ApiClient {
   hasUsablePredictedImpact(impact: any): boolean {
     const m = impact?.metrics
     if (!m || typeof m !== 'object') return false
+    const continuation = m.continuation
+    const continuationAvailable =
+      continuation && typeof continuation === 'object' && continuation.status === 'AVAILABLE'
+    const isContinuation =
+      String(m.prediction_type || '').toUpperCase() === 'CONTINUATION' ||
+      String(m.prediction_method || impact?.prediction_method || '')
+        .toUpperCase()
+        .startsWith('HISTORICAL_RATE_CONTINUATION')
     return (
       m.cost_change_pmpm != null ||
       m.cost_change != null ||
       m.utilization_change_pct != null ||
       m.utilization_change_per_1k != null ||
-      m.utilization_change != null
+      m.utilization_change != null ||
+      m.payment_impact_dollars != null ||
+      m.continuation_allowed_change != null ||
+      m.predicted_allowed != null ||
+      continuationAvailable ||
+      isContinuation
     )
   }
 
@@ -836,6 +857,15 @@ export class ApiClient {
   /** Full baseline by id (use after summary list selection). */
   async getBaseline(baselineId: string) {
     const response = await this.client.get(`/baselines/${baselineId}`)
+    return response.data
+  }
+
+  async getBaselineForPolicy(policyId: string) {
+    const response = await this.client.get(`/baselines/for-policy/${policyId}`, {
+      timeout: 30000,
+      validateStatus: (status) => status === 200 || status === 404,
+    })
+    if (response.status === 404) return null
     return response.data
   }
 
@@ -1389,6 +1419,16 @@ export class ApiClient {
   /** In-flight / short-TTL cache — StrictMode + persona redirect used to stampede this. */
   private _dashboardSummaryInflight: Promise<any> | null = null
   private _dashboardSummaryCached: { at: number; data: any } | null = null
+
+  async getSyntheticPayerIdentity() {
+    const response = await this.client.get('/synthetic-payer/identity', { timeout: 120000 })
+    return response.data
+  }
+
+  async runSyntheticWhatIf(body: { policy_id: string; policy_ids?: string[]; parameters?: Record<string, unknown> }) {
+    const response = await this.client.post('/synthetic-payer/what-if', body, { timeout: 180000 })
+    return response.data
+  }
 
   async getDashboardSummary() {
     const TTL_MS = 60_000

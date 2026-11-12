@@ -220,7 +220,8 @@ def _get_baseline_from_db(tenant_id: UUID, baseline_id: str) -> Optional[Dict[st
         db.close()
 
 
-# Scalar / list-friendly metric keys for summary list responses (omit archetypes/segments blobs)
+# Summary list keys — include archetype/segment arrays so Provider Archetype / Patient
+# Segment radar & pie charts render without waiting on a full detail fetch.
 _BASELINE_SUMMARY_METRIC_KEYS = (
     "util_rate_total_per_1000_mm",
     "util_rate_target_per_1000_mm",
@@ -235,6 +236,10 @@ _BASELINE_SUMMARY_METRIC_KEYS = (
     "member_months",
     "total_paid",
     "total_allowed",
+    "provider_archetypes",
+    "patient_segments",
+    "segmentation_source",
+    "segmentation_backfilled_at",
 )
 
 

@@ -714,26 +714,40 @@ def extract_behavioral_explanation_from_analysis_result(analysis_result: Dict[st
     effect_size = impact_estimate.get("effect_size")
 
     # Primary policy effectiveness insights require a declared endpoint.
+    decrease_goal = any(
+        str(ep.get("direction")) == "decrease" for ep in required_endpoints if isinstance(ep, dict)
+    )
+    increase_goal = any(
+        str(ep.get("direction")) == "increase" for ep in required_endpoints if isinstance(ep, dict)
+    )
     if not required_endpoints or percent_change is None:
         insights.append("No policy endpoint contract is defined, so this change is not a performance result.")
-    elif percent_change < -20 and any(str(ep.get("direction")) == "decrease" for ep in required_endpoints if isinstance(ep, dict)):
+    elif decrease_goal and percent_change < -20:
         insights.append("Policy is achieving strong reduction in utilization. Consider maintaining current approach.")
         strategic_considerations.append("Strong policy performance suggests the intervention is well-designed and effectively implemented. Consider expanding to similar service categories or member populations.")
-    elif percent_change < -10:
+    elif decrease_goal and percent_change < -10:
         insights.append("Policy shows moderate effectiveness. Review provider engagement and patient education.")
         strategic_considerations.append("Moderate effectiveness indicates policy is working but has room for improvement. Focus on areas with lower compliance rates.")
         recommendations.append("Enhance provider communication and training")
         recommendations.append("Improve patient education materials")
-    elif percent_change < -5:
+    elif decrease_goal and percent_change < -5:
         insights.append("Policy shows mild effectiveness. Consider policy adjustments or enhanced enforcement.")
         strategic_considerations.append("Mild effectiveness suggests policy may need refinement. Review policy design, communication strategy, and enforcement mechanisms.")
         recommendations.append("Review policy design and enforcement mechanisms")
-    elif percent_change > 5:
+    elif decrease_goal and percent_change > 5:
         insights.append("Policy may not be effective. Review policy design and implementation.")
         strategic_considerations.append("Policy is not achieving desired outcomes. Conduct comprehensive review of policy design, implementation barriers, and stakeholder engagement.")
         recommendations.append("Conduct policy review and redesign if necessary")
+    elif increase_goal and percent_change > 20:
+        insights.append("Declared increase endpoint shows a strong rise. Confirm access and appropriateness goals.")
+        strategic_considerations.append("Increase-aligned movement is not a cost-reduction success by itself.")
+    elif increase_goal and percent_change < -5:
+        insights.append("Utilization fell while the endpoint asks for increase. Review access barriers.")
+        recommendations.append("Investigate barriers to the intended increase in use")
+    elif not decrease_goal and not increase_goal:
+        insights.append("Endpoint directions are monitor-only or unread; change is not scored as performance.")
     else:
-        insights.append("Policy impact is neutral. Monitor for longer-term effects or consider policy adjustments.")
+        insights.append("Policy impact is near neutral relative to the declared endpoint. Monitor for longer-term effects.")
         strategic_considerations.append("Neutral impact may indicate policy needs more time to take effect, or that design adjustments are needed.")
     
     # Add timing and trend insights
@@ -817,26 +831,54 @@ def extract_behavioral_explanation_from_analysis_result(analysis_result: Dict[st
             "description": "No policy endpoint contract is defined, so this change is not a performance result.",
             "evidence": "Objective not defined. Line-level resampling is not inferential uncertainty.",
         })
-    elif percent_change < -15 and any(str(ep.get("direction")) == "decrease" for ep in required_endpoints if isinstance(ep, dict)):
+    elif decrease_goal and percent_change < -15:
         performance_narrative.append({
             "aspect": "Overall Performance",
             "assessment": "ALIGNED",
             "description": f"The declared decrease endpoint moved by {abs(percent_change):.1f}%.",
             "evidence": "Direction matches the endpoint contract. This is not an inferential test.",
         })
-    elif percent_change < -8:
+    elif increase_goal and percent_change > 15:
+        performance_narrative.append({
+            "aspect": "Overall Performance",
+            "assessment": "ALIGNED",
+            "description": f"The declared increase endpoint moved by {abs(percent_change):.1f}%.",
+            "evidence": "Direction matches the endpoint contract. This is not an inferential test.",
+        })
+    elif decrease_goal and percent_change < -8:
         performance_narrative.append({
             "aspect": "Overall Performance",
             "assessment": "GOOD",
-            "description": f"Policy shows good performance with {abs(percent_change):.1f}% utilization reduction. The intervention is meeting expectations with room for optimization.",
-            "evidence": f"Effect size of {abs(effect_size):.3f} indicates meaningful impact"
+            "description": f"Decrease endpoint moved {abs(percent_change):.1f}% in the declared direction.",
+            "evidence": f"Effect size of {abs(effect_size) if effect_size is not None else 0:.3f}. Not an inferential test.",
         })
-    elif percent_change < -3:
+    elif increase_goal and percent_change > 8:
+        performance_narrative.append({
+            "aspect": "Overall Performance",
+            "assessment": "GOOD",
+            "description": f"Increase endpoint moved {abs(percent_change):.1f}% in the declared direction.",
+            "evidence": "Direction matches the endpoint contract. This is not an inferential test.",
+        })
+    elif decrease_goal and percent_change < -3:
         performance_narrative.append({
             "aspect": "Overall Performance",
             "assessment": "MODERATE",
-            "description": f"Policy demonstrates moderate performance with {abs(percent_change):.1f}% utilization reduction. Consider targeted improvements to enhance effectiveness.",
-            "evidence": "Policy is having some impact but may benefit from refinement"
+            "description": f"Decrease endpoint moved {abs(percent_change):.1f}%. Consider targeted improvements.",
+            "evidence": "Descriptive movement only; not attributed causal effect.",
+        })
+    elif increase_goal and percent_change > 3:
+        performance_narrative.append({
+            "aspect": "Overall Performance",
+            "assessment": "MODERATE",
+            "description": f"Increase endpoint moved {abs(percent_change):.1f}%. Consider targeted improvements.",
+            "evidence": "Descriptive movement only; not attributed causal effect.",
+        })
+    elif (decrease_goal and percent_change > 5) or (increase_goal and percent_change < -5):
+        performance_narrative.append({
+            "aspect": "Overall Performance",
+            "assessment": "OFF_TRACK",
+            "description": f"Movement ({percent_change:+.1f}%) is opposite the declared endpoint direction.",
+            "evidence": "Endpoint contract direction not met. Not an inferential test.",
         })
     else:
         performance_narrative.append({

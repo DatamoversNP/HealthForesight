@@ -1,0 +1,148 @@
+{
+  "started_at": "2026-11-05T19:52:50.303235+00:00",
+  "environment": "lean_staging",
+  "demo_write": false,
+  "phases": {
+    "policies": {
+      "count": 250,
+      "with_codes": 250,
+      "nine": 9
+    },
+    "flush": {
+      "obs": 0,
+      "pred": 0,
+      "baselines": 0
+    },
+    "demo_copy": {
+      "skipped": true,
+      "reason": "flag_or_no_demo_url"
+    },
+    "densify": {
+      "inserted": 48864,
+      "policies_skipped_no_codes": 0
+    },
+    "general_baseline": {
+      "id": "5dc2b294-18bd-4cb8-b4f2-7daf5ead4593",
+      "metrics": {
+        "util_rate_total_per_1000_mm": 1362.83,
+        "utilization_per_1k": 1362.83,
+        "allowed_pmpm_total": 2426.17,
+        "cost_pmpm": 2426.17,
+        "unique_members": 1571,
+        "member_months": 18852,
+        "claim_count": 25692,
+        "source": "all_claims_cy2025"
+      }
+    },
+    "policy_cy2025_baselines": {
+      "count": 250
+    },
+    "monthly_general_baselines": {
+      "count": 12
+    },
+    "nine_monthly_baselines": {
+      "count": 108
+    },
+    "predictions_stub": {
+      "count": 250
+    },
+    "predictions_nine": {
+      "nine_stage35_ok": 0,
+      "nine_fallback": 9
+    },
+    "observations": {
+      "count": 3000
+    }
+  },
+  "failures": [
+    {
+      "phase": "schedule",
+      "error": "Failed to create schedule: One or more mappers failed to initialize - can't proceed with initialization of other mappers. Triggering mapper: 'Mapper[PolicyPredictedImpact(policy_predicted_impacts)]'. Original exception was: When initializing mapper Mapper[PolicyPredictedImpact(policy_predicted_impacts)], expression 'Baseline' failed to locate a name ('Baseline'). If this is a class name, consider adding this relationship() to the <class 'uepi_api.models.predicted_impact.PolicyPredictedImpact'> class after both dependent classes have been defined."
+    }
+  ],
+  "verify": {
+    "claims_total": 53949,
+    "claims_2025": 25692,
+    "claims_2026": 28257,
+    "baselines_total": 371,
+    "baselines_general": 13,
+    "baselines_policy": 358,
+    "predicted": 250,
+    "observations": 3000,
+    "obs_policies": 250,
+    "nine_claims_coverage": {
+      "Freestanding Imaging Steerage": {
+        "codes": [
+          "72148",
+          "72149"
+        ],
+        "claims": 2126
+      },
+      "Infusion Site-of-Care Optimization": {
+        "codes": [
+          "J1745",
+          "J2357",
+          "96413",
+          "96415",
+          "96365"
+        ],
+        "claims": 1872
+      },
+      "LCD L34425 NC MRI Coverage Criteria": {
+        "codes": [
+          "70540",
+          "70542",
+          "70543"
+        ],
+        "claims": 648
+      },
+      "Multiple Procedure Payment Reduction": {
+        "codes": [
+          "72148",
+          "72149"
+        ],
+        "claims": 2126
+      },
+      "NCCI Medically Unlikely Units": {
+        "codes": [
+          "97110"
+        ],
+        "claims": 1366
+      },
+      "NCCI Procedure-to-Procedure Bundling": {
+        "codes": [
+          "70553",
+          "70551"
+        ],
+        "claims": 946
+      },
+      "NCD 220.2 MRI Coverage Change Study": {
+        "codes": [
+          "70551",
+          "70552",
+          "70553",
+          "72148",
+          "72149",
+          "72158"
+        ],
+        "claims": 3384
+      },
+      "Outpatient MRI Prior Authorization": {
+        "codes": [
+          "72148",
+          "72149"
+        ],
+        "claims": 2126
+      },
+      "Outpatient Therapy Coverage and Payment": {
+        "codes": [
+          "97110",
+          "97140"
+        ],
+        "claims": 2064
+      }
+    }
+  },
+  "ended_at": "2026-11-05T22:54:21.101470+00:00",
+  "pass": false
+}

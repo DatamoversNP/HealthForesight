@@ -1,0 +1,77 @@
+{
+  "generated_at": "2026-11-07T05:13:27.031238+00:00",
+  "database": "hfleanstg",
+  "source_system": "SYNTHETIC_NINE_POLICY_5K_V1",
+  "meta": {
+    "source_system": "SYNTHETIC_NINE_POLICY_5K_V1",
+    "seed": 20261107,
+    "n_members": 5000,
+    "baseline_window": [
+      "2025-01-01",
+      "2025-12-31"
+    ],
+    "observation_window": [
+      "2026-01-01",
+      "2026-10-31"
+    ],
+    "ingestion_id": "afdee62f-3302-45d8-9971-0e37ebd5460c",
+    "evidence_class": "SYNTHETIC_ILLUSTRATIVE",
+    "additive_to": "SYNTHETIC_LONGITUDINAL_V1"
+  },
+  "entity_file_counts": {
+    "MemberMaster": 5000,
+    "EligibilityEnrollment": 110000,
+    "MemberRiskStratification": 40000,
+    "ClaimHeader": 32952,
+    "ClaimLine": 52428,
+    "EpisodeOfCare": 1956,
+    "PharmacyClaim": 4502,
+    "ProviderMaster": 40,
+    "FacilityMaster": 40,
+    "NetworkConfiguration": 1,
+    "ProviderContract": 40,
+    "BenefitDesign": 2,
+    "MemberAccumulator": 5000,
+    "PriorAuthorizationRequest": 1962,
+    "AppealGrievance": 155,
+    "operational_claims_lines": 52428,
+    "operational_enrollment_records": 110000
+  },
+  "entity_pack_dir": "/Users/nileshl/Private/HealthForesight/data/synthetic/nine_policy_5k",
+  "longitudinal_preserved": {
+    "claims_lines": 1423575,
+    "enrollment_records": 9479433
+  },
+  "additive_loaded": {
+    "claims_lines": 52428,
+    "enrollment_records": 110000,
+    "distinct_members_claims": 5000,
+    "distinct_members_enrollment": 5000
+  },
+  "periods": {
+    "baseline": [
+      "2025-01-01",
+      "2025-12-31"
+    ],
+    "observation": [
+      "2026-01-01",
+      "2026-10-31"
+    ]
+  },
+  "policy_definitions_unchanged_count": 9,
+  "claims_by_policy_key": {
+    "ncd": 7731,
+    "mri": 1962,
+    "background": 11102,
+    "therapy": 5857,
+    "pharmacy": 4502,
+    "lcd": 1912,
+    "sos": 7739,
+    "infusion": 1956,
+    "mue": 1923,
+    "ptp": 3912,
+    "mppr": 3832
+  },
+  "success": true,
+  "note": "Additive 5k full target-model book loaded. 500k longitudinal source_system counts unchanged. No baselines/observations generated in this step."
+}

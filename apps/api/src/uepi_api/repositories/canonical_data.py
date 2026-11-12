@@ -122,6 +122,8 @@ class CanonicalDataRepository:
         hcpcs_codes: Optional[List[str]] = None,
         service_categories: Optional[List[str]] = None,
         diagnosis_codes: Optional[List[str]] = None,
+        policy_key: Optional[str] = None,
+        source_system: Optional[str] = None,
     ) -> pd.DataFrame:
         """Get claims lines from database as DataFrame
         
@@ -131,6 +133,8 @@ class CanonicalDataRepository:
         
         query = self.db.query(ClaimsLineDB).filter(ClaimsLineDB.tenant_id == tenant_id)
         
+        if source_system:
+            query = query.filter(ClaimsLineDB.source_system == source_system)
         if start_date:
             query = query.filter(ClaimsLineDB.service_date >= start_date)
         if end_date:
@@ -177,6 +181,19 @@ class CanonicalDataRepository:
                 query = query.filter(ClaimsLineDB.icd10_diagnosis_codes.overlap(diagnosis_codes))
             except Exception:
                 pass
+        if policy_key:
+            token = f'"policy_key":"{policy_key}"'
+            if source_system:
+                # Demo/additive books are fully tagged — require exact policy_key.
+                query = query.filter(ClaimsLineDB.record_hash.contains(token))
+            else:
+                query = query.filter(
+                    or_(
+                        ClaimsLineDB.record_hash.is_(None),
+                        ~ClaimsLineDB.record_hash.contains('"policy_key":'),
+                        ClaimsLineDB.record_hash.contains(token),
+                    )
+                )
         
         # For baseline computation, we need all records but process efficiently
         records = []
@@ -310,10 +327,15 @@ class CanonicalDataRepository:
         hcpcs_codes: Optional[List[str]] = None,
         service_categories: Optional[List[str]] = None,
         diagnosis_codes: Optional[List[str]] = None,
+        policy_key: Optional[str] = None,
+        source_system: Optional[str] = None,
+        require_enrollment_on_service_date: bool = False,
+        exclude_void_reversal: bool = True,
     ) -> Optional[Dict[str, Any]]:
         """Compute baseline aggregates in the database (no row limit). Use for production-scale claim volumes.
         Returns dict with total_claims, total_paid, total_allowed, unique_members, or None if no rows."""
-        from sqlalchemy import or_
+        from sqlalchemy import and_, exists, or_
+        from uepi_api.models.canonical_data import EnrollmentRecordDB
 
         base = self.db.query(
             func.count(ClaimsLineDB.id).label("total_claims"),
@@ -322,6 +344,8 @@ class CanonicalDataRepository:
             func.count(func.distinct(ClaimsLineDB.member_id)).label("unique_members"),
         ).filter(ClaimsLineDB.tenant_id == tenant_id)
 
+        if source_system:
+            base = base.filter(ClaimsLineDB.source_system == source_system)
         if start_date:
             base = base.filter(ClaimsLineDB.service_date >= start_date)
         if end_date:
@@ -357,6 +381,42 @@ class CanonicalDataRepository:
                 base = base.filter(ClaimsLineDB.icd10_diagnosis_codes.overlap(diagnosis_codes))
             except Exception:
                 pass
+        if policy_key:
+            token = f'"policy_key":"{policy_key}"'
+            if source_system:
+                base = base.filter(ClaimsLineDB.record_hash.contains(token))
+            else:
+                base = base.filter(
+                    or_(
+                        ClaimsLineDB.record_hash.is_(None),
+                        ~ClaimsLineDB.record_hash.contains('"policy_key":'),
+                        ClaimsLineDB.record_hash.contains(token),
+                    )
+                )
+        if exclude_void_reversal:
+            base = base.filter(
+                or_(
+                    ClaimsLineDB.record_hash.is_(None),
+                    and_(
+                        ~ClaimsLineDB.record_hash.contains('"line_status":"REVERSAL"'),
+                        ~ClaimsLineDB.record_hash.contains('"line_status":"VOID"'),
+                        ~ClaimsLineDB.record_hash.contains('"line_status": "REVERSAL"'),
+                        ~ClaimsLineDB.record_hash.contains('"line_status": "VOID"'),
+                    ),
+                )
+            )
+        if require_enrollment_on_service_date:
+            enroll_match = [
+                EnrollmentRecordDB.tenant_id == tenant_id,
+                EnrollmentRecordDB.member_id == ClaimsLineDB.member_id,
+                EnrollmentRecordDB.enrollment_start_date.isnot(None),
+                EnrollmentRecordDB.enrollment_end_date.isnot(None),
+                EnrollmentRecordDB.enrollment_start_date <= ClaimsLineDB.service_date,
+                ClaimsLineDB.service_date < EnrollmentRecordDB.enrollment_end_date,
+            ]
+            if source_system:
+                enroll_match.append(EnrollmentRecordDB.source_system == source_system)
+            base = base.filter(exists().where(and_(*enroll_match)))
 
         row = base.first()
         if not row or (row.total_claims or 0) == 0:

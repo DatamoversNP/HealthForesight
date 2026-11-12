@@ -12,9 +12,131 @@
   "notes": [
     "CANDIDATE_INCLUDE is not APPROVED_INCLUDE",
     "Do not alter frozen Dec 4 demo fixtures",
-    "Mechanism-specific \u2014 not MRI lumbar PA criteria"
+    "Mechanism-specific — not MRI lumbar PA criteria",
+    "R1 structural codeset populated from representative infusion admin CPT candidates; product/owner schedule still unsigned"
   ],
-  "codes": [],
+  "codes": [
+    {
+      "code_system": "CPT",
+      "code": "96413",
+      "description": "Chemotherapy administration, intravenous infusion technique; up to 1 hour, single or initial substance/drug",
+      "anatomical_region": "NOT_APPLICABLE",
+      "contrast_variant": "NOT_APPLICABLE",
+      "setting": "OUTPATIENT",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "effective_from": null,
+      "effective_to": null,
+      "evidence_class": "REPRESENTATIVE_DESIGN",
+      "source_evidence_note": "Representative infusion admin candidate for site-of-care structural R1; not product-approved",
+      "evidence": {
+        "evidence_id": null,
+        "source_system": "platform_config",
+        "source_document_id": "11218053-bdc0-569f-a415-fb61c5dcda37",
+        "source_version": null,
+        "source_url": null,
+        "retrieved_at": null,
+        "content_checksum_sha256": null,
+        "applicability_period_start": null,
+        "applicability_period_end": null,
+        "notes": "Not a CMS verification claim"
+      },
+      "medicare_applicability": {
+        "ncd_220_2": "NOT_APPLICABLE",
+        "lcd_l34425": "NOT_APPLICABLE",
+        "article_a56729": "NOT_APPLICABLE"
+      }
+    },
+    {
+      "code_system": "CPT",
+      "code": "96415",
+      "description": "Chemotherapy administration, intravenous infusion technique; each additional hour",
+      "anatomical_region": "NOT_APPLICABLE",
+      "contrast_variant": "NOT_APPLICABLE",
+      "setting": "OUTPATIENT",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "effective_from": null,
+      "effective_to": null,
+      "evidence_class": "REPRESENTATIVE_DESIGN",
+      "source_evidence_note": "Representative infusion admin candidate for site-of-care structural R1",
+      "evidence": {
+        "evidence_id": null,
+        "source_system": "platform_config",
+        "source_document_id": "11218053-bdc0-569f-a415-fb61c5dcda37",
+        "source_version": null,
+        "source_url": null,
+        "retrieved_at": null,
+        "content_checksum_sha256": null,
+        "applicability_period_start": null,
+        "applicability_period_end": null,
+        "notes": "Not a CMS verification claim"
+      },
+      "medicare_applicability": {
+        "ncd_220_2": "NOT_APPLICABLE",
+        "lcd_l34425": "NOT_APPLICABLE",
+        "article_a56729": "NOT_APPLICABLE"
+      }
+    },
+    {
+      "code_system": "CPT",
+      "code": "96365",
+      "description": "Intravenous infusion, for therapy, prophylaxis, or diagnosis; initial, up to 1 hour",
+      "anatomical_region": "NOT_APPLICABLE",
+      "contrast_variant": "NOT_APPLICABLE",
+      "setting": "OUTPATIENT",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "effective_from": null,
+      "effective_to": null,
+      "evidence_class": "REPRESENTATIVE_DESIGN",
+      "source_evidence_note": "Representative IV infusion admin candidate for site-of-care structural R1",
+      "evidence": {
+        "evidence_id": null,
+        "source_system": "platform_config",
+        "source_document_id": "11218053-bdc0-569f-a415-fb61c5dcda37",
+        "source_version": null,
+        "source_url": null,
+        "retrieved_at": null,
+        "content_checksum_sha256": null,
+        "applicability_period_start": null,
+        "applicability_period_end": null,
+        "notes": "Not a CMS verification claim"
+      },
+      "medicare_applicability": {
+        "ncd_220_2": "NOT_APPLICABLE",
+        "lcd_l34425": "NOT_APPLICABLE",
+        "article_a56729": "NOT_APPLICABLE"
+      }
+    },
+    {
+      "code_system": "CPT",
+      "code": "96366",
+      "description": "Intravenous infusion, for therapy, prophylaxis, or diagnosis; each additional hour",
+      "anatomical_region": "NOT_APPLICABLE",
+      "contrast_variant": "NOT_APPLICABLE",
+      "setting": "OUTPATIENT",
+      "inclusion_status": "CANDIDATE_INCLUDE",
+      "effective_from": null,
+      "effective_to": null,
+      "evidence_class": "REPRESENTATIVE_DESIGN",
+      "source_evidence_note": "Representative IV infusion admin candidate for site-of-care structural R1",
+      "evidence": {
+        "evidence_id": null,
+        "source_system": "platform_config",
+        "source_document_id": "11218053-bdc0-569f-a415-fb61c5dcda37",
+        "source_version": null,
+        "source_url": null,
+        "retrieved_at": null,
+        "content_checksum_sha256": null,
+        "applicability_period_start": null,
+        "applicability_period_end": null,
+        "notes": "Not a CMS verification claim"
+      },
+      "medicare_applicability": {
+        "ncd_220_2": "NOT_APPLICABLE",
+        "lcd_l34425": "NOT_APPLICABLE",
+        "article_a56729": "NOT_APPLICABLE"
+      }
+    }
+  ],
   "fixtures_note": "infusion-soc-v1 $3600 known-answer",
   "ambiguous_mapping_policy": {
     "auto_deny": false,

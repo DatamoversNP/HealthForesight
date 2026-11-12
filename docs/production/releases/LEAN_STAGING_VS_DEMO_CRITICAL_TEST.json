@@ -1,0 +1,372 @@
+{
+  "generated_at": "2026-11-05T12:46:24.268309+00:00",
+  "demo": {
+    "env": "demo",
+    "api_base": "https://healthforesight-api.azurewebsites.net/api/v1",
+    "web_base": "https://healthforesight-web.azurewebsites.net",
+    "systems": {
+      "web_root": {
+        "http": 200,
+        "latency_s": 1.339,
+        "pass": true,
+        "snippet": "<!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/"
+      },
+      "api_health": {
+        "http": 200,
+        "latency_s": 0.718,
+        "pass": true,
+        "snippet": "{\"status\":\"healthy\",\"check\":\"liveness\",\"service\":\"uepi-api\",\"database\":\"not_checked\"}"
+      },
+      "api_ready": {
+        "http": 200,
+        "latency_s": 0.775,
+        "pass": true,
+        "snippet": "{\"status\":\"healthy\",\"check\":\"readiness\",\"service\":\"uepi-api\",\"database\":\"connected\",\"ready\":true,\"hint\":\"If database is "
+      },
+      "api_docs": {
+        "http": 200,
+        "latency_s": 0.729,
+        "pass": true,
+        "snippet": "\n    <!DOCTYPE html>\n    <html>\n    <head>\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  "
+      },
+      "login": {
+        "pass": true,
+        "latency_s": 1.045,
+        "detail": "ok"
+      }
+    },
+    "integration": {
+      "policies_list": {
+        "pass": true,
+        "http": 200,
+        "latency_s": 1.92,
+        "count": 289,
+        "nine_present": 9,
+        "nine_missing": []
+      },
+      "observations_latest": {
+        "pass": true,
+        "http": 200,
+        "latency_s": 1.659,
+        "count": 100,
+        "raw_type": "list"
+      },
+      "executive": {
+        "path_tried": "/dashboard/summary",
+        "http": 200,
+        "latency_s": 8.93,
+        "pass": true,
+        "payload_hint": [
+          "summary",
+          "metrics",
+          "business_metrics",
+          "top_policies",
+          "recent_activity",
+          "risk_indicators",
+          "general_baseline",
+          "last_updated"
+        ]
+      },
+      "monitoring_policies": {
+        "path_tried": "/policies/monitoring",
+        "http": 422,
+        "latency_s": 0.715,
+        "pass": false,
+        "payload_hint": [
+          "detail",
+          "status_code"
+        ]
+      },
+      "verdicts": {
+        "path_tried": "/policies/verdicts",
+        "http": 422,
+        "latency_s": 0.808,
+        "pass": false,
+        "payload_hint": [
+          "detail",
+          "status_code"
+        ]
+      },
+      "mri_policy_get": {
+        "pass": true,
+        "http": 200,
+        "latency_s": 0.749,
+        "name": "Outpatient MRI Prior Authorization"
+      }
+    },
+    "performance": {
+      "/policies": {
+        "path": "/policies",
+        "ok": true,
+        "codes": [
+          200,
+          200,
+          200,
+          200,
+          200
+        ],
+        "n": 5,
+        "p50_s": 1.948,
+        "p95_s": 2.042,
+        "mean_s": 2.359,
+        "max_s": 4.078,
+        "sample_keys": "list",
+        "sample_len": 289
+      },
+      "/policies/d403f101-08dd-45c9-ab83-d42e37c62018": {
+        "path": "/policies/d403f101-08dd-45c9-ab83-d42e37c62018",
+        "ok": true,
+        "codes": [
+          200,
+          200,
+          200,
+          200,
+          200
+        ],
+        "n": 5,
+        "p50_s": 0.965,
+        "p95_s": 0.975,
+        "mean_s": 0.884,
+        "max_s": 1.04,
+        "sample_keys": [
+          "id",
+          "tenant_id",
+          "name",
+          "policy_type",
+          "owner_role",
+          "description",
+          "status",
+          "created_at",
+          "updated_at",
+          "scope",
+          "effective_period",
+          "enforcement"
+        ],
+        "sample_len": null
+      },
+      "/observations?latest_only=true": {
+        "path": "/observations?latest_only=true",
+        "ok": true,
+        "codes": [
+          200,
+          200,
+          200,
+          200,
+          200
+        ],
+        "n": 5,
+        "p50_s": 1.957,
+        "p95_s": 1.962,
+        "mean_s": 1.887,
+        "max_s": 1.97,
+        "sample_keys": "list",
+        "sample_len": 100
+      },
+      "/health": {
+        "ok": true,
+        "p50_s": 0.995,
+        "p95_s": 1.046,
+        "mean_s": 1.053,
+        "max_s": 1.552
+      }
+    }
+  },
+  "staging": {
+    "env": "staging",
+    "api_base": "https://hfleanstg-api.whiteplant-64737337.eastus2.azurecontainerapps.io/api/v1",
+    "web_base": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io",
+    "systems": {
+      "web_root": {
+        "http": 200,
+        "latency_s": 0.669,
+        "pass": true,
+        "snippet": "<!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/"
+      },
+      "api_health": {
+        "http": 200,
+        "latency_s": 0.679,
+        "pass": true,
+        "snippet": "{\"status\":\"healthy\",\"check\":\"liveness\",\"service\":\"uepi-api\",\"database\":\"not_checked\"}"
+      },
+      "api_ready": {
+        "http": 200,
+        "latency_s": 0.722,
+        "pass": true,
+        "snippet": "{\"status\":\"healthy\",\"check\":\"readiness\",\"service\":\"uepi-api\",\"database\":\"connected\",\"ready\":true,\"hint\":\"If database is "
+      },
+      "api_docs": {
+        "http": 200,
+        "latency_s": 0.614,
+        "pass": true,
+        "snippet": "\n    <!DOCTYPE html>\n    <html>\n    <head>\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  "
+      },
+      "login": {
+        "pass": true,
+        "latency_s": 1.295,
+        "detail": "ok"
+      }
+    },
+    "integration": {
+      "policies_list": {
+        "pass": true,
+        "http": 200,
+        "latency_s": 3.141,
+        "count": 9,
+        "nine_present": 9,
+        "nine_missing": []
+      },
+      "observations_latest": {
+        "pass": true,
+        "http": 200,
+        "latency_s": 1.018,
+        "count": 9,
+        "raw_type": "list"
+      },
+      "executive": {
+        "path_tried": "/dashboard/summary",
+        "http": 200,
+        "latency_s": 0.713,
+        "pass": true,
+        "payload_hint": [
+          "summary",
+          "metrics",
+          "business_metrics",
+          "top_policies",
+          "recent_activity",
+          "risk_indicators",
+          "general_baseline",
+          "last_updated"
+        ]
+      },
+      "monitoring_policies": {
+        "path_tried": "/policies/monitoring",
+        "http": 422,
+        "latency_s": 0.886,
+        "pass": false,
+        "payload_hint": [
+          "detail",
+          "status_code"
+        ]
+      },
+      "verdicts": {
+        "path_tried": "/policies/verdicts",
+        "http": 422,
+        "latency_s": 0.867,
+        "pass": false,
+        "payload_hint": [
+          "detail",
+          "status_code"
+        ]
+      },
+      "mri_policy_get": {
+        "pass": true,
+        "http": 200,
+        "latency_s": 0.888,
+        "name": "Outpatient MRI Prior Authorization"
+      }
+    },
+    "performance": {
+      "/policies": {
+        "path": "/policies",
+        "ok": true,
+        "codes": [
+          200,
+          200,
+          200,
+          200,
+          200
+        ],
+        "n": 5,
+        "p50_s": 0.877,
+        "p95_s": 0.882,
+        "mean_s": 0.831,
+        "max_s": 0.887,
+        "sample_keys": "list",
+        "sample_len": 9
+      },
+      "/policies/d403f101-08dd-45c9-ab83-d42e37c62018": {
+        "path": "/policies/d403f101-08dd-45c9-ab83-d42e37c62018",
+        "ok": true,
+        "codes": [
+          200,
+          200,
+          200,
+          200,
+          200
+        ],
+        "n": 5,
+        "p50_s": 0.628,
+        "p95_s": 0.631,
+        "mean_s": 0.63,
+        "max_s": 0.646,
+        "sample_keys": [
+          "id",
+          "tenant_id",
+          "name",
+          "policy_type",
+          "owner_role",
+          "description",
+          "status",
+          "created_at",
+          "updated_at",
+          "scope",
+          "effective_period",
+          "enforcement"
+        ],
+        "sample_len": null
+      },
+      "/observations?latest_only=true": {
+        "path": "/observations?latest_only=true",
+        "ok": true,
+        "codes": [
+          200,
+          200,
+          200,
+          200,
+          200
+        ],
+        "n": 5,
+        "p50_s": 0.867,
+        "p95_s": 0.869,
+        "mean_s": 0.903,
+        "max_s": 1.108,
+        "sample_keys": "list",
+        "sample_len": 9
+      },
+      "/health": {
+        "ok": true,
+        "p50_s": 0.633,
+        "p95_s": 0.773,
+        "mean_s": 0.69,
+        "max_s": 0.84
+      }
+    }
+  },
+  "comparison": {
+    "verdict": "PASS_WITH_CRITICAL_GAPS",
+    "critical_count": 0,
+    "high_count": 1,
+    "findings": [
+      {
+        "severity": "HIGH",
+        "area": "integration",
+        "finding": "Staging policy catalog far thinner than demo (9 vs 289)"
+      },
+      {
+        "severity": "MEDIUM",
+        "area": "integration",
+        "finding": "Both envs fail monitoring_policies (route mismatch possible): demo=422 stg=422"
+      },
+      {
+        "severity": "MEDIUM",
+        "area": "integration",
+        "finding": "Both envs fail verdicts (route mismatch possible): demo=422 stg=422"
+      },
+      {
+        "severity": "INFO",
+        "area": "architecture",
+        "finding": "Staging is alembic 014 + SB Standard + synthetic seed; demo is frozen 012 App Service. Staging must not claim HA/Premium parity."
+      }
+    ]
+  }
+}

@@ -19,11 +19,12 @@ class Scorecard(Base):
     tenant_id = Column(PGUUID(as_uuid=True), nullable=False, index=True)
     policy_id = Column(PGUUID(as_uuid=True), ForeignKey("policies.id"), nullable=False, index=True)
     period = Column(String, nullable=False, index=True)  # e.g., "2026-Q1"
-    effectiveness_index = Column(Float, nullable=False)  # 0-100 composite score
-    cost_impact_score = Column(Float, nullable=False)
-    behavioral_risk_score = Column(Float, nullable=False)
-    access_impact_score = Column(Float, nullable=False)
-    regulatory_defensibility_score = Column(Float, nullable=False)
+    # Nullable when predicted impact lacks attributed % / confidence (UNESTIMATED).
+    effectiveness_index = Column(Float, nullable=True)  # 0-100 composite score, or null
+    cost_impact_score = Column(Float, nullable=True)
+    behavioral_risk_score = Column(Float, nullable=True)
+    access_impact_score = Column(Float, nullable=True)
+    regulatory_defensibility_score = Column(Float, nullable=True)
     weights = Column(JSON, nullable=True)  # Tenant-specific weights
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
@@ -40,7 +41,7 @@ class ScorecardEntry(Base):
     scorecard_id = Column(PGUUID(as_uuid=True), ForeignKey("scorecards.id"), nullable=False, index=True)
     dimension = Column(String, nullable=False)  # e.g., "COST", "BEHAVIORAL", "ACCESS", "REGULATORY"
     metric_name = Column(String, nullable=False)
-    metric_value = Column(Float, nullable=False)
+    metric_value = Column(Float, nullable=True)  # null when measure is unavailable
     metric_unit = Column(String, nullable=True)
     trend = Column(String, nullable=True)  # e.g., "UP", "DOWN", "STABLE"
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)

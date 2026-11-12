@@ -164,13 +164,30 @@ def resolve_mechanism(
     if ec.get("sub_mechanism") == "NCCI_PTP" or meta.get("sub_mechanism") == "NCCI_PTP":
         return "NCCI_PTP_FIXTURE"
 
+    # Nine-mock / synthetic catalog stamps → registry mechanism keys
+    _MECHANISM_ALIASES = {
+        "OUTPATIENT_MRI_PRIOR_AUTH": "UTILIZATION_MANAGEMENT",
+        "NCD_COVERAGE_STUDY": "COVERAGE_DETERMINATION",
+        "LCD_COVERAGE_STUDY": "COVERAGE_DETERMINATION",
+        "THERAPY": "COVERAGE_DETERMINATION",
+        "UNIT_CAP": "FEE_SCHEDULE_UNIT_PRICE",
+        "MUE": "FEE_SCHEDULE_UNIT_PRICE",
+        "PAYMENT_EDIT": "MULTIPLE_PROCEDURE_PAYMENT_REDUCTION",
+        "MPPR": "MULTIPLE_PROCEDURE_PAYMENT_REDUCTION",
+        "PTP_EDIT": "NCCI_PTP_FIXTURE",
+        "SITE_OF_SERVICE": "SITE_OF_SERVICE_PAYMENT_DIFFERENTIAL",
+        "INFUSION_SITE_OF_CARE": "SITE_OF_SERVICE_PAYMENT_DIFFERENTIAL",
+        "SOS": "SITE_OF_SERVICE_PAYMENT_DIFFERENTIAL",
+    }
+
     explicit = (
         ec.get("mechanism")
         or meta.get("analytical_mechanism")
         or meta.get("mechanism")
     )
     if explicit:
-        return str(explicit).upper()
+        key = str(explicit).upper()
+        return _MECHANISM_ALIASES.get(key, key)
 
     # Versioned strategy stamp from seed
     stamp = meta.get("analytical_strategy") or {}

@@ -81,15 +81,31 @@ def list_medicare_rules(
 
     db = SessionLocal()
     try:
-        rows = (
-            db.query(PolicySourceDocument)
-            .filter(
-                PolicySourceDocument.tenant_id == tenant_id,
-                PolicySourceDocument.family_id.in_(list(FAMILY_TO_KIND.keys())),
+        try:
+            rows = (
+                db.query(PolicySourceDocument)
+                .filter(
+                    PolicySourceDocument.tenant_id == tenant_id,
+                    PolicySourceDocument.family_id.in_(list(FAMILY_TO_KIND.keys())),
+                )
+                .order_by(PolicySourceDocument.family_id, PolicySourceDocument.source_document_id)
+                .all()
             )
-            .order_by(PolicySourceDocument.family_id, PolicySourceDocument.source_document_id)
-            .all()
-        )
+        except Exception as exc:
+            from sqlalchemy.exc import ProgrammingError, OperationalError
+            if not isinstance(exc, (ProgrammingError, OperationalError)):
+                raise
+            db.rollback()
+            return {
+                "tenant_id": str(tenant_id),
+                "count": 0,
+                "rules": [],
+                "honesty": {
+                    "default_label": "No Medicare source inventory is loaded for this environment",
+                    "not_complete_inventory": True,
+                    "source_inventory_present": False,
+                },
+            }
         items = [_serialize_doc(r) for r in rows]
         if kind:
             ku = kind.upper()

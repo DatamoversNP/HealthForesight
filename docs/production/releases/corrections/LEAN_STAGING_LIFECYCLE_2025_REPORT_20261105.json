@@ -1,0 +1,275 @@
+{
+  "started_at": "2026-11-05T16:58:46.716745+00:00",
+  "environment": "lean_staging_only",
+  "demo_untouched": true,
+  "phases": {
+    "flush": {
+      "deleted_observations": 250,
+      "deleted_predicted": 259,
+      "deleted_baselines": 1
+    },
+    "effective": {
+      "updated": 250
+    },
+    "claims_2025": {
+      "seeded": [
+        {
+          "date": "2025-01-15",
+          "ok": true,
+          "result": {
+            "success": true,
+            "claims_generated": 105,
+            "claims_loaded": 105
+          }
+        },
+        {
+          "date": "2025-02-15",
+          "ok": true,
+          "result": {
+            "success": true,
+            "claims_generated": 105,
+            "claims_loaded": 105
+          }
+        },
+        {
+          "date": "2025-03-15",
+          "ok": true,
+          "result": {
+            "success": true,
+            "claims_generated": 105,
+            "claims_loaded": 105
+          }
+        },
+        {
+          "date": "2025-04-15",
+          "ok": true,
+          "result": {
+            "success": true,
+            "claims_generated": 105,
+            "claims_loaded": 105
+          }
+        },
+        {
+          "date": "2025-05-15",
+          "ok": true,
+          "result": {
+            "success": true,
+            "claims_generated": 105,
+            "claims_loaded": 105
+          }
+        },
+        {
+          "date": "2025-06-15",
+          "ok": true,
+          "result": {
+            "success": true,
+            "claims_generated": 105,
+            "claims_loaded": 105
+          }
+        },
+        {
+          "date": "2025-07-15",
+          "ok": true,
+          "result": {
+            "success": true,
+            "claims_generated": 105,
+            "claims_loaded": 105
+          }
+        },
+        {
+          "date": "2025-08-15",
+          "ok": true,
+          "result": {
+            "success": true,
+            "claims_generated": 105,
+            "claims_loaded": 105
+          }
+        },
+        {
+          "date": "2025-09-15",
+          "ok": true,
+          "result": {
+            "success": true,
+            "claims_generated": 105,
+            "claims_loaded": 105
+          }
+        },
+        {
+          "date": "2025-10-15",
+          "ok": true,
+          "result": {
+            "success": true,
+            "claims_generated": 105,
+            "claims_loaded": 105
+          }
+        },
+        {
+          "date": "2025-11-15",
+          "ok": true,
+          "result": {
+            "success": true,
+            "claims_generated": 105,
+            "claims_loaded": 105
+          }
+        },
+        {
+          "date": "2025-12-15",
+          "ok": true,
+          "result": {
+            "success": true,
+            "claims_generated": 105,
+            "claims_loaded": 105
+          }
+        }
+      ],
+      "ok": 12,
+      "fail": 0
+    },
+    "claims_2026_topup": {
+      "seeded": [
+        {
+          "date": "2026-04-15",
+          "ok": true,
+          "result": {
+            "success": true,
+            "claims_generated": 105,
+            "claims_loaded": 105
+          }
+        },
+        {
+          "date": "2026-05-15",
+          "ok": true,
+          "result": {
+            "success": true,
+            "claims_generated": 105,
+            "claims_loaded": 105
+          }
+        },
+        {
+          "date": "2026-06-15",
+          "ok": true,
+          "result": {
+            "success": true,
+            "claims_generated": 105,
+            "claims_loaded": 105
+          }
+        },
+        {
+          "date": "2026-07-15",
+          "ok": true,
+          "result": {
+            "success": true,
+            "claims_generated": 105,
+            "claims_loaded": 105
+          }
+        },
+        {
+          "date": "2026-08-15",
+          "ok": true,
+          "result": {
+            "success": true,
+            "claims_generated": 105,
+            "claims_loaded": 105
+          }
+        },
+        {
+          "date": "2026-09-15",
+          "ok": true,
+          "result": {
+            "success": true,
+            "claims_generated": 105,
+            "claims_loaded": 105
+          }
+        },
+        {
+          "date": "2026-10-15",
+          "ok": true,
+          "result": {
+            "success": true,
+            "claims_generated": 105,
+            "claims_loaded": 105
+          }
+        },
+        {
+          "date": "2026-11-15",
+          "ok": true,
+          "result": {
+            "success": true,
+            "claims_generated": 105,
+            "claims_loaded": 105
+          }
+        },
+        {
+          "date": "2026-12-15",
+          "ok": true,
+          "result": {
+            "success": true,
+            "claims_generated": 105,
+            "claims_loaded": 105
+          }
+        }
+      ],
+      "ok": 9,
+      "fail": 0
+    },
+    "baseline": {
+      "baseline_id": "80b2213b-535f-4336-aaf8-43eb8b917778",
+      "metrics": {
+        "util_rate_total_per_1000_mm": 358.36,
+        "utilization_per_1k": 358.36,
+        "allowed_pmpm_total": 106.6,
+        "cost_pmpm": 106.6,
+        "unique_members": 293,
+        "member_months": 3516,
+        "claim_count": 1260,
+        "source": "tenant_wide_cy2025_claims_aggregate",
+        "authority": "SYNTHETIC_DEMO_NOT_CLAIMS_EXECUTABLE"
+      },
+      "window": "2025-01-01..2025-12-31"
+    },
+    "predictions": {
+      "inserted": 250
+    },
+    "observations": {
+      "inserted": 3000,
+      "policies": 250,
+      "months": 12
+    },
+    "schedule": {
+      "created": true,
+      "schedule": {
+        "id": "1bdabea8-8083-495d-bfd5-662e281f38f2",
+        "tenant_id": "00000000-0000-0000-0000-000000000001",
+        "name": "Lean Staging Monthly Observations",
+        "schedule_type": "OBSERVATION",
+        "frequency": "MONTHLY",
+        "time": "06:00",
+        "day_of_week": null,
+        "day_of_month": 2,
+        "config": {
+          "mode": "PERIODIC_MONTHLY",
+          "source": "lean_staging_demo_lifecycle_2025",
+          "note": "Synthetic demo observations; not claims-executable authority",
+          "skip_if_remediation_blocks_claims": true
+        },
+        "enabled": true,
+        "last_run": null,
+        "next_run": "2026-12-02T06:00:08.841533",
+        "created_by": null,
+        "created_at": "2026-11-05T17:12:09.039095",
+        "updated_at": "2026-11-05T17:12:09.039101"
+      }
+    }
+  },
+  "failures": [],
+  "verify": {
+    "baselines": 1,
+    "predicted": 250,
+    "observations": 3000,
+    "obs_policies": 250,
+    "claims_2025": 1260,
+    "claims_2026": 3825
+  },
+  "ended_at": "2026-11-05T17:12:12.215186+00:00",
+  "pass": true
+}

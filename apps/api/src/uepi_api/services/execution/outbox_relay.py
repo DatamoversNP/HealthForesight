@@ -1,9 +1,19 @@
-"""Outbox relay: PENDING rows → Celery (now) or Service Bus (Wave 2+)."""
+"""Outbox relay: PENDING rows → Celery (compat) or Service Bus (lean/enterprise target)."""
 from __future__ import annotations
 
+import json
+import os
 from typing import Optional
 
 from uepi_api.services.execution.outbox import JobOutbox, list_pending_outbox, mark_outbox_published
+
+
+def queue_for_workload(workload_class: str) -> str:
+    """Map workload class to Service Bus queue name (lean staging Standard)."""
+    wc = (workload_class or "").upper()
+    if wc in {"INTERACTIVE", "SYNC"}:
+        return "interactive"
+    return "policy-analytics"
 
 
 def publish_celery_outbox_row(row: JobOutbox, *, task_name: str) -> str:
@@ -25,16 +35,53 @@ def publish_celery_outbox_row(row: JobOutbox, *, task_name: str) -> str:
     return str(ar.id)
 
 
+def publish_service_bus_outbox_row(
+    row: JobOutbox,
+    *,
+    connection_string: Optional[str] = None,
+) -> str:
+    """Publish one outbox row to Azure Service Bus Standard/Premium.
+
+    Requires ``azure-servicebus`` and ``AZURE_SERVICE_BUS_CONNECTION_STRING``
+    (or explicit connection_string). Staging must never use demo namespace.
+    """
+    from azure.servicebus import ServiceBusClient, ServiceBusMessage
+
+    cs = connection_string or os.environ.get("AZURE_SERVICE_BUS_CONNECTION_STRING")
+    if not cs:
+        raise RuntimeError(
+            "AZURE_SERVICE_BUS_CONNECTION_STRING required for destination=service_bus"
+        )
+
+    payload = dict(row.payload_json or {})
+    payload.setdefault("job_id", row.job_id)
+    payload.setdefault("tenant_id", str(row.tenant_id))
+    workload = str(payload.get("workload_class") or "ASYNC_COHORT")
+    queue = queue_for_workload(workload)
+    body = json.dumps(payload, default=str)
+    message_id = payload.get("idempotency_key") or row.job_id
+
+    with ServiceBusClient.from_connection_string(cs) as client:
+        with client.get_queue_sender(queue) as sender:
+            msg = ServiceBusMessage(body, message_id=str(message_id)[:128])
+            sender.send_messages(msg)
+    return f"sb:{queue}:{message_id}"
+
+
 def drain_pending_outbox(db, *, limit: int = 50, task_name: Optional[str] = None) -> dict:
     task_name = task_name or "uepi_worker.tasks.policy_analytics_lifecycle_job"
     published = 0
     failed = 0
+    skipped = 0
     for row in list_pending_outbox(db, limit=limit):
-        if row.destination != "celery":
-            # service_bus path deferred until Azure module authorized
-            continue
         try:
-            publish_celery_outbox_row(row, task_name=task_name)
+            if row.destination == "celery":
+                publish_celery_outbox_row(row, task_name=task_name)
+            elif row.destination == "service_bus":
+                publish_service_bus_outbox_row(row)
+            else:
+                skipped += 1
+                continue
             mark_outbox_published(db, row)
             published += 1
         except Exception as e:
@@ -42,4 +89,4 @@ def drain_pending_outbox(db, *, limit: int = 50, task_name: Optional[str] = None
             row.last_error = str(e)[:500]
             failed += 1
     db.commit()
-    return {"published": published, "failed": failed}
+    return {"published": published, "failed": failed, "skipped": skipped}

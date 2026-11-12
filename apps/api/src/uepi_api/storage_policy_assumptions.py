@@ -134,7 +134,7 @@ def _get_assumptions(
                 "range": assumption.range_json if assumption.range_json else None,
                 "value": assumption.value,
                 "source": assumption.source,
-                "confidence": assumption.confidence if assumption.confidence else 0.5,
+                "confidence": assumption.confidence,
                 "created_at": assumption.created_at.isoformat() if assumption.created_at else None,
                 "updated_at": assumption.updated_at.isoformat() if assumption.updated_at else None,
             }

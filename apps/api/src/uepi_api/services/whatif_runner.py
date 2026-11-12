@@ -60,6 +60,88 @@ def run_whatif_scenario_sync(
             metadata=policy_metadata,
             policy_id=str(policy_record.id),
         )
+        # Coverage studies (NCD/LCD/therapy coverage): do not fabricate UM elasticity savings.
+        if _strategy.get("calculation_family") == "COVERAGE" and _strategy.get("dispatch") == "ENGINE":
+            result_dict = {
+                "scenario_id": f"coverage-study-{analysis_id}",
+                "mechanism": _strategy.get("mechanism"),
+                "engine_id": _strategy.get("engine_id"),
+                "calculation_family": "COVERAGE",
+                "calculation_version": _strategy.get("calculation_version"),
+                "catalog_class": (policy_metadata.get("catalog_class") or "SYNTHETIC_STAGING"),
+                "policy_effect_status": "UNESTIMATED",
+                "baseline_metrics": {
+                    "note": "Coverage determination study — not a payment-rule simulation.",
+                    "utilization_change_pct": None,
+                    "cost_change_pmpm": None,
+                },
+                "projected_metrics": {
+                    "note": "Financial projection not produced for coverage-study mechanisms.",
+                },
+                "impact_metrics": {
+                    "payment_impact_dollars": None,
+                    "cost_change_pmpm": None,
+                    "utilization_change_pct": None,
+                    "policy_effect_status": "UNESTIMATED",
+                    "interpretation": (
+                        "This policy is a coverage/provenance study. "
+                        "What-if does not invent attributed savings; compare observations vs continuation instead."
+                    ),
+                },
+                "confidence_score": None,
+                "scenario_params": scenario_params,
+                "strategy": _strategy,
+            }
+            try:
+                existing_result = db.query(WhatIfScenarioResult).filter(
+                    WhatIfScenarioResult.analysis_id == UUID(analysis_id)
+                ).first()
+                if existing_result:
+                    existing_result.result_data_json = result_dict
+                    existing_result.updated_at = datetime.utcnow()
+                    db.add(existing_result)
+                else:
+                    db.add(
+                        WhatIfScenarioResult(
+                            tenant_id=UUID(tenant_id),
+                            analysis_id=UUID(analysis_id),
+                            policy_id=UUID(policy_id),
+                            result_data_json=result_dict,
+                            schema_version="1.0",
+                        )
+                    )
+                existing_index = db.query(AnalysisResultIndex).filter(
+                    AnalysisResultIndex.analysis_id == UUID(analysis_id),
+                    AnalysisResultIndex.result_type == "WHATIF_SCENARIO",
+                ).first()
+                if not existing_index:
+                    db.add(
+                        AnalysisResultIndex(
+                            tenant_id=UUID(tenant_id),
+                            analysis_id=UUID(analysis_id),
+                            result_type="WHATIF_SCENARIO",
+                            data_uri=None,
+                            schema_version="1.0",
+                        )
+                    )
+                analysis.status = AnalysisStatus.COMPLETED.value
+                db.commit()
+            except Exception as persist_err:
+                db.rollback()
+                analysis.status = AnalysisStatus.FAILED.value
+                if hasattr(Analysis, "error_message"):
+                    analysis.error_message = str(persist_err)
+                db.commit()
+                return {"status": "error", "message": str(persist_err)}
+            return {
+                "status": "completed",
+                "analysis_id": analysis_id,
+                "result_uri": "database",
+                "confidence_score": None,
+                "result": result_dict,
+                "strategy": _strategy,
+            }
+
         if _strategy.get("forbid_utilization_elasticity") or _strategy.get(
             "calculation_family"
         ) in ("REIMBURSEMENT", "BLOCKED"):
@@ -150,18 +232,60 @@ def run_whatif_scenario_sync(
             effective_raw = {}
         enforcement_raw = policy_metadata.get("enforcement")
 
+        def _coerce_enforcement(raw: Any) -> Optional[Any]:
+            """Map staging/catalog enforcement stamps onto CanonicalPolicy enums."""
+            if not isinstance(raw, dict):
+                return None
+            from uepi_common.models import EnforcementMechanism, PolicyTouchpoint
+
+            mech_map = {
+                "HARD": EnforcementMechanism.HARD,
+                "SOFT": EnforcementMechanism.SOFT,
+                "PASSIVE": EnforcementMechanism.PASSIVE,
+                "REVIEW_REQUIRED": EnforcementMechanism.SOFT,
+                "CONFIGURED_RULE_REVIEW_REQUIRED_NO_AUTO_DENY": EnforcementMechanism.SOFT,
+            }
+            touch_map = {
+                "CLAIM_EDIT": PolicyTouchpoint.CLAIM_EDIT,
+                "PA_WORKFLOW": PolicyTouchpoint.PA_WORKFLOW,
+                "BENEFIT_ACCUMULATOR": PolicyTouchpoint.BENEFIT_ACCUMULATOR,
+                "PRECERT": PolicyTouchpoint.PRECERT,
+                "AUTHORIZATION": PolicyTouchpoint.AUTHORIZATION,
+                "CARE_MANAGEMENT": PolicyTouchpoint.CARE_MANAGEMENT,
+                "MANUAL_REVIEW": PolicyTouchpoint.PA_WORKFLOW,
+                "REVIEW": PolicyTouchpoint.PA_WORKFLOW,
+            }
+            mech = mech_map.get(str(raw.get("mechanism") or "").upper(), EnforcementMechanism.SOFT)
+            touches_in = raw.get("touchpoint") or ["PA_WORKFLOW"]
+            if isinstance(touches_in, str):
+                touches_in = [touches_in]
+            touches = [
+                touch_map.get(str(t).upper(), PolicyTouchpoint.PA_WORKFLOW) for t in touches_in
+            ] or [PolicyTouchpoint.PA_WORKFLOW]
+            return Enforcement(
+                mechanism=mech,
+                touchpoint=touches,
+                override_allowed=bool(raw.get("override_allowed", True)),
+            )
+
+        # Scope may carry non-contract keys from catalog stamps — keep only PolicyScope fields.
+        try:
+            scope = PolicyScope(**{k: v for k, v in scope_raw.items() if k in PolicyScope.model_fields}) if scope_raw else PolicyScope(lob=None, markets=None, network=None)
+        except Exception:
+            scope = PolicyScope(lob=None, markets=None, network=None)
+
         policy = CanonicalPolicy(
             policy_id=policy_record.id,
             policy_name=policy_record.name,
             policy_type=normalize_policy_type_value(policy_record.policy_type),
             description=policy_record.description or "",
             status=PolicyStatus(policy_record.status) if hasattr(policy_record, "status") else PolicyStatus.ACTIVE,
-            scope=PolicyScope(**scope_raw) if scope_raw else PolicyScope(lob=None, markets=None, network=None),
+            scope=scope,
             effective_period=EffectivePeriod(
                 start_date=datetime.fromisoformat(effective_raw["start_date"]) if effective_raw.get("start_date") else datetime.utcnow(),
                 end_date=datetime.fromisoformat(effective_raw["end_date"]) if effective_raw.get("end_date") else None,
             ) if effective_raw else EffectivePeriod(start_date=datetime.utcnow(), end_date=None),
-            enforcement=Enforcement(**enforcement_raw) if isinstance(enforcement_raw, dict) else None,
+            enforcement=_coerce_enforcement(enforcement_raw),
             policy_logic=None,
         )
 

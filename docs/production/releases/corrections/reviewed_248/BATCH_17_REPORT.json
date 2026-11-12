@@ -1,0 +1,288 @@
+{
+  "generated_at": "2026-11-07T12:32:38.341314+00:00",
+  "batch": 17,
+  "batch_size": 10,
+  "source_system": "SYNTHETIC_REVIEWED_248_V1",
+  "policies": [
+    {
+      "register_index": 162,
+      "name": "Nuclear Cardiology Prior Authorization",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1619,
+        "baseline_allowed": 2534593.27,
+        "avg_allowed_per_line": 1466.7785127314814,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "78451",
+          "78452",
+          "78453",
+          "78454"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "d49d0a39-f00c-46f8-8ac4-1e15b8070c1a",
+        "prediction_id": "af41939c-7f55-4d8d-8ce7-ae7b85ad79f1",
+        "observations": 10,
+        "allowed_pmpm": 17.60134215277778,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 163,
+      "name": "Occupational Therapy Annual Limit",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 6410,
+        "baseline_members": 4958,
+        "baseline_allowed": 1258595.01,
+        "avg_allowed_per_line": 196.3486755070203,
+        "observation_claims": 5347,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "97110",
+          "97112",
+          "97140",
+          "97530",
+          "92507"
+        ],
+        "service_category": "therapy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "b9f4ec37-c749-485c-96be-07bb6a1667c2",
+        "prediction_id": "59f9f256-9fc0-44a7-83e3-087ea1488b80",
+        "observations": 10,
+        "allowed_pmpm": 8.740243125,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 164,
+      "name": "Oncology Genomic Profiling Prior Authorization",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 165,
+      "name": "Oncology Infusion Site Steerage",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 13811,
+        "baseline_members": 8205,
+        "baseline_allowed": 15409472.96,
+        "avg_allowed_per_line": 1115.7391180942727,
+        "observation_claims": 11590,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "96413",
+          "96415",
+          "96365",
+          "J1745",
+          "J2357"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "093af219-d378-497a-95ac-5afc04127cab",
+        "prediction_id": "2eeae220-bbe7-4521-8f67-1d3147322689",
+        "observations": 10,
+        "allowed_pmpm": 107.01022888888889,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 166,
+      "name": "Oncology Oral Specialty Prior Authorization",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 167,
+      "name": "Oncology-Related Dental Clearance Coverage",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 168,
+      "name": "Opioid Analgesic Utilization Management",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 5184,
+        "baseline_members": 4238,
+        "baseline_allowed": 6674845.38,
+        "avg_allowed_per_line": 1287.585914351852,
+        "observation_claims": 4320,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J0592",
+          "J2270",
+          "J3010"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "165e8bb4-265c-4e48-8ed5-24f10840fb69",
+        "prediction_id": "a880a3ec-0527-4a58-8324-3fca63ba5602",
+        "observations": 10,
+        "allowed_pmpm": 46.35309291666667,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 169,
+      "name": "Opioid Quantity Limit \u2014 Acute Pain",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 5184,
+        "baseline_members": 4238,
+        "baseline_allowed": 6674845.38,
+        "avg_allowed_per_line": 1287.585914351852,
+        "observation_claims": 4320,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J0592",
+          "J2270",
+          "J3010"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "d4410353-931b-448c-a7a4-758e77c5aa61",
+        "prediction_id": "7fea73a7-0bd6-4874-af09-00ce3966828c",
+        "observations": 10,
+        "allowed_pmpm": 46.35309291666667,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 170,
+      "name": "Opioid Quantity Limit \u2014 Chronic Pain",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 5184,
+        "baseline_members": 4238,
+        "baseline_allowed": 6674845.38,
+        "avg_allowed_per_line": 1287.585914351852,
+        "observation_claims": 4320,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J0592",
+          "J2270",
+          "J3010"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "f947f006-136e-453e-b701-3b28b609310a",
+        "prediction_id": "34b8515c-8d43-41d6-be34-e12be8581e10",
+        "observations": 10,
+        "allowed_pmpm": 46.35309291666667,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 171,
+      "name": "Orthobiologics and PRP Noncoverage",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    }
+  ],
+  "population": {
+    "loaded": false,
+    "claims": 348744,
+    "members": 12000,
+    "source_system": "SYNTHETIC_REVIEWED_248_V1",
+    "book_mm_2025": 144000.0
+  },
+  "validation_summary": {
+    "policies_in_batch": 10,
+    "configured": 10,
+    "measurable_completed": 6,
+    "config_only": 4,
+    "thin_but_measured": 0,
+    "failed": 0,
+    "rate_continuity_checked": 6,
+    "pass": true
+  }
+}

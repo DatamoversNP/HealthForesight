@@ -74,15 +74,35 @@ interface Policy {
   created_at: string
   updated_at: string
   scope?: any
+  execution_label?: string
+  execution_code?: string
 }
 
 const POLICY_TYPES = [...CATALOG_POLICY_TYPES]
+
+function executionLabel(row?: { mechanism?: string; blocked_reason?: string; status?: string; configuration_state?: string; required_parameter?: string }): string {
+  if (!row || row.status === 'NOT_RUN') return 'Not run'
+  if (row.configuration_state === 'AWAITING_CONFIGURATION' && row.required_parameter) {
+    return `Awaiting configuration: ${row.required_parameter}`
+  }
+  if (row.configuration_state === 'REVIEW_ONLY') return 'Review required'
+  if (row.configuration_state === 'PAYMENT_SIMULATION') return 'Payment engine'
+  const code = row.mechanism || row.blocked_reason || row.status || ''
+  if (code === 'CONFIGURED_RULE_REVIEW_REQUIRED_NO_AUTO_DENY') return 'Review required'
+  if (code === 'VALIDATED_PAYMENT_ENGINE') return 'Payment engine'
+  if (code === 'NO_CANDIDATE_CODE_IN_PACKAGE') return 'No candidate code'
+  if (code === 'UNSIGNED_CLINICAL_OR_COVERAGE_AUTHORITY') return 'Clinical criteria unsigned'
+  if (code === 'NO_EXECUTABLE_RULE_IN_DEFINITION') return 'No executable rule'
+  if (code.startsWith('MISSING_')) return 'Missing parameter'
+  return code || 'Not run'
+}
 
 export default function PolicyCatalogPage() {
   const navigate = useNavigate()
   const [policies, setPolicies] = useState<Policy[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [executionNote, setExecutionNote] = useState<string | null>(null)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingPolicy, setEditingPolicy] = useState<Policy | null>(null)
   const [formData, setFormData] = useState({
@@ -185,6 +205,45 @@ export default function PolicyCatalogPage() {
       // Hide retired seed/junk policies from the default catalog (demo-safe).
       const raw = Array.isArray(data) ? data : (data && Array.isArray(data.items) ? data.items : [])
       const visible = raw.filter((p: Policy) => (p.status || 'ACTIVE') !== 'RETIRED')
+      try {
+        const summary = await apiClient.getPolicyExecutionSummary()
+        const byId = new Map(
+          (summary.policies || []).map((row: { policy_id: string; mechanism_executed?: boolean; mechanism?: string; blocked_reason?: string; status?: string; configuration_state?: string; required_parameter?: string }) => [
+            row.policy_id,
+            row,
+          ])
+        )
+        visible.forEach((policy) => {
+          const row = byId.get(policy.id)
+          const code = row
+            ? row.mechanism_executed
+              ? row.mechanism || row.status || 'EXECUTED'
+              : row.blocked_reason || row.status || 'NOT_RUN'
+            : 'NOT_RUN'
+          policy.execution_code = code
+          policy.execution_label = row ? executionLabel(row) : executionLabel({ status: 'NOT_RUN' })
+        })
+        const rows = summary.policies || []
+        const reviewOnly = rows.filter((row: { configuration_state?: string; mechanism?: string }) =>
+          row.configuration_state === 'REVIEW_ONLY' || row.mechanism === 'CONFIGURED_RULE_REVIEW_REQUIRED_NO_AUTO_DENY'
+        ).length
+        const paymentSims = rows.filter((row: { configuration_state?: string; mechanism?: string }) =>
+          row.configuration_state === 'PAYMENT_SIMULATION' || row.mechanism === 'VALIDATED_PAYMENT_ENGINE'
+        ).length
+        const awaiting = rows.filter((row: { configuration_state?: string; blocked_reason?: string }) =>
+          row.configuration_state === 'AWAITING_CONFIGURATION' || String(row.blocked_reason || '').startsWith('MISSING_')
+        ).length
+        const blocked = rows.filter((row: { mechanism_executed?: boolean; configuration_state?: string; blocked_reason?: string; status?: string }) =>
+          !row.mechanism_executed && row.status !== 'NOT_RUN' && row.configuration_state !== 'AWAITING_CONFIGURATION' && !String(row.blocked_reason || '').startsWith('MISSING_')
+        ).length
+        setExecutionNote(
+          summary.policy_count
+            ? `${summary.mechanism_executed_count} of ${summary.policy_count} policies have a stored mechanism result (${reviewOnly} review-only, ${paymentSims} payment simulations). ${awaiting} await a client parameter. ${blocked} stay blocked. Review results are not clinical outcomes. ${summary.financial_note || ''}`
+            : null
+        )
+      } catch {
+        setExecutionNote(null)
+      }
       setPolicies(visible)
     } catch (err: any) {
       // Don't log timeout errors - they're expected when API is unavailable
@@ -722,6 +781,11 @@ export default function PolicyCatalogPage() {
               </Select>
             </FormControl>
           </ListFilterBar>
+          {executionNote && (
+            <Alert severity="info" sx={{ mx: 2, mt: 1 }}>
+              {executionNote}
+            </Alert>
+          )}
           {filteredPolicies.length === 0 ? (
             <Box sx={{ p: 4, textAlign: 'center' }}>
               <Typography variant="h6" color="text.secondary" gutterBottom>
@@ -745,11 +809,12 @@ export default function PolicyCatalogPage() {
           >
             <TableHead>
               <TableRow>
-                <TableCell sx={{ width: '22%' }}>Name</TableCell>
-                <TableCell sx={{ width: '14%' }}>Type</TableCell>
-                <TableCell sx={{ width: '16%' }}>Scope</TableCell>
+                <TableCell sx={{ width: '20%' }}>Name</TableCell>
+                <TableCell sx={{ width: '12%' }}>Type</TableCell>
+                <TableCell sx={{ width: '14%' }}>Scope</TableCell>
                 <TableCell sx={{ width: '10%' }}>Status</TableCell>
-                <TableCell sx={{ width: '18%' }}>Description</TableCell>
+                <TableCell sx={{ width: '16%' }}>Execution</TableCell>
+                <TableCell sx={{ width: '14%' }}>Description</TableCell>
                 <TableCell sx={{ width: '8%' }}>Updated</TableCell>
                 <TableCell
                   align="right"
@@ -810,6 +875,11 @@ export default function PolicyCatalogPage() {
                       size="small"
                       icon={policy.status === 'ACTIVE' ? <CheckCircleIcon /> : <CancelIcon />}
                     />
+                  </TableCell>
+                  <TableCell sx={{ overflow: 'hidden' }}>
+                    <Typography variant="caption" noWrap title={policy.execution_code || 'Not run'} display="block">
+                      {policy.execution_label || 'Not run'}
+                    </Typography>
                   </TableCell>
                   <TableCell>
                     <Typography

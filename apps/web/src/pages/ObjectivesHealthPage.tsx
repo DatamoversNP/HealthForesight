@@ -253,10 +253,13 @@ export default function ObjectivesHealthPage() {
         </Typography>
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', alignItems: 'center', mb: 2 }}>
           <Chip
-            label={`${objectivesMetCount} of 6 objectives met`}
+            label={objectivesMetCount === 0 ? '0 of 6 objectives met' : `${objectivesMetCount} of 6 objectives met`}
             color={objectivesMetCount === 6 ? 'success' : 'default'}
             size="small"
           />
+          <Typography variant="caption" color="text.secondary">
+            A stored forecast or observation is not an achieved objective.
+          </Typography>
           {calculationVersion && (
             <Chip size="small" variant="outlined" label={`Calc: ${calculationVersion}`} />
           )}

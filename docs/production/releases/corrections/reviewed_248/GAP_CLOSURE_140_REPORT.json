@@ -1,0 +1,4919 @@
+{
+  "generated_at": "2026-11-07T12:58:04.914818+00:00",
+  "gap_policies": 140,
+  "remap_methods": {
+    "NAME_KEYWORD": 64,
+    "FAMILY_FALLBACK": 76
+  },
+  "population": {
+    "members": 12000,
+    "gap_claims_added": 443520,
+    "book_mm_2025": 144000.0,
+    "source_system": "SYNTHETIC_REVIEWED_248_V1"
+  },
+  "policies": [
+    {
+      "register_index": 1,
+      "name": "90-Day Retail Maintenance Program",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "S5000",
+        "J8499"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 11276,
+        "baseline_members": 7304,
+        "baseline_allowed": 6058378.36,
+        "avg_allowed_per_line": 537.2808052500887,
+        "observation_claims": 9321,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "S5000",
+          "J8499"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "4c59b1f3-b4e1-471f-82e2-a1f89d7833c6",
+        "prediction_id": "894b70ba-fe4d-4e97-b905-528b00f54a56",
+        "observations": 10,
+        "allowed_pmpm": 42.072071944444446,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 2,
+      "name": "ACA Essential Health Benefits Mapping",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "7c3c4349-3709-4e76-abef-eba5822782ed",
+        "prediction_id": "08fb902d-0731-499f-8a89-f89c293902b0",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 3,
+      "name": "ACA Preventive Services Zero Cost Share",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "99395",
+        "G0438"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 5184,
+        "baseline_members": 4179,
+        "baseline_allowed": 854465.62,
+        "avg_allowed_per_line": 164.82747299382717,
+        "observation_claims": 4320,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99395",
+          "G0438"
+        ],
+        "service_category": "preventive"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "ed669d7d-f38e-4330-a063-31994e927d9a",
+        "prediction_id": "1a687c7f-6b40-4e3c-a255-86076a062958",
+        "observations": 10,
+        "allowed_pmpm": 5.933789027777777,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 4,
+      "name": "ACL Reconstruction Prior Authorization",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "29888",
+        "27427"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1629,
+        "baseline_allowed": 10002679.17,
+        "avg_allowed_per_line": 5788.587482638889,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "29888",
+          "27427"
+        ],
+        "service_category": "surgery"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "e8c4ff8c-0b59-46af-84f8-36c55cb0b402",
+        "prediction_id": "1627343d-dfec-47c0-b466-fbfbcfb68cc8",
+        "observations": 10,
+        "allowed_pmpm": 69.46304979166666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 10,
+      "name": "Anti-Reflux Procedure Prior Authorization",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "43280",
+        "43281"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1607,
+        "baseline_allowed": 7379381.44,
+        "avg_allowed_per_line": 4270.475370370371,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "43280",
+          "43281"
+        ],
+        "service_category": "surgery"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "a9b42822-c1ac-4d08-a675-00b16078f610",
+        "prediction_id": "ff967de9-d3e6-4824-b1a3-8e4021ba674e",
+        "observations": 10,
+        "allowed_pmpm": 51.24570444444445,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 11,
+      "name": "Applied Behavior Analysis Prior Authorization",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "97151",
+        "97153"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1605,
+        "baseline_allowed": 282875.96,
+        "avg_allowed_per_line": 163.70136574074075,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "97151",
+          "97153"
+        ],
+        "service_category": "therapy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "ab299ef8-fc27-4a1a-91c1-3e6e12f916e1",
+        "prediction_id": "152a66df-80cf-47da-81e6-4d11a9e5ad2b",
+        "observations": 10,
+        "allowed_pmpm": 1.964416388888889,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 12,
+      "name": "Assistant Surgeon Payment Rules",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "27447",
+        "63047"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 7365,
+        "baseline_members": 5524,
+        "baseline_allowed": 34256840.2,
+        "avg_allowed_per_line": 4651.302131704006,
+        "observation_claims": 6117,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "27447",
+          "63047"
+        ],
+        "service_category": "surgery"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "09bd92fc-1929-46eb-a29d-81ed7bbfe297",
+        "prediction_id": "05bb0210-0d67-467a-8965-c78baad83739",
+        "observations": 10,
+        "allowed_pmpm": 237.89472361111112,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 15,
+      "name": "Away-From-Home Care / Guest Membership Rules",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "04a14f46-4025-46b2-96ac-bcbba45b52a8",
+        "prediction_id": "4ab111f0-a440-407e-a403-170653824891",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 21,
+      "name": "Biosimilar Preferencing Policy",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "Q5103",
+        "Q5104"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1598,
+        "baseline_allowed": 4149813.68,
+        "avg_allowed_per_line": 2401.5125462962965,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "Q5103",
+          "Q5104"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "8cd46cea-dc2e-4c03-98c5-98c60830234b",
+        "prediction_id": "e3c02400-9510-4abf-bf2a-a86c2f84d1d7",
+        "observations": 10,
+        "allowed_pmpm": 28.818150555555558,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 23,
+      "name": "BlueCard Home Plan Medical Policy Application",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "39ec0bdb-4c65-4f0f-be82-e9c365be9d18",
+        "prediction_id": "f5225ca8-9697-470d-8eff-5ecf25165f09",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 24,
+      "name": "BlueCard Host Plan Local Rules Application",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "31d9dd9e-3e38-4369-b7df-25c779c48732",
+        "prediction_id": "ac5faa88-a746-40e2-b084-ffb8c8ba3a74",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 25,
+      "name": "Bone Densitometry Frequency Limits",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "77080",
+        "77081"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1614,
+        "baseline_allowed": 426226.66,
+        "avg_allowed_per_line": 246.65894675925924,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "77080",
+          "77081"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "88a7a619-93a5-4df4-a1f8-a07d8d741a8d",
+        "prediction_id": "49176edf-49b4-4f55-b1a3-7e1213b268e0",
+        "observations": 10,
+        "allowed_pmpm": 2.959907361111111,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 26,
+      "name": "Bone Growth Stimulator Prior Authorization",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "2182fdf0-4776-493b-9a50-364c3855e5e2",
+        "prediction_id": "0c6458cc-e3b6-4881-9add-06cb4654dd8a",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 28,
+      "name": "Breast Reduction Medical Necessity",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "19318"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1605,
+        "baseline_allowed": 13617472.13,
+        "avg_allowed_per_line": 7880.4815567129635,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "19318"
+        ],
+        "service_category": "surgery"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "8252d0bb-1599-4ccd-8201-d32490fd46ef",
+        "prediction_id": "5154b8f4-1f05-4dfc-8832-5e5d74743aa6",
+        "observations": 10,
+        "allowed_pmpm": 94.56577868055557,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 30,
+      "name": "Bunion and Forefoot Elective Surgery Prior Authorization",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "28296",
+        "28289"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1615,
+        "baseline_allowed": 4917937.16,
+        "avg_allowed_per_line": 2846.028449074074,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "28296",
+          "28289"
+        ],
+        "service_category": "surgery"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "346bed27-a7e5-4460-bf78-7f687a5b19d5",
+        "prediction_id": "6099a0fd-630b-4358-941c-dda45a3ab452",
+        "observations": 10,
+        "allowed_pmpm": 34.15234138888889,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 31,
+      "name": "Cancer Clinical Trial Routine Cost Coverage",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "99284",
+        "99285"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 13824,
+        "baseline_members": 8189,
+        "baseline_allowed": 20744240.35,
+        "avg_allowed_per_line": 1500.596090133102,
+        "observation_claims": 11520,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99284",
+          "99285"
+        ],
+        "service_category": "emergency"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "92c173d8-7408-4d36-af0e-5cf6ea66f2de",
+        "prediction_id": "63072c95-8b77-41a3-a425-46510d787b88",
+        "observations": 10,
+        "allowed_pmpm": 144.0572246527778,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 32,
+      "name": "Capsule Endoscopy Prior Authorization",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "91110",
+        "91111"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1609,
+        "baseline_allowed": 2830792.28,
+        "avg_allowed_per_line": 1638.1899768518517,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "91110",
+          "91111"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "b0a9af59-3b2b-4b1d-8595-5d6edd7b38f3",
+        "prediction_id": "b070e3a5-80ad-4ace-98da-4f1e41debe15",
+        "observations": 10,
+        "allowed_pmpm": 19.658279722222222,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 34,
+      "name": "Cardiac Episode Bundle",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "27447",
+        "33533"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 7365,
+        "baseline_members": 5516,
+        "baseline_allowed": 43519387.79,
+        "avg_allowed_per_line": 5908.946067888663,
+        "observation_claims": 6152,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "27447",
+          "33533"
+        ],
+        "service_category": "surgery"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "fe2e0a74-c6a4-4719-a5d8-b982cc4fe554",
+        "prediction_id": "6e978174-9ae0-4eab-8b93-de3b0b300373",
+        "observations": 10,
+        "allowed_pmpm": 302.2179707638889,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 39,
+      "name": "CAR-T and Cellular Therapy Prior Authorization",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "Q2041",
+        "Q2042"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1617,
+        "baseline_allowed": 172348934.24,
+        "avg_allowed_per_line": 99738.96657407407,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "Q2041",
+          "Q2042"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "05651e1e-3a4b-4ec2-8f64-15e9a86d604d",
+        "prediction_id": "43167a70-9d9a-45be-a9d7-3040564d346f",
+        "observations": 10,
+        "allowed_pmpm": 1196.867598888889,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 42,
+      "name": "Centers of Excellence Requirement \u2014 Complex Cancer",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "96413",
+        "J1745"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 5184,
+        "baseline_members": 4249,
+        "baseline_allowed": 11118279.04,
+        "avg_allowed_per_line": 2144.72975308642,
+        "observation_claims": 4320,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "96413",
+          "J1745"
+        ],
+        "service_category": "infusion"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "31d4a8bc-3496-4a6c-bac6-63f0b15f13fe",
+        "prediction_id": "1a38e42c-dfd0-4122-93d3-15eb39b5e262",
+        "observations": 10,
+        "allowed_pmpm": 77.21027111111111,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 43,
+      "name": "Centers of Excellence Requirement \u2014 Transplant",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "50360",
+        "47135"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 5184,
+        "baseline_members": 4194,
+        "baseline_allowed": 259040742.01,
+        "avg_allowed_per_line": 49969.2789371142,
+        "observation_claims": 4320,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "50360",
+          "47135"
+        ],
+        "service_category": "surgery"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "9d2dec77-2fb3-4497-8877-19a833028c40",
+        "prediction_id": "caed64b8-6739-436d-83c6-3c112e9eb934",
+        "observations": 10,
+        "allowed_pmpm": 1798.8940417361111,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 45,
+      "name": "Chiropractic Visit Limit",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "98940",
+        "98941"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1603,
+        "baseline_allowed": 173462.98,
+        "avg_allowed_per_line": 100.38366898148149,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "98940",
+          "98941"
+        ],
+        "service_category": "therapy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "5813145f-5c06-448e-bb61-3c7e7972f404",
+        "prediction_id": "c946c815-70cb-4a01-a321-f8ecb0307bd0",
+        "observations": 10,
+        "allowed_pmpm": 1.2046040277777779,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 46,
+      "name": "CKD Disease Management Program",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "G9001",
+        "99490"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 13824,
+        "baseline_members": 8251,
+        "baseline_allowed": 1730840.2,
+        "avg_allowed_per_line": 125.2054542824074,
+        "observation_claims": 11520,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "G9001",
+          "99490"
+        ],
+        "service_category": "care_management"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "3bcf0897-4d27-49e7-ad93-a4e192548973",
+        "prediction_id": "d5061af8-ce91-45ac-b6f3-e48df1a7d2d2",
+        "observations": 10,
+        "allowed_pmpm": 12.019723611111111,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 47,
+      "name": "Cochlear Implant Prior Authorization",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "69930",
+        "L8614"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1602,
+        "baseline_allowed": 21749449.87,
+        "avg_allowed_per_line": 12586.487193287037,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "69930",
+          "L8614"
+        ],
+        "service_category": "surgery"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "969a7b27-5b87-429f-aafb-12f332af2930",
+        "prediction_id": "98eb98ae-7f98-445d-be8e-722151e4755e",
+        "observations": 10,
+        "allowed_pmpm": 151.03784631944444,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 48,
+      "name": "Colonoscopy Screening and Surveillance Intervals",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "45378",
+        "45380"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 2153,
+        "baseline_members": 1955,
+        "baseline_allowed": 4310337.56,
+        "avg_allowed_per_line": 2002.0146586158846,
+        "observation_claims": 1836,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "45378",
+          "45380"
+        ],
+        "service_category": "surgery"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "79751537-5f79-4e24-ac8a-f613800731eb",
+        "prediction_id": "a661aec4-8d0e-4cf1-91fc-0089f7587adb",
+        "observations": 10,
+        "allowed_pmpm": 29.93289972222222,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 49,
+      "name": "Complex Case Management Program",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "G9001",
+        "99490"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 13824,
+        "baseline_members": 8251,
+        "baseline_allowed": 1730840.2,
+        "avg_allowed_per_line": 125.2054542824074,
+        "observation_claims": 11520,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "G9001",
+          "99490"
+        ],
+        "service_category": "care_management"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "d5129bd9-5e76-4b43-b53d-dc520673de01",
+        "prediction_id": "a0a7fa3e-9ae3-4798-9d56-eb208f10e1ee",
+        "observations": 10,
+        "allowed_pmpm": 12.019723611111111,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 51,
+      "name": "Concurrent DUR Safety Edits",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "ea423754-5f61-4c7a-a617-2228d684d732",
+        "prediction_id": "3f2058b5-18b1-458b-b18b-b7a6f1cd6aff",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 52,
+      "name": "Continuity of Care After Provider Termination",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "4f5ce891-259c-4890-ac51-732ca2dc12d6",
+        "prediction_id": "808219bc-f85b-4190-aba0-b790d87621e6",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 53,
+      "name": "Continuity of Medications During Appeal",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "ea286753-738c-4897-908d-900a407d750f",
+        "prediction_id": "90756a6d-a0d3-497b-b2bb-c9195f7225ad",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 54,
+      "name": "Convenience Care Exclusion",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "0b60798c-c25d-4d27-ab08-ec69672d91ca",
+        "prediction_id": "c63e5999-fef7-49ba-88fe-83dc62f0649f",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 55,
+      "name": "Coordination of Benefits Administration",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "59707917-11a2-4460-b915-7ac3ea39c9c3",
+        "prediction_id": "cb027ed1-294b-4c87-81a3-61b1a4a6b842",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 56,
+      "name": "COPD Disease Management Program",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "G9001",
+        "99490"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 13824,
+        "baseline_members": 8251,
+        "baseline_allowed": 1730840.2,
+        "avg_allowed_per_line": 125.2054542824074,
+        "observation_claims": 11520,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "G9001",
+          "99490"
+        ],
+        "service_category": "care_management"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "6f3d8fb6-42a7-41d3-b6af-c58f60e35f7a",
+        "prediction_id": "445ca98a-0609-409b-801f-41de5915e645",
+        "observations": 10,
+        "allowed_pmpm": 12.019723611111111,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 57,
+      "name": "Coronary Calcium Scoring Coverage Criteria",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "a948b35d-956f-448a-832c-449aee4f4ad0",
+        "prediction_id": "d3331f63-7baf-44eb-8068-d833d8075993",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 58,
+      "name": "Cosmetic Services Exclusion",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "61762338-c8cd-4d18-8f78-8b5fe5174de0",
+        "prediction_id": "e0b5d321-a354-4594-9412-03f1d9712fcb",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 59,
+      "name": "Cosmetic Surgery Exclusion Policy",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "329ec460-66db-4159-943d-4822df0ef57e",
+        "prediction_id": "e3291f6c-ecc0-42bb-90a4-f61290b6b950",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 61,
+      "name": "Custodial Care Exclusion",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "99b5ff2c-1fdc-40c1-8553-01f94856ee17",
+        "prediction_id": "51f14677-f62a-4ef9-8262-b565b97e4cdf",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 64,
+      "name": "Diabetes Disease Management Program",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "G9001",
+        "99490"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 13824,
+        "baseline_members": 8251,
+        "baseline_allowed": 1730840.2,
+        "avg_allowed_per_line": 125.2054542824074,
+        "observation_claims": 11520,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "G9001",
+          "99490"
+        ],
+        "service_category": "care_management"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "dcccf5ef-6291-451d-bb84-6954a0307d07",
+        "prediction_id": "2bf113ac-3258-469a-bb74-ce7a04a1df67",
+        "observations": 10,
+        "allowed_pmpm": 12.019723611111111,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 65,
+      "name": "Diagnostic Cardiac Catheterization Appropriateness",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "49517d34-a205-45e6-b542-31e6d528c326",
+        "prediction_id": "50a0df5f-c4c6-4896-924b-109cbaf78005",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 69,
+      "name": "Discharge Planning Requirements",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "99238",
+        "99239"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1605,
+        "baseline_allowed": 386862.53,
+        "avg_allowed_per_line": 223.8787789351852,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99238",
+          "99239"
+        ],
+        "service_category": "inpatient"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "aa25d94a-df97-4450-82fc-5c53f721caf8",
+        "prediction_id": "1edb8353-f50a-4255-8072-6177266d23a0",
+        "observations": 10,
+        "allowed_pmpm": 2.6865453472222223,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 71,
+      "name": "Drug Testing Frequency Limits for Chronic Pain",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "G0480",
+        "80307"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1606,
+        "baseline_allowed": 292238.11,
+        "avg_allowed_per_line": 169.11927662037036,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "G0480",
+          "80307"
+        ],
+        "service_category": "lab"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "f55316b0-541f-49b3-ac98-2444c46e2c13",
+        "prediction_id": "b9cc931e-99f2-4a10-b80e-4a9a2584b1c4",
+        "observations": 10,
+        "allowed_pmpm": 2.0294313194444444,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 72,
+      "name": "Eating Disorder Level-of-Care Authorization",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "99223",
+        "90837"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 2628,
+        "baseline_members": 2372,
+        "baseline_allowed": 1619984.27,
+        "avg_allowed_per_line": 616.4323706240488,
+        "observation_claims": 2142,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99223",
+          "90837"
+        ],
+        "service_category": "behavioral"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "4bccb652-c9e9-4fe0-8b92-214466090cee",
+        "prediction_id": "58d3bd0f-f045-4c9b-a668-0836a29c9cbf",
+        "observations": 10,
+        "allowed_pmpm": 11.249890763888889,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 73,
+      "name": "ECT Authorization Criteria",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "90870"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1615,
+        "baseline_allowed": 1386014.28,
+        "avg_allowed_per_line": 802.0915972222223,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "90870"
+        ],
+        "service_category": "behavioral"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "83c67fc1-fbdf-454a-9551-8711aa092e92",
+        "prediction_id": "1ec6d91d-253a-4c37-b9a5-7c6d1a29481f",
+        "observations": 10,
+        "allowed_pmpm": 9.625099166666667,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 74,
+      "name": "Elective Delivery Before 39 Weeks Restriction",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "2bdd15c2-c1dc-48a2-b32c-d39a34978155",
+        "prediction_id": "ba778567-4ed6-4361-8915-78ac537e6c7f",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 78,
+      "name": "Enteral Nutrition Prior Authorization",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "4ed61817-6c7a-4e64-be07-abac3eb759c0",
+        "prediction_id": "8220165d-b76f-44b4-914a-087e895abdb6",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 79,
+      "name": "Epidural Steroid Injection Prior Authorization",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "a8d9d694-47e1-4ce6-831c-931c837a50eb",
+        "prediction_id": "c58f6754-7abc-464b-a0c9-0d18216b0117",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 80,
+      "name": "Esketamine Treatment Prior Authorization",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "7b0e790e-de5f-4b09-ac2d-ffc7700cd298",
+        "prediction_id": "dbe4ea48-6ac9-47ae-a3f2-1a22c0ce419f",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 81,
+      "name": "Experimental and Investigational Exclusion Framework",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "4d827975-b843-460e-bfc7-64b658a85a91",
+        "prediction_id": "21c13a55-9d51-4726-9064-82eb100518f8",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 82,
+      "name": "Experimental and Investigational Services Policy",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "52d84e0a-b2d0-442e-bb04-8af70b42f53d",
+        "prediction_id": "3b380089-8142-4d69-9201-3ab0a1e6f67a",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 83,
+      "name": "External Review / IRO Process",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "038c928a-09c1-4214-9d98-91694289b944",
+        "prediction_id": "615c8755-6bfe-4882-b65f-4191683473e3",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 84,
+      "name": "Eyelid Surgery Medical Necessity",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "5151703e-a272-4384-868f-125c241c43b7",
+        "prediction_id": "fb4dac40-0828-44a0-9c3f-45a5440dda24",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 86,
+      "name": "Facility Polysomnography Prior Authorization",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "73ae0998-50ea-49ee-ad3b-59c6b51b151d",
+        "prediction_id": "b9e8d74e-4c34-4c57-9ae2-0dc902af56d8",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 87,
+      "name": "Fertility Preservation with Oncology Coverage",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "b467aaf4-bdde-4c95-868b-c37aeb7e2b12",
+        "prediction_id": "fd469c58-d495-47c0-aa65-460020a3f715",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 88,
+      "name": "Freestanding Imaging Steerage",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "J3490",
+        "S5000"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 25890,
+        "baseline_members": 10639,
+        "baseline_allowed": 19189837.67,
+        "avg_allowed_per_line": 741.2065534955582,
+        "observation_claims": 21580,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J3490",
+          "S5000"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "1fea852e-5621-4bf7-9884-076fa141cd75",
+        "prediction_id": "6d9a7956-5dee-4402-82bd-3cfb4e398394",
+        "observations": 10,
+        "allowed_pmpm": 133.26276159722224,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 89,
+      "name": "Gender-Affirming Surgery Coverage Criteria",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "89192205-eae7-4697-8654-d10e69073b56",
+        "prediction_id": "3780def2-adbf-426a-bc0f-b082af85b97f",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 90,
+      "name": "Gene Therapy One-Time High-Cost Prior Authorization",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "J3399",
+        "J1411"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1637,
+        "baseline_allowed": 104466628.33,
+        "avg_allowed_per_line": 60455.224728009256,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J3399",
+          "J1411"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "01070ccf-e6c2-41ec-bf09-3554c26f6570",
+        "prediction_id": "b122abb6-08d7-4fd2-92ac-8d074d4acddd",
+        "observations": 10,
+        "allowed_pmpm": 725.4626967361111,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 94,
+      "name": "Hearing Aid Benefit and Replacement Cycle",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "d978c713-d669-4e04-afb1-8ebfd6e2e6c6",
+        "prediction_id": "0b351585-28dc-40de-aea9-8d38d4735db3",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 95,
+      "name": "Hearing Aid Coverage Criteria",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "1b8a8050-cb0a-43af-a559-916855ad98b5",
+        "prediction_id": "b78b5bb3-e65b-4549-b8fe-db740fc1f9b9",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 96,
+      "name": "Heart Failure Disease Management Program",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "G9001",
+        "99490"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 13824,
+        "baseline_members": 8251,
+        "baseline_allowed": 1730840.2,
+        "avg_allowed_per_line": 125.2054542824074,
+        "observation_claims": 11520,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "G9001",
+          "99490"
+        ],
+        "service_category": "care_management"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "84e80189-8f0b-46e8-a1a5-ca58c312e0fe",
+        "prediction_id": "bfedf4ab-b80a-4163-bb49-657d397e2385",
+        "observations": 10,
+        "allowed_pmpm": 12.019723611111111,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 98,
+      "name": "Hereditary Cancer Gene Panel Prior Authorization",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "99284",
+        "99285"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 13824,
+        "baseline_members": 8189,
+        "baseline_allowed": 20744240.35,
+        "avg_allowed_per_line": 1500.596090133102,
+        "observation_claims": 11520,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99284",
+          "99285"
+        ],
+        "service_category": "emergency"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "6eec5bbe-9be9-4748-8746-906e8f86432a",
+        "prediction_id": "9ef19800-4f43-4a8b-a69a-c2a4faeda707",
+        "observations": 10,
+        "allowed_pmpm": 144.0572246527778,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 99,
+      "name": "High-Risk Obstetrics Case Management Referral",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "G9001",
+        "99490"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 13824,
+        "baseline_members": 8251,
+        "baseline_allowed": 1730840.2,
+        "avg_allowed_per_line": 125.2054542824074,
+        "observation_claims": 11520,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "G9001",
+          "99490"
+        ],
+        "service_category": "care_management"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "52e26112-5dc8-4a80-b8b0-821b29a16b97",
+        "prediction_id": "b846e3b4-a72e-4c9e-96f8-9284f1e88a71",
+        "observations": 10,
+        "allowed_pmpm": 12.019723611111111,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 100,
+      "name": "HIV Antiretroviral Formulary Management",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "J3490",
+        "S5000"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 25890,
+        "baseline_members": 10639,
+        "baseline_allowed": 19189837.67,
+        "avg_allowed_per_line": 741.2065534955582,
+        "observation_claims": 21580,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J3490",
+          "S5000"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "cde852a2-fc10-4c10-bd17-d2a73ca7a05a",
+        "prediction_id": "ef3aafe7-f9c0-4ea4-94e0-2ac691d32e81",
+        "observations": 10,
+        "allowed_pmpm": 133.26276159722224,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 103,
+      "name": "Home Oxygen Qualification Criteria",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "15683b55-b422-497a-b571-6b171af57415",
+        "prediction_id": "0d3e3ffa-89cd-4206-8d56-31a90c90672e",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 107,
+      "name": "Hospital-Acquired Condition Nonpayment",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "27447",
+        "99223"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 9113,
+        "baseline_members": 6416,
+        "baseline_allowed": 38103027.31,
+        "avg_allowed_per_line": 4181.172754307034,
+        "observation_claims": 7547,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "27447",
+          "99223"
+        ],
+        "service_category": "surgery"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "12040db7-c601-4d6f-aaf5-9b612bfbc952",
+        "prediction_id": "479293b1-e454-43c3-9817-a42953279235",
+        "observations": 10,
+        "allowed_pmpm": 264.60435631944443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 109,
+      "name": "Hysterectomy Route Medical Necessity",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "2575d5c7-d6a7-4f57-8457-4ad70b69df51",
+        "prediction_id": "6a016c1b-723e-411b-a594-5e72d9a2d671",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 111,
+      "name": "Infertility Diagnostic Coverage Criteria",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "bbd0f5b5-bcea-47b5-bcdd-859bb3fad729",
+        "prediction_id": "7520d769-4065-494f-86a6-76e8dc4b47bd",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 112,
+      "name": "Infertility Treatment Prior Authorization",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "cd1e85ea-83d1-41a7-81ab-b919851d0c7c",
+        "prediction_id": "2b8ad9eb-8199-4875-a23f-00b82f14d238",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 113,
+      "name": "Infusion Site-of-Care Optimization",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "96413",
+        "J1745"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 5184,
+        "baseline_members": 4249,
+        "baseline_allowed": 11118279.04,
+        "avg_allowed_per_line": 2144.72975308642,
+        "observation_claims": 4320,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "96413",
+          "J1745"
+        ],
+        "service_category": "infusion"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "9e0d761a-cea2-420c-bb36-9670b742662b",
+        "prediction_id": "b2a0ce28-ddd9-4467-ae72-9f4d021a3d8d",
+        "observations": 10,
+        "allowed_pmpm": 77.21027111111111,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 117,
+      "name": "Insertable Cardiac Monitor Prior Authorization",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "9443e973-5196-4fff-8e97-dd165c1c11c6",
+        "prediction_id": "8f4f5450-3cf7-4a18-abe0-c464eabe2f64",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 120,
+      "name": "Interventional Pain Regenerative Injection Noncoverage",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "109551e2-3481-456e-90dd-c9645b0bd8fc",
+        "prediction_id": "549fbe76-55ee-4d93-b906-4e32171bb633",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 121,
+      "name": "Interventional Radiology Procedure Prior Authorization",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "0c66aff6-c7c3-4c40-907a-b56bc8b0b5f4",
+        "prediction_id": "f603ffde-15ea-45f4-a70c-7683571ec5c3",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 122,
+      "name": "Intrathecal Drug Pump Prior Authorization",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "J3490",
+        "S5000"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 25890,
+        "baseline_members": 10639,
+        "baseline_allowed": 19189837.67,
+        "avg_allowed_per_line": 741.2065534955582,
+        "observation_claims": 21580,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J3490",
+          "S5000"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "0c0174d3-b377-4a64-89be-66ef2187a991",
+        "prediction_id": "a7d99a57-2e52-460f-b066-db8b48f0bdcf",
+        "observations": 10,
+        "allowed_pmpm": 133.26276159722224,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 124,
+      "name": "Long-Term Acute Care Hospital Authorization",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "5beacd10-114d-4cf1-9965-a28b5855093b",
+        "prediction_id": "76b4eb8a-1fda-4603-8d48-970d8dee4698",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 125,
+      "name": "Low-Dose CT Lung Cancer Screening Criteria",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "99284",
+        "99285"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 13824,
+        "baseline_members": 8189,
+        "baseline_allowed": 20744240.35,
+        "avg_allowed_per_line": 1500.596090133102,
+        "observation_claims": 11520,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99284",
+          "99285"
+        ],
+        "service_category": "emergency"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "f1bcbe61-1b67-4db3-ba80-fe7f5fb48961",
+        "prediction_id": "79ad8727-92e4-4dd6-8137-e234988e30b5",
+        "observations": 10,
+        "allowed_pmpm": 144.0572246527778,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 126,
+      "name": "Mandatory Mail-Order Maintenance Medications",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "99284",
+        "99285"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 13824,
+        "baseline_members": 8189,
+        "baseline_allowed": 20744240.35,
+        "avg_allowed_per_line": 1500.596090133102,
+        "observation_claims": 11520,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99284",
+          "99285"
+        ],
+        "service_category": "emergency"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "0ff3da65-131c-480e-ad3c-1eca25145714",
+        "prediction_id": "1d2ec86b-0f8e-47bf-bdfc-05ece064434b",
+        "observations": 10,
+        "allowed_pmpm": 144.0572246527778,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 130,
+      "name": "Maximum Wait Time for Specialist Appointments",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "G9001",
+        "99490"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 13824,
+        "baseline_members": 8251,
+        "baseline_allowed": 1730840.2,
+        "avg_allowed_per_line": 125.2054542824074,
+        "observation_claims": 11520,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "G9001",
+          "99490"
+        ],
+        "service_category": "care_management"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "b6a3dd3f-8aac-4c3b-9ac0-f31169d65fdb",
+        "prediction_id": "e359ec0c-baa6-48ed-9810-2cd5e6d0253c",
+        "observations": 10,
+        "allowed_pmpm": 12.019723611111111,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 132,
+      "name": "Medicaid EPSDT Coverage Obligation",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "99395",
+        "G0438"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 5184,
+        "baseline_members": 4179,
+        "baseline_allowed": 854465.62,
+        "avg_allowed_per_line": 164.82747299382717,
+        "observation_claims": 4320,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99395",
+          "G0438"
+        ],
+        "service_category": "preventive"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "b544467f-71a2-4fd6-a8a8-80dc3f061d53",
+        "prediction_id": "efb2954e-3cee-4af9-9d0b-6ab112ec47ab",
+        "observations": 10,
+        "allowed_pmpm": 5.933789027777777,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 133,
+      "name": "Medical-Dental Crossover Trauma Policy",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "99284",
+        "99285"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 13824,
+        "baseline_members": 8189,
+        "baseline_allowed": 20744240.35,
+        "avg_allowed_per_line": 1500.596090133102,
+        "observation_claims": 11520,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99284",
+          "99285"
+        ],
+        "service_category": "emergency"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "de148912-85d1-493e-93d8-28867f980c5a",
+        "prediction_id": "3205ecac-7afc-4b41-8620-49244ed23040",
+        "observations": 10,
+        "allowed_pmpm": 144.0572246527778,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 134,
+      "name": "Medical Eye Disease vs Routine Vision Separation",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "b3eaa1cc-e97b-45d5-ad5d-f74da1549cb7",
+        "prediction_id": "4648bf14-22fc-4245-bb30-763032ce209e",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 135,
+      "name": "Medical Oncology Regimen Prior Authorization",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "58e2d6d9-2dc8-499a-8fda-a8c2db436c5a",
+        "prediction_id": "9434037d-2ee4-4ef2-b17e-d1dac9aeeada",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 136,
+      "name": "Medical Records Request Standards",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "c61bd999-0c4b-4fbe-81e1-fae5622b18d9",
+        "prediction_id": "0b6361ee-5b81-4096-b700-f9fa0f2a4d48",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 138,
+      "name": "Medicare NCD and LCD Precedence Policy",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "522d4047-deaf-464e-9b91-373152493132",
+        "prediction_id": "98c1c049-e1df-4567-ace6-131863756a2c",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 139,
+      "name": "Medicare Stars Gap Closure Program",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "G9001",
+        "99490"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 13824,
+        "baseline_members": 8251,
+        "baseline_allowed": 1730840.2,
+        "avg_allowed_per_line": 125.2054542824074,
+        "observation_claims": 11520,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "G9001",
+          "99490"
+        ],
+        "service_category": "care_management"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "e103da7d-f6cf-44e4-ab06-ac77f74691c5",
+        "prediction_id": "4b4aabf2-524a-48a5-b985-a5f598585594",
+        "observations": 10,
+        "allowed_pmpm": 12.019723611111111,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 140,
+      "name": "Medication-Assisted Treatment Access Policy",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "J3490",
+        "S5000"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 25890,
+        "baseline_members": 10639,
+        "baseline_allowed": 19189837.67,
+        "avg_allowed_per_line": 741.2065534955582,
+        "observation_claims": 21580,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J3490",
+          "S5000"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "3e326444-2808-4bd2-a02f-bd10c37d51e3",
+        "prediction_id": "0624d5c1-874a-442d-a24a-7233d67f4d97",
+        "observations": 10,
+        "allowed_pmpm": 133.26276159722224,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 141,
+      "name": "Medication Therapy Management Program",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "99605",
+        "99606"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1608,
+        "baseline_allowed": 164478.27,
+        "avg_allowed_per_line": 95.18418402777777,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99605",
+          "99606"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "d9d08254-e023-4c29-b1bd-7d0e14fbd513",
+        "prediction_id": "07217b1e-dfb8-4dce-b6e8-20853ec60cd3",
+        "observations": 10,
+        "allowed_pmpm": 1.1422102083333332,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 142,
+      "name": "Member Appeal and Grievance Timelines",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "c79ac106-e242-43f1-89d9-54b33656686c",
+        "prediction_id": "484d7fb9-9014-4d19-a4df-55651cb22fd8",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 148,
+      "name": "National Account Custom Benefit Administration",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "cb13c8d7-85ce-4eaf-b481-c68cb607235d",
+        "prediction_id": "a713b5be-605b-4dac-bfad-bb17dd8a0669",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 150,
+      "name": "NCCI Medically Unlikely Units",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "97110",
+        "97140"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 6745,
+        "baseline_members": 5175,
+        "baseline_allowed": 869419.89,
+        "avg_allowed_per_line": 128.89842698295033,
+        "observation_claims": 5651,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "97110",
+          "97140"
+        ],
+        "service_category": "therapy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "8e7d1a71-d4f7-4f47-96dd-c692328e70df",
+        "prediction_id": "55869b24-7ed7-4433-974a-c8404eceb8d8",
+        "observations": 10,
+        "allowed_pmpm": 6.037638125,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 153,
+      "name": "Negative Pressure Wound Therapy Prior Authorization",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "9ecd2e12-151b-4b92-ba08-6cff3fe38778",
+        "prediction_id": "ceaa2262-8647-40a8-8fdb-e0fc7bd8d93e",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 154,
+      "name": "Neuropsychological Testing Prior Authorization",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "f886c189-e8cb-49bb-a205-9e180b8defd3",
+        "prediction_id": "8e72221f-1fe1-4b39-a44a-c382f8c6484b",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 158,
+      "name": "Non-Formulary Exception Review",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "J3490",
+        "S5000"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 25890,
+        "baseline_members": 10639,
+        "baseline_allowed": 19189837.67,
+        "avg_allowed_per_line": 741.2065534955582,
+        "observation_claims": 21580,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J3490",
+          "S5000"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "5c38ed26-a2e6-423d-abd7-14b5311a4ca4",
+        "prediction_id": "46682f03-782a-41f1-8e06-0f5390a8c475",
+        "observations": 10,
+        "allowed_pmpm": 133.26276159722224,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 159,
+      "name": "Noninvasive Ventilation Prior Authorization",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "2435b000-6437-4503-a7be-2b1464c893fd",
+        "prediction_id": "34eb77ce-2fc1-4893-9dc4-5889d4e390b6",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 160,
+      "name": "North Carolina Mandated Benefit Administration",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "51a45837-631a-48a0-9010-ed12e43948a9",
+        "prediction_id": "21a6bc45-6235-439c-bcfb-b5714323c8b2",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 164,
+      "name": "Oncology Genomic Profiling Prior Authorization",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "5b125d60-ca86-4926-8d58-d8ec202b9fe4",
+        "prediction_id": "7602767f-9a97-45d5-9cfe-9866bb4b374a",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 166,
+      "name": "Oncology Oral Specialty Prior Authorization",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "67a475ba-6ecc-4ded-867b-cf96423271ca",
+        "prediction_id": "7025bd99-ba3f-4d09-ac27-58f4af15773e",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 167,
+      "name": "Oncology-Related Dental Clearance Coverage",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "f94b4655-5a14-46ad-b60a-7a0c83fd92ac",
+        "prediction_id": "444a14d5-5beb-464c-8a6b-a3ab09dc86c1",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 171,
+      "name": "Orthobiologics and PRP Noncoverage",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "J3490",
+        "S5000"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 25890,
+        "baseline_members": 10639,
+        "baseline_allowed": 19189837.67,
+        "avg_allowed_per_line": 741.2065534955582,
+        "observation_claims": 21580,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J3490",
+          "S5000"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "dc6e5300-3569-4d1d-9ef6-ffcb88bb577e",
+        "prediction_id": "e1423906-2d68-43e6-b063-83f3cad806ce",
+        "observations": 10,
+        "allowed_pmpm": 133.26276159722224,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 172,
+      "name": "Out-of-Network Elective Services Restriction",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "30b23ec0-ad5c-4240-90b1-d4a8bbf39970",
+        "prediction_id": "7e7d9d84-4b1a-4232-aa35-037dab595531",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 176,
+      "name": "Outpatient Therapy Coverage and Payment",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "27447",
+        "99223"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 9113,
+        "baseline_members": 6416,
+        "baseline_allowed": 38103027.31,
+        "avg_allowed_per_line": 4181.172754307034,
+        "observation_claims": 7547,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "27447",
+          "99223"
+        ],
+        "service_category": "surgery"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "3e7bea63-1d1b-4a9f-ad48-6ec217f248de",
+        "prediction_id": "30a8a682-4c39-42c4-adfb-f83a3ccd9b67",
+        "observations": 10,
+        "allowed_pmpm": 264.60435631944443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 177,
+      "name": "Panniculectomy Medical Necessity",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "d81805ca-6492-491f-af30-1d8db7798b1b",
+        "prediction_id": "6eb3c123-9238-435f-95ec-2d54a7d463aa",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 178,
+      "name": "PAP Therapy Initiation and Compliance",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "8863d45a-9646-423c-b818-100ff725c342",
+        "prediction_id": "744f1ac1-858c-4d52-9b61-8caabe6504a0",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 179,
+      "name": "Parenteral Nutrition Prior Authorization",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "96b73eec-1c5b-49b3-b17c-a37bce59082f",
+        "prediction_id": "9ba409d4-5b99-466a-a744-52c022be604e",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 180,
+      "name": "Partial Hospitalization and IOP Authorization",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "f71a760b-56ca-4cea-afd8-91c57819dc07",
+        "prediction_id": "6c964015-e83e-49a9-9bd4-8f7e4ebce79c",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 181,
+      "name": "PCI Elective Appropriateness Review",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "9d996d38-dd30-463f-9d7e-503fe7854733",
+        "prediction_id": "1fdfa078-d1e0-407a-b6c9-cb402a9de5f6",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 182,
+      "name": "PCP Referral Requirement for Specialist Visits",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "96413",
+        "J1745"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 5184,
+        "baseline_members": 4249,
+        "baseline_allowed": 11118279.04,
+        "avg_allowed_per_line": 2144.72975308642,
+        "observation_claims": 4320,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "96413",
+          "J1745"
+        ],
+        "service_category": "infusion"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "22bee958-5786-45bf-8cb5-771d56ae6510",
+        "prediction_id": "5930a96e-4025-4fb3-b97e-10f9cb73a080",
+        "observations": 10,
+        "allowed_pmpm": 77.21027111111111,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 185,
+      "name": "Peripheral Vascular Intervention Prior Authorization",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "7034895b-bede-4568-a8e4-71f155be7f7d",
+        "prediction_id": "8a988643-74a5-4ec4-a19b-1e25631fafb7",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 187,
+      "name": "Pharmacogenomic Testing Coverage Criteria",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "8da64d00-d37c-41ec-a95b-606171b817e1",
+        "prediction_id": "0a1e9860-4ff1-4744-b6a3-7c1e38be29c7",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 188,
+      "name": "Pharmacy Prior Authorization Program",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "J3490",
+        "S5000"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 25890,
+        "baseline_members": 10639,
+        "baseline_allowed": 19189837.67,
+        "avg_allowed_per_line": 741.2065534955582,
+        "observation_claims": 21580,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J3490",
+          "S5000"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "c10b56b1-4e70-47d3-8af9-c5eb705bb0ed",
+        "prediction_id": "f0723584-4450-412d-b265-d2b5c30c4651",
+        "observations": 10,
+        "allowed_pmpm": 133.26276159722224,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 190,
+      "name": "Power Mobility Device Prior Authorization",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "99284",
+        "99285"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 13824,
+        "baseline_members": 8189,
+        "baseline_allowed": 20744240.35,
+        "avg_allowed_per_line": 1500.596090133102,
+        "observation_claims": 11520,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99284",
+          "99285"
+        ],
+        "service_category": "emergency"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "d0854694-1ef7-46c1-bdae-9741cae87593",
+        "prediction_id": "38ce5501-d82a-41d9-93e0-d59e31ebeaec",
+        "observations": 10,
+        "allowed_pmpm": 144.0572246527778,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 194,
+      "name": "Preferred Pharmacy Network Policy",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "fd8a94cc-fead-4067-be15-5cbc6d52393a",
+        "prediction_id": "200a17e3-3af8-422b-8ef2-475ccf9a93c5",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 195,
+      "name": "Prior Authorization Submission and Turnaround Standards",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "a85df666-6246-4844-88c7-7945300e6f3f",
+        "prediction_id": "4b2e79c3-8f81-4370-8484-0e5b7982c7ea",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 197,
+      "name": "Prostate Procedure Prior Authorization",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "2370aeec-969d-4119-a2c5-07b9e4fb893a",
+        "prediction_id": "aad6a050-c399-4fcc-b512-d111b34d0db0",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 200,
+      "name": "Provider Reconsideration / Dispute Process",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "99284",
+        "99285"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 13824,
+        "baseline_members": 8189,
+        "baseline_allowed": 20744240.35,
+        "avg_allowed_per_line": 1500.596090133102,
+        "observation_claims": 11520,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99284",
+          "99285"
+        ],
+        "service_category": "emergency"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "0c794764-bda3-4e5f-b6e5-94dab8c2c526",
+        "prediction_id": "8bac4f62-9779-4290-9af7-c22a0d44d185",
+        "observations": 10,
+        "allowed_pmpm": 144.0572246527778,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 201,
+      "name": "Provider Specialty Eligibility for High-Cost Codes",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "99284",
+        "99285"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 13824,
+        "baseline_members": 8189,
+        "baseline_allowed": 20744240.35,
+        "avg_allowed_per_line": 1500.596090133102,
+        "observation_claims": 11520,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99284",
+          "99285"
+        ],
+        "service_category": "emergency"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "1d2cf95f-fbf3-4885-bb59-321a487c96e5",
+        "prediction_id": "fedbc2e2-cee9-414b-867e-bc85f8c04f0c",
+        "observations": 10,
+        "allowed_pmpm": 144.0572246527778,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 203,
+      "name": "Psychiatric Residential Treatment Authorization",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "90834",
+        "90837"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 2610,
+        "baseline_members": 2346,
+        "baseline_allowed": 1081960.44,
+        "avg_allowed_per_line": 414.54422988505746,
+        "observation_claims": 2160,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "90834",
+          "90837"
+        ],
+        "service_category": "behavioral"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "0f7f08f1-1279-4252-996f-4cba77c3cca4",
+        "prediction_id": "114ae5a6-ba1f-456c-a09e-d78fa617eafb",
+        "observations": 10,
+        "allowed_pmpm": 7.513614166666667,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 207,
+      "name": "Readmission Relatedness Review",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "b8378282-f26a-46c9-83ee-f3733b863aee",
+        "prediction_id": "2e941cee-918b-47bb-90e7-26dda6f2be73",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 208,
+      "name": "Refill-Too-Soon Edit Policy",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "J3490",
+        "S5000"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 25890,
+        "baseline_members": 10639,
+        "baseline_allowed": 19189837.67,
+        "avg_allowed_per_line": 741.2065534955582,
+        "observation_claims": 21580,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J3490",
+          "S5000"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "61fd4a33-4907-445e-863a-6516a1de9cf7",
+        "prediction_id": "5f52dcac-a0d5-4d2b-88e1-64d640306fd9",
+        "observations": 10,
+        "allowed_pmpm": 133.26276159722224,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 209,
+      "name": "Related Readmission Payment Adjustment",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "27447",
+        "99223"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 9113,
+        "baseline_members": 6416,
+        "baseline_allowed": 38103027.31,
+        "avg_allowed_per_line": 4181.172754307034,
+        "observation_claims": 7547,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "27447",
+          "99223"
+        ],
+        "service_category": "surgery"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "f40c56ee-fb76-44c0-ad85-3053d14ddd16",
+        "prediction_id": "124aea56-adfe-443d-b023-417d277d08e6",
+        "observations": 10,
+        "allowed_pmpm": 264.60435631944443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 210,
+      "name": "Remote Patient Monitoring Coverage Criteria",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "1539b9b6-fbf7-41fe-bc06-295c94864d04",
+        "prediction_id": "1097d766-32ff-4eb4-ab37-ffb71cd26ac7",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 211,
+      "name": "Retransplant Prior Authorization",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "50360",
+        "47135"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 5184,
+        "baseline_members": 4194,
+        "baseline_allowed": 259040742.01,
+        "avg_allowed_per_line": 49969.2789371142,
+        "observation_claims": 4320,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "50360",
+          "47135"
+        ],
+        "service_category": "surgery"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "9a39296f-cedf-45c4-9cb3-c014436a8bad",
+        "prediction_id": "dda5e5e2-3a94-4037-9d1c-c848f05850e0",
+        "observations": 10,
+        "allowed_pmpm": 1798.8940417361111,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 212,
+      "name": "Retrospective Authorization Window",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "aae5f20b-b0bf-47c4-89cf-a4e91fcb28fc",
+        "prediction_id": "d3875439-7000-4fc1-b519-e3b9c8f3037e",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 214,
+      "name": "Sinus Surgery Prior Authorization",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "6188793a-8eea-41a2-93f7-36c3232730dc",
+        "prediction_id": "b1ed3669-4ad7-42a8-836d-e390af8328fa",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 222,
+      "name": "Speech Generating Device Prior Authorization",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "5ab818f2-d7dc-4b59-92da-e9f0ebfa3271",
+        "prediction_id": "7fd5c96d-9d9c-4c0a-8682-297fcd25ff71",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 224,
+      "name": "Spinal Cord Stimulator Trial and Implant Prior Authorization",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "01df9456-23b9-42bf-b1e1-1b405b9f7a6f",
+        "prediction_id": "37295366-736e-464f-a92d-7e0daf026023",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 227,
+      "name": "Split-Fill Specialty Program",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "97110",
+        "97140"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 6745,
+        "baseline_members": 5175,
+        "baseline_allowed": 869419.89,
+        "avg_allowed_per_line": 128.89842698295033,
+        "observation_claims": 5651,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "97110",
+          "97140"
+        ],
+        "service_category": "therapy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "e5fd475b-c375-418b-b440-5a7b9e116d49",
+        "prediction_id": "63988d45-2739-4c47-93a0-2b206b8fac08",
+        "observations": 10,
+        "allowed_pmpm": 6.037638125,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 228,
+      "name": "Store-and-Forward Teledermatology Coverage",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "5e9caf09-ab8f-40fa-aec7-6256b861b7d7",
+        "prediction_id": "75ccde91-26ff-45ea-b668-c13c03404c7f",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 229,
+      "name": "Structural Heart Procedure Prior Authorization",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "32fc87a2-89b3-4ca3-80e4-9b11e87a9309",
+        "prediction_id": "3578e023-e896-407e-af0b-843a1727bbd0",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 232,
+      "name": "Surrogacy Exclusion Policy",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "1c835828-c120-4d33-82ea-1763212a06c9",
+        "prediction_id": "97351908-d778-4f1f-94c5-c5681b19f950",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 236,
+      "name": "Third-Party Liability and Subrogation",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "d4254165-a6e3-4cd0-89fa-f8fc4fbdb851",
+        "prediction_id": "f1e6e3ff-3a0d-47f2-8053-c16444bd7679",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 237,
+      "name": "Tiered Network Specialist Steerage",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "f899e80c-8975-413b-884a-b5697c50f22e",
+        "prediction_id": "1f34b40d-b7b2-4a59-a9ed-85a38a5c0040",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 238,
+      "name": "Timely Filing Limit \u2014 Provider Claims",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "88871eaf-647a-45d2-ad13-63f57ce4c888",
+        "prediction_id": "97c438b5-0711-4d06-a13c-8e589ae46be0",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 239,
+      "name": "TMS Prior Authorization",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "90867",
+        "90868"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1598,
+        "baseline_allowed": 1044245.53,
+        "avg_allowed_per_line": 604.3087557870371,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "90867",
+          "90868"
+        ],
+        "service_category": "behavioral"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "e166ba9c-ffbd-41ad-bf26-8774d010cb52",
+        "prediction_id": "bcc33d45-ceaa-4dca-aee2-645564521856",
+        "observations": 10,
+        "allowed_pmpm": 7.251705069444444,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 240,
+      "name": "Tonsillectomy and Adenoidectomy Criteria",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "42820",
+        "42826"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1597,
+        "baseline_allowed": 5623002.17,
+        "avg_allowed_per_line": 3254.052181712963,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "42820",
+          "42826"
+        ],
+        "service_category": "surgery"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "b35c14f0-93b2-4ee9-8346-40bb6c9c250a",
+        "prediction_id": "5fffead9-8142-4f9d-85dd-72a482e85470",
+        "observations": 10,
+        "allowed_pmpm": 39.04862618055556,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 241,
+      "name": "Transition of Care Post-Discharge Program",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "99495",
+        "99496"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1615,
+        "baseline_allowed": 345315.01,
+        "avg_allowed_per_line": 199.83507523148148,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99495",
+          "99496"
+        ],
+        "service_category": "care_management"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "f557470d-01f8-463e-803b-240b192b4f5b",
+        "prediction_id": "90585804-95a6-4310-84f0-a2fa663ab604",
+        "observations": 10,
+        "allowed_pmpm": 2.3980209027777777,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 242,
+      "name": "Transplant Evaluation and Listing Authorization",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "50360",
+        "47135"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 5184,
+        "baseline_members": 4194,
+        "baseline_allowed": 259040742.01,
+        "avg_allowed_per_line": 49969.2789371142,
+        "observation_claims": 4320,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "50360",
+          "47135"
+        ],
+        "service_category": "surgery"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "796f500b-aa79-40fc-8594-751d1c30a9c2",
+        "prediction_id": "d2e2a507-1bec-4db0-a599-d2024200883b",
+        "observations": 10,
+        "allowed_pmpm": 1798.8940417361111,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 244,
+      "name": "Upper Endoscopy Frequency Criteria",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "43239",
+        "43235"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 2190,
+        "baseline_members": 2001,
+        "baseline_allowed": 4409176.2,
+        "avg_allowed_per_line": 2013.3224657534247,
+        "observation_claims": 1764,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "43239",
+          "43235"
+        ],
+        "service_category": "surgery"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "e877ac8d-37c1-473e-8d4d-362eb1d263f8",
+        "prediction_id": "a19a333e-6291-4fb9-b8dc-be18ca8a35ab",
+        "observations": 10,
+        "allowed_pmpm": 30.61927916666667,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 246,
+      "name": "Value-Based Insurance Design Waivers",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "99395",
+        "G0438"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 5184,
+        "baseline_members": 4179,
+        "baseline_allowed": 854465.62,
+        "avg_allowed_per_line": 164.82747299382717,
+        "observation_claims": 4320,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99395",
+          "G0438"
+        ],
+        "service_category": "preventive"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "b19f9fe9-08ec-47b3-a827-ee3b78b57da6",
+        "prediction_id": "8bc9e717-2aff-43ab-93f2-5e8d969556c1",
+        "observations": 10,
+        "allowed_pmpm": 5.933789027777777,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 247,
+      "name": "Value Prior Authorization Program",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "72148",
+        "70553"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 75137,
+        "baseline_members": 11972,
+        "baseline_allowed": 105090313.11,
+        "avg_allowed_per_line": 1398.6493087293877,
+        "observation_claims": 62714,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "72148",
+          "70553"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "11c48dff-f264-4c02-b79b-44f07fc4fee3",
+        "prediction_id": "afa19ba4-307c-4f45-94d9-48847e194a2f",
+        "observations": 10,
+        "allowed_pmpm": 729.7938410416666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 248,
+      "name": "Varicose Vein Ablation Prior Authorization",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "36475",
+        "36478"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1615,
+        "baseline_allowed": 4923954.03,
+        "avg_allowed_per_line": 2849.510434027778,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "36475",
+          "36478"
+        ],
+        "service_category": "surgery"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "ea9e2993-9d03-49cd-af47-18f0c6f4a678",
+        "prediction_id": "1ddcd554-e6df-4fe5-81b4-150acc99eb7b",
+        "observations": 10,
+        "allowed_pmpm": 34.19412520833333,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 249,
+      "name": "Vertebral Augmentation Prior Authorization",
+      "remap_method": "NAME_KEYWORD",
+      "candidate_codes": [
+        "22513",
+        "22514"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1600,
+        "baseline_allowed": 11303186.73,
+        "avg_allowed_per_line": 6541.1960243055555,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "22513",
+          "22514"
+        ],
+        "service_category": "surgery"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "8a3b9164-8c91-4e6b-a6f3-1ba5d0e28c18",
+        "prediction_id": "50efc6e8-91b0-4ec8-8eb6-804ed713803b",
+        "observations": 10,
+        "allowed_pmpm": 78.49435229166667,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 250,
+      "name": "Vision Hardware vs Medical Eye Disease",
+      "remap_method": "FAMILY_FALLBACK",
+      "candidate_codes": [
+        "99213",
+        "99214"
+      ],
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 56511,
+        "baseline_members": 11900,
+        "baseline_allowed": 10745904.7,
+        "avg_allowed_per_line": 190.1559820211994,
+        "observation_claims": 47082,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99213",
+          "99214"
+        ],
+        "service_category": "professional"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "1d18904c-5279-491a-936d-91c0e0f6febc",
+        "prediction_id": "05e46e65-a4cf-46f1-8747-8d05ae3fa47c",
+        "observations": 10,
+        "allowed_pmpm": 74.62433819444443,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    }
+  ],
+  "validation_summary": {
+    "gap_policies": 140,
+    "lifecycle_completed": 140,
+    "thin": 0,
+    "failed_or_skipped": 0,
+    "pass": true
+  }
+}

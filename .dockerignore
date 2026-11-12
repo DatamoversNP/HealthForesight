@@ -34,3 +34,7 @@ healthforesight-Website
 **/healthforesight-Website/**
 *.tar.gz
 *.tgz
+
+docs
+qa
+**/*.pdf

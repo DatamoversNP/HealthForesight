@@ -38,11 +38,14 @@ interface Scorecard {
   id: string
   policy_id: string
   period: string
-  effectiveness_index: number
-  cost_impact_score: number
-  behavioral_risk_score: number
-  access_impact_score: number
-  regulatory_defensibility_score: number
+  effectiveness_index: number | null
+  cost_impact_score: number | null
+  behavioral_risk_score: number | null
+  access_impact_score: number | null
+  regulatory_defensibility_score: number | null
+  index_status?: string
+  index_reason?: string | null
+  policy_effect_status?: string | null
   created_at?: string
   updated_at?: string
 }
@@ -166,11 +169,25 @@ export default function ScorecardsPage() {
     'Regulatory': sc.regulatory_defensibility_score,
   }))
 
-  const getEffectivenessColor = (score: number): 'success' | 'warning' | 'error' => {
+  const formatScore = (score: number | null | undefined): string =>
+    score == null || Number.isNaN(score) ? 'Unavailable' : score.toFixed(1)
+
+  const getEffectivenessColor = (score: number | null | undefined): 'success' | 'warning' | 'error' | 'default' => {
+    if (score == null || Number.isNaN(score)) return 'default'
     if (score >= 70) return 'success'
     if (score >= 40) return 'warning'
     return 'error'
   }
+
+  const scoreSortValue = (score: number | null | undefined): number =>
+    score == null || Number.isNaN(score) ? -1 : score
+
+  const unavailableCount = scorecards.filter(
+    (sc) => sc.effectiveness_index == null || sc.index_status === 'UNAVAILABLE',
+  ).length
+  const descriptiveOnlyCount = scorecards.filter(
+    (sc) => sc.index_status === 'DESCRIPTIVE_ONLY',
+  ).length
 
   const handleCompareScorecards = async () => {
     if (selectedPoliciesForCompare.length < 2) {
@@ -226,6 +243,13 @@ export default function ScorecardsPage() {
         >
           Evaluate policy effectiveness across multiple dimensions. Compare policies and track trends over time.
         </Typography>
+        {descriptiveOnlyCount > 0 && (
+          <Alert severity="info" sx={{ mb: 2 }}>
+            {descriptiveOnlyCount} scorecard{descriptiveOnlyCount === 1 ? '' : 's'} use measured
+            vs-baseline descriptive % only (index status DESCRIPTIVE_ONLY). These are not attributed
+            policy-effect savings and are not authoritative payer KPIs.
+          </Alert>
+        )}
       </Box>
       {error && (
         <Alert 
@@ -286,6 +310,10 @@ export default function ScorecardsPage() {
             <MenuItem value="2025-Q2">2025 Q2</MenuItem>
             <MenuItem value="2025-Q3">2025 Q3</MenuItem>
             <MenuItem value="2025-Q4">2025 Q4</MenuItem>
+            <MenuItem value="2026-Q1">2026 Q1</MenuItem>
+            <MenuItem value="2026-Q2">2026 Q2</MenuItem>
+            <MenuItem value="2026-Q3">2026 Q3</MenuItem>
+            <MenuItem value="2026-Q4">2026 Q4</MenuItem>
           </Select>
         </FormControl>
         <FormControl size="small" sx={{ minWidth: 150 }}>
@@ -325,6 +353,15 @@ export default function ScorecardsPage() {
         </Paper>
       ) : (
         <Grid container spacing={3}>
+          {unavailableCount > 0 && (
+            <Grid item xs={12}>
+              <Alert severity="info">
+                {unavailableCount} of {scorecards.length} scorecards have no attributed effectiveness index.
+                Descriptive-only indexes (observed vs baseline, not policy-effect savings) may still appear when
+                measured % fields exist. Predicted allowed $ is not an effectiveness score.
+              </Alert>
+            </Grid>
+          )}
           <Grid item xs={12} md={8}>
             <Card>
               <CardContent>
@@ -354,7 +391,8 @@ export default function ScorecardsPage() {
                   Top Policies
                 </Typography>
                 {scorecards
-                  .sort((a, b) => b.effectiveness_index - a.effectiveness_index)
+                  .slice()
+                  .sort((a, b) => scoreSortValue(b.effectiveness_index) - scoreSortValue(a.effectiveness_index))
                   .slice(0, 5)
                   .map((sc) => (
                     <Box 
@@ -367,15 +405,15 @@ export default function ScorecardsPage() {
                           {getPolicyName(sc.policy_id)}
                         </Typography>
                         <Chip
-                          label={`${sc.effectiveness_index.toFixed(1)}`}
+                          label={formatScore(sc.effectiveness_index)}
                           color={getEffectivenessColor(sc.effectiveness_index)}
                           size="small"
                         />
                       </Box>
                       <LinearProgress
                         variant="determinate"
-                        value={sc.effectiveness_index}
-                        color={getEffectivenessColor(sc.effectiveness_index)}
+                        value={sc.effectiveness_index ?? 0}
+                        color={getEffectivenessColor(sc.effectiveness_index) === 'default' ? 'inherit' : getEffectivenessColor(sc.effectiveness_index)}
                       />
                     </Box>
                   ))}
@@ -408,15 +446,15 @@ export default function ScorecardsPage() {
                       <TableCell>{sc.period}</TableCell>
                       <TableCell>
                         <Chip
-                          label={sc.effectiveness_index.toFixed(1)}
+                          label={formatScore(sc.effectiveness_index)}
                           color={getEffectivenessColor(sc.effectiveness_index)}
                           size="small"
                         />
                       </TableCell>
-                      <TableCell>{sc.cost_impact_score.toFixed(1)}</TableCell>
-                      <TableCell>{sc.behavioral_risk_score.toFixed(1)}</TableCell>
-                      <TableCell>{sc.access_impact_score.toFixed(1)}</TableCell>
-                      <TableCell>{sc.regulatory_defensibility_score.toFixed(1)}</TableCell>
+                      <TableCell>{formatScore(sc.cost_impact_score)}</TableCell>
+                      <TableCell>{formatScore(sc.behavioral_risk_score)}</TableCell>
+                      <TableCell>{formatScore(sc.access_impact_score)}</TableCell>
+                      <TableCell>{formatScore(sc.regulatory_defensibility_score)}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -445,9 +483,14 @@ export default function ScorecardsPage() {
                     <Typography variant="body2" color="text.secondary">
                       Effectiveness Index
                     </Typography>
-                    <Typography variant="h4" color={getEffectivenessColor(selectedScorecard.effectiveness_index) === 'success' ? 'success.main' : getEffectivenessColor(selectedScorecard.effectiveness_index) === 'warning' ? 'warning.main' : 'error.main'}>
-                      {selectedScorecard.effectiveness_index.toFixed(1)}
+                    <Typography variant="h4" color={getEffectivenessColor(selectedScorecard.effectiveness_index) === 'success' ? 'success.main' : getEffectivenessColor(selectedScorecard.effectiveness_index) === 'warning' ? 'warning.main' : getEffectivenessColor(selectedScorecard.effectiveness_index) === 'default' ? 'text.secondary' : 'error.main'}>
+                      {formatScore(selectedScorecard.effectiveness_index)}
                     </Typography>
+                    {selectedScorecard.index_reason && (
+                      <Typography variant="caption" color="text.secondary" display="block" sx={{ mt: 1 }}>
+                        {selectedScorecard.index_reason}
+                      </Typography>
+                    )}
                   </Paper>
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -515,10 +558,15 @@ export default function ScorecardsPage() {
                 <MenuItem value="2025-Q2">2025 Q2</MenuItem>
                 <MenuItem value="2025-Q3">2025 Q3</MenuItem>
                 <MenuItem value="2025-Q4">2025 Q4</MenuItem>
+                <MenuItem value="2026-Q1">2026 Q1</MenuItem>
+                <MenuItem value="2026-Q2">2026 Q2</MenuItem>
+                <MenuItem value="2026-Q3">2026 Q3</MenuItem>
+                <MenuItem value="2026-Q4">2026 Q4</MenuItem>
               </Select>
             </FormControl>
             <Typography variant="body2" color="text.secondary">
-              Generate scorecards for all active policies. This may take a few minutes.
+              Generate scorecards from predicted impacts for all policies. Policies without attributed
+              cost/utilization percent changes get an Unavailable index (not a fabricated 0).
             </Typography>
           </Box>
         </DialogContent>
@@ -610,7 +658,7 @@ export default function ScorecardsPage() {
                           <TableCell>{policy.policy_name}</TableCell>
                           <TableCell align="right">
                             <Chip
-                              label={policy.effectiveness_index.toFixed(1)}
+                              label={formatScore(policy.effectiveness_index)}
                               color={getEffectivenessColor(policy.effectiveness_index)}
                               size="small"
                             />

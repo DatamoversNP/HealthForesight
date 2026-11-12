@@ -1,0 +1,307 @@
+{
+  "generated_at": "2026-11-07T12:19:19.684521+00:00",
+  "batch": 11,
+  "batch_size": 10,
+  "source_system": "SYNTHETIC_REVIEWED_248_V1",
+  "policies": [
+    {
+      "register_index": 101,
+      "name": "Home Health Episode Authorization",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 3456,
+        "baseline_members": 2965,
+        "baseline_allowed": 778728.92,
+        "avg_allowed_per_line": 225.3266550925926,
+        "observation_claims": 2880,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "G0151",
+          "G0154",
+          "99500"
+        ],
+        "service_category": "home"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "260fe2ea-d2cf-47d7-8bdc-b608fd89e6d9",
+        "prediction_id": "0d9ba04f-3fcf-458c-8398-9663986609bf",
+        "observations": 10,
+        "allowed_pmpm": 5.4078397222222225,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 102,
+      "name": "Home Infusion Preference",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 13811,
+        "baseline_members": 8205,
+        "baseline_allowed": 15409472.96,
+        "avg_allowed_per_line": 1115.7391180942727,
+        "observation_claims": 11590,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "96413",
+          "96415",
+          "96365",
+          "J1745",
+          "J2357"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "a851ef24-1310-432c-a606-ad761e57baa9",
+        "prediction_id": "bd32916b-b2eb-46e8-aa44-45eb14d886bb",
+        "observations": 10,
+        "allowed_pmpm": 107.01022888888889,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 103,
+      "name": "Home Oxygen Qualification Criteria",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 104,
+      "name": "Home Sleep Apnea Testing Preference",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 5532,
+        "baseline_members": 4413,
+        "baseline_allowed": 2785026.11,
+        "avg_allowed_per_line": 503.4392823571945,
+        "observation_claims": 4655,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "95800",
+          "95806",
+          "95810",
+          "95811",
+          "E0601"
+        ],
+        "service_category": "pulmonary"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "07222fed-62e1-4481-a68e-89f3ece485c3",
+        "prediction_id": "d1f91440-f1b8-4cad-883e-35b39e6438c9",
+        "observations": 10,
+        "allowed_pmpm": 19.340459097222222,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 105,
+      "name": "Home Sleep Testing Before Facility PSG",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 5532,
+        "baseline_members": 4413,
+        "baseline_allowed": 2785026.11,
+        "avg_allowed_per_line": 503.4392823571945,
+        "observation_claims": 4655,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "95800",
+          "95806",
+          "95810",
+          "95811",
+          "E0601"
+        ],
+        "service_category": "pulmonary"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "ce8dd3b3-abfb-4f13-a0ef-9fb47f31c86e",
+        "prediction_id": "02615d04-9fab-4ba1-b48a-a3e9508703cd",
+        "observations": 10,
+        "allowed_pmpm": 19.340459097222222,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 106,
+      "name": "Hospice Election and Concurrent Care Rules",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1605,
+        "baseline_allowed": 718522.41,
+        "avg_allowed_per_line": 415.8115798611111,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "Q5001",
+          "Q5002",
+          "G0299"
+        ],
+        "service_category": "home"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "51324c18-f8eb-40e5-a460-c1c068c427d1",
+        "prediction_id": "7c7abace-6f89-482e-b5f4-4d414b32b8bd",
+        "observations": 10,
+        "allowed_pmpm": 4.989738958333334,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 107,
+      "name": "Hospital-Acquired Condition Nonpayment",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 108,
+      "name": "Hyperbaric Oxygen Therapy Prior Authorization",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1632,
+        "baseline_allowed": 388510.2,
+        "avg_allowed_per_line": 224.83229166666666,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99183",
+          "G0277"
+        ],
+        "service_category": "oncology"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "c5189e44-6372-4440-a1b8-75f0f7df1d3b",
+        "prediction_id": "395a9fbc-7998-43d7-90c3-4be503f683de",
+        "observations": 10,
+        "allowed_pmpm": 2.6979875,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 109,
+      "name": "Hysterectomy Route Medical Necessity",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 110,
+      "name": "IBD Biologic Step Therapy",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 14874,
+        "baseline_members": 8497,
+        "baseline_allowed": 19266971.38,
+        "avg_allowed_per_line": 1295.3456622293936,
+        "observation_claims": 12322,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J0135",
+          "J1438",
+          "J1745",
+          "J9312"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "d9e6fb44-bba6-4dff-ab58-97c5ca00c908",
+        "prediction_id": "41bffca7-c445-44fa-83ea-b7c08a6ec31f",
+        "observations": 10,
+        "allowed_pmpm": 133.7984123611111,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    }
+  ],
+  "population": {
+    "loaded": false,
+    "claims": 348744,
+    "members": 12000,
+    "source_system": "SYNTHETIC_REVIEWED_248_V1",
+    "book_mm_2025": 144000.0
+  },
+  "validation_summary": {
+    "policies_in_batch": 10,
+    "configured": 10,
+    "measurable_completed": 7,
+    "config_only": 3,
+    "thin_but_measured": 0,
+    "failed": 0,
+    "rate_continuity_checked": 7,
+    "pass": true
+  }
+}

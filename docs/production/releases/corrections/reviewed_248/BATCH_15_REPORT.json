@@ -1,0 +1,288 @@
+{
+  "generated_at": "2026-11-07T12:27:42.424412+00:00",
+  "batch": 15,
+  "batch_size": 10,
+  "source_system": "SYNTHETIC_REVIEWED_248_V1",
+  "policies": [
+    {
+      "register_index": 141,
+      "name": "Medication Therapy Management Program",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 142,
+      "name": "Member Appeal and Grievance Timelines",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 143,
+      "name": "Mental Health Parity Comparative Analysis Policy",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 8640,
+        "baseline_members": 6151,
+        "baseline_allowed": 4346719.64,
+        "avg_allowed_per_line": 503.0925509259259,
+        "observation_claims": 7200,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "90834",
+          "90837",
+          "90853",
+          "H0031",
+          "H2011"
+        ],
+        "service_category": "ed"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "66f561ec-c467-4f12-8baf-15f71c1f5723",
+        "prediction_id": "37492b48-b37b-4d6f-a078-32501616dffa",
+        "observations": 10,
+        "allowed_pmpm": 30.185553055555552,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 144,
+      "name": "Mental Health Parity NQTL Documentation Policy",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 8640,
+        "baseline_members": 6151,
+        "baseline_allowed": 4346719.64,
+        "avg_allowed_per_line": 503.0925509259259,
+        "observation_claims": 7200,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "90834",
+          "90837",
+          "90853",
+          "H0031",
+          "H2011"
+        ],
+        "service_category": "ed"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "0f58035a-1f22-4d8d-a9d4-0347423f9c2f",
+        "prediction_id": "6071b851-7261-4433-99f8-d4db32d9f5e0",
+        "observations": 10,
+        "allowed_pmpm": 30.185553055555552,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 145,
+      "name": "Migraine CGRP Step Therapy",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 14129,
+        "baseline_members": 8302,
+        "baseline_allowed": 18332468.84,
+        "avg_allowed_per_line": 1297.506464717956,
+        "observation_claims": 11895,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J1745",
+          "J2357",
+          "J0135"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "ac72d38b-1597-4931-a976-8bd976444312",
+        "prediction_id": "ebb6a16f-f4d4-4d6a-ad8a-53fd8c4e874e",
+        "observations": 10,
+        "allowed_pmpm": 127.30881138888888,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 146,
+      "name": "MS Disease-Modifying Therapy Prior Authorization",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1607,
+        "baseline_allowed": 2256086.95,
+        "avg_allowed_per_line": 1305.6058738425927,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J1826",
+          "J2350",
+          "J1595",
+          "J2323"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "74abc37d-20f5-407f-89dd-b3b5b9c2722a",
+        "prediction_id": "642324e2-6acc-4724-90be-eb4b85269cd8",
+        "observations": 10,
+        "allowed_pmpm": 15.667270486111113,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 148,
+      "name": "National Account Custom Benefit Administration",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 149,
+      "name": "NCCI and MUE Claims Edit Policy",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1601,
+        "baseline_allowed": 5942966.95,
+        "avg_allowed_per_line": 3439.216984953704,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "27447",
+          "29881",
+          "43239",
+          "45380"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "54630a57-79cd-44fd-9995-204ceaa54e2e",
+        "prediction_id": "3dd2738b-42c8-4276-8942-087dc6eb7fb4",
+        "observations": 10,
+        "allowed_pmpm": 41.270603819444446,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 150,
+      "name": "NCCI Medically Unlikely Units",
+      "decision": "CONFIG_ONLY_NO_CODES",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_NO_CODES",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 151,
+      "name": "NCCI Procedure-to-Procedure Bundling",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 2827,
+        "baseline_members": 2547,
+        "baseline_allowed": 4049640.96,
+        "avg_allowed_per_line": 1432.4870746374247,
+        "observation_claims": 2397,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "70553",
+          "70551"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "09dc0480-138f-47cd-98b5-cb53a657b3f9",
+        "prediction_id": "77a5b757-bdd3-4468-bbd4-92cf2c6037aa",
+        "observations": 10,
+        "allowed_pmpm": 28.122506666666666,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    }
+  ],
+  "population": {
+    "loaded": false,
+    "claims": 348744,
+    "members": 12000,
+    "source_system": "SYNTHETIC_REVIEWED_248_V1",
+    "book_mm_2025": 144000.0
+  },
+  "validation_summary": {
+    "policies_in_batch": 10,
+    "configured": 10,
+    "measurable_completed": 6,
+    "config_only": 4,
+    "thin_but_measured": 0,
+    "failed": 0,
+    "rate_continuity_checked": 6,
+    "pass": true
+  }
+}

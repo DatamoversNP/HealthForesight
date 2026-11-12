@@ -1,0 +1,280 @@
+{
+  "batches": [
+    {
+      "batch": 1,
+      "policies_in_batch": 10,
+      "configured": 10,
+      "measurable_completed": 5,
+      "config_only": 5,
+      "thin_but_measured": 0,
+      "failed": 0,
+      "rate_continuity_checked": 5,
+      "pass": true
+    },
+    {
+      "batch": 2,
+      "policies_in_batch": 10,
+      "configured": 10,
+      "measurable_completed": 7,
+      "config_only": 3,
+      "thin_but_measured": 0,
+      "failed": 0,
+      "rate_continuity_checked": 7,
+      "pass": true
+    },
+    {
+      "batch": 3,
+      "policies_in_batch": 10,
+      "configured": 10,
+      "measurable_completed": 3,
+      "config_only": 7,
+      "thin_but_measured": 0,
+      "failed": 0,
+      "rate_continuity_checked": 3,
+      "pass": true
+    },
+    {
+      "batch": 4,
+      "policies_in_batch": 10,
+      "configured": 10,
+      "measurable_completed": 6,
+      "config_only": 4,
+      "thin_but_measured": 0,
+      "failed": 0,
+      "rate_continuity_checked": 6,
+      "pass": true
+    },
+    {
+      "batch": 5,
+      "policies_in_batch": 10,
+      "configured": 10,
+      "measurable_completed": 3,
+      "config_only": 7,
+      "thin_but_measured": 0,
+      "failed": 0,
+      "rate_continuity_checked": 3,
+      "pass": true
+    },
+    {
+      "batch": 6,
+      "policies_in_batch": 10,
+      "configured": 10,
+      "measurable_completed": 1,
+      "config_only": 9,
+      "thin_but_measured": 0,
+      "failed": 0,
+      "rate_continuity_checked": 1,
+      "pass": true
+    },
+    {
+      "batch": 7,
+      "policies_in_batch": 10,
+      "configured": 10,
+      "measurable_completed": 6,
+      "config_only": 4,
+      "thin_but_measured": 0,
+      "failed": 0,
+      "rate_continuity_checked": 6,
+      "pass": true
+    },
+    {
+      "batch": 8,
+      "policies_in_batch": 10,
+      "configured": 10,
+      "measurable_completed": 3,
+      "config_only": 7,
+      "thin_but_measured": 0,
+      "failed": 0,
+      "rate_continuity_checked": 3,
+      "pass": true
+    },
+    {
+      "batch": 9,
+      "policies_in_batch": 10,
+      "configured": 10,
+      "measurable_completed": 1,
+      "config_only": 9,
+      "thin_but_measured": 0,
+      "failed": 0,
+      "rate_continuity_checked": 1,
+      "pass": true
+    },
+    {
+      "batch": 10,
+      "policies_in_batch": 10,
+      "configured": 10,
+      "measurable_completed": 4,
+      "config_only": 6,
+      "thin_but_measured": 0,
+      "failed": 0,
+      "rate_continuity_checked": 4,
+      "pass": true
+    },
+    {
+      "batch": 11,
+      "policies_in_batch": 10,
+      "configured": 10,
+      "measurable_completed": 7,
+      "config_only": 3,
+      "thin_but_measured": 0,
+      "failed": 0,
+      "rate_continuity_checked": 7,
+      "pass": true
+    },
+    {
+      "batch": 12,
+      "policies_in_batch": 10,
+      "configured": 10,
+      "measurable_completed": 5,
+      "config_only": 5,
+      "thin_but_measured": 0,
+      "failed": 0,
+      "rate_continuity_checked": 5,
+      "pass": true
+    },
+    {
+      "batch": 13,
+      "policies_in_batch": 10,
+      "configured": 10,
+      "measurable_completed": 4,
+      "config_only": 6,
+      "thin_but_measured": 0,
+      "failed": 0,
+      "rate_continuity_checked": 4,
+      "pass": true
+    },
+    {
+      "batch": 14,
+      "policies_in_batch": 10,
+      "configured": 10,
+      "measurable_completed": 2,
+      "config_only": 8,
+      "thin_but_measured": 0,
+      "failed": 0,
+      "rate_continuity_checked": 2,
+      "pass": true
+    },
+    {
+      "batch": 15,
+      "policies_in_batch": 10,
+      "configured": 10,
+      "measurable_completed": 6,
+      "config_only": 4,
+      "thin_but_measured": 0,
+      "failed": 0,
+      "rate_continuity_checked": 6,
+      "pass": true
+    },
+    {
+      "batch": 16,
+      "policies_in_batch": 10,
+      "configured": 10,
+      "measurable_completed": 5,
+      "config_only": 5,
+      "thin_but_measured": 0,
+      "failed": 0,
+      "rate_continuity_checked": 5,
+      "pass": true
+    },
+    {
+      "batch": 17,
+      "policies_in_batch": 10,
+      "configured": 10,
+      "measurable_completed": 6,
+      "config_only": 4,
+      "thin_but_measured": 0,
+      "failed": 0,
+      "rate_continuity_checked": 6,
+      "pass": true
+    },
+    {
+      "batch": 18,
+      "policies_in_batch": 10,
+      "configured": 10,
+      "measurable_completed": 2,
+      "config_only": 8,
+      "thin_but_measured": 0,
+      "failed": 0,
+      "rate_continuity_checked": 2,
+      "pass": true
+    },
+    {
+      "batch": 19,
+      "policies_in_batch": 10,
+      "configured": 10,
+      "measurable_completed": 6,
+      "config_only": 4,
+      "thin_but_measured": 0,
+      "failed": 0,
+      "rate_continuity_checked": 6,
+      "pass": true
+    },
+    {
+      "batch": 20,
+      "policies_in_batch": 10,
+      "configured": 10,
+      "measurable_completed": 5,
+      "config_only": 5,
+      "thin_but_measured": 0,
+      "failed": 0,
+      "rate_continuity_checked": 5,
+      "pass": true
+    },
+    {
+      "batch": 21,
+      "policies_in_batch": 10,
+      "configured": 10,
+      "measurable_completed": 3,
+      "config_only": 7,
+      "thin_but_measured": 0,
+      "failed": 0,
+      "rate_continuity_checked": 3,
+      "pass": true
+    },
+    {
+      "batch": 22,
+      "policies_in_batch": 10,
+      "configured": 10,
+      "measurable_completed": 8,
+      "config_only": 2,
+      "thin_but_measured": 0,
+      "failed": 0,
+      "rate_continuity_checked": 8,
+      "pass": true
+    },
+    {
+      "batch": 23,
+      "policies_in_batch": 10,
+      "configured": 10,
+      "measurable_completed": 5,
+      "config_only": 5,
+      "thin_but_measured": 0,
+      "failed": 0,
+      "rate_continuity_checked": 5,
+      "pass": true
+    },
+    {
+      "batch": 24,
+      "policies_in_batch": 10,
+      "configured": 10,
+      "measurable_completed": 3,
+      "config_only": 7,
+      "thin_but_measured": 0,
+      "failed": 0,
+      "rate_continuity_checked": 3,
+      "pass": true
+    },
+    {
+      "batch": 25,
+      "policies_in_batch": 8,
+      "configured": 8,
+      "measurable_completed": 2,
+      "config_only": 6,
+      "thin_but_measured": 0,
+      "failed": 0,
+      "rate_continuity_checked": 2,
+      "pass": true
+    }
+  ],
+  "all_pass": true
+}

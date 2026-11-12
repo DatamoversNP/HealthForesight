@@ -59,6 +59,7 @@ import NarrativeView from '../components/narrative/NarrativeView'
 import TourButton from '../components/tour/TourButton'
 import PolicyClaimCounts from '../components/policy/PolicyClaimCounts'
 import PolicyMonitoringPanel from '../components/policy/PolicyMonitoringPanel'
+import PolicyMeasurementSeries from '../components/PolicyMeasurementSeries'
 import {
   ApplicabilityExplorerPanel,
   ApplicableMedicareRulesPanel,
@@ -274,6 +275,16 @@ export default function PolicyWorkspacePage() {
           {/* Overview Tab */}
           <TabPanel value={activeTab} index={0}>
             <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Card variant="outlined">
+                  <CardContent>
+                    <Typography variant="h6" gutterBottom>
+                      Baseline, prediction, and observation
+                    </Typography>
+                    {id && <PolicyMeasurementSeries policyId={id} />}
+                  </CardContent>
+                </Card>
+              </Grid>
               <Grid item xs={12} md={6}>
                 <Card variant="outlined">
                   <CardContent>
@@ -374,10 +385,10 @@ export default function PolicyWorkspacePage() {
                 </Alert>
                 <Box sx={{ p: 2, bgcolor: 'grey.50', borderRadius: 1 }}>
                   <Typography variant="body2" color="text.secondary">
-                    <strong>LOB:</strong> {policy.scope?.lob?.join(', ') || 'Not specified'}
+                    <strong>LOB:</strong> {(Array.isArray(policy.scope?.lob) ? policy.scope.lob.join(', ') : policy.scope?.lob) || 'Not specified'}
                   </Typography>
                   <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                    <strong>Markets:</strong> {policy.scope?.markets?.join(', ') || 'Not specified'}
+                    <strong>Markets:</strong> {(Array.isArray(policy.scope?.markets) ? policy.scope.markets.join(', ') : policy.scope?.markets) || 'Not specified'}
                   </Typography>
                   {policy.effective_period?.start_date && (
                     <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>

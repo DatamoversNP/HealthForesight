@@ -656,8 +656,8 @@ async def get_analysis_trust_panel(
             "analysis_id": str(analysis_id),
             "trust_panel": {
                 "confidence_score": {
-                    "overall_score": 0.0,
-                    "category": "UNKNOWN",
+                    "overall_score": None,
+                    "category": "UNAVAILABLE",
                     "components": {},
                 },
                 "data_sufficiency": {
@@ -693,20 +693,22 @@ async def get_analysis_trust_panel(
                     else "LOW"
                 ),
                 "components": {
-                    "method_confidence": 90.0 if impact_result.get("method") == "difference_in_differences" else 70.0,
-                    "data_quality_score": 85.0,
-                    "sample_size_score": min(100.0, (method_checks.get("actual_sample_size", 0) / 1000) * 100),
-                    "control_group_score": 90.0 if method_checks.get("has_control_group") else 0.0,
-                    "methodology_score": 85.0,
+                    "method_confidence": None,
+                    "data_quality_score": None,
+                    "sample_size_score": None,
+                    "control_group_score": None,
+                    "components_status": "NOT_MEASURED",
+                    "methodology_score": None,
                 },
             },
             "data_sufficiency": {
-                "sufficient": method_checks.get("sample_size_ok", False),
-                "min_sample_size": method_checks.get("min_sample_size", 1000),
-                "actual_sample_size": method_checks.get("actual_sample_size", 0),
-                "data_window_months": results.get("methodology", {}).get("pre_months", 6) + results.get("methodology", {}).get("post_months", 6),
-                "coverage_score": 0.8,
+                "sufficient": method_checks.get("sample_size_ok") if "sample_size_ok" in method_checks else None,
+                "min_sample_size": method_checks.get("min_sample_size"),
+                "actual_sample_size": method_checks.get("actual_sample_size"),
+                "data_window_months": None,
+                "coverage_score": None,
                 "missing_data_flags": [],
+                "status": "NOT_MEASURED",
             },
             "validation_checks": [
                 {

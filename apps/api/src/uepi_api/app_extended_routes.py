@@ -63,6 +63,9 @@ def register_extended_routes(app: FastAPI) -> None:
         from uepi_api.routers import ingestions, datasets
 
         app.include_router(policies.router, prefix="/api/v1", tags=["Policies"])
+        from uepi_api.routers import policy_execution
+
+        app.include_router(policy_execution.router, prefix="/api/v1", tags=["Policy Execution"])
         app.include_router(
             policy_rollout_recommendations.router, prefix="/api/v1", tags=["Policy Recommendations"]
         )
@@ -185,6 +188,10 @@ def register_extended_routes(app: FastAPI) -> None:
         app.include_router(
             enterprise_intelligence.router, prefix="/api/v1", tags=["Enterprise Intelligence"]
         )
+
+        from uepi_api.routers import synthetic_payer
+
+        app.include_router(synthetic_payer.router, prefix="/api/v1", tags=["Synthetic Payer"])
 
         app.state.extended_routes_loaded = True
         print("uepi_api: extended routers registered", flush=True)

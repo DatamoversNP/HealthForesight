@@ -1,7 +1,8 @@
 # Lean Azure Staging — Final Approval Package (Option B)
 
 **Decision recorded:** Option B engineering direction **conditionally approved** for plan preparation.  
-**This package:** planning complete. **`terraform apply` is NOT authorized** until you reply with explicit apply approval.  
+**This package:** planning complete. **Apply executed 2026-11-05** after owner approval.  
+**Post-apply report:** `docs/production/releases/LEAN_STAGING_APPLY_SMOKE_REPORT.md`  
 **Date:** 2026-11-05  
 **Authoring commit path:** `infra/terraform/envs/enterprise-lean-staging/`
 
@@ -46,7 +47,7 @@ Artifacts: `docs/production/releases/lean_staging_plan/`
 |---|----------|-------------|
 | 1 | Resource group `rg-healthforesight-enterprise-staging` | eastus2 |
 | 2 | VNet + 3 subnets (ACA delegated, data, PE) | `10.50.0.0/16` |
-| 3 | PostgreSQL Flexible Server `hfleanstg-pg` | **B_Standard_B2s**, 32 GiB, **single-AZ**, no ZR HA |
+| 3 | PostgreSQL Flexible Server `hfleanstg-pg` | **GP_Standard_D2s_v3** (B2s SkuNotAvailable eastus2), 32 GiB, **single-AZ**, no ZR HA |
 | 4 | PG firewall AllowAzureServices | lean public access; tighten later |
 | 5 | Service Bus namespace `hfleanstg-bus` | **Standard** (not Premium) |
 | 6 | Queues `policy-analytics`, `interactive` | duplicate detection on |
@@ -122,18 +123,11 @@ Optional interim cost control (before destroy): stop PG compute via Azure Portal
 | Demo isolation scan | PASS |
 | Cost vs $400 ceiling | PASS (planning ~$72–$143) |
 
-**Apply:** **NOT_TESTED / BLOCKED** — awaiting your explicit “approve apply”.
+**Apply:** **PASS** (2026-11-05) — see `LEAN_STAGING_APPLY_SMOKE_REPORT.md`.  
+**Workers / outbox E2E:** **NOT_TESTED** — requires separate authorization to deploy staging Container Apps.
 
 ---
 
-## 8. Approval ask (copy-paste reply)
+## 8. Approval status
 
-If the plan is acceptable:
-
-> **APPROVE LEAN STAGING APPLY** — subscription `94a13dda-e607-413d-a0ef-d9501e71e506`, RG `rg-healthforesight-enterprise-staging`, plan 23-add/0-change/0-destroy, budget alert $400, 14-day review, synthetic data only, no demo RG touch.
-
-If not:
-
-> **REJECT / REVISE** — (note SKU or scope changes).
-
-Until that message, Cursor will **not** run `terraform apply` or create billable resources.
+**Applied** after owner approval. Further spend for Container App revisions, Premium, HA, or Databricks needs a new cost package + explicit approval.

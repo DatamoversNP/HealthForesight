@@ -1,0 +1,859 @@
+{
+  "generated_at": "2026-11-07T08:00:10+00:00",
+  "database": "hfleanstg",
+  "measurement_book": "SYNTHETIC_NINE_POLICY_5K_V1",
+  "observation_window": [
+    "2026-01-01",
+    "2026-10-31"
+  ],
+  "policies": [
+    {
+      "policy_id": "a9e032f8-d4fc-599c-8ea4-4e58a0f929e3",
+      "name": "Imaging Site-of-Service Policy",
+      "baseline_version": 3,
+      "prediction_id": "d7dc2b7a-3234-4dbb-a9d2-0e59a2bfa57d",
+      "continuation_status": "AVAILABLE",
+      "policy_effect_status": "UNESTIMATED",
+      "allowed_pmpm": 114.89143016666667,
+      "observations": 10,
+      "months": [
+        {
+          "month": "2026-01-01",
+          "observation_id": "nine5k-a9e032f8-202601-05416402",
+          "claims": 351,
+          "allowed": 547128.36,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-02-01",
+          "observation_id": "nine5k-a9e032f8-202602-55a699d8",
+          "claims": 302,
+          "allowed": 472219.96,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-03-01",
+          "observation_id": "nine5k-a9e032f8-202603-99514545",
+          "claims": 347,
+          "allowed": 532807.37,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-04-01",
+          "observation_id": "nine5k-a9e032f8-202604-2d267b26",
+          "claims": 296,
+          "allowed": 463281.36,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-05-01",
+          "observation_id": "nine5k-a9e032f8-202605-52d702bd",
+          "claims": 384,
+          "allowed": 605609.32,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-06-01",
+          "observation_id": "nine5k-a9e032f8-202606-bc2b0c36",
+          "claims": 327,
+          "allowed": 508513.87,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-07-01",
+          "observation_id": "nine5k-a9e032f8-202607-1835bdfe",
+          "claims": 320,
+          "allowed": 494499.77,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-08-01",
+          "observation_id": "nine5k-a9e032f8-202608-ca0a34e8",
+          "claims": 332,
+          "allowed": 512882.65,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-09-01",
+          "observation_id": "nine5k-a9e032f8-202609-a014fbae",
+          "claims": 329,
+          "allowed": 504235.13,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-10-01",
+          "observation_id": "nine5k-a9e032f8-202610-9db69928",
+          "claims": 303,
+          "allowed": 469288.03,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        }
+      ]
+    },
+    {
+      "policy_id": "fce62ce1-1476-520d-81a6-daf0e9507743",
+      "name": "Infusion Site-of-Care and Reimbursement Policy",
+      "baseline_version": 3,
+      "prediction_id": "dbcff23d-91d8-4670-a38a-42688a1be042",
+      "continuation_status": "AVAILABLE",
+      "policy_effect_status": "UNESTIMATED",
+      "allowed_pmpm": 39.63172333333333,
+      "observations": 10,
+      "months": [
+        {
+          "month": "2026-01-01",
+          "observation_id": "nine5k-fce62ce1-202601-fc9d3ca3",
+          "claims": 89,
+          "allowed": 202765.8,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-02-01",
+          "observation_id": "nine5k-fce62ce1-202602-435149d7",
+          "claims": 83,
+          "allowed": 178242.81,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-03-01",
+          "observation_id": "nine5k-fce62ce1-202603-ebb28fa6",
+          "claims": 91,
+          "allowed": 189101.65,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-04-01",
+          "observation_id": "nine5k-fce62ce1-202604-796b704b",
+          "claims": 67,
+          "allowed": 145316.83,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-05-01",
+          "observation_id": "nine5k-fce62ce1-202605-09d61354",
+          "claims": 89,
+          "allowed": 188180.3,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-06-01",
+          "observation_id": "nine5k-fce62ce1-202606-3f41fc1f",
+          "claims": 74,
+          "allowed": 158739.21,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-07-01",
+          "observation_id": "nine5k-fce62ce1-202607-e893b7fa",
+          "claims": 91,
+          "allowed": 186020.8,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-08-01",
+          "observation_id": "nine5k-fce62ce1-202608-e803cf39",
+          "claims": 87,
+          "allowed": 176704.47,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-09-01",
+          "observation_id": "nine5k-fce62ce1-202609-584ad85e",
+          "claims": 89,
+          "allowed": 184520.7,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-10-01",
+          "observation_id": "nine5k-fce62ce1-202610-512a5f3d",
+          "claims": 102,
+          "allowed": 213138.74,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        }
+      ]
+    },
+    {
+      "policy_id": "20fe5bcf-f112-5033-a2c3-4702179e6652",
+      "name": "Local Coverage Determination Study \u2014 LCD L34425",
+      "baseline_version": 3,
+      "prediction_id": "4096b8ae-eab6-45e5-82cf-b723a1be5081",
+      "continuation_status": "AVAILABLE",
+      "policy_effect_status": "UNESTIMATED",
+      "allowed_pmpm": 19.2195455,
+      "observations": 10,
+      "months": [
+        {
+          "month": "2026-01-01",
+          "observation_id": "nine5k-20fe5bcf-202601-f9d650d3",
+          "claims": 75,
+          "allowed": 80184.8,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-02-01",
+          "observation_id": "nine5k-20fe5bcf-202602-8ff2f232",
+          "claims": 70,
+          "allowed": 70646.4,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-03-01",
+          "observation_id": "nine5k-20fe5bcf-202603-8af41d3e",
+          "claims": 74,
+          "allowed": 74622.61,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-04-01",
+          "observation_id": "nine5k-20fe5bcf-202604-a0e4e46f",
+          "claims": 88,
+          "allowed": 91382.55,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-05-01",
+          "observation_id": "nine5k-20fe5bcf-202605-b5f4f3e9",
+          "claims": 83,
+          "allowed": 89480.36,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-06-01",
+          "observation_id": "nine5k-20fe5bcf-202606-c03681a9",
+          "claims": 71,
+          "allowed": 75775.32,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-07-01",
+          "observation_id": "nine5k-20fe5bcf-202607-06393868",
+          "claims": 87,
+          "allowed": 90050.35,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-08-01",
+          "observation_id": "nine5k-20fe5bcf-202608-77c1963f",
+          "claims": 94,
+          "allowed": 103715.7,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-09-01",
+          "observation_id": "nine5k-20fe5bcf-202609-24827384",
+          "claims": 79,
+          "allowed": 86126.12,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-10-01",
+          "observation_id": "nine5k-20fe5bcf-202610-5aca4eb8",
+          "claims": 86,
+          "allowed": 93749.59,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        }
+      ]
+    },
+    {
+      "policy_id": "d65d0f7a-ab72-5dde-9cd0-1c75b79efc66",
+      "name": "Medically Unlikely Edit (MUE) / Unit Cap",
+      "baseline_version": 3,
+      "prediction_id": "e0fbedb9-ede4-4258-aa20-ee2042311b94",
+      "continuation_status": "AVAILABLE",
+      "policy_effect_status": "UNESTIMATED",
+      "allowed_pmpm": 7.7645885,
+      "observations": 10,
+      "months": [
+        {
+          "month": "2026-01-01",
+          "observation_id": "nine5k-d65d0f7a-202601-2b7ca100",
+          "claims": 80,
+          "allowed": 32659.42,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-02-01",
+          "observation_id": "nine5k-d65d0f7a-202602-3018d0ee",
+          "claims": 73,
+          "allowed": 32645.15,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-03-01",
+          "observation_id": "nine5k-d65d0f7a-202603-a16afffc",
+          "claims": 99,
+          "allowed": 44071.81,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-04-01",
+          "observation_id": "nine5k-d65d0f7a-202604-56eb7693",
+          "claims": 90,
+          "allowed": 40083.19,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-05-01",
+          "observation_id": "nine5k-d65d0f7a-202605-806d6025",
+          "claims": 90,
+          "allowed": 40665.61,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-06-01",
+          "observation_id": "nine5k-d65d0f7a-202606-9e0ee70c",
+          "claims": 72,
+          "allowed": 29486.76,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-07-01",
+          "observation_id": "nine5k-d65d0f7a-202607-5b4d96c3",
+          "claims": 80,
+          "allowed": 31577.14,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-08-01",
+          "observation_id": "nine5k-d65d0f7a-202608-c97ca561",
+          "claims": 94,
+          "allowed": 38478.35,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-09-01",
+          "observation_id": "nine5k-d65d0f7a-202609-7db90968",
+          "claims": 83,
+          "allowed": 39794.95,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-10-01",
+          "observation_id": "nine5k-d65d0f7a-202610-b5a2cc0b",
+          "claims": 75,
+          "allowed": 34228.41,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        }
+      ]
+    },
+    {
+      "policy_id": "7e7f480d-dc95-50a9-bbab-77a8c225f81f",
+      "name": "Multiple Procedure Payment Reduction (MPPR)",
+      "baseline_version": 3,
+      "prediction_id": "8af6290f-8647-4599-ab50-03ba1a352c93",
+      "continuation_status": "AVAILABLE",
+      "policy_effect_status": "UNESTIMATED",
+      "allowed_pmpm": 65.38912133333334,
+      "observations": 10,
+      "months": [
+        {
+          "month": "2026-01-01",
+          "observation_id": "nine5k-7e7f480d-202601-7271d59d",
+          "claims": 202,
+          "allowed": 367657.01,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-02-01",
+          "observation_id": "nine5k-7e7f480d-202602-8d0045b5",
+          "claims": 180,
+          "allowed": 323220.08,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-03-01",
+          "observation_id": "nine5k-7e7f480d-202603-01990ea9",
+          "claims": 132,
+          "allowed": 245453.16,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-04-01",
+          "observation_id": "nine5k-7e7f480d-202604-b7181488",
+          "claims": 168,
+          "allowed": 319081.43,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-05-01",
+          "observation_id": "nine5k-7e7f480d-202605-b4191b02",
+          "claims": 188,
+          "allowed": 345726.72,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-06-01",
+          "observation_id": "nine5k-7e7f480d-202606-1ca85e65",
+          "claims": 168,
+          "allowed": 297980.56,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-07-01",
+          "observation_id": "nine5k-7e7f480d-202607-cc07fc50",
+          "claims": 134,
+          "allowed": 242478.67,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-08-01",
+          "observation_id": "nine5k-7e7f480d-202608-08b02f5b",
+          "claims": 192,
+          "allowed": 348073.93,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-09-01",
+          "observation_id": "nine5k-7e7f480d-202609-daece5b4",
+          "claims": 172,
+          "allowed": 305552.45,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-10-01",
+          "observation_id": "nine5k-7e7f480d-202610-12efd5d2",
+          "claims": 146,
+          "allowed": 270456.52,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        }
+      ]
+    },
+    {
+      "policy_id": "b7e4ec54-64d6-5e70-8808-6e5fa0c229c7",
+      "name": "National Coverage Determination Study \u2014 MRI (NCD 220.2)",
+      "baseline_version": 3,
+      "prediction_id": "3e25ac0e-cd09-49aa-9fcb-a1bf985a565f",
+      "continuation_status": "AVAILABLE",
+      "policy_effect_status": "UNESTIMATED",
+      "allowed_pmpm": 91.89164433333333,
+      "observations": 10,
+      "months": [
+        {
+          "month": "2026-01-01",
+          "observation_id": "nine5k-b7e4ec54-202601-1e04f7eb",
+          "claims": 330,
+          "allowed": 410102.64,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-02-01",
+          "observation_id": "nine5k-b7e4ec54-202602-857e762c",
+          "claims": 333,
+          "allowed": 412399.02,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-03-01",
+          "observation_id": "nine5k-b7e4ec54-202603-c99dc262",
+          "claims": 357,
+          "allowed": 439533.04,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-04-01",
+          "observation_id": "nine5k-b7e4ec54-202604-6393f2be",
+          "claims": 306,
+          "allowed": 373043.94,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-05-01",
+          "observation_id": "nine5k-b7e4ec54-202605-88a52b18",
+          "claims": 334,
+          "allowed": 427107.28,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-06-01",
+          "observation_id": "nine5k-b7e4ec54-202606-cbbae18f",
+          "claims": 330,
+          "allowed": 410845.91,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-07-01",
+          "observation_id": "nine5k-b7e4ec54-202607-4dd67a3f",
+          "claims": 340,
+          "allowed": 416218.83,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-08-01",
+          "observation_id": "nine5k-b7e4ec54-202608-30d33ccc",
+          "claims": 348,
+          "allowed": 432322.31,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-09-01",
+          "observation_id": "nine5k-b7e4ec54-202609-41b4befe",
+          "claims": 305,
+          "allowed": 383575.5,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-10-01",
+          "observation_id": "nine5k-b7e4ec54-202610-919223ee",
+          "claims": 330,
+          "allowed": 416801.93,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        }
+      ]
+    },
+    {
+      "policy_id": "d6339860-d85a-5dc5-babd-9c91390fde36",
+      "name": "Outpatient MRI Prior Authorization",
+      "baseline_version": 3,
+      "prediction_id": "45b7d5d7-78f3-470f-a002-875a26ad508b",
+      "continuation_status": "AVAILABLE",
+      "policy_effect_status": "UNESTIMATED",
+      "allowed_pmpm": 29.135111166666665,
+      "observations": 10,
+      "months": [
+        {
+          "month": "2026-01-01",
+          "observation_id": "nine5k-d6339860-202601-5c284e01",
+          "claims": 88,
+          "allowed": 140643.07,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-02-01",
+          "observation_id": "nine5k-d6339860-202602-c98a0425",
+          "claims": 75,
+          "allowed": 116824.56,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-03-01",
+          "observation_id": "nine5k-d6339860-202603-07440ddb",
+          "claims": 104,
+          "allowed": 157335.61,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-04-01",
+          "observation_id": "nine5k-d6339860-202604-3511c085",
+          "claims": 84,
+          "allowed": 136845.13,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-05-01",
+          "observation_id": "nine5k-d6339860-202605-ea989361",
+          "claims": 81,
+          "allowed": 129390.2,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-06-01",
+          "observation_id": "nine5k-d6339860-202606-9e118a84",
+          "claims": 83,
+          "allowed": 127555.69,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-07-01",
+          "observation_id": "nine5k-d6339860-202607-eb95b8b1",
+          "claims": 79,
+          "allowed": 126767.37,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-08-01",
+          "observation_id": "nine5k-d6339860-202608-c14d990c",
+          "claims": 78,
+          "allowed": 117499.81,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-09-01",
+          "observation_id": "nine5k-d6339860-202609-e6706e3e",
+          "claims": 76,
+          "allowed": 114906.98,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-10-01",
+          "observation_id": "nine5k-d6339860-202610-b9c38630",
+          "claims": 86,
+          "allowed": 129251.65,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        }
+      ]
+    },
+    {
+      "policy_id": "435e1461-b57e-5af3-ad08-e15aac690310",
+      "name": "Outpatient Therapy Utilization and Payment Policy",
+      "baseline_version": 3,
+      "prediction_id": "2541a20c-0e1d-41dd-b868-28c2809163db",
+      "continuation_status": "AVAILABLE",
+      "policy_effect_status": "UNESTIMATED",
+      "allowed_pmpm": 6.9456283333333335,
+      "observations": 10,
+      "months": [
+        {
+          "month": "2026-01-01",
+          "observation_id": "nine5k-435e1461-202601-90131a0a",
+          "claims": 262,
+          "allowed": 34665.47,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-02-01",
+          "observation_id": "nine5k-435e1461-202602-6ba6e473",
+          "claims": 219,
+          "allowed": 27326.5,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-03-01",
+          "observation_id": "nine5k-435e1461-202603-bd707aae",
+          "claims": 237,
+          "allowed": 30263.81,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-04-01",
+          "observation_id": "nine5k-435e1461-202604-040efaa2",
+          "claims": 256,
+          "allowed": 32506.3,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-05-01",
+          "observation_id": "nine5k-435e1461-202605-9d4ccfb8",
+          "claims": 263,
+          "allowed": 32283.18,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-06-01",
+          "observation_id": "nine5k-435e1461-202606-7a4069e9",
+          "claims": 251,
+          "allowed": 31302.61,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-07-01",
+          "observation_id": "nine5k-435e1461-202607-63770e55",
+          "claims": 236,
+          "allowed": 30365.94,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-08-01",
+          "observation_id": "nine5k-435e1461-202608-ac38575c",
+          "claims": 255,
+          "allowed": 31425.78,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-09-01",
+          "observation_id": "nine5k-435e1461-202609-c68e87b5",
+          "claims": 281,
+          "allowed": 36348.51,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-10-01",
+          "observation_id": "nine5k-435e1461-202610-2382be0b",
+          "claims": 264,
+          "allowed": 33117.33,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        }
+      ]
+    },
+    {
+      "policy_id": "1d6d3332-88fd-54ac-8227-2d2bf856ed5f",
+      "name": "Procedure-to-Procedure (PTP) Coding Edit",
+      "baseline_version": 3,
+      "prediction_id": "017d3757-5a02-4926-b934-8dde91110309",
+      "continuation_status": "AVAILABLE",
+      "policy_effect_status": "UNESTIMATED",
+      "allowed_pmpm": 38.58553633333334,
+      "observations": 10,
+      "months": [
+        {
+          "month": "2026-01-01",
+          "observation_id": "nine5k-1d6d3332-202601-84acc3e4",
+          "claims": 152,
+          "allowed": 158485.41,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-02-01",
+          "observation_id": "nine5k-1d6d3332-202602-ed5d18cc",
+          "claims": 132,
+          "allowed": 135914.08,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-03-01",
+          "observation_id": "nine5k-1d6d3332-202603-bbd5f655",
+          "claims": 192,
+          "allowed": 200797.12,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-04-01",
+          "observation_id": "nine5k-1d6d3332-202604-64908b82",
+          "claims": 196,
+          "allowed": 200018.29,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-05-01",
+          "observation_id": "nine5k-1d6d3332-202605-4b2bac0b",
+          "claims": 186,
+          "allowed": 185667.16,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-06-01",
+          "observation_id": "nine5k-1d6d3332-202606-070515fa",
+          "claims": 154,
+          "allowed": 158064.64,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-07-01",
+          "observation_id": "nine5k-1d6d3332-202607-d56a852e",
+          "claims": 170,
+          "allowed": 174230.54,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-08-01",
+          "observation_id": "nine5k-1d6d3332-202608-d1526499",
+          "claims": 136,
+          "allowed": 142269.01,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-09-01",
+          "observation_id": "nine5k-1d6d3332-202609-2b5a10cf",
+          "claims": 166,
+          "allowed": 171500.12,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        },
+        {
+          "month": "2026-10-01",
+          "observation_id": "nine5k-1d6d3332-202610-dce3cf7c",
+          "claims": 166,
+          "allowed": 169745.69,
+          "member_months": 5000.0,
+          "verdict_status": "INCONCLUSIVE"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "forecast_member_months_by_month": {
+    "2026-01-01": 5000.0,
+    "2026-02-01": 5000.0,
+    "2026-03-01": 5000.0,
+    "2026-04-01": 5000.0,
+    "2026-05-01": 5000.0,
+    "2026-06-01": 5000.0,
+    "2026-07-01": 5000.0,
+    "2026-08-01": 5000.0,
+    "2026-09-01": 5000.0,
+    "2026-10-01": 5000.0
+  },
+  "summary": {
+    "policies": 9,
+    "predictions": 9,
+    "observations": 90,
+    "errors": 0,
+    "success": true
+  }
+}

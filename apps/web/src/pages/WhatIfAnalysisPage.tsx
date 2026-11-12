@@ -68,29 +68,53 @@ interface Policy {
 interface ScenarioResult {
   scenario_id: string
   scenario_name?: string
-  baseline_metrics: {
-    utilization_per_1k: number
-    allowed_pmpm: number
-    paid_pmpm: number
-    claim_count: number
-    member_months: number
+  engine_id?: string
+  mechanism?: string
+  not_utilization_elasticity?: boolean
+  limitations?: string[]
+  catalog_class?: string
+  sign_convention?: Record<string, string>
+  calculation_version?: string
+  baseline_metrics?: {
+    utilization_per_1k?: number
+    allowed_pmpm?: number
+    paid_pmpm?: number
+    claim_count?: number
+    member_months?: number
+    payer_savings?: number
+    payment_impact?: number
+    post_policy_paid?: number
+    provider_payment_change?: number
+    total_paid_baseline_window?: number
+    [key: string]: unknown
   }
-  projected_metrics: {
-    utilization_per_1k: number
-    allowed_pmpm: number
-    paid_pmpm: number
-    claim_count: number
-    member_months: number
+  projected_metrics?: {
+    utilization_per_1k?: number
+    allowed_pmpm?: number
+    paid_pmpm?: number
+    claim_count?: number
+    member_months?: number
+    payer_savings?: number
+    payment_impact?: number
+    post_policy_paid?: number
+    provider_payment_change?: number
+    [key: string]: unknown
   }
-  impact_metrics: {
-    utilization_per_1k: number
-    allowed_pmpm: number
-    paid_pmpm: number
-    percent_changes: {
-      utilization_per_1k: number
-      allowed_pmpm: number
-      paid_pmpm: number
+  impact_metrics?: {
+    utilization_per_1k?: number
+    allowed_pmpm?: number
+    paid_pmpm?: number
+    percent_changes?: {
+      utilization_per_1k?: number | null
+      allowed_pmpm?: number | null
+      paid_pmpm?: number | null
     }
+    delta_payer_savings?: number
+    delta_payment_impact?: number
+    delta_provider_payment_change?: number
+    price_effect_delta?: number
+    volume_effect?: number
+    mix_effect?: number
     tradeoff_analysis?: {
       utilization_change_pct: number
       cost_change_pct: number
@@ -101,18 +125,18 @@ interface ScenarioResult {
     }
     risk_analysis?: {
       worst_case: {
-        utilization_per_1k: number
-        utilization_change_pct: number
-        cost_pmpm: number
-        cost_change_pct: number
+        utilization_per_1k?: number
+        utilization_change_pct?: number
+        cost_pmpm?: number
+        cost_change_pct?: number
       }
       best_case: {
-        utilization_per_1k: number
-        utilization_change_pct: number
-        cost_pmpm: number
-        cost_change_pct: number
+        utilization_per_1k?: number
+        utilization_change_pct?: number
+        cost_pmpm?: number
+        cost_change_pct?: number
       }
-      confidence_interval_width: {
+      confidence_interval_width?: {
         utilization_pct: number
         cost_pct: number
       }
@@ -120,14 +144,434 @@ interface ScenarioResult {
       risk_factors: string[]
       risk_summary: string
     }
+    [key: string]: unknown
   }
-  confidence_intervals: {
-    utilization_per_1k: [number, number]
-    allowed_pmpm: [number, number]
-    paid_pmpm: [number, number]
+  confidence_intervals?: {
+    utilization_per_1k?: [number, number]
+    allowed_pmpm?: [number, number]
+    paid_pmpm?: [number, number]
   }
-  confidence_score: number
-  sensitivity_analysis: any
+  confidence_score?: number
+  sensitivity_analysis?: any
+  policy_effect_status?: string
+  outcome_status?: string
+}
+
+function isPaymentRuleWhatIf(result: ScenarioResult | null | undefined): boolean {
+  if (!result) return false
+  if (result.not_utilization_elasticity) return true
+  if (result.engine_id && /reimbursement|coverage|ncci|mppr|mue|ptp|sos|therapy/i.test(result.engine_id)) {
+    return true
+  }
+  const impact = result.impact_metrics || {}
+  const hasPaymentDelta =
+    impact.delta_payer_savings != null ||
+    impact.delta_payment_impact != null ||
+    impact.price_effect_delta != null
+  const hasUmShape =
+    result.baseline_metrics?.utilization_per_1k != null ||
+    impact.percent_changes?.utilization_per_1k != null
+  return Boolean(hasPaymentDelta && !hasUmShape)
+}
+
+function formatConfidencePct(score: number | null | undefined): string {
+  if (score == null || Number.isNaN(score)) return 'Unavailable'
+  const pct = score <= 1 ? score * 100 : score
+  return `${pct.toFixed(0)}%`
+}
+
+function syntheticMechanism(name: string): string {
+  const text = name.toLowerCase()
+  if (text.includes('mri') || text.includes('ncd') || text.includes('lcd')) return 'clinical'
+  if (text.includes('infusion')) return 'infusion'
+  if (text.includes('multiple procedure')) return 'mppr'
+  if (text.includes('site of service')) return 'sos'
+  if (text.includes('procedure-to-procedure')) return 'ptp'
+  if (text.includes('unit cap')) return 'mue'
+  if (text.includes('therapy')) return 'therapy'
+  return 'other'
+}
+
+function SyntheticParameterFields({
+  policyName,
+  params,
+  onChange,
+}: {
+  policyName: string
+  params: {
+    secondary_pct: number
+    hospital_pct: number
+    modifier_indicator: string
+    mue_value: number
+    office_allowed: number
+    steer_hopd_count: number
+  }
+  onChange: (next: typeof params) => void
+}) {
+  const mechanism = syntheticMechanism(policyName)
+  if (mechanism === 'clinical') {
+    return (
+      <Alert severity="warning" sx={{ mt: 2 }} data-testid="synthetic-whatif-clinical">
+        {policyName} can show source events. An outcome-based what-if is unavailable. Running it will not produce a dollar result.
+      </Alert>
+    )
+  }
+  if (mechanism === 'mppr') {
+    return (
+      <Box sx={{ mt: 2 }}>
+        <Typography variant="body2">Secondary procedure percent of allowed: {params.secondary_pct.toFixed(2)}</Typography>
+        <Slider
+          min={0}
+          max={1}
+          step={0.05}
+          value={params.secondary_pct}
+          onChange={(_, value) => onChange({ ...params, secondary_pct: Number(value) })}
+          aria-label="Secondary procedure percent"
+        />
+      </Box>
+    )
+  }
+  if (mechanism === 'sos') {
+    return (
+      <Box sx={{ mt: 2 }}>
+        <Typography variant="body2">
+          Hospital outpatient percent of allowed: {params.hospital_pct.toFixed(2)}. 1.00 is a zero payment difference. Above 1.00 raises simulated allowed.
+        </Typography>
+        <Slider
+          min={0.5}
+          max={1.2}
+          step={0.05}
+          value={params.hospital_pct}
+          onChange={(_, value) => onChange({ ...params, hospital_pct: Number(value) })}
+          aria-label="Hospital outpatient percent"
+        />
+      </Box>
+    )
+  }
+  if (mechanism === 'ptp') {
+    return (
+      <FormControl sx={{ mt: 2, minWidth: 280 }}>
+        <InputLabel>Modifier indicator</InputLabel>
+        <Select
+          label="Modifier indicator"
+          value={params.modifier_indicator}
+          onChange={(event) => onChange({ ...params, modifier_indicator: String(event.target.value) })}
+        >
+          <MenuItem value="1">1 — pay column two when a listed modifier is present</MenuItem>
+          <MenuItem value="0">0 — deny column two even with a modifier</MenuItem>
+          <MenuItem value="9">9 — modifier does not apply</MenuItem>
+        </Select>
+      </FormControl>
+    )
+  }
+  if (mechanism === 'mue') {
+    return (
+      <TextField
+        sx={{ mt: 2 }}
+        type="number"
+        label="Demo unit cap (not a CMS MUE)"
+        value={params.mue_value}
+        onChange={(event) => onChange({ ...params, mue_value: Number(event.target.value) })}
+        inputProps={{ min: 0, max: 100 }}
+      />
+    )
+  }
+  if (mechanism === 'infusion') {
+    return (
+      <Box sx={{ mt: 2, display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+        <TextField
+          type="number"
+          label="Office allowed amount"
+          value={params.office_allowed}
+          onChange={(event) => onChange({ ...params, office_allowed: Number(event.target.value) })}
+        />
+        <TextField
+          type="number"
+          label="HOPD lines steered per claim"
+          value={params.steer_hopd_count}
+          onChange={(event) => onChange({ ...params, steer_hopd_count: Number(event.target.value) })}
+          helperText="The population simulation steers the first HOPD line of each claim."
+        />
+      </Box>
+    )
+  }
+  if (mechanism === 'therapy') {
+    return (
+      <Alert severity="info" sx={{ mt: 2 }}>
+        Therapy uses the medically necessary units stored on each line. There is no extra scenario percent.
+      </Alert>
+    )
+  }
+  return null
+}
+
+function SyntheticWhatIfResult({
+  result,
+  formatCurrency,
+}: {
+  result: any
+  formatCurrency: (value: number | null | undefined) => string
+}) {
+  const money = (value: number | null | undefined) => formatCurrency(value)
+  const rate = (value: number | null | undefined) =>
+    value == null || Number.isNaN(value) ? 'Unavailable' : `$${value.toFixed(4)} / enrolled member-month`
+  return (
+    <Card sx={{ mb: 2 }} data-testid="synthetic-whatif-result">
+      <CardContent>
+        <Typography variant="h6" gutterBottom>
+          {result.scenario_name || result.policy_name}
+        </Typography>
+        <Alert severity={result.status === 'completed' ? 'info' : result.status === 'unavailable' ? 'warning' : 'error'} sx={{ mb: 2 }}>
+          {result.label || result.reason}
+          {result.oracle_match === true ? ' Independent oracle agrees with the engine.' : ''}
+          {result.oracle_match === false ? ' Independent oracle does not agree. Do not use this result.' : ''}
+        </Alert>
+        <Typography variant="body2" sx={{ mb: 1 }}>
+          {result.policy_name} · {result.lines_included?.toLocaleString?.() ?? result.lines_included} lines · database{' '}
+          {result.database_name} · {result.outcome_status}
+        </Typography>
+        <TableContainer>
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell>Measure</TableCell>
+                <TableCell align="right">Value</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell>Baseline allowed</TableCell>
+                <TableCell align="right">{money(result.baseline_allowed)}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Simulated allowed</TableCell>
+                <TableCell align="right">{money(result.simulated_allowed)}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Allowed difference (simulated minus baseline)</TableCell>
+                <TableCell align="right">{money(result.allowed_difference)}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Allowed difference per enrolled member-month</TableCell>
+                <TableCell align="right">{rate(result.allowed_difference_per_enrolled_member_month)}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Baseline plan paid</TableCell>
+                <TableCell align="right">{money(result.baseline_plan_paid)}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Simulated plan paid</TableCell>
+                <TableCell align="right">{money(result.simulated_plan_paid)}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Plan-paid difference</TableCell>
+                <TableCell align="right">{money(result.plan_paid_difference)}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Payer allowed difference (positive means simulated allowed is lower)</TableCell>
+                <TableCell align="right">{money(result.payment_impact_dollars)}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <Typography variant="caption" display="block" sx={{ mt: 1 }}>
+          {result.allowed_difference_meaning}
+        </Typography>
+        <Typography variant="caption" display="block">
+          {result.plan_paid_meaning}
+        </Typography>
+      </CardContent>
+    </Card>
+  )
+}
+
+function PaymentRuleWhatIfResult({
+  result,
+  formatCurrency,
+}: {
+  result: ScenarioResult
+  formatCurrency: (value: number | null | undefined) => string
+}) {
+  const baseline = result.baseline_metrics || {}
+  const projected = result.projected_metrics || {}
+  const impact = result.impact_metrics || {}
+  const deltaSavings =
+    impact.delta_payer_savings ??
+    impact.delta_payment_impact ??
+    (typeof projected.payer_savings === 'number' && typeof baseline.payer_savings === 'number'
+      ? projected.payer_savings - baseline.payer_savings
+      : null)
+  const baselinePaid =
+    (baseline.total_paid_baseline_window as number | undefined) ??
+    (baseline.post_policy_paid as number | undefined)
+  const projectedPaid = projected.post_policy_paid as number | undefined
+  const metricRows = Object.entries({
+    ...baseline,
+  })
+    .filter(([key]) => !['utilization_per_1k', 'allowed_pmpm', 'paid_pmpm'].includes(key))
+    .slice(0, 12)
+
+  return (
+    <Grid container spacing={3} data-testid="payment-rule-whatif-result">
+      <Grid item xs={12}>
+        <Card sx={{ mb: 1, bgcolor: 'primary.main', color: 'primary.contrastText' }}>
+          <CardContent>
+            <Typography variant="h5" gutterBottom sx={{ color: 'primary.contrastText', fontWeight: 600 }}>
+              {result.scenario_name || result.scenario_id || 'Payment-rule what-if'}
+            </Typography>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 1 }}>
+              {result.mechanism && (
+                <Chip label={result.mechanism} size="small" sx={{ bgcolor: 'rgba(255,255,255,0.2)', color: 'primary.contrastText' }} />
+              )}
+              {result.engine_id && (
+                <Chip label={result.engine_id} size="small" sx={{ bgcolor: 'rgba(255,255,255,0.2)', color: 'primary.contrastText' }} />
+              )}
+              {result.catalog_class && (
+                <Chip label={result.catalog_class} size="small" sx={{ bgcolor: 'rgba(255,255,255,0.2)', color: 'primary.contrastText' }} />
+              )}
+              <Chip
+                label={`Confidence ${formatConfidencePct(result.confidence_score)}`}
+                size="small"
+                sx={{ bgcolor: 'rgba(255,255,255,0.2)', color: 'primary.contrastText' }}
+              />
+            </Box>
+            <Alert severity="info" sx={{ bgcolor: 'rgba(255,255,255,0.12)', color: 'primary.contrastText' }}>
+              This is a payment-rule / reimbursement scenario (not utilization elasticity). Metrics are paid dollars and
+              edit hits, not claim-lines per 1,000 claimants.
+            </Alert>
+          </CardContent>
+        </Card>
+      </Grid>
+
+      <Grid item xs={12} md={8}>
+        <Card sx={{ mb: 3 }}>
+          <CardContent>
+            <Typography variant="h6" gutterBottom>
+              Payment impact summary
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={4}>
+                <Paper sx={{ p: 2, textAlign: 'center' }}>
+                  <Typography variant="body2" color="text.secondary">
+                    Incremental payer savings
+                  </Typography>
+                  <Typography variant="h5" color={deltaSavings != null && deltaSavings > 0 ? 'success.main' : 'text.primary'}>
+                    {formatCurrency(deltaSavings)}
+                  </Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <Paper sx={{ p: 2, textAlign: 'center' }}>
+                  <Typography variant="body2" color="text.secondary">
+                    Baseline → projected paid
+                  </Typography>
+                  <Typography variant="h6">
+                    {formatCurrency(baselinePaid)} → {formatCurrency(projectedPaid)}
+                  </Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <Paper sx={{ p: 2, textAlign: 'center' }}>
+                  <Typography variant="body2" color="text.secondary">
+                    Provider payment change (Δ)
+                  </Typography>
+                  <Typography variant="h5">
+                    {formatCurrency(
+                      (impact.delta_provider_payment_change as number | undefined) ??
+                        (typeof projected.provider_payment_change === 'number' &&
+                        typeof baseline.provider_payment_change === 'number'
+                          ? projected.provider_payment_change - baseline.provider_payment_change
+                          : null),
+                    )}
+                  </Typography>
+                </Paper>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
+
+        <Card sx={{ mb: 3 }}>
+          <CardContent>
+            <Typography variant="h6" gutterBottom>
+              Baseline vs projected (payment-rule fields)
+            </Typography>
+            <TableContainer>
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Metric</TableCell>
+                    <TableCell align="right">Baseline</TableCell>
+                    <TableCell align="right">Projected</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {metricRows.map(([key]) => {
+                    const b = baseline[key]
+                    const p = projected[key]
+                    const isMoney =
+                      typeof b === 'number' &&
+                      /paid|savings|payment|allowed|impact|change/i.test(key)
+                    const fmt = (v: unknown) =>
+                      v == null
+                        ? '—'
+                        : isMoney && typeof v === 'number'
+                          ? formatCurrency(v)
+                          : String(v)
+                    return (
+                      <TableRow key={key}>
+                        <TableCell>{key.replace(/_/g, ' ')}</TableCell>
+                        <TableCell align="right">{fmt(b)}</TableCell>
+                        <TableCell align="right">{fmt(p)}</TableCell>
+                      </TableRow>
+                    )
+                  })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </CardContent>
+        </Card>
+
+        {Array.isArray(result.limitations) && result.limitations.length > 0 && (
+          <Alert severity="warning">
+            <Typography variant="subtitle2" gutterBottom>
+              Limitations
+            </Typography>
+            <ul style={{ margin: 0, paddingLeft: 18 }}>
+              {result.limitations.map((item, idx) => (
+                <li key={idx}>
+                  <Typography variant="body2">{item}</Typography>
+                </li>
+              ))}
+            </ul>
+          </Alert>
+        )}
+      </Grid>
+
+      <Grid item xs={12} md={4}>
+        <Card>
+          <CardContent>
+            <Typography variant="h6" gutterBottom>
+              Sign convention
+            </Typography>
+            {result.sign_convention ? (
+              Object.entries(result.sign_convention).map(([key, value]) => (
+                <Box key={key} sx={{ mb: 1.5 }}>
+                  <Typography variant="subtitle2">{key.replace(/_/g, ' ')}</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {value}
+                  </Typography>
+                </Box>
+              ))
+            ) : (
+              <Typography variant="body2" color="text.secondary">
+                Positive payer savings means the payer pays less after the rule change.
+              </Typography>
+            )}
+          </CardContent>
+        </Card>
+      </Grid>
+    </Grid>
+  )
 }
 
 export default function WhatIfAnalysisPage() {
@@ -182,6 +626,16 @@ export default function WhatIfAnalysisPage() {
     cost_inflation: 0.02,
     projection_months: 12,
   })
+  const [syntheticIdentity, setSyntheticIdentity] = useState<any>(null)
+  const [syntheticResult, setSyntheticResult] = useState<any>(null)
+  const [syntheticParams, setSyntheticParams] = useState({
+    secondary_pct: 0.5,
+    hospital_pct: 0.8,
+    modifier_indicator: '1',
+    mue_value: 4,
+    office_allowed: 3200,
+    steer_hopd_count: 1,
+  })
   
   // Baseline filters
   const [baselineFilters, setBaselineFilters] = useState({
@@ -192,6 +646,7 @@ export default function WhatIfAnalysisPage() {
 
   useEffect(() => {
     loadPolicies()
+    apiClient.getSyntheticPayerIdentity().then(setSyntheticIdentity).catch(() => setSyntheticIdentity(null))
   }, [])
 
   // Open from What-If history: /whatif?policy=…&scenario=<analysis_id>
@@ -602,6 +1057,48 @@ export default function WhatIfAnalysisPage() {
       setError(null)
       setWorkerHint(null)
       setNameDialogOpen(false)
+
+      if (syntheticIdentity?.what_if_engine === 'NOT_THIS_POPULATION') {
+        setError(syntheticIdentity.honesty || 'This scenario is not this population\'s result and is not measured savings.')
+        setRunning(false)
+        return
+      }
+      const chosen = multiPolicyMode ? selectedPolicies : selectedPolicy ? [selectedPolicy] : []
+      const paymentKeys = new Set(syntheticIdentity?.supported_what_if_keys || ['mppr', 'sos', 'ptp', 'mue', 'therapy', 'infusion'])
+      const policyKeyOf = (policy: Policy | null | undefined) =>
+        String((policy as any)?.metadata?.policy_key || (policy as any)?.policy_key || '')
+      const isPopulationWhatIfPolicy = (policy: Policy | null | undefined) =>
+        String((policy as { description?: string } | null)?.description || '').includes('Synthetic illustration')
+        || (syntheticIdentity?.what_if_engine === 'LONGITUDINAL_PAYMENT' && paymentKeys.has(policyKeyOf(policy)))
+      if (chosen.some(isPopulationWhatIfPolicy)) {
+        if (!syntheticIdentity?.synthetic) {
+          setError(
+            'This application instance is not connected to the synthetic population. A legacy scenario is not that population’s result.',
+          )
+          setRunning(false)
+          return
+        }
+        if (chosen.length > 1) {
+          setError(
+            'Ordered composition of more than one policy on the same claim line is not supported. Run one payment policy at a time so a shared line is not counted twice.',
+          )
+          setRunning(false)
+          return
+        }
+        if (syntheticIdentity?.what_if_engine === 'LONGITUDINAL_PAYMENT' && !paymentKeys.has(policyKeyOf(chosen[0]))) {
+          setError('Longitudinal what-if supports only the six payment-rule policies. A simulated difference is not measured savings.')
+          setRunning(false)
+          return
+        }
+        const populationResult = await apiClient.runSyntheticWhatIf({
+          policy_id: chosen[0].id,
+          parameters: syntheticParams,
+        })
+        setSyntheticResult({ ...populationResult, scenario_name: finalName })
+        setScenarioResult(null)
+        setActiveTab('results')
+        return
+      }
       
       if (multiPolicyMode && selectedPolicies.length > 1) {
         // Multi-policy scenario: run simulations for each policy and combine results
@@ -881,6 +1378,30 @@ export default function WhatIfAnalysisPage() {
             View all scenario runs
           </Link>
         </Typography>
+        {syntheticIdentity?.what_if_engine === 'NOT_THIS_POPULATION' ? (
+          <Alert severity="warning" sx={{ mt: 2 }} data-testid="synthetic-whatif-other-population">
+            {syntheticIdentity.honesty || 'A legacy scenario is not measured savings.'}
+          </Alert>
+        ) : syntheticIdentity?.what_if_engine === 'LONGITUDINAL_PAYMENT' ? (
+          <Alert severity="info" sx={{ mt: 2 }} data-testid="synthetic-whatif-longitudinal">
+            {syntheticIdentity.honesty || 'Payment what-if runs on POST-period longitudinal lines. A simulated difference is not measured savings.'}
+          </Alert>
+        ) : syntheticIdentity?.synthetic ? (
+          <Alert severity="info" sx={{ mt: 2 }} data-testid="synthetic-whatif-ready">
+            What-if runs on the synthetic population in database {syntheticIdentity.database_name}:{' '}
+            {Number(syntheticIdentity.covered_lives || 0).toLocaleString()} covered lives and{' '}
+            {syntheticIdentity.member_months == null
+              ? 'unavailable'
+              : Number(syntheticIdentity.member_months).toLocaleString(undefined, { maximumFractionDigits: 3 })}{' '}
+            enrolled member-months. Each run uses that policy&apos;s own claim lines and the same payment engine as the
+            population simulation. A simulated difference is not measured savings. MRI prior authorization, NCD 220.2,
+            and LCD L34425 stay unavailable for an outcome. More than one policy at a time is rejected.
+          </Alert>
+        ) : policies.some((policy) => String((policy as { description?: string }).description || '').includes('Synthetic illustration')) ? (
+          <Alert severity="info" sx={{ mt: 2 }}>
+            What-if does not calculate the synthetic payer population. No legacy scenario on this page is that population&apos;s result.
+          </Alert>
+        ) : null}
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 3, gap: 1 }}>
           {scenarioResult && scenarios.length > 0 && (
@@ -974,7 +1495,7 @@ export default function WhatIfAnalysisPage() {
       {(() => {
         const visibleTabs: Array<{ label: string; key: typeof activeTab }> = []
         // When opening a past run, Results first so we never strand the user on Configure
-        if (scenarioResult || openingHistoricalRun) {
+        if (scenarioResult || syntheticResult || openingHistoricalRun) {
           visibleTabs.push({ label: 'Results', key: 'results' })
         }
         visibleTabs.push({ label: 'Configure Scenario', key: 'configure' })
@@ -1025,7 +1546,7 @@ export default function WhatIfAnalysisPage() {
           <Grid item xs={12} md={6}>
             <Card>
               <CardContent>
-                {policiesWithClaimCounts && policiesWithClaimCounts.length > 0 && policiesWithClaimCounts[0].claim_count > 0 && (
+                {!syntheticIdentity?.synthetic && policiesWithClaimCounts && policiesWithClaimCounts.length > 0 && policiesWithClaimCounts[0].claim_count > 0 && (
                   <Alert severity="info" sx={{ mb: 2 }} action={
                     <Button
                       color="inherit"
@@ -1111,6 +1632,13 @@ export default function WhatIfAnalysisPage() {
                       }}
                     />
                   </Box>
+                )}
+                {syntheticIdentity?.synthetic && selectedPolicy && !multiPolicyMode && (
+                  <SyntheticParameterFields
+                    policyName={selectedPolicy.name}
+                    params={syntheticParams}
+                    onChange={setSyntheticParams}
+                  />
                 )}
                 {multiPolicyMode && selectedPolicies.length > 1 && (
                   <Alert severity="info" sx={{ mt: 2 }}>
@@ -1399,7 +1927,15 @@ export default function WhatIfAnalysisPage() {
         </Box>
       )}
 
-      {activeTab === 'results' && scenarioResult && (
+      {activeTab === 'results' && syntheticResult && (
+        <SyntheticWhatIfResult result={syntheticResult} formatCurrency={formatCurrency} />
+      )}
+
+      {activeTab === 'results' && scenarioResult && isPaymentRuleWhatIf(scenarioResult) && (
+        <PaymentRuleWhatIfResult result={scenarioResult} formatCurrency={formatCurrency} />
+      )}
+
+      {activeTab === 'results' && scenarioResult && !isPaymentRuleWhatIf(scenarioResult) && (
         <Grid container spacing={3}>
           {/* Scenario Summary Header */}
           <Grid item xs={12}>
@@ -1460,13 +1996,13 @@ export default function WhatIfAnalysisPage() {
                         variant="h4" 
                         sx={{ 
                           color: scenarioResult.confidence_score == null ? 'primary.contrastText' :
-                                 scenarioResult.confidence_score >= 80 ? 'success.light' :
-                                 scenarioResult.confidence_score >= 60 ? 'warning.light' :
-                                 scenarioResult.confidence_score >= 40 ? 'info.light' : 'error.light',
+                                 (scenarioResult.confidence_score <= 1 ? scenarioResult.confidence_score * 100 : scenarioResult.confidence_score) >= 80 ? 'success.light' :
+                                 (scenarioResult.confidence_score <= 1 ? scenarioResult.confidence_score * 100 : scenarioResult.confidence_score) >= 60 ? 'warning.light' :
+                                 (scenarioResult.confidence_score <= 1 ? scenarioResult.confidence_score * 100 : scenarioResult.confidence_score) >= 40 ? 'info.light' : 'error.light',
                           fontWeight: 600
                         }}
                       >
-                        {scenarioResult.confidence_score == null ? 'Unavailable' : `${scenarioResult.confidence_score.toFixed(0)}%`}
+                        {formatConfidencePct(scenarioResult.confidence_score)}
                       </Typography>
                     </Box>
                   )}
@@ -1504,7 +2040,7 @@ export default function WhatIfAnalysisPage() {
                         <strong>Elasticity Adjustments:</strong> {Object.keys(scenarioParams.elasticity_adjustments).length} categories
                       </Typography>
                     )}
-                    {scenarioResult.impact_metrics.tradeoff_analysis && (
+                    {scenarioResult.impact_metrics?.tradeoff_analysis && (
                       <Typography variant="body2" sx={{ color: 'primary.contrastText', opacity: 0.9 }}>
                         <strong>Efficiency Score (cost vs utilization tradeoff):</strong> {scenarioResult.impact_metrics.tradeoff_analysis.efficiency_score.toFixed(0)}%
                       </Typography>
@@ -1512,7 +2048,10 @@ export default function WhatIfAnalysisPage() {
                   </Box>
                   
                   {/* Confidence Score Explanation */}
-                  {scenarioResult.confidence_score !== undefined && scenarioResult.confidence_score < 60 && (
+                  {scenarioResult.confidence_score !== undefined &&
+                    (scenarioResult.confidence_score <= 1
+                      ? scenarioResult.confidence_score * 100
+                      : scenarioResult.confidence_score) < 60 && (
                     <Alert 
                       severity="info" 
                       sx={{ 
@@ -1525,7 +2064,7 @@ export default function WhatIfAnalysisPage() {
                       <Typography variant="body2" sx={{ color: 'primary.contrastText', fontWeight: 600, mb: 0.5 }}>
                         {scenarioResult.confidence_score == null
                           ? 'Confidence unavailable'
-                          : `Low Confidence Score (${scenarioResult.confidence_score.toFixed(0)}%)`}
+                          : `Low Confidence Score (${formatConfidencePct(scenarioResult.confidence_score)})`}
                       </Typography>
                       <Typography variant="body2" sx={{ color: 'primary.contrastText', opacity: 0.9, fontSize: '0.85rem' }}>
                         To improve: Use shorter projection horizon (≤12 months), ensure sufficient baseline data (500+ claims), and run elasticity analysis for more accurate models.
@@ -1555,11 +2094,11 @@ export default function WhatIfAnalysisPage() {
                       <Typography variant="body2" color="text.secondary">
                         Claim lines per 1,000 claimants (not enrolled utilization)
                       </Typography>
-                      <Typography variant="h5" color={scenarioResult.impact_metrics.percent_changes.utilization_per_1k == null ? 'text.secondary' : scenarioResult.impact_metrics.percent_changes.utilization_per_1k < 0 ? 'success.main' : 'error.main'}>
-                        {formatPercent(scenarioResult.impact_metrics.percent_changes.utilization_per_1k)}
+                      <Typography variant="h5" color={scenarioResult.impact_metrics?.percent_changes?.utilization_per_1k == null ? 'text.secondary' : scenarioResult.impact_metrics.percent_changes.utilization_per_1k < 0 ? 'success.main' : 'error.main'}>
+                        {formatPercent(scenarioResult.impact_metrics?.percent_changes?.utilization_per_1k)}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
-                        {formatFixed(scenarioResult.baseline_metrics.utilization_per_1k)} → {formatFixed(scenarioResult.projected_metrics.utilization_per_1k)}
+                        {formatFixed(scenarioResult.baseline_metrics?.utilization_per_1k)} → {formatFixed(scenarioResult.projected_metrics?.utilization_per_1k)}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -1568,11 +2107,11 @@ export default function WhatIfAnalysisPage() {
                       <Typography variant="body2" color="text.secondary">
                         Allowed $ / claimant-month (not enrolled PMPM)
                       </Typography>
-                      <Typography variant="h5" color={scenarioResult.impact_metrics.percent_changes.allowed_pmpm == null ? 'text.secondary' : scenarioResult.impact_metrics.percent_changes.allowed_pmpm < 0 ? 'success.main' : 'error.main'}>
-                        {formatPercent(scenarioResult.impact_metrics.percent_changes.allowed_pmpm)}
+                      <Typography variant="h5" color={scenarioResult.impact_metrics?.percent_changes?.allowed_pmpm == null ? 'text.secondary' : scenarioResult.impact_metrics.percent_changes.allowed_pmpm < 0 ? 'success.main' : 'error.main'}>
+                        {formatPercent(scenarioResult.impact_metrics?.percent_changes?.allowed_pmpm)}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
-                        {formatCurrency(scenarioResult.baseline_metrics.allowed_pmpm)} → {formatCurrency(scenarioResult.projected_metrics.allowed_pmpm)}
+                        {formatCurrency(scenarioResult.baseline_metrics?.allowed_pmpm)} → {formatCurrency(scenarioResult.projected_metrics?.allowed_pmpm)}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -1581,11 +2120,11 @@ export default function WhatIfAnalysisPage() {
                       <Typography variant="body2" color="text.secondary">
                         Paid $ / claimant-month (not enrolled PMPM)
                       </Typography>
-                      <Typography variant="h5" color={scenarioResult.impact_metrics.percent_changes.paid_pmpm == null ? 'text.secondary' : scenarioResult.impact_metrics.percent_changes.paid_pmpm < 0 ? 'success.main' : 'error.main'}>
-                        {formatPercent(scenarioResult.impact_metrics.percent_changes.paid_pmpm)}
+                      <Typography variant="h5" color={scenarioResult.impact_metrics?.percent_changes?.paid_pmpm == null ? 'text.secondary' : scenarioResult.impact_metrics.percent_changes.paid_pmpm < 0 ? 'success.main' : 'error.main'}>
+                        {formatPercent(scenarioResult.impact_metrics?.percent_changes?.paid_pmpm)}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
-                        {formatCurrency(scenarioResult.baseline_metrics.paid_pmpm)} → {formatCurrency(scenarioResult.projected_metrics.paid_pmpm)}
+                        {formatCurrency(scenarioResult.baseline_metrics?.paid_pmpm)} → {formatCurrency(scenarioResult.projected_metrics?.paid_pmpm)}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -1594,7 +2133,7 @@ export default function WhatIfAnalysisPage() {
             </Card>
 
             {/* Tradeoff Analysis */}
-            {scenarioResult.impact_metrics.tradeoff_analysis && (
+            {scenarioResult.impact_metrics?.tradeoff_analysis && (
               <Card sx={{ mb: 3 }}>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
@@ -1682,7 +2221,7 @@ export default function WhatIfAnalysisPage() {
             )}
 
             {/* Risk Analysis */}
-            {scenarioResult.impact_metrics.risk_analysis && (
+            {scenarioResult.impact_metrics?.risk_analysis && (
               <Card sx={{ mb: 3 }}>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
@@ -1714,20 +2253,20 @@ export default function WhatIfAnalysisPage() {
                             <TableRow>
                               <TableCell>Claim lines per 1,000 claimants (not enrolled utilization)</TableCell>
                               <TableCell align="right">
-                                {scenarioResult.impact_metrics.risk_analysis.worst_case.utilization_per_1k.toFixed(2)}
+                                {formatFixed(scenarioResult.impact_metrics.risk_analysis.worst_case?.utilization_per_1k)}
                                 {' '}
                                 <Typography component="span" variant="caption" color="error.main">
-                                  ({formatPercent(scenarioResult.impact_metrics.risk_analysis.worst_case.utilization_change_pct)})
+                                  ({formatPercent(scenarioResult.impact_metrics.risk_analysis.worst_case?.utilization_change_pct)})
                                 </Typography>
                               </TableCell>
                             </TableRow>
                             <TableRow>
                               <TableCell>Paid $ / claimant-month (not enrolled PMPM)</TableCell>
                               <TableCell align="right">
-                                {formatCurrency(scenarioResult.impact_metrics.risk_analysis.worst_case.cost_pmpm)}
+                                {formatCurrency(scenarioResult.impact_metrics.risk_analysis.worst_case?.cost_pmpm)}
                                 {' '}
                                 <Typography component="span" variant="caption" color="error.main">
-                                  ({formatPercent(scenarioResult.impact_metrics.risk_analysis.worst_case.cost_change_pct)})
+                                  ({formatPercent(scenarioResult.impact_metrics.risk_analysis.worst_case?.cost_change_pct)})
                                 </Typography>
                               </TableCell>
                             </TableRow>
@@ -1745,20 +2284,20 @@ export default function WhatIfAnalysisPage() {
                             <TableRow>
                               <TableCell>Claim lines per 1,000 claimants (not enrolled utilization)</TableCell>
                               <TableCell align="right">
-                                {scenarioResult.impact_metrics.risk_analysis.best_case.utilization_per_1k.toFixed(2)}
+                                {formatFixed(scenarioResult.impact_metrics.risk_analysis.best_case?.utilization_per_1k)}
                                 {' '}
                                 <Typography component="span" variant="caption" color="success.main">
-                                  ({formatPercent(scenarioResult.impact_metrics.risk_analysis.best_case.utilization_change_pct)})
+                                  ({formatPercent(scenarioResult.impact_metrics.risk_analysis.best_case?.utilization_change_pct)})
                                 </Typography>
                               </TableCell>
                             </TableRow>
                             <TableRow>
                               <TableCell>Paid $ / claimant-month (not enrolled PMPM)</TableCell>
                               <TableCell align="right">
-                                {formatCurrency(scenarioResult.impact_metrics.risk_analysis.best_case.cost_pmpm)}
+                                {formatCurrency(scenarioResult.impact_metrics.risk_analysis.best_case?.cost_pmpm)}
                                 {' '}
                                 <Typography component="span" variant="caption" color="success.main">
-                                  ({formatPercent(scenarioResult.impact_metrics.risk_analysis.best_case.cost_change_pct)})
+                                  ({formatPercent(scenarioResult.impact_metrics.risk_analysis.best_case?.cost_change_pct)})
                                 </Typography>
                               </TableCell>
                             </TableRow>
@@ -1766,7 +2305,7 @@ export default function WhatIfAnalysisPage() {
                         </Table>
                       </Paper>
                     </Grid>
-                    {scenarioResult.impact_metrics.risk_analysis.risk_factors.length > 0 && (
+                    {(scenarioResult.impact_metrics.risk_analysis.risk_factors?.length || 0) > 0 && (
                       <Grid item xs={12}>
                         <Paper sx={{ p: 2 }}>
                           <Typography variant="subtitle2" gutterBottom>
@@ -1809,22 +2348,22 @@ export default function WhatIfAnalysisPage() {
                     <TableBody>
                       <TableRow>
                         <TableCell>Claim lines per 1,000 claimants (not enrolled utilization)</TableCell>
-                        <TableCell align="right">{formatFixed(scenarioResult.baseline_metrics.utilization_per_1k)}</TableCell>
-                        <TableCell align="right">{formatFixed(scenarioResult.projected_metrics.utilization_per_1k)}</TableCell>
+                        <TableCell align="right">{formatFixed(scenarioResult.baseline_metrics?.utilization_per_1k)}</TableCell>
+                        <TableCell align="right">{formatFixed(scenarioResult.projected_metrics?.utilization_per_1k)}</TableCell>
                         <TableCell align="right">{formatFixed(scenarioResult.confidence_intervals?.utilization_per_1k?.[0])}</TableCell>
                         <TableCell align="right">{formatFixed(scenarioResult.confidence_intervals?.utilization_per_1k?.[1])}</TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell>Allowed $ / claimant-month (not enrolled PMPM)</TableCell>
-                        <TableCell align="right">{formatCurrency(scenarioResult.baseline_metrics.allowed_pmpm)}</TableCell>
-                        <TableCell align="right">{formatCurrency(scenarioResult.projected_metrics.allowed_pmpm)}</TableCell>
+                        <TableCell align="right">{formatCurrency(scenarioResult.baseline_metrics?.allowed_pmpm)}</TableCell>
+                        <TableCell align="right">{formatCurrency(scenarioResult.projected_metrics?.allowed_pmpm)}</TableCell>
                         <TableCell align="right">{formatCurrency(scenarioResult.confidence_intervals?.allowed_pmpm?.[0])}</TableCell>
                         <TableCell align="right">{formatCurrency(scenarioResult.confidence_intervals?.allowed_pmpm?.[1])}</TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell>Paid $ / claimant-month (not enrolled PMPM)</TableCell>
-                        <TableCell align="right">{formatCurrency(scenarioResult.baseline_metrics.paid_pmpm)}</TableCell>
-                        <TableCell align="right">{formatCurrency(scenarioResult.projected_metrics.paid_pmpm)}</TableCell>
+                        <TableCell align="right">{formatCurrency(scenarioResult.baseline_metrics?.paid_pmpm)}</TableCell>
+                        <TableCell align="right">{formatCurrency(scenarioResult.projected_metrics?.paid_pmpm)}</TableCell>
                         <TableCell align="right">{formatCurrency(scenarioResult.confidence_intervals?.paid_pmpm?.[0])}</TableCell>
                         <TableCell align="right">{formatCurrency(scenarioResult.confidence_intervals?.paid_pmpm?.[1])}</TableCell>
                       </TableRow>
@@ -1903,7 +2442,7 @@ export default function WhatIfAnalysisPage() {
                         <TableRow key={leverId}>
                           <TableCell>{leverId.replace(/_/g, ' ')}</TableCell>
                           <TableCell align="right">
-                            {formatPercent(data.estimated_impact_percent || 0)}
+                            {formatPercent(data.estimated_impact_percent)}
                           </TableCell>
                           <TableCell>
                             {JSON.stringify(data.parameters || {})}

@@ -13,16 +13,17 @@
   },
   "verdict": {
     "structural_controls_applied": true,
-    "structural_technical_closure": "NOT_CLOSED",
+    "structural_technical_closure": "CONTROLS_IN_PLACE_AWAITING_INDEPENDENT_VERIFICATION",
     "clinically_complete_policy": "NOT_APPROVED",
     "production_enforceability": "NOT_APPROVED",
     "mri_pass_does_not_imply_this_pass": true,
-    "summary": "MRI-derived engineering controls applied with mechanism-specific tables. Do not treat as technical closure PASS. Independent verification + blocker clearance required."
+    "summary": "R1 codeset now has non-empty CANDIDATE_INCLUDE infusion admin CPTs. Owner release blockers and operational activation remain PROHIBITED."
   },
   "requirements": [
     {
       "id": "R1_CODESET_SCHEMA",
-      "result": "FAIL"
+      "result": "PASS",
+      "note": "codes[] populated with schema-valid CANDIDATE_INCLUDE CPT 96413/96415/96365/96366"
     },
     {
       "id": "R2_VERIFIED_SOURCE_EVIDENCE",
@@ -56,16 +57,7 @@
       "result": "PASS"
     }
   ],
-  "failed_requirements": [
-    {
-      "id": "R1_CODESET_SCHEMA",
-      "result": "FAIL"
-    },
-    {
-      "requirement": "CODESET_NON_EMPTY_OR_EXPLICIT_SITE_ONLY_DESIGN",
-      "note": "platform procedure_codes=[] \u2014 product schedule unresolved"
-    }
-  ],
+  "failed_requirements": [],
   "release_blockers": [
     {
       "id": "CODESET_EMPTY_PRODUCT_UNRESOLVED",

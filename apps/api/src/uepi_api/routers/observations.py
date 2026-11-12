@@ -24,6 +24,54 @@ from uepi_api.services.forecast_service import get_forecast_for_observation
 router = APIRouter()
 
 
+def _policy_map(tenant_id):
+    from uepi_api.storage_policies import list_policies
+
+    try:
+        policies = list_policies(tenant_id, summary=True) or []
+    except Exception:
+        return {}
+    return {
+        str(p.get("id") or p.get("policy_id")): p
+        for p in policies
+        if p.get("id") or p.get("policy_id")
+    }
+
+
+def _present_observation(observation: dict, policies_by_id: dict) -> dict:
+    from uepi_api.verdict import with_screen_verdict
+
+    policy = policies_by_id.get(str(observation.get("policy_id")))
+    return with_screen_verdict(observation, policy)
+
+
+def _trend_metadata(first_obs: dict, last_obs: dict, count: int) -> dict:
+    from uepi_common.metrics.measurement_integrity import as_optional_float
+
+    def _metric(obs: dict, key: str):
+        metrics = obs.get("metrics") or {}
+        return as_optional_float(metrics.get(key))
+
+    first_util = _metric(first_obs, "utilization_per_1k")
+    last_util = _metric(last_obs, "utilization_per_1k")
+    first_cost = _metric(first_obs, "cost_per_member")
+    last_cost = _metric(last_obs, "cost_per_member")
+    if first_util is None or last_util is None:
+        direction = None
+    elif last_util > first_util:
+        direction = "increasing"
+    elif last_util < first_util:
+        direction = "decreasing"
+    else:
+        direction = "stable"
+    return {
+        "utilization_trend": None if first_util is None or last_util is None else last_util - first_util,
+        "cost_trend": None if first_cost is None or last_cost is None else last_cost - first_cost,
+        "observation_count": count,
+        "trend_direction": direction,
+    }
+
+
 class ObservationCreate(BaseModel):
     """Observation creation model"""
     policy_id: UUID
@@ -70,6 +118,11 @@ class ObservationResponse(BaseModel):
     verdict_reason: Optional[str] = None
     recommendation: Optional[str] = None
     verdict_rule_version: Optional[str] = None
+    screen_verdict: Optional[str] = None
+    screen_verdict_reason: Optional[str] = None
+    screen_recommendation: Optional[str] = None
+    historical_verdict_status: Optional[str] = None
+    verdict_is_recomputed: Optional[bool] = None
 
 
 class ObservationComparisonResponse(BaseModel):
@@ -334,7 +387,6 @@ async def create_observation_from_analysis_route(
                         post_metrics.setdefault("total_claims", 0)
                         post_metrics.setdefault("total_paid", 0.0)
                         post_metrics.setdefault("total_allowed", 0.0)
-                        post_metrics.setdefault("member_months", float(member_count * 1))
                         post_metrics.setdefault("unique_members", member_count)
                         
                         # Ensure pre_metrics has all required fields
@@ -345,29 +397,27 @@ async def create_observation_from_analysis_route(
                         pre_metrics.setdefault("total_claims", 0)
                         pre_metrics.setdefault("total_paid", 0.0)
                         pre_metrics.setdefault("total_allowed", 0.0)
-                        pre_metrics.setdefault("member_months", float(member_count * 6))
                         pre_metrics.setdefault("unique_members", member_count)
                         
-                        # Compute effect size
-                        pre_util = pre_metrics.get('utilization_per_1k', 0.0) or 0.0
-                        post_util = post_metrics.get('utilization_per_1k', 0.0) or 0.0
-                        
-                        if pre_util > 0:
-                            util_change = post_util - pre_util
-                            effect_size = util_change / pre_util
-                            percent_change = effect_size * 100
+                        # Compute effect size. A zero pre-period rate is not a 0% or infinite change.
+                        pre_util = pre_metrics.get('utilization_per_1k')
+                        post_util = post_metrics.get('utilization_per_1k')
+                        if pre_util is None or post_util is None or float(pre_util) <= 0:
+                            effect_size = None
+                            percent_change = None
                         else:
-                            effect_size = 0.0
-                            percent_change = 0.0 if post_util == 0 else 999.0  # Infinite change if going from 0 to non-zero
+                            effect_size = (float(post_util) - float(pre_util)) / float(pre_util)
+                            percent_change = effect_size * 100
                         
                         # Build analysis result from database data with complete structure
                         analysis_result = {
                             "impact_summary": {
-                                "observed_effect_size": float(effect_size),
-                                "observed_percent_change": float(percent_change),
-                                "confidence_interval_lower": float(effect_size * 0.8),
-                                "confidence_interval_upper": float(effect_size * 1.2),
-                                "p_value": 0.05 if abs(effect_size) > 0.05 else 0.10,
+                                "observed_effect_size": None if effect_size is None else float(effect_size),
+                                "observed_percent_change": None if percent_change is None else float(percent_change),
+                                "confidence_interval_lower": None,
+                                "confidence_interval_upper": None,
+                                "p_value": None,
+                                "uncertainty_status": "UNAVAILABLE",
                             },
                             "pre_period": {
                                 "start": (effective_date - timedelta(days=180)).isoformat(),
@@ -387,8 +437,8 @@ async def create_observation_from_analysis_route(
                                 "treatment_post": post_metrics,  # OBSERVED values (post-period)
                                 "treatment_pre": pre_metrics,     # PRE-period values
                             },
-                            "method_checks": {"pre_trends_parallel": True, "control_balance": True, "seasonality_risk": "LOW"},
-                            "trust_panel": {"confidence_score": 0.85, "data_sufficiency": "SUFFICIENT"},
+                            "method_checks": {"pre_trends_parallel": None, "control_balance": None, "seasonality_risk": "NOT_ASSESSED"},
+                            "trust_panel": {"confidence_score": None, "data_sufficiency": "NOT_ASSESSED"},
                         }
                         
                         print(f"DEBUG: Built analysis_result from database - post_util: {post_util}, post_cost: {post_metrics.get('cost_pmpm')}, total_claims: {post_metrics.get('total_claims')}, effect_size: {effect_size}")
@@ -572,27 +622,15 @@ async def list_observations_route(
         for policy_id, obs_list in policy_observations.items():
             obs_list.sort(key=lambda x: x.get('observation_period_start', ''))
             
-            # Calculate trend metrics
             if len(obs_list) > 1:
-                first_obs = obs_list[0]
-                last_obs = obs_list[-1]
-                
-                first_util = first_obs.get('metrics', {}).get('utilization_per_1k', 0)
-                last_util = last_obs.get('metrics', {}).get('utilization_per_1k', 0)
-                first_cost = first_obs.get('metrics', {}).get('cost_per_member', 0)
-                last_cost = last_obs.get('metrics', {}).get('cost_per_member', 0)
-                
-                # Add trend to each observation
+                trend = _trend_metadata(obs_list[0], obs_list[-1], len(obs_list))
                 for obs in obs_list:
-                    if 'metadata' not in obs:
+                    if 'metadata' not in obs or obs['metadata'] is None:
                         obs['metadata'] = {}
-                    obs['metadata']['trend'] = {
-                        'utilization_trend': last_util - first_util if first_util > 0 else 0,
-                        'cost_trend': last_cost - first_cost if first_cost > 0 else 0,
-                        'observation_count': len(obs_list),
-                    }
-    
-    return [ObservationResponse(**o) for o in observations]
+                    obs['metadata']['trend'] = trend
+
+    policies_by_id = _policy_map(current_user.tenant_id)
+    return [ObservationResponse(**_present_observation(o, policies_by_id)) for o in observations]
 
 
 @router.get("/observations/{observation_id}", response_model=ObservationResponse)
@@ -605,8 +643,8 @@ async def get_observation_route(
     
     if not observation:
         raise HTTPException(status_code=404, detail="Observation not found")
-    
-    return ObservationResponse(**observation)
+
+    return ObservationResponse(**_present_observation(observation, _policy_map(current_user.tenant_id)))
 
 
 @router.get("/policy-verdicts")
@@ -977,28 +1015,15 @@ async def get_observations_for_policy_route(
         # Sort by date
         observations.sort(key=lambda x: x.get('observation_period_start', ''))
         
-        # Calculate trends
         if len(observations) > 1:
-            first_obs = observations[0]
-            last_obs = observations[-1]
-            
-            first_util = first_obs.get('metrics', {}).get('utilization_per_1k', 0)
-            last_util = last_obs.get('metrics', {}).get('utilization_per_1k', 0)
-            first_cost = first_obs.get('metrics', {}).get('cost_per_member', 0)
-            last_cost = last_obs.get('metrics', {}).get('cost_per_member', 0)
-            
-            # Add trend metadata
+            trend = _trend_metadata(observations[0], observations[-1], len(observations))
             for obs in observations:
-                if 'metadata' not in obs:
+                if 'metadata' not in obs or obs['metadata'] is None:
                     obs['metadata'] = {}
-                obs['metadata']['trend'] = {
-                    'utilization_trend': last_util - first_util if first_util > 0 else 0,
-                    'cost_trend': last_cost - first_cost if first_cost > 0 else 0,
-                    'observation_count': len(observations),
-                    'trend_direction': 'increasing' if last_util > first_util else 'decreasing' if last_util < first_util else 'stable',
-                }
-    
-    return [ObservationResponse(**o) for o in observations]
+                obs['metadata']['trend'] = trend
+
+    policies_by_id = _policy_map(current_user.tenant_id)
+    return [ObservationResponse(**_present_observation(o, policies_by_id)) for o in observations]
 
 
 @router.get("/observations/{observation_id}/forecast")
@@ -1046,4 +1071,5 @@ async def get_observations_for_period_route(
         tenant_id=current_user.tenant_id,
         data_period_id=period_id,
     )
-    return [ObservationResponse(**o) for o in observations]
+    policies_by_id = _policy_map(current_user.tenant_id)
+    return [ObservationResponse(**_present_observation(o, policies_by_id)) for o in observations]

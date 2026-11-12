@@ -1,0 +1,1089 @@
+{
+  "book": "SYNTHETIC_NINE_POLICY_5K_V1",
+  "window_from": "2026-01-01",
+  "enrollment": {
+    "min_month": "2026-01-01",
+    "max_month": "2026-10-01",
+    "rows": 50000,
+    "members": 5000,
+    "months": 10,
+    "by_month": [
+      {
+        "m": "2026-01-01",
+        "rows": 5000,
+        "members": 5000,
+        "mm": 5000.0
+      },
+      {
+        "m": "2026-02-01",
+        "rows": 5000,
+        "members": 5000,
+        "mm": 5000.0
+      },
+      {
+        "m": "2026-03-01",
+        "rows": 5000,
+        "members": 5000,
+        "mm": 5000.0
+      },
+      {
+        "m": "2026-04-01",
+        "rows": 5000,
+        "members": 5000,
+        "mm": 5000.0
+      },
+      {
+        "m": "2026-05-01",
+        "rows": 5000,
+        "members": 5000,
+        "mm": 5000.0
+      },
+      {
+        "m": "2026-06-01",
+        "rows": 5000,
+        "members": 5000,
+        "mm": 5000.0
+      },
+      {
+        "m": "2026-07-01",
+        "rows": 5000,
+        "members": 5000,
+        "mm": 5000.0
+      },
+      {
+        "m": "2026-08-01",
+        "rows": 5000,
+        "members": 5000,
+        "mm": 5000.0
+      },
+      {
+        "m": "2026-09-01",
+        "rows": 5000,
+        "members": 5000,
+        "mm": 5000.0
+      },
+      {
+        "m": "2026-10-01",
+        "rows": 5000,
+        "members": 5000,
+        "mm": 5000.0
+      }
+    ],
+    "products": [
+      {
+        "product_type": "N5K_BD_COMM",
+        "members": 4026
+      },
+      {
+        "product_type": "N5K_BD_MA",
+        "members": 974
+      }
+    ]
+  },
+  "claims_book": {
+    "min_svc": "2026-01-01",
+    "max_svc": "2026-10-31",
+    "lines": 23593,
+    "headers": 21927,
+    "members": 5000,
+    "months": 10,
+    "allowed": 24275143.99,
+    "paid": 19420115.03,
+    "void_rev": 0
+  },
+  "claims_by_month": [
+    {
+      "m": "2026-01-01",
+      "lines": 2443,
+      "members": 1867,
+      "allowed": 2550779.62
+    },
+    {
+      "m": "2026-02-01",
+      "lines": 2202,
+      "members": 1730,
+      "allowed": 2304072.07
+    },
+    {
+      "m": "2026-03-01",
+      "lines": 2443,
+      "members": 1868,
+      "allowed": 2463252.27
+    },
+    {
+      "m": "2026-04-01",
+      "lines": 2339,
+      "members": 1795,
+      "allowed": 2379326.67
+    },
+    {
+      "m": "2026-05-01",
+      "lines": 2472,
+      "members": 1888,
+      "allowed": 2612426.31
+    },
+    {
+      "m": "2026-06-01",
+      "lines": 2265,
+      "members": 1754,
+      "allowed": 2347615.62
+    },
+    {
+      "m": "2026-07-01",
+      "lines": 2358,
+      "members": 1852,
+      "allowed": 2413851.15
+    },
+    {
+      "m": "2026-08-01",
+      "lines": 2382,
+      "members": 1845,
+      "allowed": 2438060.28
+    },
+    {
+      "m": "2026-09-01",
+      "lines": 2316,
+      "members": 1789,
+      "allowed": 2363997.67
+    },
+    {
+      "m": "2026-10-01",
+      "lines": 2373,
+      "members": 1838,
+      "allowed": 2401762.33
+    }
+  ],
+  "policy_adequacy": [
+    {
+      "name": "Imaging Site-of-Service Policy",
+      "status": "ADEQUATE",
+      "reasons": [],
+      "lines": 3291,
+      "members": 2221,
+      "months_with_claims": 10,
+      "allowed": 5110465.82,
+      "span": [
+        "2026-01-01",
+        "2026-10-31"
+      ]
+    },
+    {
+      "name": "Infusion Site-of-Care and Reimbursement Policy",
+      "status": "ADEQUATE",
+      "reasons": [],
+      "lines": 862,
+      "members": 556,
+      "months_with_claims": 10,
+      "allowed": 1822731.31,
+      "span": [
+        "2026-01-01",
+        "2026-10-31"
+      ]
+    },
+    {
+      "name": "Local Coverage Determination Study \u2014 LCD L34425",
+      "status": "ADEQUATE",
+      "reasons": [],
+      "lines": 807,
+      "members": 556,
+      "months_with_claims": 10,
+      "allowed": 855733.8,
+      "span": [
+        "2026-01-01",
+        "2026-10-30"
+      ]
+    },
+    {
+      "name": "Medically Unlikely Edit (MUE) / Unit Cap",
+      "status": "ADEQUATE",
+      "reasons": [],
+      "lines": 836,
+      "members": 555,
+      "months_with_claims": 10,
+      "allowed": 363690.79,
+      "span": [
+        "2026-01-01",
+        "2026-10-31"
+      ]
+    },
+    {
+      "name": "Multiple Procedure Payment Reduction (MPPR)",
+      "status": "ADEQUATE",
+      "reasons": [],
+      "lines": 1682,
+      "members": 555,
+      "months_with_claims": 10,
+      "allowed": 3065680.53,
+      "span": [
+        "2026-01-01",
+        "2026-10-31"
+      ]
+    },
+    {
+      "name": "National Coverage Determination Study \u2014 MRI (NCD 220.2)",
+      "status": "ADEQUATE",
+      "reasons": [],
+      "lines": 3313,
+      "members": 2223,
+      "months_with_claims": 10,
+      "allowed": 4121950.4,
+      "span": [
+        "2026-01-01",
+        "2026-10-31"
+      ]
+    },
+    {
+      "name": "Outpatient MRI Prior Authorization",
+      "status": "ADEQUATE",
+      "reasons": [],
+      "lines": 834,
+      "members": 556,
+      "months_with_claims": 10,
+      "allowed": 1297020.07,
+      "span": [
+        "2026-01-01",
+        "2026-10-31"
+      ]
+    },
+    {
+      "name": "Outpatient Therapy Utilization and Payment Policy",
+      "status": "ADEQUATE",
+      "reasons": [],
+      "lines": 2524,
+      "members": 1667,
+      "months_with_claims": 10,
+      "allowed": 319605.43,
+      "span": [
+        "2026-01-01",
+        "2026-10-31"
+      ]
+    },
+    {
+      "name": "Procedure-to-Procedure (PTP) Coding Edit",
+      "status": "ADEQUATE",
+      "reasons": [],
+      "lines": 1650,
+      "members": 555,
+      "months_with_claims": 10,
+      "allowed": 1696692.06,
+      "span": [
+        "2026-01-01",
+        "2026-10-31"
+      ]
+    }
+  ],
+  "policy_depth": [
+    {
+      "name": "Imaging Site-of-Service Policy",
+      "codes": 2,
+      "services": [
+        "sos"
+      ],
+      "overall": {
+        "lines": 3291,
+        "headers": 3291,
+        "members": 2221,
+        "months_with_claims": 10,
+        "min_svc": "2026-01-01",
+        "max_svc": "2026-10-31",
+        "allowed": 5110465.82,
+        "paid": 4088372.39
+      },
+      "unenrolled_lines_before_gate": 0,
+      "months_present": 10,
+      "months_missing_jan_oct": [],
+      "thin_months_lt5_lines": [],
+      "by_month": [
+        {
+          "m": "2026-01-01",
+          "lines": 351,
+          "members": 337,
+          "allowed": 547128.36
+        },
+        {
+          "m": "2026-02-01",
+          "lines": 302,
+          "members": 294,
+          "allowed": 472219.96
+        },
+        {
+          "m": "2026-03-01",
+          "lines": 347,
+          "members": 333,
+          "allowed": 532807.37
+        },
+        {
+          "m": "2026-04-01",
+          "lines": 296,
+          "members": 287,
+          "allowed": 463281.36
+        },
+        {
+          "m": "2026-05-01",
+          "lines": 384,
+          "members": 369,
+          "allowed": 605609.32
+        },
+        {
+          "m": "2026-06-01",
+          "lines": 327,
+          "members": 310,
+          "allowed": 508513.87
+        },
+        {
+          "m": "2026-07-01",
+          "lines": 320,
+          "members": 307,
+          "allowed": 494499.77
+        },
+        {
+          "m": "2026-08-01",
+          "lines": 332,
+          "members": 324,
+          "allowed": 512882.65
+        },
+        {
+          "m": "2026-09-01",
+          "lines": 329,
+          "members": 319,
+          "allowed": 504235.13
+        },
+        {
+          "m": "2026-10-01",
+          "lines": 303,
+          "members": 292,
+          "allowed": 469288.03
+        }
+      ]
+    },
+    {
+      "name": "Infusion Site-of-Care and Reimbursement Policy",
+      "codes": 2,
+      "services": [
+        "infusion"
+      ],
+      "overall": {
+        "lines": 862,
+        "headers": 862,
+        "members": 556,
+        "months_with_claims": 10,
+        "min_svc": "2026-01-01",
+        "max_svc": "2026-10-31",
+        "allowed": 1822731.31,
+        "paid": 1458184.87
+      },
+      "unenrolled_lines_before_gate": 0,
+      "months_present": 10,
+      "months_missing_jan_oct": [],
+      "thin_months_lt5_lines": [],
+      "by_month": [
+        {
+          "m": "2026-01-01",
+          "lines": 89,
+          "members": 84,
+          "allowed": 202765.8
+        },
+        {
+          "m": "2026-02-01",
+          "lines": 83,
+          "members": 82,
+          "allowed": 178242.81
+        },
+        {
+          "m": "2026-03-01",
+          "lines": 91,
+          "members": 88,
+          "allowed": 189101.65
+        },
+        {
+          "m": "2026-04-01",
+          "lines": 67,
+          "members": 64,
+          "allowed": 145316.83
+        },
+        {
+          "m": "2026-05-01",
+          "lines": 89,
+          "members": 86,
+          "allowed": 188180.3
+        },
+        {
+          "m": "2026-06-01",
+          "lines": 74,
+          "members": 71,
+          "allowed": 158739.21
+        },
+        {
+          "m": "2026-07-01",
+          "lines": 91,
+          "members": 87,
+          "allowed": 186020.8
+        },
+        {
+          "m": "2026-08-01",
+          "lines": 87,
+          "members": 81,
+          "allowed": 176704.47
+        },
+        {
+          "m": "2026-09-01",
+          "lines": 89,
+          "members": 87,
+          "allowed": 184520.7
+        },
+        {
+          "m": "2026-10-01",
+          "lines": 102,
+          "members": 97,
+          "allowed": 213138.74
+        }
+      ]
+    },
+    {
+      "name": "Local Coverage Determination Study \u2014 LCD L34425",
+      "codes": 2,
+      "services": [
+        "lcd"
+      ],
+      "overall": {
+        "lines": 807,
+        "headers": 807,
+        "members": 556,
+        "months_with_claims": 10,
+        "min_svc": "2026-01-01",
+        "max_svc": "2026-10-30",
+        "allowed": 855733.8,
+        "paid": 684587.04
+      },
+      "unenrolled_lines_before_gate": 0,
+      "months_present": 10,
+      "months_missing_jan_oct": [],
+      "thin_months_lt5_lines": [],
+      "by_month": [
+        {
+          "m": "2026-01-01",
+          "lines": 75,
+          "members": 74,
+          "allowed": 80184.8
+        },
+        {
+          "m": "2026-02-01",
+          "lines": 70,
+          "members": 70,
+          "allowed": 70646.4
+        },
+        {
+          "m": "2026-03-01",
+          "lines": 74,
+          "members": 72,
+          "allowed": 74622.61
+        },
+        {
+          "m": "2026-04-01",
+          "lines": 88,
+          "members": 85,
+          "allowed": 91382.55
+        },
+        {
+          "m": "2026-05-01",
+          "lines": 83,
+          "members": 81,
+          "allowed": 89480.36
+        },
+        {
+          "m": "2026-06-01",
+          "lines": 71,
+          "members": 69,
+          "allowed": 75775.32
+        },
+        {
+          "m": "2026-07-01",
+          "lines": 87,
+          "members": 83,
+          "allowed": 90050.35
+        },
+        {
+          "m": "2026-08-01",
+          "lines": 94,
+          "members": 91,
+          "allowed": 103715.7
+        },
+        {
+          "m": "2026-09-01",
+          "lines": 79,
+          "members": 77,
+          "allowed": 86126.12
+        },
+        {
+          "m": "2026-10-01",
+          "lines": 86,
+          "members": 80,
+          "allowed": 93749.59
+        }
+      ]
+    },
+    {
+      "name": "Medically Unlikely Edit (MUE) / Unit Cap",
+      "codes": 1,
+      "services": [
+        "mue"
+      ],
+      "overall": {
+        "lines": 836,
+        "headers": 836,
+        "members": 555,
+        "months_with_claims": 10,
+        "min_svc": "2026-01-01",
+        "max_svc": "2026-10-31",
+        "allowed": 363690.79,
+        "paid": 290952.69
+      },
+      "unenrolled_lines_before_gate": 0,
+      "months_present": 10,
+      "months_missing_jan_oct": [],
+      "thin_months_lt5_lines": [],
+      "by_month": [
+        {
+          "m": "2026-01-01",
+          "lines": 80,
+          "members": 78,
+          "allowed": 32659.42
+        },
+        {
+          "m": "2026-02-01",
+          "lines": 73,
+          "members": 71,
+          "allowed": 32645.15
+        },
+        {
+          "m": "2026-03-01",
+          "lines": 99,
+          "members": 94,
+          "allowed": 44071.81
+        },
+        {
+          "m": "2026-04-01",
+          "lines": 90,
+          "members": 88,
+          "allowed": 40083.19
+        },
+        {
+          "m": "2026-05-01",
+          "lines": 90,
+          "members": 87,
+          "allowed": 40665.61
+        },
+        {
+          "m": "2026-06-01",
+          "lines": 72,
+          "members": 71,
+          "allowed": 29486.76
+        },
+        {
+          "m": "2026-07-01",
+          "lines": 80,
+          "members": 80,
+          "allowed": 31577.14
+        },
+        {
+          "m": "2026-08-01",
+          "lines": 94,
+          "members": 92,
+          "allowed": 38478.35
+        },
+        {
+          "m": "2026-09-01",
+          "lines": 83,
+          "members": 79,
+          "allowed": 39794.95
+        },
+        {
+          "m": "2026-10-01",
+          "lines": 75,
+          "members": 75,
+          "allowed": 34228.41
+        }
+      ]
+    },
+    {
+      "name": "Multiple Procedure Payment Reduction (MPPR)",
+      "codes": 2,
+      "services": [
+        "mppr"
+      ],
+      "overall": {
+        "lines": 1682,
+        "headers": 841,
+        "members": 555,
+        "months_with_claims": 10,
+        "min_svc": "2026-01-01",
+        "max_svc": "2026-10-31",
+        "allowed": 3065680.53,
+        "paid": 2452544.37
+      },
+      "unenrolled_lines_before_gate": 0,
+      "months_present": 10,
+      "months_missing_jan_oct": [],
+      "thin_months_lt5_lines": [],
+      "by_month": [
+        {
+          "m": "2026-01-01",
+          "lines": 202,
+          "members": 97,
+          "allowed": 367657.01
+        },
+        {
+          "m": "2026-02-01",
+          "lines": 180,
+          "members": 90,
+          "allowed": 323220.08
+        },
+        {
+          "m": "2026-03-01",
+          "lines": 132,
+          "members": 65,
+          "allowed": 245453.16
+        },
+        {
+          "m": "2026-04-01",
+          "lines": 168,
+          "members": 82,
+          "allowed": 319081.43
+        },
+        {
+          "m": "2026-05-01",
+          "lines": 188,
+          "members": 89,
+          "allowed": 345726.72
+        },
+        {
+          "m": "2026-06-01",
+          "lines": 168,
+          "members": 81,
+          "allowed": 297980.56
+        },
+        {
+          "m": "2026-07-01",
+          "lines": 134,
+          "members": 65,
+          "allowed": 242478.67
+        },
+        {
+          "m": "2026-08-01",
+          "lines": 192,
+          "members": 92,
+          "allowed": 348073.93
+        },
+        {
+          "m": "2026-09-01",
+          "lines": 172,
+          "members": 85,
+          "allowed": 305552.45
+        },
+        {
+          "m": "2026-10-01",
+          "lines": 146,
+          "members": 71,
+          "allowed": 270456.52
+        }
+      ]
+    },
+    {
+      "name": "National Coverage Determination Study \u2014 MRI (NCD 220.2)",
+      "codes": 2,
+      "services": [
+        "ncd"
+      ],
+      "overall": {
+        "lines": 3313,
+        "headers": 3313,
+        "members": 2223,
+        "months_with_claims": 10,
+        "min_svc": "2026-01-01",
+        "max_svc": "2026-10-31",
+        "allowed": 4121950.4,
+        "paid": 3297560.64
+      },
+      "unenrolled_lines_before_gate": 0,
+      "months_present": 10,
+      "months_missing_jan_oct": [],
+      "thin_months_lt5_lines": [],
+      "by_month": [
+        {
+          "m": "2026-01-01",
+          "lines": 330,
+          "members": 324,
+          "allowed": 410102.64
+        },
+        {
+          "m": "2026-02-01",
+          "lines": 333,
+          "members": 325,
+          "allowed": 412399.02
+        },
+        {
+          "m": "2026-03-01",
+          "lines": 357,
+          "members": 341,
+          "allowed": 439533.04
+        },
+        {
+          "m": "2026-04-01",
+          "lines": 306,
+          "members": 301,
+          "allowed": 373043.94
+        },
+        {
+          "m": "2026-05-01",
+          "lines": 334,
+          "members": 323,
+          "allowed": 427107.28
+        },
+        {
+          "m": "2026-06-01",
+          "lines": 330,
+          "members": 321,
+          "allowed": 410845.91
+        },
+        {
+          "m": "2026-07-01",
+          "lines": 340,
+          "members": 333,
+          "allowed": 416218.83
+        },
+        {
+          "m": "2026-08-01",
+          "lines": 348,
+          "members": 332,
+          "allowed": 432322.31
+        },
+        {
+          "m": "2026-09-01",
+          "lines": 305,
+          "members": 295,
+          "allowed": 383575.5
+        },
+        {
+          "m": "2026-10-01",
+          "lines": 330,
+          "members": 317,
+          "allowed": 416801.93
+        }
+      ]
+    },
+    {
+      "name": "Outpatient MRI Prior Authorization",
+      "codes": 2,
+      "services": [
+        "mri"
+      ],
+      "overall": {
+        "lines": 834,
+        "headers": 834,
+        "members": 556,
+        "months_with_claims": 10,
+        "min_svc": "2026-01-01",
+        "max_svc": "2026-10-31",
+        "allowed": 1297020.07,
+        "paid": 1037616.16
+      },
+      "unenrolled_lines_before_gate": 0,
+      "months_present": 10,
+      "months_missing_jan_oct": [],
+      "thin_months_lt5_lines": [],
+      "by_month": [
+        {
+          "m": "2026-01-01",
+          "lines": 88,
+          "members": 84,
+          "allowed": 140643.07
+        },
+        {
+          "m": "2026-02-01",
+          "lines": 75,
+          "members": 73,
+          "allowed": 116824.56
+        },
+        {
+          "m": "2026-03-01",
+          "lines": 104,
+          "members": 103,
+          "allowed": 157335.61
+        },
+        {
+          "m": "2026-04-01",
+          "lines": 84,
+          "members": 82,
+          "allowed": 136845.13
+        },
+        {
+          "m": "2026-05-01",
+          "lines": 81,
+          "members": 78,
+          "allowed": 129390.2
+        },
+        {
+          "m": "2026-06-01",
+          "lines": 83,
+          "members": 81,
+          "allowed": 127555.69
+        },
+        {
+          "m": "2026-07-01",
+          "lines": 79,
+          "members": 77,
+          "allowed": 126767.37
+        },
+        {
+          "m": "2026-08-01",
+          "lines": 78,
+          "members": 76,
+          "allowed": 117499.81
+        },
+        {
+          "m": "2026-09-01",
+          "lines": 76,
+          "members": 75,
+          "allowed": 114906.98
+        },
+        {
+          "m": "2026-10-01",
+          "lines": 86,
+          "members": 86,
+          "allowed": 129251.65
+        }
+      ]
+    },
+    {
+      "name": "Outpatient Therapy Utilization and Payment Policy",
+      "codes": 3,
+      "services": [
+        "therapy"
+      ],
+      "overall": {
+        "lines": 2524,
+        "headers": 2524,
+        "members": 1667,
+        "months_with_claims": 10,
+        "min_svc": "2026-01-01",
+        "max_svc": "2026-10-31",
+        "allowed": 319605.43,
+        "paid": 255684.35
+      },
+      "unenrolled_lines_before_gate": 0,
+      "months_present": 10,
+      "months_missing_jan_oct": [],
+      "thin_months_lt5_lines": [],
+      "by_month": [
+        {
+          "m": "2026-01-01",
+          "lines": 262,
+          "members": 254,
+          "allowed": 34665.47
+        },
+        {
+          "m": "2026-02-01",
+          "lines": 219,
+          "members": 215,
+          "allowed": 27326.5
+        },
+        {
+          "m": "2026-03-01",
+          "lines": 237,
+          "members": 227,
+          "allowed": 30263.81
+        },
+        {
+          "m": "2026-04-01",
+          "lines": 256,
+          "members": 249,
+          "allowed": 32506.3
+        },
+        {
+          "m": "2026-05-01",
+          "lines": 263,
+          "members": 257,
+          "allowed": 32283.18
+        },
+        {
+          "m": "2026-06-01",
+          "lines": 251,
+          "members": 237,
+          "allowed": 31302.61
+        },
+        {
+          "m": "2026-07-01",
+          "lines": 236,
+          "members": 228,
+          "allowed": 30365.94
+        },
+        {
+          "m": "2026-08-01",
+          "lines": 255,
+          "members": 250,
+          "allowed": 31425.78
+        },
+        {
+          "m": "2026-09-01",
+          "lines": 281,
+          "members": 273,
+          "allowed": 36348.51
+        },
+        {
+          "m": "2026-10-01",
+          "lines": 264,
+          "members": 256,
+          "allowed": 33117.33
+        }
+      ]
+    },
+    {
+      "name": "Procedure-to-Procedure (PTP) Coding Edit",
+      "codes": 2,
+      "services": [
+        "ptp"
+      ],
+      "overall": {
+        "lines": 1650,
+        "headers": 825,
+        "members": 555,
+        "months_with_claims": 10,
+        "min_svc": "2026-01-01",
+        "max_svc": "2026-10-31",
+        "allowed": 1696692.06,
+        "paid": 1357353.54
+      },
+      "unenrolled_lines_before_gate": 0,
+      "months_present": 10,
+      "months_missing_jan_oct": [],
+      "thin_months_lt5_lines": [],
+      "by_month": [
+        {
+          "m": "2026-01-01",
+          "lines": 152,
+          "members": 75,
+          "allowed": 158485.41
+        },
+        {
+          "m": "2026-02-01",
+          "lines": 132,
+          "members": 65,
+          "allowed": 135914.08
+        },
+        {
+          "m": "2026-03-01",
+          "lines": 192,
+          "members": 93,
+          "allowed": 200797.12
+        },
+        {
+          "m": "2026-04-01",
+          "lines": 196,
+          "members": 97,
+          "allowed": 200018.29
+        },
+        {
+          "m": "2026-05-01",
+          "lines": 186,
+          "members": 88,
+          "allowed": 185667.16
+        },
+        {
+          "m": "2026-06-01",
+          "lines": 154,
+          "members": 73,
+          "allowed": 158064.64
+        },
+        {
+          "m": "2026-07-01",
+          "lines": 170,
+          "members": 84,
+          "allowed": 174230.54
+        },
+        {
+          "m": "2026-08-01",
+          "lines": 136,
+          "members": 66,
+          "allowed": 142269.01
+        },
+        {
+          "m": "2026-09-01",
+          "lines": 166,
+          "members": 80,
+          "allowed": 171500.12
+        },
+        {
+          "m": "2026-10-01",
+          "lines": 166,
+          "members": 80,
+          "allowed": 169745.69
+        }
+      ]
+    }
+  ],
+  "existing_nine5k_observations": [
+    {
+      "name": "Imaging Site-of-Service Policy",
+      "obs_count": 10,
+      "first_obs": "2026-01-01",
+      "last_obs": "2026-10-31",
+      "months_with_claims": 10
+    },
+    {
+      "name": "Infusion Site-of-Care and Reimbursement Policy",
+      "obs_count": 10,
+      "first_obs": "2026-01-01",
+      "last_obs": "2026-10-31",
+      "months_with_claims": 10
+    },
+    {
+      "name": "Local Coverage Determination Study \u2014 LCD L34425",
+      "obs_count": 10,
+      "first_obs": "2026-01-01",
+      "last_obs": "2026-10-31",
+      "months_with_claims": 10
+    },
+    {
+      "name": "Medically Unlikely Edit (MUE) / Unit Cap",
+      "obs_count": 10,
+      "first_obs": "2026-01-01",
+      "last_obs": "2026-10-31",
+      "months_with_claims": 10
+    },
+    {
+      "name": "Multiple Procedure Payment Reduction (MPPR)",
+      "obs_count": 10,
+      "first_obs": "2026-01-01",
+      "last_obs": "2026-10-31",
+      "months_with_claims": 10
+    },
+    {
+      "name": "National Coverage Determination Study \u2014 MRI (NCD 220.2)",
+      "obs_count": 10,
+      "first_obs": "2026-01-01",
+      "last_obs": "2026-10-31",
+      "months_with_claims": 10
+    },
+    {
+      "name": "Outpatient MRI Prior Authorization",
+      "obs_count": 10,
+      "first_obs": "2026-01-01",
+      "last_obs": "2026-10-31",
+      "months_with_claims": 10
+    },
+    {
+      "name": "Outpatient Therapy Utilization and Payment Policy",
+      "obs_count": 10,
+      "first_obs": "2026-01-01",
+      "last_obs": "2026-10-31",
+      "months_with_claims": 10
+    },
+    {
+      "name": "Procedure-to-Procedure (PTP) Coding Edit",
+      "obs_count": 10,
+      "first_obs": "2026-01-01",
+      "last_obs": "2026-10-31",
+      "months_with_claims": 10
+    }
+  ]
+}

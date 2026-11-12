@@ -1,0 +1,26 @@
+{
+  "started_at": "2026-11-08T07:25:42.275290+00:00",
+  "scale": 2,
+  "suffix": "_G2",
+  "already_cloned": {
+    "claims": 0,
+    "enrollment": 0
+  },
+  "claims_inserted": 2268267,
+  "enrollment_inserted": 9853433,
+  "observations_scaled": 2570,
+  "baselines_scaled": 275,
+  "after_counts": {
+    "claim_lines": 4536534,
+    "claim_members": 1034000,
+    "allowed": 5207255743.66,
+    "enroll_rows": 19706866,
+    "enroll_members": 1034000
+  },
+  "executive_period_dollar_estimate": {
+    "n": 257,
+    "period_abs": 4029473.5083334004,
+    "ann_abs": 48353682.10000078
+  },
+  "finished_at": "2026-11-08T08:11:36.029002+00:00"
+}

@@ -229,6 +229,8 @@ class PolicyScope(BaseModel):
     # Geography (if markets isn't sufficient)
     states: Optional[list[str]] = None  # State codes if needed beyond markets
     regions: Optional[list[str]] = None  # Geographic regions
+    setting: Optional[list[str]] = None
+    procedure_codes: Optional[list[str]] = None
     
     # Network restrictions
     network: Optional[list[str]] = None  # ["IN"] = in-network only, ["OUT"] = OON allowed, None = all

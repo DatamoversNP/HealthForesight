@@ -1,0 +1,91 @@
+{
+  "notes": [
+    {
+      "name": "dataset-banner",
+      "pass": true,
+      "detail": "Synthetic payer population · 500,000 covered lives · 8,986,494.004 member-months · 256,428 policy-event claim rows · pharmacy rows 0 · database synthetic_payer_500k Covered population plus a policy-event extract. Not a complete medical or pharmacy book. No real payer adjudication",
+      "ms": 1310
+    },
+    {
+      "name": "executive",
+      "pass": true,
+      "detail": "expected text present",
+      "ms": 1470
+    },
+    {
+      "name": "executive-mobile",
+      "pass": true,
+      "detail": "horizontal overflow px 15"
+    },
+    {
+      "name": "policies",
+      "pass": true,
+      "detail": "expected text present",
+      "ms": 1435
+    },
+    {
+      "name": "policy-detail",
+      "pass": true,
+      "detail": "http://127.0.0.1:3155/policies/workspace/d0eeb370-df14-4478-8755-dad6c3a35a47",
+      "ms": 1239
+    },
+    {
+      "name": "baselines",
+      "pass": true,
+      "detail": "expected text present",
+      "ms": 1516
+    },
+    {
+      "name": "observations",
+      "pass": true,
+      "detail": "expected text present",
+      "ms": 1374
+    },
+    {
+      "name": "observation-detail",
+      "pass": true,
+      "detail": "opened observation list",
+      "ms": 1124
+    },
+    {
+      "name": "verdicts",
+      "pass": true,
+      "detail": "expected text present",
+      "ms": 1361
+    },
+    {
+      "name": "evidence",
+      "pass": true,
+      "detail": "Why is this policy inconclusive? Imaging site of service Inconclusive Through Sep 30, 2026 Verdict reason No policy endpoint contract is defined. A change in utilization or cost is not a verdict. What to do Declare the required endpoints an",
+      "ms": 61
+    },
+    {
+      "name": "objectives",
+      "pass": true,
+      "detail": "expected text present",
+      "ms": 1356
+    },
+    {
+      "name": "whatif-mppr",
+      "pass": true,
+      "detail": "Scenario 11/6/2026, 5:26:38 PM Synthetic allowed-dollar simulation. Not measured savings, not a confidence interval, and not real payer adjudication. Independent oracle agrees with the engine. Multiple procedure payment reduction · 20,000 lines · database synthetic_payer_500k · SYNTHETIC_SIMULATION MEASURE VALUE Baseline allowed $14,000,000.00 Simulated allowed $12,000,000.00 Allowed difference (s",
+      "ms": 1152
+    },
+    {
+      "name": "whatif-mri-unavailable",
+      "pass": true,
+      "detail": "Scenario 11/6/2026, 5:26:39 PM Source events are stored. A population payment or utilization outcome is not measurable for this policy. No endpoint contract is applied. Lumbar MRI prior authorization · 10,000 lines · database synthetic_payer_500k · NOT_MEASURABLE MEASURE VALUE Baseline allowed Unava"
+    },
+    {
+      "name": "whatif-composition-rejected",
+      "pass": true,
+      "detail": "multi-policy run rejected"
+    },
+    {
+      "name": "page-errors",
+      "pass": true,
+      "detail": "none"
+    }
+  ],
+  "consoleErrors": []
+}

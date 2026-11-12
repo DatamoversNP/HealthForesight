@@ -1,0 +1,21 @@
+{
+  "environment": "lean_staging",
+  "pass": true,
+  "verified_at": "2026-11-05T23:13:22.044548+00:00",
+  "verify": {
+    "claims_total": 53949,
+    "claims_2025": 25692,
+    "claims_2026": 28257,
+    "baselines_general": 13,
+    "baselines_policy": 358,
+    "policy_cy_baselines": 250,
+    "predicted": 250,
+    "predicted_policies": 250,
+    "observations": 3000,
+    "obs_policies": 250,
+    "schedule": "{'schedule_id': 'sch_lean_staging_monthly_observations', 'enabled': True, 'schedule_expression': '0 6 2 * *', 'next_due_at': datetime.datetime(2026, 12, 2, 6, 0)}",
+    "legacy": "{'name': 'Lean Staging Monthly Observations', 'enabled': True, 'cron_expression': '0 6 2 * *', 'target_type': 'OBSERVATION', 'description': None}",
+    "pending_outbox": 0
+  },
+  "note": "Schedule registered after mapper failure. Predictions are demo stubs (Stage 3.5 mapper failed for nine; bulk SQL stubs cover all 250). Demo claims subset was not copied."
+}

@@ -1,0 +1,133 @@
+{
+  "notes": [
+    {
+      "step": "login",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/dashboard/policy-owner",
+      "ok": true
+    },
+    {
+      "step": "dashboard",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/",
+      "title": "HealthForesight - Decision Intelligence for Utilization Policy Impact",
+      "newPageErrors": [],
+      "phrases": [],
+      "excerpt": ""
+    },
+    {
+      "step": "executive",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/dashboard/executive",
+      "title": "HealthForesight - Decision Intelligence for Utilization Policy Impact",
+      "newPageErrors": [],
+      "phrases": [
+        "not enrolled",
+        "PMPM",
+        "Unavailable",
+        "Claim lines",
+        "Paid"
+      ],
+      "excerpt": "HealthForesight by DataMovers View Policy Owner admin@healthforesight.com Dashboard Policy Verdicts Policies Policy rollout ideas Policy Impact & Guidance Objectives Health Medicare Rules Baseline Analysis Observation Analysis Observation Run History Predicted Impacts What-If Scenarios What-If run history Scorecards Cohorts Analyses Data & Ingestion Data Model Pipelines Pipeline Monitoring Run Workflow Data Quality Data Explorer Exports Schedules Notifications Decisions Lineage Documentation Pro"
+    },
+    {
+      "step": "policy-verdicts",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/policy-verdicts",
+      "title": "HealthForesight - Decision Intelligence for Utilization Policy Impact",
+      "newPageErrors": [],
+      "phrases": [
+        "Stored status",
+        "Screen value",
+        "not enrolled",
+        "PMPM",
+        "INCONCLUSIVE",
+        "BACKFIRE",
+        "AT_RISK",
+        "evidence"
+      ],
+      "excerpt": "HealthForesight by DataMovers View Policy Owner admin@healthforesight.com Dashboard Policy Verdicts Policies Policy rollout ideas Policy Impact & Guidance Objectives Health Medicare Rules Baseline Analysis Observation Analysis Observation Run History Predicted Impacts What-If Scenarios What-If run history Scorecards Cohorts Analyses Data & Ingestion Data Model Pipelines Pipeline Monitoring Run Workflow Data Quality Data Explorer Exports Schedules Notifications Decisions Lineage Documentation Pro"
+    },
+    {
+      "step": "objectives-health",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/objectives-health",
+      "title": "HealthForesight - Decision Intelligence for Utilization Policy Impact",
+      "newPageErrors": [],
+      "phrases": [
+        "Stored status",
+        "Screen value",
+        "PMPM",
+        "BACKFIRE",
+        "AT_RISK",
+        "evidence"
+      ],
+      "excerpt": "HealthForesight by DataMovers View Policy Owner admin@healthforesight.com Dashboard Policy Verdicts Policies Policy rollout ideas Policy Impact & Guidance Objectives Health Medicare Rules Baseline Analysis Observation Analysis Observation Run History Predicted Impacts What-If Scenarios What-If run history Scorecards Cohorts Analyses Data & Ingestion Data Model Pipelines Pipeline Monitoring Run Workflow Data Quality Data Explorer Exports Schedules Notifications Decisions Lineage Documentation Pro"
+    },
+    {
+      "step": "observation-analysis",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/observation-analysis",
+      "title": "HealthForesight - Decision Intelligence for Utilization Policy Impact",
+      "newPageErrors": [],
+      "phrases": [
+        "not enrolled",
+        "BACKFIRE",
+        "AT_RISK",
+        "Claim lines"
+      ],
+      "excerpt": "HealthForesight by DataMovers View Policy Owner admin@healthforesight.com Dashboard Policy Verdicts Policies Policy rollout ideas Policy Impact & Guidance Objectives Health Medicare Rules Baseline Analysis Observation Analysis Observation Run History Predicted Impacts What-If Scenarios What-If run history Scorecards Cohorts Analyses Data & Ingestion Data Model Pipelines Pipeline Monitoring Run Workflow Data Quality Data Explorer Exports Schedules Notifications Decisions Lineage Documentation Pro"
+    },
+    {
+      "step": "what-if",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/whatif",
+      "title": "HealthForesight - Decision Intelligence for Utilization Policy Impact",
+      "newPageErrors": [],
+      "phrases": [],
+      "excerpt": "HealthForesight by DataMovers View Policy Owner admin@healthforesight.com Dashboard Policy Verdicts Policies Policy rollout ideas Policy Impact & Guidance Objectives Health Medicare Rules Baseline Analysis Observation Analysis Observation Run History Predicted Impacts What-If Scenarios What-If run history Scorecards Cohorts Analyses Data & Ingestion Data Model Pipelines Pipeline Monitoring Run Workflow Data Quality Data Explorer Exports Schedules Notifications Decisions Lineage Documentation Pro"
+    },
+    {
+      "step": "what-if-scenarios",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/whatif/scenarios",
+      "title": "HealthForesight - Decision Intelligence for Utilization Policy Impact",
+      "newPageErrors": [],
+      "phrases": [],
+      "excerpt": "HealthForesight by DataMovers View Policy Owner admin@healthforesight.com Dashboard Policy Verdicts Policies Policy rollout ideas Policy Impact & Guidance Objectives Health Medicare Rules Baseline Analysis Observation Analysis Observation Run History Predicted Impacts What-If Scenarios What-If run history Scorecards Cohorts Analyses Data & Ingestion Data Model Pipelines Pipeline Monitoring Run Workflow Data Quality Data Explorer Exports Schedules Notifications Decisions Lineage Documentation Pro"
+    },
+    {
+      "step": "analyses",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/analyses",
+      "title": "HealthForesight - Decision Intelligence for Utilization Policy Impact",
+      "newPageErrors": [],
+      "phrases": [],
+      "excerpt": "HealthForesight by DataMovers View Policy Owner admin@healthforesight.com Dashboard Policy Verdicts Policies Policy rollout ideas Policy Impact & Guidance Objectives Health Medicare Rules Baseline Analysis Observation Analysis Observation Run History Predicted Impacts What-If Scenarios What-If run history Scorecards Cohorts Analyses Data & Ingestion Data Model Pipelines Pipeline Monitoring Run Workflow Data Quality Data Explorer Exports Schedules Notifications Decisions Lineage Documentation Pro"
+    },
+    {
+      "step": "baseline",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/baseline-analysis",
+      "title": "HealthForesight - Decision Intelligence for Utilization Policy Impact",
+      "newPageErrors": [],
+      "phrases": [],
+      "excerpt": "HealthForesight by DataMovers View Policy Owner admin@healthforesight.com Dashboard Policy Verdicts Policies Policy rollout ideas Policy Impact & Guidance Objectives Health Medicare Rules Baseline Analysis Observation Analysis Observation Run History Predicted Impacts What-If Scenarios What-If run history Scorecards Cohorts Analyses Data & Ingestion Data Model Pipelines Pipeline Monitoring Run Workflow Data Quality Data Explorer Exports Schedules Notifications Decisions Lineage Documentation Pro"
+    },
+    {
+      "step": "predicted-impacts",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/predicted-impacts",
+      "title": "HealthForesight - Decision Intelligence for Utilization Policy Impact",
+      "newPageErrors": [],
+      "phrases": [
+        "PMPM"
+      ],
+      "excerpt": "HealthForesight by DataMovers View Policy Owner admin@healthforesight.com Dashboard Policy Verdicts Policies Policy rollout ideas Policy Impact & Guidance Objectives Health Medicare Rules Baseline Analysis Observation Analysis Observation Run History Predicted Impacts What-If Scenarios What-If run history Scorecards Cohorts Analyses Data & Ingestion Data Model Pipelines Pipeline Monitoring Run Workflow Data Quality Data Explorer Exports Schedules Notifications Decisions Lineage Documentation Pro"
+    },
+    {
+      "storageKeys": [
+        "uepi_token",
+        "uepi_logs"
+      ]
+    },
+    {
+      "api": {
+        "verdicts": 200,
+        "reconciliation": 200,
+        "objectives": 200,
+        "dashboard": 200
+      }
+    }
+  ],
+  "pageErrors": []
+}

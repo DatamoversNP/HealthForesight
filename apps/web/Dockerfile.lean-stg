@@ -1,0 +1,26 @@
+# Lean staging web image — build context must be apps/web/
+FROM node:18-alpine AS builder
+
+WORKDIR /app
+
+COPY package.json ./
+RUN npm install || npm ci
+
+COPY . .
+
+ARG VITE_API_URL=
+ARG VITE_APP_BUILD=lean-stg
+ARG VITE_APP_NAME=HealthForesight
+ENV VITE_API_URL=$VITE_API_URL \
+    VITE_APP_BUILD=$VITE_APP_BUILD \
+    VITE_APP_NAME=$VITE_APP_NAME
+
+# Match demo Azure path: skip tsc gate (pre-existing MUI typing debt).
+RUN npm run build:skip-check
+
+FROM caddy:2.7-alpine
+COPY --from=builder /app/dist /usr/share/caddy
+# SPA-only Caddyfile (no k8s API proxy) — browser calls VITE_API_URL directly
+COPY Caddyfile.lean-stg /etc/caddy/Caddyfile
+EXPOSE 80
+CMD ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]

@@ -142,7 +142,13 @@ def build_policy_claims_filters(policy: Dict[str, Any]) -> Dict[str, Any]:
 
     Returns:
         Dict with: lob, market, procedure_codes (cpt/hcpcs merged), service_categories, diagnosis_codes
+
+    Fail-closed: when remediation marks the policy not claims-executable, procedure/service
+    code filters are cleared and ``claims_execution_blocked`` is set so callers cannot
+    silently use unverified coding.
     """
+    from uepi_api.services.policy_execution_eligibility import claims_execution_allowed
+
     meta = policy.get("policy_metadata_json") or policy.get("metadata") or {}
     scope = policy.get("scope") or meta.get("scope") or {}
     scope = scope if isinstance(scope, dict) else {}
@@ -151,6 +157,12 @@ def build_policy_claims_filters(policy: Dict[str, Any]) -> Dict[str, Any]:
         policy_levers = meta.get("policy_levers") or []
     logic = policy.get("logic") or meta.get("logic") or {}
     policy_logic = policy.get("policy_logic") or meta.get("policy_logic") or {}
+    # Merge remediation onto policy view for eligibility check
+    policy_view = dict(policy)
+    if isinstance(meta, dict) and meta.get("remediation") and "remediation" not in policy_view:
+        policy_view["remediation"] = meta["remediation"]
+        policy_view["policy_metadata_json"] = meta
+    allowed, block_reason = claims_execution_allowed(policy_view)
     policy_dict = {
         "scope": scope,
         "policy_levers": policy_levers,
@@ -188,6 +200,21 @@ def build_policy_claims_filters(policy: Dict[str, Any]) -> Dict[str, Any]:
     if market is not None:
         markets_list = market if isinstance(market, list) else [market]
 
+    if not allowed:
+        return {
+            "lob": lob,
+            "market": market,
+            "markets": markets_list,
+            "procedure_codes": None,
+            "cpt_codes": None,
+            "hcpcs_codes": None,
+            "service_categories": None,
+            "service_category": None,
+            "diagnosis_codes": None,
+            "claims_execution_blocked": True,
+            "claims_execution_block_reason": block_reason,
+        }
+
     return {
         "lob": lob,
         "market": market,
@@ -198,6 +225,7 @@ def build_policy_claims_filters(policy: Dict[str, Any]) -> Dict[str, Any]:
         "service_categories": merged_service if merged_service else None,
         "service_category": merged_service[0] if len(merged_service) == 1 else None,
         "diagnosis_codes": merged_diagnosis if merged_diagnosis else None,
+        "claims_execution_blocked": False,
     }
 
 
@@ -261,6 +289,18 @@ def generate_policy_scoped_claims_data(
             return {
                 "success": False,
                 "error": f"Policy {policy_id} not found",
+            }
+
+        from uepi_api.services.policy_execution_eligibility import claims_execution_allowed
+
+        allowed, block_reason = claims_execution_allowed(policy if isinstance(policy, dict) else {})
+        if not allowed:
+            return {
+                "success": False,
+                "error": f"Claims generation blocked: {block_reason}",
+                "claims_execution_blocked": True,
+                "claims_execution_block_reason": block_reason,
+                "policy_id": str(policy_id),
             }
         
         # Extract target codes from policy

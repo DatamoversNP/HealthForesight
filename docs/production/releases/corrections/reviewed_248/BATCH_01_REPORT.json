@@ -1,0 +1,271 @@
+{
+  "generated_at": "2026-11-07T11:50:33.999418+00:00",
+  "batch": 1,
+  "batch_size": 10,
+  "source_system": "SYNTHETIC_REVIEWED_248_V1",
+  "policies": [
+    {
+      "register_index": 1,
+      "name": "90-Day Retail Maintenance Program",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 2,
+      "name": "ACA Essential Health Benefits Mapping",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 3,
+      "name": "ACA Preventive Services Zero Cost Share",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 4,
+      "name": "ACL Reconstruction Prior Authorization",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 5,
+      "name": "Acupuncture Visit Limit",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1605,
+        "baseline_allowed": 247460.92,
+        "avg_allowed_per_line": 143.20655092592594,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "97810",
+          "97811"
+        ],
+        "service_category": "therapy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "57e933ae-44f1-46a3-9dd0-6e63e9d055d5",
+        "prediction_id": "ef4a8af3-e380-40a9-8898-b1149683e8c8",
+        "observations": 10,
+        "allowed_pmpm": 1.7184786111111112,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 6,
+      "name": "ADHD Stimulant Quantity Limits and Preferred Agents",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 11230,
+        "baseline_members": 7302,
+        "baseline_allowed": 14601531.61,
+        "avg_allowed_per_line": 1300.2254327693677,
+        "observation_claims": 9347,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J3490",
+          "S5000"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "98f1ed37-0385-45a8-be01-f95f2d5f418b",
+        "prediction_id": "6561413a-3c67-4f34-8fae-f38a252d6b80",
+        "observations": 10,
+        "allowed_pmpm": 101.39952506944444,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 7,
+      "name": "Advanced Imaging Member Cost Share Design",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1619,
+        "baseline_allowed": 2221989.3,
+        "avg_allowed_per_line": 1285.8734375,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J3490"
+        ],
+        "service_category": "ed"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "a7a3edbb-d4da-4a5b-9c5a-caf4bf4cc519",
+        "prediction_id": "35a3dce0-8c6d-4128-8c6a-55d409943498",
+        "observations": 10,
+        "allowed_pmpm": 15.430481249999998,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 8,
+      "name": "Air Ambulance Medical Necessity Review",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1617,
+        "baseline_allowed": 3435039.56,
+        "avg_allowed_per_line": 1987.8701157407409,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "A0425",
+          "A0426",
+          "A0427",
+          "A0430"
+        ],
+        "service_category": "ambulance"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "d8ac3b79-e815-41af-9558-d370dd10f412",
+        "prediction_id": "bc0c54bb-5475-4afb-9283-3af895a8e65e",
+        "observations": 10,
+        "allowed_pmpm": 23.85444138888889,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 9,
+      "name": "Ambulatory Surgery Center Preference",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 3473,
+        "baseline_members": 3020,
+        "baseline_allowed": 11988133.25,
+        "avg_allowed_per_line": 3451.809170745753,
+        "observation_claims": 2875,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "27447",
+          "29827",
+          "43239",
+          "45378"
+        ],
+        "service_category": "surgery"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "c2ca06c2-216a-464b-be26-6ee693f69504",
+        "prediction_id": "94024e02-2890-46ce-99df-7ed362b86eaa",
+        "observations": 10,
+        "allowed_pmpm": 83.25092534722222,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 10,
+      "name": "Anti-Reflux Procedure Prior Authorization",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    }
+  ],
+  "population": {
+    "loaded": true,
+    "claims": 348744,
+    "enrollment": 264000,
+    "members": 12000,
+    "source_system": "SYNTHETIC_REVIEWED_248_V1",
+    "entity_counts": {
+      "members": 12000,
+      "enrollment_records": 264000,
+      "claims_lines": 348744,
+      "pharmacy_claims": 99781,
+      "policy_specs": 108
+    },
+    "book_mm_2025": 144000.0
+  },
+  "validation_summary": {
+    "policies_in_batch": 10,
+    "configured": 10,
+    "measurable_completed": 5,
+    "config_only": 5,
+    "thin_but_measured": 0,
+    "failed": 0,
+    "rate_continuity_checked": 5,
+    "pass": true
+  }
+}

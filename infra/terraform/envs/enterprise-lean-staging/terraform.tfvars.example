@@ -9,7 +9,7 @@ resource_group_name        = "rg-healthforesight-enterprise-staging"
 owner_subscription_label   = "healthforesight"
 
 # Lean SKUs (Option B)
-postgres_sku_name          = "B_Standard_B2s"
+postgres_sku_name          = "GP_Standard_D2s_v3"
 postgres_storage_mb        = 32768
 service_bus_sku            = "Standard"
 adls_replication_type      = "LRS"

@@ -170,74 +170,75 @@ def enhance_prediction_with_confidence_and_ramp_up(
     if not baseline_metrics:
         baseline_metrics = {}
     
-    pred_metrics = predicted_impact.get("metrics", {})
-    confidence_score = predicted_impact.get("confidence", 0.7)  # Default 70% if not provided
-    prediction_method = predicted_impact.get("prediction_method", "ELASTICITY_MODEL")
-    
-    # Get baseline values (industry standard: services per 1K member-months, $ PMPM)
-    baseline_utilization = baseline_metrics.get("util_rate_target_per_1000_mm") or baseline_metrics.get("util_rate_total_per_1000_mm") or baseline_metrics.get("utilization_per_1k", 0.0)
-    baseline_utilization = float(baseline_utilization or 0.0)
-    baseline_cost_pmpm = baseline_metrics.get("paid_pmpm_target") or baseline_metrics.get("allowed_pmpm_target") or baseline_metrics.get("paid_pmpm_total") or baseline_metrics.get("allowed_pmpm_total") or baseline_metrics.get("cost_pmpm", 0.0)
-    baseline_cost_pmpm = float(baseline_cost_pmpm or 0.0)
+    pred_metrics = predicted_impact.get("metrics") or {}
+    raw_confidence = predicted_impact.get("confidence")
+    confidence_score = None if raw_confidence is None else float(raw_confidence)
+    prediction_method = predicted_impact.get("prediction_method") or "UNAVAILABLE"
 
-    # Industry-standard fallbacks when baseline is missing (HEDIS/NQF reference ranges)
-    # Avoids division-by-zero and impossible negative predictions
-    warnings_list = list(predicted_impact.get("warnings", []) or [])
-    if baseline_utilization <= 0:
-        baseline_utilization = max(baseline_utilization, 50.0)  # Fallback: ~50 services/1K (imaging typical)
-        warnings_list.append("Baseline utilization was missing or zero; used industry fallback for ramp-up.")
-    if baseline_cost_pmpm <= 0:
-        baseline_cost_pmpm = max(baseline_cost_pmpm, 50.0)  # Fallback: $50 PMPM (imaging typical)
-        warnings_list.append("Baseline cost PMPM was missing or zero; used industry fallback for ramp-up.")
+    def _present_float(source: Dict[str, Any], *keys: str) -> Optional[float]:
+        for key in keys:
+            if key in source and source.get(key) is not None:
+                return float(source[key])
+        return None
 
-    # Get predicted changes
-    utilization_change = float(pred_metrics.get("utilization_change_per_1k", 0.0) or 0.0)
-    cost_change_pmpm = float(pred_metrics.get("cost_change_pmpm", 0.0) or 0.0)
-
-    # Calculate predicted values; clamp to non-negative (industry standard)
-    predicted_utilization = max(0.0, baseline_utilization + utilization_change)
-    predicted_cost_pmpm = max(0.0, baseline_cost_pmpm + cost_change_pmpm)
-    
-    # Calculate confidence intervals
-    utilization_confidence = calculate_confidence_intervals(
-        predicted_value=predicted_utilization,
-        confidence_score=confidence_score,
-        baseline_value=baseline_utilization,
-        prediction_method=prediction_method,
+    baseline_utilization = _present_float(
+        baseline_metrics,
+        "util_rate_target_per_1000_mm",
+        "util_rate_total_per_1000_mm",
+        "utilization_per_1k",
     )
-    
-    cost_confidence = calculate_confidence_intervals(
-        predicted_value=predicted_cost_pmpm,
-        confidence_score=confidence_score,
-        baseline_value=baseline_cost_pmpm,
-        prediction_method=prediction_method,
+    baseline_cost_pmpm = _present_float(
+        baseline_metrics,
+        "paid_pmpm_target",
+        "allowed_pmpm_target",
+        "paid_pmpm_total",
+        "allowed_pmpm_total",
+        "cost_pmpm",
     )
-    
-    # Calculate time-based ramp-up
-    utilization_ramp_up = calculate_time_based_ramp_up(
-        baseline_value=baseline_utilization,
-        full_effect_value=predicted_utilization,
-        months=12,
-    )
-    
-    cost_ramp_up = calculate_time_based_ramp_up(
-        baseline_value=baseline_cost_pmpm,
-        full_effect_value=predicted_cost_pmpm,
-        months=12,
-    )
-    
-    # Enhance predicted impact
+    utilization_change = _present_float(pred_metrics, "utilization_change_per_1k", "utilization_change")
+    cost_change_pmpm = _present_float(pred_metrics, "cost_change_pmpm", "cost_change")
+    unavailable = {
+        "status": "UNAVAILABLE",
+        "reason": "Baseline, predicted change, or confidence is missing. No stand-in rate or confidence is used.",
+    }
     enhanced = predicted_impact.copy()
-    if warnings_list:
-        existing = enhanced.get("warnings") or []
-        enhanced["warnings"] = list(dict.fromkeys((existing if isinstance(existing, list) else []) + warnings_list))
+    enhanced["confidence"] = confidence_score
+    if baseline_utilization is None or utilization_change is None or confidence_score is None:
+        enhanced["confidence_intervals"] = {"utilization": unavailable, "cost": unavailable}
+        enhanced["ramp_up_projections"] = {"utilization": unavailable, "cost": unavailable}
+        return enhanced
+    if baseline_cost_pmpm is None or cost_change_pmpm is None:
+        cost_confidence = unavailable
+        cost_ramp_up = unavailable
+    else:
+        predicted_cost_pmpm = baseline_cost_pmpm + cost_change_pmpm
+        cost_confidence = calculate_confidence_intervals(
+            predicted_value=predicted_cost_pmpm,
+            confidence_score=confidence_score,
+            baseline_value=baseline_cost_pmpm,
+            prediction_method=prediction_method,
+        )
+        cost_ramp_up = calculate_time_based_ramp_up(
+            baseline_value=baseline_cost_pmpm,
+            full_effect_value=predicted_cost_pmpm,
+            months=12,
+        )
+    predicted_utilization = baseline_utilization + utilization_change
     enhanced["confidence_intervals"] = {
-        "utilization": utilization_confidence,
+        "utilization": calculate_confidence_intervals(
+            predicted_value=predicted_utilization,
+            confidence_score=confidence_score,
+            baseline_value=baseline_utilization,
+            prediction_method=prediction_method,
+        ),
         "cost": cost_confidence,
     }
     enhanced["ramp_up_projections"] = {
-        "utilization": utilization_ramp_up,
+        "utilization": calculate_time_based_ramp_up(
+            baseline_value=baseline_utilization,
+            full_effect_value=predicted_utilization,
+            months=12,
+        ),
         "cost": cost_ramp_up,
     }
-    
     return enhanced

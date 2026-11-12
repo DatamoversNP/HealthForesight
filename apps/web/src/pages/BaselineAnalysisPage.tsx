@@ -81,6 +81,7 @@ import {
   ZAxis,
 } from 'recharts'
 import { apiClient } from '../lib/api'
+import PolicyMeasurementSeries from '../components/PolicyMeasurementSeries'
 import { format } from 'date-fns'
 import { healthForesightColors } from '../theme/healthForesightTheme'
 import MetricTooltip from '../components/MetricTooltip'
@@ -253,10 +254,25 @@ export default function BaselineAnalysisPage() {
     if (!id) return
     try {
       const full = await apiClient.getBaseline(String(id))
-      if (full) setSelectedStoredBaseline(full)
+      if (full) {
+        // Preserve chart arrays if a slim response somehow omits them.
+        const slimMetrics = baseline?.baseline_metrics || baseline?.metrics || {}
+        const fullMetrics = full.baseline_metrics || full.metrics || {}
+        setSelectedStoredBaseline({
+          ...full,
+          baseline_metrics: {
+            ...slimMetrics,
+            ...fullMetrics,
+            provider_archetypes:
+              fullMetrics.provider_archetypes ?? slimMetrics.provider_archetypes,
+            patient_segments:
+              fullMetrics.patient_segments ?? slimMetrics.patient_segments,
+          },
+        })
+      }
     } catch (err) {
       console.error('Error loading full baseline detail:', err)
-      // Keep summary row so UI still works
+      // Keep summary row so UI still works (summary now includes archetypes/segments).
     }
   }
 
@@ -666,18 +682,22 @@ export default function BaselineAnalysisPage() {
         analysis: a,
         status: a.status,
       })),
-      ...uniqueStored.map((b: any) => ({
+      ...uniqueStored.map((b: any) => {
+        const policy = policies.find((p: any) => p.id === b.policy_id)
+        const policyName = policy?.name || policy?.policy_name || b.baseline_metrics?.policy_key
+        const windowLabel = b.window_start_date && b.window_end_date
+          ? `${format(new Date(b.window_start_date), 'MMM d, yyyy')} – ${format(new Date(b.window_end_date), 'MMM d, yyyy')}`
+          : (b.baseline_id || b.id || 'Baseline').toString()
+        return {
         id: `stored-${b.baseline_id || b.id}`,
         type: 'Stored' as const,
         scope: b.policy_id ? 'Policy' : 'General',
-        label: b.window_start_date && b.window_end_date
-          ? `${format(new Date(b.window_start_date), 'MMM d, yyyy')} – ${format(new Date(b.window_end_date), 'MMM d, yyyy')}`
-          : (b.baseline_id || b.id || 'Baseline').toString().slice(0, 12),
+        label: policyName ? `${policyName} · ${windowLabel}` : windowLabel,
         date: b.computed_at || b.created_at || '',
         source: 'stored' as const,
         baseline: b,
         status: 'STORED',
-      })),
+      }}),
     ].sort((a, b) => formatDateForSort(b.date) - formatDateForSort(a.date))
 
     const q = searchTerm.trim().toLowerCase()
@@ -692,7 +712,7 @@ export default function BaselineAnalysisPage() {
       const hay = `${row.label} ${row.type} ${row.scope} ${row.status || ''}`.toLowerCase()
       return hay.includes(q)
     })
-  }, [analyses, baselines, searchTerm, typeFilter, scopeFilter, statusFilter])
+  }, [analyses, baselines, policies, searchTerm, typeFilter, scopeFilter, statusFilter])
 
   // Reset to page 1 when search or filter changes
   useEffect(() => {
@@ -2064,38 +2084,134 @@ function StoredProviderArchetypesSection({ metrics }: { metrics: Record<string, 
       </>
     )
   }
+
+  const preferredKeys = ['total_claims', 'total_cost', 'avg_cost_per_claim', 'claims_per_member']
+  const keyMinMax: Record<string, { min: number; max: number }> = {}
+  for (const arch of arches) {
+    const chars = arch.characteristics || {}
+    for (const key of preferredKeys) {
+      const v = chars[key]
+      if (typeof v === 'number' && Number.isFinite(v)) {
+        if (!keyMinMax[key]) keyMinMax[key] = { min: v, max: v }
+        else {
+          keyMinMax[key].min = Math.min(keyMinMax[key].min, v)
+          keyMinMax[key].max = Math.max(keyMinMax[key].max, v)
+        }
+      }
+    }
+  }
+  const firstChars = arches[0]?.characteristics || {}
+  const fallbackKeys = Object.entries(firstChars)
+    .filter(([, v]) => typeof v === 'number' && Number.isFinite(v as number))
+    .map(([k]) => k)
+    .slice(0, 6)
+  if (Object.keys(keyMinMax).length === 0 && fallbackKeys.length > 0) {
+    for (const arch of arches) {
+      for (const key of fallbackKeys) {
+        const v = (arch.characteristics || {})[key]
+        if (typeof v === 'number' && Number.isFinite(v)) {
+          if (!keyMinMax[key]) keyMinMax[key] = { min: v, max: v }
+          else {
+            keyMinMax[key].min = Math.min(keyMinMax[key].min, v)
+            keyMinMax[key].max = Math.max(keyMinMax[key].max, v)
+          }
+        }
+      }
+    }
+  }
+  const chartKeys = Object.keys(keyMinMax).length > 0 ? preferredKeys.filter((k) => keyMinMax[k]) : fallbackKeys
+  const charLabel: Record<string, string> = {
+    total_claims: 'Claims per provider',
+    total_cost: 'Cost per provider',
+    avg_cost_per_claim: 'Avg cost per claim',
+    claims_per_member: 'Claims per member',
+  }
+
   return (
     <>
       <Typography variant="h6" sx={{ mb: 2 }}>Provider archetypes</Typography>
       <Typography color="text.secondary" sx={{ mb: 2 }}>
-        Clusters derived from claim volume by dominant service category (stored baseline snapshot).
+        Relative radar profiles from stored baseline clusters (0 = lowest, 100 = highest across archetypes). Hover for actual values.
       </Typography>
       <Grid container spacing={2}>
-        {arches.map((a, idx) => (
-          <Grid item xs={12} md={6} key={a.archetype_id ?? `arch-${idx}`}>
-            <Paper variant="outlined" sx={{ p: 2, height: '100%' }}>
-              <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1 }}>{a.archetype_name}</Typography>
-              <Chip label={`${a.provider_count ?? 0} providers`} size="small" color="primary" sx={{ mb: 1.5 }} />
-              {a.characteristics && Object.keys(a.characteristics).length > 0 && (
-                <Box sx={{ mb: 1.5 }}>
-                  {Object.entries(a.characteristics).map(([k, v]) => (
-                    <Typography key={k} variant="body2" color="text.secondary" sx={{ mb: 0.25 }}>
-                      <strong>{k.replace(/_/g, ' ')}:</strong>{' '}
-                      {typeof v === 'number' ? (Number.isInteger(v) ? v : v.toFixed(2)) : String(v)}
-                    </Typography>
-                  ))}
-                </Box>
-              )}
-              {a.representative_providers && a.representative_providers.length > 0 && (
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                  {a.representative_providers.slice(0, 6).map((id) => (
-                    <Chip key={id} label={id.length > 20 ? `${id.slice(0, 18)}…` : id} size="small" variant="outlined" />
-                  ))}
-                </Box>
-              )}
-            </Paper>
-          </Grid>
-        ))}
+        {arches.map((a, idx) => {
+          const chars = a.characteristics || {}
+          const radarData = chartKeys
+            .filter((key) => typeof chars[key] === 'number' && Number.isFinite(chars[key] as number))
+            .map((key) => {
+              const raw = chars[key] as number
+              const { min, max } = keyMinMax[key] || { min: raw, max: raw }
+              const range = max - min || 1
+              const normalized = Math.min(100, Math.max(0, ((raw - min) / range) * 100))
+              return {
+                fullKey: key,
+                characteristic: charLabel[key] || key.replace(/_/g, ' '),
+                value: Math.round(normalized * 10) / 10,
+                rawValue: raw,
+              }
+            })
+          return (
+            <Grid item xs={12} md={6} key={a.archetype_id ?? `arch-${idx}`}>
+              <Paper variant="outlined" sx={{ p: 2, height: '100%' }}>
+                <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1 }}>{a.archetype_name}</Typography>
+                <Chip label={`${a.provider_count ?? 0} providers`} size="small" color="primary" sx={{ mb: 1.5 }} />
+                {radarData.length > 0 ? (
+                  <Box sx={{ mb: 1.5 }}>
+                    <ResponsiveContainer width="100%" height={250}>
+                      <RadarChart data={radarData}>
+                        <PolarGrid />
+                        <PolarAngleAxis dataKey="characteristic" tick={{ fontSize: 11 }} />
+                        <PolarRadiusAxis angle={90} domain={[0, 100]} tick={{ fontSize: 10 }} />
+                        <Radar
+                          name="Relative"
+                          dataKey="value"
+                          stroke={COLORS[idx % COLORS.length]}
+                          fill={COLORS[idx % COLORS.length]}
+                          fillOpacity={0.6}
+                        />
+                        <Tooltip
+                          formatter={(value: number, _name: string, props: { payload?: { rawValue?: number; fullKey?: string } }) => {
+                            const raw = props?.payload?.rawValue
+                            const key = props?.payload?.fullKey || ''
+                            if (raw !== undefined && raw !== null) {
+                              if (key.includes('cost') || key === 'total_cost') {
+                                return [`$${Number(raw).toLocaleString(undefined, { maximumFractionDigits: 0 })}`, 'Actual']
+                              }
+                              return [Number(raw).toLocaleString(undefined, { maximumFractionDigits: 2 }), 'Actual']
+                            }
+                            return [value, 'Score (0-100)']
+                          }}
+                          labelFormatter={(label: string) => label}
+                        />
+                      </RadarChart>
+                    </ResponsiveContainer>
+                  </Box>
+                ) : (
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+                    No numeric characteristics available for radar chart.
+                  </Typography>
+                )}
+                {a.characteristics && Object.keys(a.characteristics).length > 0 && (
+                  <Box sx={{ mb: 1.5 }}>
+                    {Object.entries(a.characteristics).map(([k, v]) => (
+                      <Typography key={k} variant="body2" color="text.secondary" sx={{ mb: 0.25 }}>
+                        <strong>{k.replace(/_/g, ' ')}:</strong>{' '}
+                        {typeof v === 'number' ? (Number.isInteger(v) ? v : v.toFixed(2)) : String(v)}
+                      </Typography>
+                    ))}
+                  </Box>
+                )}
+                {a.representative_providers && a.representative_providers.length > 0 && (
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                    {a.representative_providers.slice(0, 6).map((id) => (
+                      <Chip key={id} label={id.length > 20 ? `${id.slice(0, 18)}…` : id} size="small" variant="outlined" />
+                    ))}
+                  </Box>
+                )}
+              </Paper>
+            </Grid>
+          )
+        })}
       </Grid>
     </>
   )
@@ -2114,38 +2230,169 @@ function StoredPatientSegmentsSection({ metrics }: { metrics: Record<string, unk
       </>
     )
   }
+  const totalMembers = segs.reduce((sum, s) => sum + (s.member_count || 0), 0) || 1
+  const utilizationLabel: Record<string, string> = {
+    avg_cost_per_claim: 'Avg cost per claim',
+    avg_cost_per_member: 'Avg cost per member',
+    avg_allowed_per_member: 'Avg allowed per member',
+    avg_paid_per_member: 'Avg paid per member',
+    avg_claims_per_member: 'Avg claims per member',
+    avg_claim_lines_per_member: 'Avg claim lines per member',
+    utilization_per_1k: 'Claim lines per 1,000 claimants',
+    cost_pmpm: 'Paid dollars per claimant-month',
+  }
+  const formatMetricValue = (v: number, k: string) => {
+    if (k.includes('cost') || k.includes('pmpm') || k.includes('allowed') || k.includes('paid')) {
+      return `$${v.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 0 })}`
+    }
+    return v.toLocaleString(undefined, { maximumFractionDigits: 2 })
+  }
+  const pieData = segs.map((s, idx) => ({
+    name: s.segment_name || `Segment ${idx + 1}`,
+    value: s.member_count || 0,
+    fill: COLORS[idx % COLORS.length],
+  }))
+  const compareBars = segs.map((s, idx) => {
+    const profile = s.utilization_profile || {}
+    return {
+      name: (s.segment_name || `Seg ${idx + 1}`).length > 28
+        ? `${(s.segment_name || '').slice(0, 26)}…`
+        : (s.segment_name || `Seg ${idx + 1}`),
+      members: s.member_count || 0,
+      avg_allowed: Number(profile.avg_allowed_per_member ?? profile.avg_cost_per_member ?? 0) || 0,
+      avg_claims: Number(profile.avg_claim_lines_per_member ?? profile.avg_claims_per_member ?? 0) || 0,
+    }
+  })
   return (
     <>
       <Typography variant="h6" sx={{ mb: 2 }}>Patient segments</Typography>
       <Typography color="text.secondary" sx={{ mb: 2 }}>
         Members grouped by line of business and utilization band (stored baseline snapshot).
       </Typography>
-      <Grid container spacing={2}>
-        {segs.map((s, idx) => (
-          <Grid item xs={12} md={6} key={s.segment_id ?? `seg-${idx}`}>
-            <Paper variant="outlined" sx={{ p: 2, height: '100%' }}>
-              <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1 }}>{s.segment_name}</Typography>
-              <Chip label={`${s.member_count ?? 0} members`} size="small" color="secondary" sx={{ mb: 1.5 }} />
-              {s.characteristics && Object.keys(s.characteristics).length > 0 && (
-                <Box sx={{ mb: 1 }}>
-                  {Object.entries(s.characteristics).map(([k, v]) => (
-                    <Typography key={k} variant="body2" color="text.secondary" sx={{ mb: 0.25 }}>
-                      <strong>{k.replace(/_/g, ' ')}:</strong> {String(v)}
-                    </Typography>
+      <Grid container spacing={2} sx={{ mb: 2 }}>
+        <Grid item xs={12} md={5}>
+          <Paper variant="outlined" sx={{ p: 2, height: '100%' }}>
+            <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 600 }}>Population share</Typography>
+            <ResponsiveContainer width="100%" height={260}>
+              <PieChart>
+                <Pie
+                  data={pieData}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={90}
+                  label={({ percent }: { percent?: number }) => `${((percent || 0) * 100).toFixed(0)}%`}
+                >
+                  {pieData.map((entry, i) => (
+                    <Cell key={`seg-pie-${i}`} fill={entry.fill} />
                   ))}
+                </Pie>
+                <Tooltip formatter={(v: number) => [`${Number(v).toLocaleString()} members`, 'Members']} />
+                <Legend wrapperStyle={{ fontSize: 11 }} />
+              </PieChart>
+            </ResponsiveContainer>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} md={7}>
+          <Paper variant="outlined" sx={{ p: 2, height: '100%' }}>
+            <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 600 }}>Segment comparison</Typography>
+            <ResponsiveContainer width="100%" height={260}>
+              <BarChart data={compareBars} margin={{ top: 8, right: 12, left: 0, bottom: 48 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" angle={-25} textAnchor="end" interval={0} tick={{ fontSize: 10 }} height={60} />
+                <YAxis yAxisId="left" tick={{ fontSize: 11 }} />
+                <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 11 }} />
+                <Tooltip />
+                <Legend />
+                <Bar yAxisId="left" dataKey="avg_claims" name="Avg claim lines / member" fill={COLORS[0]} barSize={18} />
+                <Bar yAxisId="right" dataKey="avg_allowed" name="Avg allowed / member ($)" fill={COLORS[1]} barSize={18} />
+              </BarChart>
+            </ResponsiveContainer>
+          </Paper>
+        </Grid>
+      </Grid>
+      <Grid container spacing={2}>
+        {segs.map((s, idx) => {
+          const profile = s.utilization_profile || {}
+          const profileEntries = Object.entries(profile)
+            .filter(([, v]) => typeof v === 'number' && Number.isFinite(v as number))
+            .slice(0, 8)
+          const maxVal = Math.max(...profileEntries.map(([, v]) => v as number), 1)
+          const utilizationData = profileEntries.map(([key, value]) => ({
+            key,
+            name: utilizationLabel[key] || key.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
+            value: ((value as number) / maxVal) * 100,
+            rawValue: value as number,
+          }))
+          const percentage = ((s.member_count || 0) / totalMembers) * 100
+          return (
+            <Grid item xs={12} md={6} key={s.segment_id ?? `seg-${idx}`}>
+              <Paper
+                variant="outlined"
+                sx={{
+                  p: 2,
+                  height: '100%',
+                  border: `2px solid ${COLORS[idx % COLORS.length]}`,
+                }}
+              >
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
+                  <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>{s.segment_name}</Typography>
+                  <Chip label={`${s.member_count ?? 0} members`} size="small" color="secondary" />
                 </Box>
-              )}
-              {s.utilization_profile && Object.keys(s.utilization_profile).length > 0 && (
-                <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.5 }}>Utilization profile</Typography>
-              )}
-              {s.utilization_profile && Object.entries(s.utilization_profile).map(([k, v]) => (
-                <Typography key={k} variant="body2" sx={{ mb: 0.25 }}>
-                  {k.replace(/_/g, ' ')}: {typeof v === 'number' ? v.toFixed(2) : String(v)}
-                </Typography>
-              ))}
-            </Paper>
-          </Grid>
-        ))}
+                <Box sx={{ mb: 2 }}>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
+                    <Typography variant="caption" color="text.secondary">Population share</Typography>
+                    <Typography variant="caption" sx={{ fontWeight: 600 }}>{percentage.toFixed(1)}%</Typography>
+                  </Box>
+                  <LinearProgress
+                    variant="determinate"
+                    value={percentage}
+                    sx={{
+                      height: 8,
+                      borderRadius: 4,
+                      backgroundColor: 'rgba(0,0,0,0.1)',
+                      '& .MuiLinearProgress-bar': { backgroundColor: COLORS[idx % COLORS.length] },
+                    }}
+                  />
+                </Box>
+                {utilizationData.length > 0 && (
+                  <Box sx={{ mb: 1.5 }}>
+                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1 }}>
+                      Utilization profile (relative within segment; hover for actual values)
+                    </Typography>
+                    <ResponsiveContainer width="100%" height={Math.max(160, utilizationData.length * 40)}>
+                      <BarChart data={utilizationData} layout="vertical" margin={{ left: 8, right: 16 }}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis type="number" domain={[0, 100]} tickFormatter={(v) => `${v}%`} />
+                        <YAxis dataKey="name" type="category" width={160} tick={{ fontSize: 12 }} />
+                        <Tooltip
+                          formatter={(value: number, _name: string, props: { payload?: { rawValue?: number; key?: string } }) => {
+                            const raw = props?.payload?.rawValue
+                            const k = props?.payload?.key || ''
+                            if (raw !== undefined && raw !== null) return [formatMetricValue(raw, k), 'Value']
+                            return [value, 'Relative %']
+                          }}
+                          labelFormatter={(label: string) => label}
+                        />
+                        <Bar dataKey="value" fill={COLORS[idx % COLORS.length]} name="Relative" />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </Box>
+                )}
+                {s.characteristics && Object.keys(s.characteristics).length > 0 && (
+                  <Box sx={{ mb: 1 }}>
+                    {Object.entries(s.characteristics).map(([k, v]) => (
+                      <Typography key={k} variant="body2" color="text.secondary" sx={{ mb: 0.25 }}>
+                        <strong>{k.replace(/_/g, ' ')}:</strong> {String(v)}
+                      </Typography>
+                    ))}
+                  </Box>
+                )}
+              </Paper>
+            </Grid>
+          )
+        })}
       </Grid>
     </>
   )
@@ -2219,12 +2466,15 @@ function StoredBaselineDetailView({
         <Card>
           <CardContent>
             <Typography variant="h6" sx={{ mb: 3 }}>Baseline time-series analysis</Typography>
-            <Typography color="text.secondary" sx={{ mb: 2 }}>
-              This stored baseline is a single-period snapshot. Time series (trend, bounds, observed) are produced by a full baseline analysis run.
-            </Typography>
-            <Alert severity="info" sx={{ mb: 2 }}>
-              Run <strong>Run Baseline Analysis</strong> above to get time-series charts, provider archetypes, patient segments, and confounder calendar.
-            </Alert>
+            {baseline.policy_id ? (
+              <Box sx={{ mb: 3 }}>
+                <PolicyMeasurementSeries policyId={String(baseline.policy_id)} />
+              </Box>
+            ) : (
+              <Alert severity="info" sx={{ mb: 2 }}>
+                This stored baseline has no policy scope, so no policy claim series is shown.
+              </Alert>
+            )}
             <Typography variant="subtitle2" sx={{ mb: 1 }}>Single-period metrics</Typography>
             <TableContainer>
               <Table size="small">
@@ -2328,7 +2578,21 @@ function StoredBaselinesView({
     if (!id) return
     try {
       const full = await apiClient.getBaseline(String(id))
-      if (full) setSelectedBaseline(full)
+      if (full) {
+        const slimMetrics = b?.baseline_metrics || b?.metrics || {}
+        const fullMetrics = full.baseline_metrics || full.metrics || {}
+        setSelectedBaseline({
+          ...full,
+          baseline_metrics: {
+            ...slimMetrics,
+            ...fullMetrics,
+            provider_archetypes:
+              fullMetrics.provider_archetypes ?? slimMetrics.provider_archetypes,
+            patient_segments:
+              fullMetrics.patient_segments ?? slimMetrics.patient_segments,
+          },
+        })
+      }
     } catch (err) {
       console.error('Error loading full baseline detail:', err)
     }

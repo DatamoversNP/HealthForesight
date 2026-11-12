@@ -1,0 +1,13 @@
+{
+  "database": "hfleanstg",
+  "started_at": "2026-11-08T01:02:51.732720Z",
+  "only": "baselines",
+  "force_segments": true,
+  "baselines": {
+    "baselines_scanned": 257,
+    "baselines_updated": 257,
+    "baselines_empty_claims": 0
+  },
+  "finished_at": "2026-11-08T01:27:27.946149Z",
+  "status": "OK"
+}

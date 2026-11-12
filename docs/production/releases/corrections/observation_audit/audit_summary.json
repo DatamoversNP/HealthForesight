@@ -1,0 +1,58 @@
+{
+  "audited_at": "2026-11-06T03:29:07.712635+00:00",
+  "environment": "lean_staging",
+  "read_only": true,
+  "structure_matches_expected": true,
+  "structure": {
+    "claims_total": 53949,
+    "claims_2025": 25692,
+    "claims_2026": 28257,
+    "claims_other_year": 0,
+    "demo_subset_copy": 0,
+    "general_baselines_cy2025": 1,
+    "policy_baselines_cy2025": 250,
+    "other_baselines": 0,
+    "observations": 2250,
+    "policies_with_obs": 250,
+    "obs_per_policy_min": 9,
+    "obs_per_policy_max": 9,
+    "observation_months": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04",
+      "2026-05",
+      "2026-06",
+      "2026-07",
+      "2026-08",
+      "2026-09"
+    ],
+    "months_outside_jan_sep": [],
+    "enrollment_rows": 0,
+    "policies": 250
+  },
+  "integrity": {
+    "null_allowed": 0,
+    "negative_allowed": 0,
+    "negative_paid": 0,
+    "duplicate_claim_line_keys": 0,
+    "future_service_dates_after_2026_11_06": 4282,
+    "feb_29_lines": 0,
+    "service_dates_on_day_15": 51165,
+    "sources": {
+      "Q1_2026_DEMO": 2880,
+      "DATA_GENERATOR": 2205,
+      "POLICY_MONTHLY_DENSIFY": 48864
+    }
+  },
+  "baseline_arithmetic_fail": 0,
+  "baseline_rows": 250,
+  "observation_arithmetic_fail": 0,
+  "observation_rows": 2250,
+  "status_rule_mismatches": 0,
+  "scope_fail_policies": 250,
+  "observations_not_measurable": 2250,
+  "observations_fail": 0,
+  "enrollment_used": false,
+  "example_policy": "90-Day Retail Maintenance Program"
+}

@@ -87,8 +87,11 @@ variable "budget_contact_emails" {
 }
 
 variable "postgres_sku_name" {
-  type    = string
-  default = "B_Standard_B2s"
+  type        = string
+  # B_Standard_B2s returned SkuNotAvailable in eastus2 during first apply;
+  # GP D2s_v3 is the smallest generally available lean SKU confirmed in-region.
+  default     = "GP_Standard_D2s_v3"
+  description = "Lean default GP_Standard_D2s_v3 (eastus2-available). Burstable B2s if region supports."
 }
 
 variable "postgres_storage_mb" {

@@ -1,0 +1,307 @@
+{
+  "generated_at": "2026-11-07T12:02:29.063073+00:00",
+  "batch": 2,
+  "batch_size": 10,
+  "source_system": "SYNTHETIC_REVIEWED_248_V1",
+  "policies": [
+    {
+      "register_index": 11,
+      "name": "Applied Behavior Analysis Prior Authorization",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 12,
+      "name": "Assistant Surgeon Payment Rules",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 13,
+      "name": "Asthma and COPD Biologic Step Therapy",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 14874,
+        "baseline_members": 8497,
+        "baseline_allowed": 19266971.38,
+        "avg_allowed_per_line": 1295.3456622293936,
+        "observation_claims": 12322,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J0135",
+          "J1438",
+          "J1745",
+          "J9312"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "87e00b56-7582-412f-9042-a8ab68ab2ebd",
+        "prediction_id": "159e0bf4-7e4f-4080-aefc-7dc81e08abe2",
+        "observations": 10,
+        "allowed_pmpm": 133.7984123611111,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 14,
+      "name": "Audio-Only Telehealth Coverage Rules",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 6912,
+        "baseline_members": 5259,
+        "baseline_allowed": 1549816.67,
+        "avg_allowed_per_line": 224.2211617476852,
+        "observation_claims": 5760,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99441",
+          "99442",
+          "99443",
+          "G2012"
+        ],
+        "service_category": "ed"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "ae50db5f-cf31-4f50-b55b-94ee18cb8a48",
+        "prediction_id": "8d38f73b-e13b-4ba4-8714-63b7b6775d80",
+        "observations": 10,
+        "allowed_pmpm": 10.762615763888888,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 15,
+      "name": "Away-From-Home Care / Guest Membership Rules",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 16,
+      "name": "Bariatric Revisional Surgery Prior Authorization",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 5184,
+        "baseline_members": 4202,
+        "baseline_allowed": 17504604.09,
+        "avg_allowed_per_line": 3376.6597395833332,
+        "observation_claims": 4320,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "43644",
+          "43775",
+          "43846"
+        ],
+        "service_category": "surgery"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "730850dd-63da-498e-b37a-c534b9e7263d",
+        "prediction_id": "3aec13de-7c36-40a6-b73a-6825d8fe5d6a",
+        "observations": 10,
+        "allowed_pmpm": 121.55975062499999,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 17,
+      "name": "Bariatric Surgery Prior Authorization",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 5184,
+        "baseline_members": 4202,
+        "baseline_allowed": 17504604.09,
+        "avg_allowed_per_line": 3376.6597395833332,
+        "observation_claims": 4320,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "43644",
+          "43775",
+          "43846"
+        ],
+        "service_category": "surgery"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "8e0e1c22-a404-43e3-9ce4-9255d64f373f",
+        "prediction_id": "08f079f7-e7d1-4f3d-8ba3-4585f4683c36",
+        "observations": 10,
+        "allowed_pmpm": 121.55975062499999,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 18,
+      "name": "Behavioral Health Appointment Access Standards",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 8640,
+        "baseline_members": 6151,
+        "baseline_allowed": 4346719.64,
+        "avg_allowed_per_line": 503.0925509259259,
+        "observation_claims": 7200,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "90834",
+          "90837",
+          "90853",
+          "H0031",
+          "H2011"
+        ],
+        "service_category": "ed"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "ddc400e8-12a2-4e97-a91b-96ac6c2256ae",
+        "prediction_id": "398225bc-5d36-4141-977b-053b1c5136ed",
+        "observations": 10,
+        "allowed_pmpm": 30.185553055555552,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 19,
+      "name": "Behavioral Health Inpatient Concurrent Review",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 14261,
+        "baseline_members": 8386,
+        "baseline_allowed": 3227970.77,
+        "avg_allowed_per_line": 226.3495386017811,
+        "observation_claims": 11878,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99221",
+          "99222",
+          "99223",
+          "99231",
+          "99232",
+          "99233"
+        ],
+        "service_category": "inpatient"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "de9426be-c3f9-4330-a827-6c5e07e84e15",
+        "prediction_id": "47edecc8-b5de-49ac-8050-2e7802896d2a",
+        "observations": 10,
+        "allowed_pmpm": 22.416463680555555,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 20,
+      "name": "Benzodiazepine Quantity Limits",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 11230,
+        "baseline_members": 7302,
+        "baseline_allowed": 14601531.61,
+        "avg_allowed_per_line": 1300.2254327693677,
+        "observation_claims": 9347,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J3490",
+          "S5000"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "7f29a5b6-b6f1-4cfe-868b-c3de8cb56ad1",
+        "prediction_id": "34e8aa59-abe1-47ce-abdc-07de0ced49bf",
+        "observations": 10,
+        "allowed_pmpm": 101.39952506944444,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    }
+  ],
+  "population": {
+    "loaded": false,
+    "claims": 348744,
+    "members": 12000,
+    "source_system": "SYNTHETIC_REVIEWED_248_V1",
+    "book_mm_2025": 144000.0
+  },
+  "validation_summary": {
+    "policies_in_batch": 10,
+    "configured": 10,
+    "measurable_completed": 7,
+    "config_only": 3,
+    "thin_but_measured": 0,
+    "failed": 0,
+    "rate_continuity_checked": 7,
+    "pass": true
+  }
+}

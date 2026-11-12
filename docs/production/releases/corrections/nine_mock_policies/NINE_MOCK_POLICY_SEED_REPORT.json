@@ -1,0 +1,222 @@
+{
+  "generated_at": "2026-11-07T03:35:38.009109+00:00",
+  "database": "hfleanstg",
+  "population_preserved": {
+    "claims_lines": 1423575,
+    "enrollment_records": 9479433
+  },
+  "seeded": [
+    {
+      "index": 1,
+      "policy_id": "d6339860-d85a-5dc5-babd-9c91390fde36",
+      "name": "Outpatient MRI Prior Authorization",
+      "policy_type": "PRIOR_AUTH",
+      "mechanism": "OUTPATIENT_MRI_PRIOR_AUTH",
+      "configuration_state": "REVIEW_ONLY",
+      "pdf": "HealthForesight_Outpatient_MRI_Prior_Authorization_Mock_Policy__1_.pdf"
+    },
+    {
+      "index": 2,
+      "policy_id": "b7e4ec54-64d6-5e70-8808-6e5fa0c229c7",
+      "name": "National Coverage Determination Study \u2014 MRI (NCD 220.2)",
+      "policy_type": "COVERAGE",
+      "mechanism": "NCD_COVERAGE_STUDY",
+      "configuration_state": "REVIEW_ONLY",
+      "pdf": "HealthForesight_NCD_220_2_MRI_Mock_Policy.pdf"
+    },
+    {
+      "index": 3,
+      "policy_id": "20fe5bcf-f112-5033-a2c3-4702179e6652",
+      "name": "Local Coverage Determination Study \u2014 LCD L34425",
+      "policy_type": "COVERAGE",
+      "mechanism": "LCD_COVERAGE_STUDY",
+      "configuration_state": "REVIEW_ONLY",
+      "pdf": "HealthForesight_LCD_L34425_Study_Mock_Policy.pdf"
+    },
+    {
+      "index": 4,
+      "policy_id": "fce62ce1-1476-520d-81a6-daf0e9507743",
+      "name": "Infusion Site-of-Care and Reimbursement Policy",
+      "policy_type": "SITE_OF_CARE",
+      "mechanism": "INFUSION_SITE_OF_CARE",
+      "configuration_state": "BLOCKED",
+      "pdf": "HealthForesight_Infusion_Site_of_Care_Mock_Policy.pdf"
+    },
+    {
+      "index": 5,
+      "policy_id": "435e1461-b57e-5af3-ad08-e15aac690310",
+      "name": "Outpatient Therapy Utilization and Payment Policy",
+      "policy_type": "COVERAGE",
+      "mechanism": "THERAPY",
+      "configuration_state": "REVIEW_ONLY",
+      "pdf": "HealthForesight_Therapy_Outpatient_Therapy_Mock_Policy.pdf"
+    },
+    {
+      "index": 6,
+      "policy_id": "d65d0f7a-ab72-5dde-9cd0-1c75b79efc66",
+      "name": "Medically Unlikely Edit (MUE) / Unit Cap",
+      "policy_type": "CODING_AND_BILLING",
+      "mechanism": "UNIT_CAP",
+      "configuration_state": "BLOCKED",
+      "pdf": "HealthForesight_MUE_Medically_Unlikely_Edit_Mock_Policy.pdf"
+    },
+    {
+      "index": 7,
+      "policy_id": "1d6d3332-88fd-54ac-8227-2d2bf856ed5f",
+      "name": "Procedure-to-Procedure (PTP) Coding Edit",
+      "policy_type": "CODING_AND_BILLING",
+      "mechanism": "PTP_EDIT",
+      "configuration_state": "BLOCKED",
+      "pdf": "HealthForesight_PTP_Procedure_to_Procedure_Edit_Mock_Policy.pdf"
+    },
+    {
+      "index": 8,
+      "policy_id": "a9e032f8-d4fc-599c-8ea4-4e58a0f929e3",
+      "name": "Imaging Site-of-Service Policy",
+      "policy_type": "SITE_OF_CARE",
+      "mechanism": "SITE_OF_SERVICE",
+      "configuration_state": "BLOCKED",
+      "pdf": "HealthForesight_SOS_Imaging_Site_of_Service_Mock_Policy.pdf"
+    },
+    {
+      "index": 9,
+      "policy_id": "7e7f480d-dc95-50a9-bbab-77a8c225f81f",
+      "name": "Multiple Procedure Payment Reduction (MPPR)",
+      "policy_type": "PAYMENT_POLICY",
+      "mechanism": "PAYMENT_EDIT",
+      "configuration_state": "BLOCKED",
+      "pdf": "HealthForesight_MPPR_Multiple_Procedure_Payment_Reduction_Mock_Policy.pdf"
+    }
+  ],
+  "after_counts": {
+    "policies": 9,
+    "observations": 0,
+    "baselines": 0,
+    "policy_predicted_impacts": 0,
+    "policy_assumptions": 18,
+    "policy_guardrails": 18
+  },
+  "frontend_catalog_count": 9,
+  "frontend_expected_9": true,
+  "frontend_all_named": true,
+  "frontend_checks": [
+    {
+      "name": "Outpatient MRI Prior Authorization",
+      "ok": true,
+      "id": "d6339860-d85a-5dc5-babd-9c91390fde36",
+      "policy_type": "PRIOR_AUTH",
+      "type_match": true,
+      "has_scope": true,
+      "has_levers": true,
+      "configuration_state": "REVIEW_ONLY",
+      "remediation_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "workspace_assumptions": 2,
+      "workspace_guardrails": 2
+    },
+    {
+      "name": "National Coverage Determination Study \u2014 MRI (NCD 220.2)",
+      "ok": true,
+      "id": "b7e4ec54-64d6-5e70-8808-6e5fa0c229c7",
+      "policy_type": "COVERAGE",
+      "type_match": true,
+      "has_scope": true,
+      "has_levers": true,
+      "configuration_state": "REVIEW_ONLY",
+      "remediation_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "workspace_assumptions": 2,
+      "workspace_guardrails": 2
+    },
+    {
+      "name": "Local Coverage Determination Study \u2014 LCD L34425",
+      "ok": true,
+      "id": "20fe5bcf-f112-5033-a2c3-4702179e6652",
+      "policy_type": "COVERAGE",
+      "type_match": true,
+      "has_scope": true,
+      "has_levers": true,
+      "configuration_state": "REVIEW_ONLY",
+      "remediation_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "workspace_assumptions": 2,
+      "workspace_guardrails": 2
+    },
+    {
+      "name": "Infusion Site-of-Care and Reimbursement Policy",
+      "ok": true,
+      "id": "fce62ce1-1476-520d-81a6-daf0e9507743",
+      "policy_type": "SITE_OF_CARE",
+      "type_match": true,
+      "has_scope": true,
+      "has_levers": true,
+      "configuration_state": "BLOCKED",
+      "remediation_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "workspace_assumptions": 2,
+      "workspace_guardrails": 2
+    },
+    {
+      "name": "Outpatient Therapy Utilization and Payment Policy",
+      "ok": true,
+      "id": "435e1461-b57e-5af3-ad08-e15aac690310",
+      "policy_type": "COVERAGE",
+      "type_match": true,
+      "has_scope": true,
+      "has_levers": true,
+      "configuration_state": "REVIEW_ONLY",
+      "remediation_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "workspace_assumptions": 2,
+      "workspace_guardrails": 2
+    },
+    {
+      "name": "Medically Unlikely Edit (MUE) / Unit Cap",
+      "ok": true,
+      "id": "d65d0f7a-ab72-5dde-9cd0-1c75b79efc66",
+      "policy_type": "CODING_AND_BILLING",
+      "type_match": true,
+      "has_scope": true,
+      "has_levers": true,
+      "configuration_state": "BLOCKED",
+      "remediation_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "workspace_assumptions": 2,
+      "workspace_guardrails": 2
+    },
+    {
+      "name": "Procedure-to-Procedure (PTP) Coding Edit",
+      "ok": true,
+      "id": "1d6d3332-88fd-54ac-8227-2d2bf856ed5f",
+      "policy_type": "CODING_AND_BILLING",
+      "type_match": true,
+      "has_scope": true,
+      "has_levers": true,
+      "configuration_state": "BLOCKED",
+      "remediation_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "workspace_assumptions": 2,
+      "workspace_guardrails": 2
+    },
+    {
+      "name": "Imaging Site-of-Service Policy",
+      "ok": true,
+      "id": "a9e032f8-d4fc-599c-8ea4-4e58a0f929e3",
+      "policy_type": "SITE_OF_CARE",
+      "type_match": true,
+      "has_scope": true,
+      "has_levers": true,
+      "configuration_state": "BLOCKED",
+      "remediation_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "workspace_assumptions": 2,
+      "workspace_guardrails": 2
+    },
+    {
+      "name": "Multiple Procedure Payment Reduction (MPPR)",
+      "ok": true,
+      "id": "7e7f480d-dc95-50a9-bbab-77a8c225f81f",
+      "policy_type": "PAYMENT_POLICY",
+      "type_match": true,
+      "has_scope": true,
+      "has_levers": true,
+      "configuration_state": "BLOCKED",
+      "remediation_status": "BLOCK_CLAIMS_EXECUTION_PENDING_REMAP",
+      "workspace_assumptions": 2,
+      "workspace_guardrails": 2
+    }
+  ],
+  "pdf_dir": "/Users/nileshl/Private/HealthForesight/docs/production/releases/corrections/nine_mock_policies"
+}

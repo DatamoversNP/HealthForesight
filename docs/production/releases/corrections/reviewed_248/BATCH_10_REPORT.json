@@ -1,0 +1,244 @@
+{
+  "generated_at": "2026-11-07T12:17:14.442721+00:00",
+  "batch": 10,
+  "batch_size": 10,
+  "source_system": "SYNTHETIC_REVIEWED_248_V1",
+  "policies": [
+    {
+      "register_index": 91,
+      "name": "GLP-1 Coverage Criteria for Obesity",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 8639,
+        "baseline_members": 6162,
+        "baseline_allowed": 11162645.42,
+        "avg_allowed_per_line": 1292.1224007408264,
+        "observation_claims": 7189,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J3490"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "57cbad16-11c5-4647-b589-81295ad44416",
+        "prediction_id": "b968c599-4321-4699-a0f4-aa57ec58ff91",
+        "observations": 10,
+        "allowed_pmpm": 77.51837097222221,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 92,
+      "name": "GLP-1 Step Therapy for Type 2 Diabetes",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 14129,
+        "baseline_members": 8302,
+        "baseline_allowed": 18332468.84,
+        "avg_allowed_per_line": 1297.506464717956,
+        "observation_claims": 11895,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J1745",
+          "J2357",
+          "J0135"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "97085a85-4b0a-43db-88c0-4059edc997e3",
+        "prediction_id": "14766416-7951-497a-a8d2-31c2321e006c",
+        "observations": 10,
+        "allowed_pmpm": 127.30881138888888,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 93,
+      "name": "Growth Hormone Prior Authorization",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1620,
+        "baseline_allowed": 2252036.95,
+        "avg_allowed_per_line": 1303.2621238425927,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J2941",
+          "J2940",
+          "J3590"
+        ],
+        "service_category": "ed"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "6f09b20f-0380-4db8-8f57-50d48e6f5ab9",
+        "prediction_id": "28ea324a-9bc7-4ae1-951b-0d4970dd2c15",
+        "observations": 10,
+        "allowed_pmpm": 15.639145486111113,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 94,
+      "name": "Hearing Aid Benefit and Replacement Cycle",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 95,
+      "name": "Hearing Aid Coverage Criteria",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 96,
+      "name": "Heart Failure Disease Management Program",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 97,
+      "name": "Hepatitis C Direct-Acting Antiviral Prior Authorization",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 9505,
+        "baseline_members": 6568,
+        "baseline_allowed": 12298267.65,
+        "avg_allowed_per_line": 1293.873503419253,
+        "observation_claims": 7922,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J3490",
+          "S0145"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "3c732d9f-e715-48f8-8940-5111096c0af5",
+        "prediction_id": "a44728ae-35d6-452d-905c-db36a8a34900",
+        "observations": 10,
+        "allowed_pmpm": 85.40463645833334,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 98,
+      "name": "Hereditary Cancer Gene Panel Prior Authorization",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 99,
+      "name": "High-Risk Obstetrics Case Management Referral",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 100,
+      "name": "HIV Antiretroviral Formulary Management",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    }
+  ],
+  "population": {
+    "loaded": false,
+    "claims": 348744,
+    "members": 12000,
+    "source_system": "SYNTHETIC_REVIEWED_248_V1",
+    "book_mm_2025": 144000.0
+  },
+  "validation_summary": {
+    "policies_in_batch": 10,
+    "configured": 10,
+    "measurable_completed": 4,
+    "config_only": 6,
+    "thin_but_measured": 0,
+    "failed": 0,
+    "rate_continuity_checked": 4,
+    "pass": true
+  }
+}

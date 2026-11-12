@@ -1,0 +1,31 @@
+# Lean staging — Data Voyager brand (same API as HealthForesight staging web)
+# Separate file avoids ACR build-arg space breakage for "Data Voyager".
+FROM node:18-alpine AS builder
+
+WORKDIR /app
+
+COPY package.json ./
+RUN npm install || npm ci
+
+COPY . .
+
+ARG VITE_API_URL=
+ARG VITE_APP_BUILD=lean-stg-dv
+ENV VITE_API_URL=$VITE_API_URL \
+    VITE_APP_BUILD=$VITE_APP_BUILD \
+    VITE_APP_NAME="Data Voyager" \
+    VITE_APP_BYLINE="" \
+    VITE_LOGO_SRC=/brands/data-voyager/logo-color.png \
+    VITE_LOGO_ICON_SRC=/brands/data-voyager/logo-color-icon.png \
+    VITE_LOGO_ON_DARK_SRC=/brands/data-voyager/logo-reversed.png \
+    VITE_FAVICON=/brands/data-voyager/logo-color-icon.png \
+    VITE_APP_BAR_FULL_LOGO=true
+
+# Match demo Azure path: skip tsc gate (pre-existing MUI typing debt).
+RUN npm run build:skip-check
+
+FROM caddy:2.7-alpine
+COPY --from=builder /app/dist /usr/share/caddy
+COPY Caddyfile.lean-stg /etc/caddy/Caddyfile
+EXPOSE 80
+CMD ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]

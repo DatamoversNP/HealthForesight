@@ -223,9 +223,11 @@ export default function GuardrailsManager({
                     <Typography variant="body2" paragraph>
                       {guardrail.description}
                     </Typography>
+                    {guardrail.threshold_type !== 'definition' && (
                     <Typography variant="body2" color="text.secondary">
                       Threshold: {guardrail.threshold_type === 'max' ? 'Max' : guardrail.threshold_type === 'min' ? 'Min' : 'Change %'} = {guardrail.threshold_value}
                     </Typography>
+                    )}
                     {guardrail.triggered && guardrail.current_value !== undefined && (
                       <Typography variant="body2" color="error" sx={{ mt: 1 }}>
                         Current value: {guardrail.current_value} (exceeds threshold)

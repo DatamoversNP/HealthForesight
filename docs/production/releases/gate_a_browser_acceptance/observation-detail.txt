@@ -1,0 +1,217 @@
+HealthForesight
+by DataMovers
+View
+
+Policy Owner
+
+admin@healthforesight.com
+
+Dashboard
+Policy Verdicts
+Policies
+Policy rollout ideas
+Policy Impact & Guidance
+Objectives Health
+Medicare Rules
+Baseline Analysis
+Observation Analysis
+Observation Run History
+Predicted Impacts
+What-If Scenarios
+What-If run history
+Scorecards
+Cohorts
+Analyses
+Data & Ingestion
+Data Model
+Pipelines
+Pipeline Monitoring
+Run Workflow
+Data Quality
+Data Explorer
+Exports
+Schedules
+Notifications
+Decisions
+Lineage
+Documentation
+Product Manual
+QA Testing
+Database Viewer
+Audit Log
+Admin
+UI build
+lean-stg
+Observation Analysis
+Generate Claims Data
+Run Daily Job
+View Run History
+Create Observation
+Filter by Policy
+Filter by Policy
+9 Observations
+➡️ Stable Trend
+Current observations (latest per policy)
+
+Each tile is the most recent run for that policy (by observation period end). Click to open detail, trends, and recommendations.
+
+CKD Disease Management Program
+Through Sep 30, 2026
+BACKFIRE
+Focus Areas
+
+Latest observation per policy that needs attention (not every historical run).
+
+No critical issues found. All observations are within expected ranges.
+
+Observation Timeline (by run date)
+
+Each point = one run; X axis is "Through date" (observation period end).
+
+Claim lines per 1,000 claimants (not enrolled utilization) vs through date
+Jan 31
+Feb 28
+Mar 31
+Apr 30
+May 31
+Jun 30
+Jul 31
+Sep 30
+0
+350
+700
+1050
+1400
+Observed
+Paid $ / claimant-month (not enrolled PMPM) vs through date
+Jan 31
+Feb 28
+Mar 31
+Apr 30
+May 31
+Jun 30
+Jul 31
+Sep 30
+0
+450
+900
+1350
+1800
+Observed
+All observation runs (filtered policy)
+CKD Disease Management Program
+PERIODIC
+
+Observation Period: Jan 1, 2026 - Jan 31, 2026
+
+Backfire risk
+Executed: Nov 6, 2026 02:53
+Rerun
+Prediction Accuracy
+N/A
+Prediction not available for this policy yet
+Claim lines per 1,000 claimants (not enrolled utilization)
+1228.3
+CKD Disease Management Program
+PERIODIC
+
+Observation Period: Feb 1, 2026 - Feb 28, 2026
+
+Backfire risk
+Executed: Nov 6, 2026 02:53
+Rerun
+Prediction Accuracy
+N/A
+Prediction not available for this policy yet
+Claim lines per 1,000 claimants (not enrolled utilization)
+1228.3
+CKD Disease Management Program
+PERIODIC
+
+Observation Period: Mar 1, 2026 - Mar 31, 2026
+
+Backfire risk
+Executed: Nov 6, 2026 02:53
+Rerun
+Prediction Accuracy
+N/A
+Prediction not available for this policy yet
+Claim lines per 1,000 claimants (not enrolled utilization)
+1228.3
+CKD Disease Management Program
+PERIODIC
+
+Observation Period: Apr 1, 2026 - Apr 30, 2026
+
+Backfire risk
+Executed: Nov 6, 2026 02:53
+Rerun
+Prediction Accuracy
+N/A
+Prediction not available for this policy yet
+Claim lines per 1,000 claimants (not enrolled utilization)
+1222.2
+CKD Disease Management Program
+PERIODIC
+
+Observation Period: May 1, 2026 - May 31, 2026
+
+Backfire risk
+Executed: Nov 6, 2026 02:53
+Rerun
+Prediction Accuracy
+N/A
+Prediction not available for this policy yet
+Claim lines per 1,000 claimants (not enrolled utilization)
+1226.3
+CKD Disease Management Program
+PERIODIC
+
+Observation Period: Jun 1, 2026 - Jun 30, 2026
+
+Backfire risk
+Executed: Nov 6, 2026 02:53
+Rerun
+Prediction Accuracy
+N/A
+Prediction not available for this policy yet
+Claim lines per 1,000 claimants (not enrolled utilization)
+1222.1
+CKD Disease Management Program
+PERIODIC
+
+Observation Period: Jul 1, 2026 - Jul 31, 2026
+
+Backfire risk
+Executed: Nov 6, 2026 02:53
+Rerun
+Prediction Accuracy
+N/A
+Prediction not available for this policy yet
+Claim lines per 1,000 claimants (not enrolled utilization)
+1221.9
+CKD Disease Management Program
+PERIODIC
+
+Observation Period: Aug 1, 2026 - Aug 31, 2026
+
+Backfire risk
+Executed: Nov 6, 2026 02:53
+Rerun
+Prediction Accuracy
+N/A
+Prediction not available for this policy yet
+Claim lines per 1,000 claimants (not enrolled utilization)
+1222.7
+CKD Disease Management Program
+PERIODIC
+
+Observation Period: Sep 1, 2026 - Sep 30, 2026
+
+Backfire risk
+Executed: Nov 6, 2026 02:53
+Rerun
+Prediction Accuracy
+N/A
+Prediction not available for this policy yet
+Claim lines per 1,000 claimants (

@@ -67,7 +67,9 @@ import {
 } from 'recharts'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { apiClient } from '../lib/api'
+import PolicyMeasurementSeries from '../components/PolicyMeasurementSeries'
 import { format } from 'date-fns'
+import ObservationVerdict from '../components/ObservationVerdict'
 
 interface Observation {
   observation_id: string
@@ -85,6 +87,10 @@ interface Observation {
   verdict_reason?: string
   recommendation?: string
   verdict_rule_version?: string
+  screen_verdict?: string | null
+  screen_verdict_reason?: string | null
+  historical_verdict_status?: string | null
+  verdict_is_recomputed?: boolean
   analytics_run_id?: string
   metrics: {
     utilization_per_1k?: number
@@ -244,11 +250,11 @@ function buildPrescriptiveRecommendations(obs: Observation): string[] {
         : 'Utilization is materially below baseline—confirm whether this reflects intended policy effect or under-capture.'
     )
   }
-  if (obs.verdict_status === 'BACKFIRE') {
+  if (obs.screen_verdict === 'BACKFIRE') {
     lines.push('Escalate for clinical and network review; consider pausing intensification until drivers are understood.')
-  } else if (obs.verdict_status === 'AT_RISK') {
+  } else if (obs.screen_verdict === 'AT_RISK') {
     lines.push('Set explicit checkpoints and owner actions before the next observation window closes.')
-  } else if (obs.verdict_status === 'ON_TRACK') {
+  } else if (obs.screen_verdict === 'ON_TRACK') {
     lines.push('Keep standard governance; capture what is working for replication across similar policies.')
   }
   return [...new Set(lines)]
@@ -794,22 +800,7 @@ export default function ObservationAnalysisPage() {
                           ? format(new Date(obs.observation_period_end), 'MMM d, yyyy')
                           : format(new Date(obs.computed_at), 'MMM d, yyyy')}
                       </Typography>
-                      {obs.verdict_status && (
-                        <Chip
-                          size="small"
-                          sx={{ mt: 1 }}
-                          label={obs.verdict_status}
-                          color={
-                            obs.verdict_status === 'BACKFIRE'
-                              ? 'error'
-                              : obs.verdict_status === 'AT_RISK'
-                                ? 'warning'
-                                : obs.verdict_status === 'ON_TRACK'
-                                  ? 'success'
-                                  : 'default'
-                          }
-                        />
-                      )}
+                      <ObservationVerdict observation={obs} compact />
                       {acc != null && (
                         <Typography variant="body2" sx={{ mt: 1 }}>
                           Forecast fit:{' '}
@@ -922,6 +913,17 @@ export default function ObservationAnalysisPage() {
         )
       })()}
 
+      {selectedPolicy && (
+        <Card sx={{ mb: 3 }}>
+          <CardContent>
+            <Typography variant="h6" gutterBottom>
+              Monthly baseline and observed allowed
+            </Typography>
+            <PolicyMeasurementSeries policyId={selectedPolicy} />
+          </CardContent>
+        </Card>
+      )}
+
       {/* Observation timeline: X = run date (through date), Y = utilization/cost */}
       {selectedPolicy && observations.length > 1 && (
         <Card sx={{ mb: 3 }}>
@@ -1029,14 +1031,7 @@ export default function ObservationAnalysisPage() {
                           : 'N/A'}
                         {observation.observation_period_end && ` - ${format(new Date(observation.observation_period_end), 'MMM d, yyyy')}`}
                       </Typography>
-                      {observation.verdict_status && (
-                        <Chip
-                          size="small"
-                          label={observation.verdict_status === 'BACKFIRE' ? 'Backfire risk' : observation.verdict_status === 'AT_RISK' ? 'At risk' : observation.verdict_status === 'ON_TRACK' ? 'On track' : observation.verdict_status}
-                          color={observation.verdict_status === 'BACKFIRE' ? 'error' : observation.verdict_status === 'AT_RISK' ? 'warning' : observation.verdict_status === 'ON_TRACK' ? 'success' : 'default'}
-                          sx={{ mt: 0.5, fontWeight: 600 }}
-                        />
-                      )}
+                      <ObservationVerdict observation={observation} />
                       <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mt: 1 }}>
                         {observation.analysis_created_at && (
                           <Typography variant="caption" color="text.secondary">
@@ -1083,7 +1078,9 @@ export default function ObservationAnalysisPage() {
                           </Typography>
                           {(observation.comparisons.vs_predicted.prediction_accuracy_pct ?? null) == null && (
                             <Typography variant="caption" color="text.secondary" display="block">
-                              Prediction not available for this policy yet
+                              {observation.comparisons.vs_predicted.frozen_predicted_allowed != null
+                                ? 'Frozen total is stored. Accuracy % was not calculated.'
+                                : 'Prediction not available for this policy yet'}
                             </Typography>
                           )}
                         </Box>
@@ -1172,13 +1169,8 @@ export default function ObservationAnalysisPage() {
                     height: 24
                   }} 
                 />
-                {selectedObservation?.verdict_status && (
-                  <Chip
-                    size="small"
-                    label={selectedObservation.verdict_status === 'BACKFIRE' ? 'Backfire risk' : selectedObservation.verdict_status === 'AT_RISK' ? 'At risk' : selectedObservation.verdict_status === 'ON_TRACK' ? 'On track' : selectedObservation.verdict_status}
-                    color={selectedObservation.verdict_status === 'BACKFIRE' ? 'error' : selectedObservation.verdict_status === 'AT_RISK' ? 'warning' : selectedObservation.verdict_status === 'ON_TRACK' ? 'success' : 'default'}
-                    sx={{ fontWeight: 600, fontSize: '0.75rem', height: 24 }}
-                  />
+                {selectedObservation && (
+                  <ObservationVerdict observation={selectedObservation} />
                 )}
                 <Typography variant="body2" sx={{ opacity: 0.8, fontSize: '0.875rem' }}>
                   {selectedObservation?.observation_period_start 
@@ -1208,8 +1200,7 @@ export default function ObservationAnalysisPage() {
               </Box>
               {selectedObservation?.verdict_reason && (
                 <Typography variant="body2" sx={{ mt: 1, color: '#475569', maxWidth: 720 }}>
-                  <strong>Verdict:</strong> {selectedObservation.verdict_reason}
-                  {selectedObservation.recommendation && ` — ${selectedObservation.recommendation}`}
+                  <strong>Stored historical reason:</strong> {selectedObservation.verdict_reason}
                 </Typography>
               )}
             </Box>
@@ -1292,7 +1283,12 @@ export default function ObservationAnalysisPage() {
               >
               {tabValue === 0 && (
                 <Box>
-                  {observationHistoryForSelected.length >= 1 && (
+                  {selectedPolicy && (
+                    <Box sx={{ mb: 3 }}>
+                      <PolicyMeasurementSeries policyId={selectedPolicy} />
+                    </Box>
+                  )}
+                  {observationHistoryForSelected.some((obs) => obs.metrics?.utilization_per_1k != null) && (
                     <Box sx={{ mb: 4 }}>
                       <Typography variant="h6" sx={{ mb: 1, fontWeight: 600 }}>
                         How this policy is performing over time
@@ -1322,7 +1318,7 @@ export default function ObservationAnalysisPage() {
                                       new Date(obs.observation_period_end || obs.computed_at),
                                       'MMM d'
                                     ),
-                                    observed: obs.metrics?.utilization_per_1k ?? 0,
+                                    observed: obs.metrics?.utilization_per_1k ?? null,
                                     baseline: baselineUtil,
                                     predicted:
                                       vp?.predicted_utilization_per_1k ??
@@ -1582,7 +1578,11 @@ export default function ObservationAnalysisPage() {
                             lineHeight: 1.2,
                             color: '#0F172A'
                           }}>
-                                {selectedObservation.metrics.utilization_per_1k?.toFixed(1) || 'N/A'}
+                                {(
+                                  selectedObservation.metrics.utilization_per_1k ??
+                                  selectedObservation.metrics.services_per_1k_member_years ??
+                                  selectedObservation.metrics.util_rate_total_per_1000_mm
+                                )?.toFixed?.(1) || 'N/A'}
                           </Typography>
                         </CardContent>
                       </Card>
@@ -1613,7 +1613,12 @@ export default function ObservationAnalysisPage() {
                             letterSpacing: '-0.02em',
                             lineHeight: 1.2
                           }}>
-                                ${selectedObservation.metrics.cost_per_member?.toFixed(2) || 'N/A'}
+                                ${(
+                                  selectedObservation.metrics.cost_per_member ??
+                                  selectedObservation.metrics.allowed_pmpm ??
+                                  selectedObservation.metrics.cost_pmpm ??
+                                  selectedObservation.metrics.paid_pmpm
+                                )?.toFixed?.(2) || 'N/A'}
                           </Typography>
                         </CardContent>
                       </Card>
@@ -1739,7 +1744,11 @@ export default function ObservationAnalysisPage() {
                                 color: '#0F172A',
                                 fontSize: '1.125rem'
                               }}>
-                                {selectedObservation.metrics.utilization_per_1k?.toFixed(1) || 'N/A'}
+                                {(
+                                  selectedObservation.metrics.utilization_per_1k ??
+                                  selectedObservation.metrics.services_per_1k_member_years ??
+                                  selectedObservation.metrics.util_rate_total_per_1000_mm
+                                )?.toFixed?.(1) || 'N/A'}
                               </Typography>
                             </Box>
                             <Box sx={{ 
@@ -1761,7 +1770,12 @@ export default function ObservationAnalysisPage() {
                                 color: '#0F172A',
                                 fontSize: '1.125rem'
                               }}>
-                                ${selectedObservation.metrics.cost_pmpm?.toFixed(2) || selectedObservation.metrics.cost_per_member?.toFixed(2) || 'N/A'}
+                                ${(
+                                  selectedObservation.metrics.cost_pmpm ??
+                                  selectedObservation.metrics.cost_per_member ??
+                                  selectedObservation.metrics.allowed_pmpm ??
+                                  selectedObservation.metrics.paid_pmpm
+                                )?.toFixed?.(2) || 'N/A'}
                               </Typography>
                             </Box>
                             <Box sx={{ 
@@ -2230,7 +2244,8 @@ export default function ObservationAnalysisPage() {
                                     ? '#1B5E20'
                                     : '#B71C1C'
                                 }}>
-                                  Change in paid $ / claimant-month (not enrolled PMPM)
+                                  {selectedObservation.comparisons.vs_baseline?.cost_change_meaning
+                                    || 'Change in paid $ / claimant-month (not enrolled PMPM)'}
                                 </Typography>
                               </Box>
                               <Typography variant="h6" fontWeight={700} sx={{ 
@@ -2268,22 +2283,18 @@ export default function ObservationAnalysisPage() {
                     Policy-Specific Baseline vs Observed Comparison
                   </Typography>
                   
-                  {!selectedObservation.comparisons.vs_policy_baseline ? (
+                  {!(selectedObservation.comparisons.vs_policy_baseline || selectedObservation.comparisons.vs_baseline) ? (
                     <Alert severity="info" sx={{ mb: 3 }}>
                       <Typography variant="body2">
-                        Policy-specific baseline data is not available for this observation. 
-                        This may occur if:
-                      </Typography>
-                      <Typography component="ul" variant="body2" sx={{ mt: 1, pl: 2 }}>
-                        <li>No policy-specific baseline has been computed yet</li>
-                        <li>The policy baseline analysis is still in progress</li>
-                        <li>The observation was created before policy-specific baselines were available</li>
-                      </Typography>
-                      <Typography variant="body2" sx={{ mt: 1 }}>
-                        Please run a policy-specific baseline analysis from the Baseline Analysis page to generate this comparison.
+                        This observation does not have a claimant-month policy baseline profile yet. Period totals remain on the overview chart.
                       </Typography>
                     </Alert>
                   ) : (
+                    (() => {
+                      if (!selectedObservation.comparisons.vs_policy_baseline && selectedObservation.comparisons.vs_baseline) {
+                        selectedObservation.comparisons.vs_policy_baseline = selectedObservation.comparisons.vs_baseline
+                      }
+                      return (
                   <Grid container spacing={3}>
                     {/* Utilization Metrics */}
                       <Grid item xs={12} md={6}>
@@ -2518,27 +2529,27 @@ export default function ObservationAnalysisPage() {
 
                           <Box sx={{ 
                             p: 3, 
-                            bgcolor: (selectedObservation.comparisons.vs_policy_baseline.cost_change_pct || 0) < 0
+                            bgcolor: (selectedObservation.comparisons.vs_policy_baseline?.cost_change_pct || 0) < 0
                               ? '#E8F5E9'
                               : '#FFEBEE',
-                            color: (selectedObservation.comparisons.vs_policy_baseline.cost_change_pct || 0) < 0
+                            color: (selectedObservation.comparisons.vs_policy_baseline?.cost_change_pct || 0) < 0
                               ? '#1B5E20'
                               : '#B71C1C',
                             border: '1px solid',
-                            borderColor: (selectedObservation.comparisons.vs_policy_baseline.cost_change_pct || 0) < 0
+                            borderColor: (selectedObservation.comparisons.vs_policy_baseline?.cost_change_pct || 0) < 0
                               ? '#C8E6C9'
                               : '#FFCDD2'
                           }}>
                             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
                               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                {(selectedObservation.comparisons.vs_policy_baseline.cost_change_pct || 0) < 0 ? (
+                                {(selectedObservation.comparisons.vs_policy_baseline?.cost_change_pct || 0) < 0 ? (
                                   <TrendingDownIcon sx={{ fontSize: 20, color: '#2E8B57' }} />
                                 ) : (
                                   <TrendingUpIcon sx={{ fontSize: 20, color: '#C04A4A' }} />
                                 )}
                                 <Typography variant="body2" fontWeight={600} sx={{ 
                                   fontSize: '0.875rem', 
-                                  color: (selectedObservation.comparisons.vs_policy_baseline.cost_change_pct || 0) < 0
+                                  color: (selectedObservation.comparisons.vs_policy_baseline?.cost_change_pct || 0) < 0
                                     ? '#1B5E20'
                                     : '#B71C1C'
                                 }}>
@@ -2547,7 +2558,7 @@ export default function ObservationAnalysisPage() {
                               </Box>
                               <Typography variant="h6" fontWeight={700} sx={{ 
                                 fontSize: '1.125rem', 
-                                color: (selectedObservation.comparisons.vs_policy_baseline.cost_change_pct || 0) < 0
+                                color: (selectedObservation.comparisons.vs_policy_baseline?.cost_change_pct || 0) < 0
                                   ? '#2E8B57'
                                   : '#C04A4A'
                               }}>
@@ -2558,7 +2569,7 @@ export default function ObservationAnalysisPage() {
                             <Typography variant="h4" fontWeight={700} sx={{ 
                               letterSpacing: '-0.02em',
                               lineHeight: 1.2,
-                              color: (selectedObservation.comparisons.vs_policy_baseline.cost_change_pct || 0) < 0
+                              color: (selectedObservation.comparisons.vs_policy_baseline?.cost_change_pct || 0) < 0
                                 ? '#2E8B57'
                                 : '#C04A4A'
                             }}>
@@ -2570,6 +2581,8 @@ export default function ObservationAnalysisPage() {
                 </Card>
                     </Grid>
                   </Grid>
+                      )
+                    })()
                   )}
                 </Box>
               )}
@@ -2644,7 +2657,9 @@ export default function ObservationAnalysisPage() {
                                 </Typography>
                           {(selectedObservation.comparisons.vs_predicted.prediction_accuracy_pct ?? null) == null && (
                             <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                              Prediction not available for this policy yet
+                              {selectedObservation.comparisons.vs_predicted.frozen_predicted_allowed != null
+                                ? `Frozen prediction $${Number(selectedObservation.comparisons.vs_predicted.frozen_predicted_allowed).toLocaleString()}. Observed $${Number(selectedObservation.comparisons.vs_predicted.observed_allowed ?? 0).toLocaleString()}. Difference $${Number(selectedObservation.comparisons.vs_predicted.difference ?? 0).toLocaleString()}. No accuracy percentage was calculated.`
+                                : 'Prediction not available for this policy yet'}
                             </Typography>
                           )}
                         </Box>

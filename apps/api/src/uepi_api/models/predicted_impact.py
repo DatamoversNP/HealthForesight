@@ -25,6 +25,10 @@ except ImportError:
 
 from uepi_api.database import Base
 
+# Register Baseline before relationship() string resolution. models/__init__ is lazy,
+# so importing this module alone otherwise fails mapper init with "Baseline" not found.
+from uepi_api.models.baseline import Baseline as Baseline  # noqa: F401
+
 
 class PolicyPredictedImpact(Base):
     """Policy predicted impact - stored in database (replaces file-based storage)"""

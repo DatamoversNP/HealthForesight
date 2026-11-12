@@ -217,9 +217,12 @@ def build_objectives_health_snapshot(
             "description": "Policy-level forecasts with ranges and validity window",
             "count": len(forecast_id_list),
             "total": total,
-            "why_met": _why(len(forecast_id_list), "forecasts")
-            if total
-            else "No policies in portfolio.",
+            "why_met": (
+                f"{len(forecast_id_list)} of {total} policies have a stored forecast. "
+                "A continuation forecast is not a demonstrated medical-cost outcome."
+                if total
+                else "No policies in portfolio."
+            ),
             "policy_ids": forecast_id_list,
         },
         {
@@ -242,7 +245,13 @@ def build_objectives_health_snapshot(
             "description": "Single impact verdict per policy (expected vs observed, attribution)",
             "count": len(observation_ids),
             "total": total,
-            "why_met": _why(len(observation_ids), "an impact verdict (from observation)"),
+            "why_met": (
+                f"{len(observation_ids)} of {total} policies have an observation. "
+                "An observation is not an achieved policy objective. "
+                "Verdicts stay inconclusive without an endpoint contract."
+                if total
+                else "No policies in portfolio."
+            ),
             "policy_ids": observation_ids,
         },
         {
@@ -269,13 +278,25 @@ def build_objectives_health_snapshot(
             "description": "Auto-generated evidence packs (pre-policy, observed, mitigations, confidence)",
             "count": len(evidence_ready),
             "total": total,
-            "why_met": _why(len(evidence_ready), "evidence-pack-ready data (forecast + observation)"),
+            "why_met": (
+                f"{len(evidence_ready)} of {total} policies have both a forecast and an observation. "
+                "That pairing is not an evidence pack and is not demonstrated regulator confidence."
+                if total
+                else "No policies in portfolio."
+            ),
             "policy_ids": evidence_ready,
         },
     ]
 
-    # "Met" = at least one policy contributes — preserved product semantics, but explicit
-    objectives_met_count = sum(1 for s in strategic if s["count"] > 0)
+    # A stored forecast or observation does not meet an objective.
+    # Met requires a supported ON_TRACK verdict. None of these policies have one.
+    objectives_met_count = 1 if any(r.get("verdict") == "ON_TRACK" for r in policy_rows) else 0
+    objectives_met_note = (
+        "No strategic objective is met. Stored forecasts and observations are not achieved policy objectives. "
+        "Verdicts remain inconclusive without an endpoint contract."
+        if objectives_met_count == 0
+        else "At least one policy has a supported on-track verdict."
+    )
 
     return {
         "calculation_version": CALCULATION_VERSION,
@@ -283,6 +304,7 @@ def build_objectives_health_snapshot(
         "tenant_id": str(tenant_id),
         "summary": summary,
         "objectives_met_count": objectives_met_count,
+        "objectives_met_note": objectives_met_note,
         "policy_rows": policy_rows,
         "strategic": strategic,
         "stability": {

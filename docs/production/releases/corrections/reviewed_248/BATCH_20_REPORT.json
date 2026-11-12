@@ -1,0 +1,273 @@
+{
+  "generated_at": "2026-11-07T12:39:31.585567+00:00",
+  "batch": 20,
+  "batch_size": 10,
+  "source_system": "SYNTHETIC_REVIEWED_248_V1",
+  "policies": [
+    {
+      "register_index": 193,
+      "name": "Preferred Laboratory Network Steerage",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1599,
+        "baseline_allowed": 854766.78,
+        "avg_allowed_per_line": 494.6567013888889,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "80053",
+          "85025",
+          "80061",
+          "84443"
+        ],
+        "service_category": "surgery"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "bc015cad-97ae-4962-a150-7de27fe41b3f",
+        "prediction_id": "e3d56382-6d17-43e9-a351-44314e6122fb",
+        "observations": 10,
+        "allowed_pmpm": 5.9358804166666665,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 194,
+      "name": "Preferred Pharmacy Network Policy",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 195,
+      "name": "Prior Authorization Submission and Turnaround Standards",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 196,
+      "name": "Private Duty Nursing Prior Authorization",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 3456,
+        "baseline_members": 2965,
+        "baseline_allowed": 778728.92,
+        "avg_allowed_per_line": 225.3266550925926,
+        "observation_claims": 2880,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "G0151",
+          "G0154",
+          "99500"
+        ],
+        "service_category": "home"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "f307674e-8a6a-445f-8832-4e27ee0e38bc",
+        "prediction_id": "f8a1efab-f869-4995-b993-c8d6683c5b52",
+        "observations": 10,
+        "allowed_pmpm": 5.4078397222222225,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 197,
+      "name": "Prostate Procedure Prior Authorization",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 198,
+      "name": "Prosthetic Limb Prior Authorization",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 5184,
+        "baseline_members": 4236,
+        "baseline_allowed": 2572748.85,
+        "avg_allowed_per_line": 496.2864293981482,
+        "observation_claims": 4320,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "E0143",
+          "E1390",
+          "K0001",
+          "L4360",
+          "E0601"
+        ],
+        "service_category": "dme"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "8f58da9a-5f9e-4961-930f-684130f92547",
+        "prediction_id": "78a70964-1402-40d8-87cc-ddb9c40ef721",
+        "observations": 10,
+        "allowed_pmpm": 17.866311458333335,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 199,
+      "name": "Proton Beam Therapy Coverage Criteria",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 3456,
+        "baseline_members": 2980,
+        "baseline_allowed": 5019416.67,
+        "avg_allowed_per_line": 1452.3775086805556,
+        "observation_claims": 2880,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "77301",
+          "77427",
+          "77385",
+          "77386",
+          "77761"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "979907e5-4997-4fb6-84a5-3870f02200e4",
+        "prediction_id": "bb7c113d-e889-4601-974c-d69e18e98adf",
+        "observations": 10,
+        "allowed_pmpm": 34.85706020833333,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 200,
+      "name": "Provider Reconsideration / Dispute Process",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 201,
+      "name": "Provider Specialty Eligibility for High-Cost Codes",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 202,
+      "name": "Psychiatric Inpatient Prior Authorization",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 14261,
+        "baseline_members": 8386,
+        "baseline_allowed": 3227970.77,
+        "avg_allowed_per_line": 226.3495386017811,
+        "observation_claims": 11878,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99221",
+          "99222",
+          "99223",
+          "99231",
+          "99232",
+          "99233"
+        ],
+        "service_category": "inpatient"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "27498cc4-312c-414c-9205-369c7121063a",
+        "prediction_id": "107bb95d-e3d6-4772-a087-0c3482ffa70d",
+        "observations": 10,
+        "allowed_pmpm": 22.416463680555555,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    }
+  ],
+  "population": {
+    "loaded": false,
+    "claims": 348744,
+    "members": 12000,
+    "source_system": "SYNTHETIC_REVIEWED_248_V1",
+    "book_mm_2025": 144000.0
+  },
+  "validation_summary": {
+    "policies_in_batch": 10,
+    "configured": 10,
+    "measurable_completed": 5,
+    "config_only": 5,
+    "thin_but_measured": 0,
+    "failed": 0,
+    "rate_continuity_checked": 5,
+    "pass": true
+  }
+}

@@ -1,0 +1,460 @@
+{
+  "generated_at": "2026-11-07T07:58:48.778708+00:00",
+  "database": "hfleanstg",
+  "measurement_book": "SYNTHETIC_NINE_POLICY_5K_V1",
+  "window": [
+    "2025-01-01",
+    "2025-12-31"
+  ],
+  "preserves_prior_baselines": true,
+  "baselines": [
+    {
+      "policy_id": "a9e032f8-d4fc-599c-8ea4-4e58a0f929e3",
+      "name": "Imaging Site-of-Service Policy",
+      "policy_key": "sos",
+      "status": "CREATED",
+      "baseline_id": "b82982c9-f64a-47b2-8887-5cd073e831e5",
+      "version": 3,
+      "total_claims": 4448,
+      "claim_headers": 4448,
+      "unique_members": 2221,
+      "member_months": 60000.0,
+      "total_allowed": 6893485.81,
+      "avg_allowed_per_line": 1549.7944716726618,
+      "allowed_pmpm_target": 114.89143016666667,
+      "prior_combined_book_pmpm": 114.89143016666667,
+      "filters": {
+        "codes": [
+          "72148",
+          "72149"
+        ],
+        "service_categories": [
+          "sos"
+        ],
+        "source_system": "SYNTHETIC_NINE_POLICY_5K_V1",
+        "lob": null,
+        "markets": null
+      }
+    },
+    {
+      "policy_id": "fce62ce1-1476-520d-81a6-daf0e9507743",
+      "name": "Infusion Site-of-Care and Reimbursement Policy",
+      "policy_key": "infusion",
+      "status": "CREATED",
+      "baseline_id": "326c9290-9544-4251-8fd1-f73586a38678",
+      "version": 3,
+      "total_claims": 1094,
+      "claim_headers": 1094,
+      "unique_members": 556,
+      "member_months": 60000.0,
+      "total_allowed": 2377903.4,
+      "avg_allowed_per_line": 2173.5862888482634,
+      "allowed_pmpm_target": 39.63172333333333,
+      "prior_combined_book_pmpm": 39.63172333333333,
+      "filters": {
+        "codes": [
+          "96413",
+          "J1745"
+        ],
+        "service_categories": [
+          "infusion"
+        ],
+        "source_system": "SYNTHETIC_NINE_POLICY_5K_V1",
+        "lob": null,
+        "markets": null
+      }
+    },
+    {
+      "policy_id": "20fe5bcf-f112-5033-a2c3-4702179e6652",
+      "name": "Local Coverage Determination Study \u2014 LCD L34425",
+      "policy_key": "lcd",
+      "status": "CREATED",
+      "baseline_id": "edef24ed-4545-4a72-85d7-c9550208bf6b",
+      "version": 3,
+      "total_claims": 1105,
+      "claim_headers": 1105,
+      "unique_members": 556,
+      "member_months": 60000.0,
+      "total_allowed": 1153172.73,
+      "avg_allowed_per_line": 1043.5952307692307,
+      "allowed_pmpm_target": 19.2195455,
+      "prior_combined_book_pmpm": 19.2195455,
+      "filters": {
+        "codes": [
+          "70540",
+          "70542"
+        ],
+        "service_categories": [
+          "lcd"
+        ],
+        "source_system": "SYNTHETIC_NINE_POLICY_5K_V1",
+        "lob": null,
+        "markets": null
+      }
+    },
+    {
+      "policy_id": "d65d0f7a-ab72-5dde-9cd0-1c75b79efc66",
+      "name": "Medically Unlikely Edit (MUE) / Unit Cap",
+      "policy_key": "mue",
+      "status": "CREATED",
+      "baseline_id": "26053c55-dfce-45aa-a87d-2fac5b643c96",
+      "version": 3,
+      "total_claims": 1087,
+      "claim_headers": 1087,
+      "unique_members": 555,
+      "member_months": 60000.0,
+      "total_allowed": 465875.31,
+      "avg_allowed_per_line": 428.58814167433303,
+      "allowed_pmpm_target": 7.7645885,
+      "prior_combined_book_pmpm": 7.7645885,
+      "filters": {
+        "codes": [
+          "97110"
+        ],
+        "service_categories": [
+          "mue"
+        ],
+        "source_system": "SYNTHETIC_NINE_POLICY_5K_V1",
+        "lob": null,
+        "markets": null
+      }
+    },
+    {
+      "policy_id": "7e7f480d-dc95-50a9-bbab-77a8c225f81f",
+      "name": "Multiple Procedure Payment Reduction (MPPR)",
+      "policy_key": "mppr",
+      "status": "CREATED",
+      "baseline_id": "bd7a8ccd-6066-4bc6-b691-3b097facaa68",
+      "version": 3,
+      "total_claims": 2150,
+      "claim_headers": 1075,
+      "unique_members": 555,
+      "member_months": 60000.0,
+      "total_allowed": 3923347.28,
+      "avg_allowed_per_line": 1824.812688372093,
+      "allowed_pmpm_target": 65.38912133333334,
+      "prior_combined_book_pmpm": 65.38912133333334,
+      "filters": {
+        "codes": [
+          "27447",
+          "64483"
+        ],
+        "service_categories": [
+          "mppr"
+        ],
+        "source_system": "SYNTHETIC_NINE_POLICY_5K_V1",
+        "lob": null,
+        "markets": null
+      }
+    },
+    {
+      "policy_id": "b7e4ec54-64d6-5e70-8808-6e5fa0c229c7",
+      "name": "National Coverage Determination Study \u2014 MRI (NCD 220.2)",
+      "policy_key": "ncd",
+      "status": "CREATED",
+      "baseline_id": "52ed66cc-f0ca-4032-b309-c61bad392289",
+      "version": 3,
+      "total_claims": 4418,
+      "claim_headers": 4418,
+      "unique_members": 2223,
+      "member_months": 60000.0,
+      "total_allowed": 5513498.66,
+      "avg_allowed_per_line": 1247.9625758261657,
+      "allowed_pmpm_target": 91.89164433333333,
+      "prior_combined_book_pmpm": 91.89164433333333,
+      "filters": {
+        "codes": [
+          "70551",
+          "70553"
+        ],
+        "service_categories": [
+          "ncd"
+        ],
+        "source_system": "SYNTHETIC_NINE_POLICY_5K_V1",
+        "lob": null,
+        "markets": null
+      }
+    },
+    {
+      "policy_id": "d6339860-d85a-5dc5-babd-9c91390fde36",
+      "name": "Outpatient MRI Prior Authorization",
+      "policy_key": "mri",
+      "status": "CREATED",
+      "baseline_id": "9cec5f6f-6f87-4898-9520-93f55bdd1b4b",
+      "version": 3,
+      "total_claims": 1128,
+      "claim_headers": 1128,
+      "unique_members": 556,
+      "member_months": 60000.0,
+      "total_allowed": 1748106.67,
+      "avg_allowed_per_line": 1549.7399556737587,
+      "allowed_pmpm_target": 29.135111166666665,
+      "prior_combined_book_pmpm": 29.135111166666665,
+      "filters": {
+        "codes": [
+          "72148",
+          "72149"
+        ],
+        "service_categories": [
+          "mri"
+        ],
+        "source_system": "SYNTHETIC_NINE_POLICY_5K_V1",
+        "lob": null,
+        "markets": null
+      }
+    },
+    {
+      "policy_id": "435e1461-b57e-5af3-ad08-e15aac690310",
+      "name": "Outpatient Therapy Utilization and Payment Policy",
+      "policy_key": "therapy",
+      "status": "CREATED",
+      "baseline_id": "80648d15-6cda-424f-8fe2-dc297827a4db",
+      "version": 3,
+      "total_claims": 3333,
+      "claim_headers": 3333,
+      "unique_members": 1667,
+      "member_months": 60000.0,
+      "total_allowed": 416737.7,
+      "avg_allowed_per_line": 125.03381338133813,
+      "allowed_pmpm_target": 6.9456283333333335,
+      "prior_combined_book_pmpm": 6.9456283333333335,
+      "filters": {
+        "codes": [
+          "97110",
+          "97112",
+          "97140"
+        ],
+        "service_categories": [
+          "therapy"
+        ],
+        "source_system": "SYNTHETIC_NINE_POLICY_5K_V1",
+        "lob": null,
+        "markets": null
+      }
+    },
+    {
+      "policy_id": "1d6d3332-88fd-54ac-8227-2d2bf856ed5f",
+      "name": "Procedure-to-Procedure (PTP) Coding Edit",
+      "policy_key": "ptp",
+      "status": "CREATED",
+      "baseline_id": "a017f928-8b15-4a9f-9da1-f1326cc7b10f",
+      "version": 3,
+      "total_claims": 2262,
+      "claim_headers": 1131,
+      "unique_members": 555,
+      "member_months": 60000.0,
+      "total_allowed": 2315132.18,
+      "avg_allowed_per_line": 1023.4890274093723,
+      "allowed_pmpm_target": 38.58553633333334,
+      "prior_combined_book_pmpm": 38.58553633333334,
+      "filters": {
+        "codes": [
+          "70551",
+          "70553"
+        ],
+        "service_categories": [
+          "ptp"
+        ],
+        "source_system": "SYNTHETIC_NINE_POLICY_5K_V1",
+        "lob": null,
+        "markets": null
+      }
+    }
+  ],
+  "prior_baselines_left_in_place": [
+    {
+      "baseline_id": "e668addf-f273-4b4d-b5a9-1e88e53f0d41",
+      "version": 1,
+      "policy_id": "a9e032f8-d4fc-599c-8ea4-4e58a0f929e3",
+      "name": "Imaging Site-of-Service Policy",
+      "total_claims": "11255",
+      "total_allowed": "13051195.57",
+      "allowed_pmpm": "2.349746554503575",
+      "member_months": "5554299.26899384"
+    },
+    {
+      "baseline_id": "a11c0141-c889-4764-af3b-d907527712c4",
+      "version": 2,
+      "policy_id": "a9e032f8-d4fc-599c-8ea4-4e58a0f929e3",
+      "name": "Imaging Site-of-Service Policy",
+      "total_claims": "4448",
+      "total_allowed": "6893485.81",
+      "allowed_pmpm": "114.89143016666667",
+      "member_months": "60000.0"
+    },
+    {
+      "baseline_id": "ddfb032d-d467-45ab-b9f5-db9d15bb0f8b",
+      "version": 1,
+      "policy_id": "fce62ce1-1476-520d-81a6-daf0e9507743",
+      "name": "Infusion Site-of-Care and Reimbursement Policy",
+      "total_claims": "7091",
+      "total_allowed": "29069581.39",
+      "allowed_pmpm": "5.233708156900582",
+      "member_months": "5554299.26899384"
+    },
+    {
+      "baseline_id": "4e07a059-a720-495f-b9d6-a8f8e329fbf0",
+      "version": 2,
+      "policy_id": "fce62ce1-1476-520d-81a6-daf0e9507743",
+      "name": "Infusion Site-of-Care and Reimbursement Policy",
+      "total_claims": "1094",
+      "total_allowed": "2377903.4",
+      "allowed_pmpm": "39.63172333333333",
+      "member_months": "60000.0"
+    },
+    {
+      "baseline_id": "2d1ec398-d9de-4123-9be3-e587f3a75664",
+      "version": 1,
+      "policy_id": "20fe5bcf-f112-5033-a2c3-4702179e6652",
+      "name": "Local Coverage Determination Study \u2014 LCD L34425",
+      "total_claims": "7212",
+      "total_allowed": "5139412.54",
+      "allowed_pmpm": "0.925303497542905",
+      "member_months": "5554299.26899384"
+    },
+    {
+      "baseline_id": "4b0d245a-72b2-4aae-9d1a-8628efba2340",
+      "version": 2,
+      "policy_id": "20fe5bcf-f112-5033-a2c3-4702179e6652",
+      "name": "Local Coverage Determination Study \u2014 LCD L34425",
+      "total_claims": "1105",
+      "total_allowed": "1153172.73",
+      "allowed_pmpm": "19.2195455",
+      "member_months": "60000.0"
+    },
+    {
+      "baseline_id": "7a01af49-5b39-43e2-8f0d-d06f81d6a0f9",
+      "version": 1,
+      "policy_id": "d65d0f7a-ab72-5dde-9cd0-1c75b79efc66",
+      "name": "Medically Unlikely Edit (MUE) / Unit Cap",
+      "total_claims": "6467",
+      "total_allowed": "2009833.24",
+      "allowed_pmpm": "0.361851809321769",
+      "member_months": "5554299.26899384"
+    },
+    {
+      "baseline_id": "604ae1ac-b976-48d0-8dfe-59cc1da779c0",
+      "version": 2,
+      "policy_id": "d65d0f7a-ab72-5dde-9cd0-1c75b79efc66",
+      "name": "Medically Unlikely Edit (MUE) / Unit Cap",
+      "total_claims": "1087",
+      "total_allowed": "465875.31",
+      "allowed_pmpm": "7.7645885",
+      "member_months": "60000.0"
+    },
+    {
+      "baseline_id": "fc18f4c6-2f23-40d4-a59b-2627a4bb9fd8",
+      "version": 1,
+      "policy_id": "7e7f480d-dc95-50a9-bbab-77a8c225f81f",
+      "name": "Multiple Procedure Payment Reduction (MPPR)",
+      "total_claims": "22580",
+      "total_allowed": "22397807.79",
+      "allowed_pmpm": "4.032517281708762",
+      "member_months": "5554299.26899384"
+    },
+    {
+      "baseline_id": "963f57e0-6a62-46d8-9270-a2510b47a123",
+      "version": 2,
+      "policy_id": "7e7f480d-dc95-50a9-bbab-77a8c225f81f",
+      "name": "Multiple Procedure Payment Reduction (MPPR)",
+      "total_claims": "2150",
+      "total_allowed": "3923347.28",
+      "allowed_pmpm": "65.38912133333334",
+      "member_months": "60000.0"
+    },
+    {
+      "baseline_id": "6751714c-b647-42c9-b424-6dd6542e15fa",
+      "version": 1,
+      "policy_id": "b7e4ec54-64d6-5e70-8808-6e5fa0c229c7",
+      "name": "National Coverage Determination Study \u2014 MRI (NCD 220.2)",
+      "total_claims": "10181",
+      "total_allowed": "9565560.52",
+      "allowed_pmpm": "1.7221903352234744",
+      "member_months": "5554299.26899384"
+    },
+    {
+      "baseline_id": "e90a6ca6-3081-4f44-b3ee-fe3a85c6fe8e",
+      "version": 2,
+      "policy_id": "b7e4ec54-64d6-5e70-8808-6e5fa0c229c7",
+      "name": "National Coverage Determination Study \u2014 MRI (NCD 220.2)",
+      "total_claims": "4418",
+      "total_allowed": "5513498.66",
+      "allowed_pmpm": "91.89164433333333",
+      "member_months": "60000.0"
+    },
+    {
+      "baseline_id": "fc67b40c-e1b9-40a7-963e-72f1163896fa",
+      "version": 1,
+      "policy_id": "d6339860-d85a-5dc5-babd-9c91390fde36",
+      "name": "Outpatient MRI Prior Authorization",
+      "total_claims": "14396",
+      "total_allowed": "13747869.5",
+      "allowed_pmpm": "2.4751762255133984",
+      "member_months": "5554299.26899384"
+    },
+    {
+      "baseline_id": "7bf3bc0b-237a-4aee-ba0b-a404080b709d",
+      "version": 2,
+      "policy_id": "d6339860-d85a-5dc5-babd-9c91390fde36",
+      "name": "Outpatient MRI Prior Authorization",
+      "total_claims": "1128",
+      "total_allowed": "1748106.67",
+      "allowed_pmpm": "29.135111166666665",
+      "member_months": "60000.0"
+    },
+    {
+      "baseline_id": "82ac2c0c-80a1-42af-bfff-3c9cc2a06b5d",
+      "version": 1,
+      "policy_id": "435e1461-b57e-5af3-ad08-e15aac690310",
+      "name": "Outpatient Therapy Utilization and Payment Policy",
+      "total_claims": "9782",
+      "total_allowed": "2281618.2",
+      "allowed_pmpm": "0.41078416727324",
+      "member_months": "5554299.26899384"
+    },
+    {
+      "baseline_id": "df8a5c73-1964-4d0e-85eb-43ba4d7fd7c5",
+      "version": 2,
+      "policy_id": "435e1461-b57e-5af3-ad08-e15aac690310",
+      "name": "Outpatient Therapy Utilization and Payment Policy",
+      "total_claims": "3333",
+      "total_allowed": "416737.7",
+      "allowed_pmpm": "6.9456283333333335",
+      "member_months": "60000.0"
+    },
+    {
+      "baseline_id": "73496368-008e-449e-b962-69d9654a88b4",
+      "version": 1,
+      "policy_id": "1d6d3332-88fd-54ac-8227-2d2bf856ed5f",
+      "name": "Procedure-to-Procedure (PTP) Coding Edit",
+      "total_claims": "14720",
+      "total_allowed": "13578791.19",
+      "allowed_pmpm": "2.444735246046581",
+      "member_months": "5554299.26899384"
+    },
+    {
+      "baseline_id": "82e9231a-cbae-4826-b4e1-1096d3630d4e",
+      "version": 2,
+      "policy_id": "1d6d3332-88fd-54ac-8227-2d2bf856ed5f",
+      "name": "Procedure-to-Procedure (PTP) Coding Edit",
+      "total_claims": "2262",
+      "total_allowed": "2315132.18",
+      "allowed_pmpm": "38.58553633333334",
+      "member_months": "60000.0"
+    }
+  ],
+  "errors": [],
+  "exposure": {
+    "member_months": 60000.0,
+    "enrollment_rows": 60000,
+    "members": 5000,
+    "method": "ENROLLMENT_PARTIAL_MONTH_SOURCE_SCOPED"
+  },
+  "summary": {
+    "policies": 9,
+    "created_5k_baselines": 9,
+    "prior_baselines_preserved": 18,
+    "measurement_book_mm": 60000.0,
+    "success": true
+  }
+}

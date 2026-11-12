@@ -135,7 +135,12 @@ class PolicyCreate(BaseModel):
 
 
 class PolicyResponse(BaseModel):
-    """Policy response model - supports both DB and canonical policy structure"""
+    """Policy response model - supports both DB and canonical policy structure.
+
+    Nested definition fields (scope/levers/enforcement/remediation) are typed as
+    flexible dict/list so correction-spec metadata is not stripped to null when
+    values use review-required semantics outside the legacy enum set.
+    """
     id: UUID
     tenant_id: UUID
     name: str
@@ -145,16 +150,24 @@ class PolicyResponse(BaseModel):
     status: Optional[str] = None
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None
-    scope: Optional[PolicyScope] = None
-    effective_period: Optional[EffectivePeriod] = None
-    enforcement: Optional[Enforcement] = None
-    policy_levers: Optional[list[PolicyLever]] = None
-    expected_behavioral_response: Optional[ExpectedBehavioralResponse] = None
-    analytics_expectations: Optional[AnalyticsExpectations] = None
-    ui_hints: Optional[UIHints] = None
+    scope: Optional[Any] = None
+    effective_period: Optional[Any] = None
+    enforcement: Optional[Any] = None
+    policy_levers: Optional[list[Any]] = None
+    expected_behavioral_response: Optional[Any] = None
+    analytics_expectations: Optional[Any] = None
+    ui_hints: Optional[Any] = None
+    policy_key: Optional[str] = None
+    configuration_state: Optional[str] = None
+    remediation: Optional[dict[str, Any]] = None
+    global_exceptions: Optional[list[Any]] = None
+    code_systems: Optional[Any] = None
+    assumptions: Optional[list[Any]] = None
+    guardrails: Optional[list[Any]] = None
     
     class Config:
         from_attributes = True
+        extra = "allow"
 
 
 @router.post("/policies", response_model=PolicyResponse, status_code=201)
@@ -438,60 +451,13 @@ async def list_policies(
                 "updated_at": policy.updated_at.isoformat() if policy.updated_at else None,
             }
             
-            # If canonical metadata exists, parse it
+            # If canonical metadata exists, surface full definition fields for the UI.
             if hasattr(policy, 'policy_metadata_json') and policy.policy_metadata_json:
                 metadata = policy.policy_metadata_json
                 if isinstance(metadata, dict):
-                    policy_dict.update({
-                        "scope": metadata.get("scope"),
-                        "effective_period": metadata.get("effective_period"),
-                        "enforcement": metadata.get("enforcement"),
-                        "policy_levers": metadata.get("policy_levers"),
-                        "expected_behavioral_response": metadata.get("expected_behavioral_response"),
-                        "analytics_expectations": metadata.get("analytics_expectations"),
-                        "ui_hints": metadata.get("ui_hints"),
-                    })
+                    policy_dict.update(_definition_fields_from_metadata(metadata))
 
-            # Catalog list must stay resilient: coerce/drop invalid nested metadata
-            # rather than skipping the whole policy (or dumping huge tracebacks).
-            allowed_touchpoints = {
-                "CLAIM_EDIT",
-                "PA_WORKFLOW",
-                "BENEFIT_ACCUMULATOR",
-                "PRECERT",
-                "AUTHORIZATION",
-                "CARE_MANAGEMENT",
-            }
-            enf = policy_dict.get("enforcement")
-            if isinstance(enf, dict):
-                raw_tp = enf.get("touchpoint") or []
-                if isinstance(raw_tp, list):
-                    mapped = []
-                    for t in raw_tp:
-                        s = str(t or "").upper()
-                        if s in allowed_touchpoints:
-                            mapped.append(s)
-                        elif s in {"CLAIMS", "CLAIM", "CLAIMS_EDIT", "CLAIMS_ADJUDICATION"}:
-                            mapped.append("CLAIM_EDIT")
-                        elif s in {"PRIOR_AUTH", "COVERAGE_REVIEW", "SITE_OF_CARE_REVIEW", "PRE_AUTH"}:
-                            mapped.append("PA_WORKFLOW")
-                        elif s:
-                            mapped.append("PA_WORKFLOW")
-                    enf["touchpoint"] = mapped or ["PA_WORKFLOW"]
-                    policy_dict["enforcement"] = enf
-
-            levers = policy_dict.get("policy_levers")
-            if isinstance(levers, list):
-                cleaned = []
-                for lever in levers:
-                    if not isinstance(lever, dict):
-                        continue
-                    lt = lever.get("lever_type")
-                    # Keep unknown lever types as strings; PolicyResponse may still reject —
-                    # fall back below strips levers if needed.
-                    cleaned.append(lever)
-                policy_dict["policy_levers"] = cleaned
-            
+            policy_dict = _sanitize_policy_response_dict(policy_dict)
             try:
                 # Convert dates to strings if they're datetime objects
                 if 'created_at' in policy_dict and policy_dict['created_at'] and hasattr(policy_dict['created_at'], 'isoformat'):
@@ -514,6 +480,8 @@ async def list_policies(
                         "status": policy_dict.get("status"),
                         "created_at": policy_dict.get("created_at"),
                         "updated_at": policy_dict.get("updated_at"),
+                        "configuration_state": policy_dict.get("configuration_state"),
+                        "remediation": policy_dict.get("remediation"),
                     }
                     result.append(PolicyResponse(**slim))
                 except Exception:
@@ -859,33 +827,29 @@ async def get_policy_claim_counts_breakdown(
     }
 
 
-def _sanitize_policy_response_dict(policy_dict: dict) -> dict:
-    """Coerce nested metadata so PolicyResponse validation cannot hide catalog rows."""
-    allowed_touchpoints = {
-        "CLAIM_EDIT",
-        "PA_WORKFLOW",
-        "BENEFIT_ACCUMULATOR",
-        "PRECERT",
-        "AUTHORIZATION",
-        "CARE_MANAGEMENT",
+def _definition_fields_from_metadata(metadata: Optional[dict]) -> dict:
+    """Surface correction-spec definition fields for frontend consumers."""
+    if not isinstance(metadata, dict):
+        return {}
+    out = {
+        "scope": metadata.get("scope"),
+        "effective_period": metadata.get("effective_period"),
+        "enforcement": metadata.get("enforcement"),
+        "policy_levers": metadata.get("policy_levers"),
+        "expected_behavioral_response": metadata.get("expected_behavioral_response"),
+        "analytics_expectations": metadata.get("analytics_expectations"),
+        "ui_hints": metadata.get("ui_hints"),
+        "policy_key": metadata.get("policy_key"),
+        "configuration_state": metadata.get("configuration_state"),
+        "remediation": metadata.get("remediation"),
+        "global_exceptions": metadata.get("global_exceptions"),
+        "code_systems": metadata.get("code_systems"),
     }
-    enf = policy_dict.get("enforcement")
-    if isinstance(enf, dict):
-        raw_tp = enf.get("touchpoint") or []
-        if isinstance(raw_tp, list):
-            mapped = []
-            for t in raw_tp:
-                s = str(t or "").upper()
-                if s in allowed_touchpoints:
-                    mapped.append(s)
-                elif s in {"CLAIMS", "CLAIM", "CLAIMS_EDIT", "CLAIMS_ADJUDICATION"}:
-                    mapped.append("CLAIM_EDIT")
-                elif s in {"PRIOR_AUTH", "COVERAGE_REVIEW", "SITE_OF_CARE_REVIEW", "PRE_AUTH"}:
-                    mapped.append("PA_WORKFLOW")
-                elif s:
-                    mapped.append("PA_WORKFLOW")
-            enf = {**enf, "touchpoint": mapped or ["PA_WORKFLOW"]}
-            policy_dict["enforcement"] = enf
+    return {k: v for k, v in out.items() if v is not None}
+
+
+def _sanitize_policy_response_dict(policy_dict: dict) -> dict:
+    """Preserve definition payloads; do not rewrite correction-spec semantics."""
     return policy_dict
 
 
@@ -921,15 +885,7 @@ async def get_policy(
         if hasattr(policy, 'policy_metadata_json') and policy.policy_metadata_json:
             metadata = policy.policy_metadata_json
             if isinstance(metadata, dict):
-                policy_dict.update({
-                    "scope": metadata.get("scope"),
-                    "effective_period": metadata.get("effective_period"),
-                    "enforcement": metadata.get("enforcement"),
-                    "policy_levers": metadata.get("policy_levers"),
-                    "expected_behavioral_response": metadata.get("expected_behavioral_response"),
-                    "analytics_expectations": metadata.get("analytics_expectations"),
-                    "ui_hints": metadata.get("ui_hints"),
-                })
+                policy_dict.update(_definition_fields_from_metadata(metadata))
 
         policy_dict = _sanitize_policy_response_dict(policy_dict)
         try:
@@ -946,6 +902,12 @@ async def get_policy(
                 "status": policy_dict.get("status"),
                 "created_at": policy_dict.get("created_at"),
                 "updated_at": policy_dict.get("updated_at"),
+                "configuration_state": policy_dict.get("configuration_state"),
+                "remediation": policy_dict.get("remediation"),
+                "scope": policy_dict.get("scope"),
+                "policy_levers": policy_dict.get("policy_levers"),
+                "enforcement": policy_dict.get("enforcement"),
+                "global_exceptions": policy_dict.get("global_exceptions"),
             }
             return PolicyResponse(**slim)
     except HTTPException:

@@ -68,6 +68,8 @@ import MetricCard from '../../components/brand/MetricCard'
 import ConfidenceBadge from '../../components/brand/ConfidenceBadge'
 import { useRole } from '../../contexts/RoleContext'
 import { useNavigate } from 'react-router-dom'
+import { costRollupPresentation, utilizationRollupPresentation } from '../dashboardRollup'
+import { costLabel, utilizationLabel } from '../../utils/measurementIntegrity'
 
 export default function ExecutiveDashboardPage() {
   const navigate = useNavigate()
@@ -202,10 +204,10 @@ export default function ExecutiveDashboardPage() {
       const topPolicy = topPolicies[0]
       const util = Number(topPolicy.utilization_change_pct)
       const cost = Number(topPolicy.cost_impact)
-      const utilLabel = Number.isFinite(util) ? `${Math.abs(util).toFixed(1)}%` : 'n/a'
+      const utilLabel = Number.isFinite(util) ? `${Math.abs(util).toFixed(1)}%` : 'unavailable'
       const costLabel = Number.isFinite(cost)
-        ? `$${Math.abs(cost).toLocaleString(undefined, { maximumFractionDigits: 2 })}${
-            topPolicy.cost_impact_unit === 'pmpm' || !topPolicy.cost_impact_unit ? ' PMPM' : ''
+        ? `$${Math.abs(cost).toLocaleString(undefined, { maximumFractionDigits: 2 })} ${
+            topPolicy.cost_impact_label || 'dollar change'
           }`
         : 'unavailable'
       insights.push({
@@ -219,11 +221,12 @@ export default function ExecutiveDashboardPage() {
     }
     
     const metrics = summary?.metrics || {}
-    if (metrics.avg_utilization_change_pct) {
+    if (metrics.avg_utilization_change_status === 'MEASURED' && metrics.avg_utilization_change_pct != null) {
       const change = metrics.avg_utilization_change_pct
+      const count = metrics.avg_utilization_observation_count ?? 0
       insights.push({
-        title: `Utilization Trend: ${change > 0 ? 'Increasing' : 'Decreasing'}`,
-        description: `Average utilization changed by ${Math.abs(change).toFixed(1)}% across all policies. This indicates ${change > 0 ? 'increased' : 'reduced'} healthcare utilization.`,
+        title: `Utilization Trend: ${change > 0 ? 'Increasing' : change < 0 ? 'Decreasing' : 'Unchanged'}`,
+        description: `Average utilization changed by ${Math.abs(change).toFixed(1)}% across ${count} measured observations. This indicates ${change > 0 ? 'increased' : change < 0 ? 'reduced' : 'unchanged'} healthcare utilization.`,
         category: 'Utilization',
         confidence: 'medium',
         impact: change < 0 ? 'positive' : 'negative',
@@ -233,25 +236,36 @@ export default function ExecutiveDashboardPage() {
     
     if (metrics.total_cost_impact != null && Number.isFinite(Number(metrics.total_cost_impact))) {
       const impact = Number(metrics.total_cost_impact)
-      const unit = metrics.total_cost_impact_unit === 'pmpm_sum' ? 'Σ policy Δ PMPM' : 'portfolio $'
+      const enrolled = metrics.cost_denominator_basis === 'ENROLLMENT'
+      const simulated = metrics.total_cost_impact_unit === 'simulated_allowed_per_enrolled_member_month'
+        || metrics.total_cost_impact_unit === 'observed_post_period_allowed_per_enrolled_member_month'
+      const unit = metrics.total_cost_impact_display_unit || (enrolled ? 'enrolled member-month dollars' : 'measured dollar change')
+      if (!enrolled && String(unit).includes('ΔPMPM')) {
+        return insights
+      }
       const baselinePmpm = summary?.general_baseline?.cost_pmpm
       let vsBaseline = ''
-      if (
-        metrics.total_cost_impact_unit === 'pmpm_sum' &&
+      if (simulated) {
+        vsBaseline = ' This figure is not measured savings.'
+      } else if (
+        enrolled &&
         baselinePmpm != null &&
         Number.isFinite(Number(baselinePmpm)) &&
         Number(baselinePmpm) !== 0
       ) {
         const pct = (Math.abs(impact) / Math.abs(Number(baselinePmpm))) * 100
         if (Number.isFinite(pct)) {
-          vsBaseline = ` Relative to general baseline cost PMPM ($${Number(baselinePmpm).toFixed(2)}), magnitude is ${pct.toFixed(1)}% of that PMPM (not portfolio ROI).`
+          vsBaseline = ` Relative to general baseline enrolled cost ($${Number(baselinePmpm).toFixed(2)}), magnitude is ${pct.toFixed(1)}% of that rate (not portfolio ROI).`
         }
       } else if (metrics.portfolio_financials_available === false) {
-        vsBaseline =
-          ' Portfolio $ ROI / % of book is unavailable — do not treat this PMPM rollup as savings.'
+        vsBaseline = ' Portfolio $ ROI is unavailable.'
       }
       insights.push({
-        title: `Cost Impact: ${impact < 0 ? 'Favorable PMPM' : 'Adverse PMPM'}`,
+        title: simulated
+          ? 'Simulated allowed difference per enrolled member-month'
+          : enrolled
+            ? `Enrolled dollar change ${impact < 0 ? 'below' : 'above'} baseline`
+            : `Claimant-month dollar change ${impact < 0 ? 'below' : 'above'} baseline`,
         description: `${unit}: ${impact < 0 ? '' : '+'}${impact.toLocaleString(undefined, {
           maximumFractionDigits: 2,
         })}.${vsBaseline}`,
@@ -387,6 +401,8 @@ export default function ExecutiveDashboardPage() {
 
   const summary = dashboardData?.summary || {}
   const metrics = dashboardData?.metrics || {}
+  const costRollup = costRollupPresentation(metrics)
+  const utilizationRollup = utilizationRollupPresentation(metrics)
   const performance = dashboardData?.performance || []
   const costTrendData = dashboardData?.costTrendData || []
   const whatChanged = dashboardData?.whatChanged || []
@@ -396,7 +412,7 @@ export default function ExecutiveDashboardPage() {
   return (
     <Box>
       {/* Header */}
-      <Box className="dashboard-header" sx={{ mb: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <Box className="dashboard-header" sx={{ mb: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 2 }}>
         <Box>
           <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 600 }}>
             Executive Dashboard
@@ -441,77 +457,76 @@ export default function ExecutiveDashboardPage() {
         </Typography>
         <Chip label="Database" size="small" color="primary" variant="outlined" />
       </Box>
-      <Grid container spacing={3} className="key-metrics-row" sx={{ mb: 4 }}>
-        <Grid item xs={12} sm={6} md={3}>
-          <MetricCard
-            label="Total Cost Impact (current)"
-            value={
-              metrics.total_cost_impact == null || !Number.isFinite(Number(metrics.total_cost_impact))
-                ? 'Unavailable'
-                : Math.abs(Number(metrics.total_cost_impact)).toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })
-            }
-            unit={
-              metrics.total_cost_impact == null || !Number.isFinite(Number(metrics.total_cost_impact))
-                ? undefined
-                : metrics.total_cost_impact_unit === 'pmpm_sum'
-                  ? 'Σ ΔPMPM'
-                  : '$'
-            }
-            trend={
-              metrics.total_cost_impact == null || !Number.isFinite(Number(metrics.total_cost_impact))
-                ? undefined
-                : metrics.total_cost_impact < 0
-                  ? 'down'
-                  : 'up'
-            }
-            subtitle={
-              metrics.portfolio_financials_available === false
-                ? 'Policy Δ PMPM rollup — portfolio $ ROI unavailable'
-                : metrics.total_cost_impact_unit === 'pmpm_sum'
-                  ? 'Sum of latest-per-policy cost Δ PMPM'
-                  : metrics.total_cost_impact < 0
-                    ? 'Savings vs. pre-policy baseline'
-                    : 'Increase vs. pre-policy baseline'
-            }
-            color={
-              metrics.total_cost_impact == null || !Number.isFinite(Number(metrics.total_cost_impact))
-                ? undefined
-                : metrics.total_cost_impact < 0
-                  ? 'success'
-                  : 'warning'
-            }
-          />
+      <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+        Payment-rule results and continuation comparisons stay in separate cards. They are not a portfolio savings total.
+      </Typography>
+      <Grid
+        container
+        spacing={3}
+        className="key-metrics-row"
+        sx={{ mb: 4, alignItems: 'stretch' }}
+      >
+        <Grid item xs={12} sm={6} md={3} sx={{ display: 'flex' }}>
+          <Box sx={{ width: '100%' }}>
+            <MetricCard
+              label={
+                dashboardData?.metrics?.total_cost_impact_unit === 'simulated_allowed_per_enrolled_member_month'
+                  ? 'Simulated allowed difference'
+                  : dashboardData?.metrics?.total_cost_impact_unit === 'observed_post_period_allowed_per_enrolled_member_month'
+                    ? `Payment-rule simulation (${dashboardData?.metrics?.total_cost_observation_count ?? 0} policies)`
+                    : 'Total Cost Impact (current)'
+              }
+              value={costRollup.valueText}
+              unit={costRollup.unit}
+              trend={costRollup.trend}
+              subtitle={costRollup.subtitle}
+              color={costRollup.color}
+            />
+          </Box>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <MetricCard
-            label="Avg Utilization Change (current)"
-            value={Math.abs(metrics.avg_utilization_change_pct || 0).toFixed(1)}
-            unit="%"
-            trend={metrics.avg_utilization_change_pct < 0 ? 'down' : 'up'}
-            subtitle={metrics.avg_utilization_change_pct < 0 ? 'Reduction vs. pre-policy baseline' : 'Increase vs. pre-policy baseline'}
-            color={metrics.avg_utilization_change_pct < 0 ? 'success' : 'error'}
-          />
+        <Grid item xs={12} sm={6} md={3} sx={{ display: 'flex' }}>
+          <Box sx={{ width: '100%' }}>
+            <MetricCard
+              label="Avg Utilization Change (current)"
+              value={utilizationRollup.valueText}
+              unit={utilizationRollup.unit}
+              trend={utilizationRollup.trend}
+              subtitle={utilizationRollup.subtitle}
+              color={utilizationRollup.color}
+            />
+          </Box>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <MetricCard
-            label="Active Policies"
-            value={summary.active_policies ?? 0}
-            subtitle={`of ${summary.total_policies ?? 0} total`}
-            trend={summary.active_policies > 0 ? 'up' : undefined}
-          />
+        <Grid item xs={12} sm={6} md={3} sx={{ display: 'flex' }}>
+          <Box sx={{ width: '100%' }}>
+            <MetricCard
+              label="Active Policies"
+              value={summary.active_policies ?? 0}
+              subtitle={`of ${summary.total_policies ?? 0} total`}
+              trend={summary.active_policies > 0 ? 'up' : undefined}
+            />
+          </Box>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <MetricCard
-            label="Decisions Pending"
-            value={decisions.length}
-            subtitle="Requires attention"
-            color={decisions.length > 0 ? 'warning' : undefined}
-          />
+        <Grid item xs={12} sm={6} md={3} sx={{ display: 'flex' }}>
+          <Box sx={{ width: '100%' }}>
+            <MetricCard
+              label="Decisions Pending"
+              value={decisions.length}
+              subtitle="Requires attention"
+              color={decisions.length > 0 ? 'warning' : undefined}
+            />
+          </Box>
         </Grid>
       </Grid>
+      {dashboardData?.metrics?.continuation_observation_count ? (
+        <Box sx={{ mb: 4 }}>
+          <MetricCard
+            label={`Descriptive continuation comparison (${dashboardData.metrics.continuation_observation_count} policies)`}
+            value={`${Number(dashboardData.metrics.continuation_allowed_difference) < 0 ? '-' : ''}$${Math.abs(Number(dashboardData.metrics.continuation_allowed_difference)).toFixed(2)}`}
+            unit="$ / enrolled member-month"
+            subtitle="Observed allowed minus the frozen continuation, per enrolled member-month. Not a portfolio total."
+          />
+        </Box>
+      ) : null}
 
       {/* Pre-policy baseline (general) */}
       {dashboardData?.general_baseline && (
@@ -525,15 +540,23 @@ export default function ExecutiveDashboardPage() {
             </Typography>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6} md={3}>
-                <Typography variant="caption" color="text.secondary">Claim lines per 1,000 claimants (not enrolled utilization)</Typography>
+                <Typography variant="caption" color="text.secondary">{utilizationLabel(dashboardData.general_baseline)}</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 600 }}>
                   {dashboardData.general_baseline.utilization_per_1k?.toFixed(1) ?? '—'}
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
-                <Typography variant="caption" color="text.secondary">Paid dollars per claimant-month (not enrolled PMPM)</Typography>
+                <Typography variant="caption" color="text.secondary">{costLabel(dashboardData.general_baseline)}</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 600 }}>
                   ${dashboardData.general_baseline.cost_pmpm?.toFixed(2) ?? '—'}
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Typography variant="caption" color="text.secondary">Member-months</Typography>
+                <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                  {dashboardData.general_baseline.member_months != null
+                    ? Number(dashboardData.general_baseline.member_months).toLocaleString(undefined, { maximumFractionDigits: 3 })
+                    : '—'}
                 </Typography>
               </Grid>
             </Grid>
@@ -609,8 +632,8 @@ export default function ExecutiveDashboardPage() {
         <Card className="cost-trend-chart" sx={{ mb: 4 }}>
           <CardContent>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-              <Typography variant="h6">Cost Trend Forecast (with Confidence Bands)</Typography>
-              <Chip label="P10/P50/P90" size="small" />
+              <Typography variant="h6">Paid-dollar sketch</Typography>
+              <Chip label="Not a confidence interval" size="small" />
             </Box>
             <ResponsiveContainer width="100%" height={350}>
               <AreaChart data={costTrendData} margin={{ top: 10, right: 24, bottom: 20, left: 72 }}>
@@ -644,7 +667,7 @@ export default function ExecutiveDashboardPage() {
                   stroke="#8884d8"
                   fill="#8884d8"
                   fillOpacity={0.2}
-                  name="Upper Bound (P90)"
+                  name="Sketch high"
                 />
                 <Area
                   type="monotone"
@@ -652,7 +675,7 @@ export default function ExecutiveDashboardPage() {
                   stroke="#8884d8"
                   fill="#8884d8"
                   fillOpacity={0.2}
-                  name="Lower Bound (P10)"
+                  name="Sketch low"
                 />
                 <Line
                   type="monotone"
@@ -660,7 +683,7 @@ export default function ExecutiveDashboardPage() {
                   stroke="#8884d8"
                   strokeWidth={2}
                   strokeDasharray="5 5"
-                  name="Forecast (P50)"
+                  name="Capped extrapolation"
                 />
                 {/* Actual: green shaded area on top so it’s visible over historical period */}
                 <Area
@@ -679,7 +702,7 @@ export default function ExecutiveDashboardPage() {
             <Box sx={{ mt: 2, p: 2, bgcolor: 'info.light', borderRadius: 1 }}>
               <Typography variant="caption" color="text.secondary" display="block">
                 <InfoIcon sx={{ fontSize: 14, verticalAlign: 'middle', mr: 0.5 }} />
-                Forecast bands show uncertainty range. Wider bands indicate higher uncertainty. Historical data (green) vs. forecast (purple).
+                The band is a fixed percent around a capped trend. It is not a confidence interval and not an inferential result.
               </Typography>
               <Typography variant="caption" color="primary.main" sx={{ fontWeight: 600, mt: 0.5, display: 'block' }}>
                 Data source: Database (total paid / cost PMPM from claims). Actuals = avg monthly cost; forecast = capped extrapolation from actuals (same scale).
@@ -791,12 +814,21 @@ export default function ExecutiveDashboardPage() {
       {/* Top Policy Performance - normalized keys (snake_case + camelCase) and vertical bars so values show */}
       {performance.length > 0 && (() => {
         const barData = performance.slice(0, 10).map((p: any) => {
-          const cost = Number(p?.avg_cost_impact ?? p?.avgCostImpact ?? 0) || 0
+          const raw = p?.avg_cost_impact ?? p?.avgCostImpact
+          const cost = raw == null || raw === '' || Number.isNaN(Number(raw)) ? null : Number(raw)
           const name = p?.policy_name ?? p?.policyName ?? 'Unknown'
           return { ...p, policy_name: name, avg_cost_impact: cost }
         })
-        const maxCost = Math.max(...barData.map((d: any) => d.avg_cost_impact), 0)
-        const costDomain: [number, number] = maxCost > 0 ? [0, Math.ceil(maxCost * 1.1)] : [0, 1000]
+        const measured = barData.filter((d: any) => d.avg_cost_impact != null)
+        const costs = measured.map((d: any) => Number(d.avg_cost_impact))
+        const minCost = costs.length ? Math.min(...costs, 0) : 0
+        const maxCost = costs.length ? Math.max(...costs, 0) : 0
+        const span = Math.max(Math.abs(minCost), Math.abs(maxCost), 1)
+        const costDomain: [number, number] = costs.length
+          ? [Math.floor(minCost - span * 0.1), Math.ceil(maxCost + span * 0.1)]
+          : [-1000, 1000]
+        const allMissing = measured.length === 0
+        const allZero = measured.length > 0 && measured.every((p: any) => Number(p.avg_cost_impact) === 0)
         return (
         <Grid container spacing={3}>
           <Grid item xs={12} md={8}>
@@ -806,7 +838,7 @@ export default function ExecutiveDashboardPage() {
                   Top Policy Performance (by Cost Impact)
                 </Typography>
                 <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
-                  Cost impact from database (observations vs. baseline, or predicted impact). Negative = savings.
+                  Observed allowed $ change vs baseline rate × period member-months. Negative = lower spend vs baseline rate — not attributed policy savings.
                 </Typography>
                 <ResponsiveContainer width="100%" height={400}>
                   <BarChart
@@ -828,15 +860,20 @@ export default function ExecutiveDashboardPage() {
                       tick={{ fontSize: 11 }}
                     />
                     <Tooltip
-                      formatter={(value: any) => value != null ? `$${Number(value).toLocaleString()}` : '—'}
+                      formatter={(value: any) => value != null ? `$${Number(value).toLocaleString()}` : 'Unavailable'}
                     />
                     <Legend />
                     <Bar dataKey="avg_cost_impact" fill="#8884d8" name="Cost Impact ($)" barSize={28} />
                   </BarChart>
                 </ResponsiveContainer>
-                {barData.every((p: any) => (Number(p.avg_cost_impact) || 0) === 0) && (
+                {allMissing && (
                   <Typography variant="caption" color="text.secondary" display="block" sx={{ mt: 1 }}>
-                    All zero: ensure API is restarted and observations have vs_baseline.cost_change_pmpm or policies have predicted impact.
+                    No measured cost deltas yet. Observations need vs_baseline.cost_change_pmpm and period member-months.
+                  </Typography>
+                )}
+                {allZero && (
+                  <Typography variant="caption" color="text.secondary" display="block" sx={{ mt: 1 }}>
+                    Measured cost change is zero for these policies (rates match baseline).
                   </Typography>
                 )}
               </CardContent>
@@ -863,10 +900,10 @@ export default function ExecutiveDashboardPage() {
                           secondary={
                             <Box>
                               <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
-                                Cost: ${Math.abs(policy.avg_cost_impact || 0).toLocaleString()}
+                                Cost: {policy.avg_cost_impact == null ? 'Unavailable' : `$${Math.abs(policy.avg_cost_impact).toLocaleString()}`}
                               </Typography>
                               <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
-                                Utilization: {Math.abs(policy.avg_utilization_change_pct || 0).toFixed(1)}%
+                                Utilization: {policy.avg_utilization_change_pct == null ? 'Unavailable' : `${Math.abs(policy.avg_utilization_change_pct).toFixed(1)}%`}
                               </Typography>
                               {policy.is_predicted && (
                                 <Chip label="Predicted" size="small" sx={{ mt: 0.5 }} />

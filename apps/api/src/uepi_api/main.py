@@ -73,12 +73,22 @@ def _start_background_startup(settings: object) -> None:
             )
         except Exception:
             pass
-        try:
-            from uepi_api.storage_auth import ensure_demo_tenant_and_user
+        environment = str(getattr(settings, "environment", "") or os.getenv("ENVIRONMENT", "development")).lower()
+        database_url = os.getenv("DATABASE_URL", "").lower()
+        synthetic_database = "synthetic" in database_url or ":55434" in database_url
+        if environment in {"production", "prod"} and synthetic_database:
+            print(
+                "uepi_api: production startup refused demo seed because DATABASE_URL is a synthetic database",
+                flush=True,
+            )
+            return
+        if environment not in {"production", "prod"}:
+            try:
+                from uepi_api.storage_auth import ensure_demo_tenant_and_user
 
-            ensure_demo_tenant_and_user()
-        except Exception as e:
-            print(f"uepi_api: ensure_demo_tenant_and_user (bg): {e}", flush=True)
+                ensure_demo_tenant_and_user()
+            except Exception as e:
+                print(f"uepi_api: ensure_demo_tenant_and_user (bg): {e}", flush=True)
         if os.getenv("UEPI_ENABLE_SCHEDULE_EXECUTOR", "").strip().lower() in ("1", "true", "yes"):
             try:
                 from uepi_api.routers.schedule_executor_service import start_schedule_executor

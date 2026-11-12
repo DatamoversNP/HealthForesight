@@ -1,0 +1,282 @@
+{
+  "generated_at": "2026-11-07T12:07:08.000356+00:00",
+  "batch": 4,
+  "batch_size": 10,
+  "source_system": "SYNTHETIC_REVIEWED_248_V1",
+  "policies": [
+    {
+      "register_index": 31,
+      "name": "Cancer Clinical Trial Routine Cost Coverage",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 32,
+      "name": "Capsule Endoscopy Prior Authorization",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 33,
+      "name": "Cardiac CT Angiography Prior Authorization",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1611,
+        "baseline_allowed": 2501286.4,
+        "avg_allowed_per_line": 1447.5037037037036,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "75574",
+          "75571",
+          "75572"
+        ],
+        "service_category": "imaging"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "bf8a366d-f255-46e4-bde8-06ec509daae8",
+        "prediction_id": "82adab8b-6722-4f3a-955a-6d7b3636085a",
+        "observations": 10,
+        "allowed_pmpm": 17.370044444444442,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 34,
+      "name": "Cardiac Episode Bundle",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 35,
+      "name": "Cardiac Implantable Device Prior Authorization",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1591,
+        "baseline_allowed": 5991185.42,
+        "avg_allowed_per_line": 3467.1211921296294,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "33206",
+          "33207",
+          "33208",
+          "33249"
+        ],
+        "service_category": "cardiology"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "1338dc32-633c-40e1-965a-103e204ce081",
+        "prediction_id": "129710b8-4bf4-4c15-ac65-333ed9b23be6",
+        "observations": 10,
+        "allowed_pmpm": 41.605454305555554,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 36,
+      "name": "Cardiac Rehabilitation Authorization",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1604,
+        "baseline_allowed": 866352.31,
+        "avg_allowed_per_line": 501.3612905092593,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "93797",
+          "93798"
+        ],
+        "service_category": "cardiology"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "fd17956e-cca0-4a54-bef4-03c327f387e8",
+        "prediction_id": "036b280e-c331-4bba-933d-294a864d5cc1",
+        "observations": 10,
+        "allowed_pmpm": 6.016335486111111,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 37,
+      "name": "Cardiac Rehabilitation Session Limit",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1594,
+        "baseline_allowed": 845157.8,
+        "avg_allowed_per_line": 489.0959490740741,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "93797",
+          "93798"
+        ],
+        "service_category": "therapy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "52d724a5-9032-45c1-8d4c-f34e9ee414c0",
+        "prediction_id": "15f21b3c-ad7c-42b2-b983-2c1e9fe8557d",
+        "observations": 10,
+        "allowed_pmpm": 5.8691513888888895,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 38,
+      "name": "Cardiac Stress Testing Prior Authorization",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1618,
+        "baseline_allowed": 867819.32,
+        "avg_allowed_per_line": 502.2102546296296,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "93015",
+          "93016",
+          "93017",
+          "93018"
+        ],
+        "service_category": "cardiology"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "ecbd9107-1aa9-49f9-a973-253bac74e28d",
+        "prediction_id": "521151b7-71f5-4a4f-bdfb-415de8b62a13",
+        "observations": 10,
+        "allowed_pmpm": 6.026523055555555,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 39,
+      "name": "CAR-T and Cellular Therapy Prior Authorization",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 40,
+      "name": "Cataract Surgery Second-Eye and Specialty Lens Rules",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1596,
+        "baseline_allowed": 856139.73,
+        "avg_allowed_per_line": 495.4512326388889,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "66984",
+          "66982"
+        ],
+        "service_category": "surgery"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "7c340896-8031-480d-bd26-cf3d574e81c3",
+        "prediction_id": "20310fb0-24ed-4c65-92eb-a43bcc87c18e",
+        "observations": 10,
+        "allowed_pmpm": 5.945414791666667,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    }
+  ],
+  "population": {
+    "loaded": false,
+    "claims": 348744,
+    "members": 12000,
+    "source_system": "SYNTHETIC_REVIEWED_248_V1",
+    "book_mm_2025": 144000.0
+  },
+  "validation_summary": {
+    "policies_in_batch": 10,
+    "configured": 10,
+    "measurable_completed": 6,
+    "config_only": 4,
+    "thin_but_measured": 0,
+    "failed": 0,
+    "rate_continuity_checked": 6,
+    "pass": true
+  }
+}

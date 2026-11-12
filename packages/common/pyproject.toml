@@ -5,9 +5,8 @@ description = "Shared UEPI package"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-pydantic = "^2.5.0"
+pydantic = {version = "^2.5.0", extras = ["email"]}
 pydantic-settings = "^2.1.0"
-pydantic[email] = "^2.5.0"
 # Storage dependencies
 boto3 = "^1.29.0"  # For S3-compatible storage (MinIO, AWS S3)
 azure-storage-blob = "^12.19.0"  # For Azure Blob Storage

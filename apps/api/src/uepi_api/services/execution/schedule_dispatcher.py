@@ -7,8 +7,9 @@ Data-aware: if required_data_watermark is set and not satisfied → DEFERRED.
 """
 from __future__ import annotations
 
+import calendar
 import os
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from typing import Callable, List, Optional
 from uuid import uuid4
 
@@ -90,16 +91,27 @@ def claim_due_occurrences(
         )
         db.add(occ)
         created.append(occ)
-        # Advance cursor only when we accepted the occurrence (even if deferred)
-        # Simple monthly/daily advance left to caller for expression parsing;
-        # mark next_due far future if expression empty to avoid hot loop.
         if not sched.schedule_expression:
             sched.enabled = False
         else:
-            # Placeholder: caller/ cron expression engine should set next_due;
-            # bump by 1 day to avoid tight loop until engine wired.
-            from datetime import timedelta
-
-            sched.next_due_at = (sched.next_due_at or now) + timedelta(days=1)
+            sched.next_due_at = _advance_next_due(sched, sched.next_due_at or now)
     db.flush()
     return created
+
+
+def _advance_next_due(sched: JobSchedule, due: datetime) -> datetime:
+    """Advance the cursor without a tight loop.
+
+    ``0 H D * *`` (minute hour day-of-month) is treated as calendar-monthly.
+    Anything else stays on the previous +1 day placeholder.
+    """
+    expr = (sched.schedule_expression or "").split()
+    if len(expr) == 5 and expr[2].isdigit() and expr[3] == "*" and expr[4] == "*":
+        year, month = due.year, due.month + 1
+        if month > 12:
+            year, month = year + 1, 1
+        day = min(int(expr[2]), calendar.monthrange(year, month)[1])
+        hour = int(expr[1]) if expr[1].isdigit() else due.hour
+        minute = int(expr[0]) if expr[0].isdigit() else due.minute
+        return due.replace(year=year, month=month, day=day, hour=hour, minute=minute, second=0, microsecond=0)
+    return due + timedelta(days=1)

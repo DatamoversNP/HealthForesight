@@ -125,6 +125,16 @@ export default function PolicyVerdictsPage() {
     () => Array.from(new Set(allRows.map((r) => r.verdict).filter(Boolean))).sort(),
     [allRows]
   )
+  const dollarHeader = useMemo(() => {
+    const valued = allRows.filter((row) => row.savings_or_cost_impact_pmpm != null)
+    if (!valued.length) return costLabel(undefined)
+    const enrolled = valued.filter(
+      (row) => row.denominator_basis === 'ENROLLMENT' && row.enrolled_rate_status === 'MEASURED',
+    )
+    if (enrolled.length === valued.length) return costLabel(enrolled[0])
+    if (enrolled.length === 0) return costLabel(undefined)
+    return 'Dollar change (mixed denominators)'
+  }, [allRows])
   const filteredRows = useMemo(() => {
     const q = search.trim().toLowerCase()
     return allRows.filter((r) => {
@@ -244,7 +254,7 @@ export default function PolicyVerdictsPage() {
                   <TableCell><strong>Effective</strong></TableCell>
                   <TableCell><strong>Through</strong></TableCell>
                   <TableCell><strong>Verdict</strong></TableCell>
-                  <TableCell align="right"><strong>{costLabel(undefined)}</strong></TableCell>
+                  <TableCell align="right"><strong>{dollarHeader}</strong></TableCell>
                   <TableCell align="right"><strong>Cost %</strong></TableCell>
                   <TableCell align="right"><strong>Confidence</strong></TableCell>
                   <TableCell><strong>Reason</strong></TableCell>
@@ -357,7 +367,7 @@ export default function PolicyVerdictsPage() {
               <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr 1fr' }, gap: 2 }}>
                 <Paper variant="outlined" sx={{ p: 2 }}>
                   <Typography variant="caption" color="text.secondary">
-                    {costLabel(undefined)}
+                    {costLabel(evidenceRow)}
                   </Typography>
                   <Typography variant="h6">
                     {evidenceRow.savings_or_cost_impact_pmpm != null

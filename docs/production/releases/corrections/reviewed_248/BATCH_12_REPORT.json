@@ -1,0 +1,272 @@
+{
+  "generated_at": "2026-11-07T12:22:17.230423+00:00",
+  "batch": 12,
+  "batch_size": 10,
+  "source_system": "SYNTHETIC_REVIEWED_248_V1",
+  "policies": [
+    {
+      "register_index": 111,
+      "name": "Infertility Diagnostic Coverage Criteria",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 112,
+      "name": "Infertility Treatment Prior Authorization",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 113,
+      "name": "Infusion Site-of-Care Optimization",
+      "decision": "CONFIG_ONLY_NO_CODES",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_NO_CODES",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 114,
+      "name": "Inpatient Concurrent Stay Review",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 14261,
+        "baseline_members": 8386,
+        "baseline_allowed": 3227970.77,
+        "avg_allowed_per_line": 226.3495386017811,
+        "observation_claims": 11878,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99221",
+          "99222",
+          "99223",
+          "99231",
+          "99232",
+          "99233"
+        ],
+        "service_category": "inpatient"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "389237b5-2d7e-4f70-85bf-890100eb828c",
+        "prediction_id": "c415bc7c-ab99-4aac-adc1-a47e3605adc8",
+        "observations": 10,
+        "allowed_pmpm": 22.416463680555555,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 115,
+      "name": "Inpatient Rehabilitation Facility Authorization",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1595,
+        "baseline_allowed": 388955.83,
+        "avg_allowed_per_line": 225.09017939814817,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99304",
+          "99305",
+          "99306",
+          "99307"
+        ],
+        "service_category": "post_acute"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "2173d90c-10d3-4d6b-bdfb-e6d61d8b1aec",
+        "prediction_id": "a789cd99-ee3e-4108-a4f8-5a6fa1d6b94c",
+        "observations": 10,
+        "allowed_pmpm": 2.701082152777778,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 116,
+      "name": "Inpatient vs Observation Status Determination",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 14261,
+        "baseline_members": 8386,
+        "baseline_allowed": 3227970.77,
+        "avg_allowed_per_line": 226.3495386017811,
+        "observation_claims": 11878,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99221",
+          "99222",
+          "99223",
+          "99231",
+          "99232",
+          "99233"
+        ],
+        "service_category": "inpatient"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "ebe305c7-e482-4abd-89f6-26ef2e97abd8",
+        "prediction_id": "8a86e53d-935d-4f7d-adb9-1711c97ccdec",
+        "observations": 10,
+        "allowed_pmpm": 22.416463680555555,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 117,
+      "name": "Insertable Cardiac Monitor Prior Authorization",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 118,
+      "name": "Insulin Preferred Product and Biosimilar Step",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1613,
+        "baseline_allowed": 2237518.59,
+        "avg_allowed_per_line": 1294.860295138889,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J1815",
+          "J1817",
+          "S5560"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "e79e7dcb-4087-470d-afa3-8810a335d255",
+        "prediction_id": "1f9670b4-56fd-4db1-b39d-e70f553fc8bf",
+        "observations": 10,
+        "allowed_pmpm": 15.538323541666665,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 119,
+      "name": "Insulin Pump and CGM Medical Benefit Criteria",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1610,
+        "baseline_allowed": 2199902.82,
+        "avg_allowed_per_line": 1273.0919097222222,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J1815",
+          "J1817",
+          "S5560"
+        ],
+        "service_category": "ed"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "17c84a2c-7367-457c-a612-1b4247ad7f90",
+        "prediction_id": "f8740fd0-2981-482a-82a2-0a1fb4695eb8",
+        "observations": 10,
+        "allowed_pmpm": 15.277102916666665,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 120,
+      "name": "Interventional Pain Regenerative Injection Noncoverage",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    }
+  ],
+  "population": {
+    "loaded": false,
+    "claims": 348744,
+    "members": 12000,
+    "source_system": "SYNTHETIC_REVIEWED_248_V1",
+    "book_mm_2025": 144000.0
+  },
+  "validation_summary": {
+    "policies_in_batch": 10,
+    "configured": 10,
+    "measurable_completed": 5,
+    "config_only": 5,
+    "thin_but_measured": 0,
+    "failed": 0,
+    "rate_continuity_checked": 5,
+    "pass": true
+  }
+}

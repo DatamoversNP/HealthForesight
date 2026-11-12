@@ -18,6 +18,8 @@ COPY apps/api/alembic.ini ./apps/api/
 COPY packages/common/src ./packages/common/src
 # What-if / simulate runs inline on the API via BackgroundTasks and imports uepi_worker.whatif
 COPY apps/worker/src ./apps/worker/src
+# Lean-stg ops scripts (run via one-shot job against hfleanstg only)
+COPY apps/api/ops_scripts ./apps/api/ops_scripts
 
 # Install Python dependencies at build time (avoids 10-min startup on Azure)
 RUN pip install --no-cache-dir -r apps/api/requirements.txt

@@ -1,0 +1,326 @@
+{
+  "generated_at": "2026-11-07T12:43:28.690591+00:00",
+  "batch": 22,
+  "batch_size": 10,
+  "source_system": "SYNTHETIC_REVIEWED_248_V1",
+  "policies": [
+    {
+      "register_index": 213,
+      "name": "Rheumatology Biologic Step Therapy for RA",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 14874,
+        "baseline_members": 8497,
+        "baseline_allowed": 19266971.38,
+        "avg_allowed_per_line": 1295.3456622293936,
+        "observation_claims": 12322,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J0135",
+          "J1438",
+          "J1745",
+          "J9312"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "538fcb6a-a79d-400f-a13e-aa041b9a8d5c",
+        "prediction_id": "dc0fb110-ac6e-4979-83c5-650757260787",
+        "observations": 10,
+        "allowed_pmpm": 133.7984123611111,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 214,
+      "name": "Sinus Surgery Prior Authorization",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    },
+    {
+      "register_index": 215,
+      "name": "Skilled Nursing Facility Authorization",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 1728,
+        "baseline_members": 1618,
+        "baseline_allowed": 377912.62,
+        "avg_allowed_per_line": 218.69943287037037,
+        "observation_claims": 1440,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "99304",
+          "99305",
+          "99306",
+          "99307"
+        ],
+        "service_category": "home"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "224ed808-a396-448d-85f2-c251d194ed7a",
+        "prediction_id": "51768467-4844-45db-ab4b-c1c5d8c2d354",
+        "observations": 10,
+        "allowed_pmpm": 2.6243931944444445,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 216,
+      "name": "Sleep Surgery Prior Authorization",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 5532,
+        "baseline_members": 4413,
+        "baseline_allowed": 2785026.11,
+        "avg_allowed_per_line": 503.4392823571945,
+        "observation_claims": 4655,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "95800",
+          "95806",
+          "95810",
+          "95811",
+          "E0601"
+        ],
+        "service_category": "pulmonary"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "17c897f8-8b97-46bc-965f-593cc26c843e",
+        "prediction_id": "c3853dd5-7729-4d54-8715-7a2dc1a1730d",
+        "observations": 10,
+        "allowed_pmpm": 19.340459097222222,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 217,
+      "name": "Specialty Drug Days\u2019 Supply Limits",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 15879,
+        "baseline_members": 8811,
+        "baseline_allowed": 20528400.86,
+        "avg_allowed_per_line": 1292.8018678758108,
+        "observation_claims": 13228,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J1745",
+          "J2357",
+          "J9312",
+          "J1300"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "fc4080a6-e62a-4c9c-b779-e431ccff15a0",
+        "prediction_id": "cce39b3b-a3d2-41df-bd39-f289ce880907",
+        "observations": 10,
+        "allowed_pmpm": 142.55833930555556,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 218,
+      "name": "Specialty Infusion Site-of-Care Optimization",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 13811,
+        "baseline_members": 8205,
+        "baseline_allowed": 15409472.96,
+        "avg_allowed_per_line": 1115.7391180942727,
+        "observation_claims": 11590,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "96413",
+          "96415",
+          "96365",
+          "J1745",
+          "J2357"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "7fb9e745-df20-4c99-ad3d-10bc943342ca",
+        "prediction_id": "298b2e37-be8c-4404-ba02-292a39f4a048",
+        "observations": 10,
+        "allowed_pmpm": 107.01022888888889,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 219,
+      "name": "Specialty Pharmacy Coinsurance Design",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 15879,
+        "baseline_members": 8811,
+        "baseline_allowed": 20528400.86,
+        "avg_allowed_per_line": 1292.8018678758108,
+        "observation_claims": 13228,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J1745",
+          "J2357",
+          "J9312",
+          "J1300"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "64a2a63f-bdd3-440d-aeda-516d1fa1d78f",
+        "prediction_id": "66c272b8-c25a-4ec5-a285-e198b77e3562",
+        "observations": 10,
+        "allowed_pmpm": 142.55833930555556,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 220,
+      "name": "Specialty Pharmacy Exclusive Network",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 15879,
+        "baseline_members": 8811,
+        "baseline_allowed": 20528400.86,
+        "avg_allowed_per_line": 1292.8018678758108,
+        "observation_claims": 13228,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J1745",
+          "J2357",
+          "J9312",
+          "J1300"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "4fb5292f-3a53-45a1-91f1-f1f3ffb201eb",
+        "prediction_id": "7f44ef31-5249-4eb5-ad79-9cd62d8a66d8",
+        "observations": 10,
+        "allowed_pmpm": 142.55833930555556,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 221,
+      "name": "Specialty Tier Coinsurance Design",
+      "decision": "CANDIDATE_MEASURE",
+      "configured": true,
+      "validation": {
+        "aligned": true,
+        "status": "ALIGNED",
+        "issues": [],
+        "baseline_claims": 8639,
+        "baseline_members": 6162,
+        "baseline_allowed": 11162645.42,
+        "avg_allowed_per_line": 1292.1224007408264,
+        "observation_claims": 7189,
+        "book_mm_2025": 144000.0,
+        "codes": [
+          "J3490"
+        ],
+        "service_category": "pharmacy"
+      },
+      "lifecycle": {
+        "status": "COMPLETED",
+        "baseline_version": 1,
+        "baseline_id": "d1366444-9190-4d59-b88b-2692a5a87dce",
+        "prediction_id": "e4ba2406-3de8-403a-b318-8fbcb5c6dfb0",
+        "observations": 10,
+        "allowed_pmpm": 77.51837097222221,
+        "continuation_status": "AVAILABLE",
+        "policy_effect": "UNESTIMATED"
+      }
+    },
+    {
+      "register_index": 222,
+      "name": "Speech Generating Device Prior Authorization",
+      "decision": "CONFIG_ONLY_BAD_EXPORT",
+      "configured": true,
+      "validation": {
+        "aligned": false,
+        "status": "CONFIG_ONLY",
+        "reason": "CONFIG_ONLY_BAD_EXPORT",
+        "note": "No claims measurement \u2014 bad/missing codeset not auto-substituted."
+      },
+      "lifecycle": {
+        "status": "SKIPPED_CONFIG_ONLY"
+      }
+    }
+  ],
+  "population": {
+    "loaded": false,
+    "claims": 348744,
+    "members": 12000,
+    "source_system": "SYNTHETIC_REVIEWED_248_V1",
+    "book_mm_2025": 144000.0
+  },
+  "validation_summary": {
+    "policies_in_batch": 10,
+    "configured": 10,
+    "measurable_completed": 8,
+    "config_only": 2,
+    "thin_but_measured": 0,
+    "failed": 0,
+    "rate_continuity_checked": 8,
+    "pass": true
+  }
+}

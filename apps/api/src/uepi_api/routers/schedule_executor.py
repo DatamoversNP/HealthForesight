@@ -148,13 +148,31 @@ def _execute_analysis_schedule(schedule: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def _execute_observation_schedule(schedule: Dict[str, Any]) -> Dict[str, Any]:
-    """Execute an observation schedule"""
-    config = schedule.get("config", {})
+    """Execute an observation schedule.
+
+    Single-policy jobs require ``config.policy_id``. Catalog-wide monthly jobs
+    (lean staging) use ``config.mode=PERIODIC_MONTHLY`` and enqueue one observation
+    job per active policy for the previous calendar month.
+    """
+    config = schedule.get("config", {}) or {}
     policy_id = config.get("policy_id")
-    
+    mode = config.get("mode")
+
+    if mode == "PERIODIC_MONTHLY" and not policy_id:
+        from uepi_api.services.execution.monthly_observations import enqueue_monthly_observations
+
+        tenant_id = UUID(schedule["tenant_id"])
+        queued = enqueue_monthly_observations(tenant_id)
+        return {
+            "observation_triggered": True,
+            "mode": "PERIODIC_MONTHLY",
+            "queued": queued,
+            "message": "Monthly observation jobs enqueued for active policies",
+        }
+
     if not policy_id:
         raise ValueError("Observation schedule requires policy_id in config")
-    
+
     return {
         "observation_triggered": True,
         "policy_id": policy_id,
@@ -164,56 +182,103 @@ def _execute_observation_schedule(schedule: Dict[str, Any]) -> Dict[str, Any]:
 
 def get_due_schedules() -> List[Dict[str, Any]]:
     """
-    Get all schedules that are due for execution
-    
-    Returns:
-        List of schedule dictionaries that should be executed
+    Get all schedules that are due for execution.
+
+    Database schedules are the source of truth (lean staging and production).
+    Legacy JSON files under STORAGE_PATH/schedules are included only when a
+    schedule id is not already returned from the database.
     """
-    import os
-    from pathlib import Path
-    
-    STORAGE_PATH = os.getenv("STORAGE_PATH", "./data")
-    BASE_PATH = Path(STORAGE_PATH)
-    
-    due_schedules = []
+    from uepi_api.database import SessionLocal
+    from uepi_api.models.schedule import Schedule
+
+    due_schedules: List[Dict[str, Any]] = []
+    seen: set[str] = set()
     now = datetime.utcnow()
-    
-    # Iterate through all tenant directories
-    schedules_base = BASE_PATH / "schedules"
+    grace = now + timedelta(minutes=1)
+
+    db = SessionLocal()
+    try:
+        rows = (
+            db.query(Schedule)
+            .filter(Schedule.enabled.is_(True))
+            .filter(Schedule.next_run_at.isnot(None))
+            .filter(Schedule.next_run_at <= grace)
+            .all()
+        )
+        for row in rows:
+            item = _schedule_row_to_dict(row)
+            seen.add(item["id"])
+            due_schedules.append(item)
+    except Exception as e:
+        print(f"Error loading due schedules from database: {e}")
+    finally:
+        db.close()
+
+    STORAGE_PATH = os.getenv("STORAGE_PATH", "./data")
+    schedules_base = Path(STORAGE_PATH) / "schedules"
     if not schedules_base.exists():
-        return []
-    
+        return due_schedules
+
     for tenant_dir in schedules_base.iterdir():
         if not tenant_dir.is_dir():
             continue
-        
         for schedule_file in tenant_dir.glob("*.json"):
             try:
-                with open(schedule_file, 'r') as f:
+                with open(schedule_file, "r") as f:
                     schedule = json.load(f)
-                
-                # Check if schedule is enabled
                 if not schedule.get("enabled", True):
                     continue
-                
-                # Check if next_run is due
+                sid = str(schedule.get("id") or "")
+                if sid and sid in seen:
+                    continue
                 next_run_str = schedule.get("next_run")
                 if not next_run_str:
                     continue
-                
-                try:
-                    next_run = datetime.fromisoformat(next_run_str.replace("Z", "+00:00"))
-                    # Execute if next_run is in the past (allow 1 minute grace period)
-                    if next_run <= now + timedelta(minutes=1):
-                        due_schedules.append(schedule)
-                except (ValueError, TypeError):
-                    continue
-                    
+                next_run = datetime.fromisoformat(next_run_str.replace("Z", "+00:00"))
+                if next_run <= grace:
+                    due_schedules.append(schedule)
             except Exception as e:
                 print(f"Error loading schedule {schedule_file}: {e}")
                 continue
-    
+
     return due_schedules
+
+
+def _schedule_row_to_dict(row: Any) -> Dict[str, Any]:
+    """Map a Schedule ORM row into the dict shape execute_schedule expects."""
+    from uepi_api.storage_schedules import _parse_frequency_from_cron, _parse_time_from_cron
+
+    frequency = _parse_frequency_from_cron(row.cron_expression)
+    time_str = _parse_time_from_cron(row.cron_expression) or "09:00"
+    day_of_week = None
+    day_of_month = None
+    if row.cron_expression:
+        parts = row.cron_expression.split()
+        if len(parts) >= 5:
+            if parts[4] != "*":
+                day_of_week = int(parts[4]) if parts[4].isdigit() else None
+            elif parts[2] != "*":
+                day_of_month = int(parts[2]) if parts[2].isdigit() else None
+    return {
+        "id": str(row.id),
+        "tenant_id": str(row.tenant_id),
+        "name": row.name,
+        "schedule_type": row.target_type or "EXPORT",
+        "frequency": frequency,
+        "time": time_str,
+        "day_of_week": day_of_week,
+        "day_of_month": day_of_month,
+        "config": {
+            "target_type": row.target_type,
+            "target_id": row.target_id,
+            "mode": (row.description or "") if (row.description or "").startswith("PERIODIC_") else (
+                "PERIODIC_MONTHLY" if (row.target_type or "") == "OBSERVATION" and not row.target_id else None
+            ),
+        },
+        "enabled": row.enabled,
+        "last_run": row.last_run_at.isoformat() if row.last_run_at else None,
+        "next_run": row.next_run_at.isoformat() if row.next_run_at else None,
+    }
 
 
 def run_schedule_executor():

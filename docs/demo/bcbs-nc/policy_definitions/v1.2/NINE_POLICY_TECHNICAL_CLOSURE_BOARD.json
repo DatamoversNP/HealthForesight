@@ -84,10 +84,8 @@
       "folder": "infusion",
       "document_id": "HF-RP-SOC-INF-001",
       "mechanism": "INFUSION_SITE_OF_CARE",
-      "structural_technical_closure": "NOT_CLOSED",
-      "requirement_fails": [
-        "R1_CODESET_SCHEMA"
-      ],
+      "structural_technical_closure": "CONTROLS_IN_PLACE_AWAITING_INDEPENDENT_VERIFICATION",
+      "requirement_fails": [],
       "release_blocker_count": 5,
       "operational_activation": "PROHIBITED",
       "clinical_product_approval": "WITHHELD",
@@ -118,8 +116,8 @@
   ],
   "counts": {
     "provisional_structural_pass": 1,
-    "controls_in_place_awaiting_verification": 7,
-    "not_closed": 1,
+    "controls_in_place_awaiting_verification": 8,
+    "not_closed": 0,
     "operationally_authorized": 0
   },
   "demo_readiness": {

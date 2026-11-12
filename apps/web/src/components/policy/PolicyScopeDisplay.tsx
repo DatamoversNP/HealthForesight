@@ -20,6 +20,8 @@ interface PolicyScope {
   plans?: string[] | null
   product_types?: string[] | null
   states?: string[] | null
+  procedure_codes?: string[] | null
+  setting?: string[] | null
   member_age_min?: number | null
   member_age_max?: number | null
   exclude_pregnant?: boolean | null
@@ -73,8 +75,16 @@ export default function PolicyScopeDisplay({ scope, compact = false, showLabel =
   // Markets
   if (scope.markets && scope.markets.length > 0 && !scope.markets.includes('ALL')) {
     scopeParts.push(scope.markets.join(', '))
+  } else if (scope.states && scope.states.length > 0) {
+    scopeParts.push(scope.states.join(', '))
   } else if (!scope.applies_to_all && (!scope.markets || scope.markets.includes('ALL'))) {
     scopeParts.push('All Markets')
+  }
+  if (scope.setting && scope.setting.length > 0) {
+    scopeParts.push(scope.setting.join(', '))
+  }
+  if (scope.procedure_codes && scope.procedure_codes.length > 0) {
+    scopeParts.push(`${scope.procedure_codes.length} procedure code${scope.procedure_codes.length === 1 ? '' : 's'}`)
   }
 
   // Network

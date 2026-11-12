@@ -169,7 +169,11 @@ def _policy_db_to_dict(policy_db: PolicyDB) -> Dict[str, Any]:
     # Extract fields from policy_metadata_json
     if policy_metadata:
         # Copy metadata fields to root level for compatibility
-        for key in ['scope', 'effective_period', 'enforcement', 'policy_levers', 'logic', 'apply_when', 'global_exceptions', 'predicted_impact']:
+        for key in [
+            'scope', 'effective_period', 'enforcement', 'policy_levers', 'logic',
+            'apply_when', 'global_exceptions', 'predicted_impact', 'remediation',
+            'configuration_state', 'code_systems', 'assumptions', 'guardrails',
+        ]:
             if key in policy_metadata:
                 policy_dict[key] = policy_metadata[key]
         

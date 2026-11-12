@@ -1,0 +1,23 @@
+{
+  "database": "hfleanstg",
+  "started_at": "2026-11-08T01:22:26.914142Z",
+  "medicare": {
+    "medicare_docs_created": 6,
+    "medicare_docs_updated": 0
+  },
+  "policies": {
+    "policies_endpoint_contracts": 257
+  },
+  "predictions": {
+    "predictions_updated": 257
+  },
+  "observations": {
+    "observations_updated": 2570,
+    "verdict_distribution": {
+      "BACKFIRE": 1666,
+      "ON_TRACK": 904
+    }
+  },
+  "finished_at": "2026-11-08T01:24:27.424649Z",
+  "status": "OK"
+}

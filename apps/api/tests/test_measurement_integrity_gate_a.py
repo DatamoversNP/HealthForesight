@@ -15,7 +15,9 @@ from uepi_api.storage_scorecards import generate_scorecard_from_predicted_impact
 from uepi_api.verdict import VERDICT_RULE_VERSION, compute_verdict, endpoint_contract_from_policy
 from uepi_common.analytics.impact import ImpactAnalysisEngine, ImpactResult, _relative_percent
 from uepi_common.analytics.predicted_impact import PredictedImpactGenerator
+from uepi_api.verdict import with_screen_verdict
 from uepi_common.metrics.measurement_integrity import (
+    aggregate_policy_observation_rollups,
     annotate_claimant_exposure,
     authoritative_measure_label,
     enrolled_rate,
@@ -384,6 +386,173 @@ def test_multi_policy_what_if_does_not_turn_missing_allowed_into_zero():
     assert "allowed_pmpm: totalAllowedChange" in module
 
 
+def _stored_backfire() -> dict:
+    return {
+        "verdict_status": "BACKFIRE",
+        "verdict_reason": "stored reason",
+        "recommendation": "stored recommendation",
+        "verdict_rule_version": "v0",
+        "comparisons": {"vs_baseline": {"utilization_change_pct": -25}},
+        "behavioral_explanation": {"risk_factors": ["substitution"]},
+    }
+
+
+def test_screen_verdict_shows_inconclusive_without_replacing_stored_backfire():
+    stored = _stored_backfire()
+    shown = with_screen_verdict(stored, {})
+    assert stored["verdict_status"] == "BACKFIRE"
+    assert shown["verdict_status"] == "BACKFIRE"
+    assert shown["historical_verdict_status"] == "BACKFIRE"
+    assert shown["recommendation"] == "stored recommendation"
+    assert shown["verdict_rule_version"] == "v0"
+    assert shown["screen_verdict"] == "INCONCLUSIVE"
+    assert "No policy endpoint contract" in shown["screen_verdict_reason"]
+    assert "update_observation" not in inspect.getsource(with_screen_verdict)
+
+
+def test_one_endpoint_contract_remains_on_track_at_read_time():
+    shown = with_screen_verdict(
+        _stored_backfire(),
+        {"required_endpoints": [{"metric_id": "utilization_per_1k", "direction": "decrease"}]},
+    )
+    assert shown["screen_verdict"] == "ON_TRACK"
+    assert shown["verdict_status"] == "BACKFIRE"
+
+
+def test_missing_endpoint_measurement_does_not_become_on_track():
+    stored = _stored_backfire()
+    stored["comparisons"] = {"vs_baseline": {}}
+    shown = with_screen_verdict(
+        stored,
+        {"required_endpoints": [{"metric_id": "utilization_per_1k", "direction": "decrease"}]},
+    )
+    assert shown["screen_verdict"] == "INCONCLUSIVE"
+    assert shown["screen_verdict"] != "ON_TRACK"
+
+
+def test_rollup_treats_missing_changes_as_unavailable():
+    rollup = aggregate_policy_observation_rollups([
+        {
+            "metrics": {},
+            "comparisons": {"vs_baseline": {"change_from_baseline": 12}},
+        }
+    ])
+    assert rollup["avg_utilization_change_pct"] is None
+    assert rollup["avg_utilization_change_status"] == "UNAVAILABLE"
+    assert rollup["avg_utilization_observation_count"] == 0
+    assert rollup["total_cost_impact"] is None
+    assert rollup["total_cost_impact_status"] == "UNAVAILABLE"
+    assert rollup["total_cost_impact_display_unit"] is None
+
+
+def test_rollup_keeps_measured_zero_and_excludes_null():
+    rollup = aggregate_policy_observation_rollups([
+        {
+            "metrics": {"denominator_basis": "CLAIMANT_MONTHS"},
+            "comparisons": {"vs_baseline": {"utilization_change_pct": None, "cost_change_pmpm": None}},
+        },
+        {
+            "metrics": {"denominator_basis": "CLAIMANT_MONTHS", "member_months": 1000},
+            "comparisons": {"vs_baseline": {"utilization_change_pct": 0, "cost_change_pmpm": 0}},
+        },
+        {
+            "metrics": {"denominator_basis": "CLAIMANT_MONTHS", "member_months": 1000},
+            "comparisons": {"vs_baseline": {"utilization_change_pct": -10, "cost_change_pmpm": 4}},
+        },
+    ])
+    assert rollup["avg_utilization_change_pct"] == -5
+    assert rollup["avg_utilization_observation_count"] == 2
+    assert rollup["avg_utilization_measured_zero_count"] == 1
+    # Absolute period $ = 0*1000 + 4*1000
+    assert rollup["total_cost_impact"] == 4000
+    assert rollup["total_cost_impact_annualized"] == 48000
+    assert rollup["total_cost_observation_count"] == 2
+    assert rollup["cost_denominator_basis"] == "CLAIMANT_MONTHS"
+    assert rollup["total_cost_impact_display_unit"] == "period $"
+    assert "ΔPMPM" not in rollup["total_cost_impact_display_unit"]
+    assert "not attributed" in rollup["total_cost_impact_label"].lower()
+
+
+def test_rollup_enrolled_label_requires_verified_enrollment():
+    enrolled = aggregate_policy_observation_rollups([
+        {
+            "metrics": {"denominator_basis": "ENROLLMENT", "enrolled_rate_status": "MEASURED"},
+            "comparisons": {"vs_baseline": {"utilization_change_pct": -2, "cost_change_pmpm": -8}},
+        }
+    ])
+    assert enrolled["cost_denominator_basis"] == "ENROLLMENT"
+    assert enrolled["total_cost_impact"] == -8
+    assert "ΔPMPM" in enrolled["total_cost_impact_display_unit"]
+
+    unverified = aggregate_policy_observation_rollups([
+        {
+            "metrics": {"denominator_basis": "ENROLLMENT", "enrolled_rate_status": "NOT_MEASURABLE"},
+            "comparisons": {"vs_baseline": {"utilization_change_pct": 0, "cost_change_pmpm": -8}},
+        }
+    ])
+    assert unverified["total_cost_impact"] is None
+    assert unverified["avg_utilization_change_pct"] == 0
+    assert unverified["avg_utilization_observation_count"] == 1
+
+
+def test_rollup_mixed_denominators_stay_unavailable():
+    rollup = aggregate_policy_observation_rollups([
+        {
+            "metrics": {"denominator_basis": "CLAIMANT_MONTHS"},
+            "comparisons": {"vs_baseline": {"utilization_change_pct": 1, "cost_change_pmpm": 10}},
+        },
+        {
+            "metrics": {
+                "denominator_basis": "ENROLLMENT",
+                "enrolled_rate_status": "MEASURED",
+            },
+            "comparisons": {"vs_baseline": {"utilization_change_pct": 1, "cost_change_pmpm": 5}},
+        },
+    ])
+    assert rollup["total_cost_impact"] is None
+    assert rollup["total_cost_impact_status"] == "UNAVAILABLE"
+    assert rollup["claimant_cost_observation_count"] == 1
+    assert rollup["enrolled_cost_observation_count"] == 1
+
+
+def test_dashboard_summary_uses_the_null_safe_rollup():
+    import uepi_api.routers.dashboard as dashboard_router
+    source = inspect.getsource(dashboard_router.get_dashboard_summary)
+    assert "aggregate_policy_observation_rollups" in source
+    assert "utilization_change or 0" not in source
+    assert 'get("change_from_baseline")' not in source
+    assert 'metrics.get("utilization_change_pct", 0)' not in source
+
+
+def test_missing_observation_trend_is_not_zero():
+    trend = observations_router._trend_metadata({"metrics": {}}, {"metrics": {"utilization_per_1k": 10}}, 2)
+    assert trend["utilization_trend"] is None
+    assert trend["cost_trend"] is None
+    assert trend["trend_direction"] is None
+
+
+def test_mppr_scenario_result_keeps_known_dollars_and_null_utilization():
+    from uepi_api.services.reimbursement_whatif import run_reimbursement_whatif
+
+    result = run_reimbursement_whatif(
+        policy_type=None,
+        policy_name="MPPR multiple procedure",
+        metadata={},
+        policy_id="mppr-local",
+        scenario_params={"base_secondary_pct": 0.5, "secondary_pct": 0.4},
+    )
+    assert result["status"] == "completed"
+    payload = result["result"]
+    baseline = payload["baseline_metrics"]
+    assert baseline["total_paid_baseline_window"] == 3150.0
+    assert baseline["payment_impact"] == 600.0
+    assert baseline["utilization_change_pct"] is None
+    assert payload["impact_metrics"]["volume_effect"] == 0.0
+    assert payload["impact_metrics"]["delta_payment_impact"] == round(
+        payload["projected_metrics"]["payment_impact"] - baseline["payment_impact"], 2
+    )
+
+
 def test_scorecard_does_not_invent_confidence():
     card = generate_scorecard_from_predicted_impact(
         uuid4(),
@@ -391,3 +560,71 @@ def test_scorecard_does_not_invent_confidence():
     )
     assert card["regulatory_defensibility_score"] is None
     assert card["effectiveness_index"] is None
+
+
+def test_scorecard_unestimated_pi_stays_unavailable():
+    card = generate_scorecard_from_predicted_impact(
+        uuid4(),
+        {
+            "policy_effect_status": "UNESTIMATED",
+            "metrics": {
+                "cost_change_pct": None,
+                "utilization_change_pct": None,
+                "confidence_score": None,
+                "predicted_allowed": 1_500_000.0,
+            },
+        },
+        period="2026-Q4",
+    )
+    assert card["index_status"] == "UNAVAILABLE"
+    assert card["effectiveness_index"] is None
+    assert card["cost_impact_score"] is None
+    assert card["behavioral_risk_score"] is None
+    assert card["access_impact_score"] is None
+    assert card["regulatory_defensibility_score"] is None
+    assert all(entry["trend"] != "DOWN" or entry["metric_value"] is not None for entry in card["entries"])
+    allowed_entries = [e for e in card["entries"] if e["metric_name"].startswith("Predicted Allowed")]
+    assert len(allowed_entries) == 1
+    assert allowed_entries[0]["metric_value"] == 1_500_000.0
+
+
+def test_scorecard_measured_descriptive_index():
+    card = generate_scorecard_from_predicted_impact(
+        uuid4(),
+        {
+            "policy_effect_status": "UNESTIMATED",
+            "metrics": {
+                "cost_change_pct": None,
+                "utilization_change_pct": None,
+                "measured_vs_baseline_cost_change_pct": -10.0,
+                "measured_vs_baseline_utilization_change_pct": -20.0,
+                "confidence_score": None,
+            },
+        },
+        period="2026-Q4",
+    )
+    assert card["index_status"] == "DESCRIPTIVE_ONLY"
+    assert card["effectiveness_index"] is not None
+    assert card["cost_impact_score"] == 70.0  # 50 + 10*2
+    assert card["behavioral_risk_score"] == 80.0  # 100 - 20
+    assert card["access_impact_score"] == 80
+    assert card["regulatory_defensibility_score"] is None
+    assert "not attributed" in (card.get("index_reason") or "").lower() or "descriptive" in (
+        card.get("index_reason") or ""
+    ).lower()
+
+
+def test_scorecard_measured_descriptive_positive_deltas():
+    card = generate_scorecard_from_predicted_impact(
+        uuid4(),
+        {
+            "metrics": {
+                "measured_vs_baseline_cost_change_pct": 10.0,
+                "measured_vs_baseline_utilization_change_pct": 5.0,
+            },
+        },
+    )
+    assert card["index_status"] == "DESCRIPTIVE_ONLY"
+    assert card["cost_impact_score"] == 30.0  # 50 - 10*2
+    assert card["behavioral_risk_score"] == 100.0  # no deferral on util increase
+    assert card["effectiveness_index"] is not None

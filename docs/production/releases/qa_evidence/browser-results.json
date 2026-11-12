@@ -1,0 +1,328 @@
+{
+  "results": [
+    {
+      "id": "route-dashboard-executive",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/dashboard/executive",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1421,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/route-dashboard-executive.png"
+    },
+    {
+      "id": "route-dashboard-policy-owner",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/dashboard/policy-owner",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1417,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/route-dashboard-policy-owner.png"
+    },
+    {
+      "id": "route-dashboard-analyst",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/dashboard/analyst",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1423,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/route-dashboard-analyst.png"
+    },
+    {
+      "id": "route-policies",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/policies",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1413,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/route-policies.png"
+    },
+    {
+      "id": "route-policy-verdicts",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/policy-verdicts",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1420,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/route-policy-verdicts.png"
+    },
+    {
+      "id": "route-objectives-health",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/objectives-health",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1420,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/route-objectives-health.png"
+    },
+    {
+      "id": "route-baseline-analysis",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/baseline-analysis",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1425,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/route-baseline-analysis.png"
+    },
+    {
+      "id": "route-observation-analysis",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/observation-analysis",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1419,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/route-observation-analysis.png"
+    },
+    {
+      "id": "route-predicted-impacts",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/predicted-impacts",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1417,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/route-predicted-impacts.png"
+    },
+    {
+      "id": "route-whatif",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/whatif",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1413,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/route-whatif.png"
+    },
+    {
+      "id": "route-whatif-scenarios",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/whatif/scenarios",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1414,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/route-whatif-scenarios.png"
+    },
+    {
+      "id": "route-policies-builder",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/policies/builder",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1419,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/route-policies-builder.png"
+    },
+    {
+      "id": "route-medicare-rules",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/medicare-rules",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1431,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/route-medicare-rules.png"
+    },
+    {
+      "id": "route-exports",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/exports",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1421,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/route-exports.png"
+    },
+    {
+      "id": "route-audit-log",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/audit-log",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1419,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/route-audit-log.png"
+    },
+    {
+      "id": "route-lineage",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/lineage",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1422,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/route-lineage.png"
+    },
+    {
+      "id": "route-cohorts",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/cohorts",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1413,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/route-cohorts.png"
+    },
+    {
+      "id": "route-analyses",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/analyses",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1416,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/route-analyses.png"
+    },
+    {
+      "id": "route-scorecards",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/scorecards",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1418,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/route-scorecards.png"
+    },
+    {
+      "id": "workspace-4aa9248d",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/policies/workspace/4aa9248d-30fe-5d80-a831-356ba4eb7487",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 8042,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/workspace-4aa9248d.png"
+    },
+    {
+      "id": "workspace-4700258b",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/policies/workspace/4700258b-959d-5bf4-a87b-6fc605e32f55",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1000,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/workspace-4700258b.png"
+    },
+    {
+      "id": "workspace-67217db4",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/policies/workspace/67217db4-b317-559c-9a23-b071d56b3fc3",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1501,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/workspace-67217db4.png"
+    },
+    {
+      "id": "workspace-475b0843",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/policies/workspace/475b0843-557a-5fd6-86e2-6582fed53aa8",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1009,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/workspace-475b0843.png"
+    },
+    {
+      "id": "workspace-9723994c",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/policies/workspace/9723994c-c43b-5489-a265-7c16ef7e3923",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1009,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/workspace-9723994c.png"
+    },
+    {
+      "id": "workspace-00ce7271",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/policies/workspace/00ce7271-f295-5a6f-ab9d-2492c721e934",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1508,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/workspace-00ce7271.png"
+    },
+    {
+      "id": "workspace-6395fca8",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/policies/workspace/6395fca8-eca7-5e9c-91ec-a3da875549c0",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1018,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/workspace-6395fca8.png"
+    },
+    {
+      "id": "workspace-1ffd459a",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/policies/workspace/1ffd459a-88fc-58cc-a163-f3326d9eb0d9",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1518,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/workspace-1ffd459a.png"
+    },
+    {
+      "id": "workspace-a31915b1",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/policies/workspace/a31915b1-7695-509d-983f-8005c4206eea",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 999,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/workspace-a31915b1.png"
+    },
+    {
+      "id": "workspace-ffe9b246",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/policies/workspace/ffe9b246-52f8-5280-b9c3-2b4b63bd3db1",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1000,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/workspace-ffe9b246.png"
+    },
+    {
+      "id": "workspace-c7998b09",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/policies/workspace/c7998b09-dcfb-5c9c-8c2a-5e04cc65ab2f",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1012,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/workspace-c7998b09.png"
+    },
+    {
+      "id": "workspace-7179e9f3",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/policies/workspace/7179e9f3-1f91-50e8-b08d-b569aae4843a",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 999,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/workspace-7179e9f3.png"
+    },
+    {
+      "id": "chart-4aa9248d",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/observation-analysis?policy=4aa9248d-30fe-5d80-a831-356ba4eb7487",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 3050,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/chart-4aa9248d.png"
+    },
+    {
+      "id": "executive-separation",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/dashboard/executive",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 798,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/executive-separation.png"
+    },
+    {
+      "id": "whatif-disclaimer",
+      "url": "https://hfleanstg-web.whiteplant-64737337.eastus2.azurecontainerapps.io/whatif",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 798,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/whatif-disclaimer.png"
+    },
+    {
+      "id": "executive-separation",
+      "url": "https://hfleanstg-web-datavoyager.whiteplant-64737337.eastus2.azurecontainerapps.io/dashboard/executive",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1522,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/executive-separation.png"
+    },
+    {
+      "id": "whatif-disclaimer",
+      "url": "https://hfleanstg-web-datavoyager.whiteplant-64737337.eastus2.azurecontainerapps.io/whatif",
+      "ok": true,
+      "notes": [],
+      "failures": [],
+      "elapsed_ms": 1512,
+      "screenshot": "/Users/nileshl/Private/HealthForesight/docs/production/releases/qa_evidence/whatif-disclaimer.png"
+    }
+  ]
+}

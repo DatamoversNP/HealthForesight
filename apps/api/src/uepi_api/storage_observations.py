@@ -151,13 +151,26 @@ def _create_observation(
         )
 
         # Phase 2: Compute verdict (versioned logic)
-        from uepi_api.verdict import compute_verdict, VERDICT_RULE_VERSION
+        from uepi_api.verdict import (
+            compute_verdict,
+            endpoint_contract_from_policy,
+            VERDICT_RULE_VERSION,
+        )
         comparisons = observation_data.get("comparisons") or {}
         behavioral = observation_data.get("behavioral_explanation") or {}
+        required_endpoints = observation_data.get("required_endpoints")
+        if not required_endpoints and policy_id is not None:
+            try:
+                from uepi_api.storage_policies import get_policy
+
+                policy_row = get_policy(policy_id, tenant_id)
+                required_endpoints = endpoint_contract_from_policy(policy_row)
+            except Exception:
+                required_endpoints = None
         verdict_status, verdict_reason, recommendation = compute_verdict(
             comparisons,
             behavioral,
-            required_endpoints=observation_data.get("required_endpoints"),
+            required_endpoints=required_endpoints,
         )
         
         # Create observation in database
@@ -327,7 +340,9 @@ _OBS_SUMMARY_METRIC_KEYS = (
     "paid_pmpm",
     "observed_percent_change",
     "utilization_change_pct",
+    "cost_change_pmpm",
     "member_months",
+    "eligible_member_months",
     "unique_members",
     "total_claims",
     "denominator_basis",
@@ -376,7 +391,13 @@ def _observation_to_dict(observation: Observation, summary: bool = False) -> Dic
     if summary:
         metrics = _slim_obs_metrics({k: v for k, v in _metrics.items() if k != "observed_measures"})
         observed_measures: Dict[str, Any] = {}
-        behavioral: Dict[str, Any] = {}
+        raw_behavioral = observation.behavioral_explanation_json or {}
+        if not isinstance(raw_behavioral, dict):
+            raw_behavioral = {}
+        behavioral = {
+            "risk_factors": raw_behavioral.get("risk_factors") or [],
+            "actionable_insights": raw_behavioral.get("actionable_insights") or [],
+        }
         comparisons = observation.comparisons_json if observation.comparisons_json else {}
         # Keep vs_baseline / vs_predicted; drop nested bulk if present under other keys
         if isinstance(comparisons, dict):

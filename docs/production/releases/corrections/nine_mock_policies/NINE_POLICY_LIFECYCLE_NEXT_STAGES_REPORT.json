@@ -1,0 +1,269 @@
+{
+  "generated_at": "2026-11-07T08:25:31+00:00",
+  "database": "hfleanstg",
+  "measurement_book": "SYNTHETIC_NINE_POLICY_5K_V1",
+  "stages": {
+    "reconciliation_audit": 9,
+    "verdict_audit": 9,
+    "whatif_continuation": 18,
+    "evidence_packs": 9,
+    "objectives_health_snapshot": "4a559be1-ca66-4978-b1bc-6d0384bc61a6",
+    "observation_schedules": 9
+  },
+  "policies": [
+    {
+      "policy_id": "a9e032f8-d4fc-599c-8ea4-4e58a0f929e3",
+      "name": "Imaging Site-of-Service Policy",
+      "baseline_version": 3,
+      "prediction_id": "d7dc2b7a-3234-4dbb-a9d2-0e59a2bfa57d",
+      "observations": 10,
+      "whatif_scenarios": [
+        {
+          "scenario_id": "plus10pct_mm",
+          "analysis_id": "bcbc1f19-12b1-4e77-b77a-5f337e8e1120",
+          "status": "AVAILABLE",
+          "scenario_member_months": 55000.00000000001,
+          "scenario_continuation_allowed": 6319028.659166668
+        },
+        {
+          "scenario_id": "minus10pct_mm",
+          "analysis_id": "b571a05a-0fa8-4699-92ab-7a3120a7c922",
+          "status": "AVAILABLE",
+          "scenario_member_months": 45000.0,
+          "scenario_continuation_allowed": 5170114.3575
+        }
+      ],
+      "evidence_id": "c7ce56a3-d55a-4dd6-9845-b06d5ba8fec4",
+      "schedule_id": "0be11ebf-f845-42d9-8512-6cd0feff80f4",
+      "verdict": "INCONCLUSIVE",
+      "objectives_health": "no_data"
+    },
+    {
+      "policy_id": "fce62ce1-1476-520d-81a6-daf0e9507743",
+      "name": "Infusion Site-of-Care and Reimbursement Policy",
+      "baseline_version": 3,
+      "prediction_id": "dbcff23d-91d8-4670-a38a-42688a1be042",
+      "observations": 10,
+      "whatif_scenarios": [
+        {
+          "scenario_id": "plus10pct_mm",
+          "analysis_id": "23a92880-9885-4742-ba4c-f5fcc2dc7a2d",
+          "status": "AVAILABLE",
+          "scenario_member_months": 55000.00000000001,
+          "scenario_continuation_allowed": 2179744.7833333337
+        },
+        {
+          "scenario_id": "minus10pct_mm",
+          "analysis_id": "d1205fda-ae1c-4892-8e6f-0d1a0d672938",
+          "status": "AVAILABLE",
+          "scenario_member_months": 45000.0,
+          "scenario_continuation_allowed": 1783427.55
+        }
+      ],
+      "evidence_id": "1426209b-f6cc-468f-8127-0fba4e4ee708",
+      "schedule_id": "4c09b682-6f9f-4212-8ac9-a10729bbd85d",
+      "verdict": "INCONCLUSIVE",
+      "objectives_health": "no_data"
+    },
+    {
+      "policy_id": "20fe5bcf-f112-5033-a2c3-4702179e6652",
+      "name": "Local Coverage Determination Study \u2014 LCD L34425",
+      "baseline_version": 3,
+      "prediction_id": "4096b8ae-eab6-45e5-82cf-b723a1be5081",
+      "observations": 10,
+      "whatif_scenarios": [
+        {
+          "scenario_id": "plus10pct_mm",
+          "analysis_id": "e8cdc597-2715-4bd3-bfa3-1fcf74123d83",
+          "status": "AVAILABLE",
+          "scenario_member_months": 55000.00000000001,
+          "scenario_continuation_allowed": 1057075.0025000002
+        },
+        {
+          "scenario_id": "minus10pct_mm",
+          "analysis_id": "064aa683-c783-4c8c-99ad-eb09cb5dc491",
+          "status": "AVAILABLE",
+          "scenario_member_months": 45000.0,
+          "scenario_continuation_allowed": 864879.5475
+        }
+      ],
+      "evidence_id": "30f4ed68-b48e-47f3-836e-d89f7e6ff467",
+      "schedule_id": "2422a960-2b90-4449-b1e3-b581ce753812",
+      "verdict": "INCONCLUSIVE",
+      "objectives_health": "no_data"
+    },
+    {
+      "policy_id": "d65d0f7a-ab72-5dde-9cd0-1c75b79efc66",
+      "name": "Medically Unlikely Edit (MUE) / Unit Cap",
+      "baseline_version": 3,
+      "prediction_id": "e0fbedb9-ede4-4258-aa20-ee2042311b94",
+      "observations": 10,
+      "whatif_scenarios": [
+        {
+          "scenario_id": "plus10pct_mm",
+          "analysis_id": "311e70a3-92b4-4182-a94c-eadc28f1e02c",
+          "status": "AVAILABLE",
+          "scenario_member_months": 55000.00000000001,
+          "scenario_continuation_allowed": 427052.36750000005
+        },
+        {
+          "scenario_id": "minus10pct_mm",
+          "analysis_id": "6f36866d-7706-40f8-9f62-355a76799150",
+          "status": "AVAILABLE",
+          "scenario_member_months": 45000.0,
+          "scenario_continuation_allowed": 349406.48250000004
+        }
+      ],
+      "evidence_id": "78328ad4-ccec-42e3-8b98-147a6efaa4f0",
+      "schedule_id": "9e5a40e1-f001-4884-9af1-7811beeb5b54",
+      "verdict": "INCONCLUSIVE",
+      "objectives_health": "no_data"
+    },
+    {
+      "policy_id": "7e7f480d-dc95-50a9-bbab-77a8c225f81f",
+      "name": "Multiple Procedure Payment Reduction (MPPR)",
+      "baseline_version": 3,
+      "prediction_id": "8af6290f-8647-4599-ab50-03ba1a352c93",
+      "observations": 10,
+      "whatif_scenarios": [
+        {
+          "scenario_id": "plus10pct_mm",
+          "analysis_id": "8c1960c6-dc92-4eb7-be74-03afc48ea041",
+          "status": "AVAILABLE",
+          "scenario_member_months": 55000.00000000001,
+          "scenario_continuation_allowed": 3596401.673333334
+        },
+        {
+          "scenario_id": "minus10pct_mm",
+          "analysis_id": "e59300d3-fb17-4c39-bd72-f3b22b87b75e",
+          "status": "AVAILABLE",
+          "scenario_member_months": 45000.0,
+          "scenario_continuation_allowed": 2942510.46
+        }
+      ],
+      "evidence_id": "e240718c-8c82-4322-848b-791927d88707",
+      "schedule_id": "f1242fb1-a372-40ad-9782-36850c84b77f",
+      "verdict": "INCONCLUSIVE",
+      "objectives_health": "no_data"
+    },
+    {
+      "policy_id": "b7e4ec54-64d6-5e70-8808-6e5fa0c229c7",
+      "name": "National Coverage Determination Study \u2014 MRI (NCD 220.2)",
+      "baseline_version": 3,
+      "prediction_id": "3e25ac0e-cd09-49aa-9fcb-a1bf985a565f",
+      "observations": 10,
+      "whatif_scenarios": [
+        {
+          "scenario_id": "plus10pct_mm",
+          "analysis_id": "8555d256-d01e-4bba-b972-c91934f7340f",
+          "status": "AVAILABLE",
+          "scenario_member_months": 55000.00000000001,
+          "scenario_continuation_allowed": 5054040.4383333335
+        },
+        {
+          "scenario_id": "minus10pct_mm",
+          "analysis_id": "e8e19837-0d5c-455b-893a-e1bb2dd243ab",
+          "status": "AVAILABLE",
+          "scenario_member_months": 45000.0,
+          "scenario_continuation_allowed": 4135123.995
+        }
+      ],
+      "evidence_id": "4112a5db-1594-4d39-961d-3ed5d98433b4",
+      "schedule_id": "3eee5d97-2a48-4de0-92be-962128132d12",
+      "verdict": "INCONCLUSIVE",
+      "objectives_health": "no_data"
+    },
+    {
+      "policy_id": "d6339860-d85a-5dc5-babd-9c91390fde36",
+      "name": "Outpatient MRI Prior Authorization",
+      "baseline_version": 3,
+      "prediction_id": "45b7d5d7-78f3-470f-a002-875a26ad508b",
+      "observations": 10,
+      "whatif_scenarios": [
+        {
+          "scenario_id": "plus10pct_mm",
+          "analysis_id": "34b4209f-570c-4ecb-8b41-c3abc445e912",
+          "status": "AVAILABLE",
+          "scenario_member_months": 55000.00000000001,
+          "scenario_continuation_allowed": 1602431.1141666668
+        },
+        {
+          "scenario_id": "minus10pct_mm",
+          "analysis_id": "c6197857-0e47-4243-9256-d8940a58e170",
+          "status": "AVAILABLE",
+          "scenario_member_months": 45000.0,
+          "scenario_continuation_allowed": 1311080.0025
+        }
+      ],
+      "evidence_id": "066bdbe5-9e35-4052-8804-4c5383def921",
+      "schedule_id": "6540e633-d320-4bc7-abdf-724d05c09d05",
+      "verdict": "INCONCLUSIVE",
+      "objectives_health": "no_data"
+    },
+    {
+      "policy_id": "435e1461-b57e-5af3-ad08-e15aac690310",
+      "name": "Outpatient Therapy Utilization and Payment Policy",
+      "baseline_version": 3,
+      "prediction_id": "2541a20c-0e1d-41dd-b868-28c2809163db",
+      "observations": 10,
+      "whatif_scenarios": [
+        {
+          "scenario_id": "plus10pct_mm",
+          "analysis_id": "908f64a4-1669-4f16-8a24-146b974448ef",
+          "status": "AVAILABLE",
+          "scenario_member_months": 55000.00000000001,
+          "scenario_continuation_allowed": 382009.5583333334
+        },
+        {
+          "scenario_id": "minus10pct_mm",
+          "analysis_id": "02f2c3b1-8df6-448a-91fd-be310cc1a00d",
+          "status": "AVAILABLE",
+          "scenario_member_months": 45000.0,
+          "scenario_continuation_allowed": 312553.275
+        }
+      ],
+      "evidence_id": "36863d49-d793-426d-8d85-f40680466174",
+      "schedule_id": "5ba91162-87f8-4242-aed8-bc0646395b05",
+      "verdict": "INCONCLUSIVE",
+      "objectives_health": "no_data"
+    },
+    {
+      "policy_id": "1d6d3332-88fd-54ac-8227-2d2bf856ed5f",
+      "name": "Procedure-to-Procedure (PTP) Coding Edit",
+      "baseline_version": 3,
+      "prediction_id": "017d3757-5a02-4926-b934-8dde91110309",
+      "observations": 10,
+      "whatif_scenarios": [
+        {
+          "scenario_id": "plus10pct_mm",
+          "analysis_id": "74ac718d-19da-4a57-b26e-a5aef8cafed4",
+          "status": "AVAILABLE",
+          "scenario_member_months": 55000.00000000001,
+          "scenario_continuation_allowed": 2122204.498333334
+        },
+        {
+          "scenario_id": "minus10pct_mm",
+          "analysis_id": "1ab60a6f-a4a2-426a-a929-c66b745080f8",
+          "status": "AVAILABLE",
+          "scenario_member_months": 45000.0,
+          "scenario_continuation_allowed": 1736349.1350000002
+        }
+      ],
+      "evidence_id": "b06b9b4e-7b0a-4dff-8eca-ae46962b7132",
+      "schedule_id": "fbbc8a80-71a8-4e37-85de-82ac5cf4d789",
+      "verdict": "INCONCLUSIVE",
+      "objectives_health": "no_data"
+    }
+  ],
+  "errors": [],
+  "summary": {
+    "policies": 9,
+    "errors": 0,
+    "success": true,
+    "intentionally_not_done": [
+      "policy_effect_estimation",
+      "endpoint_contract_fabrication",
+      "ON_TRACK_verdicts_without_endpoints"
+    ]
+  }
+}

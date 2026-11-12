@@ -35,25 +35,26 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 interface ScenarioResult {
   scenario_id: string
   scenario_name?: string
-  baseline_metrics: {
-    utilization_per_1k: number
-    allowed_pmpm: number
-    paid_pmpm: number
+  baseline_metrics?: {
+    utilization_per_1k?: number | null
+    allowed_pmpm?: number | null
+    paid_pmpm?: number | null
   }
-  projected_metrics: {
-    utilization_per_1k: number
-    allowed_pmpm: number
-    paid_pmpm: number
+  projected_metrics?: {
+    utilization_per_1k?: number | null
+    allowed_pmpm?: number | null
+    paid_pmpm?: number | null
   }
-  impact_metrics: {
-    utilization_per_1k: number
-    allowed_pmpm: number
-    paid_pmpm: number
-    percent_changes: {
-      utilization_per_1k: number
-      allowed_pmpm: number
-      paid_pmpm: number
-    }
+  impact_metrics?: {
+    utilization_per_1k?: number | null
+    allowed_pmpm?: number | null
+    paid_pmpm?: number | null
+    delta_payment_impact?: number | null
+    percent_changes?: {
+      utilization_per_1k?: number | null
+      allowed_pmpm?: number | null
+      paid_pmpm?: number | null
+    } | null
   }
   confidence_score: number | null
 }
@@ -73,12 +74,19 @@ export default function ScenarioComparison({
   const [selectedScenario, setSelectedScenario] = useState<string | null>(null)
   const [newName, setNewName] = useState('')
 
-  const formatCurrency = (value: number) => {
+  const formatCurrency = (value: number | null | undefined) => {
+    if (value == null || Number.isNaN(Number(value))) return 'Unavailable'
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 }).format(value)
   }
 
-  const formatPercent = (value: number) => {
+  const formatPercent = (value: number | null | undefined) => {
+    if (value == null || Number.isNaN(Number(value))) return 'Unavailable'
     return `${value >= 0 ? '+' : ''}${value.toFixed(2)}%`
+  }
+
+  const percentOrNull = (value: unknown): number | null => {
+    if (value == null || value === '' || Number.isNaN(Number(value))) return null
+    return Number(value)
   }
 
   const handleRenameClick = (scenario: ScenarioResult) => {
@@ -99,9 +107,9 @@ export default function ScenarioComparison({
   // Prepare data for comparison chart
   const comparisonData = scenarios.map((scenario) => ({
     name: scenario.scenario_name || scenario.scenario_id.substring(0, 8),
-    'Utilization Change (%)': scenario.impact_metrics.percent_changes.utilization_per_1k,
-    'Allowed PMPM Change (%)': scenario.impact_metrics.percent_changes.allowed_pmpm,
-    'Paid PMPM Change (%)': scenario.impact_metrics.percent_changes.paid_pmpm,
+    'Utilization Change (%)': percentOrNull(scenario.impact_metrics?.percent_changes?.utilization_per_1k),
+    'Allowed change (%)': percentOrNull(scenario.impact_metrics?.percent_changes?.allowed_pmpm),
+    'Paid change (%)': percentOrNull(scenario.impact_metrics?.percent_changes?.paid_pmpm),
   }))
 
   if (scenarios.length === 0) {
@@ -129,11 +137,11 @@ export default function ScenarioComparison({
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis label={{ value: 'Percent Change (%)', angle: -90, position: 'insideLeft' }} />
-              <Tooltip formatter={(value: number) => formatPercent(value)} />
+              <Tooltip formatter={(value) => formatPercent(value as number | null)} />
               <Legend />
               <Bar dataKey="Utilization Change (%)" fill="#8884d8" name="Claim lines per 1,000 claimants (not enrolled utilization)" />
-              <Bar dataKey="Allowed PMPM Change (%)" fill="#82ca9d" name="Allowed $ / claimant-month (not enrolled PMPM)" />
-              <Bar dataKey="Paid PMPM Change (%)" fill="#ffc658" name="Paid $ / claimant-month (not enrolled PMPM)" />
+              <Bar dataKey="Allowed change (%)" fill="#82ca9d" name="Allowed $ / claimant-month (not enrolled PMPM)" />
+              <Bar dataKey="Paid change (%)" fill="#ffc658" name="Paid $ / claimant-month (not enrolled PMPM)" />
             </BarChart>
           </ResponsiveContainer>
         </CardContent>
@@ -174,40 +182,33 @@ export default function ScenarioComparison({
                       </Typography>
                     </TableCell>
                     <TableCell align="right">
-                      <Typography
-                        variant="body2"
-                        color={scenario.impact_metrics.percent_changes.utilization_per_1k < 0 ? 'success.main' : 'error.main'}
-                        fontWeight="medium"
-                      >
-                        {formatPercent(scenario.impact_metrics.percent_changes.utilization_per_1k)}
-                      </Typography>
-                    </TableCell>
-                    <TableCell align="right">
-                      <Typography
-                        variant="body2"
-                        color={scenario.impact_metrics.percent_changes.allowed_pmpm < 0 ? 'success.main' : 'error.main'}
-                        fontWeight="medium"
-                      >
-                        {formatPercent(scenario.impact_metrics.percent_changes.allowed_pmpm)}
-                      </Typography>
-                    </TableCell>
-                    <TableCell align="right">
-                      <Typography
-                        variant="body2"
-                        color={scenario.impact_metrics.percent_changes.paid_pmpm < 0 ? 'success.main' : 'error.main'}
-                        fontWeight="medium"
-                      >
-                        {formatPercent(scenario.impact_metrics.percent_changes.paid_pmpm)}
-                      </Typography>
-                    </TableCell>
-                    <TableCell align="right">
-                      <Typography variant="body2">
-                        {formatCurrency(scenario.baseline_metrics.allowed_pmpm)}
+                      <Typography variant="body2" fontWeight="medium">
+                        {formatPercent(scenario.impact_metrics?.percent_changes?.utilization_per_1k)}
                       </Typography>
                     </TableCell>
                     <TableCell align="right">
                       <Typography variant="body2" fontWeight="medium">
-                        {formatCurrency(scenario.projected_metrics.allowed_pmpm)}
+                        {formatPercent(scenario.impact_metrics?.percent_changes?.allowed_pmpm)}
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="right">
+                      <Typography variant="body2" fontWeight="medium">
+                        {formatPercent(scenario.impact_metrics?.percent_changes?.paid_pmpm)}
+                      </Typography>
+                      {scenario.impact_metrics?.delta_payment_impact != null && (
+                        <Typography variant="caption" display="block" color="text.secondary">
+                          Payment impact delta {formatCurrency(scenario.impact_metrics.delta_payment_impact)} (fixture dollars, not enrolled PMPM)
+                        </Typography>
+                      )}
+                    </TableCell>
+                    <TableCell align="right">
+                      <Typography variant="body2">
+                        {formatCurrency(scenario.baseline_metrics?.allowed_pmpm)}
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="right">
+                      <Typography variant="body2" fontWeight="medium">
+                        {formatCurrency(scenario.projected_metrics?.allowed_pmpm)}
                       </Typography>
                     </TableCell>
                     <TableCell align="right">

@@ -103,8 +103,43 @@ def list_latest_predicted_impacts(tenant_id: UUID, limit: int = 500) -> list[Dic
             pred_metrics = metrics_data.get("metrics", metrics_data)
             if not isinstance(pred_metrics, dict):
                 pred_metrics = {}
-            # Skip empty shells
-            if not any(
+            # Merge root-level measured_* if writers stored them outside nested metrics.
+            for _mk in (
+                "measured_vs_baseline_cost_change_pct",
+                "measured_vs_baseline_utilization_change_pct",
+                "measured_vs_baseline_cost_change_pmpm",
+                "measured_vs_baseline_meaning",
+                "measured_vs_baseline_note",
+                "predicted_allowed",
+                "predicted_allowed_pmpm",
+            ):
+                if pred_metrics.get(_mk) is None and metrics_data.get(_mk) is not None:
+                    pred_metrics[_mk] = metrics_data.get(_mk)
+            continuation = pred_metrics.get("continuation")
+            if not isinstance(continuation, dict):
+                continuation = metrics_data.get("continuation") if isinstance(metrics_data, dict) else None
+            if not isinstance(continuation, dict):
+                continuation = {}
+            horizon = continuation.get("horizon_totals") if isinstance(continuation.get("horizon_totals"), dict) else {}
+            predicted_allowed = pred_metrics.get("predicted_allowed")
+            if predicted_allowed is None:
+                predicted_allowed = horizon.get("predicted_allowed")
+            series = continuation.get("series") if isinstance(continuation.get("series"), list) else []
+            first_series = series[0] if series and isinstance(series[0], dict) else {}
+            predicted_allowed_pmpm = pred_metrics.get("predicted_allowed_pmpm")
+            if predicted_allowed_pmpm is None:
+                predicted_allowed_pmpm = first_series.get("predicted_allowed_pmpm")
+            is_continuation = (
+                str(pred_metrics.get("prediction_type") or "").upper() == "CONTINUATION"
+                or str(r["prediction_method"] or "").upper().startswith("HISTORICAL_RATE_CONTINUATION")
+                or continuation.get("status") == "AVAILABLE"
+            )
+            continuation_allowed_change = pred_metrics.get("continuation_allowed_change")
+            # Rate-freeze delta vs itself is 0; keep for contract, never treat as policy-effect %.
+            if continuation_allowed_change is None and is_continuation:
+                continuation_allowed_change = 0.0
+            # Skip empty shells — keep CONTINUATION forecasts visible even when policy-effect is UNESTIMATED
+            usable = any(
                 pred_metrics.get(k) is not None
                 for k in (
                     "cost_change_pmpm",
@@ -112,9 +147,36 @@ def list_latest_predicted_impacts(tenant_id: UUID, limit: int = 500) -> list[Dic
                     "cost_change",
                     "utilization_change",
                     "utilization_change_per_1k",
+                    "payment_impact_dollars",
+                    "continuation_allowed_change",
+                    "predicted_allowed",
+                    "predicted_allowed_pmpm",
+                    "measured_vs_baseline_cost_change_pct",
+                    "measured_vs_baseline_utilization_change_pct",
                 )
-            ):
+            ) or continuation_allowed_change is not None or predicted_allowed is not None or predicted_allowed_pmpm is not None or continuation.get("status") == "AVAILABLE" or is_continuation
+            if not usable:
                 continue
+            # Never surface fabricated policy-effect zeros for continuation forecasts.
+            cost_change_pmpm = pred_metrics.get("cost_change_pmpm")
+            if cost_change_pmpm is None:
+                cost_change_pmpm = pred_metrics.get("cost_change")
+            util_change_pct = pred_metrics.get("utilization_change_pct")
+            util_change_1k = pred_metrics.get("utilization_change_per_1k")
+            if util_change_1k is None:
+                util_change_1k = pred_metrics.get("utilization_change")
+            if is_continuation:
+                cost_change_pmpm = None
+                util_change_pct = None
+                util_change_1k = None
+            measured_cost_pct = pred_metrics.get("measured_vs_baseline_cost_change_pct")
+            measured_util_pct = pred_metrics.get("measured_vs_baseline_utilization_change_pct")
+            measured_cost_pmpm = pred_metrics.get("measured_vs_baseline_cost_change_pmpm")
+            measured_meaning = pred_metrics.get("measured_vs_baseline_meaning") or (
+                "OBSERVED_VS_BASELINE_NOT_ATTRIBUTED"
+                if measured_cost_pct is not None or measured_util_pct is not None
+                else None
+            )
             pred_at = r["predicted_at"].isoformat() if r["predicted_at"] else None
             out.append(
                 {
@@ -128,15 +190,29 @@ def list_latest_predicted_impacts(tenant_id: UUID, limit: int = 500) -> list[Dic
                     "prediction_method": r["prediction_method"],
                     "baseline_id": str(r["baseline_id"]) if r["baseline_id"] else None,
                     "metrics": {
-                        "cost_change_pmpm": pred_metrics.get("cost_change_pmpm")
-                        if pred_metrics.get("cost_change_pmpm") is not None
-                        else pred_metrics.get("cost_change"),
-                        "utilization_change_pct": pred_metrics.get("utilization_change_pct"),
-                        "utilization_change_per_1k": pred_metrics.get("utilization_change_per_1k")
-                        if pred_metrics.get("utilization_change_per_1k") is not None
-                        else pred_metrics.get("utilization_change"),
-                        "cost_change_total": pred_metrics.get("cost_change_total"),
-                        "cost_change_pct": pred_metrics.get("cost_change_pct"),
+                        "cost_change_pmpm": cost_change_pmpm,
+                        "utilization_change_pct": util_change_pct,
+                        "utilization_change_per_1k": util_change_1k,
+                        "cost_change_total": pred_metrics.get("cost_change_total")
+                        if pred_metrics.get("cost_change_total") is not None
+                        else pred_metrics.get("payment_impact_dollars"),
+                        "payment_impact_dollars": pred_metrics.get("payment_impact_dollars"),
+                        "continuation_allowed_change": continuation_allowed_change,
+                        "predicted_allowed": predicted_allowed,
+                        "predicted_allowed_pmpm": predicted_allowed_pmpm,
+                        "cost_change_pct": pred_metrics.get("cost_change_pct") if not is_continuation else None,
+                        "cost_change_meaning": pred_metrics.get("cost_change_meaning")
+                        or ("UNESTIMATED_POLICY_EFFECT" if is_continuation else None),
+                        "utilization_change_meaning": pred_metrics.get("utilization_change_meaning")
+                        or ("UNESTIMATED_POLICY_EFFECT" if is_continuation else None),
+                        "measured_vs_baseline_cost_change_pct": measured_cost_pct,
+                        "measured_vs_baseline_utilization_change_pct": measured_util_pct,
+                        "measured_vs_baseline_cost_change_pmpm": measured_cost_pmpm,
+                        "measured_vs_baseline_meaning": measured_meaning,
+                        "display_note": pred_metrics.get("display_note"),
+                        "prediction_type": pred_metrics.get("prediction_type")
+                        or continuation.get("prediction_type")
+                        or ("CONTINUATION" if is_continuation else None),
                         "confidence_score": pred_metrics.get("confidence_score")
                         if pred_metrics.get("confidence_score") is not None
                         else r["confidence"],
@@ -145,9 +221,17 @@ def list_latest_predicted_impacts(tenant_id: UUID, limit: int = 500) -> list[Dic
                     },
                 }
             )
-        # Prefer largest absolute cost impact first for overview default sort
+        # Prefer largest absolute estimated cost impact; fall back to predicted allowed for continuation books
         out.sort(
-            key=lambda x: abs(float((x.get("metrics") or {}).get("cost_change_pmpm") or 0)),
+            key=lambda x: abs(
+                float(
+                    (x.get("metrics") or {}).get("cost_change_pmpm")
+                    if (x.get("metrics") or {}).get("cost_change_pmpm") is not None
+                    else (x.get("metrics") or {}).get("predicted_allowed_pmpm")
+                    or (x.get("metrics") or {}).get("predicted_allowed")
+                    or 0
+                )
+            ),
             reverse=True,
         )
         return out
@@ -203,6 +287,23 @@ def _get_predicted_impact(policy_id: UUID | str, tenant_id: UUID) -> Optional[Di
         pred_metrics = metrics_data.get("metrics", metrics_data) if isinstance(metrics_data, dict) else metrics_data
         if not isinstance(pred_metrics, dict):
             pred_metrics = {}
+        # Merge root-level measured_* / predicted_allowed onto nested metrics for scorecards/UI.
+        if isinstance(metrics_data, dict):
+            pred_metrics = dict(pred_metrics)
+            for _mk in (
+                "measured_vs_baseline_cost_change_pct",
+                "measured_vs_baseline_utilization_change_pct",
+                "measured_vs_baseline_cost_change_pmpm",
+                "measured_vs_baseline_meaning",
+                "measured_vs_baseline_note",
+                "predicted_allowed",
+                "predicted_allowed_pmpm",
+                "cost_change_meaning",
+                "utilization_change_meaning",
+                "policy_effect_status",
+            ):
+                if pred_metrics.get(_mk) is None and metrics_data.get(_mk) is not None:
+                    pred_metrics[_mk] = metrics_data.get(_mk)
         
         # Phase 2.2: Ensure observation_enhancement can find utilization_change and cost_change
         # Add aliases for utilization_change_per_1k -> utilization_change, cost_change_pmpm -> cost_change

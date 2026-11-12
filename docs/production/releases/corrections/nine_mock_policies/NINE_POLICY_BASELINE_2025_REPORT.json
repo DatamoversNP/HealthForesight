@@ -1,0 +1,456 @@
+{
+  "generated_at": "2026-11-07T06:36:25.326087+00:00",
+  "database": "hfleanstg",
+  "window": [
+    "2025-01-01",
+    "2025-12-31"
+  ],
+  "policy_start": "2026-01-01",
+  "validation": [
+    {
+      "name": "Imaging Site-of-Service Policy",
+      "codes": [
+        "72148",
+        "72149"
+      ],
+      "diagnosis_codes": [],
+      "service_categories": [
+        "sos"
+      ],
+      "lob": null,
+      "markets": null,
+      "execution_eligibility": "PENDING_PARAMETERS",
+      "register_status": "AWAITING_CONFIGURATION_PARAMETERS",
+      "code_mapping_state": "CANDIDATE_DEMO_MAPPING",
+      "policy_key": "sos",
+      "issues": [],
+      "structurally_configured": true,
+      "synthetic_product_mismatch": false
+    },
+    {
+      "name": "Infusion Site-of-Care and Reimbursement Policy",
+      "codes": [
+        "96413",
+        "J1745"
+      ],
+      "diagnosis_codes": [],
+      "service_categories": [
+        "infusion"
+      ],
+      "lob": null,
+      "markets": null,
+      "execution_eligibility": "PENDING_PARAMETERS",
+      "register_status": "AWAITING_CONFIGURATION_PARAMETERS",
+      "code_mapping_state": "CANDIDATE_DEMO_MAPPING",
+      "policy_key": "infusion",
+      "issues": [],
+      "structurally_configured": true,
+      "synthetic_product_mismatch": false
+    },
+    {
+      "name": "Local Coverage Determination Study \u2014 LCD L34425",
+      "codes": [
+        "70540",
+        "70542"
+      ],
+      "diagnosis_codes": [],
+      "service_categories": [
+        "lcd"
+      ],
+      "lob": [
+        "MEDICARE"
+      ],
+      "markets": [
+        "NC"
+      ],
+      "execution_eligibility": "REVIEW_ONLY",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "CANDIDATE_DEMO_MAPPING",
+      "policy_key": "lcd",
+      "issues": [
+        "scope_lob_medicare_vs_synthetic_commercial_book",
+        "scope_market_nc_vs_synthetic_market"
+      ],
+      "structurally_configured": true,
+      "synthetic_product_mismatch": true
+    },
+    {
+      "name": "Medically Unlikely Edit (MUE) / Unit Cap",
+      "codes": [
+        "97110"
+      ],
+      "diagnosis_codes": [],
+      "service_categories": [
+        "mue"
+      ],
+      "lob": null,
+      "markets": null,
+      "execution_eligibility": "PENDING_PARAMETERS",
+      "register_status": "AWAITING_CONFIGURATION_PARAMETERS",
+      "code_mapping_state": "CANDIDATE_DEMO_MAPPING",
+      "policy_key": "mue",
+      "issues": [],
+      "structurally_configured": true,
+      "synthetic_product_mismatch": false
+    },
+    {
+      "name": "Multiple Procedure Payment Reduction (MPPR)",
+      "codes": [
+        "27447",
+        "64483"
+      ],
+      "diagnosis_codes": [],
+      "service_categories": [
+        "mppr"
+      ],
+      "lob": null,
+      "markets": null,
+      "execution_eligibility": "PENDING_PARAMETERS",
+      "register_status": "AWAITING_CONFIGURATION_PARAMETERS",
+      "code_mapping_state": "CANDIDATE_DEMO_MAPPING",
+      "policy_key": "mppr",
+      "issues": [],
+      "structurally_configured": true,
+      "synthetic_product_mismatch": false
+    },
+    {
+      "name": "National Coverage Determination Study \u2014 MRI (NCD 220.2)",
+      "codes": [
+        "70551",
+        "70553"
+      ],
+      "diagnosis_codes": [],
+      "service_categories": [
+        "ncd"
+      ],
+      "lob": [
+        "MEDICARE"
+      ],
+      "markets": null,
+      "execution_eligibility": "REVIEW_ONLY",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "CANDIDATE_DEMO_MAPPING",
+      "policy_key": "ncd",
+      "issues": [
+        "scope_lob_medicare_vs_synthetic_commercial_book"
+      ],
+      "structurally_configured": true,
+      "synthetic_product_mismatch": true
+    },
+    {
+      "name": "Outpatient MRI Prior Authorization",
+      "codes": [
+        "72148",
+        "72149"
+      ],
+      "diagnosis_codes": [],
+      "service_categories": [
+        "mri"
+      ],
+      "lob": null,
+      "markets": null,
+      "execution_eligibility": "REVIEW_ONLY",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "CANDIDATE_DEMO_MAPPING",
+      "policy_key": "mri",
+      "issues": [],
+      "structurally_configured": true,
+      "synthetic_product_mismatch": false
+    },
+    {
+      "name": "Outpatient Therapy Utilization and Payment Policy",
+      "codes": [
+        "97110",
+        "97112",
+        "97140"
+      ],
+      "diagnosis_codes": [],
+      "service_categories": [
+        "therapy"
+      ],
+      "lob": null,
+      "markets": null,
+      "execution_eligibility": "REVIEW_ONLY",
+      "register_status": "REVIEW_REQUIRED_NO_AUTHORITY_CERTIFICATION",
+      "code_mapping_state": "CANDIDATE_DEMO_MAPPING",
+      "policy_key": "therapy",
+      "issues": [],
+      "structurally_configured": true,
+      "synthetic_product_mismatch": false
+    },
+    {
+      "name": "Procedure-to-Procedure (PTP) Coding Edit",
+      "codes": [
+        "70551",
+        "70553"
+      ],
+      "diagnosis_codes": [],
+      "service_categories": [
+        "ptp"
+      ],
+      "lob": null,
+      "markets": null,
+      "execution_eligibility": "PENDING_PARAMETERS",
+      "register_status": "AWAITING_CONFIGURATION_PARAMETERS",
+      "code_mapping_state": "CANDIDATE_DEMO_MAPPING",
+      "policy_key": "ptp",
+      "issues": [],
+      "structurally_configured": true,
+      "synthetic_product_mismatch": false
+    }
+  ],
+  "data_check": {
+    "claims_cy2025": 1013937,
+    "claims_cy2025_5k": 28835,
+    "claims_cy2025_500k": 985102,
+    "load_required": false
+  },
+  "baselines": [
+    {
+      "policy_id": "a9e032f8-d4fc-599c-8ea4-4e58a0f929e3",
+      "name": "Imaging Site-of-Service Policy",
+      "status": "CREATED",
+      "baseline_id": "e668addf-f273-4b4d-b5a9-1e88e53f0d41",
+      "total_claims": 11255,
+      "unique_members": 6710,
+      "member_months": 5554299.26899384,
+      "total_allowed": 13051195.57,
+      "allowed_pmpm_target": 2.349746554503575,
+      "util_rate_target_per_1000_mm": 2.026358223588993,
+      "exposure_method": "ENROLLMENT_PARTIAL_MONTH",
+      "denominator_basis": "ENROLLMENT",
+      "filters": {
+        "codes": [
+          "72148",
+          "72149"
+        ],
+        "service_categories": [
+          "sos"
+        ],
+        "lob": null,
+        "markets": null
+      },
+      "validation_issues": []
+    },
+    {
+      "policy_id": "fce62ce1-1476-520d-81a6-daf0e9507743",
+      "name": "Infusion Site-of-Care and Reimbursement Policy",
+      "status": "CREATED",
+      "baseline_id": "ddfb032d-d467-45ab-b9f5-db9d15bb0f8b",
+      "total_claims": 7091,
+      "unique_members": 4779,
+      "member_months": 5554299.26899384,
+      "total_allowed": 29069581.39,
+      "allowed_pmpm_target": 5.233708156900582,
+      "util_rate_target_per_1000_mm": 1.2766686951105775,
+      "exposure_method": "ENROLLMENT_PARTIAL_MONTH",
+      "denominator_basis": "ENROLLMENT",
+      "filters": {
+        "codes": [
+          "96413",
+          "J1745"
+        ],
+        "service_categories": [
+          "infusion"
+        ],
+        "lob": null,
+        "markets": null
+      },
+      "validation_issues": []
+    },
+    {
+      "policy_id": "20fe5bcf-f112-5033-a2c3-4702179e6652",
+      "name": "Local Coverage Determination Study \u2014 LCD L34425",
+      "status": "CREATED",
+      "baseline_id": "2d1ec398-d9de-4123-9be3-e587f3a75664",
+      "total_claims": 7212,
+      "unique_members": 4773,
+      "member_months": 5554299.26899384,
+      "total_allowed": 5139412.54,
+      "allowed_pmpm_target": 0.925303497542905,
+      "util_rate_target_per_1000_mm": 1.298453621370397,
+      "exposure_method": "ENROLLMENT_PARTIAL_MONTH",
+      "denominator_basis": "ENROLLMENT",
+      "filters": {
+        "codes": [
+          "70540",
+          "70542"
+        ],
+        "service_categories": [
+          "lcd"
+        ],
+        "lob": null,
+        "markets": null
+      },
+      "validation_issues": [
+        "scope_lob_medicare_vs_synthetic_commercial_book",
+        "scope_market_nc_vs_synthetic_market"
+      ]
+    },
+    {
+      "policy_id": "d65d0f7a-ab72-5dde-9cd0-1c75b79efc66",
+      "name": "Medically Unlikely Edit (MUE) / Unit Cap",
+      "status": "CREATED",
+      "baseline_id": "7a01af49-5b39-43e2-8f0d-d06f81d6a0f9",
+      "total_claims": 6467,
+      "unique_members": 4576,
+      "member_months": 5554299.26899384,
+      "total_allowed": 2009833.24,
+      "allowed_pmpm_target": 0.361851809321769,
+      "util_rate_target_per_1000_mm": 1.16432329026655,
+      "exposure_method": "ENROLLMENT_PARTIAL_MONTH",
+      "denominator_basis": "ENROLLMENT",
+      "filters": {
+        "codes": [
+          "97110"
+        ],
+        "service_categories": [
+          "mue"
+        ],
+        "lob": null,
+        "markets": null
+      },
+      "validation_issues": []
+    },
+    {
+      "policy_id": "7e7f480d-dc95-50a9-bbab-77a8c225f81f",
+      "name": "Multiple Procedure Payment Reduction (MPPR)",
+      "status": "CREATED",
+      "baseline_id": "fc18f4c6-2f23-40d4-a59b-2627a4bb9fd8",
+      "total_claims": 22580,
+      "unique_members": 8175,
+      "member_months": 5554299.26899384,
+      "total_allowed": 22397807.79,
+      "allowed_pmpm_target": 4.032517281708762,
+      "util_rate_target_per_1000_mm": 4.065319297080362,
+      "exposure_method": "ENROLLMENT_PARTIAL_MONTH",
+      "denominator_basis": "ENROLLMENT",
+      "filters": {
+        "codes": [
+          "27447",
+          "64483"
+        ],
+        "service_categories": [
+          "mppr"
+        ],
+        "lob": null,
+        "markets": null
+      },
+      "validation_issues": []
+    },
+    {
+      "policy_id": "b7e4ec54-64d6-5e70-8808-6e5fa0c229c7",
+      "name": "National Coverage Determination Study \u2014 MRI (NCD 220.2)",
+      "status": "CREATED",
+      "baseline_id": "6751714c-b647-42c9-b424-6dd6542e15fa",
+      "total_claims": 10181,
+      "unique_members": 6359,
+      "member_months": 5554299.26899384,
+      "total_allowed": 9565560.52,
+      "allowed_pmpm_target": 1.7221903352234744,
+      "util_rate_target_per_1000_mm": 1.8329944979439838,
+      "exposure_method": "ENROLLMENT_PARTIAL_MONTH",
+      "denominator_basis": "ENROLLMENT",
+      "filters": {
+        "codes": [
+          "70551",
+          "70553"
+        ],
+        "service_categories": [
+          "ncd"
+        ],
+        "lob": null,
+        "markets": null
+      },
+      "validation_issues": [
+        "scope_lob_medicare_vs_synthetic_commercial_book"
+      ]
+    },
+    {
+      "policy_id": "d6339860-d85a-5dc5-babd-9c91390fde36",
+      "name": "Outpatient MRI Prior Authorization",
+      "status": "CREATED",
+      "baseline_id": "fc67b40c-e1b9-40a7-963e-72f1163896fa",
+      "total_claims": 14396,
+      "unique_members": 9411,
+      "member_months": 5554299.26899384,
+      "total_allowed": 13747869.5,
+      "allowed_pmpm_target": 2.4751762255133984,
+      "util_rate_target_per_1000_mm": 2.591866102779844,
+      "exposure_method": "ENROLLMENT_PARTIAL_MONTH",
+      "denominator_basis": "ENROLLMENT",
+      "filters": {
+        "codes": [
+          "72148",
+          "72149"
+        ],
+        "service_categories": [
+          "mri"
+        ],
+        "lob": null,
+        "markets": null
+      },
+      "validation_issues": []
+    },
+    {
+      "policy_id": "435e1461-b57e-5af3-ad08-e15aac690310",
+      "name": "Outpatient Therapy Utilization and Payment Policy",
+      "status": "CREATED",
+      "baseline_id": "82ac2c0c-80a1-42af-bfff-3c9cc2a06b5d",
+      "total_claims": 9782,
+      "unique_members": 6037,
+      "member_months": 5554299.26899384,
+      "total_allowed": 2281618.2,
+      "allowed_pmpm_target": 0.41078416727324,
+      "util_rate_target_per_1000_mm": 1.761158253500447,
+      "exposure_method": "ENROLLMENT_PARTIAL_MONTH",
+      "denominator_basis": "ENROLLMENT",
+      "filters": {
+        "codes": [
+          "97110",
+          "97112",
+          "97140"
+        ],
+        "service_categories": [
+          "therapy"
+        ],
+        "lob": null,
+        "markets": null
+      },
+      "validation_issues": []
+    },
+    {
+      "policy_id": "1d6d3332-88fd-54ac-8227-2d2bf856ed5f",
+      "name": "Procedure-to-Procedure (PTP) Coding Edit",
+      "status": "CREATED",
+      "baseline_id": "73496368-008e-449e-b962-69d9654a88b4",
+      "total_claims": 14720,
+      "unique_members": 4847,
+      "member_months": 5554299.26899384,
+      "total_allowed": 13578791.19,
+      "allowed_pmpm_target": 2.444735246046581,
+      "util_rate_target_per_1000_mm": 2.650199293756551,
+      "exposure_method": "ENROLLMENT_PARTIAL_MONTH",
+      "denominator_basis": "ENROLLMENT",
+      "filters": {
+        "codes": [
+          "70551",
+          "70553"
+        ],
+        "service_categories": [
+          "ptp"
+        ],
+        "lob": null,
+        "markets": null
+      },
+      "validation_issues": []
+    }
+  ],
+  "errors": [],
+  "summary": {
+    "policies": 9,
+    "created": 9,
+    "blocked_or_empty": 0,
+    "success": true
+  }
+}

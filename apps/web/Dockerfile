@@ -11,6 +11,12 @@ RUN npm install || npm ci
 # Copy source
 COPY apps/web ./
 
+# Bake API origin at build time (lean staging / env-specific deploys).
+ARG VITE_API_URL=
+ARG VITE_APP_BUILD=
+ENV VITE_API_URL=$VITE_API_URL \
+    VITE_APP_BUILD=$VITE_APP_BUILD
+
 # Build
 RUN npm run build
 

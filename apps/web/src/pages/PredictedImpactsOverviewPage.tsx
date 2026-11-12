@@ -61,13 +61,24 @@ interface PredictedImpact {
   policy_id: string
   predicted_at: string
   metrics: {
-    utilization_change_per_1k: number
-    cost_change_pmpm: number
-    cost_change_total: number
-    utilization_change_pct: number
-    cost_change_pct: number
-    confidence_score: number
-    prediction_method: string
+    utilization_change_per_1k?: number | null
+    cost_change_pmpm?: number | null
+    payment_impact_dollars?: number | null
+    continuation_allowed_change?: number | null
+    predicted_allowed?: number | null
+    predicted_allowed_pmpm?: number | null
+    cost_change_total?: number | null
+    utilization_change_pct?: number | null
+    cost_change_pct?: number | null
+    cost_change_meaning?: string | null
+    utilization_change_meaning?: string | null
+    measured_vs_baseline_cost_change_pct?: number | null
+    measured_vs_baseline_utilization_change_pct?: number | null
+    measured_vs_baseline_cost_change_pmpm?: number | null
+    measured_vs_baseline_meaning?: string | null
+    prediction_type?: string | null
+    confidence_score?: number | null
+    prediction_method?: string | null
   }
   warnings?: string[]
   limitations?: string[]
@@ -77,6 +88,36 @@ interface PolicyWithImpact extends Policy {
   predictedImpact?: PredictedImpact
   hasImpact: boolean
   loadingImpact: boolean
+}
+
+function isContinuationImpact(impact?: PredictedImpact | null): boolean {
+  if (!impact?.metrics) return false
+  const m = impact.metrics
+  const method = String(m.prediction_method || '').toUpperCase()
+  const ptype = String(m.prediction_type || '').toUpperCase()
+  return (
+    ptype === 'CONTINUATION' ||
+    method.startsWith('HISTORICAL_RATE_CONTINUATION') ||
+    String(m.cost_change_meaning || '').toUpperCase() === 'UNESTIMATED_POLICY_EFFECT'
+  )
+}
+
+function estimatedCostChange(impact?: PredictedImpact | null): number | null {
+  if (!impact?.metrics || isContinuationImpact(impact)) return null
+  const m = impact.metrics
+  if (m.cost_change_pmpm != null && Number.isFinite(Number(m.cost_change_pmpm))) {
+    return Number(m.cost_change_pmpm)
+  }
+  if (m.payment_impact_dollars != null && Number.isFinite(Number(m.payment_impact_dollars))) {
+    return -Number(m.payment_impact_dollars)
+  }
+  return null
+}
+
+function estimatedUtilChange(impact?: PredictedImpact | null): number | null {
+  if (!impact?.metrics || isContinuationImpact(impact)) return null
+  const v = impact.metrics.utilization_change_pct
+  return v != null && Number.isFinite(Number(v)) ? Number(v) : null
 }
 
 export default function PredictedImpactsOverviewPage() {
@@ -184,18 +225,26 @@ export default function PredictedImpactsOverviewPage() {
     })
     .sort((a, b) => {
       switch (sortBy) {
-        case 'cost_change':
-          const costA = a.predictedImpact?.metrics.cost_change_pmpm || 0
-          const costB = b.predictedImpact?.metrics.cost_change_pmpm || 0
-          return Math.abs(costB) - Math.abs(costA)
-        case 'utilization_change':
-          const utilA = a.predictedImpact?.metrics.utilization_change_pct || 0
-          const utilB = b.predictedImpact?.metrics.utilization_change_pct || 0
-          return Math.abs(utilB) - Math.abs(utilA)
-        case 'confidence':
+        case 'cost_change': {
+          const costA = estimatedCostChange(a.predictedImpact)
+          const costB = estimatedCostChange(b.predictedImpact)
+          if (costA != null || costB != null) {
+            return Math.abs(costB ?? 0) - Math.abs(costA ?? 0)
+          }
+          const predA = Number(a.predictedImpact?.metrics.predicted_allowed_pmpm ?? a.predictedImpact?.metrics.predicted_allowed ?? 0)
+          const predB = Number(b.predictedImpact?.metrics.predicted_allowed_pmpm ?? b.predictedImpact?.metrics.predicted_allowed ?? 0)
+          return Math.abs(predB) - Math.abs(predA)
+        }
+        case 'utilization_change': {
+          const utilA = estimatedUtilChange(a.predictedImpact)
+          const utilB = estimatedUtilChange(b.predictedImpact)
+          return Math.abs(utilB ?? 0) - Math.abs(utilA ?? 0)
+        }
+        case 'confidence': {
           const confA = a.predictedImpact?.metrics.confidence_score || 0
           const confB = b.predictedImpact?.metrics.confidence_score || 0
           return confB - confA
+        }
         case 'name':
         default:
           return a.name.localeCompare(b.name)
@@ -204,16 +253,27 @@ export default function PredictedImpactsOverviewPage() {
 
   const policiesWithImpact = filteredPolicies.filter((p) => p.hasImpact)
   const policiesWithoutImpact = filteredPolicies.filter((p) => !p.hasImpact)
+  const continuationOnlyBook = policiesWithImpact.length > 0 && policiesWithImpact.every((p) => isContinuationImpact(p.predictedImpact))
 
-  // Prepare chart data
-  const chartData = policiesWithImpact.map((policy) => ({
-    name: policy.name.length > 20 ? policy.name.substring(0, 20) + '...' : policy.name,
-    fullName: policy.name,
-    costChange: policy.predictedImpact?.metrics.cost_change_pmpm || 0,
-    utilizationChange: policy.predictedImpact?.metrics.utilization_change_pct || 0,
-    confidence: policy.predictedImpact?.metrics.confidence_score || 0,
-    policyId: policy.id,
-  }))
+  // Prepare chart data — never coerce UNESTIMATED continuation into +$0 / 0%
+  const chartData = policiesWithImpact.map((policy) => {
+    const costChange = estimatedCostChange(policy.predictedImpact)
+    const utilChange = estimatedUtilChange(policy.predictedImpact)
+    const predictedAllowedPmpm = policy.predictedImpact?.metrics.predicted_allowed_pmpm
+    return {
+      name: policy.name.length > 20 ? policy.name.substring(0, 20) + '...' : policy.name,
+      fullName: policy.name,
+      costChange: costChange,
+      utilizationChange: utilChange,
+      predictedAllowedPmpm:
+        predictedAllowedPmpm != null && Number.isFinite(Number(predictedAllowedPmpm))
+          ? Number(predictedAllowedPmpm)
+          : null,
+      confidence: policy.predictedImpact?.metrics.confidence_score || 0,
+      policyId: policy.id,
+      isContinuation: isContinuationImpact(policy.predictedImpact),
+    }
+  })
 
   if (loading) {
     return (
@@ -343,8 +403,12 @@ export default function PredictedImpactsOverviewPage() {
                 <TableRow>
                   <TableCell>Policy Name</TableCell>
                   <TableCell>Type</TableCell>
-                  <TableCell align="right">Cost Change (PMPM)</TableCell>
-                  <TableCell align="right">Utilization Change (%)</TableCell>
+                  <TableCell align="right">
+                    {continuationOnlyBook ? 'Predicted allowed (continuation)' : 'Cost change'}
+                  </TableCell>
+                  <TableCell align="right">
+                    {continuationOnlyBook ? 'Policy-effect util' : 'Utilization Change (%)'}
+                  </TableCell>
                   <TableCell align="right">Confidence</TableCell>
                   <TableCell>Prediction Method</TableCell>
                   <TableCell align="right">Last Updated</TableCell>
@@ -357,8 +421,11 @@ export default function PredictedImpactsOverviewPage() {
                   if (!impact || !impact.metrics) {
                     return null
                   }
-                  const costChange = impact.metrics.cost_change_pmpm || 0
-                  const utilChange = impact.metrics.utilization_change_pct || 0
+                  const continuation = isContinuationImpact(impact)
+                  const costChange = estimatedCostChange(impact)
+                  const utilChange = estimatedUtilChange(impact)
+                  const predictedAllowed = impact.metrics.predicted_allowed
+                  const predictedAllowedPmpm = impact.metrics.predicted_allowed_pmpm
                   return (
                     <TableRow key={policy.id} hover>
                       <TableCell>
@@ -370,41 +437,80 @@ export default function PredictedImpactsOverviewPage() {
                         <Chip label={policy.policy_type} size="small" variant="outlined" />
                       </TableCell>
                       <TableCell align="right">
-                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 0.5 }}>
-                          {costChange < 0 ? (
-                            <TrendingDownIcon color="success" fontSize="small" />
-                          ) : costChange > 0 ? (
-                            <TrendingUpIcon color="error" fontSize="small" />
-                          ) : null}
-                          <Typography
-                            variant="body2"
-                            color={costChange < 0 ? 'success.main' : costChange > 0 ? 'error.main' : 'text.primary'}
-                            fontWeight="medium"
-                          >
-                            {costChange >= 0 ? '+' : ''}
-                            ${costChange.toFixed(2)}
-                          </Typography>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                          {continuation ? (
+                            <>
+                              <Typography variant="body2" fontWeight="medium">
+                                {predictedAllowedPmpm != null
+                                  ? `$${Number(predictedAllowedPmpm).toLocaleString(undefined, { maximumFractionDigits: 2 })} PMPM`
+                                  : predictedAllowed != null
+                                    ? `$${Number(predictedAllowed).toLocaleString(undefined, { maximumFractionDigits: 0 })}`
+                                    : 'UNESTIMATED'}
+                              </Typography>
+                              <Typography variant="caption" color="text.secondary">
+                                {predictedAllowed != null || predictedAllowedPmpm != null
+                                  ? 'continuation forecast — policy-effect UNESTIMATED'
+                                  : 'policy-effect UNESTIMATED (not +$0)'}
+                              </Typography>
+                              {impact.metrics.measured_vs_baseline_cost_change_pct != null && (
+                                <Typography variant="caption" color="text.secondary">
+                                  measured vs baseline{' '}
+                                  {`${Number(impact.metrics.measured_vs_baseline_cost_change_pct) >= 0 ? '+' : ''}${Number(impact.metrics.measured_vs_baseline_cost_change_pct).toFixed(1)}%`}
+                                  {' '}(not attributed)
+                                </Typography>
+                              )}
+                            </>
+                          ) : costChange != null ? (
+                            <Typography
+                              variant="body2"
+                              color={costChange < 0 ? 'success.main' : costChange > 0 ? 'error.main' : 'text.primary'}
+                              fontWeight="medium"
+                            >
+                              {costChange >= 0 ? '+' : ''}
+                              ${costChange.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                            </Typography>
+                          ) : (
+                            <Typography variant="body2" color="text.secondary">UNESTIMATED</Typography>
+                          )}
                         </Box>
                       </TableCell>
                       <TableCell align="right">
-                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 0.5 }}>
-                          {utilChange < 0 ? (
-                            <TrendingDownIcon color="success" fontSize="small" />
-                          ) : utilChange > 0 ? (
-                            <TrendingUpIcon color="error" fontSize="small" />
-                          ) : null}
-                          <Typography
-                            variant="body2"
-                            color={utilChange < 0 ? 'success.main' : utilChange > 0 ? 'error.main' : 'text.primary'}
-                            fontWeight="medium"
-                          >
-                            {utilChange >= 0 ? '+' : ''}
-                            {utilChange.toFixed(1)}%
-                          </Typography>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                          {continuation || utilChange == null ? (
+                            <>
+                              {impact.metrics.measured_vs_baseline_utilization_change_pct != null ? (
+                                <>
+                                  <Typography variant="body2" fontWeight="medium">
+                                    {`${Number(impact.metrics.measured_vs_baseline_utilization_change_pct) >= 0 ? '+' : ''}${Number(impact.metrics.measured_vs_baseline_utilization_change_pct).toFixed(1)}%`}
+                                  </Typography>
+                                  <Typography variant="caption" color="text.secondary">
+                                    measured vs baseline (not attributed)
+                                  </Typography>
+                                </>
+                              ) : (
+                                <>
+                                  <Typography variant="body2" fontWeight="medium" color="text.secondary">
+                                    UNESTIMATED
+                                  </Typography>
+                                  <Typography variant="caption" color="text.secondary">
+                                    {continuation ? 'not a 0% policy-effect' : 'no estimated util change'}
+                                  </Typography>
+                                </>
+                              )}
+                            </>
+                          ) : (
+                            <Typography
+                              variant="body2"
+                              color={utilChange < 0 ? 'success.main' : utilChange > 0 ? 'error.main' : 'text.primary'}
+                              fontWeight="medium"
+                            >
+                              {`${utilChange >= 0 ? '+' : ''}${Number(utilChange).toFixed(1)}%`}
+                            </Typography>
+                          )}
                         </Box>
                       </TableCell>
                       <TableCell align="right">
-                        <ConfidenceBadge confidence={impact.metrics?.confidence_score || 0} />
+                        <ConfidenceBadge confidence={impact.metrics?.confidence_score ?? null} />
                       </TableCell>
                       <TableCell>
                         <Typography variant="caption" color="text.secondary">
@@ -436,8 +542,10 @@ export default function PredictedImpactsOverviewPage() {
               if (!impact || !impact.metrics) {
                 return null
               }
-              const costChange = impact.metrics.cost_change_pmpm || 0
-              const utilChange = impact.metrics.utilization_change_pct || 0
+              const continuation = isContinuationImpact(impact)
+              const costChange = estimatedCostChange(impact)
+              const utilChange = estimatedUtilChange(impact)
+              const predictedAllowedPmpm = impact.metrics.predicted_allowed_pmpm
               return (
                 <Grid item xs={12} sm={6} md={4} key={policy.id}>
                   <Card sx={{ height: '100%' }}>
@@ -456,15 +564,37 @@ export default function PredictedImpactsOverviewPage() {
                       <Grid container spacing={2} sx={{ mt: 1 }}>
                         <Grid item xs={6}>
                           <Typography variant="caption" color="text.secondary">
-                            Cost Change (PMPM)
+                            {continuation ? 'Predicted allowed PMPM' : 'Cost Change (PMPM)'}
                           </Typography>
-                          <Typography
-                            variant="h6"
-                            color={costChange < 0 ? 'success.main' : costChange > 0 ? 'error.main' : 'text.primary'}
-                          >
-                            {costChange >= 0 ? '+' : ''}
-                            ${costChange.toFixed(2)}
-                          </Typography>
+                          {continuation ? (
+                            <Typography variant="h6">
+                              {predictedAllowedPmpm != null
+                                ? `$${Number(predictedAllowedPmpm).toFixed(2)}`
+                                : 'UNESTIMATED'}
+                            </Typography>
+                          ) : (
+                            <Typography
+                              variant="h6"
+                              color={
+                                costChange == null
+                                  ? 'text.secondary'
+                                  : costChange < 0
+                                    ? 'success.main'
+                                    : costChange > 0
+                                      ? 'error.main'
+                                      : 'text.primary'
+                              }
+                            >
+                              {costChange == null
+                                ? 'UNESTIMATED'
+                                : `${costChange >= 0 ? '+' : ''}$${costChange.toFixed(2)}`}
+                            </Typography>
+                          )}
+                          {continuation && (
+                            <Typography variant="caption" color="text.secondary" display="block">
+                              policy-effect UNESTIMATED
+                            </Typography>
+                          )}
                         </Grid>
                         <Grid item xs={6}>
                           <Typography variant="caption" color="text.secondary">
@@ -472,11 +602,25 @@ export default function PredictedImpactsOverviewPage() {
                           </Typography>
                           <Typography
                             variant="h6"
-                            color={utilChange < 0 ? 'success.main' : utilChange > 0 ? 'error.main' : 'text.primary'}
+                            color={
+                              utilChange == null
+                                ? 'text.secondary'
+                                : utilChange < 0
+                                  ? 'success.main'
+                                  : utilChange > 0
+                                    ? 'error.main'
+                                    : 'text.primary'
+                            }
                           >
-                            {utilChange >= 0 ? '+' : ''}
-                            {utilChange.toFixed(1)}%
+                            {utilChange == null
+                              ? 'UNESTIMATED'
+                              : `${utilChange >= 0 ? '+' : ''}${utilChange.toFixed(1)}%`}
                           </Typography>
+                          {continuation && (
+                            <Typography variant="caption" color="text.secondary" display="block">
+                              not +0%
+                            </Typography>
+                          )}
                         </Grid>
                         <Grid item xs={12}>
                           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -500,15 +644,28 @@ export default function PredictedImpactsOverviewPage() {
               <Card>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
-                    Cost Impact by Policy (PMPM)
+                    {continuationOnlyBook
+                      ? 'Continuation predicted allowed PMPM'
+                      : 'Cost Impact by Policy (PMPM)'}
                   </Typography>
+                  {continuationOnlyBook ? (
+                    <Alert severity="info" sx={{ mb: 2 }}>
+                      Policy-effect cost change is UNESTIMATED for this book. Chart shows frozen continuation forecast levels, not +$0 savings.
+                    </Alert>
+                  ) : null}
                   <ResponsiveContainer width="100%" height={400}>
-                    <BarChart data={chartData}>
+                    <BarChart
+                      data={
+                        continuationOnlyBook
+                          ? chartData.filter((d) => d.predictedAllowedPmpm != null)
+                          : chartData.filter((d) => d.costChange != null)
+                      }
+                    >
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="name" angle={-45} textAnchor="end" height={100} />
                       <YAxis />
                       <RechartsTooltip
-                        formatter={(value: number) => `$${value.toFixed(2)}`}
+                        formatter={(value: number) => `$${Number(value).toFixed(2)}`}
                         labelFormatter={(label, payload) => {
                           if (payload && payload[0]) {
                             return payload[0].payload.fullName
@@ -517,13 +674,28 @@ export default function PredictedImpactsOverviewPage() {
                         }}
                       />
                       <Legend />
-                      <Bar dataKey="costChange" name="Cost Change (PMPM)">
-                        {chartData.map((entry, index) => (
-                          <Cell
-                            key={`cell-${index}`}
-                            fill={entry.costChange < 0 ? healthForesightColors.success : healthForesightColors.error}
-                          />
-                        ))}
+                      <Bar
+                        dataKey={continuationOnlyBook ? 'predictedAllowedPmpm' : 'costChange'}
+                        name={continuationOnlyBook ? 'Predicted allowed PMPM' : 'Cost Change (PMPM)'}
+                      >
+                        {(continuationOnlyBook
+                          ? chartData.filter((d) => d.predictedAllowedPmpm != null)
+                          : chartData.filter((d) => d.costChange != null)
+                        ).map((entry, index) => {
+                          const v = continuationOnlyBook ? entry.predictedAllowedPmpm : entry.costChange
+                          return (
+                            <Cell
+                              key={`cell-${index}`}
+                              fill={
+                                continuationOnlyBook
+                                  ? healthForesightColors.primary.main
+                                  : (v ?? 0) < 0
+                                    ? healthForesightColors.success.main
+                                    : healthForesightColors.error.main
+                              }
+                            />
+                          )
+                        })}
                       </Bar>
                     </BarChart>
                   </ResponsiveContainer>
@@ -536,13 +708,18 @@ export default function PredictedImpactsOverviewPage() {
                   <Typography variant="h6" gutterBottom>
                     Utilization Impact by Policy (%)
                   </Typography>
+                  {continuationOnlyBook || chartData.every((d) => d.utilizationChange == null) ? (
+                    <Alert severity="info">
+                      Policy-effect utilization change is UNESTIMATED for continuation forecasts. Showing 0% would be incorrect.
+                    </Alert>
+                  ) : (
                   <ResponsiveContainer width="100%" height={400}>
-                    <BarChart data={chartData}>
+                    <BarChart data={chartData.filter((d) => d.utilizationChange != null)}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="name" angle={-45} textAnchor="end" height={100} />
                       <YAxis />
                       <RechartsTooltip
-                        formatter={(value: number) => `${value.toFixed(1)}%`}
+                        formatter={(value: number) => `${Number(value).toFixed(1)}%`}
                         labelFormatter={(label, payload) => {
                           if (payload && payload[0]) {
                             return payload[0].payload.fullName
@@ -552,15 +729,16 @@ export default function PredictedImpactsOverviewPage() {
                       />
                       <Legend />
                       <Bar dataKey="utilizationChange" name="Utilization Change (%)">
-                        {chartData.map((entry, index) => (
+                        {chartData.filter((d) => d.utilizationChange != null).map((entry, index) => (
                           <Cell
                             key={`cell-${index}`}
-                            fill={entry.utilizationChange < 0 ? healthForesightColors.success : healthForesightColors.error}
+                            fill={(entry.utilizationChange ?? 0) < 0 ? healthForesightColors.success.main : healthForesightColors.error.main}
                           />
                         ))}
                       </Bar>
                     </BarChart>
                   </ResponsiveContainer>
+                  )}
                 </CardContent>
               </Card>
             </Grid>
