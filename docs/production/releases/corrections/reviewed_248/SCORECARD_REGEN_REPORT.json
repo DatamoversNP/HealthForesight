@@ -1,10 +1,10 @@
 {
-  "finished_at": "2026-11-12T04:56:05.902345+00:00",
+  "finished_at": "2026-11-13T06:15:33.002779+00:00",
   "period": "2026-Q4",
   "policies_seen": 257,
   "generated": 257,
-  "available_index": 257,
-  "unavailable_index": 0,
+  "available_index": 252,
+  "unavailable_index": 5,
   "skipped_no_predicted_impact": 0,
   "errors": [],
   "error_count": 0

@@ -222,7 +222,7 @@
   "ok": true,
   "scorecard_regen": {
     "period": "2026-Q4",
-    "finished_at": "2026-11-13T01:58:03.052667+00:00",
+    "finished_at": "2026-11-13T06:15:33.002779+00:00",
     "policies_seen": 257,
     "generated": 257,
     "available_index": 252,
@@ -313,7 +313,7 @@
     }
   ],
   "verification": {
-    "checked_at": "2026-11-13T05:22:08.292752+00:00",
+    "checked_at": "2026-11-13T08:40:07.934703+00:00",
     "mechanism_stamped": true,
     "required_endpoints": true,
     "baseline_calc_version": true,
@@ -323,6 +323,86 @@
     "whatif_status": "completed",
     "scorecards_regenerated": true,
     "scorecard_unavailable_for_five": true,
-    "scorecard_followup": "storage_scorecards now maps payment_impact_pct → DESCRIPTIVE_ONLY; re-run lean_staging_regenerate_scorecards.py after API deploy to clear UNAVAILABLE on the five"
+    "scorecard_followup": "storage_scorecards now maps payment_impact_pct \u2192 DESCRIPTIVE_ONLY; re-run lean_staging_regenerate_scorecards.py after API deploy to clear UNAVAILABLE on the five",
+    "scorecard_smoke_ok": true
+  },
+  "scorecard_smoke": {
+    "checked_at": "2026-11-13T08:40:07.934703+00:00",
+    "api": "https://hfleanstg-api.whiteplant-64737337.eastus2.azurecontainerapps.io/api/v1",
+    "login_ok": true,
+    "policies": [
+      {
+        "key": "mppr",
+        "policy_id": "7e7f480d-dc95-50a9-bbab-77a8c225f81f",
+        "pi_http": 200,
+        "pi_present": true,
+        "pi_payment_impact": 600.0,
+        "pi_cost_change_pct": null,
+        "pi_calculation_version": "reimbursement-mppr-v1",
+        "scorecard_http": 200,
+        "scorecard_id": "f823968a-e931-4b2f-96e3-143bb26a6f17",
+        "index_status": "UNAVAILABLE",
+        "effectiveness_index": null,
+        "ok": true
+      },
+      {
+        "key": "sos",
+        "policy_id": "a9e032f8-d4fc-599c-8ea4-4e58a0f929e3",
+        "pi_http": 200,
+        "pi_present": true,
+        "pi_payment_impact": 520.0,
+        "pi_cost_change_pct": null,
+        "pi_calculation_version": "reimbursement-sos-v1",
+        "scorecard_http": 200,
+        "scorecard_id": "e63ee81d-42ab-46c0-a02b-c6ed3d7fb518",
+        "index_status": "UNAVAILABLE",
+        "effectiveness_index": null,
+        "ok": true
+      },
+      {
+        "key": "ptp",
+        "policy_id": "1d6d3332-88fd-54ac-8227-2d2bf856ed5f",
+        "pi_http": 200,
+        "pi_present": true,
+        "pi_payment_impact": 1200.0,
+        "pi_cost_change_pct": null,
+        "pi_calculation_version": "reimbursement-ncci-ptp-v1",
+        "scorecard_http": 200,
+        "scorecard_id": "48f21f3c-becd-46ce-bc51-f348a25660d5",
+        "index_status": "UNAVAILABLE",
+        "effectiveness_index": null,
+        "ok": true
+      },
+      {
+        "key": "mue",
+        "policy_id": "d65d0f7a-ab72-5dde-9cd0-1c75b79efc66",
+        "pi_http": 200,
+        "pi_present": true,
+        "pi_payment_impact": 100.0,
+        "pi_cost_change_pct": null,
+        "pi_calculation_version": "reimbursement-ncci-mue-v1",
+        "scorecard_http": 200,
+        "scorecard_id": "40f05490-521c-4e8e-80c9-555e98d8ca12",
+        "index_status": "UNAVAILABLE",
+        "effectiveness_index": null,
+        "ok": true
+      },
+      {
+        "key": "infusion",
+        "policy_id": "fce62ce1-1476-520d-81a6-daf0e9507743",
+        "pi_http": 200,
+        "pi_present": true,
+        "pi_payment_impact": 3600.0,
+        "pi_cost_change_pct": null,
+        "pi_calculation_version": "reimbursement-infusion-soc-v1",
+        "scorecard_http": 200,
+        "scorecard_id": "e605859e-1cfe-4dbd-8a58-d9884ff0c642",
+        "index_status": "UNAVAILABLE",
+        "effectiveness_index": null,
+        "ok": true
+      }
+    ],
+    "ok": true,
+    "note": "Five reimbursement verticals return scorecards with index_status UNAVAILABLE (cost_change_pct null / UNESTIMATED); PI present for all five."
   }
 }
