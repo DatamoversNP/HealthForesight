@@ -1,0 +1,328 @@
+{
+  "started_at": "2026-11-13T01:54:15.822130+00:00",
+  "database": "hfleanstg",
+  "option": "A",
+  "policies": [
+    {
+      "key": "mppr",
+      "policy_id": "7e7f480d-dc95-50a9-bbab-77a8c225f81f",
+      "name": "Multiple Procedure Payment Reduction (MPPR)",
+      "policy_type": "PAYMENT_POLICY",
+      "mechanism": "MULTIPLE_PROCEDURE_PAYMENT_REDUCTION",
+      "calculation_version": "reimbursement-mppr-v1",
+      "known_answer_passed": true,
+      "payment_impact": 600.0,
+      "lifecycle": {
+        "baseline_id": "mppr-ka-baseline-reimbursement-mppr-v1",
+        "predicted_impact_id": "052f0e2e-7d97-4a4b-92cf-eee8281ab554",
+        "observation_id": "mppr-ka-obs-reimbursement-mppr-v1",
+        "verdict_status": "ON_TRACK",
+        "payment_impact": 600.0,
+        "calculation_version": "reimbursement-mppr-v1",
+        "known_answer_passed": true
+      }
+    },
+    {
+      "key": "sos",
+      "policy_id": "a9e032f8-d4fc-599c-8ea4-4e58a0f929e3",
+      "name": "Imaging Site-of-Service Policy",
+      "policy_type": "SITE_OF_CARE",
+      "mechanism": "SITE_OF_SERVICE_PAYMENT_DIFFERENTIAL",
+      "calculation_version": "reimbursement-sos-v1",
+      "known_answer_passed": true,
+      "payment_impact": 520.0,
+      "lifecycle": {
+        "baseline_id": "sos-ka-baseline-reimbursement-sos-v1",
+        "predicted_impact_id": "7c9b3441-be27-450c-8845-b6de33c5bfa7",
+        "observation_id": "sos-ka-obs-reimbursement-sos-v1",
+        "verdict_status": "ON_TRACK",
+        "payment_impact": 520.0,
+        "calculation_version": "reimbursement-sos-v1",
+        "known_answer_passed": true
+      }
+    },
+    {
+      "key": "ptp",
+      "policy_id": "1d6d3332-88fd-54ac-8227-2d2bf856ed5f",
+      "name": "Procedure-to-Procedure (PTP) Coding Edit",
+      "policy_type": "CODING_AND_BILLING",
+      "mechanism": "NCCI_PTP_FIXTURE",
+      "calculation_version": "reimbursement-ncci-ptp-v1",
+      "known_answer_passed": true,
+      "payment_impact": 1200.0,
+      "lifecycle": {
+        "baseline_id": "ptp-ka-baseline-reimbursement-ncci-ptp-v1",
+        "predicted_impact_id": "11cf76e8-4193-4dca-9535-8700cfea4375",
+        "observation_id": "ptp-ka-obs-reimbursement-ncci-ptp-v1",
+        "verdict_status": "ON_TRACK",
+        "payment_impact": 1200.0,
+        "calculation_version": "reimbursement-ncci-ptp-v1",
+        "known_answer_passed": true
+      }
+    },
+    {
+      "key": "mue",
+      "policy_id": "d65d0f7a-ab72-5dde-9cd0-1c75b79efc66",
+      "name": "Medically Unlikely Edit (MUE) / Unit Cap",
+      "policy_type": "CODING_AND_BILLING",
+      "mechanism": "FEE_SCHEDULE_UNIT_PRICE",
+      "calculation_version": "reimbursement-ncci-mue-v1",
+      "known_answer_passed": true,
+      "payment_impact": 100.0,
+      "lifecycle": {
+        "baseline_id": "mue-ka-baseline-reimbursement-ncci-mue-v1",
+        "predicted_impact_id": "d30c7115-52fc-45e4-947b-e520cf643fa5",
+        "observation_id": "mue-ka-obs-reimbursement-ncci-mue-v1",
+        "verdict_status": "ON_TRACK",
+        "payment_impact": 100.0,
+        "calculation_version": "reimbursement-ncci-mue-v1",
+        "known_answer_passed": true
+      }
+    },
+    {
+      "key": "infusion",
+      "policy_id": "fce62ce1-1476-520d-81a6-daf0e9507743",
+      "name": "Infusion Site-of-Care and Reimbursement Policy",
+      "policy_type": "SITE_OF_CARE",
+      "mechanism": "SITE_OF_SERVICE_PAYMENT_DIFFERENTIAL",
+      "calculation_version": "reimbursement-infusion-soc-v1",
+      "known_answer_passed": true,
+      "payment_impact": 3600.0,
+      "lifecycle": {
+        "baseline_id": "infusion-ka-baseline-reimbursement-infusion-soc-v1",
+        "predicted_impact_id": "2e8d0023-ec43-419f-bd34-dcce85354b5f",
+        "observation_id": "infusion-ka-obs-reimbursement-infusion-soc-v1",
+        "verdict_status": "ON_TRACK",
+        "payment_impact": 3600.0,
+        "calculation_version": "reimbursement-infusion-soc-v1",
+        "known_answer_passed": true
+      }
+    }
+  ],
+  "whatifs": [
+    {
+      "key": "mppr",
+      "policy_id": "7e7f480d-dc95-50a9-bbab-77a8c225f81f",
+      "status": "completed",
+      "mechanism": "MULTIPLE_PROCEDURE_PAYMENT_REDUCTION",
+      "calculation_version": "reimbursement-mppr-v1",
+      "message": null
+    },
+    {
+      "key": "sos",
+      "policy_id": "a9e032f8-d4fc-599c-8ea4-4e58a0f929e3",
+      "status": "completed",
+      "mechanism": "SITE_OF_SERVICE_PAYMENT_DIFFERENTIAL",
+      "calculation_version": "reimbursement-sos-v1",
+      "message": null
+    },
+    {
+      "key": "ptp",
+      "policy_id": "1d6d3332-88fd-54ac-8227-2d2bf856ed5f",
+      "status": "completed",
+      "mechanism": "NCCI_PTP_FIXTURE",
+      "calculation_version": "reimbursement-ncci-ptp-v1",
+      "message": null
+    },
+    {
+      "key": "mue",
+      "policy_id": "d65d0f7a-ab72-5dde-9cd0-1c75b79efc66",
+      "status": "completed",
+      "mechanism": "FEE_SCHEDULE_UNIT_PRICE",
+      "calculation_version": "reimbursement-ncci-mue-v1",
+      "message": null
+    },
+    {
+      "key": "infusion",
+      "policy_id": "fce62ce1-1476-520d-81a6-daf0e9507743",
+      "status": "completed",
+      "mechanism": "SITE_OF_SERVICE_PAYMENT_DIFFERENTIAL",
+      "calculation_version": "reimbursement-infusion-soc-v1",
+      "message": null
+    }
+  ],
+  "errors": [],
+  "baseline_counts": [
+    {
+      "policy_id": "fce62ce1-1476-520d-81a6-daf0e9507743",
+      "n": 4,
+      "enrollment_or_sample": 4
+    },
+    {
+      "policy_id": "d65d0f7a-ab72-5dde-9cd0-1c75b79efc66",
+      "n": 4,
+      "enrollment_or_sample": 4
+    },
+    {
+      "policy_id": "1d6d3332-88fd-54ac-8227-2d2bf856ed5f",
+      "n": 4,
+      "enrollment_or_sample": 4
+    },
+    {
+      "policy_id": "7e7f480d-dc95-50a9-bbab-77a8c225f81f",
+      "n": 4,
+      "enrollment_or_sample": 4
+    },
+    {
+      "policy_id": "a9e032f8-d4fc-599c-8ea4-4e58a0f929e3",
+      "n": 4,
+      "enrollment_or_sample": 4
+    }
+  ],
+  "observation_counts": [
+    {
+      "policy_id": "7e7f480d-dc95-50a9-bbab-77a8c225f81f",
+      "n": 11,
+      "with_verdict": 11
+    },
+    {
+      "policy_id": "d65d0f7a-ab72-5dde-9cd0-1c75b79efc66",
+      "n": 11,
+      "with_verdict": 11
+    },
+    {
+      "policy_id": "a9e032f8-d4fc-599c-8ea4-4e58a0f929e3",
+      "n": 11,
+      "with_verdict": 11
+    },
+    {
+      "policy_id": "fce62ce1-1476-520d-81a6-daf0e9507743",
+      "n": 11,
+      "with_verdict": 11
+    },
+    {
+      "policy_id": "1d6d3332-88fd-54ac-8227-2d2bf856ed5f",
+      "n": 11,
+      "with_verdict": 11
+    }
+  ],
+  "pi_counts": [
+    {
+      "policy_id": "1d6d3332-88fd-54ac-8227-2d2bf856ed5f",
+      "n": 5
+    },
+    {
+      "policy_id": "7e7f480d-dc95-50a9-bbab-77a8c225f81f",
+      "n": 5
+    },
+    {
+      "policy_id": "a9e032f8-d4fc-599c-8ea4-4e58a0f929e3",
+      "n": 5
+    },
+    {
+      "policy_id": "d65d0f7a-ab72-5dde-9cd0-1c75b79efc66",
+      "n": 5
+    },
+    {
+      "policy_id": "fce62ce1-1476-520d-81a6-daf0e9507743",
+      "n": 5
+    }
+  ],
+  "finished_at": "2026-11-13T01:54:22.878695+00:00",
+  "ok": true,
+  "scorecard_regen": {
+    "period": "2026-Q4",
+    "finished_at": "2026-11-13T01:58:03.052667+00:00",
+    "policies_seen": 257,
+    "generated": 257,
+    "available_index": 252,
+    "unavailable_index": 5,
+    "error_count": 0,
+    "note": "Five reimbursement verticals intentionally unavailable_index (cost_change_pct null / UNESTIMATED)."
+  },
+  "scorecards": [
+    {
+      "key": "mppr",
+      "policy_id": "7e7f480d-dc95-50a9-bbab-77a8c225f81f",
+      "scorecard": {
+        "id": "f823968a-e931-4b2f-96e3-143bb26a6f17",
+        "period": "2026-Q4",
+        "effectiveness_index": null,
+        "cost_impact_score": null,
+        "behavioral_risk_score": null,
+        "access_impact_score": null,
+        "regulatory_defensibility_score": null,
+        "created_at": "2026-11-08 15:58:56.06673",
+        "updated_at": "2026-11-13 01:25:10.869359"
+      },
+      "index_status": "UNAVAILABLE"
+    },
+    {
+      "key": "sos",
+      "policy_id": "a9e032f8-d4fc-599c-8ea4-4e58a0f929e3",
+      "scorecard": {
+        "id": "e63ee81d-42ab-46c0-a02b-c6ed3d7fb518",
+        "period": "2026-Q4",
+        "effectiveness_index": null,
+        "cost_impact_score": null,
+        "behavioral_risk_score": null,
+        "access_impact_score": null,
+        "regulatory_defensibility_score": null,
+        "created_at": "2026-11-08 15:59:11.831113",
+        "updated_at": "2026-11-13 01:25:13.698404"
+      },
+      "index_status": "UNAVAILABLE"
+    },
+    {
+      "key": "ptp",
+      "policy_id": "1d6d3332-88fd-54ac-8227-2d2bf856ed5f",
+      "scorecard": {
+        "id": "48f21f3c-becd-46ce-bc51-f348a25660d5",
+        "period": "2026-Q4",
+        "effectiveness_index": null,
+        "cost_impact_score": null,
+        "behavioral_risk_score": null,
+        "access_impact_score": null,
+        "regulatory_defensibility_score": null,
+        "created_at": "2026-11-08 15:59:07.898934",
+        "updated_at": "2026-11-13 01:25:12.334605"
+      },
+      "index_status": "UNAVAILABLE"
+    },
+    {
+      "key": "mue",
+      "policy_id": "d65d0f7a-ab72-5dde-9cd0-1c75b79efc66",
+      "scorecard": {
+        "id": "40f05490-521c-4e8e-80c9-555e98d8ca12",
+        "period": "2026-Q4",
+        "effectiveness_index": null,
+        "cost_impact_score": null,
+        "behavioral_risk_score": null,
+        "access_impact_score": null,
+        "regulatory_defensibility_score": null,
+        "created_at": "2026-11-08 15:59:01.984804",
+        "updated_at": "2026-11-13 01:25:11.251677"
+      },
+      "index_status": "UNAVAILABLE"
+    },
+    {
+      "key": "infusion",
+      "policy_id": "fce62ce1-1476-520d-81a6-daf0e9507743",
+      "scorecard": {
+        "id": "e605859e-1cfe-4dbd-8a58-d9884ff0c642",
+        "period": "2026-Q4",
+        "effectiveness_index": null,
+        "cost_impact_score": null,
+        "behavioral_risk_score": null,
+        "access_impact_score": null,
+        "regulatory_defensibility_score": null,
+        "created_at": "2026-11-08 15:58:58.031698",
+        "updated_at": "2026-11-13 01:25:11.619138"
+      },
+      "index_status": "UNAVAILABLE"
+    }
+  ],
+  "verification": {
+    "checked_at": "2026-11-13T05:22:08.292752+00:00",
+    "mechanism_stamped": true,
+    "required_endpoints": true,
+    "baseline_calc_version": true,
+    "pi_payment_impact": true,
+    "pi_cost_change_pct_null": true,
+    "observation_verdict": "ON_TRACK",
+    "whatif_status": "completed",
+    "scorecards_regenerated": true,
+    "scorecard_unavailable_for_five": true,
+    "scorecard_followup": "storage_scorecards now maps payment_impact_pct → DESCRIPTIVE_ONLY; re-run lean_staging_regenerate_scorecards.py after API deploy to clear UNAVAILABLE on the five"
+  }
+}

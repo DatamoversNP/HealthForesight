@@ -89,12 +89,34 @@ def generate_scorecard_from_predicted_impact(
         util_pct = metrics.get("utilization_change_pct")
         measured_cost_pct = metrics.get("measured_vs_baseline_cost_change_pct")
         measured_util_pct = metrics.get("measured_vs_baseline_utilization_change_pct")
+        # Payment-rule engines store payer savings as payment_impact(_pct), not
+        # attributed cost_change_pct. Map to descriptive cost decrease.
+        payment_impact_pct = metrics.get("payment_impact_pct")
+        if payment_impact_pct is None:
+            baseline_paid = metrics.get("baseline_paid")
+            payment_impact = metrics.get("payment_impact")
+            try:
+                if baseline_paid is not None and float(baseline_paid) != 0 and payment_impact is not None:
+                    payment_impact_pct = (float(payment_impact) / float(baseline_paid)) * 100.0
+            except (TypeError, ValueError):
+                payment_impact_pct = None
         if cost_pct is None and util_pct is None and (
             measured_cost_pct is not None or measured_util_pct is not None
         ):
             descriptive_only = True
             cost_pct = measured_cost_pct
             util_pct = measured_util_pct
+        elif (
+            cost_pct is None
+            and util_pct is None
+            and measured_cost_pct is None
+            and measured_util_pct is None
+            and payment_impact_pct is not None
+        ):
+            descriptive_only = True
+            # Positive payment_impact = payer savings → descriptive cost decrease
+            cost_pct = -abs(float(payment_impact_pct))
+            util_pct = 0.0  # payment engines hold volume constant
         # Negative cost % → savings magnitude for the cost component.
         # Descriptive path also scores cost increases (lower cost_impact_score).
         if cost_pct is not None and cost_pct < 0:
