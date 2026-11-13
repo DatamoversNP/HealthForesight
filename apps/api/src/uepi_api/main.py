@@ -171,6 +171,12 @@ def create_app() -> FastAPI:
         r"^https://healthforesight-[a-z0-9-]+\.azurewebsites\.net$",
         re.IGNORECASE,
     )
+    # Lean-stg / Container Apps frontends (hfleanstg-web, datavoyager, etc.)
+    # Host shape: <app>.<env>.<region>.azurecontainerapps.io
+    _CORS_AZURE_CONTAINER_APPS = re.compile(
+        r"^https://[a-z0-9-]+(?:\.[a-z0-9-]+)+\.azurecontainerapps\.io$",
+        re.IGNORECASE,
+    )
     # Data Voyager / HealthForesight Vercel (prod + preview URLs)
     _CORS_VERCEL_APP = re.compile(
         r"^https://([a-z0-9-]+\.)*vercel\.app$",
@@ -186,6 +192,8 @@ def create_app() -> FastAPI:
         if o.startswith("https://") and ".azurestaticapps.net" in o:
             return o
         if _CORS_HEALTHFORESIGHT_APP.match(o):
+            return o
+        if _CORS_AZURE_CONTAINER_APPS.match(o):
             return o
         if _CORS_VERCEL_APP.match(o):
             return o
